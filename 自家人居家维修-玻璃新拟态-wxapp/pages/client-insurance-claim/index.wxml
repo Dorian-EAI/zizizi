@@ -1,0 +1,194 @@
+<!-- 像素级复刻 client-insurance-claim.html -->
+<view class="page">
+  <!-- 背景装饰光斑：teal-amber 径向渐变 -->
+  <view class="blob" style="top:-80rpx;right:-120rpx;width:560rpx;height:560rpx;background:radial-gradient(circle, var(--brand) 0%, transparent 70%);"></view>
+  <view class="blob" style="top:1000rpx;left:-160rpx;width:480rpx;height:480rpx;background:radial-gradient(circle, var(--accent) 0%, transparent 70%);"></view>
+
+  <scroll-view scroll-y class="page-scroll hide-scroll" style="padding-bottom:200rpx;">
+
+    <!-- ===== Top Nav Bar（HTML: sticky, 下圆角 28px → 56rpx） ===== -->
+    <view class="nav-bar" style="padding-top:calc({{statusBarHeight}}px + 36rpx);">
+      <view class="nav-icon-btn press-scale" bindtap="onBack">
+        <image src="{{icons.back}}" mode="aspectFit" class="nav-icon-btn-icon" lazy-load="{{false}}" />
+      </view>
+      <text class="nav-title">理赔申请</text>
+      <view class="nav-spacer"></view>
+    </view>
+
+    <!-- ===== Policy Card 保单信息卡 ===== -->
+    <view class="section">
+      <view class="glass-neu-card policy-card">
+        <view class="policy-top">
+          <view class="policy-shield">
+            <image src="{{icons.shield}}" mode="aspectFit" class="policy-shield-icon" lazy-load="{{false}}" />
+          </view>
+          <view class="policy-head">
+            <text class="policy-name">{{policy.name}}</text>
+            <text class="policy-tier">{{policy.tier}}</text>
+          </view>
+          <view class="status-badge status-active">{{policy.status}}</view>
+        </view>
+        <view class="policy-meta">
+          <view class="meta-row">
+            <text class="meta-label">保单号</text>
+            <text class="meta-value mono">{{policy.policyNo}}</text>
+          </view>
+          <view class="meta-row">
+            <text class="meta-label">关联订单</text>
+            <text class="meta-value mono">{{policy.orderNo}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== Claim Form 理赔表单 ===== -->
+    <view class="section">
+      <view class="glass-neu-card form-card">
+        <view class="card-title">理赔信息</view>
+
+        <!-- 损失描述 -->
+        <view class="field">
+          <text class="field-label">损失描述</text>
+          <textarea
+            class="neu-textarea"
+            placeholder="请描述因师傅服务造成的财产损失情况..."
+            placeholder-class="neu-textarea-ph"
+            value="{{form.lossDesc}}"
+            bindinput="onLossDescInput"
+            auto-height
+          />
+        </view>
+
+        <!-- 损失照片 -->
+        <view class="field">
+          <view class="field-label-row">
+            <text class="field-label">损失照片</text>
+            <text class="field-hint">最多{{maxPhotos}}张</text>
+          </view>
+          <scroll-view scroll-x class="photo-grid" enable-flex>
+            <!-- 已选照片 -->
+            <view
+              class="photo-item"
+              wx:for="{{photos}}"
+              wx:key="*this"
+              data-idx="{{index}}"
+              bindtap="onPreviewPhoto"
+            >
+              <image src="{{item}}" mode="aspectFill" class="photo-img" lazy-load="{{false}}" />
+              <view class="photo-remove press-scale" data-idx="{{index}}" catchtap="onRemovePhoto">
+                <image src="{{icons.close}}" mode="aspectFit" class="photo-remove-icon" lazy-load="{{false}}" />
+              </view>
+            </view>
+            <!-- 添加占位 -->
+            <view
+              class="photo-slot press-scale"
+              wx:if="{{photos.length < maxPhotos}}"
+              bindtap="onChoosePhoto"
+            >
+              <image src="{{icons.plus}}" mode="aspectFit" class="photo-slot-icon" lazy-load="{{false}}" />
+            </view>
+          </scroll-view>
+        </view>
+
+        <!-- 损失金额预估 -->
+        <view class="field">
+          <text class="field-label">损失金额预估</text>
+          <view class="neu-input-wrap">
+            <text class="input-prefix">¥</text>
+            <input
+              type="digit"
+              inputmode="decimal"
+              class="neu-input mono"
+              placeholder="¥0"
+              placeholder-class="neu-input-ph"
+              value="{{form.lossAmount}}"
+              bindinput="onLossAmountInput"
+            />
+          </view>
+        </view>
+
+        <!-- 师傅责任说明 -->
+        <view class="field field-last">
+          <text class="field-label">师傅责任说明</text>
+          <textarea
+            class="neu-textarea"
+            placeholder="说明师傅操作与损失的关联..."
+            placeholder-class="neu-textarea-ph"
+            value="{{form.liability}}"
+            bindinput="onLiabilityInput"
+            auto-height
+          />
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== Claim Process Timeline 理赔流程 ===== -->
+    <view class="section">
+      <view class="section-title">理赔流程</view>
+      <view class="glass-neu-card process-card">
+        <view class="v-timeline">
+          <!-- 步骤1：提交申请 -->
+          <view class="vt-step">
+            <view class="vt-rail">
+              <view class="vt-dot vt-dot-brand">
+                <image src="{{icons.document}}" mode="aspectFit" class="vt-dot-icon" lazy-load="{{false}}" />
+              </view>
+              <view class="vt-line"></view>
+            </view>
+            <view class="vt-content">
+              <text class="vt-title">提交申请</text>
+              <text class="vt-desc">填写损失描述、上传照片并提交理赔申请</text>
+            </view>
+          </view>
+          <!-- 步骤2：客服审核 -->
+          <view class="vt-step">
+            <view class="vt-rail">
+              <view class="vt-dot vt-dot-brand">
+                <image src="{{icons.headset}}" mode="aspectFit" class="vt-dot-icon" lazy-load="{{false}}" />
+              </view>
+              <view class="vt-line"></view>
+            </view>
+            <view class="vt-content">
+              <text class="vt-title">客服审核</text>
+              <text class="vt-desc">专属客服24小时内联系核实损失情况</text>
+            </view>
+          </view>
+          <!-- 步骤3：赔付到钱包 -->
+          <view class="vt-step">
+            <view class="vt-rail">
+              <view class="vt-dot vt-dot-brand">
+                <image src="{{icons.wallet}}" mode="aspectFit" class="vt-dot-icon" lazy-load="{{false}}" />
+              </view>
+              <view class="vt-line"></view>
+            </view>
+            <view class="vt-content">
+              <text class="vt-title">赔付到钱包</text>
+              <text class="vt-desc">审核通过后赔付款即时到账我的钱包</text>
+            </view>
+          </view>
+          <!-- 步骤4：保证金扣除 -->
+          <view class="vt-step vt-step-last">
+            <view class="vt-rail">
+              <view class="vt-dot vt-dot-accent">
+                <image src="{{icons.shieldAccent}}" mode="aspectFit" class="vt-dot-icon" lazy-load="{{false}}" />
+              </view>
+            </view>
+            <view class="vt-content">
+              <text class="vt-title">师傅保证金扣除</text>
+              <text class="vt-desc">从师傅保证金中扣除对应赔付金额</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+  </scroll-view>
+
+  <!-- ===== Bottom Fixed Action Bar 底部固定提交按钮 ===== -->
+  <view class="action-bar safe-bottom">
+    <view class="action-btn-primary press-scale" bindtap="onSubmitClaim">
+      <image src="{{icons.send}}" mode="aspectFit" class="action-btn-primary-icon" lazy-load="{{false}}" />
+      <text class="action-btn-primary-text">提交理赔申请</text>
+    </view>
+  </view>
+</view>

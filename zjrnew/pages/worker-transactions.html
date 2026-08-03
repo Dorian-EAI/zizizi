@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自家人居家维修 · 玻璃新拟态 · 交易明细</title>
+    <link rel="stylesheet" href="../assets/fonts.css">
+
+    <style id="theme-vars">
+/* 自家人居家维修 - 玻璃新拟态 */
+:root {
+  /* Brand - Worker (Blue) */
+  --brand: #2D6CDF;
+  --brand-dark: #2456B8;
+  --brand-mid: #5A8EE8;
+  --brand-light: #DCE8FB;
+  --brand-glow: rgba(45, 108, 223, 0.28);
+  --brand-subtle: rgba(45, 108, 223, 0.08);
+
+  /* Accent (Amber) */
+  --accent: #D4944C;
+  --accent-dark: #A0723C;
+  --accent-mid: #E8C088;
+  --accent-light: #F5E6D0;
+  --accent-glow: rgba(212, 148, 76, 0.20);
+
+  /* Background */
+  --background: #F2EDE8;
+  --foreground: #2C2824;
+  --body-bg: #E8E4DF;
+  --bg-elevated: #F7F3EF;
+
+  /* Neumorphic */
+  --neu-light: #FFF8F2;
+  --neu-dark: #DDD6CE;
+  --neu-highlight: rgba(255, 255, 255, 0.55);
+
+  /* Surface & Card */
+  --card: rgba(255, 255, 255, 0.52);
+  --card-foreground: #2C2824;
+  --popover: #fff;
+  --popover-foreground: #2C2824;
+
+  /* Muted */
+  --muted: #F7F3EF;
+  --muted-foreground: #8B8178;
+
+  /* Border & Input */
+  --border: rgba(44, 40, 36, 0.06);
+  --input: rgba(44, 40, 36, 0.06);
+  --ring: #2D6CDF;
+
+  /* Primary */
+  --primary: #2D6CDF;
+  --primary-foreground: #ffffff;
+
+  /* Semantic aliases */
+  --state-success: #5B8C5A;
+  --state-warning: #D4944C;
+  --state-error: #C4533A;
+  --state-info: #5A8FAD;
+
+  /* Text */
+  --text-1: #2C2824;
+  --text-2: #8B8178;
+  --text-3: #B5ADA5;
+  --text-inverse: #ffffff;
+
+  /* Sep & Fill */
+  --sep: rgba(44, 40, 36, 0.06);
+  --fill: rgba(44, 40, 36, 0.04);
+
+  /* Green/Red/Orange/Blue semantic */
+  --green: #5B8C5A;
+  --red: #C4533A;
+  --orange: #D4944C;
+  --blue: #5A8FAD;
+
+  /* Radius */
+  --radius-sm: 0.75rem;
+  --radius-md: 1.2rem;
+  --radius-lg: 1.6rem;
+  --radius-full: 9999px;
+
+    /* Font — 统一衬线系统 */
+  --font-display: 'Cormorant Garamond', 'Noto Serif SC', 'STSong', Georgia, serif;
+  --font-body: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --font-nums: 'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
+  --font: var(--font-body);
+
+  /* Motion */
+  --spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --dur: 0.2s;
+
+  /* Glass */
+  --glass-bg: rgba(255, 255, 255, 0.18);
+  --glass-blur: blur(12px) saturate(140%);
+  --glass-border: rgba(255, 255, 255, 0.60);
+
+  /* Surface presets for glass-neumorphic components */
+  --surface-1: rgba(255, 255, 255, 0.50);
+  --surface-2: rgba(255, 255, 255, 0.45);
+
+  /* Neumorphic shadow presets */
+  --neu-out-sm: 6px 6px 14px var(--neu-dark), -6px -6px 14px var(--neu-light), 0 4px 16px rgba(0, 0, 0, 0.04);
+  --neu-out-md: 8px 8px 18px var(--neu-dark), -8px -8px 18px var(--neu-light), 0 6px 24px rgba(0, 0, 0, 0.05);
+  --neu-out-lg: 10px 10px 24px var(--neu-dark), -10px -10px 24px var(--neu-light), 0 8px 32px rgba(0, 0, 0, 0.06);
+  --neu-in: inset 4px 4px 8px var(--neu-dark), inset -4px -4px 8px var(--neu-light);
+  --neu-in-deep: inset 5px 5px 10px var(--neu-dark), inset -5px -5px 10px var(--neu-light);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --font-sans: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --font-serif: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --radius-full: var(--radius-full);}
+
+/* Semantic token fallback */
+#semantic-token-fallback {
+  --brand-background: var(--background);
+  --brand-foreground: var(--foreground);
+  --brand-card: var(--card);
+  --brand-card-foreground: var(--card-foreground);
+  --brand-popover: var(--popover);
+  --brand-popover-foreground: var(--popover-foreground);
+  --brand-primary: var(--primary);
+  --brand-primary-foreground: var(--primary-foreground);
+  --brand-muted: var(--muted);
+  --brand-muted-foreground: var(--muted-foreground);
+  --brand-border: var(--border);
+  --brand-input: var(--input);
+  --brand-ring: var(--ring);
+  --brand-radius-sm: var(--radius-sm);
+  --brand-radius-md: var(--radius-md);
+  --brand-radius-lg: var(--radius-lg);
+}
+
+/* ===== Global Neumorphic Components ===== */
+/* Buttons */
+.btn-neu-primary{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:var(--brand);color:var(--text-inverse);
+  border:none;border-radius:9999px;
+  padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
+  cursor:pointer;
+  box-shadow:var(--neu-out-sm),0 2px 8px var(--brand-glow);
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
+.btn-neu-primary:active{box-shadow:var(--neu-in);transform:scale(0.94)}
+
+.btn-neu-secondary{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,0.50);color:var(--brand);
+  border:0.5px solid rgba(255,255,255,0.60);border-radius:9999px;
+  padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
+  cursor:pointer;
+  box-shadow:var(--neu-out-sm);
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
+.btn-neu-secondary:active{box-shadow:var(--neu-in);transform:scale(0.94)}
+
+.btn-neu-ghost{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:transparent;color:var(--text-2);
+  border:0.5px solid var(--border);border-radius:9999px;
+  padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
+  cursor:pointer;
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease),color var(--dur) var(--ease);
+}
+.btn-neu-ghost:active{transform:scale(0.94);color:var(--brand)}
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-accent: var(--accent);
+    --radius-sm: var(--radius-sm);
+    --radius-md: var(--radius-md);
+    --radius-lg: var(--radius-lg);
+    --radius-full: var(--radius-full);
+    --font-sans: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+    --font-serif: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+    <style id="semantic-token-fallback">
+      .bg-background { background-color: var(--background); }
+      .text-background { color: var(--background); }
+      .border-background { border-color: var(--background); }
+      .ring-background { --tw-ring-color: var(--background); }
+      .bg-foreground { background-color: var(--foreground); }
+      .text-foreground { color: var(--foreground); }
+      .border-foreground { border-color: var(--foreground); }
+      .ring-foreground { --tw-ring-color: var(--foreground); }
+      .bg-card { background-color: var(--card); }
+      .text-card { color: var(--card); }
+      .border-card { border-color: var(--card); }
+      .ring-card { --tw-ring-color: var(--card); }
+      .bg-card-foreground { background-color: var(--card-foreground); }
+      .text-card-foreground { color: var(--card-foreground); }
+      .border-card-foreground { border-color: var(--card-foreground); }
+      .ring-card-foreground { --tw-ring-color: var(--card-foreground); }
+      .bg-popover { background-color: var(--popover); }
+      .text-popover { color: var(--popover); }
+      .border-popover { border-color: var(--popover); }
+      .ring-popover { --tw-ring-color: var(--popover); }
+      .bg-popover-foreground { background-color: var(--popover-foreground); }
+      .text-popover-foreground { color: var(--popover-foreground); }
+      .border-popover-foreground { border-color: var(--popover-foreground); }
+      .ring-popover-foreground { --tw-ring-color: var(--popover-foreground); }
+      .bg-primary { background-color: var(--primary); }
+      .text-primary { color: var(--primary); }
+      .border-primary { border-color: var(--primary); }
+      .ring-primary { --tw-ring-color: var(--primary); }
+      .bg-primary-foreground { background-color: var(--primary-foreground); }
+      .text-primary-foreground { color: var(--primary-foreground); }
+      .border-primary-foreground { border-color: var(--primary-foreground); }
+      .ring-primary-foreground { --tw-ring-color: var(--primary-foreground); }
+      .bg-muted { background-color: var(--muted); }
+      .text-muted { color: var(--muted); }
+      .border-muted { border-color: var(--muted); }
+      .ring-muted { --tw-ring-color: var(--muted); }
+      .bg-muted-foreground { background-color: var(--muted-foreground); }
+      .text-muted-foreground { color: var(--muted-foreground); }
+      .border-muted-foreground { border-color: var(--muted-foreground); }
+      .ring-muted-foreground { --tw-ring-color: var(--muted-foreground); }
+      .bg-border { background-color: var(--border); }
+      .text-border { color: var(--border); }
+      .border-border { border-color: var(--border); }
+      .ring-border { --tw-ring-color: var(--border); }
+      .bg-input { background-color: var(--input); }
+      .text-input { color: var(--input); }
+      .border-input { border-color: var(--input); }
+      .ring-input { --tw-ring-color: var(--input); }
+      .bg-ring { background-color: var(--ring); }
+      .text-ring { color: var(--ring); }
+      .border-ring { border-color: var(--ring); }
+      .ring-ring { --tw-ring-color: var(--ring); }
+      .bg-accent { background-color: var(--accent); }
+      .text-accent { color: var(--accent); }
+      .border-accent { border-color: var(--accent); }
+      .ring-accent { --tw-ring-color: var(--accent); }
+    </style>
+    <style>
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      [data-icon] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        background-color: currentColor;
+      }
+    </style>
+</head>
+<body>
+<div class="phone" data-dom-id="page-worker-transactions">
+
+  <!-- ===== TOP NAV BAR (sticky) ===== -->
+  <header class="nav-bar">
+    <button class="nav-icon-btn" data-dom-id="back-btn" aria-label="返回">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m15 18-6-6 6-6"/>
+      </svg>
+    </button>
+    <h1 class="nav-title">交易明细</h1>
+    <div class="nav-placeholder" aria-hidden="true"></div>
+  </header>
+
+  <!-- ===== SUMMARY CARD (收支汇总) ===== -->
+  <section class="section">
+    <div class="glass-neu-card summary-card">
+      <div class="summary-top-bar"></div>
+      <div class="summary-body">
+        <div class="summary-cols">
+          <div class="summary-col">
+            <div class="summary-label">本月收入</div>
+            <div class="summary-value summary-value-brand mono">&yen;3,286.50</div>
+          </div>
+          <div class="summary-divider"></div>
+          <div class="summary-col">
+            <div class="summary-label">累计提现</div>
+            <div class="summary-value mono">&yen;8,600.00</div>
+          </div>
+        </div>
+        <div class="summary-foot">本月订单 28 单 &middot; 好评率 98%</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FILTER SEGMENT (筛选选项卡) ===== -->
+  <section class="section">
+    <div class="filter-segment" data-dom-id="tx-filter">
+      <button class="filter-item filter-item-active" data-filter="all">全部</button>
+      <button class="filter-item" data-filter="income">收入</button>
+      <button class="filter-item" data-filter="withdraw">提现</button>
+      <button class="filter-item" data-filter="deduct">扣款</button>
+    </div>
+  </section>
+
+  <!-- ===== TX GROUP: 今天 ===== -->
+  <section class="section">
+    <div class="glass-neu-card tx-group">
+      <div class="tx-group-head">
+        <span class="tx-date">今天</span>
+        <span class="tx-subtotal mono">小计 +&yen;128.00</span>
+      </div>
+
+      <div class="tx-row" data-tx-type="income">
+        <div class="tx-icon tx-icon-income">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg>
+        </div>
+        <div class="tx-main">
+          <div class="tx-title">订单收益</div>
+          <div class="tx-sub">防水维修 &middot; ORD...001</div>
+        </div>
+        <div class="tx-right">
+          <div class="tx-amount tx-amount-in mono">+&yen;128.00</div>
+          <div class="tx-time">15:30</div>
+        </div>
+      </div>
+
+      <div class="tx-row" data-tx-type="withdraw">
+        <div class="tx-icon tx-icon-withdraw">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+        </div>
+        <div class="tx-main">
+          <div class="tx-title">提现</div>
+          <div class="tx-sub">招商银行 ****8866</div>
+        </div>
+        <div class="tx-right">
+          <div class="tx-amount tx-amount-out mono">-&yen;500.00</div>
+          <div class="tx-time">10:20</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TX GROUP: 昨天 ===== -->
+  <section class="section">
+    <div class="glass-neu-card tx-group">
+      <div class="tx-group-head">
+        <span class="tx-date">昨天</span>
+        <span class="tx-subtotal mono">小计 +&yen;83.00</span>
+      </div>
+
+      <div class="tx-row" data-tx-type="income">
+        <div class="tx-icon tx-icon-income">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg>
+        </div>
+        <div class="tx-main">
+          <div class="tx-title">订单收益</div>
+          <div class="tx-sub">空调清洗 &middot; ORD...002</div>
+        </div>
+        <div class="tx-right">
+          <div class="tx-amount tx-amount-in mono">+&yen;88.00</div>
+          <div class="tx-time">18:05</div>
+        </div>
+      </div>
+
+      <div class="tx-row" data-tx-type="deduct">
+        <div class="tx-icon tx-icon-deduct">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 5 5 19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg>
+        </div>
+        <div class="tx-main">
+          <div class="tx-title">平台服务费</div>
+          <div class="tx-sub">订单 ORD...002</div>
+        </div>
+        <div class="tx-right">
+          <div class="tx-amount tx-amount-deduct mono">-&yen;5.00</div>
+          <div class="tx-time">18:06</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TX GROUP: 07-27 ===== -->
+  <section class="section">
+    <div class="glass-neu-card tx-group">
+      <div class="tx-group-head">
+        <span class="tx-date">07-27</span>
+        <span class="tx-subtotal mono">小计 +&yen;68.00</span>
+      </div>
+
+      <div class="tx-row" data-tx-type="income">
+        <div class="tx-icon tx-icon-income">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg>
+        </div>
+        <div class="tx-main">
+          <div class="tx-title">订单收益</div>
+          <div class="tx-sub">管道疏通 &middot; ORD...003</div>
+        </div>
+        <div class="tx-right">
+          <div class="tx-amount tx-amount-in mono">+&yen;68.00</div>
+          <div class="tx-time">14:22</div>
+        </div>
+      </div>
+
+      <div class="tx-row" data-tx-type="income">
+        <div class="tx-icon tx-icon-income">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg>
+        </div>
+        <div class="tx-main">
+          <div class="tx-title">订单收益</div>
+          <div class="tx-sub">门锁更换 &middot; ORD...004</div>
+        </div>
+        <div class="tx-right">
+          <div class="tx-amount tx-amount-in mono">+&yen;120.00</div>
+          <div class="tx-time">09:10</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOT NOTE ===== -->
+  <div class="foot-note">仅显示近 30 天记录</div>
+
+</div>
+
+    <style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --brand:#2D6CDF;--brand-dark:#2456B8;--brand-mid:#5A8EE8;--brand-light:#DCE8FB;
+  --brand-glow:rgba(45,108,223,0.28);--brand-subtle:rgba(45,108,223,0.08);
+  --brand-gradient:linear-gradient(135deg,#2D6CDF 0%,#5A8EE8 50%,#D4944C 100%);
+  --accent:#D4944C;--accent-dark:#A0723C;--accent-light:#F5E6D0;--accent-glow:rgba(212,148,76,0.25);
+  --bg:#F2EDE8;--bg-elevated:#F7F3EF;
+  --neu-light:#FFF8F2;--neu-dark:#DDD6CE;
+  --text-1:#2C2824;--text-2:#8B8178;--text-3:#B5ADA5;--text-inverse:#FFFFFF;
+  --sep:rgba(44,40,36,0.06);--fill:rgba(44,40,36,0.04);
+  --green:#5B8C5A;--red:#C4533A;--orange:#D4944C;--blue:#5A8FAD;
+  --r:1.2rem;--r-lg:1.6rem;--r-sm:0.75rem;--r-pill:9999px;--r-tab:24px;
+  /* Font */--font-display:'Cormorant Garamond', 'Noto Serif SC', 'STSong', Georgia, serif;
+  --font-body:'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --font-nums:'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
+  --font:var(--font-body);
+  --neu-out-sm:6px 6px 14px var(--neu-dark),-6px -6px 14px var(--neu-light),0 4px 16px rgba(0,0,0,0.04);
+  --neu-out-md:8px 8px 18px var(--neu-dark),-8px -8px 18px var(--neu-light),0 6px 24px rgba(0,0,0,0.05);
+  --neu-out-lg:10px 10px 24px var(--neu-dark),-10px -10px 24px var(--neu-light),0 8px 32px rgba(0,0,0,0.06);
+  --neu-in:inset 4px 4px 8px var(--neu-dark),inset -4px -4px 8px var(--neu-light);
+  --neu-in-deep:inset 5px 5px 10px var(--neu-dark),inset -5px -5px 10px var(--neu-light);
+  --spring:cubic-bezier(0.175,0.885,0.32,1.275);--ease:cubic-bezier(0.25,0.46,0.45,0.94);--dur:0.2s;
+}
+html,body{font-family:var(--font);color:var(--text-1);-webkit-font-smoothing:antialiased}
+body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh;background:#E8E4DF;letter-spacing:-0.01em}
+
+/* ===== Phone Frame (活力渐变布局: 无圆角/无overflow) ===== */
+.phone{position:relative;width:414px;min-height:896px;background:var(--bg);border-radius:48px;overflow:hidden;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.12),0 4px 16px rgba(0,0,0,.06);padding-bottom:82px}
+
+/* Mono / Tabular nums */
+.mono{font-variant-numeric:tabular-nums;letter-spacing:-0.01em}
+
+/* ===== Top Nav Bar (sticky) ===== */
+.nav-bar{background:radial-gradient(ellipse 220px 160px at 78% 45%,rgba(143,169,152,.14) 0%,transparent 70%),radial-gradient(ellipse 180px 140px at 18% 75%,rgba(45,108,223,.16) 0%,transparent 70%),linear-gradient(135deg,rgba(45,108,223,.14) 0%,rgba(143,169,152,.08) 50%,rgba(45,108,223,.06) 100%);position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:18px 20px;padding-top:max(18px,env(safe-area-inset-top)); border-radius:0 0 28px 28px; overflow:hidden;}
+.nav-icon-btn{
+  width:44px;height:44px;border-radius:50%;border:none;
+  background:var(--bg-elevated);
+  box-shadow:var(--neu-out-sm),inset 0 1px 1px rgba(255,255,255,0.45);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--text-1);cursor:pointer;flex-shrink:0;
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
+.nav-icon-btn:active{box-shadow:var(--neu-in);transform:scale(0.94)}
+.nav-icon-btn svg{width:22px;height:22px}
+.nav-title{font-size:17px;font-weight:700;color:var(--text-1);letter-spacing:-0.02em}
+/* transparent placeholder to keep title centered */
+.nav-placeholder{width:44px;height:44px;flex-shrink:0}
+
+/* ===== Sections ===== */
+.section{padding:0 20px;margin-top:16px;position:relative;z-index:2}
+.section:first-of-type{margin-top:18px}
+
+/* ===== Glass + Neumorphic Card ===== */
+.glass-neu-card{
+  background:rgba(255,255,255,0.52);
+  backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);
+  border:1px solid rgba(255,255,255,0.70);
+  border-radius:var(--r-lg);
+  box-shadow:var(--neu-out-md),0 6px 28px rgba(0,0,0,0.06),0 2px 8px rgba(45,108,223,0.04),0 0 0 1px rgba(44,40,36,0.05);
+  position:relative;overflow:hidden;
+}
+.glass-neu-card::before{
+  content:'';position:absolute;inset:0;border-radius:inherit;
+  background:linear-gradient(165deg,rgba(255,255,255,0.22) 0%,rgba(255,255,255,0.05) 30%,transparent 55%);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;padding:0.5px;pointer-events:none;
+}
+
+/* ===== Card Title ===== */
+.card-title{font-size:16px;font-weight:700;color:var(--text-1);letter-spacing:-0.01em;margin-bottom:14px}
+
+/* ===== Summary Card (收支汇总) ===== */
+.summary-card{padding:0}
+.summary-top-bar{height:5px;width:100%;background:var(--brand-gradient)}
+.summary-body{padding:20px 20px 18px}
+.summary-cols{display:flex;align-items:stretch}
+.summary-col{flex:1;display:flex;flex-direction:column;gap:8px;min-width:0}
+.summary-col:first-child{align-items:flex-start}
+.summary-col:last-child{align-items:flex-end}
+.summary-label{font-size:12.5px;color:var(--text-2);font-weight:600;letter-spacing:0.01em}
+.summary-value{font-size:26px;font-weight:800;color:var(--text-1);letter-spacing:-0.02em;line-height:1.1;font-variant-numeric:tabular-nums}
+.summary-value-brand{color:var(--brand)}
+.summary-divider{width:0.5px;align-self:stretch;background:var(--sep);margin:2px 18px}
+.summary-foot{margin-top:16px;padding-top:14px;border-top:0.5px solid var(--sep);font-size:12px;color:var(--text-2);font-weight:500;text-align:center;letter-spacing:0.02em}
+
+/* ===== Filter Segment (新拟态内凹) ===== */
+.filter-segment{
+  display:flex;align-items:center;gap:4px;
+  padding:5px;border-radius:var(--r-pill);
+  background:var(--bg-elevated);
+  box-shadow:var(--neu-in),inset 0 1px 1px rgba(255,255,255,0.35);
+}
+.filter-item{
+  flex:1;height:38px;border:none;
+  background:transparent;color:var(--text-2);
+  font-size:13px;font-weight:600;font-family:var(--font);
+  border-radius:var(--r-pill);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:background var(--dur) var(--ease),color var(--dur) var(--ease),box-shadow var(--dur) var(--ease),transform var(--dur) var(--spring);
+}
+.filter-item:active{transform:scale(0.95)}
+.filter-item-active{
+  background:var(--brand);color:var(--text-inverse);
+  box-shadow:0 3px 10px var(--brand-glow),inset 0 1px 1px rgba(255,255,255,0.30);
+}
+
+/* ===== Transaction Group Card ===== */
+.tx-group{padding:0 18px}
+.tx-group-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 0 10px;
+  border-bottom:0.5px solid var(--sep);
+}
+.tx-date{font-size:13.5px;font-weight:700;color:var(--text-1);letter-spacing:-0.01em}
+.tx-subtotal{font-size:12.5px;color:var(--text-2);font-weight:600}
+
+/* ===== Transaction Row ===== */
+.tx-row{
+  display:flex;align-items:center;gap:12px;
+  min-height:60px;padding:10px 0;
+  border-bottom:0.5px solid var(--sep);
+}
+.tx-row:last-child{border-bottom:none}
+.tx-icon{
+  width:36px;height:36px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--bg-elevated);
+  box-shadow:var(--neu-out-sm),inset 0 1px 1px rgba(255,255,255,0.45);
+}
+.tx-icon svg{width:18px;height:18px}
+.tx-icon-income{color:var(--green)}
+.tx-icon-withdraw{color:var(--blue)}
+.tx-icon-deduct{color:var(--orange)}
+.tx-main{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
+.tx-title{font-size:14.5px;font-weight:600;color:var(--text-1);letter-spacing:-0.01em}
+.tx-sub{font-size:12px;color:var(--text-2);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tx-right{display:flex;flex-direction:column;align-items:flex-end;gap:3px;flex-shrink:0}
+.tx-amount{font-size:15px;font-weight:700;letter-spacing:-0.01em;font-variant-numeric:tabular-nums}
+.tx-amount-in{color:var(--green)}
+.tx-amount-out{color:var(--text-1)}
+.tx-amount-deduct{color:var(--red)}
+.tx-time{font-size:11.5px;color:var(--text-3);font-weight:500;font-variant-numeric:tabular-nums}
+
+/* ===== Foot Note ===== */
+.foot-note{
+  text-align:center;font-size:12px;color:var(--text-3);
+  font-weight:500;padding:24px 20px 8px;letter-spacing:0.02em;
+}
+
+/* ===== Reduced Motion ===== */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{
+    animation-duration:0.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:0.01ms !important;
+  }
+}
+
+    </style>
+    <style>@theme inline{--font-sans: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+--font-serif: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+--color-background:var(--background);--color-foreground:var(--foreground);--color-card:var(--card);--color-card-foreground:var(--card-foreground);--color-popover:var(--popover);--color-popover-foreground:var(--popover-foreground);--color-primary:var(--primary);--color-primary-foreground:var(--primary-foreground);--color-muted:var(--muted);--color-muted-foreground:var(--muted-foreground);--color-border:var(--border);--color-input:var(--input);--color-ring:var(--ring);--radius-md:var(--radius-md);}</style>
+    <style>@layer base{body{background:var(--background);color:var(--foreground);font-family:var(--font-body);}}</style>
+</body>
+</html>

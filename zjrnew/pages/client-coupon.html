@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自家人居家维修 · 玻璃新拟态 · 优惠券</title>
+    <link rel="stylesheet" href="../assets/fonts.css">
+
+    <style id="theme-vars">
+/* 自家人居家维修 - 玻璃新拟态 */
+:root {
+  /* Brand - Client (Teal) */
+  --brand: #0D9488;
+  --brand-dark: #0A7A70;
+  --brand-mid: #14B8A6;
+  --brand-light: #CCFBF1;
+  --brand-glow: rgba(13, 148, 136, 0.24);
+  --brand-subtle: rgba(13, 148, 136, 0.10);
+
+  /* Accent (Amber) */
+  --accent: #D4944C;
+  --accent-dark: #A0723C;
+  --accent-mid: #E8C088;
+  --accent-light: #F5E6D0;
+  --accent-glow: rgba(212, 148, 76, 0.20);
+
+  /* Background */
+  --background: #F2EDE8;
+  --foreground: #2C2824;
+  --body-bg: #E8E4DF;
+  --bg-elevated: #F7F3EF;
+
+  /* Neumorphic */
+  --neu-light: #FFF8F2;
+  --neu-dark: #DDD6CE;
+  --neu-highlight: rgba(255, 255, 255, 0.55);
+
+  /* Surface & Card */
+  --card: rgba(255, 255, 255, 0.52);
+  --card-foreground: #2C2824;
+  --popover: #fff;
+  --popover-foreground: #2C2824;
+
+  /* Muted */
+  --muted: #F7F3EF;
+  --muted-foreground: #8B8178;
+
+  /* Border & Input */
+  --border: rgba(44, 40, 36, 0.06);
+  --input: rgba(44, 40, 36, 0.06);
+  --ring: #0D9488;
+
+  /* Primary */
+  --primary: #0D9488;
+  --primary-foreground: #ffffff;
+
+  /* Semantic aliases */
+  --state-success: #5B8C5A;
+  --state-warning: #D4944C;
+  --state-error: #C4533A;
+  --state-info: #5A8FAD;
+
+  /* Text */
+  --text-1: #2C2824;
+  --text-2: #8B8178;
+  --text-3: #B5ADA5;
+  --text-inverse: #ffffff;
+
+  /* Sep & Fill */
+  --sep: rgba(44, 40, 36, 0.06);
+  --fill: rgba(44, 40, 36, 0.04);
+
+  /* Green/Red/Orange/Blue semantic */
+  --green: #5B8C5A;
+  --red: #C4533A;
+  --orange: #D4944C;
+  --blue: #5A8FAD;
+
+  /* Radius */
+  --radius-sm: 0.75rem;
+  --radius-md: 1.2rem;
+  --radius-lg: 1.6rem;
+  --radius-full: 9999px;
+
+    /* Font — 统一衬线系统 */
+  --font-display: 'Cormorant Garamond', 'Noto Serif SC', 'STSong', Georgia, serif;
+  --font-body: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --font-nums: 'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
+  --font: var(--font-body);
+
+  /* Motion */
+  --spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --dur: 0.2s;
+
+  /* Glass */
+  --glass-bg: rgba(255, 255, 255, 0.18);
+  --glass-blur: blur(12px) saturate(140%);
+  --glass-border: rgba(255, 255, 255, 0.60);
+
+  /* Surface presets for glass-neumorphic components */
+  --surface-1: rgba(255, 255, 255, 0.50);
+  --surface-2: rgba(255, 255, 255, 0.45);
+
+  /* Neumorphic shadow presets */
+  --neu-out-sm: 6px 6px 14px var(--neu-dark), -6px -6px 14px var(--neu-light), 0 4px 16px rgba(0, 0, 0, 0.04);
+  --neu-out-md: 8px 8px 18px var(--neu-dark), -8px -8px 18px var(--neu-light), 0 6px 24px rgba(0, 0, 0, 0.05);
+  --neu-out-lg: 10px 10px 24px var(--neu-dark), -10px -10px 24px var(--neu-light), 0 8px 32px rgba(0, 0, 0, 0.06);
+  --neu-in: inset 4px 4px 8px var(--neu-dark), inset -4px -4px 8px var(--neu-light);
+  --neu-in-deep: inset 5px 5px 10px var(--neu-dark), inset -5px -5px 10px var(--neu-light);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --font-sans: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --font-serif: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --radius-full: var(--radius-full);}
+
+/* Semantic token fallback */
+#semantic-token-fallback {
+  --brand-background: var(--background);
+  --brand-foreground: var(--foreground);
+  --brand-card: var(--card);
+  --brand-card-foreground: var(--card-foreground);
+  --brand-popover: var(--popover);
+  --brand-popover-foreground: var(--popover-foreground);
+  --brand-primary: var(--primary);
+  --brand-primary-foreground: var(--primary-foreground);
+  --brand-muted: var(--muted);
+  --brand-muted-foreground: var(--muted-foreground);
+  --brand-border: var(--border);
+  --brand-input: var(--input);
+  --brand-ring: var(--ring);
+  --brand-radius-sm: var(--radius-sm);
+  --brand-radius-md: var(--radius-md);
+  --brand-radius-lg: var(--radius-lg);
+}
+
+/* ===== Global Neumorphic Components ===== */
+/* Buttons */
+.btn-neu-primary{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:var(--brand);color:var(--text-inverse);
+  border:none;border-radius:9999px;
+  padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
+  cursor:pointer;
+  box-shadow:var(--neu-out-sm),0 2px 8px var(--brand-glow);
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
+.btn-neu-primary:active{box-shadow:var(--neu-in);transform:scale(0.94)}
+
+.btn-neu-secondary{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,0.50);color:var(--brand);
+  border:0.5px solid rgba(255,255,255,0.60);border-radius:9999px;
+  padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
+  cursor:pointer;
+  box-shadow:var(--neu-out-sm);
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
+.btn-neu-secondary:active{box-shadow:var(--neu-in);transform:scale(0.94)}
+
+.btn-neu-ghost{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:transparent;color:var(--text-2);
+  border:0.5px solid var(--border);border-radius:9999px;
+  padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
+  cursor:pointer;
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease),color var(--dur) var(--ease);
+}
+.btn-neu-ghost:active{transform:scale(0.94);color:var(--brand)}
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-accent: var(--accent);
+    --radius-sm: var(--radius-sm);
+    --radius-md: var(--radius-md);
+    --radius-lg: var(--radius-lg);
+    --radius-full: var(--radius-full);
+    --font-sans: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+    --font-serif: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+    <style id="semantic-token-fallback">
+      .bg-background { background-color: var(--background); }
+      .text-background { color: var(--background); }
+      .border-background { border-color: var(--background); }
+      .ring-background { --tw-ring-color: var(--background); }
+      .bg-foreground { background-color: var(--foreground); }
+      .text-foreground { color: var(--foreground); }
+      .border-foreground { border-color: var(--foreground); }
+      .ring-foreground { --tw-ring-color: var(--foreground); }
+      .bg-card { background-color: var(--card); }
+      .text-card { color: var(--card); }
+      .border-card { border-color: var(--card); }
+      .ring-card { --tw-ring-color: var(--card); }
+      .bg-card-foreground { background-color: var(--card-foreground); }
+      .text-card-foreground { color: var(--card-foreground); }
+      .border-card-foreground { border-color: var(--card-foreground); }
+      .ring-card-foreground { --tw-ring-color: var(--card-foreground); }
+      .bg-popover { background-color: var(--popover); }
+      .text-popover { color: var(--popover); }
+      .border-popover { border-color: var(--popover); }
+      .ring-popover { --tw-ring-color: var(--popover); }
+      .bg-popover-foreground { background-color: var(--popover-foreground); }
+      .text-popover-foreground { color: var(--popover-foreground); }
+      .border-popover-foreground { border-color: var(--popover-foreground); }
+      .ring-popover-foreground { --tw-ring-color: var(--popover-foreground); }
+      .bg-primary { background-color: var(--primary); }
+      .text-primary { color: var(--primary); }
+      .border-primary { border-color: var(--primary); }
+      .ring-primary { --tw-ring-color: var(--primary); }
+      .bg-primary-foreground { background-color: var(--primary-foreground); }
+      .text-primary-foreground { color: var(--primary-foreground); }
+      .border-primary-foreground { border-color: var(--primary-foreground); }
+      .ring-primary-foreground { --tw-ring-color: var(--primary-foreground); }
+      .bg-muted { background-color: var(--muted); }
+      .text-muted { color: var(--muted); }
+      .border-muted { border-color: var(--muted); }
+      .ring-muted { --tw-ring-color: var(--muted); }
+      .bg-muted-foreground { background-color: var(--muted-foreground); }
+      .text-muted-foreground { color: var(--muted-foreground); }
+      .border-muted-foreground { border-color: var(--muted-foreground); }
+      .ring-muted-foreground { --tw-ring-color: var(--muted-foreground); }
+      .bg-border { background-color: var(--border); }
+      .text-border { color: var(--border); }
+      .border-border { border-color: var(--border); }
+      .ring-border { --tw-ring-color: var(--border); }
+      .bg-input { background-color: var(--input); }
+      .text-input { color: var(--input); }
+      .border-input { border-color: var(--input); }
+      .ring-input { --tw-ring-color: var(--input); }
+      .bg-ring { background-color: var(--ring); }
+      .text-ring { color: var(--ring); }
+      .border-ring { border-color: var(--ring); }
+      .ring-ring { --tw-ring-color: var(--ring); }
+      .bg-accent { background-color: var(--accent); }
+      .text-accent { color: var(--accent); }
+      .border-accent { border-color: var(--accent); }
+      .ring-accent { --tw-ring-color: var(--accent); }
+    </style>
+    <style>
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      [data-icon] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        background-color: currentColor;
+      }
+    </style>
+</head>
+<body>
+<div class="phone" data-dom-id="page-client-coupon">
+
+  <!-- ===== TOP NAV BAR (sticky) ===== -->
+  <header class="nav-bar">
+    <button class="nav-icon-btn" data-dom-id="back-btn" aria-label="返回">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m15 18-6-6 6-6"/>
+      </svg>
+    </button>
+    <h1 class="nav-title">优惠券</h1>
+    <button class="nav-icon-btn" data-dom-id="redeem-code" aria-label="兑换码">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 7v10a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1Z"/>
+        <path d="M9 12h.01M15 12h.01"/>
+        <path d="M3 9h18"/>
+      </svg>
+    </button>
+  </header>
+
+  <!-- ===== SUMMARY CARD ===== -->
+  <section class="section">
+    <div class="glass-neu-card summary-card">
+      <div class="summary-item">
+        <div class="summary-num">3<span class="summary-unit">张</span></div>
+        <div class="summary-label">可用优惠券</div>
+      </div>
+      <div class="summary-divider"></div>
+      <div class="summary-item">
+        <div class="summary-num mono">&yen;86</div>
+        <div class="summary-label">累计已省</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SEGMENTED TABS ===== -->
+  <section class="section">
+    <div class="segmented-tabs" data-dom-id="coupon-tabs">
+      <button class="seg-tab active" data-dom-id="tab-unused">未使用</button>
+      <button class="seg-tab" data-dom-id="tab-used">已使用</button>
+      <button class="seg-tab" data-dom-id="tab-expired">已过期</button>
+    </div>
+  </section>
+
+  <!-- ===== UNUSED COUPON LIST ===== -->
+  <section class="section">
+    <div class="coupon-list">
+
+      <!-- Coupon 1 -->
+      <div class="coupon-card" data-dom-id="coupon-unused-1">
+        <div class="coupon-amount">
+          <div class="coupon-amount-val"><span class="cur">&yen;</span><span class="num">10</span></div>
+          <div class="coupon-amount-threshold">满&yen;50可用</div>
+        </div>
+        <div class="coupon-divider"></div>
+        <div class="coupon-info">
+          <div class="coupon-name">防水维修专用</div>
+          <div class="coupon-validity">有效期至 2026-08-31</div>
+          <button class="coupon-use-btn" data-dom-id="use-coupon-1">立即使用</button>
+        </div>
+      </div>
+
+      <!-- Coupon 2 -->
+      <div class="coupon-card" data-dom-id="coupon-unused-2">
+        <div class="coupon-amount">
+          <div class="coupon-amount-val"><span class="cur">&yen;</span><span class="num">20</span></div>
+          <div class="coupon-amount-threshold">满&yen;100可用</div>
+        </div>
+        <div class="coupon-divider"></div>
+        <div class="coupon-info">
+          <div class="coupon-name">全场通用</div>
+          <div class="coupon-validity">有效期至 2026-09-15</div>
+          <button class="coupon-use-btn" data-dom-id="use-coupon-2">立即使用</button>
+        </div>
+      </div>
+
+      <!-- Coupon 3 -->
+      <div class="coupon-card" data-dom-id="coupon-unused-3">
+        <div class="coupon-amount">
+          <div class="coupon-amount-val"><span class="cur">&yen;</span><span class="num">5</span></div>
+          <div class="coupon-amount-threshold">无门槛</div>
+        </div>
+        <div class="coupon-divider"></div>
+        <div class="coupon-info">
+          <div class="coupon-name">新人专享</div>
+          <div class="coupon-validity">有效期至 2026-08-10</div>
+          <button class="coupon-use-btn" data-dom-id="use-coupon-3">立即使用</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== USED COUPON SECTION ===== -->
+  <section class="section">
+    <div class="list-section-title">已使用</div>
+    <div class="coupon-list">
+
+      <!-- Used Coupon 1 -->
+      <div class="coupon-card coupon-used" data-dom-id="coupon-used-1">
+        <div class="coupon-amount">
+          <div class="coupon-amount-val"><span class="cur">&yen;</span><span class="num">15</span></div>
+          <div class="coupon-amount-threshold">满&yen;80可用</div>
+        </div>
+        <div class="coupon-divider"></div>
+        <div class="coupon-info">
+          <div class="coupon-name">管道疏通专享</div>
+          <div class="coupon-validity">已于 2026-07-20 使用</div>
+          <span class="coupon-used-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            已使用
+          </span>
+        </div>
+      </div>
+
+      <!-- Used Coupon 2 -->
+      <div class="coupon-card coupon-used" data-dom-id="coupon-used-2">
+        <div class="coupon-amount">
+          <div class="coupon-amount-val"><span class="cur">&yen;</span><span class="num">8</span></div>
+          <div class="coupon-amount-threshold">满&yen;60可用</div>
+        </div>
+        <div class="coupon-divider"></div>
+        <div class="coupon-info">
+          <div class="coupon-name">家电清洗通用</div>
+          <div class="coupon-validity">已于 2026-07-05 使用</div>
+          <span class="coupon-used-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            已使用
+          </span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== FOOT NOTE ===== -->
+  <div class="coupon-foot-note">
+    优惠券不可叠加使用，最终解释权归自家人所有
+  </div>
+
+</div>
+
+    <style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --brand:#0D9488;--brand-dark:#0A7A70;--brand-mid:#14B8A6;--brand-light:#CCFBF1;
+  --brand-glow:rgba(13,148,136,0.28);--brand-subtle:rgba(13,148,136,0.08);
+  --brand-gradient:linear-gradient(135deg,#0D9488 0%,#14B8A6 50%,#D4944C 100%);
+  --accent:#D4944C;--accent-dark:#A0723C;--accent-light:#F5E6D0;--accent-glow:rgba(212,148,76,0.25);
+  --bg:#F2EDE8;--bg-elevated:#F7F3EF;
+  --neu-light:#FFF8F2;--neu-dark:#DDD6CE;
+  --text-1:#2C2824;--text-2:#8B8178;--text-3:#B5ADA5;--text-inverse:#FFFFFF;
+  --sep:rgba(44,40,36,0.06);--fill:rgba(44,40,36,0.04);
+  --green:#5B8C5A;--red:#C4533A;--orange:#D4944C;--blue:#5A8FAD;
+  --r:1.2rem;--r-lg:1.6rem;--r-sm:0.75rem;--r-pill:9999px;--r-tab:24px;
+  /* Font */--font-display:'Cormorant Garamond', 'Noto Serif SC', 'STSong', Georgia, serif;
+  --font-body:'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --font-nums:'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
+  --font:var(--font-body);
+  --neu-out-sm:6px 6px 14px var(--neu-dark),-6px -6px 14px var(--neu-light),0 4px 16px rgba(0,0,0,0.04);
+  --neu-out-md:8px 8px 18px var(--neu-dark),-8px -8px 18px var(--neu-light),0 6px 24px rgba(0,0,0,0.05);
+  --neu-out-lg:10px 10px 24px var(--neu-dark),-10px -10px 24px var(--neu-light),0 8px 32px rgba(0,0,0,0.06);
+  --neu-in:inset 4px 4px 8px var(--neu-dark),inset -4px -4px 8px var(--neu-light);
+  --neu-in-deep:inset 5px 5px 10px var(--neu-dark),inset -5px -5px 10px var(--neu-light);
+  --spring:cubic-bezier(0.175,0.885,0.32,1.275);--ease:cubic-bezier(0.25,0.46,0.45,0.94);--dur:0.2s;
+}
+html,body{font-family:var(--font);color:var(--text-1);-webkit-font-smoothing:antialiased}
+body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh;background:#E8E4DF;letter-spacing:-0.01em}
+
+/* ===== Phone Frame (活力渐变布局: 无圆角/无overflow) ===== */
+.phone{position:relative;width:414px;min-height:896px;background:var(--bg);border-radius:48px;overflow:hidden;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.12),0 4px 16px rgba(0,0,0,.06);padding-bottom:82px}
+
+/* Mono / Tabular nums */
+.mono{font-variant-numeric:tabular-nums;letter-spacing:-0.01em}
+
+/* ===== Top Nav Bar (sticky) ===== */
+.nav-bar{background:radial-gradient(ellipse 220px 160px at 78% 45%,rgba(212,148,76,.14) 0%,transparent 70%),radial-gradient(ellipse 180px 140px at 18% 75%,rgba(13,148,136,.16) 0%,transparent 70%),linear-gradient(135deg,rgba(13,148,136,.14) 0%,rgba(212,148,76,.08) 50%,rgba(13,148,136,.06) 100%);position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:18px 20px;padding-top:max(18px,env(safe-area-inset-top)); border-radius:0 0 28px 28px; overflow:hidden;}
+.nav-icon-btn{
+  width:44px;height:44px;border-radius:50%;border:none;
+  background:var(--bg-elevated);
+  box-shadow:var(--neu-out-sm),inset 0 1px 1px rgba(255,255,255,0.45);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--text-1);cursor:pointer;flex-shrink:0;
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
+.nav-icon-btn:active{box-shadow:var(--neu-in);transform:scale(0.94)}
+.nav-icon-btn svg{width:22px;height:22px}
+.nav-title{font-size:17px;font-weight:700;color:var(--text-1);letter-spacing:-0.02em}
+
+/* Nav Text Button (right side) */
+.nav-text-btn{
+  display:inline-flex;align-items:center;gap:5px;
+  min-width:44px;height:40px;padding:0 12px;
+  background:var(--bg-elevated);
+  border:0.5px solid rgba(255,255,255,0.60);border-radius:var(--r-pill);
+  color:var(--brand);font-size:13px;font-weight:600;font-family:var(--font);
+  cursor:pointer;flex-shrink:0;
+  box-shadow:var(--neu-out-sm),inset 0 1px 1px rgba(255,255,255,0.45);
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
+.nav-text-btn:active{box-shadow:var(--neu-in);transform:scale(0.94)}
+.nav-text-btn svg{width:16px;height:16px}
+
+/* ===== Sections ===== */
+.section{padding:0 20px;margin-top:16px;position:relative;z-index:2}
+.section:first-of-type{margin-top:18px}
+
+/* ===== Glass + Neumorphic Card ===== */
+.glass-neu-card{
+  background:rgba(255,255,255,0.52);
+  backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);
+  border:1px solid rgba(255,255,255,0.70);
+  border-radius:var(--r-lg);
+  box-shadow:var(--neu-out-md),0 6px 28px rgba(0,0,0,0.06),0 2px 8px rgba(13,148,136,0.04),0 0 0 1px rgba(44,40,36,0.05);
+  position:relative;overflow:hidden;
+}
+.glass-neu-card::before{
+  content:'';position:absolute;inset:0;border-radius:inherit;
+  background:linear-gradient(165deg,rgba(255,255,255,0.22) 0%,rgba(255,255,255,0.05) 30%,transparent 55%);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;padding:0.5px;pointer-events:none;
+}
+
+/* ===== Card Title ===== */
+.card-title{font-size:16px;font-weight:700;color:var(--text-1);letter-spacing:-0.01em;margin-bottom:14px}
+
+/* ===== Bottom Fixed Action Bar (kept for parity, unused on this browse page) ===== */
+.action-bar{
+  position:fixed;bottom:0;left:50%;transform:translateX(-50%);
+  width:100%;max-width:414px;
+  display:flex;align-items:center;gap:12px;
+  padding:14px 20px;padding-bottom:max(14px,env(safe-area-inset-bottom));
+  background:rgba(242,237,232,0.88);
+  backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);
+  border-top:0.5px solid rgba(255,255,255,0.55);
+  box-shadow:0 -4px 20px rgba(0,0,0,0.05);
+  z-index:60;
+}
+
+/* ============================================================
+   ===== Coupon Page Specific Styles =====
+   ============================================================ */
+
+/* ===== Summary Card ===== */
+.summary-card{
+  display:flex;align-items:center;
+  padding:18px 18px;gap:8px;
+}
+.summary-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px}
+.summary-num{
+  font-size:28px;font-weight:800;color:var(--brand);
+  letter-spacing:-0.02em;line-height:1;font-variant-numeric:tabular-nums;
+  display:inline-flex;align-items:baseline;
+}
+.summary-unit{font-size:13px;font-weight:600;margin-left:2px;opacity:0.85}
+.summary-label{font-size:12px;color:var(--text-2);font-weight:500;letter-spacing:0.01em}
+.summary-divider{width:1px;height:38px;background:var(--sep);flex-shrink:0}
+
+/* ===== Segmented Tabs (neu inset) ===== */
+.segmented-tabs{
+  display:flex;gap:4px;
+  padding:5px;
+  background:var(--bg-elevated);
+  border-radius:var(--r-pill);
+  box-shadow:var(--neu-in),inset 0 1px 1px rgba(255,255,255,0.35);
+}
+.seg-tab{
+  flex:1;height:38px;border:none;
+  background:transparent;color:var(--text-2);
+  font-size:13.5px;font-weight:600;font-family:var(--font);
+  border-radius:var(--r-pill);cursor:pointer;
+  transition:all var(--dur) var(--ease);
+  display:inline-flex;align-items:center;justify-content:center;
+}
+.seg-tab.active{
+  background:var(--brand);color:var(--text-inverse);
+  box-shadow:var(--neu-out-sm),0 2px 10px var(--brand-glow),inset 0 1px 1px rgba(255,255,255,0.25);
+  letter-spacing:0.01em;
+}
+.seg-tab:not(.active):active{transform:scale(0.95);color:var(--brand)}
+
+/* ===== List Section Title ===== */
+.list-section-title{
+  display:flex;align-items:center;gap:8px;
+  font-size:13px;font-weight:700;color:var(--text-2);
+  letter-spacing:0.02em;margin-bottom:14px;padding:0 2px;
+}
+.list-section-title::before{
+  content:'';width:3px;height:14px;
+  background:var(--brand);border-radius:2px;
+  box-shadow:0 0 6px var(--brand-glow);
+}
+
+/* ===== Coupon List ===== */
+.coupon-list{display:flex;flex-direction:column;gap:16px}
+
+/* ===== Coupon Ticket Card ===== */
+.coupon-card{
+  display:flex;align-items:stretch;
+  background:rgba(255,255,255,0.55);
+  backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);
+  border:1px solid rgba(255,255,255,0.70);
+  border-radius:var(--r-md);
+  box-shadow:var(--neu-out-sm),0 6px 22px rgba(0,0,0,0.05),0 0 0 1px rgba(44,40,36,0.04);
+  position:relative;
+  overflow:visible;
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
+.coupon-card:active{transform:scale(0.985)}
+.coupon-card::before{
+  content:'';position:absolute;inset:0;border-radius:inherit;
+  background:linear-gradient(165deg,rgba(255,255,255,0.22) 0%,rgba(255,255,255,0.05) 30%,transparent 55%);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;padding:0.5px;pointer-events:none;z-index:1;
+}
+
+/* Amount area (left, brand gradient) */
+.coupon-amount{
+  flex:0 0 110px;
+  background:var(--brand-gradient);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:6px;
+  padding:18px 8px;
+  color:var(--text-inverse);
+  border-radius:calc(var(--r-md) - 1px) 0 0 calc(var(--r-md) - 1px);
+  position:relative;z-index:2;
+  box-shadow:inset -1px 0 0 rgba(255,255,255,0.18);
+}
+.coupon-amount::after{
+  content:'';position:absolute;inset:0;border-radius:inherit;
+  background:linear-gradient(165deg,rgba(255,255,255,0.28) 0%,transparent 42%);
+  pointer-events:none;
+}
+.coupon-amount-val{display:inline-flex;align-items:baseline;justify-content:center}
+.coupon-amount .cur{font-size:15px;font-weight:700;opacity:0.92;margin-right:1px}
+.coupon-amount .num{font-size:40px;font-weight:800;line-height:1;letter-spacing:-0.03em;font-variant-numeric:tabular-nums}
+.coupon-amount-threshold{
+  font-size:10.5px;font-weight:600;letter-spacing:0.01em;
+  white-space:nowrap;
+  background:rgba(255,255,255,0.20);
+  padding:2px 9px;border-radius:var(--r-pill);
+  box-shadow:inset 0 1px 1px rgba(255,255,255,0.22);
+}
+
+/* Divider with circular notches (ticket perforation) */
+.coupon-divider{
+  position:relative;
+  width:1.5px;
+  align-self:stretch;
+  background-image:linear-gradient(to bottom,var(--sep) 55%,transparent 55%);
+  background-size:1.5px 8px;
+  background-repeat:repeat-y;
+  background-position:center;
+  z-index:3;
+  opacity:0.9;
+}
+/* Top & bottom circular notches (punch holes) on the divider */
+.coupon-divider::before,
+.coupon-divider::after{
+  content:'';
+  position:absolute;
+  left:50%;
+  width:16px;height:16px;border-radius:50%;
+  background:var(--bg);
+  box-shadow:inset 0 1px 2px rgba(0,0,0,0.10),inset 0 -1px 1px rgba(255,255,255,0.4);
+  transform:translateX(-50%);
+}
+.coupon-divider::before{top:-8px}
+.coupon-divider::after{bottom:-8px}
+
+/* Info area (right) */
+.coupon-info{
+  flex:1;min-width:0;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:14px 16px;gap:5px;
+  position:relative;z-index:2;
+}
+.coupon-name{
+  font-size:15px;font-weight:700;color:var(--text-1);
+  letter-spacing:-0.01em;line-height:1.3;
+}
+.coupon-validity{
+  font-size:11.5px;color:var(--text-2);font-weight:500;
+  display:inline-flex;align-items:center;gap:4px;
+}
+.coupon-validity::before{
+  content:'';width:5px;height:5px;border-radius:50%;background:var(--text-3);flex-shrink:0;
+}
+.coupon-use-btn{
+  align-self:flex-start;
+  margin-top:6px;
+  display:inline-flex;align-items:center;justify-content:center;
+  background:var(--brand);color:var(--text-inverse);
+  border:none;border-radius:var(--r-pill);
+  padding:6px 15px;font-size:12px;font-weight:700;font-family:var(--font);
+  cursor:pointer;letter-spacing:0.02em;
+  box-shadow:0 2px 8px var(--brand-glow),inset 0 1px 1px rgba(255,255,255,0.25);
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
+.coupon-use-btn:active{transform:scale(0.93);box-shadow:var(--neu-in)}
+
+/* Used coupons (grayed out, non-interactive) */
+.coupon-card.coupon-used{opacity:0.55;pointer-events:none;filter:grayscale(0.35)}
+.coupon-card.coupon-used .coupon-amount{
+  background:linear-gradient(135deg,#B5ADA5 0%,#8B8178 60%,#6F665E 100%);
+}
+.coupon-used-badge{
+  align-self:flex-start;
+  margin-top:6px;
+  display:inline-flex;align-items:center;gap:3px;
+  font-size:11.5px;font-weight:700;color:var(--text-3);
+  background:var(--fill);border:0.5px solid var(--sep);
+  padding:5px 10px;border-radius:var(--r-pill);
+  letter-spacing:0.02em;
+}
+.coupon-used-badge svg{width:13px;height:13px}
+
+/* ===== Foot Note ===== */
+.coupon-foot-note{
+  text-align:center;font-size:11.5px;color:var(--text-3);
+  line-height:1.6;padding:14px 40px 4px;font-weight:500;
+  letter-spacing:0.01em;position:relative;z-index:2;
+}
+
+/* ===== Reduced Motion ===== */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{
+    animation-duration:0.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:0.01ms !important;
+  }
+}
+
+    </style>
+    <style>@theme inline{--font-sans: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+--font-serif: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+--color-background:var(--background);--color-foreground:var(--foreground);--color-card:var(--card);--color-card-foreground:var(--card-foreground);--color-popover:var(--popover);--color-popover-foreground:var(--popover-foreground);--color-primary:var(--primary);--color-primary-foreground:var(--primary-foreground);--color-muted:var(--muted);--color-muted-foreground:var(--muted-foreground);--color-border:var(--border);--color-input:var(--input);--color-ring:var(--ring);--radius-md:var(--radius-md);}</style>
+    <style>@layer base{body{background:var(--background);color:var(--foreground);font-family:var(--font-body);}}</style>
+</body>
+</html>

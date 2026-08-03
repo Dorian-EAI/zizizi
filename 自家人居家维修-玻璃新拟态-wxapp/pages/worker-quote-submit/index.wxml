@@ -1,0 +1,170 @@
+<!-- pages/worker-quote-submit/index.wxml — 师傅报价提交页 玻璃新拟态（像素级复刻 worker-quote-submit.html） -->
+<view class="page">
+  <!-- 背景装饰光斑：blue-sage 径向渐变 -->
+  <view class="blob" style="top: -40px; right: -60px; width: 280px; height: 280px; background: radial-gradient(circle, var(--brand) 0%, transparent 70%);"></view>
+  <view class="blob" style="top: 360px; left: -80px; width: 240px; height: 240px; background: radial-gradient(circle, var(--sage) 0%, transparent 70%);"></view>
+
+  <scroll-view scroll-y enable-flex class="page-scroll hide-scroll" style="padding-bottom: 220rpx;">
+
+    <!-- ===== TOP NAV BAR (sticky) ===== -->
+    <view class="nav-bar" style="padding-top: calc({{statusBarHeight}}px + 36rpx);">
+      <view class="nav-icon-btn press-neu" bindtap="onBack">
+        <image src="{{icons.back}}" mode="aspectFit" class="nav-icon" lazy-load="{{false}}" />
+      </view>
+      <text class="nav-title">提交报价</text>
+      <view class="nav-placeholder"></view>
+    </view>
+
+    <!-- ===== ORDER SUMMARY CARD (read-only) ===== -->
+    <view class="section">
+      <view class="glass-neu-card summary-card">
+        <text class="card-title">订单摘要</text>
+        <view class="summary-list">
+          <view class="summary-row">
+            <view class="summary-label">
+              <image src="{{icons.wrench}}" mode="aspectFit" class="summary-ic" lazy-load="{{false}}" />
+              <text>服务类型</text>
+            </view>
+            <text class="summary-value">{{order.serviceName || order.service_type || '服务待确认'}}</text>
+          </view>
+          <view class="summary-row">
+            <view class="summary-label">
+              <image src="{{icons.location}}" mode="aspectFit" class="summary-ic" lazy-load="{{false}}" />
+              <text>客户地址</text>
+            </view>
+            <text class="summary-value">{{order.address || '地址待确认'}}</text>
+          </view>
+          <view class="summary-row">
+            <view class="summary-label">
+              <image src="{{icons.calendar}}" mode="aspectFit" class="summary-ic" lazy-load="{{false}}" />
+              <text>预约时间</text>
+            </view>
+            <text class="summary-value mono">{{order.appointmentTime || order.time || '时间待确认'}}</text>
+          </view>
+          <view class="summary-desc">
+            <text class="summary-desc-label">问题描述</text>
+            <text class="summary-desc-text">{{order.description || order.issue || '暂无描述'}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== QUOTE AMOUNT INPUT CARD ===== -->
+    <view class="section">
+      <view class="glass-neu-card amount-card">
+        <text class="amount-label">报价金额</text>
+        <view class="amount-field">
+          <text class="amount-symbol">¥</text>
+          <input
+            class="amount-input"
+            type="digit"
+            value="{{amount}}"
+            placeholder="0"
+            placeholder-class="amount-placeholder"
+            bindinput="onAmountInput"
+          />
+        </view>
+        <view class="amount-divider"></view>
+        <view class="amount-quick">
+          <view
+            class="quick-chip press-neu {{activeQuick === item.key ? 'is-active' : ''}}"
+            wx:for="{{quickAmounts}}"
+            wx:key="key"
+            data-key="{{item.key}}"
+            bindtap="onQuickAmount"
+          >{{item.label}}</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== FORM CARD ===== -->
+    <view class="section">
+      <view class="glass-neu-card form-card">
+        <text class="card-title">报价明细</text>
+
+        <!-- 预计用时 -->
+        <view class="form-row">
+          <text class="form-label">预计用时</text>
+          <view class="duration-group">
+            <view
+              class="dur-chip press-neu {{activeDuration === item.key ? 'is-active' : ''}}"
+              wx:for="{{durationOptions}}"
+              wx:key="key"
+              data-key="{{item.key}}"
+              bindtap="onDurationSelect"
+            >{{item.label}}</view>
+          </view>
+        </view>
+
+        <!-- 材料费（选填） -->
+        <view class="form-row">
+          <text class="form-label">材料费<text class="form-label-opt">选填</text></text>
+          <view class="neu-input">
+            <text class="neu-input-prefix">¥</text>
+            <input
+              class="neu-input-el"
+              type="digit"
+              value="{{materialFee}}"
+              placeholder="0.00"
+              placeholder-class="neu-input-ph"
+              bindinput="onMaterialFeeInput"
+            />
+          </view>
+        </view>
+
+        <!-- 上门时间 -->
+        <view class="form-row">
+          <text class="form-label">上门时间</text>
+          <view class="neu-input">
+            <input
+              class="neu-input-el"
+              value="{{visitTime}}"
+              placeholder="待确认"
+              placeholder-class="neu-input-ph"
+              disabled
+            />
+            <image src="{{icons.calendar}}" mode="aspectFit" class="neu-input-suffix-ic" lazy-load="{{false}}" />
+          </view>
+        </view>
+
+        <!-- 报价说明（选填） -->
+        <view class="form-row">
+          <text class="form-label">报价说明<text class="form-label-opt">选填</text></text>
+          <view class="neu-input neu-input-area">
+            <textarea
+              class="neu-input-el neu-input-textarea"
+              value="{{quoteNote}}"
+              maxlength="200"
+              placeholder="补充说明维修方案、所用材料等"
+              placeholder-class="neu-input-ph"
+              bindinput="onNoteInput"
+            />
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== QUOTE HINT CARD ===== -->
+    <view class="section">
+      <view class="glass-neu-card hint-card">
+        <view class="hint-ic">
+          <image src="{{icons.lightbulb}}" mode="aspectFit" class="hint-ic-img" lazy-load="{{false}}" />
+        </view>
+        <text class="hint-text">合理报价更易被客户选中，平台抽成 <text class="hi-strong">5%</text>，预计到手 <text class="hi-net">¥{{payout}}</text></text>
+      </view>
+    </view>
+
+  </scroll-view>
+
+  <!-- ===== BOTTOM FIXED ACTION BAR ===== -->
+  <view class="action-bar">
+    <view class="action-btn-secondary press-neu" bindtap="onSaveDraft">
+      <image src="{{icons.bookmark}}" mode="aspectFit" class="action-btn-secondary-icon" lazy-load="{{false}}" />
+      <text>保存草稿</text>
+    </view>
+    <view class="action-btn-primary press-neu {{submitting ? 'disabled' : ''}}" bindtap="onSubmit">
+      <image src="{{icons.send}}" mode="aspectFit" class="action-btn-primary-icon" lazy-load="{{false}}" />
+      <text>{{submitting ? '提交中...' : '提交报价'}}</text>
+    </view>
+  </view>
+</view>

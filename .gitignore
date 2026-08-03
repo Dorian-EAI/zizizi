@@ -1,0 +1,66 @@
+# Operating-system and editor metadata
+.DS_Store
+._*
+Thumbs.db
+Desktop.ini
+.idea/
+.vscode/
+
+# Local agent state, caches, backups, and uploads
+.trae/
+**/.trae/
+.uploads/
+.uv-cache/
+.uv-python/
+**/.backups/
+**/uploads/
+**/logs/
+*.log
+
+# Python environments and generated files
+**/.venv/
+**/venv/
+**/venv_win/
+**/__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+**/.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# JavaScript dependencies and diagnostics
+**/node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Secrets and machine-local configuration
+**/.env
+**/.env.*
+!**/.env.example
+**/project.private.config.json
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+
+# Local databases and runtime artifacts
+*.db
+*.sqlite
+*.sqlite3
+*.pid
+**/.test_body.json
+**/_scan_classes.ps1
+**/_scan_result.txt
+**/runtime-orchestration-summary.json
+/hero-check.png
+/zjrnew/old/
+/自家人家居维修-玻璃新拟态/
+
+# Full source fonts are unused; the application loads the subset WOFF2 files
+/zjrnew/assets/NotoSerifSC-Bold.otf
+/zjrnew/assets/NotoSerifSC-Regular.otf

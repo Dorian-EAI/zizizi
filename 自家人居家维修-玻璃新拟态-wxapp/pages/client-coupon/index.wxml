@@ -1,0 +1,104 @@
+<!-- pages/client-coupon/index.wxml — 优惠券 像素级复刻 client-coupon.html -->
+<view class="page">
+  <!-- 背景装饰光斑 -->
+  <view class="blob" style="top:-80rpx;right:-120rpx;width:560rpx;height:560rpx;background:var(--brand);"></view>
+  <view class="blob" style="top:800rpx;left:-160rpx;width:480rpx;height:480rpx;background:var(--accent);"></view>
+
+  <scroll-view scroll-y class="page-scroll hide-scroll" style="padding-bottom:160rpx;">
+
+    <!-- ===== Nav Bar（HTML: sticky, 下圆角 28px → 56rpx） ===== -->
+    <view class="nav-bar" style="padding-top:calc({{statusBarHeight}}px + 36rpx);">
+      <view class="nav-icon-btn press-scale" bindtap="onBack">
+        <image src="{{icons.back}}" mode="aspectFit" class="nav-icon" lazy-load="{{false}}" />
+      </view>
+      <text class="nav-title">优惠券</text>
+      <view class="nav-icon-btn press-scale" bindtap="onRedeemCode">
+        <image src="{{icons.redeem}}" mode="aspectFit" class="nav-icon" lazy-load="{{false}}" />
+      </view>
+    </view>
+
+    <!-- ===== Summary Card ===== -->
+    <view class="section">
+      <view class="glass-neu-card summary-card">
+        <view class="summary-left">
+          <view class="summary-value numeric">¥{{totalSaved}}</view>
+          <text class="summary-label">累计已省</text>
+        </view>
+        <view class="summary-stats">
+          <view class="stat-item">
+            <view class="stat-value numeric">{{availableCount}}<text class="stat-unit">张</text></view>
+            <text class="stat-label">可用券</text>
+          </view>
+        </view>
+        <view class="btn-use-coupon press-scale" bindtap="onUseCoupon">
+          <text class="btn-use-coupon-text">去使用</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== Segmented Tabs ===== -->
+    <view class="section">
+      <view class="segmented-tabs">
+        <view
+          class="seg-tab {{activeTab === item.key ? 'active' : ''}}"
+          wx:for="{{tabs}}"
+          wx:key="key"
+          data-key="{{item.key}}"
+          bindtap="onTabTap"
+        >{{item.name}}</view>
+      </view>
+    </view>
+
+    <!-- ===== Coupon List ===== -->
+    <view class="section" wx:if="{{coupons.length > 0}}">
+      <view class="list-section-title" wx:if="{{activeTab === 'used'}}">已使用</view>
+      <view class="list-section-title" wx:if="{{activeTab === 'expired'}}">已过期</view>
+      <view class="coupon-list">
+        <view
+          class="coupon-card press-card {{item.status !== 'available' ? 'coupon-used' : ''}}"
+          wx:for="{{coupons}}"
+          wx:key="id"
+          data-item="{{item}}"
+          bindtap="onCouponTap"
+        >
+          <!-- 左侧金额区 -->
+          <view class="coupon-amount">
+            <view class="coupon-amount-val">
+              <text class="cur">¥</text>
+              <text class="num numeric">{{item.amount}}</text>
+            </view>
+            <text class="coupon-amount-threshold" wx:if="{{item.threshold}}">满¥{{item.threshold}}可用</text>
+            <text class="coupon-amount-threshold" wx:else>无门槛</text>
+          </view>
+          <!-- 票根虚线分隔 -->
+          <view class="coupon-divider"></view>
+          <!-- 右侧信息区 -->
+          <view class="coupon-info">
+            <text class="coupon-name">{{item.name}}</text>
+            <text class="coupon-validity">{{item.expireAt}}</text>
+            <view class="coupon-use-btn press-scale" wx:if="{{item.status === 'available'}}">
+              <text class="coupon-use-btn-text">立即使用</text>
+            </view>
+            <view class="coupon-used-badge" wx:else>
+              <image src="{{icons.check}}" mode="aspectFit" class="badge-icon" lazy-load="{{false}}" />
+              <text class="badge-text">{{item.statusText}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== 空态 ===== -->
+    <view class="empty" wx:else>
+      <view class="empty-icon neu-icon-inset">
+        <image src="{{icons.empty}}" mode="aspectFit" class="empty-img" lazy-load="{{false}}" />
+      </view>
+      <text class="empty-text">暂无优惠券</text>
+      <text class="empty-sub">去领券中心看看吧</text>
+    </view>
+
+    <!-- ===== 脚注 ===== -->
+    <view class="coupon-foot-note">优惠券不可叠加使用，最终解释权归自家人所有</view>
+
+  </scroll-view>
+</view>

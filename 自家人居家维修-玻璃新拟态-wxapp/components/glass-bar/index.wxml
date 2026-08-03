@@ -1,0 +1,27 @@
+<!-- components/glass-bar/index.wxml
+  忠于 zjrnew：带径向光斑渐变 + 下部 56rpx 倒圆角的导航栏
+  - theme="worker" 切换师傅端蓝色配色
+-->
+<view class="glass-bar {{theme === 'worker' ? 'worker glass-bar-worker' : ''}}">
+  <view class="bar-gradient" style="padding-top: calc(env(safe-area-inset-top) + 36rpx);">
+    <view class="bar-content">
+      <!-- 左侧返回 -->
+      <view class="bar-left" wx:if="{{showBack}}" bindtap="onBack">
+        <view class="back-btn nav-icon-btn">
+          <view class="back-arrow"></view>
+        </view>
+      </view>
+      <view class="bar-left-placeholder" wx:else></view>
+
+      <!-- 标题 -->
+      <view class="bar-title" style="{{titleColor ? 'color:' + titleColor : ''}}">{{title}}</view>
+
+      <!-- 右侧插槽 -->
+      <view class="bar-right">
+        <slot name="right"></slot>
+      </view>
+    </view>
+  </view>
+</view>
+<!-- 占位 -->
+<view class="glass-bar-placeholder" style="height: calc(env(safe-area-inset-top) + 160rpx);"></view>

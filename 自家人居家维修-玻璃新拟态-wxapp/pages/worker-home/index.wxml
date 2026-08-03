@@ -1,0 +1,92 @@
+<!-- pages/worker-home/index.wxml — 师傅端接单大厅 像素级复刻 worker-home.html -->
+<view class="page">
+  <!-- 背景装饰光斑 -->
+  <view class="blob" style="top: -80rpx; right: -120rpx; width: 560rpx; height: 560rpx; background: var(--brand-worker);"></view>
+  <view class="blob" style="top: 480rpx; left: -160rpx; width: 480rpx; height: 480rpx; background: var(--sage);"></view>
+
+  <scroll-view scroll-y class="page-scroll hide-scroll" style="padding-bottom: 220rpx;">
+
+    <!-- ===== HERO 区域 ===== -->
+    <view class="hero hero-worker" style="padding-top: calc({{statusBarHeight}}px + 76rpx);">
+      <view class="greeting-row">
+        <view class="greeting-text">
+          <text class="hero-title">接单大厅</text>
+          <text class="hero-sub">实时发现附近维修需求</text>
+        </view>
+        <!-- 筛选按钮（右上角圆形玻璃） -->
+        <view class="filter-btn" bindtap="onFilterSettings">
+          <image src="{{icons.filter}}" mode="aspectFit" class="filter-btn-icon" lazy-load="{{false}}" />
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== 筛选 Pill 行（负 margin 叠叠 Hero） ===== -->
+    <view class="filter-tabs worker">
+      <view
+        class="filter-pill {{activeFilter === item.key ? 'active' : ''}}"
+        wx:for="{{filters}}"
+        wx:key="key"
+        data-key="{{item.key}}"
+        bindtap="onFilterTap"
+      >{{item.name}}</view>
+    </view>
+
+    <!-- ===== 区块标题 ===== -->
+    <view class="section">
+      <view class="section-title-row">
+        <text class="section-title-text">最新订单</text>
+        <text class="section-more" bindtap="onViewAll">查看全部 ›</text>
+      </view>
+    </view>
+
+    <!-- ===== 订单列表 ===== -->
+    <view class="order-list" wx:if="{{orders.length > 0}}">
+      <view
+        class="order-card"
+        wx:for="{{orders}}"
+        wx:key="id"
+        data-id="{{item.id}}"
+        bindtap="onOrderTap"
+      >
+        <!-- 顶部：左侧圆形图标 + 右侧标题/meta -->
+        <view class="order-top">
+          <view class="order-icon">
+            <image src="{{item.iconUrl}}" mode="aspectFit" class="order-icon-img" lazy-load="{{false}}" />
+          </view>
+          <view class="order-info">
+            <view class="order-title-row">
+              <text class="order-title">{{item.serviceName}}</text>
+              <view class="order-tag" wx:if="{{item.urgent}}">紧急</view>
+            </view>
+            <view class="order-meta">
+              <image src="{{icons.location}}" mode="aspectFit" class="meta-icon" lazy-load="{{false}}" />
+              <text class="meta-text">{{item.distance}}km</text>
+              <view class="meta-dot"></view>
+              <text class="meta-text">{{item.createdAt}}</text>
+            </view>
+          </view>
+        </view>
+        <!-- 底部：价格 + 立即报价按钮 -->
+        <view class="order-bottom">
+          <text class="order-price">¥{{item.priceRange}}</text>
+          <view class="quote-btn" catchtap="onQuoteTap" data-id="{{item.id}}">
+            <image src="{{icons.edit}}" mode="aspectFit" class="quote-btn-icon" lazy-load="{{false}}" />
+            <text class="quote-btn-text">立即报价</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== 空态 ===== -->
+    <view class="empty" wx:else>
+      <view class="empty-icon neu-icon-inset">
+        <image src="{{icons.orders}}" mode="aspectFit" class="empty-img" lazy-load="{{false}}" />
+      </view>
+      <text class="empty-text">暂无最新订单</text>
+      <text class="empty-sub">稍后再来看看吧</text>
+    </view>
+
+  </scroll-view>
+
+  <tab-bar id="tabbar" active="hall" />
+</view>

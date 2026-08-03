@@ -1,0 +1,3 @@
+<view class="svg-icon" style="width:{{size * 2}}rpx;height:{{size * 2}}rpx;">
+  <image class="svg-icon-img" src="{{iconPath}}" mode="aspectFit"></image>
+</view>

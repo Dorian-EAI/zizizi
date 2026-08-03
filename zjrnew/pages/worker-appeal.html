@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自家人居家维修 · 玻璃新拟态 · 申诉中心</title>
+    <link rel="stylesheet" href="../assets/fonts.css">
+
+    <style id="theme-vars">
+/* 自家人居家维修 - 玻璃新拟态 */
+:root {
+  /* Brand - Worker (Blue) */
+  --brand: #2D6CDF;
+  --brand-dark: #2456B8;
+  --brand-mid: #5A8EE8;
+  --brand-light: #DCE8FB;
+  --brand-glow: rgba(45, 108, 223, 0.28);
+  --brand-subtle: rgba(45, 108, 223, 0.08);
+
+  /* Accent (Amber) */
+  --accent: #D4944C;
+  --accent-dark: #A0723C;
+  --accent-mid: #E8C088;
+  --accent-light: #F5E6D0;
+  --accent-glow: rgba(212, 148, 76, 0.20);
+
+  /* Background */
+  --background: #F2EDE8;
+  --foreground: #2C2824;
+  --body-bg: #E8E4DF;
+  --bg-elevated: #F7F3EF;
+
+  /* Neumorphic */
+  --neu-light: #FFF8F2;
+  --neu-dark: #DDD6CE;
+  --neu-highlight: rgba(255, 255, 255, 0.55);
+
+  /* Surface & Card */
+  --card: rgba(255, 255, 255, 0.52);
+  --card-foreground: #2C2824;
+  --popover: #fff;
+  --popover-foreground: #2C2824;
+
+  /* Muted */
+  --muted: #F7F3EF;
+  --muted-foreground: #8B8178;
+
+  /* Border & Input */
+  --border: rgba(44, 40, 36, 0.06);
+  --input: rgba(44, 40, 36, 0.06);
+  --ring: #2D6CDF;
+
+  /* Primary */
+  --primary: #2D6CDF;
+  --primary-foreground: #ffffff;
+
+  /* Semantic aliases */
+  --state-success: #5B8C5A;
+  --state-warning: #D4944C;
+  --state-error: #C4533A;
+  --state-info: #5A8FAD;
+
+  /* Text */
+  --text-1: #2C2824;
+  --text-2: #8B8178;
+  --text-3: #B5ADA5;
+  --text-inverse: #ffffff;
+
+  /* Sep & Fill */
+  --sep: rgba(44, 40, 36, 0.06);
+  --fill: rgba(44, 40, 36, 0.04);
+
+  /* Green/Red/Orange/Blue semantic */
+  --green: #5B8C5A;
+  --red: #C4533A;
+  --orange: #D4944C;
+  --blue: #5A8FAD;
+
+  /* Radius */
+  --radius-sm: 0.75rem;
+  --radius-md: 1.2rem;
+  --radius-lg: 1.6rem;
+  --radius-full: 9999px;
+
+    /* Font — 统一衬线系统 */
+  --font-display: 'Cormorant Garamond', 'Noto Serif SC', 'STSong', Georgia, serif;
+  --font-body: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --font-nums: 'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
+  --font: var(--font-body);
+
+  /* Motion */
+  --spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --dur: 0.2s;
+
+  /* Glass */
+  --glass-bg: rgba(255, 255, 255, 0.18);
+  --glass-blur: blur(12px) saturate(140%);
+  --glass-border: rgba(255, 255, 255, 0.60);
+
+  /* Surface presets for glass-neumorphic components */
+  --surface-1: rgba(255, 255, 255, 0.50);
+  --surface-2: rgba(255, 255, 255, 0.45);
+
+  /* Neumorphic shadow presets */
+  --neu-out-sm: 6px 6px 14px var(--neu-dark), -6px -6px 14px var(--neu-light), 0 4px 16px rgba(0, 0, 0, 0.04);
+  --neu-out-md: 8px 8px 18px var(--neu-dark), -8px -8px 18px var(--neu-light), 0 6px 24px rgba(0, 0, 0, 0.05);
+  --neu-out-lg: 10px 10px 24px var(--neu-dark), -10px -10px 24px var(--neu-light), 0 8px 32px rgba(0, 0, 0, 0.06);
+  --neu-in: inset 4px 4px 8px var(--neu-dark), inset -4px -4px 8px var(--neu-light);
+  --neu-in-deep: inset 5px 5px 10px var(--neu-dark), inset -5px -5px 10px var(--neu-light);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --font-sans: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --font-serif: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --radius-full: var(--radius-full);}
+
+/* Semantic token fallback */
+#semantic-token-fallback {
+  --brand-background: var(--background);
+  --brand-foreground: var(--foreground);
+  --brand-card: var(--card);
+  --brand-card-foreground: var(--card-foreground);
+  --brand-popover: var(--popover);
+  --brand-popover-foreground: var(--popover-foreground);
+  --brand-primary: var(--primary);
+  --brand-primary-foreground: var(--primary-foreground);
+  --brand-muted: var(--muted);
+  --brand-muted-foreground: var(--muted-foreground);
+  --brand-border: var(--border);
+  --brand-input: var(--input);
+  --brand-ring: var(--ring);
+  --brand-radius-sm: var(--radius-sm);
+  --brand-radius-md: var(--radius-md);
+  --brand-radius-lg: var(--radius-lg);
+}
+
+/* ===== Global Neumorphic Components ===== */
+/* Tab Bar */
+.tab-bar{
+  position:absolute;
+  bottom:max(14px, env(safe-area-inset-bottom));
+  left:50%;
+  transform:translateX(-50%);
+  width:calc(100% - 32px);
+  max-width:360px;
+  height:64px;
+  z-index:100;
+  background:rgba(255,255,255,0.22);
+  backdrop-filter:blur(48px) saturate(210%);
+  -webkit-backdrop-filter:blur(48px) saturate(210%);
+  border:0.5px solid rgba(255,255,255,0.50);
+  border-radius:28px;
+  box-shadow:
+    inset 0 1.5px 3px rgba(255,255,255,0.60),
+    inset 0 -0.5px 1px rgba(255,255,255,0.20),
+    0 0 0 0.5px rgba(0,0,0,0.04),
+    0 2px 10px rgba(0,0,0,0.06),
+    0 12px 36px rgba(0,0,0,0.08);
+  display:flex;
+  align-items:center;
+  justify-content:space-around;
+  padding:0 10px;
+}
+.tab-bar::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  background:linear-gradient(160deg,
+    rgba(255,255,255,0.42) 0%,
+    rgba(255,255,255,0.16) 20%,
+    rgba(255,255,255,0.03) 40%,
+    transparent 60%);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
+  padding:0.5px;
+  pointer-events:none;
+  z-index:1;
+}
+.tab-bar::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  background:linear-gradient(320deg,
+    transparent 60%,
+    rgba(45,108,223,0.06) 80%,
+    rgba(255,255,255,0.04) 100%);
+  pointer-events:none;
+  z-index:1;
+}
+.tab-item{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+  width:68px;
+  height:44px;
+  border-radius:14px;
+  color:var(--text-3);
+  font-size:11px;
+  font-weight:500;
+  text-decoration:none;
+  position:relative;
+  transition:all .2s;
+}
+.tab-item svg{
+  width:20px;
+  height:20px;
+  stroke:currentColor;
+  fill:none;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.tab-item[data-active="true"]{
+  color:var(--brand);
+  font-weight:600;
+}
+.tab-item[data-active="true"]::before{
+  content:"";
+  position:absolute;
+  width:54px;
+  height:42px;
+  border-radius:16px;
+  background:rgba(45,108,223,0.16);
+  backdrop-filter:blur(24px);
+  -webkit-backdrop-filter:blur(24px);
+  border:0.5px solid rgba(45,108,223,0.30);
+  box-shadow:
+    inset 0 1px 3px rgba(255,255,255,0.55),
+    inset 0 -0.5px 1px rgba(255,255,255,0.15),
+    0 2px 10px rgba(45,108,223,0.20),
+    0 0 0 0.5px rgba(45,108,223,0.08);
+  z-index:0;
+}
+.tab-item[data-active="true"] svg{
+  transform:scale(1.08);
+  position:relative;
+  z-index:1;
+}
+
+.btn-neu-primary:active{box-shadow:var(--neu-in);transform:scale(0.94)}
+
+.btn-neu-secondary{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,0.50);color:var(--brand);
+  border:0.5px solid rgba(255,255,255,0.60);border-radius:9999px;
+  padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
+  cursor:pointer;
+  box-shadow:var(--neu-out-sm);
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
+.btn-neu-secondary:active{box-shadow:var(--neu-in);transform:scale(0.94)}
+
+.btn-neu-ghost{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:transparent;color:var(--text-2);
+  border:0.5px solid var(--border);border-radius:9999px;
+  padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
+  cursor:pointer;
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease),color var(--dur) var(--ease);
+}
+.btn-neu-ghost:active{transform:scale(0.94);color:var(--brand)}
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-accent: var(--accent);
+    --radius-sm: var(--radius-sm);
+    --radius-md: var(--radius-md);
+    --radius-lg: var(--radius-lg);
+    --radius-full: var(--radius-full);
+    --font-sans: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+    --font-serif: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+    <style id="semantic-token-fallback">
+      .bg-background { background-color: var(--background); }
+      .text-background { color: var(--background); }
+      .border-background { border-color: var(--background); }
+      .ring-background { --tw-ring-color: var(--background); }
+      .bg-foreground { background-color: var(--foreground); }
+      .text-foreground { color: var(--foreground); }
+      .border-foreground { border-color: var(--foreground); }
+      .ring-foreground { --tw-ring-color: var(--foreground); }
+      .bg-card { background-color: var(--card); }
+      .text-card { color: var(--card); }
+      .border-card { border-color: var(--card); }
+      .ring-card { --tw-ring-color: var(--card); }
+      .bg-card-foreground { background-color: var(--card-foreground); }
+      .text-card-foreground { color: var(--card-foreground); }
+      .border-card-foreground { border-color: var(--card-foreground); }
+      .ring-card-foreground { --tw-ring-color: var(--card-foreground); }
+      .bg-popover { background-color: var(--popover); }
+      .text-popover { color: var(--popover); }
+      .border-popover { border-color: var(--popover); }
+      .ring-popover { --tw-ring-color: var(--popover); }
+      .bg-popover-foreground { background-color: var(--popover-foreground); }
+      .text-popover-foreground { color: var(--popover-foreground); }
+      .border-popover-foreground { border-color: var(--popover-foreground); }
+      .ring-popover-foreground { --tw-ring-color: var(--popover-foreground); }
+      .bg-primary { background-color: var(--primary); }
+      .text-primary { color: var(--primary); }
+      .border-primary { border-color: var(--primary); }
+      .ring-primary { --tw-ring-color: var(--primary); }
+      .bg-primary-foreground { background-color: var(--primary-foreground); }
+      .text-primary-foreground { color: var(--primary-foreground); }
+      .border-primary-foreground { border-color: var(--primary-foreground); }
+      .ring-primary-foreground { --tw-ring-color: var(--primary-foreground); }
+      .bg-muted { background-color: var(--muted); }
+      .text-muted { color: var(--muted); }
+      .border-muted { border-color: var(--muted); }
+      .ring-muted { --tw-ring-color: var(--muted); }
+      .bg-muted-foreground { background-color: var(--muted-foreground); }
+      .text-muted-foreground { color: var(--muted-foreground); }
+      .border-muted-foreground { border-color: var(--muted-foreground); }
+      .ring-muted-foreground { --tw-ring-color: var(--muted-foreground); }
+      .bg-border { background-color: var(--border); }
+      .text-border { color: var(--border); }
+      .border-border { border-color: var(--border); }
+      .ring-border { --tw-ring-color: var(--border); }
+      .bg-input { background-color: var(--input); }
+      .text-input { color: var(--input); }
+      .border-input { border-color: var(--input); }
+      .ring-input { --tw-ring-color: var(--input); }
+      .bg-ring { background-color: var(--ring); }
+      .text-ring { color: var(--ring); }
+      .border-ring { border-color: var(--ring); }
+      .ring-ring { --tw-ring-color: var(--ring); }
+      .bg-accent { background-color: var(--accent); }
+      .text-accent { color: var(--accent); }
+      .border-accent { border-color: var(--accent); }
+      .ring-accent { --tw-ring-color: var(--accent); }
+    </style>
+    <style>
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      [data-icon] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        background-color: currentColor;
+      }
+    </style>
+</head>
+<body>
+<div class="phone" data-dom-id="page-worker-appeal">
+
+  <!-- ===== BACK BAR ===== -->
+  <div class="back-bar">
+    <button class="back-btn" data-dom-id="back-btn" type="button" aria-label="返回">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 18 9 12 15 6"/>
+      </svg>
+    </button>
+    <h1 class="back-title">申诉中心</h1>
+    <span class="back-spacer"></span>
+  </div>
+
+  <!-- ===== APPEAL HERO (说明卡) ===== -->
+  <section class="appeal-hero" data-dom-id="appeal-intro">
+    <div class="appeal-hero-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/>
+        <path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/>
+        <path d="M7 21h10"/>
+        <path d="M12 3v18"/>
+        <path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/>
+      </svg>
+    </div>
+    <div class="appeal-hero-text">
+      <h2>对平台处罚有异议？</h2>
+      <p>提交申诉后客服将在3个工作日内复核，请提供充分证据</p>
+    </div>
+  </section>
+
+  <!-- ===== MY APPEALS ===== -->
+  <div class="section">
+    <div class="section-title">
+      <span>我的申诉</span>
+    </div>
+    <div class="card appeal-card">
+
+      <div class="appeal-item" data-dom-id="appeal-item-1">
+        <div class="appeal-item-top">
+          <span class="penalty-tag">扣除保证金</span>
+          <span class="status-badge status-pending">待复核</span>
+        </div>
+        <div class="appeal-item-title">扣除保证金 ¥200</div>
+        <div class="appeal-item-reason">工单WO20260720</div>
+        <div class="appeal-item-bottom">
+          <span class="appeal-item-time">2小时前</span>
+          <button class="appeal-view-btn" data-dom-id="appeal-view-1" type="button">
+            查看
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="appeal-item" data-dom-id="appeal-item-2">
+        <div class="appeal-item-top">
+          <span class="penalty-tag">限制抢单</span>
+          <span class="status-badge status-rejected">已驳回</span>
+        </div>
+        <div class="appeal-item-title">限制抢单3天</div>
+        <div class="appeal-item-reason">拒单率超标</div>
+        <div class="appeal-item-bottom">
+          <span class="appeal-item-time">2026-07-22</span>
+          <button class="appeal-view-btn" data-dom-id="appeal-view-2" type="button">
+            查看
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== SUBMIT NEW APPEAL (FORM) ===== -->
+  <div class="section">
+    <div class="section-title">
+      <span>提交新申诉</span>
+    </div>
+    <div class="card form-card" data-dom-id="appeal-form">
+
+      <div class="form-field" data-dom-id="field-penalty-id">
+        <label class="form-label">处罚单号</label>
+        <input class="form-input" type="text" placeholder="请输入处罚单号" data-dom-id="input-penalty-id">
+      </div>
+
+      <div class="form-field" data-dom-id="field-appeal-type">
+        <label class="form-label">申诉类型</label>
+        <div class="chip-group" data-dom-id="appeal-type-group">
+          <label class="chip-radio">
+            <input type="radio" name="appeal-type" value="deduct" checked data-dom-id="type-deduct">
+            <span>扣除保证金</span>
+          </label>
+          <label class="chip-radio">
+            <input type="radio" name="appeal-type" value="limit" data-dom-id="type-limit">
+            <span>限制抢单</span>
+          </label>
+          <label class="chip-radio">
+            <input type="radio" name="appeal-type" value="freeze" data-dom-id="type-freeze">
+            <span>账号冻结</span>
+          </label>
+          <label class="chip-radio">
+            <input type="radio" name="appeal-type" value="other" data-dom-id="type-other">
+            <span>其他</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="form-field" data-dom-id="field-appeal-reason">
+        <label class="form-label">申诉理由</label>
+        <textarea class="form-textarea" rows="4" placeholder="请详细说明申诉理由..." data-dom-id="input-appeal-reason"></textarea>
+      </div>
+
+      <div class="form-field" data-dom-id="field-evidence">
+        <label class="form-label">证据图片</label>
+        <div class="upload-grid" data-dom-id="upload-grid">
+          <button class="upload-box" data-dom-id="upload-1" type="button" aria-label="上传证据图片1">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="5" x2="12" y2="19"/>
+              <line x1="5" y1="12" x2="19" y2="12"/>
+            </svg>
+          </button>
+          <button class="upload-box" data-dom-id="upload-2" type="button" aria-label="上传证据图片2">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="5" x2="12" y2="19"/>
+              <line x1="5" y1="12" x2="19" y2="12"/>
+            </svg>
+          </button>
+          <button class="upload-box" data-dom-id="upload-3" type="button" aria-label="上传证据图片3">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="5" x2="12" y2="19"/>
+              <line x1="5" y1="12" x2="19" y2="12"/>
+            </svg>
+          </button>
+        </div>
+        <p class="upload-hint">上传聊天截图/现场照片等证据</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== FIXED SUBMIT BUTTON ===== -->
+  <div class="submit-bar">
+    <button class="btn-submit" data-dom-id="btn-submit-appeal" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px">
+        <path d="M22 2 11 13"/>
+        <path d="M22 2 15 22l-4-9-9-4 20-7z"/>
+      </svg>
+      提交申诉
+    </button>
+  </div>
+
+</div>
+
+    <style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --brand:#2D6CDF;--brand-dark:#2456B8;--brand-light:#DCE8FB;
+  --brand-glow:rgba(45,108,223,0.28);--brand-subtle:rgba(45,108,223,0.08);
+  --brand-gradient:linear-gradient(135deg,#2D6CDF 0%,#5A8EE8 50%,#D4944C 100%);
+  --accent:#D4944C;--accent-light:#F5E6D0;--accent-glow:rgba(212,148,76,0.25);
+  --bg:#F2EDE8;--bg-elevated:#F7F3EF;
+  --neu-light:#FFF8F2;--neu-dark:#DDD6CE;
+  --text-1:#2C2824;--text-2:#8B8178;--text-3:#B5ADA5;--text-inverse:#FFFFFF;
+  --sep:rgba(44,40,36,0.06);--fill:rgba(44,40,36,0.04);
+  --green:#5B8C5A;--red:#C4533A;--orange:#D4944C;--blue:#5A8FAD;
+  --r:1.2rem;--r-lg:1.6rem;--r-sm:0.75rem;--r-pill:9999px;--r-tab:24px;
+  /* Font */--font-display:'Cormorant Garamond', 'Noto Serif SC', 'STSong', Georgia, serif;
+  --font-body:'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --font-nums:'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
+  --font:var(--font-body);
+  --neu-out-sm:5px 5px 12px var(--neu-dark),-5px -5px 12px var(--neu-light);
+  --neu-out-md:8px 8px 18px var(--neu-dark),-8px -8px 18px var(--neu-light);
+  --neu-out-lg:10px 10px 24px var(--neu-dark),-10px -10px 24px var(--neu-light);
+  --neu-in:inset 4px 4px 8px var(--neu-dark),inset -4px -4px 8px var(--neu-light);
+  --neu-in-deep:inset 5px 5px 10px var(--neu-dark),inset -5px -5px 10px var(--neu-light);
+  --glass-tab-bg:rgba(255,255,255,0.18);--glass-tab-blur:blur(48px) saturate(210%);--glass-tab-border:rgba(255,255,255,0.45);
+  --spring:cubic-bezier(0.175,0.885,0.32,1.275);--ease:cubic-bezier(0.25,0.46,0.45,0.94);--dur:0.2s;
+}
+html,body{font-family:var(--font);color:var(--text-1);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh;background:#E8E4DF;letter-spacing:-0.01em}
+.phone{position:relative;width:414px;min-height:896px;background:var(--bg);border-radius:48px;overflow:hidden;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.12),0 4px 16px rgba(0,0,0,.06);padding-bottom:96px}
+.phone::after{content:'';position:absolute;bottom:0;left:0;right:0;height:260px;background:radial-gradient(ellipse 200px 140px at 20% 90%,rgba(45,108,223,.07) 0%,transparent 70%),radial-gradient(ellipse 180px 120px at 80% 85%,rgba(143,169,152,.06) 0%,transparent 70%),radial-gradient(ellipse 160px 100px at 50% 95%,rgba(124,142,212,.04) 0%,transparent 70%);pointer-events:none;z-index:0}
+.phone>*:not(.tab-bar):not(.submit-bar){position:relative;z-index:1}
+
+/* ===== Back Bar ===== */
+.back-bar{background:radial-gradient(ellipse 220px 160px at 78% 45%,rgba(143,169,152,.14) 0%,transparent 70%),radial-gradient(ellipse 180px 140px at 18% 75%,rgba(45,108,223,.16) 0%,transparent 70%),linear-gradient(135deg,rgba(45,108,223,.14) 0%,rgba(143,169,152,.08) 50%,rgba(45,108,223,.06) 100%); display:flex;align-items:center;justify-content:space-between;gap:12px;padding: max(16px, env(safe-area-inset-top)) 20px 14px;position:relative;z-index:20; border-radius:0 0 28px 28px; overflow:hidden;}
+.back-btn{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,0.50);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:0.5px solid rgba(255,255,255,0.60);box-shadow:var(--neu-out-sm),inset 0 1px 1.5px rgba(255,255,255,0.50);display:flex;align-items:center;justify-content:center;color:var(--brand);cursor:pointer;flex-shrink:0;transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease)}
+.back-btn:active{box-shadow:var(--neu-in);transform:scale(0.92)}
+.back-btn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.back-title{font-size:17px;font-weight:700;color:var(--text-1);letter-spacing:-0.02em;text-align:center}
+.back-spacer{width:38px;flex-shrink:0}
+
+/* ===== Section + card ===== */
+.section{padding:0 24px;margin-top:20px;position:relative;z-index:5}
+.section-title{font-size:17px;font-weight:700;color:var(--text-1);margin-bottom:12px;letter-spacing:-0.02em;display:flex;align-items:center;justify-content:space-between}
+.section-title .more{font-size:13px;font-weight:500;color:var(--text-3)}
+
+.card{background:rgba(255,255,255,0.52);backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);border:1px solid rgba(255,255,255,0.70);border-radius:var(--r);box-shadow:var(--neu-out-md),0 6px 24px rgba(0,0,0,0.06),0 0 0 1px rgba(44,40,36,0.05),0 2px 8px rgba(20,184,166,0.04);overflow:hidden;position:relative}
+.card::before{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(165deg,rgba(255,255,255,0.22) 0%,rgba(255,255,255,0.05) 30%,transparent 55%);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;padding:0.5px;pointer-events:none}
+
+/* ===== Appeal Hero (说明卡 · 玻璃渐变) ===== */
+.appeal-hero{margin:4px 24px 0;padding:22px;display:flex;gap:16px;align-items:flex-start;background:radial-gradient(ellipse 200px 160px at 20% 30%,rgba(143,169,152,0.30) 0%,transparent 70%),radial-gradient(ellipse 180px 140px at 85% 80%,rgba(45,108,223,0.22) 0%,transparent 70%),linear-gradient(135deg,rgba(45,108,223,0.24) 0%,rgba(143,169,152,0.18) 50%,rgba(45,108,223,0.10) 100%);border:1px solid rgba(255,255,255,0.70);border-radius:var(--r-lg);box-shadow:var(--neu-out-md),0 6px 24px rgba(0,0,0,0.06),0 0 0 1px rgba(44,40,36,0.05);position:relative;overflow:hidden;z-index:5}
+.appeal-hero::before{content:"";position:absolute;top:-25%;right:-12%;width:170px;height:170px;background:radial-gradient(circle,rgba(255,255,255,0.18) 0%,transparent 70%);border-radius:50%;pointer-events:none}
+.appeal-hero::after{content:"";position:absolute;bottom:-30%;left:-8%;width:150px;height:150px;background:radial-gradient(circle,rgba(255,255,255,0.08) 0%,transparent 70%);border-radius:50%;pointer-events:none}
+.appeal-hero-icon{width:52px;height:52px;border-radius:var(--r-sm);background:rgba(255,255,255,0.55);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:0.5px solid rgba(255,255,255,0.70);box-shadow:var(--neu-out-sm),inset 0 1px 2px rgba(255,255,255,0.50);display:flex;align-items:center;justify-content:center;color:var(--brand);flex-shrink:0;position:relative;z-index:1}
+.appeal-hero-icon svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.appeal-hero-text{flex:1;min-width:0;position:relative;z-index:1}
+.appeal-hero-text h2{font-size:17px;font-weight:700;color:var(--text-1);letter-spacing:-0.02em;margin-bottom:6px}
+.appeal-hero-text p{font-size:13px;color:var(--text-2);line-height:1.55}
+
+/* ===== Appeal List ===== */
+.appeal-card{padding:4px 0}
+.appeal-item{padding:16px 18px;position:relative;cursor:pointer;transition:transform var(--dur) var(--ease);z-index:1}
+.appeal-item:active{transform:scale(0.98)}
+.appeal-item+.appeal-item::before{content:"";position:absolute;top:0;left:18px;right:18px;height:0.5px;background:var(--sep)}
+.appeal-item-top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:9px}
+.penalty-tag{display:inline-flex;align-items:center;padding:3px 10px;border-radius:var(--r-pill);background:var(--brand-subtle);color:var(--brand);font-size:11px;font-weight:600;border:0.5px solid rgba(45,108,223,0.22)}
+.status-badge{display:inline-flex;align-items:center;padding:3px 10px;border-radius:var(--r-pill);font-size:11px;font-weight:600;border:0.5px solid transparent;letter-spacing:0.01em}
+.status-pending{background:rgba(212,148,76,0.14);color:var(--orange);border-color:rgba(212,148,76,0.32)}
+.status-passed{background:rgba(91,140,90,0.14);color:var(--green);border-color:rgba(91,140,90,0.32)}
+.status-rejected{background:rgba(196,83,58,0.14);color:var(--red);border-color:rgba(196,83,58,0.32)}
+.appeal-item-title{font-size:15px;font-weight:600;color:var(--text-1);letter-spacing:-0.01em;margin-bottom:4px}
+.appeal-item-reason{font-size:13px;color:var(--text-2);margin-bottom:11px}
+.appeal-item-bottom{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.appeal-item-time{font-size:12px;color:var(--text-3);font-variant-numeric:tabular-nums}
+.appeal-view-btn{display:inline-flex;align-items:center;gap:2px;background:rgba(255,255,255,0.55);color:var(--brand);border:0.5px solid rgba(255,255,255,0.70);border-radius:9999px;font-size:13px;font-weight:600;font-family:var(--font);cursor:pointer;padding:6px 12px;box-shadow:var(--neu-out-sm);transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease),background var(--dur) var(--ease)}
+.appeal-view-btn:active{box-shadow:var(--neu-in);transform:scale(0.92);background:rgba(255,255,255,0.40)}
+.appeal-view-btn svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+
+/* ===== Form Card ===== */
+.form-card{padding:6px 18px}
+.form-field{padding:14px 0;position:relative;z-index:1}
+.form-field+.form-field{border-top:0.5px solid var(--sep)}
+.form-label{display:block;font-size:13px;font-weight:600;color:var(--text-1);margin-bottom:10px;letter-spacing:-0.01em}
+.form-input,.form-textarea{width:100%;background:var(--bg);border:0.5px solid var(--border);border-radius:var(--r-sm);padding:12px 14px;font-size:14px;color:var(--text-1);font-family:var(--font);box-shadow:inset 2px 2px 5px var(--neu-dark),inset -2px -2px 5px var(--neu-light);outline:none;transition:box-shadow 0.2s var(--ease)}
+.form-input::placeholder,.form-textarea::placeholder{color:var(--text-3)}
+.form-input:focus,.form-textarea:focus{box-shadow:inset 2px 2px 5px var(--neu-dark),inset -2px -2px 5px var(--neu-light),0 0 0 2px var(--brand-glow)}
+.form-textarea{resize:none;line-height:1.55;min-height:96px;display:block}
+
+/* Chip radio group */
+.chip-group{display:flex;flex-wrap:wrap;gap:8px}
+.chip-radio{position:relative;cursor:pointer}
+.chip-radio input{position:absolute;opacity:0;width:0;height:0}
+.chip-radio span{display:inline-flex;align-items:center;padding:8px 14px;border-radius:var(--r-pill);background:var(--bg);color:var(--text-2);font-size:13px;font-weight:600;border:0.5px solid var(--border);box-shadow:var(--neu-out-sm);transition:all var(--dur) var(--ease)}
+.chip-radio:active span{transform:scale(0.94)}
+.chip-radio input:checked+span{background:var(--brand);color:#fff;border-color:var(--brand);box-shadow:var(--neu-out-sm),0 0 12px var(--brand-glow)}
+
+/* Upload grid */
+.upload-grid{display:flex;gap:10px}
+.upload-box{width:74px;height:74px;border-radius:var(--r-sm);background:var(--bg);border:1.5px dashed var(--text-3);display:flex;align-items:center;justify-content:center;color:var(--text-3);cursor:pointer;flex-shrink:0;transition:all var(--dur) var(--ease)}
+.upload-box:active{transform:scale(0.94);border-color:var(--brand);color:var(--brand)}
+.upload-box svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.upload-hint{font-size:11.5px;color:var(--text-3);margin-top:8px;line-height:1.4}
+
+/* ===== Fixed Submit Bar ===== */
+.submit-bar{position:absolute;left:24px;right:24px;bottom:18px;z-index:100}
+.btn-submit{width:100%;display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--brand-gradient);color:#fff;border:0.5px solid rgba(255,255,255,0.40);border-radius:var(--r-pill);padding:16px;font-size:16px;font-weight:700;font-family:var(--font);letter-spacing:0.04em;cursor:pointer;box-shadow:var(--neu-out-md),0 8px 24px var(--brand-glow),inset 0 1px 2px rgba(255,255,255,0.30);transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease)}
+.btn-submit:active{transform:scale(0.97);box-shadow:var(--neu-in)}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:0.01ms !important;animation-iteration-count:1 !important;transition-duration:0.01ms !important;scroll-behavior:auto !important}
+  .back-btn,.appeal-item,.appeal-view-btn,.chip-radio,.upload-box,.btn-submit{transition:none !important;transform:none !important}
+  .appeal-hero,.card,.form-input,.form-textarea,.submit-bar{backdrop-filter:none;-webkit-backdrop-filter:none}
+}
+</style>
+    <style>@theme inline{--font-sans: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+--font-serif: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+--color-background:var(--background);--color-foreground:var(--foreground);--color-card:var(--card);--color-card-foreground:var(--card-foreground);--color-popover:var(--popover);--color-popover-foreground:var(--popover-foreground);--color-primary:var(--primary);--color-primary-foreground:var(--primary-foreground);--color-muted:var(--muted);--color-muted-foreground:var(--muted-foreground);--color-border:var(--border);--color-input:var(--input);--color-ring:var(--ring);--radius-md:var(--radius-md);}</style>
+    <style>@layer base{body{background:var(--background);color:var(--foreground);font-family:var(--font-body);}}</style>
+</body>
+</html>

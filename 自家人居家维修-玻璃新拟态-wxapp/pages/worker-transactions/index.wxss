@@ -1,0 +1,343 @@
+/* pages/worker-transactions/index.wxss — 师傅交易明细页 像素级复刻 worker-transactions.html
+ * 换算基准：1px = 2rpx（750rpx 设计稿）
+ * 师傅端品牌色：--brand-worker #2D6CDF（蓝色），光斑 blue-sage 渐变
+ * 严格忠于 HTML 参考的尺寸、间距、圆角、阴影、渐变透明度
+ */
+
+/* HTML: .page 为画布容器，min-height:100vh，overflow:hidden */
+.page {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+/* ===== 师傅端导航栏滚动态（磨砂增强）===== */
+/* 滚动驱动：navScrolled=true 时叠加磨砂背景 + 阴影，参考 worker-deposit .topbar.scrolled */
+.nav-bar.worker.scrolled {
+  background:
+    radial-gradient(ellipse 440rpx 320rpx at 78% 45%, rgba(143, 169, 152, 0.18) 0%, transparent 70%),
+    radial-gradient(ellipse 360rpx 280rpx at 18% 75%, rgba(45, 108, 223, 0.20) 0%, transparent 70%),
+    linear-gradient(135deg, rgba(45, 108, 223, 0.18) 0%, rgba(143, 169, 152, 0.12) 50%, rgba(45, 108, 223, 0.10) 100%),
+    rgba(247, 243, 239, 0.72);
+  backdrop-filter: blur(40rpx) saturate(160%);
+  -webkit-backdrop-filter: blur(40rpx) saturate(160%);
+  box-shadow: 0 8rpx 32rpx rgba(45, 108, 223, 0.08);
+}
+
+/* ===== 师傅端 Glass-Neu Card 覆盖（蓝色辉光）===== */
+/* HTML .glass-neu-card box-shadow 第四层为 rgba(45,108,223,0.04) 蓝色辉光 */
+.glass-neu-card {
+  background: rgba(255, 255, 255, 0.52);
+  backdrop-filter: blur(40rpx) saturate(150%);
+  -webkit-backdrop-filter: blur(40rpx) saturate(150%);
+  border: 1rpx solid rgba(255, 255, 255, 0.70);
+  border-radius: var(--r-lg);
+  /* HTML: var(--neu-out-md),0 6px 28px rgba(0,0,0,0.06),0 2px 8px rgba(45,108,223,0.04),0 0 0 1px rgba(44,40,36,0.05) */
+  box-shadow:
+    var(--neu-raised),
+    0 12rpx 56rpx rgba(0, 0, 0, 0.06),
+    0 4rpx 16rpx rgba(45, 108, 223, 0.04),
+    0 0 0 2rpx rgba(44, 40, 36, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+/* HTML: .glass-neu-card::before Rim Light */
+.glass-neu-card::before {
+  content: "";
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  border-radius: inherit;
+  background: linear-gradient(165deg,
+    rgba(255, 255, 255, 0.22) 0%,
+    rgba(255, 255, 255, 0.05) 30%,
+    transparent 55%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* HTML: .mono{font-variant-numeric:tabular-nums;letter-spacing:-0.01em} */
+.mono {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+/* ===== Sections ===== */
+/* HTML: .section{padding:0 20px;margin-top:16px;position:relative;z-index:2} */
+.section {
+  padding: 0 40rpx;
+  margin-top: 32rpx;
+  position: relative;
+  z-index: 2;
+}
+/* HTML: .section:first-of-type{margin-top:18px} */
+.section:first-of-type {
+  margin-top: 36rpx;
+}
+
+/* ===== Summary Card (收支汇总) ===== */
+/* HTML: .summary-card{padding:0} */
+.summary-card {
+  padding: 0;
+}
+/* HTML: .summary-top-bar{height:5px;width:100%;background:var(--brand-gradient)} */
+.summary-top-bar {
+  height: 10rpx;
+  width: 100%;
+  background: var(--brand-worker-gradient);
+}
+/* HTML: .summary-body{padding:20px 20px 18px} */
+.summary-body {
+  padding: 40rpx 40rpx 36rpx;
+  position: relative;
+  z-index: 1;
+}
+/* HTML: .summary-cols{display:flex;align-items:stretch} */
+.summary-cols {
+  display: flex;
+  align-items: stretch;
+}
+/* HTML: .summary-col{flex:1;display:flex;flex-direction:column;gap:8px;min-width:0} */
+.summary-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+  min-width: 0;
+}
+.summary-col-left {
+  align-items: flex-start;
+}
+.summary-col-right {
+  align-items: flex-end;
+}
+/* HTML: .summary-label{font-size:12.5px;color:var(--text-2);font-weight:600;letter-spacing:0.01em} */
+.summary-label {
+  font-size: 25rpx;
+  color: var(--text-2);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+/* HTML: .summary-value{font-size:26px;font-weight:800;color:var(--text-1);letter-spacing:-0.02em;line-height:1.1;font-variant-numeric:tabular-nums} */
+.summary-value {
+  font-size: 52rpx;
+  font-weight: 800;
+  color: var(--text-1);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+/* HTML: .summary-value-brand{color:var(--brand)} */
+.summary-value-brand {
+  color: var(--brand-worker);
+}
+/* HTML: .summary-divider{width:0.5px;align-self:stretch;background:var(--sep);margin:2px 18px} */
+.summary-divider {
+  width: 1rpx;
+  align-self: stretch;
+  background: var(--sep);
+  margin: 4rpx 36rpx;
+}
+/* HTML: .summary-foot{margin-top:16px;padding-top:14px;border-top:0.5px solid var(--sep);font-size:12px;color:var(--text-2);font-weight:500;text-align:center;letter-spacing:0.02em} */
+.summary-foot {
+  display: block;
+  margin-top: 32rpx;
+  padding-top: 28rpx;
+  border-top: 1rpx solid var(--sep);
+  font-size: 24rpx;
+  color: var(--text-2);
+  font-weight: 500;
+  text-align: center;
+  letter-spacing: 0.02em;
+}
+
+/* ===== Filter Segment (新拟态内凹) ===== */
+/* HTML: .filter-segment{display:flex;align-items:center;gap:4px;padding:5px;border-radius:var(--r-pill);background:var(--bg-elevated);box-shadow:var(--neu-in),inset 0 1px 1px rgba(255,255,255,0.35)} */
+.filter-segment {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  padding: 10rpx;
+  border-radius: var(--r-pill);
+  background: var(--bg-elevated);
+  box-shadow: var(--neu-inset), inset 0 2rpx 2rpx rgba(255, 255, 255, 0.35);
+}
+/* HTML: .filter-item{flex:1;height:38px;border:none;background:transparent;color:var(--text-2);font-size:13px;font-weight:600;border-radius:var(--r-pill);display:flex;align-items:center;justify-content:center;transition:...} */
+.filter-item {
+  flex: 1;
+  height: 76rpx;
+  background: transparent;
+  color: var(--text-2);
+  border-radius: var(--r-pill);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--dur-base) var(--ease), color var(--dur-base) var(--ease), box-shadow var(--dur-base) var(--ease), transform var(--dur-base) var(--spring);
+}
+.filter-item:active {
+  transform: scale(0.95);
+}
+.filter-item-text {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: inherit;
+  letter-spacing: -0.01em;
+}
+/* HTML: .filter-item-active{background:var(--brand);color:var(--text-inverse);box-shadow:0 3px 10px var(--brand-glow),inset 0 1px 1px rgba(255,255,255,0.30)} */
+.filter-item-active {
+  background: var(--brand-worker);
+  color: var(--text-inverse);
+  box-shadow: 0 6rpx 20rpx var(--brand-worker-glow), inset 0 2rpx 2rpx rgba(255, 255, 255, 0.30);
+}
+.filter-item-active .filter-item-text {
+  color: var(--text-inverse);
+}
+
+/* ===== Transaction Group Card ===== */
+/* HTML: .tx-group{padding:0 18px} */
+.tx-group {
+  padding: 0 36rpx;
+}
+/* HTML: .tx-group-head{display:flex;align-items:center;justify-content:space-between;padding:14px 0 10px;border-bottom:0.5px solid var(--sep)} */
+.tx-group-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28rpx 0 20rpx;
+  border-bottom: 1rpx solid var(--sep);
+  position: relative;
+  z-index: 1;
+}
+/* HTML: .tx-date{font-size:13.5px;font-weight:700;color:var(--text-1);letter-spacing:-0.01em} */
+.tx-date {
+  font-size: 27rpx;
+  font-weight: 700;
+  color: var(--text-1);
+  letter-spacing: -0.01em;
+}
+/* HTML: .tx-subtotal{font-size:12.5px;color:var(--text-2);font-weight:600} */
+.tx-subtotal {
+  font-size: 25rpx;
+  color: var(--text-2);
+  font-weight: 600;
+}
+
+/* ===== Transaction Row ===== */
+/* HTML: .tx-row{display:flex;align-items:center;gap:12px;min-height:60px;padding:10px 0;border-bottom:0.5px solid var(--sep)} */
+.tx-row {
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+  min-height: 120rpx;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid var(--sep);
+  position: relative;
+  z-index: 1;
+}
+.tx-row:last-child {
+  border-bottom: none;
+}
+/* HTML: .tx-icon{width:36px;height:36px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:var(--bg-elevated);box-shadow:var(--neu-out-sm),inset 0 1px 1px rgba(255,255,255,0.45)} */
+.tx-icon {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-elevated);
+  box-shadow: var(--neu-raised-sm), inset 0 2rpx 2rpx rgba(255, 255, 255, 0.45);
+}
+/* HTML: .tx-icon svg{width:18px;height:18px} */
+.tx-icon-svg {
+  width: 36rpx;
+  height: 36rpx;
+  display: inline-block;
+}
+/* HTML: .tx-icon-income{color:var(--green)} / .tx-icon-withdraw{color:var(--blue)} / .tx-icon-deduct{color:var(--orange)} */
+.tx-icon-income { color: var(--green); }
+.tx-icon-withdraw { color: var(--blue); }
+.tx-icon-deduct { color: var(--orange); }
+/* HTML: .tx-icon-expense{color:var(--red)} 兼容原 expense 类型 */
+.tx-icon-expense { color: var(--red); }
+
+/* HTML: .tx-main{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px} */
+.tx-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6rpx;
+}
+/* HTML: .tx-title{font-size:14.5px;font-weight:600;color:var(--text-1);letter-spacing:-0.01em} */
+.tx-title {
+  font-size: 29rpx;
+  font-weight: 600;
+  color: var(--text-1);
+  letter-spacing: -0.01em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+/* HTML: .tx-sub{font-size:12px;color:var(--text-2);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap} */
+.tx-sub {
+  font-size: 24rpx;
+  color: var(--text-2);
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+/* HTML: .tx-right{display:flex;flex-direction:column;align-items:flex-end;gap:3px;flex-shrink:0} */
+.tx-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6rpx;
+  flex-shrink: 0;
+}
+/* HTML: .tx-amount{font-size:15px;font-weight:700;letter-spacing:-0.01em;font-variant-numeric:tabular-nums} */
+.tx-amount {
+  font-size: 30rpx;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+}
+/* HTML: .tx-amount-in{color:var(--green)} / .tx-amount-out{color:var(--text-1)} / .tx-amount-deduct{color:var(--red)} */
+.tx-amount-income { color: var(--green); }
+.tx-amount-withdraw { color: var(--text-1); }
+.tx-amount-deduct { color: var(--red); }
+.tx-amount-expense { color: var(--text-1); }
+/* HTML: .tx-time{font-size:11.5px;color:var(--text-3);font-weight:500;font-variant-numeric:tabular-nums} */
+.tx-time {
+  font-size: 23rpx;
+  color: var(--text-3);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ===== Empty State ===== */
+.empty {
+  padding: 80rpx 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+.empty-text {
+  font-size: 26rpx;
+  color: var(--text-3);
+  font-weight: 500;
+}
+
+/* ===== Foot Note ===== */
+/* HTML: .foot-note{text-align:center;font-size:12px;color:var(--text-3);font-weight:500;padding:24px 20px 8px;letter-spacing:0.02em} */
+.foot-note {
+  text-align: center;
+  font-size: 24rpx;
+  color: var(--text-3);
+  font-weight: 500;
+  padding: 48rpx 40rpx 16rpx;
+  letter-spacing: 0.02em;
+}

@@ -1,0 +1,156 @@
+<!-- pages/worker-certification/index.wxml — 师傅资质认证 玻璃新拟态（像素级复刻 worker-certification.html） -->
+<view class="page">
+  <!-- 背景装饰光斑：blue-sage 径向渐变 -->
+  <view class="blob" style="top: -40px; right: -60px; width: 280px; height: 280px; background: radial-gradient(circle, var(--brand) 0%, transparent 70%);"></view>
+  <view class="blob" style="top: 360px; left: -80px; width: 240px; height: 240px; background: radial-gradient(circle, var(--sage) 0%, transparent 70%);"></view>
+
+  <scroll-view scroll-y class="page-scroll hide-scroll" style="padding-bottom: 220rpx;">
+
+    <!-- ===== Back Bar (sticky) ===== -->
+    <!-- HTML: position:sticky; top:0; z-index:40; padding: max(16px, env(safe-area-inset-top)) 24px 12px; border-radius:0 0 28px 28px -->
+    <view class="back-bar worker" style="padding-top: calc({{statusBarHeight}}px + 32rpx);">
+      <!-- HTML: back-btn 36x36 圆形玻璃，brand 色 -->
+      <view class="back-btn" bindtap="onBack">
+        <image src="{{icons.back}}" mode="aspectFit" class="back-btn-icon" lazy-load="{{false}}" />
+      </view>
+      <text class="back-title">资质认证</text>
+      <view class="back-spacer"></view>
+    </view>
+
+    <!-- ===== Cert Status Hero Card (glass gradient) ===== -->
+    <!-- HTML: margin:14px 24px 0; padding:20px; border-radius:var(--r-lg); glass+brand gradient -->
+    <view class="cert-hero">
+      <!-- HTML: cert-hero-top display:flex; gap:14px -->
+      <view class="cert-hero-top">
+        <!-- HTML: cert-shield 52x52 圆形琥珀渐变 + shield svg 26x26 -->
+        <view class="cert-shield">
+          <image src="{{icons.shield}}" mode="aspectFit" class="cert-shield-icon" lazy-load="{{false}}" />
+        </view>
+        <view class="cert-hero-info">
+          <!-- HTML: cert-hero-title 18px/700 -->
+          <text class="cert-hero-title">金牌师傅 · 已认证</text>
+          <!-- HTML: cert-hero-sub 12.5px/500 -->
+          <view class="cert-hero-sub">
+            <text>认证完成度 </text>
+            <text class="cert-progress-num">4/5 项</text>
+          </view>
+          <!-- HTML: cert-progress-bar 6px 圆角条 -->
+          <view class="cert-progress-bar">
+            <view class="cert-progress-fill" style="width:80%"></view>
+          </view>
+        </view>
+      </view>
+      <!-- HTML: cert-hero-benefits 12.5px/500 padding:9px 14px -->
+      <view class="cert-hero-benefits">金牌师傅享不限抢单、抽成10%、首页推荐</view>
+    </view>
+
+    <!-- ===== 认证项目 ===== -->
+    <!-- HTML: .section padding:0 24px; margin-top:18px -->
+    <view class="section">
+      <view class="section-title-row"><text>认证项目</text></view>
+      <view class="card cert-card">
+
+        <!-- HTML: cert-row display:flex; gap:12px; padding:13px 18px -->
+        <view class="cert-row" data-key="idcard" bindtap="onCertTap">
+          <!-- HTML: cert-icon 40x40 圆角；icon 20x20 -->
+          <view class="cert-icon cert-icon-indigo">
+            <image src="{{icons.idcard}}" mode="aspectFit" class="cert-icon-img" lazy-load="{{false}}" />
+          </view>
+          <view class="cert-info">
+            <!-- HTML: cert-name 15px/600 -->
+            <text class="cert-name">身份认证</text>
+            <!-- HTML: cert-status 11.5px/600 pill -->
+            <text class="cert-status status-pass">已通过</text>
+          </view>
+          <view class="btn-cert-secondary" data-key="idcard" catchtap="onViewTap">查看</view>
+        </view>
+
+        <view class="cert-row" data-key="skill" bindtap="onCertTap">
+          <view class="cert-icon cert-icon-amber">
+            <image src="{{icons.award}}" mode="aspectFit" class="cert-icon-img" lazy-load="{{false}}" />
+          </view>
+          <view class="cert-info">
+            <text class="cert-name">技能证书</text>
+            <text class="cert-status status-pass">已上传3张</text>
+          </view>
+          <view class="btn-cert-secondary" data-key="skill" catchtap="onViewTap">查看</view>
+        </view>
+
+        <view class="cert-row" data-key="deposit" bindtap="onCertTap">
+          <view class="cert-icon cert-icon-blue">
+            <image src="{{icons.wallet}}" mode="aspectFit" class="cert-icon-img" lazy-load="{{false}}" />
+          </view>
+          <view class="cert-info">
+            <text class="cert-name">保证金</text>
+            <text class="cert-status status-pass">已缴¥2000</text>
+          </view>
+          <view class="btn-cert-secondary" data-key="deposit" catchtap="onViewTap">管理</view>
+        </view>
+
+        <view class="cert-row" data-key="health" bindtap="onCertTap">
+          <view class="cert-icon cert-icon-green">
+            <image src="{{icons.heart}}" mode="aspectFit" class="cert-icon-img" lazy-load="{{false}}" />
+          </view>
+          <view class="cert-info">
+            <text class="cert-name">健康证</text>
+            <text class="cert-status status-pass">已通过</text>
+          </view>
+          <view class="btn-cert-secondary" data-key="health" catchtap="onViewTap">查看</view>
+        </view>
+
+        <view class="cert-row" data-key="license" bindtap="onCertTap">
+          <view class="cert-icon cert-icon-gray">
+            <image src="{{icons.hall}}" mode="aspectFit" class="cert-icon-img" lazy-load="{{false}}" />
+          </view>
+          <view class="cert-info">
+            <text class="cert-name">营业执照</text>
+            <text class="cert-status status-pending">未上传</text>
+          </view>
+          <view class="btn-cert-primary" data-key="license" catchtap="onUploadTap">去上传</view>
+        </view>
+
+      </view>
+    </view>
+
+    <!-- ===== 已认证技能 ===== -->
+    <view class="section">
+      <view class="section-title-row"><text>已认证技能</text></view>
+      <!-- HTML: skill-card padding:16px 18px -->
+      <view class="card skill-card">
+        <!-- HTML: skill-chips flex wrap gap:9px -->
+        <view class="skill-chips">
+          <view class="skill-chip" wx:for="{{serviceOptions}}" wx:key="*this">
+            <view class="skill-dot"></view>
+            <text>{{item}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== 金牌师傅权益 ===== -->
+    <view class="section">
+      <view class="section-title-row"><text>金牌师傅权益</text></view>
+      <view class="card benefit-card">
+        <!-- HTML: benefit-row gap:12px; padding:13px 18px -->
+        <view class="benefit-row" wx:for="{{benefits}}" wx:key="text">
+          <view class="benefit-check">
+            <image src="{{icons.checkGreen}}" mode="aspectFit" class="benefit-check-icon" lazy-load="{{false}}" />
+          </view>
+          <text class="benefit-text">{{item.text}}</text>
+          <text class="benefit-tag">{{item.tag}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="scroll-bottom-spacer"></view>
+  </scroll-view>
+
+  <!-- ===== 固定底部 CTA ===== -->
+  <!-- HTML: bottom-cta padding:14px 24px 22px -->
+  <view class="bottom-cta">
+    <view class="btn-neu-primary" bindtap="onSubmit">
+      <image src="{{icons.plus}}" mode="aspectFit" class="btn-neu-primary-icon" lazy-load="{{false}}" />
+      <text>补充资质材料</text>
+    </view>
+  </view>
+</view>

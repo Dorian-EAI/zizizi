@@ -1,0 +1,97 @@
+<!-- pages/worker-orders/index.wxml — 师傅端订单列表 像素级复刻 worker-orders.html -->
+<view class="page">
+  <!-- 背景装饰光斑 -->
+  <view class="blob" style="top: -80rpx; right: -120rpx; width: 560rpx; height: 560rpx; background: var(--brand-worker);"></view>
+  <view class="blob" style="top: 640rpx; left: -160rpx; width: 480rpx; height: 480rpx; background: var(--accent);"></view>
+
+  <scroll-view scroll-y class="page-scroll hide-scroll" style="padding-bottom: 220rpx;">
+
+    <!-- ===== 顶部固定区（sticky: Hero + Filter Tabs） ===== -->
+    <view class="top-header">
+      <!-- Hero -->
+      <view class="hero hero-worker" style="padding-top: calc({{statusBarHeight}}px + 76rpx);">
+        <view class="greeting-row">
+          <view class="greeting-text">
+            <text class="hero-title">订单管理</text>
+            <text class="hero-sub">管理您的服务订单与收入</text>
+          </view>
+          <!-- 筛选按钮 -->
+          <view class="filter-btn" bindtap="onFilterSettings">
+            <image src="{{icons.filter}}" mode="aspectFit" class="filter-btn-icon" lazy-load="{{false}}" />
+          </view>
+        </view>
+      </view>
+
+      <!-- 筛选 Pill 行（负 margin 叠叠 Hero） -->
+      <view class="filter-tabs worker">
+        <view
+          class="filter-pill {{activeTab === item.key ? 'active' : ''}}"
+          wx:for="{{tabs}}"
+          wx:key="key"
+          data-key="{{item.key}}"
+          bindtap="onTabTap"
+        >{{item.name}}</view>
+      </view>
+    </view>
+
+    <!-- ===== 订单列表 ===== -->
+    <view class="order-list" wx:if="{{orders.length > 0}}">
+      <view
+        class="order-card status-{{item.status}} {{item.status === 'serving' ? 'accent' : ''}}"
+        wx:for="{{orders}}"
+        wx:key="id"
+        data-id="{{item.id}}"
+        bindtap="onOrderTap"
+      >
+        <!-- 头部：服务名 + 状态徽章 -->
+        <view class="order-head">
+          <text class="order-service">{{item.serviceName}}</text>
+          <view class="status-badge {{item.statusBadgeClass}}">{{item.statusText}}</view>
+        </view>
+
+        <!-- 客户信息 -->
+        <view class="order-customer" wx:if="{{item.userName}}">
+          <image src="{{icons.user}}" mode="aspectFit" class="customer-icon" lazy-load="{{false}}" />
+          <text class="customer-text">{{item.userName}}</text>
+          <view class="customer-sep"></view>
+          <image src="{{icons.phone}}" mode="aspectFit" class="customer-icon-sm" lazy-load="{{false}}" />
+          <text class="customer-text">{{item.userPhone}}</text>
+        </view>
+
+        <!-- 地址 -->
+        <view class="order-address">
+          <image src="{{icons.location}}" mode="aspectFit" class="address-icon" lazy-load="{{false}}" />
+          <text class="address-text">{{item.address}}</text>
+        </view>
+
+        <!-- 分隔线 -->
+        <view class="order-sep"></view>
+
+        <!-- 底部：价格 + 操作按钮 -->
+        <view class="order-bottom">
+          <view class="order-price {{item.isGreen ? 'price-green' : ''}}">
+            <text class="price-label">{{item.priceLabel}}</text>
+            <text class="yuan">¥</text>
+            <text class="price-amount numeric">{{item.price}}</text>
+          </view>
+          <view class="action-btn" catchtap="onActionTap" data-id="{{item.id}}" data-status="{{item.status}}">
+            <image src="{{icons.arrowRight}}" mode="aspectFit" class="action-icon" lazy-load="{{false}}" />
+            <text class="action-text">{{item.actionText}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== 空态 ===== -->
+    <view class="empty" wx:else>
+      <view class="empty-icon neu-icon-inset">
+        <image src="{{icons.orders}}" mode="aspectFit" class="empty-img" lazy-load="{{false}}" />
+      </view>
+      <text class="empty-text">暂无相关订单</text>
+      <text class="empty-sub">去接单大厅看看吧</text>
+    </view>
+
+  </scroll-view>
+
+  <tab-bar id="tabbar" active="orders" />
+</view>

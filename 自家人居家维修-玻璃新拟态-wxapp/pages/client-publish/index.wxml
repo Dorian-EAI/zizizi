@@ -1,0 +1,254 @@
+<!-- pages/client-publish/index.wxml — 客户端发布订单页 像素级复刻 zjrnew/pages/client-publish.html -->
+<view class="page">
+  <!-- 背景装饰光斑 -->
+  <view class="blob blob-brand" style="top: -80rpx; right: -120rpx; width: 560rpx; height: 560rpx;"></view>
+  <view class="blob blob-accent" style="top: 480rpx; left: -160rpx; width: 480rpx; height: 480rpx;"></view>
+
+  <scroll-view scroll-y class="page-scroll hide-scroll" enable-flex style="padding-bottom: 360rpx;">
+
+    <!-- ===== HERO：活力渐变 + 标题 + 3 步指示器 ===== -->
+    <!-- HTML: padding: max(38px, env(safe-area-inset-top)) 24px 36px; border-radius: 0 0 32px 32px; -->
+    <view class="hero" style="padding-top: calc({{statusBarHeight}}px + 76rpx);">
+      <view class="hero-head">
+        <view class="hero-title">
+          <text class="hero-h1">发布需求</text>
+          <text class="hero-sub">3步极速下单</text>
+        </view>
+      </view>
+
+      <!-- 3-step indicator -->
+      <view class="steps">
+        <view class="step-circle {{step >= 1 ? 'step-done' : 'step-current'}}">
+          <text class="step-text" wx:if="{{step > 1}}">✓</text>
+          <text class="step-text" wx:else>1</text>
+        </view>
+        <view class="step-line {{step >= 2 ? 'active' : ''}}"></view>
+        <view class="step-circle {{step === 2 ? 'step-current' : step > 2 ? 'step-done' : 'step-pending'}}">
+          <text class="step-text">{{step > 2 ? '✓' : '2'}}</text>
+        </view>
+        <view class="step-line {{step >= 3 ? 'active' : ''}}"></view>
+        <view class="step-circle {{step === 3 ? 'step-current' : 'step-pending'}}">
+          <text class="step-text">3</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== STEP 1: 选服务类型 ===== -->
+    <view class="section" wx:if="{{step === 1}}">
+      <view class="section-label">选择服务类型</view>
+      <view class="card">
+        <view class="service-card">
+          <view class="service-grid">
+            <view
+              class="service-item {{selectedService.key === item.key ? 'selected' : ''}}"
+              wx:for="{{services}}"
+              wx:key="key"
+              data-key="{{item.key}}"
+              bindtap="onServiceSelect"
+            >
+              <view class="service-icon-chip">
+                <image src="{{item.iconUrl}}" mode="aspectFit" class="service-icon" lazy-load="{{false}}" />
+              </view>
+              <text class="service-label">{{item.name}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== STEP 2: 问题描述 + 地址 + 时间 + 加急 + 图片 + 下单模式 ===== -->
+    <block wx:if="{{step === 2}}">
+
+      <!-- 问题描述卡（textarea + 地址 + 时间 + 加急标签 同卡） -->
+      <view class="section">
+        <view class="section-label">问题描述</view>
+        <view class="card">
+          <view class="desc-card">
+            <textarea
+              class="desc-textarea"
+              placeholder="请详细描述您遇到的问题..."
+              placeholder-class="desc-placeholder"
+              maxlength="500"
+              value="{{description}}"
+              bindinput="onDescInput"
+            />
+            <view class="char-count">
+              <text class="char-count-text">{{description.length}}/500</text>
+            </view>
+
+            <!-- 地址行 -->
+            <view class="info-row" bindtap="onChooseLocation">
+              <view class="info-icon">
+                <image src="{{icons.location}}" mode="aspectFit" class="info-icon-img" lazy-load="{{false}}" />
+              </view>
+              <text class="info-text {{address ? '' : 'placeholder'}}">{{address ? address.detail : '请选择服务地址'}}</text>
+              <view class="info-chevron">
+                <image src="{{icons.arrowRight}}" mode="aspectFit" class="info-chevron-img" lazy-load="{{false}}" />
+              </view>
+            </view>
+
+            <!-- 时间行 -->
+            <view class="info-row" bindtap="onChooseTime">
+              <view class="info-icon">
+                <image src="{{icons.calendar}}" mode="aspectFit" class="info-icon-img" lazy-load="{{false}}" />
+              </view>
+              <text class="info-text {{time ? '' : 'placeholder'}}">{{time ? time : '请选择上门时间'}}</text>
+              <view class="info-chevron">
+                <image src="{{icons.arrowRight}}" mode="aspectFit" class="info-chevron-img" lazy-load="{{false}}" />
+              </view>
+            </view>
+
+            <!-- 加急标签 -->
+            <view class="tag-row">
+              <view
+                class="tag-chip {{urgent === item.value ? 'active' : ''}}"
+                wx:for="{{urgentOptions}}"
+                wx:key="value"
+                data-value="{{item.value}}"
+                bindtap="onUrgentSelect"
+              >{{item.label}}</view>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 图片上传 -->
+      <view class="section">
+        <view class="section-label">上传图片（{{images.length}}/3）</view>
+        <view class="card">
+          <view class="img-grid">
+            <view
+              class="img-slot"
+              wx:for="{{[0,1,2]}}"
+              wx:key="*this"
+              data-index="{{item}}"
+              bindtap="onChooseImage"
+            >
+              <block wx:if="{{images[item]}}">
+                <image src="{{images[item]}}" mode="aspectFill" class="img-preview" lazy-load="{{false}}" />
+                <view class="img-remove" catchtap="onRemoveImage" data-index="{{item}}">×</view>
+              </block>
+              <block wx:else>
+                <image src="{{icons.camera}}" mode="aspectFit" class="img-camera" lazy-load="{{false}}" />
+                <text class="img-text">添加</text>
+              </block>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 下单模式 -->
+      <view class="section">
+        <view class="section-label">选择下单模式</view>
+        <view class="mode-grid">
+          <view
+            class="card mode-card {{mode === item.key ? 'selected' : ''}}"
+            wx:for="{{modes}}"
+            wx:key="key"
+            data-key="{{item.key}}"
+            bindtap="onModeSelect"
+          >
+            <view class="mode-icon">
+              <image src="{{icons.check}}" mode="aspectFit" class="mode-icon-img {{mode === item.key ? 'visible' : ''}}" lazy-load="{{false}}" />
+            </view>
+            <text class="mode-title">{{item.name}}</text>
+            <text class="mode-desc">{{item.desc}}</text>
+          </view>
+        </view>
+      </view>
+
+    </block>
+
+    <!-- ===== STEP 3: 确认订单 + 费用说明 ===== -->
+    <view class="section" wx:if="{{step === 3}}">
+      <view class="section-label">确认订单信息</view>
+      <view class="card">
+        <view class="confirm-card">
+          <view class="confirm-service">
+            <view class="confirm-icon">
+              <image src="{{selectedService.iconUrl}}" mode="aspectFit" class="confirm-icon-img" lazy-load="{{false}}" />
+            </view>
+            <view class="confirm-service-info">
+              <text class="confirm-service-name">{{selectedService.name}}</text>
+              <text class="confirm-service-desc">{{selectedService.desc}}</text>
+            </view>
+          </view>
+          <view class="confirm-divider"></view>
+          <view class="confirm-row">
+            <text class="confirm-label">问题描述</text>
+            <text class="confirm-value">{{description || '未填写'}}</text>
+          </view>
+          <view class="confirm-divider"></view>
+          <view class="confirm-row">
+            <text class="confirm-label">服务地址</text>
+            <text class="confirm-value">{{address ? address.detail : '未选择'}}</text>
+          </view>
+          <view class="confirm-divider"></view>
+          <view class="confirm-row">
+            <text class="confirm-label">上门时间</text>
+            <text class="confirm-value">{{time || '未选择'}}</text>
+          </view>
+          <view class="confirm-divider"></view>
+          <view class="confirm-row">
+            <text class="confirm-label">下单模式</text>
+            <text class="confirm-value">
+              <text wx:if="{{mode === 'bidding'}}">竞价模式</text>
+              <text wx:elif="{{mode === 'fixed'}}">一口价</text>
+              <text wx:else>悬赏模式</text>
+            </text>
+          </view>
+          <view class="confirm-divider"></view>
+          <view class="confirm-row">
+            <text class="confirm-label">加急费用</text>
+            <text class="confirm-value text-accent">{{urgent > 0 ? '+¥' + urgent : '不加急'}}</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="section">
+        <view class="section-label">费用说明</view>
+        <view class="card">
+          <view class="fee-card">
+            <view class="fee-row">
+              <text class="fee-label">服务参考价</text>
+              <text class="fee-value">¥{{selectedService.priceFrom}}-{{selectedService.priceTo}}</text>
+            </view>
+            <view class="fee-row">
+              <text class="fee-label">加急费用</text>
+              <text class="fee-value text-accent">{{urgent > 0 ? '+¥' + urgent : '免费'}}</text>
+            </view>
+            <view class="fee-row">
+              <text class="fee-label">平台服务费</text>
+              <text class="fee-value">免费</text>
+            </view>
+            <view class="confirm-divider"></view>
+            <view class="fee-row total">
+              <text class="fee-label">质保期</text>
+              <text class="fee-value text-brand">{{selectedService.warranty}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+  </scroll-view>
+
+  <!-- ===== 底部固定发布栏 ===== -->
+  <view class="summary-bar fixed">
+    <view class="summary-left">
+      <text class="summary-label" wx:if="{{step === 3}}">实付金额</text>
+      <text class="summary-label" wx:else>{{step === 1 ? '第一步·选服务' : '第二步·完善信息'}}</text>
+      <view class="summary-price" wx:if="{{step === 3}}">
+        <text class="currency">¥</text>
+        <text class="amount numeric">{{selectedService.priceFrom + urgent}}</text>
+      </view>
+    </view>
+    <view class="summary-actions">
+      <view class="btn-back" wx:if="{{step > 1}}" bindtap="onStepPrev">上一步</view>
+      <view class="btn-publish" wx:if="{{step < 3}}" bindtap="onStepNext">下一步</view>
+      <view class="btn-publish" wx:else bindtap="onSubmit">{{submitting ? '提交中...' : '立即发布'}}</view>
+    </view>
+  </view>
+
+  <tab-bar id="tabbar" active="publish" />
+</view>

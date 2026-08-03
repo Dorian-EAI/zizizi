@@ -1,0 +1,97 @@
+<!-- 像素级复刻 client-favorite-workers.html -->
+<view class="page">
+  <!-- 背景装饰光斑：teal-amber 径向渐变 -->
+  <view class="blob" style="top:-80rpx;right:-120rpx;width:560rpx;height:560rpx;background:radial-gradient(circle, var(--brand) 0%, transparent 70%);"></view>
+  <view class="blob" style="top:720rpx;left:-160rpx;width:480rpx;height:480rpx;background:radial-gradient(circle, var(--accent) 0%, transparent 70%);"></view>
+
+  <scroll-view scroll-y class="page-scroll hide-scroll" style="padding-bottom:80rpx;">
+
+    <!-- ===== Top Header: Hero + Filter Tabs（sticky） ===== -->
+    <view class="top-header">
+
+      <!-- Hero：返回 + 标题 + 编辑 -->
+      <view class="hero fav-hero" style="padding-top:calc({{statusBarHeight}}px + 36rpx);">
+        <view class="nav-content">
+          <view class="nav-back" bindtap="onBack">
+            <image src="{{icons.back}}" mode="aspectFit" class="nav-back-icon" lazy-load="{{false}}" />
+          </view>
+          <text class="nav-title">收藏的师傅</text>
+          <view class="nav-edit" bindtap="onEdit">
+            <image src="{{icons.edit}}" mode="aspectFit" class="nav-edit-icon" lazy-load="{{false}}" />
+          </view>
+        </view>
+      </view>
+
+      <!-- Filter Tabs（-18px 负边距上移叠加在 Hero 上） -->
+      <view class="filter-tabs">
+        <view
+          class="filter-pill {{activeFilter === item.key ? 'active' : ''}}"
+          wx:for="{{tabs}}"
+          wx:key="key"
+          data-key="{{item.key}}"
+          bindtap="onFilterTap"
+        >{{item.name}}</view>
+      </view>
+    </view>
+
+    <!-- ===== WORKER LIST ===== -->
+    <view class="worker-list" wx:if="{{workers.length > 0}}">
+      <view class="worker-card" wx:for="{{workers}}" wx:key="id" data-id="{{item.id}}">
+        <!-- 头部：头像+等级 / 师傅信息 -->
+        <view class="worker-head">
+          <view class="avatar-wrap">
+            <view class="avatar">{{item.avatarText}}</view>
+            <text class="level-badge {{item.levelClass}}">{{item.levelText}}</text>
+          </view>
+          <view class="worker-info">
+            <view class="name-row">
+              <text class="worker-name">{{item.name}}</text>
+              <view class="rating">
+                <image src="{{icons.star}}" mode="aspectFit" class="rating-icon" lazy-load="{{false}}" />
+                <text class="rating-num">{{item.rating}}</text>
+              </view>
+            </view>
+            <view class="meta-row">
+              <view class="meta-item">
+                <image src="{{icons.location}}" mode="aspectFit" class="meta-ico" lazy-load="{{false}}" />
+                <text>{{item.distanceText}}</text>
+              </view>
+              <view class="dot-sep"></view>
+              <text class="meta-item">服务 {{item.orderCount}} 次</text>
+            </view>
+            <view class="tag-chips" wx:if="{{item.skills && item.skills.length}}">
+              <text class="tag-chip" wx:for="{{item.skills}}" wx:key="*this" wx:for-item="s">{{s}}</text>
+            </view>
+          </view>
+        </view>
+        <!-- 底部：认证徽章 + 操作 -->
+        <view class="worker-foot">
+          <view class="auth-badges">
+            <view class="auth-badge" wx:if="{{item.depositPaid}}">
+              <image src="{{icons.shield}}" mode="aspectFit" class="auth-icon" lazy-load="{{false}}" />
+              <text>保证金已缴</text>
+            </view>
+            <view class="auth-badge" wx:if="{{item.verified}}">
+              <image src="{{icons.check}}" mode="aspectFit" class="auth-icon" lazy-load="{{false}}" />
+              <text>认证等级</text>
+            </view>
+          </view>
+          <view class="actions">
+            <view class="btn-neu-ghost" data-id="{{item.id}}" catchtap="onCancelFavorite">取消收藏</view>
+            <view class="btn-neu-primary" data-id="{{item.id}}" catchtap="onPublish">预约</view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== 空态 ===== -->
+    <view class="empty" wx:else>
+      <view class="empty-icon neu-icon-inset">
+        <image src="{{icons.heart}}" mode="aspectFit" class="empty-img" lazy-load="{{false}}" />
+      </view>
+      <text class="empty-text">暂未收藏师傅</text>
+      <text class="empty-sub">遇到心仪的师傅记得收藏哦</text>
+    </view>
+
+  </scroll-view>
+</view>

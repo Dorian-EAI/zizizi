@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自家人居家维修 · 玻璃新拟态 · 积分中心</title>
+    <link rel="stylesheet" href="../assets/fonts.css">
+    <style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --brand:#0D9488;--brand-dark:#0A7A70;--brand-mid:#14B8A6;--brand-light:#CCFBF1;
+  --brand-glow:rgba(13,148,136,0.28);--brand-subtle:rgba(13,148,136,0.08);
+  --brand-gradient:linear-gradient(135deg,#0D9488 0%,#14B8A6 50%,#D4944C 100%);
+  --accent:#D4944C;--accent-dark:#A0723C;--accent-light:#F5E6D0;--accent-glow:rgba(212,148,76,0.25);
+  --bg:#F2EDE8;--bg-elevated:#F7F3EF;
+  --neu-light:#FFF8F2;--neu-dark:#DDD6CE;
+  --text-1:#2C2824;--text-2:#8B8178;--text-3:#B5ADA5;--text-inverse:#FFFFFF;
+  --sep:rgba(44,40,36,0.06);
+  --green:#5B8C5A;--red:#C4533A;--orange:#D4944C;--blue:#5A8FAD;
+  --r:1.2rem;--r-lg:1.6rem;--r-sm:0.75rem;--r-pill:9999px;
+  --font-display:'Cormorant Garamond', 'Noto Serif SC', 'STSong', Georgia, serif;
+  --font-body:'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --font-nums:'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
+  --font:var(--font-body);
+  --neu-out-sm:6px 6px 14px var(--neu-dark),-6px -6px 14px var(--neu-light),0 4px 16px rgba(0,0,0,0.04);
+  --neu-out-md:8px 8px 18px var(--neu-dark),-8px -8px 18px var(--neu-light),0 6px 24px rgba(0,0,0,0.05);
+  --neu-in:inset 4px 4px 8px var(--neu-dark),inset -4px -4px 8px var(--neu-light);
+  --spring:cubic-bezier(0.175,0.885,0.32,1.275);--ease:cubic-bezier(0.25,0.46,0.45,0.94);--dur:0.2s;
+}
+html,body{font-family:var(--font);color:var(--text-1);-webkit-font-smoothing:antialiased}
+body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh;background:#E8E4DF;letter-spacing:-0.01em}
+
+.phone{position:relative;width:414px;min-height:896px;background:var(--bg);border-radius:48px;overflow:hidden;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.12),0 4px 16px rgba(0,0,0,.06);padding-bottom:40px}
+.mono{font-variant-numeric:tabular-nums;letter-spacing:-0.01em}
+
+/* ===== Top Nav ===== */
+.nav-bar{background:radial-gradient(ellipse 220px 160px at 78% 45%,rgba(212,148,76,.14) 0%,transparent 70%),radial-gradient(ellipse 180px 140px at 18% 75%,rgba(13,148,136,.16) 0%,transparent 70%),linear-gradient(135deg,rgba(13,148,136,.14) 0%,rgba(212,148,76,.08) 50%,rgba(13,148,136,.06) 100%);position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:18px 20px;padding-top:max(18px,env(safe-area-inset-top));border-radius:0 0 28px 28px;overflow:hidden}
+.nav-icon-btn{width:44px;height:44px;border-radius:50%;border:none;background:var(--bg-elevated);box-shadow:var(--neu-out-sm),inset 0 1px 1px rgba(255,255,255,0.45);display:flex;align-items:center;justify-content:center;color:var(--text-1);cursor:pointer;flex-shrink:0;transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease)}
+.nav-icon-btn:active{box-shadow:var(--neu-in);transform:scale(0.94)}
+.nav-title{font-size:17px;font-weight:700;color:var(--text-1);letter-spacing:-0.02em}
+
+/* ===== Points Hero ===== */
+.points-hero{padding:24px 20px 32px;background:
+  radial-gradient(ellipse 280px 180px at 85% 30%,rgba(212,148,76,.22) 0%,transparent 60%),
+  radial-gradient(ellipse 220px 160px at 10% 70%,rgba(13,148,136,.18) 0%,transparent 60%),
+  linear-gradient(150deg,rgba(13,148,136,.12) 0%,rgba(212,148,76,.10) 100%);
+  border-radius:0 0 32px 32px;
+  text-align:center;
+  position:relative;
+}
+.points-label{font-size:13px;color:var(--text-2);margin-bottom:8px}
+.points-value{font-size:56px;font-weight:700;font-family:var(--font-display);letter-spacing:-0.04em;line-height:1;background:linear-gradient(135deg,var(--brand) 0%,var(--accent) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.points-unit{font-size:16px;color:var(--text-2);margin-top:4px}
+.points-actions{display:flex;justify-content:center;gap:16px;margin-top:24px}
+.points-action-btn{padding:10px 24px;border-radius:9999px;font-size:13px;font-weight:600;border:none;cursor:pointer;transition:all var(--dur) var(--spring)}
+.points-action-btn.primary{background:var(--brand-gradient);color:#fff;box-shadow:var(--neu-out-sm),0 4px 14px var(--brand-glow)}
+.points-action-btn.secondary{background:rgba(255,255,255,0.52);color:var(--brand);border:0.5px solid rgba(255,255,255,0.60);box-shadow:var(--neu-out-sm)}
+.points-action-btn:active{transform:scale(0.94)}
+
+/* ===== Section ===== */
+.section{padding:20px 20px 0}
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.section-title{font-size:15px;font-weight:700;color:var(--text-1)}
+.section-more{font-size:12px;color:var(--text-2);cursor:pointer}
+
+/* ===== Glass Card ===== */
+.glass-card{background:rgba(255,255,255,0.52);backdrop-filter:blur(20px) saturate(140%);-webkit-backdrop-filter:blur(20px) saturate(140%);border-radius:var(--r-lg);border:0.5px solid rgba(255,255,255,0.60);box-shadow:var(--neu-out-md);padding:16px;position:relative}
+.glass-card::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.80),transparent);pointer-events:none}
+
+/* ===== Ways to earn ===== */
+.earn-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.earn-item{text-align:center;cursor:pointer}
+.earn-icon{width:52px;height:52px;border-radius:16px;margin:0 auto 8px;background:rgba(255,255,255,0.52);box-shadow:var(--neu-out-sm);display:flex;align-items:center;justify-content:center;color:var(--brand)}
+.earn-item:active .earn-icon{box-shadow:var(--neu-in);transform:scale(0.94)}
+.earn-name{font-size:12px;color:var(--text-1);margin-bottom:2px}
+.earn-points{font-size:11px;color:var(--accent);font-weight:600}
+
+/* ===== Points Mall ===== */
+.mall-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.mall-item{background:rgba(255,255,255,0.52);border-radius:var(--r-md);border:0.5px solid rgba(255,255,255,0.60);box-shadow:var(--neu-out-sm);overflow:hidden;cursor:pointer;transition:all var(--dur) var(--ease)}
+.mall-item:active{transform:scale(0.97);box-shadow:var(--neu-in)}
+.mall-img{height:100px;background:linear-gradient(135deg,var(--brand-light),var(--accent-light));display:flex;align-items:center;justify-content:center;font-size:40px}
+.mall-info{padding:12px}
+.mall-name{font-size:13px;font-weight:600;margin-bottom:4px}
+.mall-points{font-size:14px;font-weight:700;color:var(--accent);font-family:var(--font-display)}
+.mall-points small{font-size:10px;font-weight:500;color:var(--text-3);margin-left:4px}
+
+/* ===== Records ===== */
+.record-item{display:flex;align-items:center;padding:14px 0;border-bottom:1px solid var(--sep)}
+.record-item:last-child{border-bottom:none}
+.record-icon{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-right:12px;flex-shrink:0}
+.record-icon.plus{background:rgba(91,140,90,0.12);color:var(--green)}
+.record-icon.minus{background:rgba(212,148,76,0.12);color:var(--accent)}
+.record-info{flex:1}
+.record-title{font-size:14px;font-weight:500;margin-bottom:2px}
+.record-time{font-size:12px;color:var(--text-2)}
+.record-points{font-size:16px;font-weight:700;font-family:var(--font-display)}
+.record-points.plus{color:var(--green)}
+.record-points.minus{color:var(--accent)}
+
+/* ===== Segmented Tabs ===== */
+.segmented-tabs{display:flex;background:var(--bg-elevated);border-radius:9999px;padding:4px;box-shadow:var(--neu-in);margin-bottom:16px}
+.seg-tab{flex:1;padding:8px 0;font-size:13px;font-weight:500;text-align:center;border-radius:9999px;color:var(--text-2);cursor:pointer;transition:all var(--dur) var(--ease)}
+.seg-tab.active{background:rgba(255,255,255,0.80);color:var(--brand);box-shadow:var(--neu-out-sm);font-weight:600}
+    </style>
+</head>
+<body>
+<div class="phone" data-dom-id="page-client-points">
+
+  <!-- ===== TOP NAV ===== -->
+  <header class="nav-bar">
+    <button class="nav-icon-btn" data-dom-id="back-btn" aria-label="返回">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="m15 18-6-6 6-6"/></svg>
+    </button>
+    <h1 class="nav-title">积分中心</h1>
+    <button class="nav-icon-btn" data-dom-id="rules-btn" aria-label="规则">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+    </button>
+  </header>
+
+  <!-- ===== POINTS HERO ===== -->
+  <div class="points-hero">
+    <div class="points-label">我的积分</div>
+    <div class="points-value mono">2,680</div>
+    <div class="points-unit">积分</div>
+    <div class="points-actions">
+      <button class="points-action-btn primary" data-dom-id="sign-in-btn">
+        立即签到 +10
+      </button>
+      <button class="points-action-btn secondary" data-dom-id="exchange-btn">
+        积分兑换
+      </button>
+    </div>
+  </div>
+
+  <!-- ===== WAYS TO EARN ===== -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-title">赚积分</div>
+      <div class="section-more">更多任务 ></div>
+    </div>
+    <div class="glass-card">
+      <div class="earn-grid">
+        <div class="earn-item" data-dom-id="earn-signin">
+          <div class="earn-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M20 6 9 17l-5-5"/></svg>
+          </div>
+          <div class="earn-name">每日签到</div>
+          <div class="earn-points">+10积分</div>
+        </div>
+        <div class="earn-item" data-dom-id="earn-order">
+          <div class="earn-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </div>
+          <div class="earn-name">下单消费</div>
+          <div class="earn-points">1元=1积分</div>
+        </div>
+        <div class="earn-item" data-dom-id="earn-review">
+          <div class="earn-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <div class="earn-name">评价订单</div>
+          <div class="earn-points">+20积分</div>
+        </div>
+        <div class="earn-item" data-dom-id="earn-share">
+          <div class="earn-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          </div>
+          <div class="earn-name">邀请好友</div>
+          <div class="earn-points">+100积分</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== POINTS MALL ===== -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-title">积分商城</div>
+      <div class="section-more">查看全部 ></div>
+    </div>
+    <div class="mall-grid">
+      <div class="mall-item" data-dom-id="mall-coupon-10">
+        <div class="mall-img">🎫</div>
+        <div class="mall-info">
+          <div class="mall-name">10元优惠券</div>
+          <div class="mall-points mono">500 <small>积分</small></div>
+        </div>
+      </div>
+      <div class="mall-item" data-dom-id="mall-coupon-20">
+        <div class="mall-img" style="background:linear-gradient(135deg,#fde68a,#fcd34d)">🎁</div>
+        <div class="mall-info">
+          <div class="mall-name">20元优惠券</div>
+          <div class="mall-points mono">1000 <small>积分</small></div>
+        </div>
+      </div>
+      <div class="mall-item" data-dom-id="mall-coupon-50">
+        <div class="mall-img" style="background:linear-gradient(135deg,#fecaca,#fca5a5)">💰</div>
+        <div class="mall-info">
+          <div class="mall-name">50元优惠券</div>
+          <div class="mall-points mono">2500 <small>积分</small></div>
+        </div>
+      </div>
+      <div class="mall-item" data-dom-id="mall-vip">
+        <div class="mall-img" style="background:linear-gradient(135deg,#ddd6fe,#c4b5fd)">👑</div>
+        <div class="mall-info">
+          <div class="mall-name">月卡会员</div>
+          <div class="mall-points mono">3000 <small>积分</small></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== RECORDS ===== -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-title">积分明细</div>
+    </div>
+    <div class="glass-card">
+      <div class="segmented-tabs">
+        <div class="seg-tab active">全部</div>
+        <div class="seg-tab">获取</div>
+        <div class="seg-tab">使用</div>
+      </div>
+      <div class="record-item">
+        <div class="record-icon plus">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M20 6 9 17l-5-5"/></svg>
+        </div>
+        <div class="record-info">
+          <div class="record-title">订单消费奖励</div>
+          <div class="record-time">2026-08-02 14:30</div>
+        </div>
+        <div class="record-points plus mono">+168</div>
+      </div>
+      <div class="record-item">
+        <div class="record-icon minus">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M3 7v10a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1Z"/></svg>
+        </div>
+        <div class="record-info">
+          <div class="record-title">兑换10元优惠券</div>
+          <div class="record-time">2026-08-01 09:15</div>
+        </div>
+        <div class="record-points minus mono">-500</div>
+      </div>
+      <div class="record-item">
+        <div class="record-icon plus">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <div class="record-info">
+          <div class="record-title">评价订单奖励</div>
+          <div class="record-time">2026-07-30 16:20</div>
+        </div>
+        <div class="record-points plus mono">+20</div>
+      </div>
+      <div class="record-item">
+        <div class="record-icon plus">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M20 6 9 17l-5-5"/></svg>
+        </div>
+        <div class="record-info">
+          <div class="record-title">每日签到</div>
+          <div class="record-time">2026-07-30 08:00</div>
+        </div>
+        <div class="record-points plus mono">+10</div>
+      </div>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>

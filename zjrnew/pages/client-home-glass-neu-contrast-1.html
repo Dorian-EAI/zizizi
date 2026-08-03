@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自家人居家维修 · 玻璃新拟态实体感 · 客户端首页</title>
+    <link rel="stylesheet" href="../assets/fonts.css">
+
+    <style id="theme-vars">
+/* 自家人居家维修 - 玻璃新拟态 */
+:root {
+  /* Brand - Client (Teal) */
+  --brand: #0D9488;
+  --brand-dark: #0A7A70;
+  --brand-mid: #14B8A6;
+  --brand-light: #CCFBF1;
+  --brand-glow: rgba(13, 148, 136, 0.24);
+  --brand-subtle: rgba(13, 148, 136, 0.10);
+
+  /* Accent (Amber) */
+  --accent: #D4944C;
+  --accent-dark: #A0723C;
+  --accent-mid: #E8C088;
+  --accent-light: #F5E6D0;
+  --accent-glow: rgba(212, 148, 76, 0.20);
+
+  /* Background */
+  --background: #F2EDE8;
+  --foreground: #2C2824;
+  --body-bg: #E8E4DF;
+  --bg-elevated: #F7F3EF;
+
+  /* Neumorphic */
+  --neu-light: #FFF8F2;
+  --neu-dark: #DDD6CE;
+  --neu-highlight: rgba(255, 255, 255, 0.55);
+
+  /* Surface & Card */
+  --card: rgba(255, 255, 255, 0.52);
+  --card-foreground: #2C2824;
+  --popover: #fff;
+  --popover-foreground: #2C2824;
+
+  /* Muted */
+  --muted: #F7F3EF;
+  --muted-foreground: #8B8178;
+
+  /* Border & Input */
+  --border: rgba(44, 40, 36, 0.06);
+  --input: rgba(44, 40, 36, 0.06);
+  --ring: #0D9488;
+
+  /* Primary */
+  --primary: #0D9488;
+  --primary-foreground: #ffffff;
+
+  /* Semantic aliases */
+  --state-success: #5B8C5A;
+  --state-warning: #D4944C;
+  --state-error: #C4533A;
+  --state-info: #5A8FAD;
+
+  /* Text */
+  --text-1: #2C2824;
+  --text-2: #8B8178;
+  --text-3: #B5ADA5;
+  --text-inverse: #ffffff;
+
+  /* Sep & Fill */
+  --sep: rgba(44, 40, 36, 0.06);
+  --fill: rgba(44, 40, 36, 0.04);
+
+  /* Green/Red/Orange/Blue semantic */
+  --green: #5B8C5A;
+  --red: #C4533A;
+  --orange: #D4944C;
+  --blue: #5A8FAD;
+
+  /* Radius */
+  --radius-sm: 0.75rem;
+  --radius-md: 1.2rem;
+  --radius-lg: 1.6rem;
+  --radius-full: 9999px;
+
+    /* Font — 统一衬线系统 */
+  --font-display: 'Cormorant Garamond', 'Noto Serif SC', 'STSong', Georgia, serif;
+  --font-body: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --font-nums: 'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
+  --font: var(--font-body);
+
+  /* Motion */
+  --spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --dur: 0.2s;
+
+  /* Glass */
+  --glass-bg: rgba(255, 255, 255, 0.18);
+  --glass-blur: blur(12px) saturate(140%);
+  --glass-border: rgba(255, 255, 255, 0.60);
+
+  /* Surface presets for glass-neumorphic components */
+  --surface-1: rgba(255, 255, 255, 0.50);
+  --surface-2: rgba(255, 255, 255, 0.45);
+
+  /* Neumorphic shadow presets */
+  --neu-out-sm: 6px 6px 14px var(--neu-dark), -6px -6px 14px var(--neu-light), 0 4px 16px rgba(0, 0, 0, 0.04);
+  --neu-out-md: 8px 8px 18px var(--neu-dark), -8px -8px 18px var(--neu-light), 0 6px 24px rgba(0, 0, 0, 0.05);
+  --neu-out-lg: 10px 10px 24px var(--neu-dark), -10px -10px 24px var(--neu-light), 0 8px 32px rgba(0, 0, 0, 0.06);
+  --neu-in: inset 4px 4px 8px var(--neu-dark), inset -4px -4px 8px var(--neu-light);
+  --neu-in-deep: inset 5px 5px 10px var(--neu-dark), inset -5px -5px 10px var(--neu-light);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --font-sans: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --font-serif: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --radius-full: var(--radius-full);}
+
+/* Semantic token fallback */
+#semantic-token-fallback {
+  --brand-background: var(--background);
+  --brand-foreground: var(--foreground);
+  --brand-card: var(--card);
+  --brand-card-foreground: var(--card-foreground);
+  --brand-popover: var(--popover);
+  --brand-popover-foreground: var(--popover-foreground);
+  --brand-primary: var(--primary);
+  --brand-primary-foreground: var(--primary-foreground);
+  --brand-muted: var(--muted);
+  --brand-muted-foreground: var(--muted-foreground);
+  --brand-border: var(--border);
+  --brand-input: var(--input);
+  --brand-ring: var(--ring);
+  --brand-radius-sm: var(--radius-sm);
+  --brand-radius-md: var(--radius-md);
+  --brand-radius-lg: var(--radius-lg);
+}
+
+/* ===== Global Neumorphic Components ===== */
+/* Tab Bar */
+.tab-bar{
+  position:absolute;
+  bottom:max(14px, env(safe-area-inset-bottom));
+  left:50%;
+  transform:translateX(-50%);
+  width:calc(100% - 32px);
+  max-width:360px;
+  height:64px;
+  z-index:100;
+  background:rgba(255,255,255,0.22);
+  backdrop-filter:blur(48px) saturate(210%);
+  -webkit-backdrop-filter:blur(48px) saturate(210%);
+  border:0.5px solid rgba(255,255,255,0.50);
+  border-radius:28px;
+  box-shadow:
+    inset 0 1.5px 3px rgba(255,255,255,0.60),
+    inset 0 -0.5px 1px rgba(255,255,255,0.20),
+    0 0 0 0.5px rgba(0,0,0,0.04),
+    0 2px 10px rgba(0,0,0,0.06),
+    0 12px 36px rgba(0,0,0,0.08);
+  display:flex;
+  align-items:center;
+  justify-content:space-around;
+  padding:0 10px;
+}
+.tab-bar::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  background:linear-gradient(160deg,
+    rgba(255,255,255,0.42) 0%,
+    rgba(255,255,255,0.16) 20%,
+    rgba(255,255,255,0.03) 40%,
+    transparent 60%);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
+  padding:0.5px;
+  pointer-events:none;
+  z-index:1;
+}
+.tab-bar::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  background:linear-gradient(320deg,
+    transparent 60%,
+    rgba(13,148,136,0.06) 80%,
+    rgba(255,255,255,0.04) 100%);
+  pointer-events:none;
+  z-index:1;
+}
+.tab-item{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+  width:68px;
+  height:44px;
+  border-radius:14px;
+  color:var(--text-3);
+  font-size:11px;
+  font-weight:500;
+  text-decoration:none;
+  position:relative;
+  transition:all .2s;
+}
+.tab-item svg{
+  width:20px;
+  height:20px;
+  stroke:currentColor;
+  fill:none;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.tab-item[data-active="true"]{
+  color:var(--brand);
+  font-weight:600;
+}
+.tab-item[data-active="true"]::before{
+  content:"";
+  position:absolute;
+  width:54px;
+  height:42px;
+  border-radius:16px;
+  background:rgba(13,148,136,0.16);
+  backdrop-filter:blur(24px);
+  -webkit-backdrop-filter:blur(24px);
+  border:0.5px solid rgba(13,148,136,0.30);
+  box-shadow:
+    inset 0 1px 3px rgba(255,255,255,0.55),
+    inset 0 -0.5px 1px rgba(255,255,255,0.15),
+    0 2px 10px rgba(13,148,136,0.20),
+    0 0 0 0.5px rgba(13,148,136,0.08);
+  z-index:0;
+}
+.tab-item[data-active="true"] svg{
+  transform:scale(1.08);
+  position:relative;
+  z-index:1;
+}
+
+.btn-neu-primary{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:var(--bg-elevated);color:var(--brand);
+  border:0.5px solid rgba(255,255,255,0.75);border-radius:9999px;
+  padding:8px 18px;font-size:13px;font-weight:700;font-family:var(--font);
+  cursor:pointer;
+  box-shadow:var(--neu-out-sm),inset 0 1px 1px rgba(255,255,255,0.55);
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease),background var(--dur) var(--ease);
+}
+.btn-neu-primary:active{box-shadow:var(--neu-in);transform:scale(0.94);background:var(--brand-subtle)}
+
+.btn-neu-secondary{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,0.50);color:var(--brand);
+  border:0.5px solid rgba(255,255,255,0.60);border-radius:9999px;
+  padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
+  cursor:pointer;
+  box-shadow:var(--neu-out-sm);
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
+.btn-neu-secondary:active{box-shadow:var(--neu-in);transform:scale(0.94)}
+
+.btn-neu-ghost{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:transparent;color:var(--text-2);
+  border:0.5px solid var(--border);border-radius:9999px;
+  padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
+  cursor:pointer;
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease),color var(--dur) var(--ease);
+}
+.btn-neu-ghost:active{transform:scale(0.94);color:var(--brand)}
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-accent: var(--accent);
+    --radius-sm: var(--radius-sm);
+    --radius-md: var(--radius-md);
+    --radius-lg: var(--radius-lg);
+    --radius-full: var(--radius-full);
+    --font-sans: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+    --font-serif: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+    <style id="semantic-token-fallback">
+      .bg-background { background-color: var(--background); }
+      .text-background { color: var(--background); }
+      .border-background { border-color: var(--background); }
+      .ring-background { --tw-ring-color: var(--background); }
+      .bg-foreground { background-color: var(--foreground); }
+      .text-foreground { color: var(--foreground); }
+      .border-foreground { border-color: var(--foreground); }
+      .ring-foreground { --tw-ring-color: var(--foreground); }
+      .bg-card { background-color: var(--card); }
+      .text-card { color: var(--card); }
+      .border-card { border-color: var(--card); }
+      .ring-card { --tw-ring-color: var(--card); }
+      .bg-card-foreground { background-color: var(--card-foreground); }
+      .text-card-foreground { color: var(--card-foreground); }
+      .border-card-foreground { border-color: var(--card-foreground); }
+      .ring-card-foreground { --tw-ring-color: var(--card-foreground); }
+      .bg-popover { background-color: var(--popover); }
+      .text-popover { color: var(--popover); }
+      .border-popover { border-color: var(--popover); }
+      .ring-popover { --tw-ring-color: var(--popover); }
+      .bg-popover-foreground { background-color: var(--popover-foreground); }
+      .text-popover-foreground { color: var(--popover-foreground); }
+      .border-popover-foreground { border-color: var(--popover-foreground); }
+      .ring-popover-foreground { --tw-ring-color: var(--popover-foreground); }
+      .bg-primary { background-color: var(--primary); }
+      .text-primary { color: var(--primary); }
+      .border-primary { border-color: var(--primary); }
+      .ring-primary { --tw-ring-color: var(--primary); }
+      .bg-primary-foreground { background-color: var(--primary-foreground); }
+      .text-primary-foreground { color: var(--primary-foreground); }
+      .border-primary-foreground { border-color: var(--primary-foreground); }
+      .ring-primary-foreground { --tw-ring-color: var(--primary-foreground); }
+      .bg-muted { background-color: var(--muted); }
+      .text-muted { color: var(--muted); }
+      .border-muted { border-color: var(--muted); }
+      .ring-muted { --tw-ring-color: var(--muted); }
+      .bg-muted-foreground { background-color: var(--muted-foreground); }
+      .text-muted-foreground { color: var(--muted-foreground); }
+      .border-muted-foreground { border-color: var(--muted-foreground); }
+      .ring-muted-foreground { --tw-ring-color: var(--muted-foreground); }
+      .bg-border { background-color: var(--border); }
+      .text-border { color: var(--border); }
+      .border-border { border-color: var(--border); }
+      .ring-border { --tw-ring-color: var(--border); }
+      .bg-input { background-color: var(--input); }
+      .text-input { color: var(--input); }
+      .border-input { border-color: var(--input); }
+      .ring-input { --tw-ring-color: var(--input); }
+      .bg-ring { background-color: var(--ring); }
+      .text-ring { color: var(--ring); }
+      .border-ring { border-color: var(--ring); }
+      .ring-ring { --tw-ring-color: var(--ring); }
+      .bg-accent { background-color: var(--accent); }
+      .text-accent { color: var(--accent); }
+      .border-accent { border-color: var(--accent); }
+      .ring-accent { --tw-ring-color: var(--accent); }
+    </style>
+    <style>
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      [data-icon] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        background-color: currentColor;
+      }
+    </style>
+</head>
+<body>
+
+
+
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --phone-bg:#F2EDE8;
+  --surface-1:rgba(255,255,255,0.50);
+  --surface-2:rgba(255,255,255,0.45);
+  --border-glass:0.5px solid rgba(255,255,255,0.60);
+  --border-glass-soft:0.5px solid rgba(255,255,255,0.45);
+  --neu-out-sm:6px 6px 14px var(--neu-dark),-6px -6px 14px var(--neu-light),0 4px 16px rgba(0,0,0,0.04);
+  --neu-out-md:8px 8px 18px var(--neu-dark),-8px -8px 18px var(--neu-light),0 6px 24px rgba(0,0,0,0.05);
+  --neu-out-lg:10px 10px 24px var(--neu-dark),-10px -10px 24px var(--neu-light),0 8px 32px rgba(0,0,0,0.06);
+  --neu-in:inset 4px 4px 8px var(--neu-dark),inset -4px -4px 8px var(--neu-light);
+  --neu-in-deep:inset 5px 5px 10px var(--neu-dark),inset -5px -5px 10px var(--neu-light);
+  --icon-raise:5px 5px 10px var(--neu-dark),-5px -5px 10px var(--neu-light);
+  --icon-inset:inset 3px 3px 6px var(--neu-dark),inset -3px -3px 6px var(--neu-light);
+}
+html,body{font-family:var(--font);color:var(--text-1);-webkit-font-smoothing:antialiased}
+body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh;background:var(--body-bg);letter-spacing:-0.01em}
+
+/* ===== Phone Frame ===== */
+.phone{position:relative;width:414px;min-height:896px;background:var(--phone-bg);border-radius:48px;overflow:hidden;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.12),0 4px 16px rgba(0,0,0,.06);padding-bottom:82px}
+.phone::-webkit-scrollbar{display:none}
+.phone{scrollbar-width:none}
+.phone::after{content:'';position:absolute;bottom:0;left:0;right:0;height:260px;background:radial-gradient(ellipse 180px 120px at 20% 90%,rgba(13,148,136,.06) 0%,transparent 70%),radial-gradient(ellipse 160px 100px at 80% 85%,rgba(212,148,76,.06) 0%,transparent 70%);pointer-events:none;z-index:0}
+.phone>*:not(.tab-bar){position:relative;z-index:1}
+
+/* ===== Style Label ===== */
+.style-label{position:absolute;top:16px;left:16px;z-index:100;background:var(--surface-2);backdrop-filter:blur(12px) saturate(130%);-webkit-backdrop-filter:blur(12px) saturate(130%);border:var(--border-glass-soft);border-radius:10px;padding:6px 12px;font-size:11px;font-weight:600;color:var(--brand);letter-spacing:.3px}
+
+/* ===== HERO ===== */
+.hero{padding:14px 24px 24px;position:relative;z-index:1;background:radial-gradient(ellipse 220px 180px at 75% 45%,rgba(212,148,76,.14) 0%,transparent 70%),radial-gradient(ellipse 180px 140px at 20% 80%,rgba(13,148,136,.14) 0%,transparent 70%),linear-gradient(135deg,rgba(13,148,136,.16) 0%,rgba(212,148,76,.10) 50%,rgba(13,148,136,.06) 100%);border-radius:0 0 32px 32px;overflow:hidden}
+
+/* Status bar */
+.status-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;font-size:13px;font-weight:600;color:var(--text-1)}
+.status-icons{display:flex;align-items:center;gap:6px}
+.status-icons svg{width:16px;height:16px;stroke:var(--text-1);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+/* Greeting */
+.greeting{font-size:14px;color:var(--text-2);margin-bottom:4px}
+.app-name{font-size:26px;font-weight:700;color:var(--text-1);margin-bottom:18px;letter-spacing:-.3px}
+
+/* Glass Search Bar */
+.search-bar{display:flex;align-items:center;gap:10px;background:var(--surface-2);backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);border:var(--border-glass);border-radius:28px;padding:12px 18px;margin-bottom:16px;color:var(--text-3);font-size:14px;cursor:pointer;transition:transform var(--dur) var(--spring)}
+.search-bar:active{transform:scale(0.97)}
+.search-bar svg{width:18px;height:18px;stroke:var(--text-3);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.search-bar span{font-size:14px;color:var(--text-3)}
+
+/* Stat Cards */
+.stats{display:flex;gap:12px}
+.stat-card{flex:1;background:var(--surface-2);backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);border:var(--border-glass-soft);border-radius:20px;box-shadow:var(--neu-out-sm);padding:14px 8px;text-align:center;transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease)}
+.stat-card:active{transform:scale(0.96);box-shadow:var(--neu-in)}
+.stat-value{font-size:18px;font-weight:700;margin-bottom:3px}
+.stat-label{font-size:11px;color:var(--text-2)}
+.stat-card:nth-child(1) .stat-value{color:var(--brand)}
+.stat-card:nth-child(2) .stat-value{color:var(--accent)}
+.stat-card:nth-child(3) .stat-value{color:var(--text-1)}
+
+/* ===== Hot Tags ===== */
+.hot-tags{display:flex;gap:8px;overflow-x:auto;padding:14px 0 0;margin-bottom:14px;scrollbar-width:none}
+.hot-tags::-webkit-scrollbar{display:none}
+.hot-tag{flex-shrink:0;background:var(--bg-elevated);border-radius:9999px;padding:7px 14px;font-size:12px;font-weight:600;color:var(--text-2);white-space:nowrap;cursor:pointer;box-shadow:var(--neu-out-sm);transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease),color var(--dur) var(--ease)}
+.hot-tag:active{transform:scale(0.96);box-shadow:var(--neu-in);color:var(--brand)}
+
+/* ===== Section Title ===== */
+.section-title{font-size:18px;font-weight:700;color:var(--text-1);padding:10px 24px 7px;letter-spacing:-.2px}
+
+/* ===== Service Grid ===== */
+.service-grid{display:grid;grid-template-columns:repeat(3,101px);gap:11px;justify-content:center;padding:11px 24px}
+.service-card{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;width:101px;height:90px;background:var(--surface-1);backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);border:0.5px solid rgba(255,255,255,0.75);border-radius:22px;box-shadow:var(--neu-out-md),inset 0 1.5px 2px rgba(255,255,255,0.65);padding:8px 6px;cursor:pointer;text-decoration:none;transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease)}
+.service-card:active{transform:scale(0.95);box-shadow:var(--neu-in)}
+.icon-circle{width:48px;height:48px;border-radius:50%;flex-shrink:0;background:var(--phone-bg);box-shadow:var(--icon-raise),inset 0 1.5px 2px rgba(255,255,255,0.65);display:flex;align-items:center;justify-content:center;transition:box-shadow var(--dur) var(--ease),transform var(--dur) var(--spring)}
+.service-card:active .icon-circle{box-shadow:var(--neu-in);transform:scale(0.94)}
+.icon-circle svg{width:22px;height:22px;stroke:var(--brand);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.service-name{font-size:12px;color:var(--text-1);font-weight:600;white-space:nowrap}
+
+/* ===== Category Chips ===== */
+.chips-row{display:flex;gap:8px;overflow-x:auto;padding:10px 24px 11px;scrollbar-width:none}
+.chips-row::-webkit-scrollbar{display:none}
+.chip{flex-shrink:0;padding:8px 18px;border-radius:9999px;font-size:13px;font-weight:600;text-align:center;cursor:pointer;white-space:nowrap;transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease),background var(--dur) var(--ease),color var(--dur) var(--ease);border:none;font-family:var(--font);background:var(--bg-elevated);color:var(--text-2);box-shadow:var(--neu-out-sm)}
+.chip:active{transform:scale(0.94);box-shadow:var(--neu-in)}
+.chip-active{background:var(--brand-subtle);color:var(--brand);box-shadow:var(--neu-in),0 0 0 0.5px var(--brand-subtle)}
+
+/* ===== AI Assistant Card ===== */
+.ai-card{margin:14px 24px 0;padding:16px;display:flex;align-items:center;gap:14px;border-radius:24px;background:radial-gradient(ellipse 240px 200px at 75% 40%,rgba(212,148,76,.32) 0%,transparent 70%),radial-gradient(ellipse 200px 160px at 20% 80%,rgba(13,148,136,.24) 0%,transparent 70%),linear-gradient(135deg,rgba(13,148,136,.28) 0%,rgba(212,148,76,.20) 50%,rgba(20,184,166,.12) 100%);box-shadow:var(--neu-out-md),0 8px 28px rgba(13,148,136,0.12);cursor:pointer;transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease)}
+.ai-card:active{transform:scale(0.97);box-shadow:var(--neu-in)}
+.ai-icon{width:50px;height:50px;flex-shrink:0;border-radius:14px;background:linear-gradient(135deg,var(--brand) 0%,var(--brand-mid) 50%,var(--accent) 100%);box-shadow:var(--neu-out-sm);display:flex;align-items:center;justify-content:center;color:var(--text-inverse)}
+.ai-icon svg{width:24px;height:24px}
+.ai-text{flex:1;min-width:0}
+.ai-title{font-size:16px;font-weight:700;color:var(--text-1);margin-bottom:3px;letter-spacing:-0.01em}
+.ai-desc{font-size:12px;color:var(--text-2)}
+
+
+/* ===== Recommend Masters (horizontal cards like reference) ===== */
+.recommend-card{display:flex;align-items:center;gap:14px;margin:0 24px 14px;background:var(--surface-1);backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);border:var(--border-glass-soft);border-radius:20px;box-shadow:var(--neu-out-sm);padding:14px;cursor:pointer;transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease)}
+.recommend-card:active{transform:scale(0.97);box-shadow:var(--neu-in)}
+.avatar{width:52px;height:52px;border-radius:50%;flex-shrink:0;position:relative;overflow:hidden;background:linear-gradient(145deg,rgba(255,255,255,0.68) 0%,rgba(255,255,255,0.28) 40%,var(--brand-subtle) 78%,rgba(255,255,255,0.18) 100%);backdrop-filter:blur(10px) saturate(160%);-webkit-backdrop-filter:blur(10px) saturate(160%);border:0.5px solid rgba(255,255,255,0.75);box-shadow:inset 0 2px 3px rgba(255,255,255,0.88),inset 0 -1px 2px rgba(0,0,0,0.04),var(--icon-raise);display:flex;align-items:center;justify-content:center}
+.avatar::before{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(160deg,rgba(255,255,255,0.48) 0%,rgba(255,255,255,0.12) 35%,transparent 60%);pointer-events:none}
+.avatar svg{width:26px;height:26px;stroke:var(--green);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.recommend-info{flex:1;min-width:0}
+.recommend-name{font-size:15px;font-weight:700;color:var(--text-1);margin-bottom:2px}
+.recommend-sub{font-size:12px;color:var(--text-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.recommend-price{font-size:18px;font-weight:700;color:var(--accent);white-space:nowrap}
+
+/* ===== Recommended Services Scroll ===== */
+.rec-scroll{display:flex;gap:12px;overflow-x:auto;padding:0 24px 8px;scrollbar-width:none}
+.rec-scroll::-webkit-scrollbar{display:none}
+.rec-card{flex-shrink:0;width:180px;background:var(--surface-1);backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);border:var(--border-glass-soft);border-radius:20px;box-shadow:var(--neu-out-sm);overflow:hidden;padding:10px;cursor:pointer;transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease)}
+.rec-card:active{transform:scale(0.96);box-shadow:var(--neu-in)}
+.rec-img{width:100%;height:100px;border-radius:14px;overflow:hidden;margin-bottom:10px;display:flex;align-items:center;justify-content:center;position:relative;box-shadow:inset 2px 2px 6px rgba(0,0,0,0.12)}
+.rec-img-label{font-size:14px;font-weight:700;color:var(--text-inverse);text-shadow:0 1px 4px rgba(0,0,0,0.18);position:relative;z-index:2;letter-spacing:0.02em}
+.rec-title{font-size:14px;font-weight:600;color:var(--text-1);margin-bottom:4px;letter-spacing:-0.01em}
+.rec-meta{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-2);margin-bottom:10px}
+.rec-star{display:inline-flex;align-items:center;gap:3px;color:var(--orange);font-weight:600}
+.rec-star svg{width:12px;height:12px;color:var(--orange)}
+.rec-bottom{display:flex;align-items:center;justify-content:space-between}
+.rec-price{display:flex;align-items:baseline;gap:1px}
+.rec-price .currency{font-size:12px;color:var(--red);font-weight:600}
+.rec-price .amount{font-size:19px;color:var(--red);font-weight:700;letter-spacing:-0.02em}
+/* ===== Custom Title Bar (scroll morph) ===== */
+.title-bar{
+  position:fixed;top:0;left:0;right:0;height:88px;padding-top:44px;
+  display:flex;align-items:center;justify-content:center;
+  padding-left:16px;padding-right:16px;
+  background:rgba(242,237,232,0);backdrop-filter:blur(0px);-webkit-backdrop-filter:blur(0px);
+  opacity:0;z-index:100;pointer-events:none;
+  transition:background .3s ease,backdrop-filter .3s ease,opacity .25s ease;
+}
+.title-bar.visible{
+  background:rgba(242,237,232,0.92);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);
+  opacity:1;pointer-events:auto;
+}
+.title-bar__name{
+  font-size:18px;font-weight:700;color:var(--text-1);letter-spacing:-.2px;
+  opacity:1;transform:translateX(0);
+  transition:opacity .2s ease,transform .25s ease;
+}
+.title-bar.search-mode .title-bar__name{opacity:0;transform:translateX(-10px)}
+.title-bar__search{
+  position:absolute;left:16px;right:16px;top:50%;transform:translateY(-50%) scaleX(.88);
+  opacity:0;height:36px;display:flex;align-items:center;gap:8px;padding:0 14px;
+  background:rgba(255,255,255,0.72);border:0.5px solid rgba(255,255,255,0.60);
+  border-radius:18px;box-shadow:var(--neu-out-sm);
+  backdrop-filter:blur(20px) saturate(160%);-webkit-backdrop-filter:blur(20px) saturate(160%);
+  color:var(--text-3);font-size:13px;cursor:pointer;
+  transition:opacity .25s ease,transform .3s var(--ease);
+}
+.title-bar.search-mode .title-bar__search{opacity:1;transform:translateY(-50%) scaleX(1)}
+.title-bar__search svg{width:15px;height:15px;stroke:var(--text-3);fill:none;flex-shrink:0}
+.title-bar__search span{font-size:13px;color:var(--text-3)}
+.title-bar.search-mode{background:rgba(242,237,232,0.95);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%)}
+
+/* Hero elements fade on scroll */
+.hero .greeting,.hero .app-name,.hero .search-bar,.hero .hot-tags{
+  transition:opacity .25s ease,transform .3s ease;
+}
+.phone.scrolled .hero .greeting{opacity:0;transform:translateY(-12px)}
+.phone.scrolled-2 .hero .app-name{opacity:0;transform:translateY(-8px)}
+.phone.scrolled-2 .hero .search-bar{opacity:0;transform:translateY(-16px) scale(.96);pointer-events:none}
+.phone.scrolled-2 .hot-tags{opacity:0;transform:translateY(-8px);pointer-events:none}
+
+@media (prefers-reduced-motion:reduce){
+  .search-bar,.stat-card,.hot-tag,.service-card,.icon-circle,.chip,.ai-card,.ai-ask-btn,.recommend-card,.rec-card,.rec-book-btn,.tab-item{transition:none}
+  .title-bar,.title-bar__name,.title-bar__search,.hero .greeting,.hero .app-name,.hero .search-bar,.hot-tags{transition:none}
+}
+</style>
+
+<script>
+(function(){
+  var phone=document.querySelector('.phone');
+  var titleBar=document.getElementById('titleBar');
+  if(!phone||!titleBar)return;
+  var ticking=false;
+  function update(){
+    var y=phone.scrollTop;
+    if(y>40)titleBar.classList.add('visible');else titleBar.classList.remove('visible');
+    if(y>90)titleBar.classList.add('search-mode');else titleBar.classList.remove('search-mode');
+    if(y>20)phone.classList.add('scrolled');else phone.classList.remove('scrolled');
+    if(y>60)phone.classList.add('scrolled-2');else phone.classList.remove('scrolled-2');
+    ticking=false;
+  }
+  phone.addEventListener('scroll',function(){
+    if(!ticking){ticking=true;requestAnimationFrame(update)}
+  },{passive:true});
+  update();
+})();
+</script>
+
+<div class="phone" data-dom-id="page-client-home" data-editor-id="editor-node-msankx9y-1" style="top: -90px;">
+
+  <!-- Style Label -->
+  
+
+  <!-- Custom Title Bar (fixed, appears on scroll) -->
+  <div class="title-bar" id="titleBar">
+    <span class="title-bar__name">自家人维修</span>
+    <div class="title-bar__search" id="titleSearch">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.3-4.3"></path></svg>
+      <span>搜索维修服务、师傅</span>
+    </div>
+  </div>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <!-- Status Bar -->
+    <div class="status-bar">
+      <span>21:30</span>
+      <div class="status-icons">
+        <svg viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0 1 14.08 0"></path><path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path><circle cx="12" cy="20" r="1"></circle></svg>
+        <svg viewBox="0 0 24 24"><rect x="2" y="7" width="18" height="10" rx="2"></rect><path d="M22 11v2"></path></svg>
+      </div>
+    </div>
+
+    <!-- Greeting -->
+    <div class="greeting">下午好</div>
+    <div class="app-name">自家人维修</div>
+
+    <!-- Glass Search Bar -->
+    <div class="search-bar">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      <span>搜索维修服务、师傅</span>
+    </div>
+
+    <!-- Hot Tags -->
+    
+
+    <!-- Stats Cards -->
+    <div class="stats">
+      <div class="stat-card">
+        <div class="stat-value">8,247</div>
+        <div class="stat-label">认证师傅</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">98.6%</div>
+        <div class="stat-label">好评率</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">3s</div>
+        <div class="stat-label">平均响应</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SERVICE GRID ===== -->
+  <div class="section-title">热门服务</div>
+  <div class="service-grid">
+    <a class="service-card" data-dom-id="svc-waterproof">
+      <div class="icon-circle">
+        <svg viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path></svg>
+      </div>
+      <span class="service-name">防水维修</span>
+    </a>
+    <a class="service-card" data-dom-id="svc-appliance">
+      <div class="icon-circle">
+        <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+      </div>
+      <span class="service-name">家电维修</span>
+    </a>
+    <a class="service-card" data-dom-id="svc-pipe">
+      <div class="icon-circle">
+        <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+      </div>
+      <span class="service-name">管道疏通</span>
+    </a>
+    <a class="service-card" data-dom-id="svc-lock">
+      <div class="icon-circle">
+        <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+      </div>
+      <span class="service-name">开锁换锁</span>
+    </a>
+    <a class="service-card" data-dom-id="svc-cleaning">
+      <div class="icon-circle">
+        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+      </div>
+      <span class="service-name">家政清洁</span>
+    </a>
+    <a class="service-card" data-dom-id="svc-wall">
+      <div class="icon-circle">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+      </div>
+      <span class="service-name">墙面翻新</span>
+    </a>
+    <a class="service-card" data-dom-id="svc-furniture">
+      <div class="icon-circle">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+      </div>
+      <span class="service-name">家具维修</span>
+    </a>
+    <a class="service-card" data-dom-id="svc-install">
+      <div class="icon-circle">
+        <svg viewBox="0 0 24 24"><path d="M12 22V8"></path><path d="M5 12H2a10 10 0 0 0 20 0h-3"></path><path d="M8 8a4 4 0 0 1 8 0"></path><path d="M6 12v0"></path><path d="M18 12v0"></path></svg>
+      </div>
+      <span class="service-name">电器安装</span>
+    </a>
+    <a class="service-card" data-dom-id="svc-more">
+      <div class="icon-circle">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+      </div>
+      <span class="service-name">更多</span>
+    </a>
+  </div>
+
+  <!-- ===== AI ASSISTANT CARD ===== -->
+  <div class="ai-card">
+    <div class="ai-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="4" y="8" width="16" height="12" rx="4"></rect>
+        <path d="M12 8V4"></path>
+        <circle cx="12" cy="3" r="1"></circle>
+        <circle cx="9" cy="14" r="1.2" fill="currentColor"></circle>
+        <circle cx="15" cy="14" r="1.2" fill="currentColor"></circle>
+        <path d="M2 14v2"></path><path d="M22 14v2"></path>
+      </svg>
+    </div>
+    <div class="ai-text">
+      <div class="ai-title">AI 智能助手</div>
+      <div class="ai-desc">描述问题，智能匹配最优方案</div>
+    </div>
+    <button class="btn-neu-primary">去问问</button>
+  </div>
+
+  <!-- ===== RECOMMENDED MASTERS ===== -->
+  <div class="section-title">推荐师傅</div>
+
+  <!-- ===== CATEGORY CHIPS ===== -->
+  <div class="chips-row" style="height: 44px;">
+    <span class="chip chip-active" style="padding-top: 1px; padding-bottom: 1px;">全部</span>
+    <span class="chip" style="padding-top: 1px; padding-bottom: 1px;">防水维修</span>
+    <span class="chip" style="padding-top: 1px; padding-bottom: 1px;">漏水检测</span>
+    <span class="chip" style="padding-top: 1px; padding-bottom: 1px;">水电改造</span>
+    <span class="chip" style="padding-top: 1px; padding-bottom: 1px;">清洁服务</span>
+    <span class="chip" style="padding-top: 1px; padding-bottom: 1px;">厨房改造</span>
+  </div>
+
+  <div class="recommend-card">
+    <div class="avatar">
+      <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+    </div>
+    <div class="recommend-info">
+      <div class="recommend-name">张师傅</div>
+      <div class="recommend-sub">防水维修 · 12年经验 · 好评99%</div>
+    </div>
+    <div class="recommend-price">&yen;80起</div>
+  </div>
+  <div class="recommend-card">
+    <div class="avatar">
+      <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+    </div>
+    <div class="recommend-info">
+      <div class="recommend-name">李师傅</div>
+      <div class="recommend-sub">管道疏通 · 8年经验 · 好评98%</div>
+    </div>
+    <div class="recommend-price">&yen;60起</div>
+  </div>
+
+  <!-- ===== RECOMMENDED SERVICES ===== -->
+  <div class="section-title">推荐服务</div>
+  <div class="rec-scroll">
+    <div class="rec-card">
+      <div class="rec-img" style="background:var(--brand);"><span class="rec-img-label">防水维修</span></div>
+      <div class="rec-title">防水维修</div>
+      <div class="rec-meta">
+        <span class="rec-star"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg> 4.9</span>
+        <span>· 128次服务</span>
+      </div>
+      <div class="rec-bottom">
+        <div class="rec-price"><span class="currency">&yen;</span><span class="amount">128</span></div>
+        <button class="btn-neu-primary">预约</button>
+      </div>
+    </div>
+    <div class="rec-card">
+      <div class="rec-img" style="background:var(--accent);"><span class="rec-img-label">水电维修</span></div>
+      <div class="rec-title">水电维修</div>
+      <div class="rec-meta">
+        <span class="rec-star"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg> 4.8</span>
+        <span>· 256次服务</span>
+      </div>
+      <div class="rec-bottom">
+        <div class="rec-price"><span class="currency">&yen;</span><span class="amount">88</span></div>
+        <button class="btn-neu-primary">预约</button>
+      </div>
+    </div>
+    <div class="rec-card">
+      <div class="rec-img" style="background:var(--green);"><span class="rec-img-label">管道疏通</span></div>
+      <div class="rec-title">管道疏通</div>
+      <div class="rec-meta">
+        <span class="rec-star"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg> 4.9</span>
+        <span>· 192次服务</span>
+      </div>
+      <div class="rec-bottom">
+        <div class="rec-price"><span class="currency">&yen;</span><span class="amount">68</span></div>
+        <button class="btn-neu-primary">预约</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== FLOATING TAB BAR ===== -->
+  <nav class="tab-bar" data-mobile-nav="global">
+  <a class="tab-item" data-active="true" data-dom-id="nav-home" data-nav-key="home" aria-label="首页">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+    <span class="tab-label whitespace-nowrap">首页</span>
+  </a>
+  <a class="tab-item" data-dom-id="nav-publish" data-nav-key="publish" aria-label="发布">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+    <span class="tab-label whitespace-nowrap">发布</span>
+  </a>
+  <a class="tab-item" data-dom-id="nav-orders" data-nav-key="orders" aria-label="订单">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+    <span class="tab-label whitespace-nowrap">订单</span>
+  </a>
+  <a class="tab-item" data-dom-id="nav-mine" data-nav-key="mine" aria-label="我的">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+    <span class="tab-label whitespace-nowrap">我的</span>
+  </a>
+</nav>
+
+</div></body>
+</html>

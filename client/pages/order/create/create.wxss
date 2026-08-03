@@ -1,0 +1,78 @@
+.container { background: #f5f6fa; min-height: 100vh; padding-bottom: 140rpx; }
+.card { margin: 20rpx; padding: 24rpx; background: #fff; border-radius: 16rpx; }
+.section-title { font-size: 30rpx; font-weight: 600; color: #333; margin-bottom: 20rpx; }
+
+.service-info { display: flex; align-items: center; gap: 20rpx; }
+.svc-icon { width: 100rpx; height: 100rpx; border-radius: 12rpx; }
+.svc-detail { }
+.svc-name { font-size: 34rpx; font-weight: 600; color: #333; display: block; }
+.svc-price { font-size: 30rpx; color: #e64340; font-weight: 600; }
+
+.worker-select { }
+.wk-list { display: flex; gap: 16rpx; flex-wrap: wrap; }
+.wk-item { display: flex; align-items: center; gap: 8rpx; padding: 16rpx 20rpx; background: #f5f5f5; border-radius: 30rpx; border: 2rpx solid transparent; }
+.wk-item.active { border-color: #07c160; background: #e6f7ed; }
+.wk-avatar { width: 48rpx; height: 48rpx; border-radius: 50%; }
+.wk-name { font-size: 26rpx; color: #333; }
+.wk-rating { font-size: 24rpx; color: #ff9900; }
+
+.date-card { }
+.date-scroll { white-space: nowrap; }
+.date-list { display: inline-flex; gap: 16rpx; }
+.date-item { display: inline-flex; flex-direction: column; align-items: center; padding: 16rpx 24rpx; background: #f5f5f5; border-radius: 12rpx; border: 2rpx solid transparent; min-width: 90rpx; }
+.date-item.active { border-color: #07c160; background: #e6f7ed; }
+.date-label { font-size: 28rpx; font-weight: 600; color: #333; }
+.date-weekday { font-size: 22rpx; color: #999; }
+
+.time-list { display: flex; flex-wrap: wrap; gap: 12rpx; margin-top: 20rpx; }
+.time-item { padding: 12rpx 24rpx; background: #f5f5f5; border-radius: 8rpx; font-size: 26rpx; color: #333; }
+.time-item.active { background: #07c160; color: #fff; }
+
+.contact-card { }
+.form-group { display: flex; align-items: center; padding: 20rpx 0; border-bottom: 1rpx solid #f5f5f5; }
+.form-group:last-child { border-bottom: none; }
+.form-label { width: 140rpx; font-size: 28rpx; color: #666; }
+.form-input { flex: 1; font-size: 28rpx; color: #333; }
+.form-value { flex: 1; font-size: 28rpx; color: #333; display: flex; justify-content: space-between; align-items: center; }
+.form-value.placeholder { color: #999; }
+.form-value.address { }
+.arrow { color: #ccc; }
+
+.bottom-bar { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; box-shadow: 0 -2rpx 12rpx rgba(0,0,0,0.05); padding: 20rpx 30rpx; display: flex; align-items: center; gap: 20rpx; }
+.total-display { flex: 1; }
+.total-label { font-size: 24rpx; color: #999; display: block; }
+.total-value { font-size: 36rpx; font-weight: 700; color: #e64340; }
+.submit-btn { background: #07c160; color: #fff; padding: 24rpx 60rpx; border-radius: 44rpx; font-size: 32rpx; font-weight: 600; }
+
+.desc-card { position: relative; }
+.desc-textarea { width: 100%; height: 180rpx; font-size: 28rpx; color: #333; line-height: 1.6; }
+.desc-count { position: absolute; right: 24rpx; bottom: 24rpx; font-size: 24rpx; color: #999; }
+
+.image-list { display: flex; flex-wrap: wrap; gap: 16rpx; }
+.image-item { position: relative; width: 160rpx; height: 160rpx; }
+.image-preview { width: 160rpx; height: 160rpx; border-radius: 12rpx; }
+.image-remove { position: absolute; top: -10rpx; right: -10rpx; width: 40rpx; height: 40rpx; line-height: 36rpx; text-align: center; background: #e64340; color: #fff; border-radius: 50%; font-size: 28rpx; }
+.image-add { width: 160rpx; height: 160rpx; display: flex; align-items: center; justify-content: center; background: #f5f5f5; border-radius: 12rpx; border: 2rpx dashed #ddd; }
+.image-add-icon { font-size: 60rpx; color: #999; }
+
+.option-list { display: flex; flex-wrap: wrap; gap: 16rpx; }
+.option-item { display: flex; flex-direction: column; align-items: center; padding: 16rpx 32rpx; background: #f5f5f5; border-radius: 12rpx; border: 2rpx solid transparent; }
+.option-item.active { border-color: #07c160; background: #e6f7ed; }
+.option-label { font-size: 28rpx; color: #333; }
+.option-desc { font-size: 24rpx; color: #999; margin-top: 4rpx; }
+
+.coupon-list { display: flex; flex-direction: column; gap: 16rpx; }
+.coupon-item { display: flex; justify-content: space-between; align-items: center; padding: 20rpx; background: #f5f5f5; border-radius: 12rpx; border: 2rpx solid transparent; }
+.coupon-item.active { border-color: #07c160; background: #e6f7ed; }
+.coupon-name { font-size: 28rpx; color: #333; }
+.coupon-value { font-size: 28rpx; color: #e64340; font-weight: 600; }
+.coupon-empty { font-size: 26rpx; color: #999; padding: 12rpx 0; }
+
+/* 地图选址相关 */
+.form-group-address { flex-direction: column; align-items: stretch; }
+.form-group-address .form-label { width: auto; margin-bottom: 16rpx; }
+.form-group-address .form-value.address { display: flex; align-items: center; gap: 16rpx; }
+.address-input { flex: 1; font-size: 28rpx; color: #333; border: 1rpx solid #eee; border-radius: 8rpx; padding: 16rpx; background: #fafafa; }
+.choose-loc-btn { flex-shrink: 0; padding: 14rpx 20rpx; background: #004080; color: #fff; font-size: 24rpx; border-radius: 8rpx; white-space: nowrap; }
+.use-current-link { margin-top: 16rpx; font-size: 26rpx; color: #004080; text-align: right; }
+.address-map { width: 100%; height: 300rpx; margin-top: 16rpx; border-radius: 12rpx; }

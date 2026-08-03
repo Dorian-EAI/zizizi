@@ -1,0 +1,7 @@
+{
+  "desc": "自家人居家维修 玻璃新拟态版 sitemap",
+  "rules": [{
+    "action": "allow",
+    "page": "*"
+  }]
+}

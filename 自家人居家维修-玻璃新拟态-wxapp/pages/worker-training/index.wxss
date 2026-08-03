@@ -1,0 +1,553 @@
+/* pages/worker-training/index.wxss — 师傅培训中心 玻璃新拟态
+ * 像素级复刻 worker-training.html
+ * 换算基准：1px = 2rpx（750rpx 设计稿）
+ * 严格忠于 HTML 参考的尺寸、间距、圆角、阴影、渐变透明度
+ */
+
+/* ===== 师傅端品牌色覆盖（蓝色 #2D6CDF） ===== */
+page {
+  --brand: #2D6CDF;
+  --brand-dark: #2456B8;
+  --brand-mid: #5A8EE8;
+  --brand-light: #DCE8FB;
+  --brand-glow: rgba(45, 108, 223, 0.28);
+  --brand-subtle: rgba(45, 108, 223, 0.08);
+  --brand-gradient: linear-gradient(135deg, #2D6CDF 0%, #5A8EE8 50%, #D4944C 100%);
+  --accent: #D4944C;
+  --accent-dark: #A0723C;
+  --accent-light: #F5E6D0;
+  --accent-glow: rgba(212, 148, 76, 0.25);
+}
+
+.page {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+/* ===== Back Bar ===== */
+/* HTML: back-bar padding: max(16px, env(safe-area-inset-top)) 24px 16px; border-radius:0 0 28px 28px */
+.back-bar.worker {
+  padding: 0 48rpx 32rpx;
+  /* padding-top 由内联 style 动态提供（statusBarHeight + 32rpx） */
+  border-radius: 0 0 56rpx 56rpx;
+  gap: 24rpx;
+}
+/* HTML: back-btn 40x40 圆形玻璃 + neu-out-sm + brand 色 */
+.back-btn {
+  width: 80rpx;        /* 40px */
+  height: 80rpx;       /* 40px */
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.50);
+  backdrop-filter: blur(32rpx);
+  -webkit-backdrop-filter: blur(32rpx);
+  border: 1rpx solid rgba(255, 255, 255, 0.55);
+  box-shadow: var(--neu-raised-sm), inset 0 2rpx 4rpx rgba(255, 255, 255, 0.50);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--brand);
+  flex-shrink: 0;
+  transition: transform var(--dur-base) var(--spring), box-shadow var(--dur-base) var(--ease);
+}
+.back-btn:active {
+  box-shadow: var(--neu-inset);
+  transform: scale(0.9);
+}
+/* HTML: back-btn svg 20x20 */
+.back-btn-icon { width: 40rpx; height: 40rpx; }
+
+/* HTML: back-title flex:1 18px/700 居中 */
+.back-title {
+  flex: 1;
+  font-size: 36rpx;    /* 18px */
+  font-weight: 700;
+  color: var(--text-1);
+  letter-spacing: -0.02em;
+  text-align: center;
+}
+.back-spacer { width: 80rpx; flex-shrink: 0; }
+
+/* ===== Training Stats Hero (glass gradient) ===== */
+/* HTML: margin:4px 24px 0; padding:22px 22px 20px; border-radius:var(--r-lg) */
+.training-hero {
+  margin: 8rpx 48rpx 0;       /* 4px 24px 0 */
+  padding: 44rpx 44rpx 40rpx; /* 22px 22px 20px */
+  border-radius: var(--r-lg);
+  position: relative;
+  overflow: hidden;
+  z-index: 5;
+  background:
+    radial-gradient(ellipse 440rpx 360rpx at 20% 30%, rgba(143, 169, 152, 0.30) 0%, transparent 70%),
+    radial-gradient(ellipse 400rpx 320rpx at 85% 80%, rgba(45, 108, 223, 0.30) 0%, transparent 70%),
+    linear-gradient(135deg, rgba(45, 108, 223, 0.30) 0%, rgba(143, 169, 152, 0.22) 50%, rgba(45, 108, 223, 0.16) 100%);
+  backdrop-filter: blur(40rpx) saturate(150%);
+  -webkit-backdrop-filter: blur(40rpx) saturate(150%);
+  border: 2rpx solid rgba(255, 255, 255, 0.60);
+  box-shadow: var(--neu-raised), 0 20rpx 72rpx rgba(0, 0, 0, 0.08), 0 0 0 2rpx rgba(44, 40, 36, 0.05);
+}
+/* HTML: training-hero::before 右上 200x200 径向光晕 */
+.training-hero::before {
+  content: "";
+  position: absolute;
+  top: -30%;
+  right: -15%;
+  width: 400rpx;       /* 200px */
+  height: 400rpx;      /* 200px */
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.18) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+/* HTML: training-hero::after 左下 170x170 径向光晕 */
+.training-hero::after {
+  content: "";
+  position: absolute;
+  bottom: -30%;
+  left: -10%;
+  width: 340rpx;       /* 170px */
+  height: 340rpx;      /* 170px */
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.10) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* HTML: th-top display:flex; justify-content:space-between; gap:12px; margin-bottom:18px */
+.th-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24rpx;          /* 12px */
+  margin-bottom: 36rpx;/* 18px */
+  position: relative;
+  z-index: 2;
+}
+.th-label-block { display: flex; flex-direction: column; }
+/* HTML: th-label 13px/500 margin-bottom:6px letter-spacing:0.02em */
+.th-label {
+  display: block;
+  font-size: 26rpx;    /* 13px */
+  color: var(--text-2);
+  font-weight: 500;
+  margin-bottom: 12rpx;/* 6px */
+  letter-spacing: 0.02em;
+}
+.th-amount-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8rpx;
+}
+/* HTML: th-amount 38px/800 brand letter-spacing:-1.2px line-height:1.1 */
+.th-amount {
+  font-size: 76rpx;    /* 38px */
+  font-weight: 800;
+  color: var(--brand);
+  letter-spacing: -2.4rpx; /* -1.2px */
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+/* HTML: th-unit 16px/600 margin-left:4px */
+.th-unit {
+  font-size: 32rpx;    /* 16px */
+  font-weight: 600;
+  color: var(--brand);
+  margin-left: 0;
+}
+
+.th-meta {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8rpx;           /* 4px */
+  padding-top: 8rpx;   /* 4px */
+}
+/* HTML: th-meta-label 12px/500 */
+.th-meta-label {
+  font-size: 24rpx;    /* 12px */
+  color: var(--text-2);
+  font-weight: 500;
+}
+/* HTML: th-meta-value 15px/700 pill glass + 0.5px border + inset shadow */
+.th-meta-value {
+  display: flex;
+  align-items: baseline;
+  gap: 4rpx;
+  font-size: 30rpx;    /* 15px */
+  font-weight: 700;
+  color: var(--text-1);
+  font-variant-numeric: tabular-nums;
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(16rpx);
+  -webkit-backdrop-filter: blur(16rpx);
+  border: 1rpx solid rgba(255, 255, 255, 0.60);
+  padding: 8rpx 20rpx; /* 4px 10px */
+  border-radius: var(--r-pill);
+  box-shadow: inset 0 2rpx 2rpx rgba(255, 255, 255, 0.45);
+}
+.th-meta-divider {
+  font-size: 24rpx;
+  color: var(--text-2);
+  margin: 0 2rpx;
+}
+.th-meta-unit {
+  font-size: 24rpx;    /* 12px */
+  font-weight: 600;
+  color: var(--text-2);
+  margin-left: 2rpx;
+}
+
+/* HTML: th-progress display:flex; gap:10px; margin-bottom:10px */
+.th-progress {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;          /* 10px */
+  margin-bottom: 20rpx;/* 10px */
+  position: relative;
+  z-index: 2;
+}
+/* HTML: th-progress-track 8px pill glass inset shadow */
+.th-progress-track {
+  flex: 1;
+  height: 16rpx;       /* 8px */
+  border-radius: var(--r-pill);
+  background: rgba(255, 255, 255, 0.55);
+  box-shadow: inset 4rpx 4rpx 8rpx var(--neu-dark), inset -4rpx -4rpx 8rpx var(--neu-light);
+  overflow: hidden;
+}
+/* HTML: th-progress-fill linear brand→brand-mid + glow */
+.th-progress-fill {
+  height: 100%;
+  border-radius: var(--r-pill);
+  background: linear-gradient(90deg, var(--brand) 0%, var(--brand-mid) 100%);
+  box-shadow: 0 0 20rpx var(--brand-glow);
+}
+/* HTML: th-progress-text 12px/700 brand */
+.th-progress-text {
+  font-size: 24rpx;    /* 12px */
+  font-weight: 700;
+  color: var(--brand);
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+}
+/* HTML: th-hint 12px/500 letter-spacing:0.01em */
+.th-hint {
+  font-size: 24rpx;    /* 12px */
+  color: var(--text-2);
+  font-weight: 500;
+  position: relative;
+  z-index: 2;
+  letter-spacing: 0.01em;
+}
+
+/* ===== Section + Card ===== */
+/* HTML: section padding:0 24px; margin-top:22px */
+.section {
+  padding: 0 48rpx;     /* 0 24px */
+  margin-top: 44rpx;    /* 22px */
+  position: relative;
+  z-index: 5;
+}
+/* HTML: section-title 17px/700 margin-bottom:12px letter-spacing:-0.02em */
+.section-title-row {
+  font-size: 34rpx;     /* 17px */
+  font-weight: 700;
+  color: var(--text-1);
+  margin-bottom: 24rpx; /* 12px */
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+/* HTML: .card glass + neu-out-md + ring + teal env glow */
+.card {
+  background: rgba(255, 255, 255, 0.52);
+  backdrop-filter: blur(40rpx) saturate(150%);
+  -webkit-backdrop-filter: blur(40rpx) saturate(150%);
+  border: 2rpx solid rgba(255, 255, 255, 0.70);
+  border-radius: var(--r-lg);
+  box-shadow: var(--neu-raised), 0 12rpx 48rpx rgba(0, 0, 0, 0.06), 0 0 0 2rpx rgba(44, 40, 36, 0.05), 0 4rpx 16rpx rgba(20, 184, 166, 0.04);
+  overflow: hidden;
+  position: relative;
+}
+
+/* ===== Course Cards ===== */
+/* HTML: course-stack flex column gap:12px */
+.course-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;          /* 12px */
+}
+/* HTML: course-card display:flex; gap:14px; padding:16px; r radius; neu-out-sm */
+.course-card {
+  display: flex;
+  align-items: center;
+  gap: 28rpx;          /* 14px */
+  padding: 32rpx;      /* 16px */
+  background: rgba(255, 255, 255, 0.52);
+  backdrop-filter: blur(40rpx) saturate(150%);
+  -webkit-backdrop-filter: blur(40rpx) saturate(150%);
+  border: 2rpx solid rgba(255, 255, 255, 0.70);
+  border-radius: var(--r-md);
+  box-shadow: var(--neu-raised-sm), 0 8rpx 32rpx rgba(0, 0, 0, 0.04);
+  position: relative;
+  overflow: hidden;
+  transition: transform var(--dur-base) var(--ease);
+}
+.course-card:active { transform: scale(0.98); }
+
+/* HTML: course-icon 46x46 圆 + svg 22x22 + 双向阴影 */
+.course-icon {
+  width: 92rpx;        /* 46px */
+  height: 92rpx;       /* 46px */
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--neu-raised-sm), inset 0 2rpx 3rpx rgba(255, 255, 255, 0.55);
+  border: 1rpx solid rgba(255, 255, 255, 0.45);
+  position: relative;
+  z-index: 1;
+}
+.course-icon-img { width: 44rpx; height: 44rpx; }
+
+.icon-indigo {
+  color: var(--brand);
+  background: linear-gradient(135deg, rgba(45, 108, 223, 0.18), rgba(45, 108, 223, 0.06));
+}
+.icon-amber {
+  color: var(--accent-dark);
+  background: linear-gradient(135deg, rgba(212, 148, 76, 0.22), rgba(212, 148, 76, 0.08));
+}
+.icon-blue {
+  color: var(--blue);
+  background: linear-gradient(135deg, rgba(90, 143, 173, 0.20), rgba(90, 143, 173, 0.06));
+}
+.icon-green {
+  color: var(--green);
+  background: linear-gradient(135deg, rgba(91, 140, 90, 0.20), rgba(91, 140, 90, 0.06));
+}
+
+/* HTML: course-info flex column gap:4px */
+.course-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;           /* 4px */
+  position: relative;
+  z-index: 1;
+}
+/* HTML: course-name 15px/600 letter-spacing:-0.01em */
+.course-name {
+  font-size: 30rpx;    /* 15px */
+  font-weight: 600;
+  color: var(--text-1);
+  letter-spacing: -0.01em;
+}
+/* HTML: course-meta 12px/500 tabular-nums */
+.course-meta {
+  font-size: 24rpx;    /* 12px */
+  color: var(--text-2);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+/* HTML: course-progress margin-top:6px; track 5px */
+.course-progress {
+  margin-top: 12rpx;   /* 6px */
+  width: 100%;
+}
+.course-progress-track {
+  height: 10rpx;       /* 5px */
+  border-radius: var(--r-pill);
+  background: rgba(44, 40, 36, 0.06);
+  box-shadow: inset 2rpx 2rpx 4rpx var(--neu-dark);
+  overflow: hidden;
+}
+.course-progress-fill {
+  height: 100%;
+  border-radius: var(--r-pill);
+  background: linear-gradient(90deg, var(--blue), var(--brand));
+  box-shadow: 0 0 12rpx rgba(90, 143, 173, 0.4);
+}
+
+/* HTML: course-right flex column align-end gap:8px */
+.course-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 16rpx;          /* 8px */
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+
+/* HTML: course-status 11.5px/600 pill 3px 9px */
+.course-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8rpx;           /* 4px */
+  font-size: 23rpx;    /* 11.5px */
+  font-weight: 600;
+  padding: 6rpx 18rpx; /* 3px 9px */
+  border-radius: var(--r-pill);
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+}
+.course-status-icon { width: 24rpx; height: 24rpx; }
+/* HTML: status.done green bg + 0.5px border */
+.course-status.done {
+  color: var(--green);
+  background: rgba(91, 140, 90, 0.12);
+  border: 1rpx solid rgba(91, 140, 90, 0.22);
+}
+/* HTML: status.learning brand bg + 0.5px border */
+.course-status.learning {
+  color: var(--brand);
+  background: rgba(45, 108, 223, 0.12);
+  border: 1rpx solid rgba(45, 108, 223, 0.24);
+}
+/* HTML: status.todo text-2 bg + 0.5px border */
+.course-status.todo {
+  color: var(--text-2);
+  background: rgba(139, 129, 120, 0.10);
+  border: 1rpx solid rgba(139, 129, 120, 0.18);
+}
+
+/* ===== 课程按钮 ===== */
+/* HTML: btn-neu-primary 8px 16px 13px/600 brand + glow */
+.btn-neu-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--brand);
+  color: #fff;
+  border: 1rpx solid rgba(255, 255, 255, 0.30);
+  border-radius: var(--r-pill);
+  padding: 16rpx 32rpx; /* 8px 16px */
+  font-size: 26rpx;     /* 13px */
+  font-weight: 600;
+  box-shadow: var(--neu-raised-sm), 0 8rpx 28rpx var(--brand-glow);
+  transition: transform var(--dur-base) var(--spring), box-shadow var(--dur-base) var(--ease);
+}
+.btn-neu-primary:active {
+  box-shadow: var(--neu-inset);
+  transform: scale(0.94);
+}
+/* HTML: btn-neu-secondary glass pill 8px 16px 13px/600 */
+.btn-neu-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.50);
+  color: var(--brand);
+  border: 1rpx solid rgba(255, 255, 255, 0.60);
+  border-radius: var(--r-pill);
+  padding: 16rpx 32rpx;
+  font-size: 26rpx;
+  font-weight: 600;
+  box-shadow: var(--neu-raised-sm);
+  transition: transform var(--dur-base) var(--spring), box-shadow var(--dur-base) var(--ease);
+}
+.btn-neu-secondary:active {
+  box-shadow: var(--neu-inset);
+  transform: scale(0.94);
+}
+/* HTML: course-btn 7px 14px 12.5px */
+.course-btn {
+  padding: 14rpx 28rpx; /* 7px 14px */
+  font-size: 25rpx;     /* 12.5px */
+}
+
+/* ===== Benefit Card ===== */
+/* HTML: benefit-card padding:18px */
+.benefit-card { padding: 36rpx; }
+/* HTML: benefit-desc 14px/600 border-bottom 0.5px sep */
+.benefit-desc {
+  display: block;
+  font-size: 28rpx;    /* 14px */
+  color: var(--text-1);
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  margin-bottom: 28rpx;
+  padding-bottom: 28rpx;
+  border-bottom: 1rpx solid var(--sep);
+  position: relative;
+  z-index: 1;
+}
+/* HTML: check-list gap:11px */
+.check-list {
+  display: flex;
+  flex-direction: column;
+  gap: 22rpx;          /* 11px */
+  position: relative;
+  z-index: 1;
+}
+/* HTML: check-item gap:10px font-size:13.5px */
+.check-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 20rpx;          /* 10px */
+  font-size: 27rpx;    /* 13.5px */
+  color: var(--text-1);
+  line-height: 1.5;
+  font-weight: 500;
+}
+/* HTML: check-mark 20x20 圆 green + inset + glow */
+.check-mark {
+  width: 40rpx;        /* 20px */
+  height: 40rpx;       /* 20px */
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(91, 140, 90, 0.14);
+  color: var(--green);
+  box-shadow: inset 0 2rpx 2rpx rgba(255, 255, 255, 0.45), 0 2rpx 6rpx rgba(91, 140, 90, 0.18);
+  margin-top: 2rpx;
+}
+/* HTML: check-mark svg 12x12 */
+.check-mark-icon { width: 24rpx; height: 24rpx; }
+.check-text { flex: 1; }
+/* HTML: check-text strong brand 700 */
+.check-strong {
+  color: var(--brand);
+  font-weight: 700;
+}
+
+/* ===== Records Link ===== */
+/* HTML: records-link-wrap padding:24px 24px 4px; center */
+.records-link-wrap {
+  padding: 48rpx 48rpx 8rpx; /* 24px 24px 4px */
+  display: flex;
+  justify-content: center;
+  position: relative;
+  z-index: 5;
+}
+/* HTML: records-link 14px/600 brand pill 10px 20px glass */
+.records-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8rpx;           /* 4px */
+  font-size: 28rpx;    /* 14px */
+  font-weight: 600;
+  color: var(--brand);
+  padding: 20rpx 40rpx;/* 10px 20px */
+  border-radius: var(--r-pill);
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(24rpx);
+  -webkit-backdrop-filter: blur(24rpx);
+  border: 1rpx solid rgba(255, 255, 255, 0.60);
+  box-shadow: var(--neu-raised-sm);
+  transition: transform var(--dur-base) var(--spring), box-shadow var(--dur-base) var(--ease);
+}
+.records-link:active {
+  box-shadow: var(--neu-inset);
+  transform: scale(0.96);
+}
+/* HTML: records-link svg 16x16 */
+.records-link-icon { width: 32rpx; height: 32rpx; }
+
+.scroll-bottom-spacer { height: 40rpx; }

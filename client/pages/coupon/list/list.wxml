@@ -1,0 +1,45 @@
+<view class="container">
+  <view class="tab-bar">
+    <view class="tab-item {{activeTab === item.key ? 'active' : ''}}"
+          wx:for="{{tabs}}" wx:key="key"
+          bindtap="onTabTap" data-key="{{item.key}}">
+      <text>{{item.label}}</text>
+    </view>
+  </view>
+
+  <view class="coupon-list">
+    <view class="coupon-card status-{{item.status || activeTab}}"
+          wx:for="{{coupons}}" wx:key="id"
+          bindtap="useCoupon" data-status="{{item.status || activeTab}}">
+      <view class="cc-left">
+        <view class="cc-amount">
+          <text class="cc-symbol" wx:if="{{item.amount}}">¥</text>
+          <text class="cc-value">{{item.amount || item.discount}}</text>
+          <text class="cc-unit" wx:if="{{!item.amount}}">折</text>
+        </view>
+        <view class="cc-min" wx:if="{{item.min_spend}}">满{{item.min_spend}}可用</view>
+      </view>
+      <view class="cc-right">
+        <view class="cc-row1">
+          <text class="cc-name">{{item.name}}</text>
+          <view class="cc-badge badge-{{item.status || activeTab}}">
+            {{activeTab === 'unused' ? '未使用' : activeTab === 'used' ? '已使用' : '已过期'}}
+          </view>
+        </view>
+        <view class="cc-scope" wx:if="{{item.service_type}}">适用范围：{{item.service_type}}</view>
+        <view class="cc-expire">有效期至：{{item.expire_time}}</view>
+        <view class="cc-btn {{item.status === 'used' || activeTab !== 'unused' ? 'disabled' : ''}}">
+          {{activeTab === 'unused' ? '立即使用' : (activeTab === 'used' ? '已使用' : '已过期')}}
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{!loading && coupons.length === 0}}" class="empty">
+    <text class="empty-icon">🎫</text>
+    <text class="empty-text">暂无{{tabs[activeTab === 'unused' ? 0 : activeTab === 'used' ? 1 : 2].label}}优惠券</text>
+  </view>
+
+  <view wx:if="{{loading}}" class="loading">加载中...</view>
+  <view wx:elif="{{!hasMore && coupons.length > 0}}" class="load-end">没有更多了</view>
+</view>

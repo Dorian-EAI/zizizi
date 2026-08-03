@@ -1,0 +1,1950 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>居家维修 · 运营管理后台</title>
+  <link rel="stylesheet" href="https://unpkg.com/element-plus/dist/index.css" />
+  <script src="https://unpkg.com/echarts@5.4.3/dist/echarts.min.js"></script>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; height: 100%; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Helvetica Neue", Helvetica, Arial, sans-serif; background: #f0f2f5; }
+    #app { height: 100%; }
+
+    /* ===== Login ===== */
+    .login-wrap {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #1f2d3d 0%, #2c3e50 100%);
+    }
+    .login-card {
+      width: 380px;
+      max-width: 92vw;
+      padding: 40px 36px 28px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+    }
+    .login-card h2 {
+      margin: 0 0 6px;
+      font-size: 22px;
+      color: #1f2d3d;
+      text-align: center;
+    }
+    .login-card .sub {
+      text-align: center;
+      color: #909399;
+      font-size: 13px;
+      margin-bottom: 28px;
+    }
+    .login-card .tip {
+      margin-top: 14px;
+      font-size: 12px;
+      color: #909399;
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    /* ===== Layout ===== */
+    .layout { height: 100vh; }
+    .sidebar {
+      background: #1f2d3d;
+      color: #bfcbd9;
+      width: 220px !important;
+      transition: width 0.2s;
+      overflow-x: hidden;
+    }
+    .sidebar.collapsed { width: 64px !important; }
+    .sidebar .logo {
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      white-space: nowrap;
+    }
+    .sidebar .el-menu {
+      border-right: none;
+      background: transparent;
+    }
+    .sidebar .el-menu-item, .sidebar .el-sub-menu__title {
+      color: #bfcbd9;
+    }
+    .sidebar .el-menu-item.is-active, .sidebar .el-sub-menu__title.is-active {
+      color: #fff;
+      background: #001528 !important;
+    }
+    .sidebar .el-menu-item:hover, .sidebar .el-sub-menu__title:hover {
+      background: #263445 !important;
+    }
+
+    .topbar {
+      background: #fff;
+      border-bottom: 1px solid #e6e6e6;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 18px;
+      height: 60px;
+      box-shadow: 0 1px 4px rgba(0,21,41,0.08);
+    }
+    .topbar .left { display: flex; align-items: center; gap: 12px; }
+    .topbar .right { display: flex; align-items: center; gap: 14px; }
+    .topbar .admin-name { color: #303133; font-size: 14px; }
+
+    .main-content { padding: 18px; overflow-y: auto; background: #f0f2f5; }
+
+    /* ===== Dashboard ===== */
+    .stat-card {
+      border-radius: 8px;
+      overflow: hidden;
+      color: #fff;
+      padding: 20px;
+      height: 110px;
+      position: relative;
+    }
+    .stat-card .label { font-size: 13px; opacity: 0.85; }
+    .stat-card .value { font-size: 28px; font-weight: 600; margin-top: 8px; }
+    .stat-card .icon-bg {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 48px;
+      opacity: 0.18;
+    }
+    .c1 { background: linear-gradient(135deg, #409EFF, #66b1ff); }
+    .c2 { background: linear-gradient(135deg, #67C23A, #85ce61); }
+    .c3 { background: linear-gradient(135deg, #E6A23C, #ebb563); }
+    .c4 { background: linear-gradient(135deg, #F56C6C, #f78989); }
+    .c5 { background: linear-gradient(135deg, #909399, #a6a9ad); }
+
+    .page-card {
+      background: #fff;
+      border-radius: 8px;
+      padding: 18px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    .page-card + .page-card { margin-top: 14px; }
+    .page-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #303133;
+      margin: 0 0 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 14px;
+      align-items: center;
+    }
+    .filter-bar .el-input, .filter-bar .el-select { width: auto; }
+
+    .icon-cell { width: 40px; height: 40px; object-fit: cover; border-radius: 6px; vertical-align: middle; }
+    .price-range { color: #409EFF; font-weight: 500; }
+
+    .json-field { margin-bottom: 14px; }
+    .json-field .json-label {
+      font-size: 13px; color: #606266; margin-bottom: 4px; font-weight: 500;
+    }
+    .json-field .json-hint {
+      font-size: 12px; color: #909399; margin-top: 4px; line-height: 1.5;
+    }
+    .json-field .json-error {
+      font-size: 12px; color: #f56c6c; margin-top: 4px;
+    }
+    .json-field textarea {
+      font-family: "SF Mono", Monaco, Menlo, Consolas, monospace;
+      font-size: 12.5px;
+      line-height: 1.55;
+    }
+    .pagination-wrap {
+      margin-top: 14px;
+      display: flex;
+      justify-content: flex-end;
+    }
+    .empty-block { padding: 40px 0; }
+
+    .service-edit-dialog .el-dialog__body { padding: 12px 20px; max-height: 72vh; overflow-y: auto; }
+    .service-edit-dialog .el-dialog__header { padding: 14px 20px; border-bottom: 1px solid #eee; }
+
+    .icon-preview {
+      width: 40px; height: 40px; border-radius: 6px; margin-top: 6px;
+      border: 1px dashed #dcdfe6; object-fit: cover;
+    }
+
+    /* ===== Charts ===== */
+    .chart-box {
+      background: #fff;
+      border-radius: 8px;
+      padding: 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      margin-bottom: 14px;
+    }
+    .chart-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #303133;
+      margin-bottom: 10px;
+    }
+    .chart-canvas {
+      width: 100%;
+      height: 320px;
+    }
+    .stats-summary-card {
+      background: #fff;
+      border-radius: 8px;
+      padding: 16px 18px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      border-left: 4px solid #004080;
+    }
+    .stats-summary-card .label { font-size: 13px; color: #909399; }
+    .stats-summary-card .value { font-size: 22px; font-weight: 600; color: #303133; margin-top: 6px; }
+
+    /* mobile */
+    @media (max-width: 768px) {
+      .sidebar { position: fixed; z-index: 1001; height: 100vh; }
+      .sidebar:not(.mobile-open) { transform: translateX(-100%); }
+      .sidebar.mobile-open { transform: translateX(0); box-shadow: 2px 0 12px rgba(0,0,0,0.2); }
+      .mobile-mask {
+        position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 1000;
+      }
+      .main-content { padding: 12px; }
+      .el-col { max-width: 100% !important; flex: 0 0 100% !important; }
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <!-- ============ Login ============ -->
+    <div v-if="!isLoggedIn" class="login-wrap">
+      <div class="login-card">
+        <h2>居家维修运营后台</h2>
+        <div class="sub">Home Repair Admin Console</div>
+        <el-form :model="loginForm" label-position="top" @submit.prevent="handleLogin">
+          <el-form-item label="用户名">
+            <el-input v-model="loginForm.username" placeholder="请输入用户名" autocomplete="off" clearable>
+              <template #prefix><el-icon><user /></el-icon></template>
+            </el-input>
+          </el-form-item>
+          <el-form-item label="密码">
+            <el-input v-model="loginForm.password" type="password" placeholder="请输入密码" show-password @keyup.enter="handleLogin">
+              <template #prefix><el-icon><lock /></el-icon></template>
+            </el-input>
+          </el-form-item>
+          <el-button type="primary" :loading="loginLoading" style="width:100%" @click="handleLogin">登 录</el-button>
+        </el-form>
+      </div>
+    </div>
+
+    <!-- ============ Main Layout ============ -->
+    <el-container v-else class="layout">
+      <!-- mobile mask -->
+      <div v-if="sidebarMobileOpen" class="mobile-mask" @click="sidebarMobileOpen = false"></div>
+
+      <el-aside :class="['sidebar', { collapsed: isCollapse, 'mobile-open': sidebarMobileOpen }]">
+        <div class="logo">{{ isCollapse ? '修' : '居家维修后台' }}</div>
+        <el-menu
+          :default-active="activeMenu"
+          :collapse="isCollapse"
+          background-color="#1f2d3d"
+          text-color="#bfcbd9"
+          active-text-color="#ffffff"
+          @select="handleMenuSelect"
+        >
+          <el-menu-item index="dashboard">
+            <el-icon><data-analysis /></el-icon>
+            <template #title>仪表盘</template>
+          </el-menu-item>
+          <el-menu-item index="services">
+            <el-icon><grid /></el-icon>
+            <template #title>服务内容管理</template>
+          </el-menu-item>
+          <el-menu-item index="orders">
+            <el-icon><document /></el-icon>
+            <template #title>订单管理</template>
+          </el-menu-item>
+          <el-menu-item index="users">
+            <el-icon><user-filled /></el-icon>
+            <template #title>用户管理</template>
+          </el-menu-item>
+          <el-menu-item index="workers">
+            <el-icon><avatar /></el-icon>
+            <template #title>师傅管理</template>
+          </el-menu-item>
+          <el-menu-item index="withdraws">
+            <el-icon><money /></el-icon>
+            <template #title>提现管理</template>
+          </el-menu-item>
+          <el-menu-item index="statistics">
+            <el-icon><trend-charts /></el-icon>
+            <template #title>数据统计</template>
+          </el-menu-item>
+        </el-menu>
+      </el-aside>
+
+      <el-container>
+        <el-header class="topbar">
+          <div class="left">
+            <el-button text @click="toggleSidebar">
+              <el-icon size="20"><expand v-if="isCollapse" /><fold v-else /></el-icon>
+            </el-button>
+            <span style="font-size:15px;color:#303133;font-weight:500;">{{ currentPageTitle }}</span>
+          </div>
+          <div class="right">
+            <el-tag type="info" effect="plain" size="small">{{ adminRole }}</el-tag>
+            <span class="admin-name">{{ adminName || '管理员' }}</span>
+            <el-button text type="danger" @click="handleLogout">
+              <el-icon><switch-button /></el-icon> 退出
+            </el-button>
+          </div>
+        </el-header>
+
+        <el-main class="main-content">
+          <!-- ============ Dashboard ============ -->
+          <div v-show="activeMenu === 'dashboard'">
+            <el-row :gutter="14">
+              <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="6">
+                <div class="stat-card c1">
+                  <div class="label">今日订单</div>
+                  <div class="value">{{ dashboard.today_orders }}</div>
+                  <el-icon class="icon-bg"><document /></el-icon>
+                </div>
+              </el-col>
+              <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="6">
+                <div class="stat-card c2">
+                  <div class="label">今日交易额</div>
+                  <div class="value">¥ {{ formatMoney(dashboard.today_amount) }}</div>
+                  <el-icon class="icon-bg"><money /></el-icon>
+                </div>
+              </el-col>
+              <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="6">
+                <div class="stat-card c3">
+                  <div class="label">新增用户</div>
+                  <div class="value">{{ dashboard.new_users }}</div>
+                  <el-icon class="icon-bg"><user-filled /></el-icon>
+                </div>
+              </el-col>
+              <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="6">
+                <div class="stat-card c4">
+                  <div class="label">新增师傅</div>
+                  <div class="value">{{ dashboard.new_workers }}</div>
+                  <el-icon class="icon-bg"><avatar /></el-icon>
+                </div>
+              </el-col>
+              <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="6">
+                <div class="stat-card c5">
+                  <div class="label">待审核提现</div>
+                  <div class="value">{{ dashboard.pending_withdraw_count }}</div>
+                  <el-icon class="icon-bg"><wallet /></el-icon>
+                </div>
+              </el-col>
+            </el-row>
+            <div class="page-card" style="margin-top:14px;">
+              <div class="page-title">运营提示</div>
+              <el-empty v-if="dashboard.pending_withdraw_count === 0" description="暂无待办事项" :image-size="80"></el-empty>
+              <div v-else>
+                <el-alert
+                  :title="`当前有 ${dashboard.pending_withdraw_count} 笔提现待审核，请前往「提现管理」处理。`"
+                  type="warning"
+                  show-icon
+                  :closable="false"
+                />
+                <el-button type="warning" size="small" style="margin-top:10px;" @click="activeMenu = 'withdraws'; loadWithdraws();">前往处理</el-button>
+              </div>
+            </div>
+          </div>
+
+          <!-- ============ Services ============ -->
+          <div v-show="activeMenu === 'services'">
+            <div class="page-card">
+              <div class="page-title">
+                <span>服务内容管理</span>
+                <span>
+                  <el-button type="success" size="small" @click="handleSeedDefault" :loading="seedLoading">
+                    <el-icon><magic-stick /></el-icon> 初始化种子数据
+                  </el-button>
+                  <el-button type="primary" size="small" @click="openCreateService">
+                    <el-icon><plus /></el-icon> 新建服务
+                  </el-button>
+                </span>
+              </div>
+              <el-table :data="services" v-loading="servicesLoading" border stripe size="default">
+                <el-table-column label="图标" width="80" align="center">
+                  <template #default="{ row }">
+                    <img v-if="row.icon" :src="row.icon" class="icon-cell" alt="icon" />
+                    <el-icon v-else><picture /></el-icon>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="name" label="服务名称" min-width="120" />
+                <el-table-column prop="key" label="Key" width="120" />
+                <el-table-column prop="category" label="分类" width="120">
+                  <template #default="{ row }">
+                    <el-tag v-if="row.category" size="small">{{ row.category }}</el-tag>
+                    <span v-else>-</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="价格区间" width="160">
+                  <template #default="{ row }">
+                    <span class="price-range">¥{{ row.price_min }} ~ ¥{{ row.price_max }}</span>
+                    <span style="color:#909399;font-size:12px;"> / {{ row.price_unit }}</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="状态" width="100" align="center">
+                  <template #default="{ row }">
+                    <el-switch
+                      :model-value="row.is_active"
+                      @change="(val) => toggleServiceActive(row, val)"
+                      active-text="启用"
+                      inline-prompt
+                    />
+                  </template>
+                </el-table-column>
+                <el-table-column label="操作" width="160" fixed="right">
+                  <template #default="{ row }">
+                    <el-button link type="primary" size="small" @click="openEditService(row)">编辑</el-button>
+                    <el-button link type="primary" size="small" @click="viewServiceDetail(row)">详情</el-button>
+                  </template>
+                </el-table-column>
+              </el-table>
+            </div>
+          </div>
+
+          <!-- ============ Orders ============ -->
+          <div v-show="activeMenu === 'orders'">
+            <div class="page-card">
+              <div class="page-title">订单管理</div>
+              <div class="filter-bar">
+                <el-select v-model="orderFilter.status" placeholder="状态筛选" clearable style="width:140px;" @change="loadOrders(1)">
+                  <el-option label="待接单" value="pending" />
+                  <el-option label="已接单" value="accepted" />
+                  <el-option label="已完成" value="completed" />
+                  <el-option label="已支付" value="paid" />
+                  <el-option label="已取消" value="cancelled" />
+                  <el-option label="已评价" value="reviewed" />
+                </el-select>
+                <el-input v-model="orderFilter.keyword" placeholder="订单号 / 服务名" clearable style="width:220px;" @keyup.enter="loadOrders(1)" @clear="loadOrders(1)" />
+                <el-button type="primary" size="default" @click="loadOrders(1)">查询</el-button>
+                <el-button size="default" @click="resetOrderFilter">重置</el-button>
+              </div>
+              <el-table :data="orders" v-loading="ordersLoading" border stripe size="default">
+                <el-table-column prop="order_no" label="订单号" min-width="160" />
+                <el-table-column prop="service_name" label="服务" min-width="120" />
+                <el-table-column label="状态" width="100" align="center">
+                  <template #default="{ row }">
+                    <el-tag :type="orderStatusTag(row.status)">{{ orderStatusLabel(row.status) }}</el-tag>
+                  </template>
+                </el-table-column>
+                <el-table-column label="预算" width="100" align="right">
+                  <template #default="{ row }">¥{{ row.budget }}</template>
+                </el-table-column>
+                <el-table-column label="成交价" width="100" align="right">
+                  <template #default="{ row }">{{ row.final_price != null ? '¥' + row.final_price : '-' }}</template>
+                </el-table-column>
+                <el-table-column prop="user_id" label="用户ID" width="80" />
+                <el-table-column prop="worker_id" label="师傅ID" width="80" />
+                <el-table-column prop="appoint_time" label="预约时间" min-width="150" />
+                <el-table-column prop="created_at" label="创建时间" min-width="150" />
+                <el-table-column label="操作" width="220" fixed="right">
+                  <template #default="{ row }">
+                    <el-button v-if="['pending','accepted'].includes(row.status)" link type="primary" size="small" @click="openStatusDialog(row)">取消订单</el-button>
+                    <el-button v-if="adminRole === 'super_admin' && ['paid','reviewed'].includes(row.status)" link type="warning" size="small" @click="openRefundDialog(row)">退款</el-button>
+                  </template>
+                </el-table-column>
+              </el-table>
+              <div class="pagination-wrap">
+                <el-pagination
+                  background
+                  layout="total, prev, pager, next, jumper"
+                  :total="orderTotal"
+                  :page-size="orderFilter.size"
+                  :current-page="orderFilter.page"
+                  @current-change="(p) => { orderFilter.page = p; loadOrders(); }"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- ============ Users ============ -->
+          <div v-show="activeMenu === 'users'">
+            <div class="page-card">
+              <div class="page-title">用户管理</div>
+              <div class="filter-bar">
+                <el-input v-model="userFilter.keyword" placeholder="昵称 / 手机号 / openid" clearable style="width:260px;" @keyup.enter="loadUsers(1)" @clear="loadUsers(1)" />
+                <el-select v-model="userFilter.status" placeholder="状态" clearable style="width:120px;" @change="loadUsers(1)">
+                  <el-option label="正常" value="active" />
+                  <el-option label="禁用" value="inactive" />
+                </el-select>
+                <el-button type="primary" @click="loadUsers(1)">查询</el-button>
+                <el-button @click="resetUserFilter">重置</el-button>
+              </div>
+              <el-table :data="users" v-loading="usersLoading" border stripe size="default">
+                <el-table-column prop="id" label="ID" width="70" />
+                <el-table-column label="头像" width="70" align="center">
+                  <template #default="{ row }">
+                    <img v-if="row.avatar" :src="row.avatar" style="width:36px;height:36px;border-radius:50%;" alt="" />
+                    <el-icon v-else><avatar /></el-icon>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="nickname" label="昵称" min-width="120" />
+                <el-table-column prop="phone" label="手机号" width="130" />
+                <el-table-column prop="role" label="角色" width="90" />
+                <el-table-column prop="member_level" label="会员" width="90" />
+                <el-table-column label="余额" width="100" align="right">
+                  <template #default="{ row }">¥{{ row.balance }}</template>
+                </el-table-column>
+                <el-table-column label="状态" width="120" align="center">
+                  <template #default="{ row }">
+                    <el-switch
+                      :model-value="row.is_active"
+                      @change="(val) => toggleUserActive(row, val)"
+                      active-text="启用"
+                      inactive-text="禁用"
+                      inline-prompt
+                    />
+                  </template>
+                </el-table-column>
+                <el-table-column prop="created_at" label="注册时间" min-width="150" />
+              </el-table>
+              <div class="pagination-wrap">
+                <el-pagination
+                  background
+                  layout="total, prev, pager, next, jumper"
+                  :total="userTotal"
+                  :page-size="userFilter.size"
+                  :current-page="userFilter.page"
+                  @current-change="(p) => { userFilter.page = p; loadUsers(); }"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- ============ Workers ============ -->
+          <div v-show="activeMenu === 'workers'">
+            <div class="page-card">
+              <div class="page-title">师傅管理</div>
+              <div class="filter-bar">
+                <el-input v-model="workerFilter.keyword" placeholder="昵称 / 真名 / 手机号" clearable style="width:260px;" @keyup.enter="loadWorkers(1)" @clear="loadWorkers(1)" />
+                <el-select v-model="workerFilter.certified" placeholder="认证状态" clearable style="width:140px;" @change="loadWorkers(1)">
+                  <el-option label="未认证" :value="0" />
+                  <el-option label="待审核" :value="1" />
+                  <el-option label="已认证" :value="2" />
+                  <el-option label="已拒绝/封禁" :value="3" />
+                </el-select>
+                <el-button type="primary" @click="loadWorkers(1)">查询</el-button>
+                <el-button @click="resetWorkerFilter">重置</el-button>
+              </div>
+              <el-table :data="workers" v-loading="workersLoading" border stripe size="default">
+                <el-table-column prop="id" label="ID" width="70" />
+                <el-table-column label="头像" width="70" align="center">
+                  <template #default="{ row }">
+                    <img v-if="row.avatar" :src="row.avatar" style="width:36px;height:36px;border-radius:50%;" alt="" />
+                    <el-icon v-else><avatar /></el-icon>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="nickname" label="昵称" min-width="110" />
+                <el-table-column prop="real_name" label="真名" width="100" />
+                <el-table-column prop="phone" label="手机号" width="130" />
+                <el-table-column label="认证" width="120" align="center">
+                  <template #default="{ row }">
+                    <el-tag :type="certifiedTag(row.certified)">{{ certifiedLabel(row.certified) }}</el-tag>
+                  </template>
+                </el-table-column>
+                <el-table-column label="评分" width="80" align="center">
+                  <template #default="{ row }">{{ row.rating }} ★</template>
+                </el-table-column>
+                <el-table-column prop="service_count" label="单数" width="80" align="center" />
+                <el-table-column prop="level" label="等级" width="70" align="center" />
+                <el-table-column label="余额" width="100" align="right">
+                  <template #default="{ row }">¥{{ row.balance }}</template>
+                </el-table-column>
+                <el-table-column label="在线" width="80" align="center">
+                  <template #default="{ row }">
+                    <el-tag :type="row.is_online ? 'success' : 'info'" size="small">{{ row.is_online ? '在线' : '离线' }}</el-tag>
+                  </template>
+                </el-table-column>
+                <el-table-column label="操作" width="180" fixed="right">
+                  <template #default="{ row }">
+                    <el-select :model-value="row.certified" size="small" style="width:130px;" @change="(val) => updateWorkerCertified(row, val)">
+                      <el-option label="未认证" :value="0" />
+                      <el-option label="待审核" :value="1" />
+                      <el-option label="已认证" :value="2" />
+                      <el-option label="已拒绝/封禁" :value="3" />
+                    </el-select>
+                  </template>
+                </el-table-column>
+              </el-table>
+              <div class="pagination-wrap">
+                <el-pagination
+                  background
+                  layout="total, prev, pager, next, jumper"
+                  :total="workerTotal"
+                  :page-size="workerFilter.size"
+                  :current-page="workerFilter.page"
+                  @current-change="(p) => { workerFilter.page = p; loadWorkers(); }"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- ============ Withdraws ============ -->
+          <div v-show="activeMenu === 'withdraws'">
+            <div class="page-card">
+              <div class="page-title">提现管理（待审核）</div>
+              <div class="filter-bar">
+                <el-button type="primary" @click="loadWithdraws()">刷新</el-button>
+              </div>
+              <el-table :data="withdraws" v-loading="withdrawsLoading" border stripe size="default">
+                <el-table-column prop="id" label="ID" width="70" />
+                <el-table-column label="提现人" min-width="160">
+                  <template #default="{ row }">
+                    <div>
+                      <el-tag size="small" :type="row.owner_type === 'worker' ? 'warning' : 'primary'">{{ row.owner_type === 'worker' ? '师傅' : '用户' }}</el-tag>
+                      <span style="margin-left:6px;">{{ row.owner && row.owner.nickname || '-' }}</span>
+                    </div>
+                    <div style="font-size:12px;color:#909399;">{{ row.owner && row.owner.phone || row.owner_id }}</div>
+                  </template>
+                </el-table-column>
+                <el-table-column label="金额" width="120" align="right">
+                  <template #default="{ row }">
+                    <span style="color:#f56c6c;font-weight:600;">¥{{ row.amount }}</span>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="method" label="方式" width="100" />
+                <el-table-column prop="description" label="说明" min-width="160" />
+                <el-table-column prop="bank_info" label="收款信息" min-width="180">
+                  <template #default="{ row }">
+                    <span v-if="row.bank_info">{{ typeof row.bank_info === 'string' ? row.bank_info : JSON.stringify(row.bank_info) }}</span>
+                    <span v-else>-</span>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="created_at" label="申请时间" min-width="150" />
+                <el-table-column label="操作" width="120" fixed="right">
+                  <template #default="{ row }">
+                    <el-popconfirm title="确认审批通过并触发转账？" @confirm="approveWithdraw(row)">
+                      <template #reference>
+                        <el-button v-if="adminRole === 'super_admin'" type="success" size="small">通过</el-button>
+                      </template>
+                    </el-popconfirm>
+                  </template>
+                </el-table-column>
+              </el-table>
+              <div v-if="withdraws.length === 0 && !withdrawsLoading" class="empty-block">
+                <el-empty description="暂无待审核提现"></el-empty>
+              </div>
+              <div class="pagination-wrap">
+                <el-pagination
+                  background
+                  layout="total, prev, pager, next, jumper"
+                  :total="withdrawTotal"
+                  :page-size="withdrawFilter.size"
+                  :current-page="withdrawFilter.page"
+                  @current-change="(p) => { withdrawFilter.page = p; loadWithdraws(); }"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- ============ Statistics ============ -->
+          <div v-show="activeMenu === 'statistics'">
+            <!-- 财务总览 -->
+            <el-row :gutter="14" v-loading="statsSummaryLoading">
+              <el-col :xs="24" :sm="12" :md="6">
+                <div class="stat-card c1">
+                  <div class="label">总交易额</div>
+                  <div class="value">¥ {{ formatMoney(statsSummary.total_amount) }}</div>
+                  <el-icon class="icon-bg"><money /></el-icon>
+                </div>
+              </el-col>
+              <el-col :xs="24" :sm="12" :md="6">
+                <div class="stat-card c2">
+                  <div class="label">平台收入</div>
+                  <div class="value">¥ {{ formatMoney(statsSummary.platform_income) }}</div>
+                  <el-icon class="icon-bg"><wallet /></el-icon>
+                </div>
+              </el-col>
+              <el-col :xs="24" :sm="12" :md="6">
+                <div class="stat-card c4">
+                  <div class="label">总退款</div>
+                  <div class="value">¥ {{ formatMoney(statsSummary.total_refund) }}</div>
+                  <el-icon class="icon-bg"><refresh-left /></el-icon>
+                </div>
+              </el-col>
+              <el-col :xs="24" :sm="12" :md="6">
+                <div class="stat-card c3">
+                  <div class="label">系统余额</div>
+                  <div class="value">¥ {{ formatMoney(statsSummary.system_balance) }}</div>
+                  <el-icon class="icon-bg"><coin /></el-icon>
+                </div>
+              </el-col>
+            </el-row>
+
+            <div class="page-card" style="margin-top:14px;">
+              <div class="page-title">
+                <span>数据统计</span>
+                <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+                  <el-date-picker
+                    v-model="statsDateRange"
+                    type="daterange"
+                    range-separator="至"
+                    start-placeholder="开始日期"
+                    end-placeholder="结束日期"
+                    value-format="YYYY-MM-DD"
+                    :clearable="false"
+                    style="width:300px;"
+                  />
+                  <el-button type="primary" size="small" @click="loadStatistics">查询</el-button>
+                </div>
+              </div>
+
+              <!-- 区间汇总卡片 -->
+              <el-row :gutter="14" style="margin-bottom:14px;">
+                <el-col :xs="24" :sm="8">
+                  <div class="stats-summary-card" style="border-left-color:#004080;">
+                    <div class="label">区间订单总数</div>
+                    <div class="value">{{ statsTotals.order_count }}</div>
+                  </div>
+                </el-col>
+                <el-col :xs="24" :sm="8">
+                  <div class="stats-summary-card" style="border-left-color:#f5576c;">
+                    <div class="label">区间订单金额</div>
+                    <div class="value">¥ {{ formatMoney(statsTotals.order_amount) }}</div>
+                  </div>
+                </el-col>
+                <el-col :xs="24" :sm="8">
+                  <div class="stats-summary-card" style="border-left-color:#10B981;">
+                    <div class="label">区间平台收入</div>
+                    <div class="value">¥ {{ formatMoney(statsTotals.platform_income) }}</div>
+                  </div>
+                </el-col>
+              </el-row>
+
+              <!-- 图表网格 -->
+              <el-row :gutter="14" v-loading="statsLoading">
+                <el-col :xs="24" :lg="12">
+                  <div class="chart-box">
+                    <div class="chart-title">订单趋势折线图</div>
+                    <div ref="chartTrend" class="chart-canvas"></div>
+                  </div>
+                </el-col>
+                <el-col :xs="24" :lg="12">
+                  <div class="chart-box">
+                    <div class="chart-title">平台收入柱状图</div>
+                    <div ref="chartRevenue" class="chart-canvas"></div>
+                  </div>
+                </el-col>
+                <el-col :xs="24" :lg="12">
+                  <div class="chart-box">
+                    <div class="chart-title">订单状态分布饼图</div>
+                    <div ref="chartStatusPie" class="chart-canvas"></div>
+                  </div>
+                </el-col>
+                <el-col :xs="24" :lg="12">
+                  <div class="chart-box">
+                    <div class="chart-title">服务类型分布环形图</div>
+                    <div ref="chartServiceDonut" class="chart-canvas"></div>
+                  </div>
+                </el-col>
+              </el-row>
+            </div>
+          </div>
+        </el-main>
+      </el-container>
+    </el-container>
+
+    <!-- ============ Service Edit Dialog ============ -->
+    <el-dialog
+      v-model="serviceDialog.visible"
+      :title="serviceDialog.isEdit ? '编辑服务' : '新建服务'"
+      width="900px"
+      top="5vh"
+      class="service-edit-dialog"
+      :close-on-click-modal="false"
+      destroy-on-close
+    >
+      <el-form :model="serviceForm" label-width="120px" label-position="right">
+        <el-divider content-position="left">基础信息</el-divider>
+        <el-row :gutter="16">
+          <el-col :span="12">
+            <el-form-item label="服务名称" required>
+              <el-input v-model="serviceForm.name" placeholder="如：水电维修" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="Key" required>
+              <el-input v-model="serviceForm.key" placeholder="英文唯一标识，如 electric" :disabled="serviceDialog.isEdit" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="分类">
+              <el-input v-model="serviceForm.category" placeholder="如 居家维修 / 家电维修" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="价格区间">
+              <el-input-number v-model="serviceForm.price_min" :min="0" :precision="2" controls-position="right" style="width:48%;" />
+              <span style="margin:0 4px;">~</span>
+              <el-input-number v-model="serviceForm.price_max" :min="0" :precision="2" controls-position="right" style="width:48%;" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="价格单位">
+              <el-input v-model="serviceForm.price_unit" placeholder="如 次 / 平方米" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="排序">
+              <el-input-number v-model="serviceForm.sort_order" :min="0" controls-position="right" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="图标 URL">
+              <el-input v-model="serviceForm.icon" placeholder="https://..." />
+              <img v-if="serviceForm.icon" :src="serviceForm.icon" class="icon-preview" alt="" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="Banner URL">
+              <el-input v-model="serviceForm.banner" placeholder="https://..." />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="介绍视频 URL">
+              <el-input v-model="serviceForm.intro_video" placeholder="https://..." />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="启用状态">
+              <el-switch v-model="serviceForm.is_active" active-text="启用" inactive-text="禁用" inline-prompt />
+            </el-form-item>
+          </el-col>
+          <el-col :span="24">
+            <el-form-item label="服务描述">
+              <el-input v-model="serviceForm.description" type="textarea" :rows="3" placeholder="服务简介" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-divider content-position="left">JSON 富内容字段（请保持 JSON 格式合法）</el-divider>
+
+        <div class="json-field">
+          <div class="json-label">process_steps 服务流程</div>
+          <el-input
+            v-model="serviceForm.process_steps"
+            type="textarea"
+            :rows="5"
+            placeholder='[{"step":1,"title":"在线预约","desc":"选择服务类型"}]'
+          />
+          <div class="json-hint">数组，元素结构：{"step":1,"title":"步骤标题","desc":"描述"}</div>
+          <div class="json-error" v-if="jsonErrors.process_steps">{{ jsonErrors.process_steps }}</div>
+        </div>
+
+        <div class="json-field">
+          <div class="json-label">faq 常见问题</div>
+          <el-input
+            v-model="serviceForm.faq"
+            type="textarea"
+            :rows="5"
+            placeholder='[{"q":"问题","a":"答案"}]'
+          />
+          <div class="json-hint">数组，元素结构：{"q":"问题","a":"答案"}</div>
+          <div class="json-error" v-if="jsonErrors.faq">{{ jsonErrors.faq }}</div>
+        </div>
+
+        <div class="json-field">
+          <div class="json-label">cases 案例展示</div>
+          <el-input
+            v-model="serviceForm.cases"
+            type="textarea"
+            :rows="5"
+            placeholder='[{"title":"案例标题","desc":"描述","images":["url1"]}]'
+          />
+          <div class="json-hint">数组，元素结构：{"title":"标题","desc":"描述","images":["图片URL"]}</div>
+          <div class="json-error" v-if="jsonErrors.cases">{{ jsonErrors.cases }}</div>
+        </div>
+
+        <div class="json-field">
+          <div class="json-label">service_images 服务图片</div>
+          <el-input
+            v-model="serviceForm.service_images"
+            type="textarea"
+            :rows="5"
+            placeholder='[{"url":"https://...","caption":"说明","sort":1}]'
+          />
+          <div class="json-hint">数组，元素结构：{"url":"图片URL","caption":"说明","sort":1}</div>
+          <div class="json-error" v-if="jsonErrors.service_images">{{ jsonErrors.service_images }}</div>
+        </div>
+
+        <div class="json-field">
+          <div class="json-label">detail_sections 详情章节</div>
+          <el-input
+            v-model="serviceForm.detail_sections"
+            type="textarea"
+            :rows="5"
+            placeholder='[{"title":"章节标题","content":"正文","image":"可选图URL"}]'
+          />
+          <div class="json-hint">数组，元素结构：{"title":"标题","content":"正文","image":"可选配图URL"}</div>
+          <div class="json-error" v-if="jsonErrors.detail_sections">{{ jsonErrors.detail_sections }}</div>
+        </div>
+
+        <div class="json-field">
+          <div class="json-label">service_standards 服务标准</div>
+          <el-input
+            v-model="serviceForm.service_standards"
+            type="textarea"
+            :rows="5"
+            placeholder='[{"icon":"https://...","title":"标题","desc":"描述"}]'
+          />
+          <div class="json-hint">数组，元素结构：{"icon":"图标URL","title":"标题","desc":"描述"}</div>
+          <div class="json-error" v-if="jsonErrors.service_standards">{{ jsonErrors.service_standards }}</div>
+        </div>
+
+        <div class="json-field">
+          <div class="json-label">price_details 价格明细</div>
+          <el-input
+            v-model="serviceForm.price_details"
+            type="textarea"
+            :rows="5"
+            placeholder='[{"item":"项目","price":100,"unit":"次","note":"备注"}]'
+          />
+          <div class="json-hint">数组，元素结构：{"item":"项目","price":100,"unit":"次","note":"备注"}</div>
+          <div class="json-error" v-if="jsonErrors.price_details">{{ jsonErrors.price_details }}</div>
+        </div>
+      </el-form>
+
+      <template #footer>
+        <el-button @click="serviceDialog.visible = false">取消</el-button>
+        <el-button type="primary" :loading="serviceDialog.saving" @click="saveService">保存</el-button>
+      </template>
+    </el-dialog>
+
+    <!-- ============ Order Status Dialog ============ -->
+    <el-dialog v-model="orderStatusDialog.visible" title="修改订单状态" width="460px">
+      <el-form label-width="100px">
+        <el-form-item label="订单号">
+          <span>{{ orderStatusDialog.order && orderStatusDialog.order.order_no }}</span>
+        </el-form-item>
+        <el-form-item label="新状态">
+          <el-select v-model="orderStatusDialog.status" placeholder="选择状态" style="width:100%;">
+            <el-option label="已取消" value="cancelled" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="备注">
+          <el-input v-model="orderStatusDialog.remark" type="textarea" :rows="2" placeholder="必填：取消原因" />
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <el-button @click="orderStatusDialog.visible = false">取消</el-button>
+        <el-button type="primary" :loading="orderStatusDialog.saving" @click="submitOrderStatus">确认修改</el-button>
+      </template>
+    </el-dialog>
+
+    <!-- ============ Refund Dialog ============ -->
+    <el-dialog v-model="refundDialog.visible" title="订单退款" width="460px">
+      <el-form label-width="100px">
+        <el-form-item label="订单号">
+          <span>{{ refundDialog.order && refundDialog.order.order_no }}</span>
+        </el-form-item>
+        <el-form-item label="退款金额">
+          <el-input-number v-model="refundDialog.amount" :min="0" :precision="2" controls-position="right" style="width:100%;" />
+        </el-form-item>
+        <el-form-item label="退款原因">
+          <el-input v-model="refundDialog.reason" type="textarea" :rows="3" placeholder="请填写退款原因" />
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <el-button @click="refundDialog.visible = false">取消</el-button>
+        <el-button type="warning" :loading="refundDialog.saving" @click="submitRefund">确认退款</el-button>
+      </template>
+    </el-dialog>
+
+    <!-- ============ Service Detail Viewer ============ -->
+    <el-dialog v-model="detailDialog.visible" title="服务详情" width="760px" top="5vh">
+      <div v-if="detailDialog.data">
+        <el-descriptions :column="2" border size="small">
+          <el-descriptions-item label="ID">{{ detailDialog.data.id }}</el-descriptions-item>
+          <el-descriptions-item label="Key">{{ detailDialog.data.key }}</el-descriptions-item>
+          <el-descriptions-item label="名称">{{ detailDialog.data.name }}</el-descriptions-item>
+          <el-descriptions-item label="分类">{{ detailDialog.data.category || '-' }}</el-descriptions-item>
+          <el-descriptions-item label="价格">¥{{ detailDialog.data.price_min }} ~ ¥{{ detailDialog.data.price_max }} / {{ detailDialog.data.price_unit }}</el-descriptions-item>
+          <el-descriptions-item label="状态">{{ detailDialog.data.is_active ? '启用' : '禁用' }}</el-descriptions-item>
+          <el-descriptions-item label="图标" v-if="detailDialog.data.icon">
+            <img :src="detailDialog.data.icon" class="icon-cell" alt="" />
+          </el-descriptions-item>
+          <el-descriptions-item label="Banner" v-if="detailDialog.data.banner">
+            <img :src="detailDialog.data.banner" style="width:160px;border-radius:6px;" alt="" />
+          </el-descriptions-item>
+          <el-descriptions-item label="介绍视频" :span="2" v-if="detailDialog.data.intro_video">
+            {{ detailDialog.data.intro_video }}
+          </el-descriptions-item>
+          <el-descriptions-item label="描述" :span="2">{{ detailDialog.data.description || '-' }}</el-descriptions-item>
+        </el-descriptions>
+
+        <el-divider content-position="left">JSON 字段预览</el-divider>
+        <el-tabs>
+          <el-tab-pane label="process_steps">
+            <pre style="max-height:240px;overflow:auto;font-size:12px;background:#f5f7fa;padding:10px;border-radius:4px;">{{ formatJson(detailDialog.data.process_steps) }}</pre>
+          </el-tab-pane>
+          <el-tab-pane label="faq">
+            <pre style="max-height:240px;overflow:auto;font-size:12px;background:#f5f7fa;padding:10px;border-radius:4px;">{{ formatJson(detailDialog.data.faq) }}</pre>
+          </el-tab-pane>
+          <el-tab-pane label="cases">
+            <pre style="max-height:240px;overflow:auto;font-size:12px;background:#f5f7fa;padding:10px;border-radius:4px;">{{ formatJson(detailDialog.data.cases) }}</pre>
+          </el-tab-pane>
+          <el-tab-pane label="service_images">
+            <pre style="max-height:240px;overflow:auto;font-size:12px;background:#f5f7fa;padding:10px;border-radius:4px;">{{ formatJson(detailDialog.data.service_images) }}</pre>
+          </el-tab-pane>
+          <el-tab-pane label="detail_sections">
+            <pre style="max-height:240px;overflow:auto;font-size:12px;background:#f5f7fa;padding:10px;border-radius:4px;">{{ formatJson(detailDialog.data.detail_sections) }}</pre>
+          </el-tab-pane>
+          <el-tab-pane label="service_standards">
+            <pre style="max-height:240px;overflow:auto;font-size:12px;background:#f5f7fa;padding:10px;border-radius:4px;">{{ formatJson(detailDialog.data.service_standards) }}</pre>
+          </el-tab-pane>
+          <el-tab-pane label="price_details">
+            <pre style="max-height:240px;overflow:auto;font-size:12px;background:#f5f7fa;padding:10px;border-radius:4px;">{{ formatJson(detailDialog.data.price_details) }}</pre>
+          </el-tab-pane>
+        </el-tabs>
+      </div>
+    </el-dialog>
+  </div>
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="https://unpkg.com/element-plus"></script>
+  <script src="https://unpkg.com/@element-plus/icons-vue"></script>
+  <script>
+    const { createApp, reactive, ref, computed, onMounted, onBeforeUnmount, nextTick } = Vue;
+
+    const BASE_URL = ""; // same origin
+
+    function request(url, options = {}) {
+      const headers = Object.assign({}, options.headers || {});
+      const token = localStorage.getItem("admin_token");
+      if (token) headers["Authorization"] = "Bearer " + token;
+      if (options.body && typeof options.body !== "string") {
+        headers["Content-Type"] = "application/json";
+        options.body = JSON.stringify(options.body);
+      }
+      return fetch(BASE_URL + url, {
+        method: options.method || "GET",
+        headers,
+        body: options.body,
+      })
+        .then((res) => res.json().then((json) => ({ ok: res.ok, status: res.status, json })))
+        .then(({ ok, status, json }) => {
+          if (!ok || (json && json.code !== undefined && json.code !== 0)) {
+            const msg = (json && (json.detail || json.message)) || ("请求失败 (" + status + ")");
+            const err = new Error(msg);
+            err.status = status;
+            err.body = json;
+            throw err;
+          }
+          return json;
+        });
+    }
+
+    const app = createApp({
+      setup() {
+        // ===== Auth state =====
+        const adminId = ref(localStorage.getItem("admin_id") || "");
+        const adminToken = ref(localStorage.getItem("admin_token") || "");
+        const adminName = ref(localStorage.getItem("admin_name") || "");
+        const adminRole = ref(localStorage.getItem("admin_role") || "");
+        const isLoggedIn = computed(() => !!adminToken.value && !!adminId.value);
+
+        const loginForm = reactive({ username: "", password: "" });
+        const loginLoading = ref(false);
+
+        async function handleLogin() {
+          if (!loginForm.username || !loginForm.password) {
+            ElementPlus.ElMessage.warning("请输入用户名和密码");
+            return;
+          }
+          loginLoading.value = true;
+          try {
+            const res = await request("/api/admin/login", {
+              method: "POST",
+              body: { username: loginForm.username, password: loginForm.password },
+            });
+            const data = res.data || {};
+            adminToken.value = data.token;
+            adminId.value = String(data.admin_id);
+            adminRole.value = data.role || "";
+            localStorage.setItem("admin_token", adminToken.value);
+            localStorage.setItem("admin_id", adminId.value);
+            localStorage.setItem("admin_role", adminRole.value);
+            adminName.value = loginForm.username;
+            localStorage.setItem("admin_name", adminName.value);
+            ElementPlus.ElMessage.success("登录成功");
+            loginForm.username = "";
+            loginForm.password = "";
+            loadDashboard();
+          } catch (e) {
+            ElementPlus.ElMessage.error(e.message || "登录失败");
+          } finally {
+            loginLoading.value = false;
+          }
+        }
+
+        function clearAdminSession() {
+          adminToken.value = "";
+          adminId.value = "";
+          adminName.value = "";
+          adminRole.value = "";
+          localStorage.removeItem("admin_token");
+          localStorage.removeItem("admin_id");
+          localStorage.removeItem("admin_name");
+          localStorage.removeItem("admin_role");
+        }
+
+        function handleLogout() {
+          ElementPlus.ElMessageBox.confirm("确认退出登录？", "提示", { type: "warning" })
+            .then(async () => {
+              try {
+                await request("/api/admin/logout", { method: "POST" });
+                clearAdminSession();
+              } catch (e) {
+                ElementPlus.ElMessage.error(e.message || "退出失败，请重试");
+              }
+            })
+            .catch(() => {});
+        }
+
+        // ===== Layout =====
+        const activeMenu = ref("dashboard");
+        const isCollapse = ref(false);
+        const sidebarMobileOpen = ref(false);
+        function toggleSidebar() {
+          isCollapse.value = !isCollapse.value;
+        }
+        function handleMenuSelect(index) {
+          // 离开数据统计页时销毁图表实例，避免内存泄漏
+          if (activeMenu.value === "statistics" && index !== "statistics") {
+            disposeStatsCharts();
+          }
+          activeMenu.value = index;
+          // close mobile sidebar after select
+          sidebarMobileOpen.value = false;
+          switch (index) {
+            case "dashboard": loadDashboard(); break;
+            case "services": loadServices(); break;
+            case "orders": loadOrders(1); break;
+            case "users": loadUsers(1); break;
+            case "workers": loadWorkers(1); break;
+            case "withdraws": loadWithdraws(1); break;
+            case "statistics": loadFinanceSummary(); loadStatistics(); break;
+          }
+        }
+        const currentPageTitle = computed(() => {
+          const map = {
+            dashboard: "仪表盘",
+            services: "服务内容管理",
+            orders: "订单管理",
+            users: "用户管理",
+            workers: "师傅管理",
+            withdraws: "提现管理",
+            statistics: "数据统计",
+          };
+          return map[activeMenu.value] || "";
+        });
+
+        // ===== Dashboard =====
+        const dashboard = reactive({
+          today_orders: 0,
+          today_amount: 0,
+          new_users: 0,
+          new_workers: 0,
+          pending_withdraw_count: 0,
+        });
+        async function loadDashboard() {
+          try {
+            const res = await request("/api/admin/dashboard");
+            Object.assign(dashboard, res.data || {});
+          } catch (e) {
+            // ignore
+          }
+        }
+
+        // ===== Services =====
+        const services = ref([]);
+        const servicesLoading = ref(false);
+        const seedLoading = ref(false);
+
+        async function loadServices() {
+          servicesLoading.value = true;
+          try {
+            const res = await request("/api/services");
+            services.value = res.data || [];
+          } catch (e) {
+            ElementPlus.ElMessage.error(e.message || "加载服务列表失败");
+          } finally {
+            servicesLoading.value = false;
+          }
+        }
+
+        const serviceDialog = reactive({
+          visible: false,
+          isEdit: false,
+          saving: false,
+          editingId: null,
+          originalIsActive: null,
+          editingRow: null,
+        });
+        const serviceForm = reactive({
+          key: "",
+          name: "",
+          icon: "",
+          banner: "",
+          category: "",
+          price_min: 0,
+          price_max: 0,
+          price_unit: "次",
+          description: "",
+          process_steps: "",
+          faq: "",
+          cases: "",
+          service_images: "",
+          detail_sections: "",
+          service_standards: "",
+          price_details: "",
+          intro_video: "",
+          sort_order: 0,
+          is_active: true,
+        });
+        const jsonErrors = reactive({});
+        const JSON_FIELDS = [
+          "process_steps", "faq", "cases", "service_images",
+          "detail_sections", "service_standards", "price_details",
+        ];
+
+        function emptyServiceForm() {
+          serviceForm.key = "";
+          serviceForm.name = "";
+          serviceForm.icon = "";
+          serviceForm.banner = "";
+          serviceForm.category = "";
+          serviceForm.price_min = 0;
+          serviceForm.price_max = 0;
+          serviceForm.price_unit = "次";
+          serviceForm.description = "";
+          serviceForm.process_steps = "";
+          serviceForm.faq = "";
+          serviceForm.cases = "";
+          serviceForm.service_images = "";
+          serviceForm.detail_sections = "";
+          serviceForm.service_standards = "";
+          serviceForm.price_details = "";
+          serviceForm.intro_video = "";
+          serviceForm.sort_order = 0;
+          serviceForm.is_active = true;
+          Object.keys(jsonErrors).forEach((k) => delete jsonErrors[k]);
+        }
+
+        function openCreateService() {
+          emptyServiceForm();
+          serviceDialog.isEdit = false;
+          serviceDialog.editingId = null;
+          serviceDialog.visible = true;
+        }
+
+        async function openEditService(row) {
+          // fetch full detail
+          try {
+            const res = await request("/api/services/" + row.id);
+            const d = res.data || {};
+            emptyServiceForm();
+            serviceForm.key = d.key || "";
+            serviceForm.name = d.name || "";
+            serviceForm.icon = d.icon || "";
+            serviceForm.banner = d.banner || "";
+            serviceForm.category = d.category || "";
+            serviceForm.price_min = d.price_min || 0;
+            serviceForm.price_max = d.price_max || 0;
+            serviceForm.price_unit = d.price_unit || "次";
+            serviceForm.description = d.description || "";
+            serviceForm.intro_video = d.intro_video || "";
+            serviceForm.sort_order = d.sort_order || 0;
+            serviceForm.is_active = row.is_active;
+            JSON_FIELDS.forEach((f) => {
+              serviceForm[f] = d[f] ? JSON.stringify(d[f], null, 2) : "";
+            });
+            serviceDialog.isEdit = true;
+            serviceDialog.editingId = row.id;
+            serviceDialog.editingRow = row;
+            serviceDialog.originalIsActive = row.is_active;
+            serviceDialog.visible = true;
+          } catch (e) {
+            ElementPlus.ElMessage.error(e.message || "加载服务详情失败");
+          }
+        }
+
+        function validateAndParseJson() {
+          let valid = true;
+          Object.keys(jsonErrors).forEach((k) => delete jsonErrors[k]);
+          const parsed = {};
+          JSON_FIELDS.forEach((f) => {
+            const raw = (serviceForm[f] || "").trim();
+            if (!raw) {
+              parsed[f] = null;
+              return;
+            }
+            try {
+              const obj = JSON.parse(raw);
+              if (!Array.isArray(obj)) {
+                jsonErrors[f] = "应为 JSON 数组";
+                valid = false;
+              } else {
+                parsed[f] = obj;
+              }
+            } catch (err) {
+              jsonErrors[f] = "JSON 格式错误：" + err.message;
+              valid = false;
+            }
+          });
+          return { valid, parsed };
+        }
+
+        async function saveService() {
+          if (!serviceForm.name || !serviceForm.key) {
+            ElementPlus.ElMessage.warning("请填写服务名称和 Key");
+            return;
+          }
+          if (serviceForm.price_max < serviceForm.price_min) {
+            ElementPlus.ElMessage.warning("价格区间最大值不能小于最小值");
+            return;
+          }
+          const { valid, parsed } = validateAndParseJson();
+          if (!valid) {
+            ElementPlus.ElMessage.error("JSON 字段存在格式错误，请检查后重试");
+            return;
+          }
+          const payload = {
+            key: serviceForm.key,
+            name: serviceForm.name,
+            icon: serviceForm.icon || null,
+            banner: serviceForm.banner || null,
+            category: serviceForm.category || null,
+            price_min: Number(serviceForm.price_min) || 0,
+            price_max: Number(serviceForm.price_max) || 0,
+            price_unit: serviceForm.price_unit || "次",
+            description: serviceForm.description || null,
+            intro_video: serviceForm.intro_video || null,
+            sort_order: Number(serviceForm.sort_order) || 0,
+            process_steps: parsed.process_steps,
+            faq: parsed.faq,
+            cases: parsed.cases,
+            service_images: parsed.service_images,
+            detail_sections: parsed.detail_sections,
+            service_standards: parsed.service_standards,
+            price_details: parsed.price_details,
+          };
+
+          // The ServiceTypeCreateRequest schema does NOT include is_active.
+          // is_active can only be toggled via the dedicated /api/services/{id}/active endpoint.
+          // We send the main payload first, then toggle is_active if it changed.
+
+          serviceDialog.saving = true;
+          try {
+            if (serviceDialog.isEdit) {
+              await request("/api/services/" + serviceDialog.editingId, {
+                method: "PUT",
+                body: payload,
+              });
+              // Toggle is_active via the dedicated endpoint if changed in the dialog
+              if (serviceDialog.originalIsActive !== null &&
+                  serviceDialog.originalIsActive !== !!serviceForm.is_active) {
+                try {
+                  await request("/api/services/" + serviceDialog.editingId + "/active", {
+                    method: "PUT",
+                    body: { is_active: !!serviceForm.is_active },
+                  });
+                  if (serviceDialog.editingRow) {
+                    serviceDialog.editingRow.is_active = !!serviceForm.is_active;
+                  }
+                } catch (toggleErr) {
+                  ElementPlus.ElMessage.warning("主信息已更新，但启用状态切换失败：" + (toggleErr.message || ""));
+                }
+              }
+              ElementPlus.ElMessage.success("更新成功");
+            } else {
+              await request("/api/services", { method: "POST", body: payload });
+              ElementPlus.ElMessage.success("创建成功");
+            }
+            serviceDialog.visible = false;
+            loadServices();
+          } catch (e) {
+            ElementPlus.ElMessage.error(e.message || "保存失败");
+          } finally {
+            serviceDialog.saving = false;
+          }
+        }
+
+        async function toggleServiceActive(row, val) {
+          try {
+            await request("/api/services/" + row.id + "/active", {
+              method: "PUT",
+              body: { is_active: val },
+            });
+            row.is_active = val;
+            ElementPlus.ElMessage.success(val ? "已启用" : "已禁用");
+          } catch (e) {
+            ElementPlus.ElMessage.error(e.message || "状态更新失败");
+          }
+        }
+
+        async function handleSeedDefault() {
+          try {
+            await ElementPlus.ElMessageBox.confirm(
+              "将插入 8 类标准服务种子数据（已存在的会跳过）。是否继续？",
+              "初始化种子数据",
+              { type: "warning" }
+            );
+          } catch (e) {
+            return;
+          }
+          seedLoading.value = true;
+          try {
+            const res = await request("/api/services/seed-default", { method: "POST" });
+            ElementPlus.ElMessage.success(res.message || "初始化完成");
+            loadServices();
+          } catch (e) {
+            ElementPlus.ElMessage.error(e.message || "初始化失败");
+          } finally {
+            seedLoading.value = false;
+          }
+        }
+
+        // ===== Service detail viewer =====
+        const detailDialog = reactive({ visible: false, data: null });
+        async function viewServiceDetail(row) {
+          try {
+            const res = await request("/api/services/" + row.id);
+            detailDialog.data = res.data || {};
+            detailDialog.visible = true;
+          } catch (e) {
+            ElementPlus.ElMessage.error(e.message || "加载详情失败");
+          }
+        }
+        function formatJson(v) {
+          if (v == null) return "-";
+          if (typeof v === "string") {
+            try { return JSON.stringify(JSON.parse(v), null, 2); } catch (e) { return v; }
+          }
+          try { return JSON.stringify(v, null, 2); } catch (e) { return String(v); }
+        }
+
+        // ===== Orders =====
+        const orders = ref([]);
+        const ordersLoading = ref(false);
+        const orderTotal = ref(0);
+        const orderFilter = reactive({ page: 1, size: 20, status: "", keyword: "" });
+
+        async function loadOrders(page) {
+          if (page) orderFilter.page = page;
+          ordersLoading.value = true;
+          try {
+            const params = new URLSearchParams();
+            params.set("page", orderFilter.page);
+            params.set("size", orderFilter.size);
+            if (orderFilter.status) params.set("status", orderFilter.status);
+            if (orderFilter.keyword) params.set("keyword", orderFilter.keyword);
+            const res = await request("/api/admin/orders?" + params.toString());
+            const data = res.data || {};
+            orders.value = data.list || [];
+            orderTotal.value = data.total || 0;
+          } catch (e) {
+            ElementPlus.ElMessage.error(e.message || "加载订单失败");
+          } finally {
+            ordersLoading.value = false;
+          }
+        }
+        function resetOrderFilter() {
+          orderFilter.status = "";
+          orderFilter.keyword = "";
+          loadOrders(1);
+        }
+        function orderStatusLabel(s) {
+          const map = {
+            pending: "待接单", accepted: "已接单", completed: "已完成",
+            paid: "已支付", cancelled: "已取消", reviewed: "已评价",
+          };
+          return map[s] || s;
+        }
+        function orderStatusTag(s) {
+          const map = {
+            pending: "warning", accepted: "primary", completed: "success",
+            paid: "success", cancelled: "info", reviewed: "",
+          };
+          return map[s] || "info";
+        }
+
+        const orderStatusDialog = reactive({
+          visible: false, order: null, status: "", remark: "", saving: false,
+        });
+        function openStatusDialog(row) {
+          orderStatusDialog.order = row;
+          orderStatusDialog.status = "cancelled";
+          orderStatusDialog.remark = "";
+          orderStatusDialog.visible = true;
+        }
+        async function submitOrderStatus() {
+          if (!orderStatusDialog.order) return;
+          orderStatusDialog.saving = true;
+          try {
+            await request("/api/admin/orders/" + orderStatusDialog.order.id + "/status", {
+              method: "PUT",
+              body: { status: orderStatusDialog.status, remark: orderStatusDialog.remark },
+            });
+            ElementPlus.ElMessage.success("状态已更新");
+            orderStatusDialog.visible = false;
+            loadOrders();
+          } catch (e) {
+            ElementPlus.ElMessage.error(e.message || "更新失败");
+          } finally {
+            orderStatusDialog.saving = false;
+          }
+        }
+
+        const refundDialog = reactive({
+          visible: false, order: null, amount: 0, reason: "", saving: false,
+        });
+        function openRefundDialog(row) {
+          refundDialog.order = row;
+          refundDialog.amount = row.final_price != null ? row.final_price : row.budget;
+          refundDialog.reason = "";
+          refundDialog.visible = true;
+        }
+        async function submitRefund() {
+          if (!refundDialog.order) return;
+          if (!refundDialog.reason) {
+            ElementPlus.ElMessage.warning("请填写退款原因");
+            return;
+          }
+          refundDialog.saving = true;
+          try {
+            await request("/api/wallet/refund", {
+              method: "POST",
+              body: {
+                order_no: refundDialog.order.order_no,
+                reason: refundDialog.reason,
+                amount: Number(refundDialog.amount),
+              },
+            });
+            ElementPlus.ElMessage.success("退款已发起");
+            refundDialog.visible = false;
+            loadOrders();
+          } catch (e) {
+            ElementPlus.ElMessage.error(e.message || "退款失败");
+          } finally {
+            refundDialog.saving = false;
+          }
+        }
+
+        // ===== Users =====
+        const users = ref([]);
+        const usersLoading = ref(false);
+        const userTotal = ref(0);
+        const userFilter = reactive({ page: 1, size: 20, keyword: "", status: "" });
+        async function loadUsers(page) {
+          if (page) userFilter.page = page;
+          usersLoading.value = true;
+          try {
+            const params = new URLSearchParams();
+            params.set("page", userFilter.page);
+            params.set("size", userFilter.size);
+            if (userFilter.keyword) params.set("keyword", userFilter.keyword);
+            if (userFilter.status) params.set("status", userFilter.status);
+            const res = await request("/api/admin/users?" + params.toString());
+            const data = res.data || {};
+            users.value = data.list || [];
+            userTotal.value = data.total || 0;
+          } catch (e) {
+            ElementPlus.ElMessage.error(e.message || "加载用户失败");
+          } finally {
+            usersLoading.value = false;
+          }
+        }
+        function resetUserFilter() {
+          userFilter.keyword = "";
+          userFilter.status = "";
+          loadUsers(1);
+        }
+        async function toggleUserActive(row, val) {
+          try {
+            await request("/api/admin/users/" + row.id + "/active", {
+              method: "PUT",
+              body: { is_active: val },
+            });
+            row.is_active = val;
+            ElementPlus.ElMessage.success(val ? "已启用" : "已禁用");
+          } catch (e) {
+            ElementPlus.ElMessage.error(e.message || "操作失败");
+          }
+        }
+
+        // ===== Workers =====
+        const workers = ref([]);
+        const workersLoading = ref(false);
+        const workerTotal = ref(0);
+        const workerFilter = reactive({ page: 1, size: 20, certified: "", keyword: "" });
+        async function loadWorkers(page) {
+          if (page) workerFilter.page = page;
+          workersLoading.value = true;
+          try {
+            const params = new URLSearchParams();
+            params.set("page", workerFilter.page);
+            params.set("size", workerFilter.size);
+            if (workerFilter.certified !== "" && workerFilter.certified != null) {
+              params.set("certified", workerFilter.certified);
+            }
+            if (workerFilter.keyword) params.set("keyword", workerFilter.keyword);
+            const res = await request("/api/admin/workers?" + params.toString());
+            const data = res.data || {};
+            workers.value = data.list || [];
+            workerTotal.value = data.total || 0;
+          } catch (e) {
+            ElementPlus.ElMessage.error(e.message || "加载师傅失败");
+          } finally {
+            workersLoading.value = false;
+          }
+        }
+        function resetWorkerFilter() {
+          workerFilter.certified = "";
+          workerFilter.keyword = "";
+          loadWorkers(1);
+        }
+        function certifiedLabel(c) {
+          return ["未认证", "待审核", "已认证", "已拒绝/封禁"][c] || "未知";
+        }
+        function certifiedTag(c) {
+          return ["info", "warning", "success", "danger"][c] || "info";
+        }
+        async function updateWorkerCertified(row, val) {
+          try {
+            await request("/api/admin/workers/" + row.id + "/certify", {
+              method: "PUT",
+              body: { certified: Number(val) },
+            });
+            row.certified = Number(val);
+            ElementPlus.ElMessage.success("认证状态已更新");
+          } catch (e) {
+            ElementPlus.ElMessage.error(e.message || "操作失败");
+            loadWorkers();
+          }
+        }
+
+        // ===== Withdraws =====
+        const withdraws = ref([]);
+        const withdrawsLoading = ref(false);
+        const withdrawTotal = ref(0);
+        const withdrawFilter = reactive({ page: 1, size: 20 });
+        async function loadWithdraws(page) {
+          if (page) withdrawFilter.page = page;
+          withdrawsLoading.value = true;
+          try {
+            const params = new URLSearchParams();
+            params.set("page", withdrawFilter.page);
+            params.set("size", withdrawFilter.size);
+            const res = await request("/api/admin/withdraws/pending?" + params.toString());
+            const data = res.data || {};
+            withdraws.value = data.list || [];
+            withdrawTotal.value = data.total || 0;
+          } catch (e) {
+            ElementPlus.ElMessage.error(e.message || "加载提现列表失败");
+          } finally {
+            withdrawsLoading.value = false;
+          }
+        }
+        async function approveWithdraw(row) {
+          try {
+            await request("/api/admin/withdraws/" + row.id + "/approve", { method: "PUT" });
+            ElementPlus.ElMessage.success("已审批通过");
+            loadWithdraws();
+            loadDashboard();
+          } catch (e) {
+            ElementPlus.ElMessage.error(e.message || "审批失败");
+          }
+        }
+
+        // ===== Statistics =====
+        function statsFmtDate(d) {
+          const y = d.getFullYear();
+          const m = String(d.getMonth() + 1).padStart(2, "0");
+          const day = String(d.getDate()).padStart(2, "0");
+          return y + "-" + m + "-" + day;
+        }
+        function statsDefaultStart() {
+          const d = new Date();
+          d.setDate(d.getDate() - 29);
+          return statsFmtDate(d);
+        }
+        function statsDefaultEnd() {
+          return statsFmtDate(new Date());
+        }
+
+        const statsDateRange = ref([statsDefaultStart(), statsDefaultEnd()]);
+        const statsLoading = ref(false);
+        const statsSummaryLoading = ref(false);
+        const statsSummary = reactive({
+          total_amount: 0,
+          platform_income: 0,
+          total_refund: 0,
+          system_balance: 0,
+        });
+        const statsTotals = reactive({
+          order_count: 0,
+          order_amount: 0,
+          platform_income: 0,
+        });
+        const chartTrend = ref(null);
+        const chartRevenue = ref(null);
+        const chartStatusPie = ref(null);
+        const chartServiceDonut = ref(null);
+        // 图表实例存放在非响应式对象中，避免 Vue 拦截
+        const chartInstances = {};
+
+        function disposeStatsCharts() {
+          Object.keys(chartInstances).forEach((k) => {
+            try { chartInstances[k] && chartInstances[k].dispose(); } catch (e) {}
+            delete chartInstances[k];
+          });
+        }
+        function handleChartResize() {
+          Object.keys(chartInstances).forEach((k) => {
+            try { chartInstances[k] && chartInstances[k].resize(); } catch (e) {}
+          });
+        }
+
+        async function loadFinanceSummary() {
+          statsSummaryLoading.value = true;
+          try {
+            const res = await request("/api/admin/finance/summary");
+            Object.assign(statsSummary, res.data || {});
+          } catch (e) {
+            // 静默忽略，不影响主流程
+          } finally {
+            statsSummaryLoading.value = false;
+          }
+        }
+
+        async function loadStatistics() {
+          statsLoading.value = true;
+          disposeStatsCharts();
+          try {
+            const range = statsDateRange.value || [];
+            const startDate = range[0];
+            const endDate = range[1];
+            if (!startDate || !endDate) {
+              ElementPlus.ElMessage.warning("请选择日期范围");
+              return;
+            }
+            const [dailyRes, ordersRes, servicesRes] = await Promise.all([
+              request("/api/admin/finance/daily?start_date=" + startDate + "&end_date=" + endDate),
+              request("/api/admin/orders?page=1&size=1000"),
+              request("/api/services"),
+            ]);
+            const dailyData = Array.isArray(dailyRes.data)
+              ? dailyRes.data
+              : (dailyRes.data && dailyRes.data.list) || [];
+            const allOrders = (ordersRes.data && ordersRes.data.list) || [];
+            const allServices = servicesRes.data || [];
+
+            statsTotals.order_count = dailyData.reduce((s, d) => s + (Number(d.order_count) || 0), 0);
+            statsTotals.order_amount = dailyData.reduce((s, d) => s + (Number(d.order_amount) || 0), 0);
+            statsTotals.platform_income = dailyData.reduce((s, d) => s + (Number(d.platform_income) || 0), 0);
+
+            // 等待 DOM 渲染完成后再初始化图表
+            await nextTick();
+            renderTrendChart(dailyData);
+            renderRevenueChart(dailyData);
+            renderStatusPie(allOrders);
+            renderServiceDonut(allServices);
+          } catch (e) {
+            ElementPlus.ElMessage.error(e.message || "加载统计数据失败");
+          } finally {
+            statsLoading.value = false;
+          }
+        }
+
+        function renderTrendChart(data) {
+          const dom = chartTrend.value;
+          if (!dom || typeof echarts === "undefined") return;
+          const chart = echarts.init(dom);
+          chartInstances.trend = chart;
+          const dates = data.map((d) => d.date);
+          const counts = data.map((d) => Number(d.order_count) || 0);
+          const amounts = data.map((d) => Number(d.order_amount) || 0);
+          chart.setOption({
+            tooltip: { trigger: "axis" },
+            legend: { data: ["订单数", "订单金额"], bottom: 0 },
+            grid: { left: 50, right: 60, top: 30, bottom: 50 },
+            color: ["#004080", "#f5576c"],
+            xAxis: { type: "category", data: dates, axisLabel: { rotate: 30, fontSize: 11 } },
+            yAxis: [
+              { type: "value", name: "订单数", position: "left" },
+              { type: "value", name: "金额(¥)", position: "right" },
+            ],
+            series: [
+              { name: "订单数", type: "line", data: counts, smooth: true, yAxisIndex: 0, areaStyle: { opacity: 0.1 } },
+              { name: "订单金额", type: "line", data: amounts, smooth: true, yAxisIndex: 1 },
+            ],
+          });
+        }
+
+        function renderRevenueChart(data) {
+          const dom = chartRevenue.value;
+          if (!dom || typeof echarts === "undefined") return;
+          const chart = echarts.init(dom);
+          chartInstances.revenue = chart;
+          const dates = data.map((d) => d.date);
+          const incomes = data.map((d) => Number(d.platform_income) || 0);
+          chart.setOption({
+            tooltip: {
+              trigger: "axis",
+              formatter: (p) => p[0].name + "<br/>平台收入：¥" + (p[0].value || 0),
+            },
+            grid: { left: 60, right: 30, top: 30, bottom: 50 },
+            color: ["#667eea"],
+            xAxis: { type: "category", data: dates, axisLabel: { rotate: 30, fontSize: 11 } },
+            yAxis: { type: "value", name: "平台收入(¥)" },
+            series: [
+              { name: "平台收入", type: "bar", data: incomes, itemStyle: { borderRadius: [4, 4, 0, 0] } },
+            ],
+          });
+        }
+
+        function renderStatusPie(orders) {
+          const dom = chartStatusPie.value;
+          if (!dom || typeof echarts === "undefined") return;
+          const chart = echarts.init(dom);
+          chartInstances.statusPie = chart;
+          const counter = {};
+          orders.forEach((o) => {
+            const s = o.status || "unknown";
+            counter[s] = (counter[s] || 0) + 1;
+          });
+          const statusMap = {
+            pending: "待接单", accepted: "已接单", completed: "已完成",
+            paid: "已支付", cancelled: "已取消", reviewed: "已评价",
+          };
+          const data = Object.keys(counter).map((k) => ({
+            name: statusMap[k] || k,
+            value: counter[k],
+          }));
+          chart.setOption({
+            tooltip: { trigger: "item", formatter: "{b}: {c} ({d}%)" },
+            legend: { bottom: 0, type: "scroll" },
+            color: ["#004080", "#667eea", "#10B981", "#F59E0B", "#f5576c", "#909399"],
+            series: [
+              {
+                name: "订单状态",
+                type: "pie",
+                radius: "55%",
+                center: ["50%", "45%"],
+                data: data,
+                label: { formatter: "{b}\n{d}%" },
+              },
+            ],
+          });
+        }
+
+        function renderServiceDonut(services) {
+          const dom = chartServiceDonut.value;
+          if (!dom || typeof echarts === "undefined") return;
+          const chart = echarts.init(dom);
+          chartInstances.serviceDonut = chart;
+          const counter = {};
+          services.forEach((s) => {
+            const c = s.category || "未分类";
+            counter[c] = (counter[c] || 0) + 1;
+          });
+          const data = Object.keys(counter).map((k) => ({ name: k, value: counter[k] }));
+          chart.setOption({
+            tooltip: { trigger: "item", formatter: "{b}: {c} ({d}%)" },
+            legend: { bottom: 0, type: "scroll" },
+            color: ["#004080", "#667eea", "#f5576c", "#10B981", "#F59E0B", "#76b1f5", "#a78bfa"],
+            series: [
+              {
+                name: "服务类型",
+                type: "pie",
+                radius: ["40%", "65%"],
+                center: ["50%", "45%"],
+                data: data,
+                label: { formatter: "{b}\n{d}%" },
+                avoidLabelOverlap: true,
+              },
+            ],
+          });
+        }
+
+        // ===== Helpers =====
+        function formatMoney(n) {
+          const v = Number(n || 0);
+          return v.toFixed(2).replace(/\.00$/, "");
+        }
+
+        // ===== Init =====
+        onMounted(() => {
+          if (isLoggedIn.value) {
+            loadDashboard();
+          }
+          window.addEventListener("resize", handleChartResize);
+        });
+        onBeforeUnmount(() => {
+          window.removeEventListener("resize", handleChartResize);
+          disposeStatsCharts();
+        });
+
+        return {
+          // auth
+          isLoggedIn, loginForm, loginLoading, handleLogin, handleLogout,
+          adminName, adminRole, adminId,
+          // layout
+          activeMenu, isCollapse, sidebarMobileOpen, toggleSidebar, handleMenuSelect,
+          currentPageTitle,
+          // dashboard
+          dashboard,
+          // services
+          services, servicesLoading, seedLoading, loadServices,
+          serviceDialog, serviceForm, jsonErrors, saveService,
+          openCreateService, openEditService, toggleServiceActive, handleSeedDefault,
+          detailDialog, viewServiceDetail, formatJson,
+          // orders
+          orders, ordersLoading, orderTotal, orderFilter, loadOrders, resetOrderFilter,
+          orderStatusLabel, orderStatusTag, orderStatusDialog, openStatusDialog, submitOrderStatus,
+          refundDialog, openRefundDialog, submitRefund,
+          // users
+          users, usersLoading, userTotal, userFilter, loadUsers, resetUserFilter, toggleUserActive,
+          // workers
+          workers, workersLoading, workerTotal, workerFilter, loadWorkers, resetWorkerFilter,
+          certifiedLabel, certifiedTag, updateWorkerCertified,
+          // withdraws
+          withdraws, withdrawsLoading, withdrawTotal, withdrawFilter, loadWithdraws, approveWithdraw,
+          // statistics
+          statsDateRange, statsLoading, statsSummaryLoading, statsSummary, statsTotals,
+          chartTrend, chartRevenue, chartStatusPie, chartServiceDonut,
+          loadStatistics, loadFinanceSummary,
+          // helpers
+          formatMoney,
+        };
+      },
+    });
+
+    app.use(ElementPlus);
+    for (const [key, comp] of Object.entries(ElementPlusIconsVue)) {
+      app.component(key, comp);
+    }
+    app.mount("#app");
+  </script>
+</body>
+</html>

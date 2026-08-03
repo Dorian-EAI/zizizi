@@ -1,0 +1,144 @@
+<view class="page">
+  <!-- ===== HERO ===== -->
+  <view class="hero">
+    <view class="hero-header">
+      <view class="hero-title-block">
+        <view class="hero-title">我的钱包</view>
+        <view class="hero-subtitle">管理您的收入</view>
+      </view>
+    </view>
+
+    <view class="balance-block">
+      <view class="balance-label">累计收入</view>
+      <view class="balance-amount">¥ {{totalEarnings || '3,826.50'}}</view>
+      <view class="balance-chips">
+        <view class="chip">
+          <text class="chip-label">本月</text>
+          <text class="chip-value">¥{{monthEarnings || '1,280'}}</text>
+        </view>
+        <view class="chip">
+          <text class="chip-label">可提现</text>
+          <text class="chip-value">¥{{withdrawable || '2,546.50'}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- ===== QUICK ACTIONS CARD (overlaps hero -36rpx) ===== -->
+  <view class="quick-card">
+    <view class="qa-item" bindtap="withdraw" data-dom-id="btn-withdraw">
+      <view class="qa-icon">
+        <view class="icon-svg">
+          <view class="svg-arrow-up"></view>
+        </view>
+      </view>
+      <text class="qa-label">提现</text>
+    </view>
+    <view class="qa-item" bindtap="transfer">
+      <view class="qa-icon">
+        <view class="icon-svg">
+          <view class="svg-transfer"></view>
+        </view>
+      </view>
+      <text class="qa-label">转账</text>
+    </view>
+    <view class="qa-item" bindtap="viewDetail">
+      <view class="qa-icon">
+        <view class="icon-svg">
+          <view class="svg-list"></view>
+        </view>
+      </view>
+      <text class="qa-label">明细</text>
+    </view>
+  </view>
+
+  <!-- ===== INCOME STATS CARD ===== -->
+  <view class="section">
+    <view class="section-title">
+      <text>收入统计</text>
+    </view>
+    <view class="card income-card">
+      <view class="income-card-title">本周收入趋势</view>
+
+      <view class="chart-wrap">
+        <view class="y-axis">
+          <text class="y-label">¥500</text>
+          <text class="y-label">¥0</text>
+        </view>
+        <view class="bars-area">
+          <view class="bar-col" wx:for="{{weekDays}}" wx:key="day">
+            <view class="bar-track">
+              <view class="bar {{item.isToday ? 'today' : ''}}" style="height: {{item.height}}%;"></view>
+            </view>
+            <text class="bar-label">{{item.day}}</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="chart-summary">
+        <text class="cs-label">本周收入</text>
+        <text class="cs-value">¥{{weekIncome || '1,280'}}</text>
+      </view>
+      <view class="card-gloss"></view>
+    </view>
+  </view>
+
+  <!-- ===== RECENT TRANSACTIONS ===== -->
+  <view class="section">
+    <view class="section-title">
+      <text>最近交易</text>
+    </view>
+    <view class="card tx-card">
+
+      <view class="tx-row" wx:for="{{transactions}}" wx:key="id" bindtap="goDetail" data-id="{{item.id}}">
+        <view class="tx-icon {{item.direction === 'in' ? 'income' : 'outcome'}}">
+          <view class="icon-svg">
+            <view class="tx-icon-svg {{item.direction === 'in' ? 'svg-bolt' : 'svg-arrow-down'}}"></view>
+          </view>
+        </view>
+        <view class="tx-info">
+          <text class="tx-title">{{item.type_text}}</text>
+          <text class="tx-time">{{item.created_at}}</text>
+        </view>
+        <text class="tx-amount {{item.direction === 'in' ? 'income' : 'outcome'}}">{{item.direction === 'in' ? '+' : '-'}}¥{{item.amount}}</text>
+      </view>
+
+      <view wx:if="{{!loading && transactions.length === 0}}" class="empty-state">
+        <text class="empty-text">暂无交易记录</text>
+      </view>
+
+      <view wx:if="{{loading}}" class="loading-state">加载中...</view>
+
+      <view wx:if="{{!hasMore && transactions.length > 0}}" class="load-end">没有更多了</view>
+      <view class="card-gloss"></view>
+    </view>
+  </view>
+
+  <!-- ===== FLOATING TAB BAR ===== -->
+  <view class="tab-bar">
+    <view class="tab-item {{currentTab === 'home' ? 'active' : ''}}" bindtap="onTabTap" data-key="home">
+      <view class="tab-icon">
+        <view class="icon-svg svg-home"></view>
+      </view>
+      <text class="tab-label">接单</text>
+    </view>
+    <view class="tab-item {{currentTab === 'orders' ? 'active' : ''}}" bindtap="onTabTap" data-key="orders">
+      <view class="tab-icon">
+        <view class="icon-svg svg-orders"></view>
+      </view>
+      <text class="tab-label">订单</text>
+    </view>
+    <view class="tab-item {{currentTab === 'wallet' ? 'active' : ''}}" bindtap="onTabTap" data-key="wallet">
+      <view class="tab-icon">
+        <view class="icon-svg svg-wallet"></view>
+      </view>
+      <text class="tab-label">钱包</text>
+    </view>
+    <view class="tab-item {{currentTab === 'profile' ? 'active' : ''}}" bindtap="onTabTap" data-key="profile">
+      <view class="tab-icon">
+        <view class="icon-svg svg-user"></view>
+      </view>
+      <text class="tab-label">我的</text>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,527 @@
+/* pages/address/index.wxss — 地址管理 玻璃新拟态
+ * 像素级复刻 client-address.html
+ * 换算基准：1px = 2rpx（750rpx 设计稿）
+ * 严格忠于 HTML 参考的尺寸、间距、圆角、阴影、渐变透明度
+ */
+
+.page {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+/* ===== 顶部导航栏（对齐 HTML .nav-bar） ===== */
+/* HTML .nav-bar: position:sticky;top:0;z-index:50;display:flex;align-items:center;
+   justify-content:space-between;padding:max(18px,env) 16px 12px；
+   border-radius:0 0 28px 28px → 0 0 56rpx 56rpx；
+   background 三层径向 + 线性渐变 */
+.nav-bar {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* padding-top 由内联 style 动态提供（statusBarHeight + 36rpx） */
+  padding-right: 32rpx;
+  padding-bottom: 24rpx;
+  padding-left: 32rpx;
+  border-radius: 0 0 56rpx 56rpx;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 440rpx 320rpx at 78% 45%, rgba(212, 148, 76, 0.14) 0%, transparent 70%),
+    radial-gradient(ellipse 360rpx 280rpx at 18% 75%, rgba(13, 148, 136, 0.16) 0%, transparent 70%),
+    linear-gradient(135deg, rgba(13, 148, 136, 0.14) 0%, rgba(212, 148, 76, 0.08) 50%, rgba(13, 148, 136, 0.06) 100%);
+  flex-shrink: 0;
+}
+
+/* HTML .nav-back: width:44px;height:44px → 88rpx；border-radius:50%；
+   background:var(--bg)；border:none；box-shadow:var(--neu-out-sm),inset 0 1px 1px rgba(255,255,255,0.5) */
+.nav-back {
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: var(--bg);
+  border: none;
+  box-shadow: var(--neu-raised-sm), inset 0 2rpx 2rpx rgba(255, 255, 255, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-1);
+  transition: transform var(--dur-base) var(--spring), box-shadow var(--dur-base) var(--ease);
+}
+
+.nav-back:active {
+  box-shadow: var(--neu-inset);
+  transform: scale(0.94);
+}
+
+/* HTML .nav-back svg: width:22px;height:22px → 44rpx */
+.nav-back-icon {
+  width: 44rpx;
+  height: 44rpx;
+  display: inline-block;
+}
+
+/* HTML .nav-title: font-size:17px;font-weight:700;color:var(--text-1);
+   letter-spacing:-0.02em;flex:1;text-align:center → 34rpx 700 */
+.nav-title {
+  font-size: 34rpx;
+  font-weight: 700;
+  color: var(--text-1);
+  letter-spacing: -0.02em;
+  flex: 1;
+  text-align: center;
+}
+
+/* HTML .nav-edit: width:42px;height:42px → 84rpx；border-radius:50%；
+   background:rgba(255,255,255,0.18)；backdrop-filter:blur(16px)；
+   border:0.5px solid rgba(255,255,255,0.30)；box-shadow:inset 0 1px 2px rgba(255,255,255,0.3) */
+.nav-edit {
+  width: 84rpx;
+  height: 84rpx;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(32rpx);
+  -webkit-backdrop-filter: blur(32rpx);
+  border: 1rpx solid rgba(255, 255, 255, 0.30);
+  box-shadow: inset 0 2rpx 4rpx rgba(255, 255, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-1);
+  transition: transform var(--dur-base) var(--spring), background 0.2s var(--ease);
+}
+
+.nav-edit:active {
+  transform: scale(0.85);
+  background: rgba(255, 255, 255, 0.32);
+}
+
+/* HTML .nav-edit svg: width:22px;height:22px → 44rpx */
+.nav-edit-icon {
+  width: 44rpx;
+  height: 44rpx;
+  display: inline-block;
+}
+
+/* ===== 区块容器（对齐 HTML .section） ===== */
+/* HTML .section: padding:0 16px;margin-top:18px → 0 32rpx / 36rpx */
+.section {
+  position: relative;
+  z-index: 2;
+  padding: 0 32rpx;
+  margin-top: 36rpx;
+}
+
+/* ===== 区块标题行（对齐 HTML .section-title） ===== */
+/* HTML .section-title: font-size:15px;font-weight:700;margin-bottom:12px → 30rpx 700 / 24rpx；
+   display:flex;align-items:center;justify-content:space-between */
+.addr-section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24rpx;
+}
+
+.addr-section-title {
+  font-size: 30rpx;
+  font-weight: 700;
+  color: var(--text-1);
+  letter-spacing: -0.01em;
+}
+
+/* HTML .count: font-size:12px → 24rpx；font-weight:500；color:var(--text-2) */
+.addr-count {
+  font-size: 24rpx;
+  font-weight: 500;
+  color: var(--text-2);
+}
+
+/* ===== 当前定位卡（对齐 HTML .loc-card） ===== */
+/* HTML .loc-card: display:flex;align-items:center;gap:12px → 24rpx；
+   padding:14px 14px → 28rpx 28rpx */
+.loc-card {
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+  padding: 28rpx;
+}
+
+/* HTML .loc-icon: width:44px;height:44px → 88rpx；border-radius:50%；
+   background:var(--brand-gradient)；box-shadow:var(--neu-out-sm),0 4px 12px var(--brand-glow) */
+.loc-icon {
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: 50%;
+  background: var(--brand-gradient);
+  box-shadow: var(--neu-raised-sm), 0 8rpx 24rpx var(--brand-glow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-inverse);
+  flex-shrink: 0;
+}
+
+/* HTML .loc-icon svg: width:22px;height:22px → 44rpx */
+.loc-icon-img {
+  width: 44rpx;
+  height: 44rpx;
+  display: inline-block;
+}
+
+.loc-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6rpx;
+}
+
+/* HTML .loc-label: font-size:11px → 22rpx；color:var(--text-2)；font-weight:600；
+   letter-spacing:0.02em；margin-bottom:3px → 6rpx */
+.loc-label {
+  font-size: 22rpx;
+  color: var(--text-2);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+/* HTML .loc-addr: font-size:14px → 28rpx；color:var(--text-1)；font-weight:600；
+   letter-spacing:-0.01em；line-height:1.35；white-space:nowrap；text-overflow:ellipsis */
+.loc-addr {
+  font-size: 28rpx;
+  color: var(--text-1);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.35;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* HTML .loc-relocate: height:34px → 68rpx；padding:0 12px → 0 24rpx；
+   background:rgba(255,255,255,0.55)；color:var(--brand)；
+   border:0.5px solid rgba(255,255,255,0.70)；border-radius:9999px；
+   font-size:12.5px → 25rpx；font-weight:600；box-shadow:var(--neu-out-sm) */
+.loc-relocate {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  height: 68rpx;
+  padding: 0 24rpx;
+  background: rgba(255, 255, 255, 0.55);
+  color: var(--brand);
+  border: 1rpx solid rgba(255, 255, 255, 0.70);
+  border-radius: var(--r-pill);
+  font-size: 25rpx;
+  font-weight: 600;
+  font-family: var(--font-body);
+  flex-shrink: 0;
+  box-shadow: var(--neu-raised-sm);
+  transition: transform var(--dur-base) var(--spring), box-shadow var(--dur-base) var(--ease), background var(--dur-base) var(--ease);
+}
+
+.loc-relocate:active {
+  box-shadow: var(--neu-inset);
+  transform: scale(0.94);
+  background: rgba(255, 255, 255, 0.40);
+}
+
+/* HTML .loc-relocate svg: width:15px;height:15px → 30rpx */
+.loc-relocate-icon {
+  width: 30rpx;
+  height: 30rpx;
+  display: inline-block;
+}
+
+.loc-relocate-text {
+  font-size: 25rpx;
+  color: var(--brand);
+  font-weight: 600;
+}
+
+/* ===== 地址列表（对齐 HTML .addr-list） ===== */
+/* HTML .addr-list: display:flex;flex-direction:column;gap:14px → 28rpx */
+.addr-list {
+  display: flex;
+  flex-direction: column;
+  gap: 28rpx;
+}
+
+/* HTML .addr-card: display:flex;align-items:stretch;padding:16px 16px → 32rpx 32rpx */
+.addr-card {
+  display: flex;
+  align-items: stretch;
+  padding: 32rpx;
+}
+
+/* HTML .addr-default: box-shadow 加重品牌色辉光 */
+.addr-default {
+  box-shadow:
+    var(--neu-raised),
+    0 12rpx 56rpx rgba(0, 0, 0, 0.06),
+    0 4rpx 16rpx rgba(13, 148, 136, 0.10),
+    0 0 0 2rpx rgba(44, 40, 36, 0.05);
+}
+
+/* HTML .addr-accent: position:absolute;left:0;top:14px;bottom:14px → 28rpx；
+   width:3px → 6rpx；border-radius:0 3px 3px 0 → 0 6rpx 6rpx 0；
+   background:var(--brand-gradient)；box-shadow:0 0 12px var(--brand-glow) */
+.addr-accent {
+  position: absolute;
+  left: 0;
+  top: 28rpx;
+  bottom: 28rpx;
+  width: 6rpx;
+  border-radius: 0 6rpx 6rpx 0;
+  background: var(--brand-gradient);
+  box-shadow: 0 0 24rpx var(--brand-glow);
+  z-index: 3;
+}
+
+/* HTML .addr-body: flex:1;min-width:0;display:flex;flex-direction:column;
+   gap:7px → 14rpx；padding-left:2px → 4rpx */
+.addr-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14rpx;
+  padding-left: 4rpx;
+}
+
+/* HTML .addr-row: display:flex;align-items:center;gap:8px → 16rpx；flex-wrap:wrap */
+.addr-row {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  flex-wrap: wrap;
+}
+
+/* HTML .addr-tag: min-width:32px → 64rpx；height:22px → 44rpx；
+   padding:0 8px → 0 16rpx；border-radius:7px → 14rpx；
+   font-size:12px → 24rpx；font-weight:700；letter-spacing:0.02em */
+.addr-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 64rpx;
+  height: 44rpx;
+  padding: 0 16rpx;
+  border-radius: 14rpx;
+  font-size: 24rpx;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  flex-shrink: 0;
+}
+
+.tag-home {
+  background: var(--brand-subtle);
+  color: var(--brand);
+}
+
+.tag-company {
+  background: var(--accent-subtle);
+  color: var(--accent-dark);
+}
+
+.tag-school {
+  background: var(--blue-subtle);
+  color: var(--blue);
+}
+
+/* HTML .addr-name: font-size:15px → 30rpx；font-weight:700；letter-spacing:-0.01em */
+.addr-name {
+  font-size: 30rpx;
+  font-weight: 700;
+  color: var(--text-1);
+  letter-spacing: -0.01em;
+}
+
+/* HTML .addr-phone: font-size:13px → 26rpx；font-weight:500；letter-spacing:0.01em */
+.addr-phone {
+  font-size: 26rpx;
+  font-weight: 500;
+  color: var(--text-2);
+  letter-spacing: 0.01em;
+}
+
+/* HTML .addr-default-tag: height:20px → 40rpx；padding:0 7px → 0 14rpx；
+   border-radius:6px → 12rpx；background:var(--brand)；color:var(--text-inverse)；
+   font-size:10.5px → 21rpx；font-weight:700；letter-spacing:0.04em；
+   box-shadow:0 2px 6px var(--brand-glow) */
+.addr-default-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 40rpx;
+  padding: 0 14rpx;
+  border-radius: 12rpx;
+  background: var(--brand);
+  color: var(--text-inverse);
+  font-size: 21rpx;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  box-shadow: 0 4rpx 12rpx var(--brand-glow);
+  flex-shrink: 0;
+}
+
+/* HTML .addr-detail: font-size:13px → 26rpx；color:var(--text-2)；
+   line-height:1.5；letter-spacing:-0.005em；-webkit-line-clamp:2 */
+.addr-detail {
+  font-size: 26rpx;
+  color: var(--text-2);
+  line-height: 1.5;
+  letter-spacing: -0.005em;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ===== 地址操作按钮（对齐 HTML .addr-actions） ===== */
+/* HTML .addr-actions: display:flex;align-items:center;gap:4px → 8rpx；
+   flex-shrink:0；align-self:center；padding-left:8px → 16rpx */
+.addr-actions {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  flex-shrink: 0;
+  align-self: center;
+  padding-left: 16rpx;
+}
+
+/* HTML .addr-btn: width:44px;height:44px → 88rpx；border-radius:50%；
+   background:var(--bg-elevated)；border:none；
+   box-shadow:var(--neu-out-sm),inset 0 1px 1px rgba(255,255,255,0.5) */
+.addr-btn {
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: 50%;
+  background: var(--bg-elevated);
+  border: none;
+  box-shadow: var(--neu-raised-sm), inset 0 2rpx 2rpx rgba(255, 255, 255, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-2);
+  transition: transform var(--dur-base) var(--spring), box-shadow var(--dur-base) var(--ease), color var(--dur-base) var(--ease);
+}
+
+.addr-btn:active {
+  box-shadow: var(--neu-inset);
+  transform: scale(0.90);
+  color: var(--brand);
+}
+
+/* HTML .addr-btn svg: width:18px;height:18px → 36rpx */
+.addr-btn-icon {
+  width: 36rpx;
+  height: 36rpx;
+  display: inline-block;
+}
+
+/* HTML .addr-btn-danger:active: color:var(--red) */
+.addr-btn-danger:active {
+  color: var(--red);
+}
+
+/* ===== 空状态 ===== */
+.empty {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16rpx;
+  padding: 120rpx 0 80rpx;
+}
+
+.empty-icon {
+  width: 160rpx;
+  height: 160rpx;
+}
+
+.empty-icon-img {
+  width: 64rpx;
+  height: 64rpx;
+  display: inline-block;
+}
+
+.empty-title {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: var(--text-1);
+}
+
+.empty-desc {
+  font-size: 24rpx;
+  color: var(--text-3);
+}
+
+/* ===== 底部留白 ===== */
+.cta-spacer {
+  height: calc(env(safe-area-inset-bottom) + 200rpx);
+}
+
+/* ===== 底部固定 CTA（对齐 HTML .addr-cta） ===== */
+/* HTML .addr-cta: position:fixed;left:50%;transform:translateX(-50%);bottom:0;
+   width:100%;max-width:414px；padding:14px 16px max(14px,env) → 28rpx 32rpx calc(env+28rpx)；
+   background:linear-gradient(180deg,rgba(242,237,232,0) 0%,rgba(242,237,232,0.92) 30%,rgba(242,237,232,0.98) 100%)；
+   backdrop-filter:blur(8px) */
+.addr-cta {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 28rpx 32rpx calc(env(safe-area-inset-bottom) + 28rpx);
+  background: linear-gradient(180deg, rgba(242, 237, 232, 0) 0%, rgba(242, 237, 232, 0.92) 30%, rgba(242, 237, 232, 0.98) 100%);
+  backdrop-filter: blur(16rpx);
+  -webkit-backdrop-filter: blur(16rpx);
+  z-index: 60;
+}
+
+/* HTML .cta-add: width:100%;height:52px → 104rpx；display:flex;
+   align-items:center;justify-content:center;gap:8px → 16rpx；
+   background:var(--brand-gradient)；color:var(--text-inverse)；border:none；
+   border-radius:9999px；font-size:16px → 32rpx；font-weight:700；letter-spacing:0.02em；
+   box-shadow:var(--neu-out-md),0 8px 22px var(--brand-glow),inset 0 1.5px 1px rgba(255,255,255,0.35) */
+.cta-add {
+  width: 100%;
+  height: 104rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16rpx;
+  background: var(--brand-gradient);
+  color: var(--text-inverse);
+  border: none;
+  border-radius: var(--r-pill);
+  font-size: 32rpx;
+  font-weight: 700;
+  font-family: var(--font-body);
+  letter-spacing: 0.02em;
+  box-shadow: var(--neu-raised), 0 16rpx 44rpx var(--brand-glow), inset 0 3rpx 4rpx rgba(255, 255, 255, 0.35);
+  transition: transform var(--dur-base) var(--spring), box-shadow var(--dur-base) var(--ease);
+}
+
+.cta-add:active {
+  box-shadow: var(--neu-inset-lg), 0 8rpx 20rpx var(--brand-glow);
+  transform: scale(0.97);
+}
+
+/* HTML .cta-add svg: width:20px;height:20px → 40rpx */
+.cta-add-icon {
+  width: 40rpx;
+  height: 40rpx;
+  display: inline-block;
+}
+
+.cta-add-text {
+  font-size: 32rpx;
+  color: var(--text-inverse);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}

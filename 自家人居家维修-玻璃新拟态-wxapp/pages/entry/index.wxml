@@ -1,0 +1,57 @@
+<!-- pages/entry/index.wxml — 角色选择入口页 -->
+<view class="page" style="padding-top: {{statusBarHeight}}px;">
+  <!-- 背景装饰光斑：径向渐变（设计规范要求） -->
+  <view class="blob blob-brand" style="top: 10%; right: -60px; width: 280px; height: 280px; background: radial-gradient(circle, var(--brand) 0%, transparent 70%);"></view>
+  <view class="blob blob-accent" style="bottom: 15%; left: -60px; width: 240px; height: 240px; background: radial-gradient(circle, var(--accent) 0%, transparent 70%);"></view>
+  <view class="blob blob-worker" style="top: 45%; right: -40px; width: 200px; height: 200px; background: radial-gradient(circle, var(--brand-worker) 0%, transparent 70%);"></view>
+
+  <view class="entry-container">
+    <!-- Logo 区：品牌渐变 + 新拟态凸起 -->
+    <view class="logo-wrap">
+      <view class="logo-circle neu-icon">
+        <view class="logo-inner">
+          <text class="logo-text">自家人</text>
+        </view>
+      </view>
+      <text class="app-title">自家人居家维修</text>
+      <text class="app-subtitle">专业·透明·有保障</text>
+    </view>
+
+    <!-- 角色选择 -->
+    <view class="role-section">
+      <text class="role-title">请选择您的身份</text>
+
+      <!-- 客户端 -->
+      <view class="role-card glass-neu-card press-card" bindtap="onClient">
+        <view class="role-icon neu-icon">
+          <image src="{{clientIcon}}" mode="aspectFit" class="role-icon-img" lazy-load="{{false}}" />
+        </view>
+        <view class="role-info">
+          <text class="role-name">我是用户</text>
+          <text class="role-desc">发布维修需求，师傅快速响应</text>
+        </view>
+        <view class="role-arrow"></view>
+      </view>
+
+      <!-- 师傅端 -->
+      <view class="role-card glass-neu-card press-card" bindtap="onWorker">
+        <view class="role-icon neu-icon role-icon-worker">
+          <image src="{{workerIcon}}" mode="aspectFit" class="role-icon-img" lazy-load="{{false}}" />
+        </view>
+        <view class="role-info">
+          <text class="role-name">我是师傅</text>
+          <text class="role-desc">接单赚钱，灵活工作</text>
+        </view>
+        <view class="role-arrow"></view>
+      </view>
+    </view>
+
+    <!-- 协议链接：btn-neu-ghost 风格 -->
+    <view class="agreement">
+      <text class="agreement-text">进入即代表同意</text>
+      <text class="agreement-link">《用户协议》</text>
+      <text class="agreement-text">与</text>
+      <text class="agreement-link">《隐私政策》</text>
+    </view>
+  </view>
+</view>

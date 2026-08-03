@@ -1,0 +1,94 @@
+<view class="page">
+  <view class="top-header">
+    <view class="hero">
+      <view class="greeting-row">
+        <view class="greeting-text">
+          <view class="hero-title">订单管理</view>
+          <view class="hero-subtitle">管理您的服务订单与收入</view>
+        </view>
+        <view class="filter-btn" bindtap="onFilterTap">
+          <image class="filter-icon" src="/assets/svg/search.svg" mode="aspectFit"></image>
+        </view>
+      </view>
+    </view>
+
+    <view class="filter-tabs">
+      <view class="filter-pill {{activeTab === item.key ? 'active' : ''}}"
+            wx:for="{{filterTabs}}" wx:key="key"
+            bindtap="onTabTap" data-key="{{item.key}}">
+        <text>{{item.text}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="order-list">
+    <view wx:if="{{orders.length === 0 && !loading}}" class="empty-wrap">
+      <text class="empty-icon">📋</text>
+      <text class="empty-text">暂无相关订单</text>
+    </view>
+
+    <view class="order-card {{item.status === 'departing' || item.status === 'arrived' || item.status === 'serving' ? 'accent' : ''}}"
+          wx:for="{{orders}}" wx:key="id"
+          bindtap="goDetail" data-id="{{item.id}}">
+      <view class="order-head">
+        <text class="order-service">{{item.service_name || item.service_type}}</text>
+        <text class="status-badge status-{{item.status}}">{{item.status_text}}</text>
+      </view>
+
+      <view class="order-customer">
+        <image class="cust-icon" src="/assets/svg/user.svg" mode="aspectFit"></image>
+        <text class="cust-name">{{item.contact_name || '客户'}}</text>
+        <text class="customer-sep"></text>
+        <image class="phone-icon" src="/assets/svg/phone.svg" mode="aspectFit"></image>
+        <text class="cust-phone">{{item.contact_phone_text || item.contact_phone || ''}}</text>
+      </view>
+
+      <view class="order-address" wx:if="{{item.address}}">
+        <image class="addr-icon" src="/assets/svg/location.svg" mode="aspectFit"></image>
+        <text>{{item.address}}</text>
+      </view>
+
+      <view class="order-sep"></view>
+
+      <view class="order-bottom">
+        <view class="order-price {{item.status === 'reviewed' || item.status === 'paid' ? 'price-green' : ''}}">
+          <text class="price-label">{{item.status === 'reviewed' ? '实收' : '预计收入'}}</text>
+          <text class="yuan">¥</text>{{item.final_price || item.total_amount || '面议'}}
+        </view>
+        <view wx:if="{{item.status === 'pending'}}" class="btn-neu-primary action-btn" catchtap="confirmAccept" data-id="{{item.id}}">
+          <image class="btn-icon" src="/assets/svg/check.svg" mode="aspectFit"></image>
+          <text>确认接单</text>
+        </view>
+        <view wx:else class="btn-neu-primary action-btn" catchtap="goDetail" data-id="{{item.id}}">
+          <image class="btn-icon" src="/assets/svg/tasks.svg" mode="aspectFit"></image>
+          <text>查看详情</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{loading}}" class="loading">加载中...</view>
+
+  <view class="tab-bar">
+    <view class="tab-item {{currentTab === 'home' ? 'active' : ''}}"
+          bindtap="onTabBarTap" data-path="/pages/worker/index/index">
+      <image class="tab-icon" src="{{currentTab === 'home' ? '/assets/svg/home_blue.svg' : '/assets/svg/home.svg'}}" mode="aspectFit"></image>
+      <text class="tab-label">接单</text>
+    </view>
+    <view class="tab-item {{currentTab === 'orders' ? 'active' : ''}}"
+          bindtap="onTabBarTap" data-path="/pages/worker/orders/orders">
+      <image class="tab-icon" src="{{currentTab === 'orders' ? '/assets/svg/tasks_blue.svg' : '/assets/svg/tasks.svg'}}" mode="aspectFit"></image>
+      <text class="tab-label">订单</text>
+    </view>
+    <view class="tab-item {{currentTab === 'wallet' ? 'active' : ''}}"
+          bindtap="onTabBarTap" data-path="/pages/wallet/wallet">
+      <image class="tab-icon" src="{{currentTab === 'wallet' ? '/assets/svg/wallet_blue.svg' : '/assets/svg/wallet.svg'}}" mode="aspectFit"></image>
+      <text class="tab-label">钱包</text>
+    </view>
+    <view class="tab-item {{currentTab === 'mine' ? 'active' : ''}}"
+          bindtap="onTabBarTap" data-path="/pages/worker/profile/profile">
+      <image class="tab-icon" src="{{currentTab === 'mine' ? '/assets/svg/user_blue.svg' : '/assets/svg/user.svg'}}" mode="aspectFit"></image>
+      <text class="tab-label">我的</text>
+    </view>
+  </view>
+</view>

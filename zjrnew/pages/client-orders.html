@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自家人居家维修 · 玻璃新拟态 · 我的订单</title>
+    <link rel="stylesheet" href="../assets/fonts.css">
+
+    <style id="theme-vars">
+/* 自家人居家维修 - 玻璃新拟态 */
+:root {
+  /* Brand - Client (Teal) */
+  --brand: #0D9488;
+  --brand-dark: #0A7A70;
+  --brand-mid: #14B8A6;
+  --brand-light: #CCFBF1;
+  --brand-glow: rgba(13, 148, 136, 0.24);
+  --brand-subtle: rgba(13, 148, 136, 0.10);
+
+  /* Accent (Amber) */
+  --accent: #D4944C;
+  --accent-dark: #A0723C;
+  --accent-mid: #E8C088;
+  --accent-light: #F5E6D0;
+  --accent-glow: rgba(212, 148, 76, 0.20);
+
+  /* Background */
+  --background: #F2EDE8;
+  --foreground: #2C2824;
+  --body-bg: #E8E4DF;
+  --bg-elevated: #F7F3EF;
+
+  /* Neumorphic */
+  --neu-light: #FFF8F2;
+  --neu-dark: #DDD6CE;
+  --neu-highlight: rgba(255, 255, 255, 0.55);
+
+  /* Surface & Card */
+  --card: rgba(255, 255, 255, 0.52);
+  --card-foreground: #2C2824;
+  --popover: #fff;
+  --popover-foreground: #2C2824;
+
+  /* Muted */
+  --muted: #F7F3EF;
+  --muted-foreground: #8B8178;
+
+  /* Border & Input */
+  --border: rgba(44, 40, 36, 0.06);
+  --input: rgba(44, 40, 36, 0.06);
+  --ring: #0D9488;
+
+  /* Primary */
+  --primary: #0D9488;
+  --primary-foreground: #ffffff;
+
+  /* Semantic aliases */
+  --state-success: #5B8C5A;
+  --state-warning: #D4944C;
+  --state-error: #C4533A;
+  --state-info: #5A8FAD;
+
+  /* Text */
+  --text-1: #2C2824;
+  --text-2: #8B8178;
+  --text-3: #B5ADA5;
+  --text-inverse: #ffffff;
+
+  /* Sep & Fill */
+  --sep: rgba(44, 40, 36, 0.06);
+  --fill: rgba(44, 40, 36, 0.04);
+
+  /* Green/Red/Orange/Blue semantic */
+  --green: #5B8C5A;
+  --red: #C4533A;
+  --orange: #D4944C;
+  --blue: #5A8FAD;
+
+  /* Radius */
+  --radius-sm: 0.75rem;
+  --radius-md: 1.2rem;
+  --radius-lg: 1.6rem;
+  --radius-full: 9999px;
+
+    /* Font — 统一衬线系统 */
+  --font-display: 'Cormorant Garamond', 'Noto Serif SC', 'STSong', Georgia, serif;
+  --font-body: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --font-nums: 'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
+  --font: var(--font-body);
+
+  /* Motion */
+  --spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --dur: 0.2s;
+
+  /* Glass */
+  --glass-bg: rgba(255, 255, 255, 0.18);
+  --glass-blur: blur(12px) saturate(140%);
+  --glass-border: rgba(255, 255, 255, 0.60);
+
+  /* Surface presets for glass-neumorphic components */
+  --surface-1: rgba(255, 255, 255, 0.50);
+  --surface-2: rgba(255, 255, 255, 0.45);
+
+  /* Neumorphic shadow presets */
+  --neu-out-sm: 6px 6px 14px var(--neu-dark), -6px -6px 14px var(--neu-light), 0 4px 16px rgba(0, 0, 0, 0.04);
+  --neu-out-md: 8px 8px 18px var(--neu-dark), -8px -8px 18px var(--neu-light), 0 6px 24px rgba(0, 0, 0, 0.05);
+  --neu-out-lg: 10px 10px 24px var(--neu-dark), -10px -10px 24px var(--neu-light), 0 8px 32px rgba(0, 0, 0, 0.06);
+  --neu-in: inset 4px 4px 8px var(--neu-dark), inset -4px -4px 8px var(--neu-light);
+  --neu-in-deep: inset 5px 5px 10px var(--neu-dark), inset -5px -5px 10px var(--neu-light);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --font-sans: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --font-serif: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --radius-full: var(--radius-full);}
+
+/* Semantic token fallback */
+#semantic-token-fallback {
+  --brand-background: var(--background);
+  --brand-foreground: var(--foreground);
+  --brand-card: var(--card);
+  --brand-card-foreground: var(--card-foreground);
+  --brand-popover: var(--popover);
+  --brand-popover-foreground: var(--popover-foreground);
+  --brand-primary: var(--primary);
+  --brand-primary-foreground: var(--primary-foreground);
+  --brand-muted: var(--muted);
+  --brand-muted-foreground: var(--muted-foreground);
+  --brand-border: var(--border);
+  --brand-input: var(--input);
+  --brand-ring: var(--ring);
+  --brand-radius-sm: var(--radius-sm);
+  --brand-radius-md: var(--radius-md);
+  --brand-radius-lg: var(--radius-lg);
+}
+
+/* ===== Global Neumorphic Components ===== */
+/* Tab Bar */
+.tab-bar{
+  position:absolute;
+  bottom:max(14px, env(safe-area-inset-bottom));
+  left:50%;
+  transform:translateX(-50%);
+  width:calc(100% - 32px);
+  max-width:360px;
+  height:64px;
+  z-index:100;
+  background:rgba(255,255,255,0.22);
+  backdrop-filter:blur(48px) saturate(210%);
+  -webkit-backdrop-filter:blur(48px) saturate(210%);
+  border:0.5px solid rgba(255,255,255,0.50);
+  border-radius:28px;
+  box-shadow:
+    inset 0 1.5px 3px rgba(255,255,255,0.60),
+    inset 0 -0.5px 1px rgba(255,255,255,0.20),
+    0 0 0 0.5px rgba(0,0,0,0.04),
+    0 2px 10px rgba(0,0,0,0.06),
+    0 12px 36px rgba(0,0,0,0.08);
+  display:flex;
+  align-items:center;
+  justify-content:space-around;
+  padding:0 10px;
+}
+.tab-bar::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  background:linear-gradient(160deg,
+    rgba(255,255,255,0.42) 0%,
+    rgba(255,255,255,0.16) 20%,
+    rgba(255,255,255,0.03) 40%,
+    transparent 60%);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
+  padding:0.5px;
+  pointer-events:none;
+  z-index:1;
+}
+.tab-bar::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  background:linear-gradient(320deg,
+    transparent 60%,
+    rgba(13,148,136,0.06) 80%,
+    rgba(255,255,255,0.04) 100%);
+  pointer-events:none;
+  z-index:1;
+}
+.tab-item{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+  width:68px;
+  height:44px;
+  border-radius:14px;
+  color:var(--text-3);
+  font-size:11px;
+  font-weight:500;
+  text-decoration:none;
+  position:relative;
+  transition:all .2s;
+}
+.tab-item svg{
+  width:20px;
+  height:20px;
+  stroke:currentColor;
+  fill:none;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.tab-item[data-active="true"]{
+  color:var(--brand);
+  font-weight:600;
+}
+.tab-item[data-active="true"]::before{
+  content:"";
+  position:absolute;
+  width:54px;
+  height:42px;
+  border-radius:16px;
+  background:rgba(13,148,136,0.16);
+  backdrop-filter:blur(24px);
+  -webkit-backdrop-filter:blur(24px);
+  border:0.5px solid rgba(13,148,136,0.30);
+  box-shadow:
+    inset 0 1px 3px rgba(255,255,255,0.55),
+    inset 0 -0.5px 1px rgba(255,255,255,0.15),
+    0 2px 10px rgba(13,148,136,0.20),
+    0 0 0 0.5px rgba(13,148,136,0.08);
+  z-index:0;
+}
+.tab-item[data-active="true"] svg{
+  transform:scale(1.08);
+  position:relative;
+  z-index:1;
+}
+
+.btn-neu-primary{
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  background:var(--brand-gradient);
+  color:var(--text-inverse);
+  border:0.5px solid rgba(255,255,255,0.40);border-radius:9999px;
+  padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
+  cursor:pointer;
+  box-shadow:var(--neu-out-sm),0 4px 14px var(--brand-glow),inset 0 1px 1px rgba(255,255,255,0.30);
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
+.btn-neu-primary:active{box-shadow:var(--neu-in);transform:scale(0.94)}
+
+.btn-neu-secondary{
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  background:rgba(255,255,255,0.92);
+  color:var(--brand);
+  border:0.5px solid rgba(255,255,255,0.95);border-radius:9999px;
+  padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
+  cursor:pointer;
+  box-shadow:var(--neu-out-md),inset 0 1.5px 2px rgba(255,255,255,0.65),inset 0 -1px 1px rgba(0,0,0,0.03);
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease),background var(--dur) var(--ease);
+}
+.btn-neu-secondary:active{box-shadow:var(--neu-in-deep);transform:scale(0.94);background:rgba(255,255,255,0.78)}
+
+.btn-neu-ghost{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:transparent;color:var(--text-2);
+  border:0.5px solid var(--border);border-radius:9999px;
+  padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
+  cursor:pointer;
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease),color var(--dur) var(--ease);
+}
+.btn-neu-ghost:active{transform:scale(0.94);color:var(--brand)}
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-accent: var(--accent);
+    --radius-sm: var(--radius-sm);
+    --radius-md: var(--radius-md);
+    --radius-lg: var(--radius-lg);
+    --radius-full: var(--radius-full);
+    --font-sans: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+    --font-serif: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+    <style id="semantic-token-fallback">
+      .bg-background { background-color: var(--background); }
+      .text-background { color: var(--background); }
+      .border-background { border-color: var(--background); }
+      .ring-background { --tw-ring-color: var(--background); }
+      .bg-foreground { background-color: var(--foreground); }
+      .text-foreground { color: var(--foreground); }
+      .border-foreground { border-color: var(--foreground); }
+      .ring-foreground { --tw-ring-color: var(--foreground); }
+      .bg-card { background-color: var(--card); }
+      .text-card { color: var(--card); }
+      .border-card { border-color: var(--card); }
+      .ring-card { --tw-ring-color: var(--card); }
+      .bg-card-foreground { background-color: var(--card-foreground); }
+      .text-card-foreground { color: var(--card-foreground); }
+      .border-card-foreground { border-color: var(--card-foreground); }
+      .ring-card-foreground { --tw-ring-color: var(--card-foreground); }
+      .bg-popover { background-color: var(--popover); }
+      .text-popover { color: var(--popover); }
+      .border-popover { border-color: var(--popover); }
+      .ring-popover { --tw-ring-color: var(--popover); }
+      .bg-popover-foreground { background-color: var(--popover-foreground); }
+      .text-popover-foreground { color: var(--popover-foreground); }
+      .border-popover-foreground { border-color: var(--popover-foreground); }
+      .ring-popover-foreground { --tw-ring-color: var(--popover-foreground); }
+      .bg-primary { background-color: var(--primary); }
+      .text-primary { color: var(--primary); }
+      .border-primary { border-color: var(--primary); }
+      .ring-primary { --tw-ring-color: var(--primary); }
+      .bg-primary-foreground { background-color: var(--primary-foreground); }
+      .text-primary-foreground { color: var(--primary-foreground); }
+      .border-primary-foreground { border-color: var(--primary-foreground); }
+      .ring-primary-foreground { --tw-ring-color: var(--primary-foreground); }
+      .bg-muted { background-color: var(--muted); }
+      .text-muted { color: var(--muted); }
+      .border-muted { border-color: var(--muted); }
+      .ring-muted { --tw-ring-color: var(--muted); }
+      .bg-muted-foreground { background-color: var(--muted-foreground); }
+      .text-muted-foreground { color: var(--muted-foreground); }
+      .border-muted-foreground { border-color: var(--muted-foreground); }
+      .ring-muted-foreground { --tw-ring-color: var(--muted-foreground); }
+      .bg-border { background-color: var(--border); }
+      .text-border { color: var(--border); }
+      .border-border { border-color: var(--border); }
+      .ring-border { --tw-ring-color: var(--border); }
+      .bg-input { background-color: var(--input); }
+      .text-input { color: var(--input); }
+      .border-input { border-color: var(--input); }
+      .ring-input { --tw-ring-color: var(--input); }
+      .bg-ring { background-color: var(--ring); }
+      .text-ring { color: var(--ring); }
+      .border-ring { border-color: var(--ring); }
+      .ring-ring { --tw-ring-color: var(--ring); }
+      .bg-accent { background-color: var(--accent); }
+      .text-accent { color: var(--accent); }
+      .border-accent { border-color: var(--accent); }
+      .ring-accent { --tw-ring-color: var(--accent); }
+    </style>
+    <style>
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      [data-icon] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        background-color: currentColor;
+      }
+    </style>
+</head>
+<body>
+<div class="phone" data-dom-id="page-client-orders">
+  <!-- Top Header: Hero + Filter Tabs -->
+  <header class="top-header">
+    <section class="hero">
+      <div class="greeting-row">
+        <div class="greeting-text">
+          <h1>我的订单</h1>
+          <p class="subtitle">查看和管理您的服务订单</p>
+        </div>
+        <button class="search-btn" aria-label="搜索订单" data-dom-id="btn-search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="7"></circle>
+            <line x1="16.5" y1="16.5" x2="21" y2="21"></line>
+          </svg>
+        </button>
+      </div>
+    </section>
+
+    <div class="filter-tabs">
+      <button class="filter-pill active">全部</button>
+      <button class="filter-pill">竞价中</button>
+      <button class="filter-pill">服务中</button>
+      <button class="filter-pill">已完成</button>
+      <button class="filter-pill">待评价</button>
+    </div>
+  </header>
+
+  <!-- Order list -->
+  <div class="order-list">
+    <!-- Order 1 - 竞价中 -->
+    <div class="order-card" data-dom-id="order-item-1">
+      <div class="card-top">
+        <span class="status-badge badge-bidding">竞价中</span>
+        <span class="order-date">2024-06-20 14:30</span>
+      </div>
+      <div class="order-title">厨房水管漏水维修</div>
+      <div class="order-address">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+          <circle cx="12" cy="10" r="3"></circle>
+        </svg>
+        <span>北京市朝阳区建国路88号院3号楼</span>
+      </div>
+      <div class="card-sep"></div>
+      <div class="card-bottom">
+        <div class="bottom-info">
+          <span class="info-main">已有 3 位师傅报价</span>
+          <span class="info-price">¥128-268</span>
+        </div>
+        <button class="btn-neu-secondary">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;margin-right:5px">
+            <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+            <circle cx="12" cy="12" r="3"></circle>
+          </svg>
+          查看报价
+        </button>
+      </div>
+    </div>
+
+    <!-- Order 2 - 服务中 -->
+    <div class="order-card" data-dom-id="order-item-2">
+      <div class="card-top">
+        <span class="status-badge badge-serving">服务中</span>
+        <span class="order-date">2024-06-19 09:00</span>
+      </div>
+      <div class="order-title">空调不制冷维修</div>
+      <div class="order-address">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+          <circle cx="12" cy="10" r="3"></circle>
+        </svg>
+        <span>北京市海淀区中关村大街1号</span>
+      </div>
+      <div class="card-sep"></div>
+      <div class="card-bottom">
+        <div class="bottom-info">
+          <span class="info-main">张师傅正在服务</span>
+        </div>
+        <button class="btn-neu-secondary">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;margin-right:5px">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path>
+          </svg>
+          联系师傅
+        </button>
+      </div>
+    </div>
+
+    <!-- Order 3 - 已完成 -->
+    <div class="order-card" data-dom-id="order-item-3">
+      <div class="card-top">
+        <span class="status-badge badge-done">已完成</span>
+        <span class="order-date">2024-06-15 16:20</span>
+      </div>
+      <div class="order-title">门锁更换</div>
+      <div class="order-address">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+          <circle cx="12" cy="10" r="3"></circle>
+        </svg>
+        <span>北京市西城区西直门外大街18号</span>
+      </div>
+      <div class="card-sep"></div>
+      <div class="card-bottom">
+        <div class="bottom-info">
+          <span class="info-main">服务已完成</span>
+        </div>
+        <button class="btn-neu-secondary">
+          <svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;margin-right:5px">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+          </svg>
+          评价师傅
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tab Bar -->
+  <nav class="tab-bar" data-mobile-nav="global">
+  <a class="tab-item" data-dom-id="nav-home" data-nav-key="home" aria-label="首页">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+    <span class="tab-label whitespace-nowrap">首页</span>
+  </a>
+  <a class="tab-item" data-dom-id="nav-publish" data-nav-key="publish" aria-label="发布">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+    <span class="tab-label whitespace-nowrap">发布</span>
+  </a>
+  <a class="tab-item" data-active="true" data-dom-id="nav-orders" data-nav-key="orders" aria-label="订单">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+    <span class="tab-label whitespace-nowrap">订单</span>
+  </a>
+  <a class="tab-item" data-dom-id="nav-mine" data-nav-key="mine" aria-label="我的">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+    <span class="tab-label whitespace-nowrap">我的</span>
+  </a>
+</nav>
+</div>
+
+    <style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --brand:#0D9488;--brand-dark:#0A7A70;--brand-light:#CCFBF1;
+  --brand-glow:rgba(13,148,136,0.28);--brand-subtle:rgba(13,148,136,0.08);
+  --brand-gradient:linear-gradient(135deg,#0D9488 0%,#14B8A6 50%,#D4944C 100%);
+  --accent:#D4944C;--accent-light:#F5E6D0;--accent-glow:rgba(212,148,76,0.25);
+  --bg:#F2EDE8;--bg-elevated:#F7F3EF;
+  --neu-light:#FFF8F2;--neu-dark:#DDD6CE;
+  --text-1:#2C2824;--text-2:#8B8178;--text-3:#B5ADA5;
+  --sep:rgba(44,40,36,0.06);--fill:rgba(44,40,36,0.04);
+  --green:#5B8C5A;--red:#C4533A;--orange:#D4944C;--blue:#5A8FAD;
+  --r:1.2rem;--r-lg:1.6rem;--r-sm:0.75rem;--r-pill:9999px;--r-tab:24px;
+  /* Font */--font-display:'Cormorant Garamond', 'Noto Serif SC', 'STSong', Georgia, serif;
+  --font-body:'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --font-nums:'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
+  --font:var(--font-body);
+  --neu-out-sm:5px 5px 12px var(--neu-dark),-5px -5px 12px var(--neu-light);
+  --neu-out-md:8px 8px 18px var(--neu-dark),-8px -8px 18px var(--neu-light);
+  --neu-in:inset 4px 4px 8px var(--neu-dark),inset -4px -4px 8px var(--neu-light);
+  --neu-in-deep:inset 5px 5px 10px var(--neu-dark),inset -5px -5px 10px var(--neu-light);
+  --glass-tab-bg:rgba(255,255,255,0.18);--glass-tab-blur:blur(48px) saturate(210%);--glass-tab-border:rgba(255,255,255,0.45);
+  --spring:cubic-bezier(0.175,0.885,0.32,1.275);--ease:cubic-bezier(0.25,0.46,0.45,0.94);--dur:0.2s;
+}
+html,body{font-family:var(--font);color:var(--text-1);-webkit-font-smoothing:antialiased}
+body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh;background:#E8E4DF;letter-spacing:-0.01em}
+.phone{position:relative;width:414px;min-height:896px;background:var(--bg);border-radius:48px;overflow:hidden;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.12),0 4px 16px rgba(0,0,0,.06);padding-bottom:82px}
+.phone::after{content:'';position:absolute;bottom:0;left:0;right:0;height:260px;background:radial-gradient(ellipse 200px 140px at 20% 90%,rgba(13,148,136,.07) 0%,transparent 70%),radial-gradient(ellipse 180px 120px at 80% 85%,rgba(212,148,76,.06) 0%,transparent 70%),radial-gradient(ellipse 160px 100px at 50% 95%,rgba(20,184,166,.04) 0%,transparent 70%);pointer-events:none;z-index:0}
+.phone>*:not(.tab-bar):not(.top-header){position:relative;z-index:1}
+
+/* Top Header */
+.top-header{position:sticky;top:0;z-index:50}
+
+/* Hero */
+.hero{padding: max(38px, env(safe-area-inset-top)) 24px 24px;position:relative;z-index:1;background:radial-gradient(ellipse 240px 200px at 75% 40%,rgba(212,148,76,.32) 0%,transparent 70%),radial-gradient(ellipse 200px 160px at 20% 80%,rgba(13,148,136,.24) 0%,transparent 70%),linear-gradient(135deg,rgba(13,148,136,.28) 0%,rgba(212,148,76,.20) 50%,rgba(20,184,166,.12) 100%);border-radius:0 0 32px 32px}
+.hero::before{content:"";position:absolute;top:-40%;right:-20%;width:300px;height:300px;background:radial-gradient(circle,rgba(255,255,255,0.15) 0%,transparent 70%);border-radius:50%;pointer-events:none}
+.hero::after{content:"";position:absolute;bottom:-30%;left:-10%;width:220px;height:220px;background:radial-gradient(circle,rgba(200,255,250,0.10) 0%,transparent 70%);border-radius:50%;pointer-events:none}
+.greeting-row{display:flex;align-items:center;justify-content:space-between;position:relative;z-index:2}
+.greeting-text h1{font-size:26px;font-weight:800;color:var(--text-1);letter-spacing:-0.02em;line-height:1.2}
+.greeting-text .subtitle{font-size:14px;color:var(--text-2);margin-top:4px;font-weight:500}
+
+.back-btn{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.50);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.75);display:flex;align-items:center;justify-content:center;color:var(--text-1);cursor:pointer;flex-shrink:0;box-shadow:var(--neu-out-sm),inset 0 1px 1.5px rgba(255,255,255,0.50),0 4px 12px rgba(0,0,0,0.05);transition:transform var(--dur) var(--ease),box-shadow 0.15s var(--ease)}
+.back-btn:active{box-shadow:var(--neu-in);transform:scale(0.94)}
+.search-btn{width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,0.18);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:0.5px solid rgba(255,255,255,0.30);box-shadow:inset 0 1px 2px rgba(255,255,255,0.3);display:flex;align-items:center;justify-content:center;color:var(--text-1);cursor:pointer;flex-shrink:0;transition:transform var(--dur) var(--spring),background 0.2s var(--ease)}
+.search-btn:active{transform:scale(0.85);background:rgba(255,255,255,0.32)}
+.search-btn svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+
+/* Filter Pills (overlaps hero) */
+.filter-tabs{margin:-18px 20px 0;background:rgba(255,255,255,0.52);backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);border:1px solid rgba(255,255,255,0.70);border-radius:var(--radius-md);box-shadow:var(--neu-out-md),0 6px 28px rgba(0,0,0,0.06),0 0 0 1px rgba(44,40,36,0.05);padding:8px;display:flex;gap:6px;position:relative;z-index:10}
+.filter-tabs::before{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(165deg,rgba(255,255,255,0.22) 0%,rgba(255,255,255,0.05) 30%,transparent 55%);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;padding:0.5px;pointer-events:none}
+
+.filter-pill{flex:1;text-align:center;padding:10px 0;border-radius:var(--radius-sm);font-size:13.5px;font-weight:600;color:var(--text-2);cursor:pointer;white-space:nowrap;transition:transform var(--dur) var(--spring),all 0.2s var(--ease);border:none;background:transparent;font-family:var(--font)}
+.filter-pill:active{transform:scale(0.94)}
+.filter-pill:not(.active){background:var(--bg);box-shadow:var(--neu-out-sm),inset 0 1px 1px rgba(255,255,255,0.45)}
+.filter-pill.active{background:rgba(13,148,136,0.15);box-shadow:inset 2px 2px 5px var(--neu-dark),inset -2px -2px 5px var(--neu-light);color:var(--brand)}
+
+/* Order list */
+.order-list{position:relative;z-index:2;padding:20px 20px 0;display:flex;flex-direction:column;gap:12px}
+.order-card{background:rgba(255,255,255,0.52);backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);border:1px solid rgba(255,255,255,0.70);border-radius:var(--radius-md);padding:16px;box-shadow:var(--neu-out-md),0 6px 28px rgba(0,0,0,0.06),0 0 0 1px rgba(44,40,36,0.05),0 2px 8px rgba(13,148,136,0.04);cursor:pointer;transition:transform var(--dur) var(--ease),box-shadow 0.2s var(--ease);position:relative}
+.order-card::before{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(165deg,rgba(255,255,255,0.22) 0%,rgba(255,255,255,0.05) 30%,transparent 55%);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;padding:0.5px;pointer-events:none}
+.order-card:active{box-shadow:var(--neu-in-deep);transform:scale(0.98)}
+
+.order-title{font-size:16px;font-weight:600;color:var(--text-1);letter-spacing:-0.01em;margin-bottom:8px;line-height:1.3}
+
+.card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;position:relative;z-index:1}
+.status-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 10px 4px 8px;border-radius:var(--radius-full);font-size:12px;font-weight:600;position:relative}
+.status-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:currentColor;flex-shrink:0}
+.badge-pending{background:rgba(212,148,76,0.14);color:var(--orange)}
+.badge-bidding{background:rgba(196,83,58,0.14);color:var(--red)}
+.badge-serving{background:rgba(90,143,173,0.14);color:var(--blue)}
+.badge-done{background:rgba(91,140,90,0.14);color:var(--green)}
+.order-date{font-size:12px;color:var(--text-3);font-variant-numeric:tabular-nums}
+
+.order-address{display:flex;align-items:center;gap:5px;font-size:13px;color:var(--text-2);line-height:1.4;margin-bottom:0}
+.order-address svg{width:14px;height:14px;flex-shrink:0;color:var(--text-3);fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+.card-sep{height:0.5px;background:var(--sep);margin:14px -16px;position:relative;z-index:1}
+.card-bottom{display:flex;align-items:center;justify-content:space-between;gap:10px;position:relative;z-index:1}
+
+.bottom-info{display:flex;flex-direction:column;gap:2px;min-width:0}
+.bottom-info .info-main{font-size:13px;color:var(--text-2);font-weight:500}
+.bottom-info .info-price{font-size:15px;color:var(--accent);font-weight:700;font-variant-numeric:tabular-nums}
+
+
+
+@media (prefers-reduced-motion:reduce){.order-card,.chip,.back-btn,.search-btn{transition:none}}
+
+
+</style>
+    <style>@theme inline{--font-sans: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+--font-serif: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+--color-background:var(--background);--color-foreground:var(--foreground);--color-card:var(--card);--color-card-foreground:var(--card-foreground);--color-popover:var(--popover);--color-popover-foreground:var(--popover-foreground);--color-primary:var(--primary);--color-primary-foreground:var(--primary-foreground);--color-muted:var(--muted);--color-muted-foreground:var(--muted-foreground);--color-border:var(--border);--color-input:var(--input);--color-ring:var(--ring);--radius-md:var(--radius-md);}</style>
+    <style>@layer base{body{background:var(--background);color:var(--foreground);font-family:var(--font-body);}}</style>
+</body>
+</html>

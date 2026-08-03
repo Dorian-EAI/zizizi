@@ -1,0 +1,514 @@
+/* pages/client-favorite-workers/index.wxss — 收藏师傅页 玻璃新拟态
+ * 像素级复刻 client-favorite-workers.html
+ * 换算基准：1px = 2rpx（750rpx 设计稿）
+ * 严格忠于 HTML 参考的尺寸、间距、圆角、阴影、渐变透明度
+ */
+
+/* ===== Top Header（sticky） ===== */
+/* HTML: position:sticky; top:0; z-index:50 */
+.top-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+/* ===== Hero 覆写：收藏页使用更鲜艳的 teal-amber 渐变（HTML 参考） ===== */
+/* HTML .hero: padding:max(38px,env) 24px 24px; border-radius:0 0 32px 32px */
+.fav-hero {
+  padding: 48rpx 48rpx 48rpx;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 480rpx 400rpx at 75% 40%, rgba(212, 148, 76, 0.32) 0%, transparent 70%),
+    radial-gradient(ellipse 400rpx 320rpx at 20% 80%, rgba(13, 148, 136, 0.24) 0%, transparent 70%),
+    linear-gradient(135deg, rgba(13, 148, 136, 0.28) 0%, rgba(212, 148, 76, 0.20) 50%, rgba(20, 184, 166, 0.12) 100%);
+  border-radius: 0 0 64rpx 64rpx;
+}
+
+/* HTML .hero::before: top:-40%; right:-20%; 300px×300px; radial white .15 */
+.fav-hero::before {
+  content: "";
+  position: absolute;
+  top: -40%;
+  right: -20%;
+  width: 600rpx;
+  height: 600rpx;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* HTML .hero::after: bottom:-30%; left:-10%; 220px×220px; radial rgba(200,255,250,0.10) */
+.fav-hero::after {
+  content: "";
+  position: absolute;
+  bottom: -30%;
+  left: -10%;
+  width: 440rpx;
+  height: 440rpx;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(200, 255, 250, 0.10) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* HTML .nav-content: display:grid; grid-template-columns:40px 1fr auto; gap:8px; z-index:2 */
+.nav-content {
+  display: grid;
+  grid-template-columns: 80rpx 1fr 84rpx;
+  align-items: center;
+  gap: 16rpx;
+  position: relative;
+  z-index: 2;
+}
+
+/* HTML .nav-back: 40px×40px; border-radius:50%; bg rgba(255,255,255,0.18); blur(16px); border 0.5px rgba(255,255,255,0.30); inset 0 1px 2px rgba(255,255,255,0.3) */
+.nav-back {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(32rpx) saturate(160%);
+  -webkit-backdrop-filter: blur(32rpx) saturate(160%);
+  border: 1rpx solid rgba(255, 255, 255, 0.30);
+  box-shadow: inset 0 2rpx 4rpx rgba(255, 255, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-1);
+  flex-shrink: 0;
+  transition: transform var(--dur-base) var(--spring), background 0.2s var(--ease);
+}
+.nav-back:active {
+  transform: scale(0.85);
+  background: rgba(255, 255, 255, 0.32);
+}
+/* HTML .nav-back svg: 20px×20px */
+.nav-back-icon {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+/* HTML .nav-title: font-size:22px; font-weight:700; letter-spacing:-0.02em; text-align:center; justify-self:center */
+.nav-title {
+  font-size: 44rpx;
+  font-weight: 700;
+  color: var(--text-1);
+  letter-spacing: -0.02em;
+  text-align: center;
+  justify-self: center;
+}
+
+/* HTML .nav-edit: 42px×42px; glass circle */
+.nav-edit {
+  width: 84rpx;
+  height: 84rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(32rpx) saturate(160%);
+  -webkit-backdrop-filter: blur(32rpx) saturate(160%);
+  border: 1rpx solid rgba(255, 255, 255, 0.30);
+  box-shadow: inset 0 2rpx 4rpx rgba(255, 255, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-1);
+  flex-shrink: 0;
+  transition: transform var(--dur-base) var(--spring), background 0.2s var(--ease);
+}
+.nav-edit:active {
+  transform: scale(0.85);
+  background: rgba(255, 255, 255, 0.32);
+}
+/* HTML .nav-edit svg: 22px×22px */
+.nav-edit-icon {
+  width: 44rpx;
+  height: 44rpx;
+}
+
+/* ===== Filter Tabs（页面级覆写，匹配 HTML client-favorite-workers.html 设计） ===== */
+/* HTML .filter-tabs: margin:-18px 20px 0 → -36rpx 40rpx 0; padding:8px → 16rpx;
+ * gap:6px → 12rpx; border-radius:radius-md; neu-out-md shadow */
+.filter-tabs {
+  margin: -36rpx 40rpx 0;
+  padding: 16rpx;
+  gap: 12rpx;
+  background: rgba(255, 255, 255, 0.52);
+  backdrop-filter: blur(40rpx) saturate(150%);
+  -webkit-backdrop-filter: blur(40rpx) saturate(150%);
+  border: 1rpx solid rgba(255, 255, 255, 0.70);
+  border-radius: var(--r-md);
+  box-shadow: var(--neu-raised), 0 12rpx 56rpx rgba(0, 0, 0, 0.06), 0 0 0 2rpx rgba(44, 40, 36, 0.05);
+  position: relative;
+  z-index: 10;
+}
+.filter-tabs::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.05) 30%, transparent 55%);
+  pointer-events: none;
+}
+
+/* HTML .filter-pill: flex:1; padding:10px 0 → 20rpx 0;
+ * border-radius:radius-sm(12px→24rpx); font:13.5px/600 → 27rpx; bg transparent */
+.filter-pill {
+  flex: 1;
+  text-align: center;
+  padding: 20rpx 0;
+  border-radius: var(--r-sm);
+  font-size: 27rpx;
+  font-weight: 600;
+  color: var(--text-2);
+  background: transparent;
+  border: none;
+  white-space: nowrap;
+  font-family: var(--font-body);
+  transition: transform 0.2s var(--spring), box-shadow 0.2s var(--ease), background 0.2s var(--ease), color 0.2s var(--ease);
+}
+.filter-pill:active {
+  transform: scale(0.94);
+}
+/* HTML .filter-pill:not(.active): bg bg-elevated; neu-out-sm + inset 1px 1px rgba(255,255,255,0.45) */
+.filter-pill:not(.active) {
+  background: var(--bg-elevated);
+  box-shadow: var(--neu-raised-sm), inset 0 2rpx 2rpx rgba(255, 255, 255, 0.45);
+  color: var(--text-2);
+}
+/* HTML .filter-pill.active: bg rgba(brand,0.15); inset 2px 2px 5px neu-dark, inset -2px -2px 5px neu-light; color brand */
+.filter-pill.active {
+  background: rgba(13, 148, 136, 0.15);
+  box-shadow: inset 4rpx 4rpx 10rpx var(--neu-dark), inset -4rpx -4rpx 10rpx var(--neu-light);
+  color: var(--brand);
+}
+
+/* ===== Worker List ===== */
+/* HTML .worker-list: padding:6px 20px 4px */
+.worker-list {
+  position: relative;
+  z-index: 1;
+  padding: 12rpx 40rpx 8rpx;
+}
+
+/* ===== Worker Card（玻璃新拟态） ===== */
+/* HTML .worker-card: margin-bottom:14px; padding:16px; bg surface-1; blur(20px); border 0.5px rgba(255,255,255,0.45); border-radius:22px; box-shadow var(--neu-out-md) */
+.worker-card {
+  margin-bottom: 28rpx;
+  padding: 32rpx;
+  background: rgba(255, 255, 255, 0.50);
+  backdrop-filter: blur(40rpx) saturate(150%);
+  -webkit-backdrop-filter: blur(40rpx) saturate(150%);
+  border: 1rpx solid rgba(255, 255, 255, 0.45);
+  border-radius: 44rpx;
+  box-shadow: var(--neu-raised);
+  position: relative;
+  overflow: hidden;
+  transition: transform var(--dur-base) var(--spring), box-shadow var(--dur-base) var(--ease);
+}
+.worker-card:active {
+  transform: scale(0.985);
+  box-shadow: var(--neu-raised-sm);
+}
+/* HTML .worker-card::before: rim light 165deg */
+.worker-card::before {
+  content: "";
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  border-radius: inherit;
+  background: linear-gradient(165deg,
+    rgba(255, 255, 255, 0.22) 0%,
+    rgba(255, 255, 255, 0.05) 30%,
+    transparent 55%);
+  pointer-events: none;
+  z-index: 0;
+}
+.worker-card > view,
+.worker-card > text {
+  position: relative;
+  z-index: 1;
+}
+
+/* HTML .worker-head: display:flex; align-items:flex-start; gap:14px */
+.worker-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 28rpx;
+}
+
+/* HTML .avatar-wrap: flex-direction:column; align-items:center; gap:5px; width:64px */
+.avatar-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10rpx;
+  flex-shrink: 0;
+  width: 128rpx;
+}
+
+/* HTML .avatar: 56px×56px; border-radius:50%; font-size:22px; font-weight:700; color:brand-dark;
+   bg linear-gradient(145deg,...); blur(10px); border 0.5px rgba(255,255,255,0.75);
+   box-shadow inset 0 2px 3px rgba(255,255,255,0.88), inset 0 -1px 2px rgba(0,0,0,0.04), var(--icon-raise) */
+.avatar {
+  width: 112rpx;
+  height: 112rpx;
+  border-radius: 50%;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 44rpx;
+  font-weight: 700;
+  color: var(--brand-dark);
+  letter-spacing: 0;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.68) 0%, rgba(255, 255, 255, 0.28) 40%, var(--brand-subtle) 78%, rgba(255, 255, 255, 0.18) 100%);
+  backdrop-filter: blur(20rpx) saturate(160%);
+  -webkit-backdrop-filter: blur(20rpx) saturate(160%);
+  border: 1rpx solid rgba(255, 255, 255, 0.75);
+  box-shadow: inset 0 4rpx 6rpx rgba(255, 255, 255, 0.88), inset 0 -2rpx 4rpx rgba(0, 0, 0, 0.04), 10rpx 10rpx 20rpx var(--neu-dark), -10rpx -10rpx 20rpx var(--neu-light);
+}
+/* HTML .avatar::before: rim light 160deg */
+.avatar::before {
+  content: "";
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  border-radius: inherit;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.48) 0%, rgba(255, 255, 255, 0.12) 35%, transparent 60%);
+  pointer-events: none;
+}
+
+/* HTML .level-badge: font-size:9px; font-weight:700; color:#fff; padding:2px 8px; border-radius:9999px; border 0.5px rgba(255,255,255,0.55); box-shadow 0 2px 6px rgba(0,0,0,0.12) */
+.level-badge {
+  font-size: 18rpx;
+  font-weight: 700;
+  color: #fff;
+  padding: 4rpx 16rpx;
+  border-radius: 9999rpx;
+  white-space: nowrap;
+  border: 1rpx solid rgba(255, 255, 255, 0.55);
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.12);
+  letter-spacing: 0.4rpx;
+}
+/* HTML .level-badge.gold: bg linear-gradient(135deg, accent, accent-dark); box-shadow 0 2px 6px rgba(212,148,76,0.32) */
+.level-badge.gold {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+  box-shadow: 0 4rpx 12rpx rgba(212, 148, 76, 0.32);
+}
+/* HTML .level-badge.normal: bg linear-gradient(135deg, brand, brand-dark); box-shadow 0 2px 6px rgba(13,148,136,0.30) */
+.level-badge.normal {
+  background: linear-gradient(135deg, var(--brand) 0%, var(--brand-dark) 100%);
+  box-shadow: 0 4rpx 12rpx rgba(13, 148, 136, 0.30);
+}
+
+/* HTML .worker-info: flex:1; min-width:0; padding-top:2px */
+.worker-info {
+  flex: 1;
+  min-width: 0;
+  padding-top: 4rpx;
+}
+
+/* HTML .name-row: display:flex; align-items:center; gap:8px; margin-bottom:6px */
+.name-row {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  margin-bottom: 12rpx;
+}
+
+/* HTML .worker-name: font-size:16px; font-weight:700; letter-spacing:-0.01em */
+.worker-name {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: var(--text-1);
+  letter-spacing: -0.01em;
+}
+
+/* HTML .rating: inline-flex; gap:3px; font-size:13px; font-weight:700; color:var(--orange) */
+.rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 6rpx;
+  font-size: 26rpx;
+  font-weight: 700;
+  color: var(--orange);
+  font-family: var(--font-number);
+  font-variant-numeric: tabular-nums;
+}
+/* HTML .rating svg: 13px×13px; color:var(--orange) */
+.rating-icon {
+  width: 26rpx;
+  height: 26rpx;
+}
+
+/* HTML .meta-row: display:flex; align-items:center; gap:8px; font-size:12px; color:text-2; margin-bottom:9px; font-weight:500 */
+.meta-row {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  font-size: 24rpx;
+  color: var(--text-2);
+  margin-bottom: 18rpx;
+  font-weight: 500;
+}
+
+/* HTML .meta-item: inline-flex; align-items:center; gap:3px */
+.meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6rpx;
+}
+
+/* HTML .meta-ico: 12px×12px; stroke:text-2 */
+.meta-ico {
+  width: 24rpx;
+  height: 24rpx;
+  flex-shrink: 0;
+}
+
+/* HTML .dot-sep: 3px×3px; border-radius:50%; background:text-3 */
+.dot-sep {
+  width: 6rpx;
+  height: 6rpx;
+  border-radius: 50%;
+  background: var(--text-3);
+  flex-shrink: 0;
+}
+
+/* HTML .tag-chips: display:flex; gap:6px; flex-wrap:wrap */
+.tag-chips {
+  display: flex;
+  gap: 12rpx;
+  flex-wrap: wrap;
+}
+
+/* HTML .tag-chip: font-size:11px; font-weight:600; color:brand; bg brand-subtle; padding:3px 9px; border-radius:9999px; border 0.5px rgba(13,148,136,0.18) */
+.tag-chip {
+  font-size: 22rpx;
+  font-weight: 600;
+  color: var(--brand);
+  background: var(--brand-subtle);
+  padding: 6rpx 18rpx;
+  border-radius: 9999rpx;
+  border: 1rpx solid rgba(13, 148, 136, 0.18);
+}
+
+/* HTML .worker-foot: display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:14px; padding-top:14px; border-top 0.5px var(--sep) */
+.worker-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20rpx;
+  margin-top: 28rpx;
+  padding-top: 28rpx;
+  border-top: 1rpx solid var(--sep);
+}
+
+/* HTML .auth-badges: display:flex; gap:6px; flex-wrap:wrap; min-width:0 */
+.auth-badges {
+  display: flex;
+  gap: 12rpx;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+/* HTML .auth-badge: inline-flex; gap:3px; font-size:11px; font-weight:600; color:green; bg rgba(91,140,90,0.10); padding:3px 8px; border-radius:7px; border 0.5px rgba(91,140,90,0.16) */
+.auth-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6rpx;
+  font-size: 22rpx;
+  font-weight: 600;
+  color: var(--green);
+  background: rgba(91, 140, 90, 0.10);
+  padding: 6rpx 16rpx;
+  border-radius: 14rpx;
+  border: 1rpx solid rgba(91, 140, 90, 0.16);
+  white-space: nowrap;
+}
+/* HTML .auth-badge svg: 11px×11px */
+.auth-icon {
+  width: 22rpx;
+  height: 22rpx;
+  flex-shrink: 0;
+}
+
+/* HTML .actions: display:flex; gap:10px; flex-shrink:0 */
+.actions {
+  display: flex;
+  gap: 20rpx;
+  flex-shrink: 0;
+}
+
+/* HTML .btn-neu-primary: bg linear-gradient(135deg, brand, brand-mid); color:#fff; border 0.5px rgba(13,148,136,0.40); border-radius:9999px; padding:8px 18px; font-size:13px; font-weight:600; box-shadow var(--neu-out-sm),0 4px 12px rgba(13,148,136,0.25) */
+.btn-neu-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--brand) 0%, var(--brand-mid) 100%);
+  color: var(--text-inverse);
+  border: 1rpx solid rgba(13, 148, 136, 0.40);
+  border-radius: 9999rpx;
+  padding: 16rpx 36rpx;
+  font-size: 26rpx;
+  font-weight: 600;
+  font-family: var(--font-body);
+  box-shadow: var(--neu-raised-sm), 0 8rpx 24rpx rgba(13, 148, 136, 0.25);
+  transition: transform var(--dur-base) var(--spring), box-shadow var(--dur-base) var(--ease);
+}
+.btn-neu-primary:active {
+  box-shadow: var(--neu-inset);
+  transform: scale(0.94);
+}
+
+/* HTML .btn-neu-ghost: bg transparent; color:text-2; border 0.5px var(--border); border-radius:9999px; padding:8px 16px; font-size:13px; font-weight:600 */
+.btn-neu-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  color: var(--text-2);
+  border: 1rpx solid var(--border);
+  border-radius: 9999rpx;
+  padding: 16rpx 32rpx;
+  font-size: 26rpx;
+  font-weight: 600;
+  font-family: var(--font-body);
+  transition: transform var(--dur-base) var(--spring), box-shadow var(--dur-base) var(--ease), color var(--dur-base) var(--ease);
+}
+.btn-neu-ghost:active {
+  transform: scale(0.94);
+  color: var(--brand);
+}
+
+/* ===== 空态 ===== */
+.empty {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 120rpx 32rpx;
+  gap: 16rpx;
+}
+.empty-icon {
+  width: 160rpx;
+  height: 160rpx;
+  margin-bottom: 8rpx;
+}
+.empty-img {
+  width: 64rpx;
+  height: 64rpx;
+}
+.empty-text {
+  font-size: 30rpx;
+  color: var(--text-2);
+  font-weight: 500;
+}
+.empty-sub {
+  font-size: 24rpx;
+  color: var(--text-3);
+}

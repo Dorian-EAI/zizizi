@@ -1,0 +1,175 @@
+<view class="page">
+  <!-- Hero -->
+  <view class="hero">
+    <view class="profile-row">
+      <view class="avatar-col">
+        <view class="avatar avatar-glass">
+          <image wx:if="{{worker.avatar}}" class="avatar-img" src="{{worker.avatar}}" mode="aspectFill"></image>
+          <view wx:else class="avatar-fallback">
+            <view class="icon-svg svg-user-lg"></view>
+          </view>
+        </view>
+        <view class="verify-badge badge-below">
+          <view class="icon-svg svg-check"></view>
+          <text>已认证</text>
+        </view>
+      </view>
+      <view class="profile-info">
+        <view class="name-row">
+          <text class="profile-name">{{worker.nickname || worker.name || '张师傅'}}</text>
+        </view>
+      </view>
+      <view class="edit-btn" bindtap="onEditProfile">
+        <view class="icon-svg svg-edit"></view>
+      </view>
+    </view>
+    <view class="rating-row">
+      <view class="rating-chip">
+        <view class="icon-svg svg-star"></view>
+        <text>{{stats.rating || '4.9'}}分</text>
+      </view>
+      <view class="rating-divider"></view>
+      <text class="service-count">{{stats.total_orders || 328}}次服务</text>
+    </view>
+  </view>
+
+  <!-- Stats Card -->
+  <view class="stats-card">
+    <view class="stat-col">
+      <text class="stat-num">{{stats.total_orders || '128'}}</text>
+      <text class="stat-label">完成订单</text>
+    </view>
+    <view class="stat-col">
+      <text class="stat-num brand">{{stats.rating || '4.9'}}</text>
+      <text class="stat-label">服务评分</text>
+    </view>
+    <view class="stat-col">
+      <text class="stat-num">98%</text>
+      <text class="stat-label">好评率</text>
+    </view>
+    <view class="card-gloss"></view>
+  </view>
+
+  <!-- Basic Info -->
+  <view class="section">
+    <view class="section-title">基本信息</view>
+    <view class="card">
+      <view class="menu-card">
+        <view class="menu-row" bindtap="onMenuTap" data-key="scope">
+          <view class="menu-icon menu-icon-teal">
+            <view class="icon-svg svg-wrench"></view>
+          </view>
+          <text class="menu-label">服务范围</text>
+          <view class="menu-chevron">
+            <view class="icon-svg svg-chevron-right"></view>
+          </view>
+        </view>
+        <view class="menu-row" bindtap="onMenuTap" data-key="experience">
+          <view class="menu-icon menu-icon-amber">
+            <view class="icon-svg svg-clock"></view>
+          </view>
+          <text class="menu-label">从业年限</text>
+          <text class="menu-value">{{worker.experience || '8年'}}</text>
+          <view class="menu-chevron">
+            <view class="icon-svg svg-chevron-right"></view>
+          </view>
+        </view>
+        <view class="menu-row" bindtap="onMenuTap" data-key="area">
+          <view class="menu-icon menu-icon-blue">
+            <view class="icon-svg svg-location"></view>
+          </view>
+          <text class="menu-label">所在区域</text>
+          <text class="menu-value">{{worker.area || '北京市朝阳区'}}</text>
+          <view class="menu-chevron">
+            <view class="icon-svg svg-chevron-right"></view>
+          </view>
+        </view>
+        <view class="menu-row" bindtap="onMenuTap" data-key="verify">
+          <view class="menu-icon menu-icon-green">
+            <view class="icon-svg svg-shield-check"></view>
+          </view>
+          <text class="menu-label">认证状态</text>
+          <text class="menu-value green">已认证</text>
+          <view class="menu-chevron">
+            <view class="icon-svg svg-chevron-right"></view>
+          </view>
+        </view>
+      </view>
+      <view class="card-gloss"></view>
+    </view>
+  </view>
+
+  <!-- More Functions -->
+  <view class="section">
+    <view class="section-title">更多功能</view>
+    <view class="card">
+      <view class="menu-card">
+        <view class="menu-row" bindtap="onMenuTap" data-key="reviews">
+          <view class="menu-icon menu-icon-purple">
+            <view class="icon-svg svg-star-outline"></view>
+          </view>
+          <text class="menu-label">我的评价</text>
+          <view class="menu-chevron">
+            <view class="icon-svg svg-chevron-right"></view>
+          </view>
+        </view>
+        <view class="menu-row" bindtap="onMenuTap" data-key="income">
+          <view class="menu-icon menu-icon-blue">
+            <view class="icon-svg svg-chart"></view>
+          </view>
+          <text class="menu-label">收入报告</text>
+          <view class="menu-chevron">
+            <view class="icon-svg svg-chevron-right"></view>
+          </view>
+        </view>
+        <view class="menu-row" bindtap="onMenuTap" data-key="help">
+          <view class="menu-icon menu-icon-green">
+            <view class="icon-svg svg-message"></view>
+          </view>
+          <text class="menu-label">帮助与反馈</text>
+          <view class="menu-chevron">
+            <view class="icon-svg svg-chevron-right"></view>
+          </view>
+        </view>
+        <view class="menu-row" bindtap="onMenuTap" data-key="settings">
+          <view class="menu-icon menu-icon-gray">
+            <view class="icon-svg svg-gear"></view>
+          </view>
+          <text class="menu-label">设置</text>
+          <view class="menu-chevron">
+            <view class="icon-svg svg-chevron-right"></view>
+          </view>
+        </view>
+      </view>
+      <view class="card-gloss"></view>
+    </view>
+  </view>
+
+  <!-- ===== FLOATING TAB BAR ===== -->
+  <view class="tab-bar">
+    <view class="tab-item {{currentTab === 'home' ? 'active' : ''}}" bindtap="onTabTap" data-key="home">
+      <view class="tab-icon">
+        <view class="icon-svg svg-home"></view>
+      </view>
+      <text class="tab-label">接单</text>
+    </view>
+    <view class="tab-item {{currentTab === 'orders' ? 'active' : ''}}" bindtap="onTabTap" data-key="orders">
+      <view class="tab-icon">
+        <view class="icon-svg svg-orders"></view>
+      </view>
+      <text class="tab-label">订单</text>
+    </view>
+    <view class="tab-item {{currentTab === 'wallet' ? 'active' : ''}}" bindtap="onTabTap" data-key="wallet">
+      <view class="tab-icon">
+        <view class="icon-svg svg-wallet"></view>
+      </view>
+      <text class="tab-label">钱包</text>
+    </view>
+    <view class="tab-item {{currentTab === 'profile' ? 'active' : ''}}" bindtap="onTabTap" data-key="profile">
+      <view class="tab-icon">
+        <view class="icon-svg svg-user"></view>
+      </view>
+      <text class="tab-label">我的</text>
+    </view>
+  </view>
+</view>

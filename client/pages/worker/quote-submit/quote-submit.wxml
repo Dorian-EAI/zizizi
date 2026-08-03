@@ -1,0 +1,125 @@
+<view class="page">
+  <view class="nav-bar">
+    <view class="nav-icon-btn" bindtap="onBack">
+      <image class="nav-icon" src="/assets/svg/arrow-left.svg" mode="aspectFit"></image>
+    </view>
+    <text class="nav-title">提交报价</text>
+    <view class="nav-placeholder"></view>
+  </view>
+
+  <view class="section">
+    <view class="glass-neu-card summary-card">
+      <text class="card-title">订单摘要</text>
+      <view class="summary-list">
+        <view class="summary-row">
+          <view class="summary-label">
+            <image class="summary-ic" src="/assets/svg/wrench.svg" mode="aspectFit"></image>
+            <text>服务类型</text>
+          </view>
+          <text class="summary-value">{{order.service_type || '防水维修'}}</text>
+        </view>
+        <view class="summary-row">
+          <view class="summary-label">
+            <image class="summary-ic" src="/assets/svg/location.svg" mode="aspectFit"></image>
+            <text>客户地址</text>
+          </view>
+          <text class="summary-value">{{order.address || '北京市朝阳区建国路88号'}}</text>
+        </view>
+        <view class="summary-row">
+          <view class="summary-label">
+            <image class="summary-ic" src="/assets/svg/calendar.svg" mode="aspectFit"></image>
+            <text>预约时间</text>
+          </view>
+          <text class="summary-value mono">{{order.appoint_time || '今天 15:00-18:00'}}</text>
+        </view>
+        <view class="summary-desc">
+          <text class="summary-desc-label">问题描述</text>
+          <text class="summary-desc-text">{{order.description || '卫生间墙面渗水，需检查防水层'}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="glass-neu-card amount-card">
+      <text class="amount-label">报价金额</text>
+      <view class="amount-field">
+        <text class="amount-symbol">&yen;</text>
+        <input class="amount-input" type="digit" value="{{quote.amount}}" placeholder="0" bindinput="onAmountInput" focus="{{focusAmount}}" />
+      </view>
+      <view class="amount-divider"></view>
+      <view class="amount-quick">
+        <view class="quick-chip {{quote.quick === '100' ? 'is-active' : ''}}" data-amount="100" bindtap="onQuickAmount">¥100</view>
+        <view class="quick-chip {{quote.quick === '150' ? 'is-active' : ''}}" data-amount="150" bindtap="onQuickAmount">¥150</view>
+        <view class="quick-chip {{quote.quick === '200' ? 'is-active' : ''}}" data-amount="200" bindtap="onQuickAmount">¥200</view>
+        <view class="quick-chip {{quote.quick === 'custom' ? 'is-active' : ''}}" data-amount="custom" bindtap="onQuickAmount">自定义</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="glass-neu-card form-card">
+      <text class="card-title">报价明细</text>
+
+      <view class="form-row">
+        <text class="form-label">预计用时</text>
+        <view class="duration-group">
+          <view class="dur-chip {{quote.duration === '1' ? 'is-active' : ''}}" data-dur="1" bindtap="onDurationChange">1h</view>
+          <view class="dur-chip {{quote.duration === '1.5' ? 'is-active' : ''}}" data-dur="1.5" bindtap="onDurationChange">1.5h</view>
+          <view class="dur-chip {{quote.duration === '2' ? 'is-active' : ''}}" data-dur="2" bindtap="onDurationChange">2h</view>
+          <view class="dur-chip {{quote.duration === '3' ? 'is-active' : ''}}" data-dur="3" bindtap="onDurationChange">3h+</view>
+        </view>
+      </view>
+
+      <view class="form-row">
+        <view class="form-label-row">
+          <text class="form-label">材料费</text>
+          <text class="form-label-opt">选填</text>
+        </view>
+        <view class="neu-input">
+          <text class="neu-input-prefix">&yen;</text>
+          <input type="digit" placeholder="0.00" value="{{quote.material_fee}}" bindinput="onMaterialInput" />
+        </view>
+      </view>
+
+      <view class="form-row">
+        <text class="form-label">上门时间</text>
+        <view class="neu-input neu-input-readonly">
+          <input type="text" readonly value="{{order.appoint_time || '今天 15:00-18:00'}}" />
+          <image class="neu-input-suffix-ic" src="/assets/svg/calendar.svg" mode="aspectFit"></image>
+        </view>
+      </view>
+
+      <view class="form-row">
+        <view class="form-label-row">
+          <text class="form-label">报价说明</text>
+          <text class="form-label-opt">选填</text>
+        </view>
+        <view class="neu-input neu-input-area">
+          <textarea placeholder="补充说明维修方案、所用材料等" value="{{quote.note}}" bindinput="onNoteInput" auto-height></textarea>
+        </view>
+      </view>
+
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="glass-neu-card hint-card">
+      <view class="hint-ic">
+        <image class="hint-ic-svg" src="/assets/svg/bot.svg" mode="aspectFit"></image>
+      </view>
+      <text class="hint-text">合理报价更易被客户选中，平台抽成 <text class="hi-strong">5%</text>，预计到手 <text class="hi-net">&yen;{{quote.payout}}</text></text>
+    </view>
+  </view>
+
+  <view class="action-bar">
+    <view class="action-btn-secondary" bindtap="onSaveDraft">
+      <image class="action-btn-ic" src="/assets/svg/document.svg" mode="aspectFit"></image>
+      <text>保存草稿</text>
+    </view>
+    <view class="action-btn-primary" bindtap="onSubmit">
+      <image class="action-btn-ic" src="/assets/svg/plus.svg" mode="aspectFit"></image>
+      <text>提交报价</text>
+    </view>
+  </view>
+</view>

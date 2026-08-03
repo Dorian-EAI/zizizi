@@ -1,0 +1,121 @@
+<!-- pages/client-annual-card/index.wxml — 家庭年卡 像素级复刻 client-annual-card.html -->
+<view class="page">
+  <!-- 背景装饰光斑 -->
+  <view class="blob" style="top:-80rpx;right:-120rpx;width:560rpx;height:560rpx;background:var(--brand);"></view>
+  <view class="blob" style="top:760rpx;left:-160rpx;width:480rpx;height:480rpx;background:var(--accent);"></view>
+
+  <scroll-view scroll-y class="page-scroll hide-scroll" style="padding-bottom:200rpx;">
+
+    <!-- ===== Nav Bar ===== -->
+    <view class="nav-bar" style="padding-top:calc({{statusBarHeight}}px + 36rpx);">
+      <view class="nav-back press-scale" bindtap="onBack">
+        <image src="{{icons.back}}" mode="aspectFit" class="nav-back-icon" lazy-load="{{false}}" />
+      </view>
+      <text class="nav-title">家庭年卡</text>
+      <view class="nav-spacer"></view>
+    </view>
+
+    <!-- ===== 我的年卡（已购） ===== -->
+    <view class="my-card-wrap" wx:if="{{myCard}}">
+      <view class="my-card">
+        <view class="my-card-shine"></view>
+        <view class="my-card-top">
+          <text class="my-card-name">{{myCard.templateName}}</text>
+          <text class="my-card-expire">{{myCard.expireAt}}到期</text>
+        </view>
+        <view class="my-card-usage">
+          <view class="usage-num">
+            <text class="usage-used numeric">{{myCard.usedTimes}}</text>
+            <text class="usage-sep">/</text>
+            <text class="usage-total numeric">{{myCardTotal}}</text>
+            <text class="usage-unit">次</text>
+          </view>
+          <text class="usage-label">剩余次数</text>
+        </view>
+        <view class="progress-track">
+          <view class="progress-fill" style="width:{{myCardProgress}}%;"></view>
+        </view>
+        <view class="my-card-bottom">
+          <view class="btn-use press-scale" bindtap="onUse">
+            <text class="btn-use-text">立即使用</text>
+          </view>
+          <view class="btn-refund press-scale" bindtap="onRefund">
+            <text class="btn-refund-text">退卡</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== 选择套餐 ===== -->
+    <view class="section-title">选择套餐</view>
+    <view
+      class="plan-card press-card {{item.recommended ? 'plan-card--featured' : ''}} {{selectedPlanId === item.id ? 'plan-card--selected' : ''}}"
+      wx:for="{{templates}}"
+      wx:key="id"
+      data-id="{{item.id}}"
+      bindtap="onSelectPlan"
+    >
+      <view class="plan-badge" wx:if="{{item.recommended}}">推荐</view>
+      <view class="plan-card-head">
+        <text class="plan-name">{{item.name}}</text>
+        <view class="plan-price">
+          <text class="cur">¥</text>
+          <text class="amt numeric">{{item.displayPrice}}</text>
+        </view>
+      </view>
+      <view class="plan-benefits">
+        <view class="plan-benefit" wx:for="{{item.benefitList || []}}" wx:key="index" wx:for-item="b">
+          <image src="{{icons.check}}" mode="aspectFit" class="plan-benefit-icon" lazy-load="{{false}}" />
+          <text class="plan-benefit-text">{{b}}</text>
+        </view>
+      </view>
+      <view
+        class="plan-choose {{item.recommended ? 'plan-choose-primary' : 'plan-choose-secondary'}} press-scale"
+        data-id="{{item.id}}"
+        catchtap="onPurchase"
+      >
+        <text class="plan-choose-text">选择</text>
+      </view>
+    </view>
+
+    <!-- ===== 适用服务类型 ===== -->
+    <view class="section-title">适用服务类型</view>
+    <view class="chips-wrap">
+      <view class="chip-neu press-scale" wx:for="{{serviceTypes}}" wx:key="*this">{{item}}</view>
+    </view>
+
+    <!-- ===== 权益对比 ===== -->
+    <view class="section-title" wx:if="{{compareCols.length}}">权益对比</view>
+    <view class="compare-card" wx:if="{{compareCols.length}}">
+      <view class="compare-row head">
+        <view class="compare-label">权益</view>
+        <view
+          class="compare-col {{item.recommended ? 'highlight' : ''}}"
+          wx:for="{{compareCols}}"
+          wx:key="id"
+        >{{item.name}}</view>
+      </view>
+      <view
+        class="compare-row"
+        wx:for="{{compareRows}}"
+        wx:key="key"
+      >
+        <view class="compare-label">{{item.label}}</view>
+        <view
+          class="compare-col"
+          wx:for="{{item.values}}"
+          wx:key="index"
+          wx:for-item="v"
+        >{{v}}</view>
+      </view>
+    </view>
+
+  </scroll-view>
+
+  <!-- ===== 底部购买栏 ===== -->
+  <view class="bottom-bar">
+    <view class="btn-buy press-scale" bindtap="onBuy">
+      <text class="btn-buy-text">立即购买</text>
+    </view>
+  </view>
+</view>

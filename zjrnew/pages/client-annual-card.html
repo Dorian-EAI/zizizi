@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自家人居家维修 · 玻璃新拟态 · 家庭年卡</title>
+    <link rel="stylesheet" href="../assets/fonts.css">
+
+    <style id="theme-vars">
+/* 自家人居家维修 - 玻璃新拟态 */
+:root {
+  /* Brand - Client (Teal) */
+  --brand: #0D9488;
+  --brand-dark: #0A7A70;
+  --brand-mid: #14B8A6;
+  --brand-light: #CCFBF1;
+  --brand-glow: rgba(13, 148, 136, 0.24);
+  --brand-subtle: rgba(13, 148, 136, 0.10);
+  --brand-gradient:linear-gradient(135deg,#0D9488 0%,#14B8A6 50%,#D4944C 100%);
+
+  /* Accent (Amber) */
+  --accent: #D4944C;
+  --accent-dark: #A0723C;
+  --accent-mid: #E8C088;
+  --accent-light: #F5E6D0;
+  --accent-glow: rgba(212, 148, 76, 0.20);
+
+  /* Background */
+  --background: #F2EDE8;
+  --foreground: #2C2824;
+  --body-bg: #E8E4DF;
+  --bg-elevated: #F7F3EF;
+
+  /* Neumorphic */
+  --neu-light: #FFF8F2;
+  --neu-dark: #DDD6CE;
+  --neu-highlight: rgba(255, 255, 255, 0.55);
+
+  /* Surface & Card */
+  --card: rgba(255, 255, 255, 0.52);
+  --card-foreground: #2C2824;
+  --popover: #fff;
+  --popover-foreground: #2C2824;
+
+  /* Muted */
+  --muted: #F7F3EF;
+  --muted-foreground: #8B8178;
+
+  /* Border & Input */
+  --border: rgba(44, 40, 36, 0.06);
+  --input: rgba(44, 40, 36, 0.06);
+  --ring: #0D9488;
+
+  /* Primary */
+  --primary: #0D9488;
+  --primary-foreground: #ffffff;
+
+  /* Semantic aliases */
+  --state-success: #5B8C5A;
+  --state-warning: #D4944C;
+  --state-error: #C4533A;
+  --state-info: #5A8FAD;
+
+  /* Text */
+  --text-1: #2C2824;
+  --text-2: #8B8178;
+  --text-3: #B5ADA5;
+  --text-inverse: #ffffff;
+
+  /* Sep & Fill */
+  --sep: rgba(44, 40, 36, 0.06);
+  --fill: rgba(44, 40, 36, 0.04);
+
+  /* Green/Red/Orange/Blue semantic */
+  --green: #5B8C5A;
+  --red: #C4533A;
+  --orange: #D4944C;
+  --blue: #5A8FAD;
+
+  /* Radius */
+  --radius-sm: 0.75rem;
+  --radius-md: 1.2rem;
+  --radius-lg: 1.6rem;
+  --radius-full: 9999px;
+
+    /* Font — 统一衬线系统 */
+  --font-display: 'Cormorant Garamond', 'Noto Serif SC', 'STSong', Georgia, serif;
+  --font-body: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --font-nums: 'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
+  --font: var(--font-body);
+
+  /* Motion */
+  --spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --dur: 0.2s;
+
+  /* Glass */
+  --glass-bg: rgba(255, 255, 255, 0.18);
+  --glass-blur: blur(12px) saturate(140%);
+  --glass-border: rgba(255, 255, 255, 0.60);
+
+  /* Surface presets for glass-neumorphic components */
+  --surface-1: rgba(255, 255, 255, 0.50);
+  --surface-2: rgba(255, 255, 255, 0.45);
+
+  /* Neumorphic shadow presets */
+  --neu-out-sm: 6px 6px 14px var(--neu-dark), -6px -6px 14px var(--neu-light), 0 4px 16px rgba(0, 0, 0, 0.04);
+  --neu-out-md: 8px 8px 18px var(--neu-dark), -8px -8px 18px var(--neu-light), 0 6px 24px rgba(0, 0, 0, 0.05);
+  --neu-out-lg: 10px 10px 24px var(--neu-dark), -10px -10px 24px var(--neu-light), 0 8px 32px rgba(0, 0, 0, 0.06);
+  --neu-in: inset 4px 4px 8px var(--neu-dark), inset -4px -4px 8px var(--neu-light);
+  --neu-in-deep: inset 5px 5px 10px var(--neu-dark), inset -5px -5px 10px var(--neu-light);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --font-sans: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --font-serif: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --radius-full: var(--radius-full);}
+
+/* Semantic token fallback */
+#semantic-token-fallback {
+  --brand-background: var(--background);
+  --brand-foreground: var(--foreground);
+  --brand-card: var(--card);
+  --brand-card-foreground: var(--card-foreground);
+  --brand-popover: var(--popover);
+  --brand-popover-foreground: var(--popover-foreground);
+  --brand-primary: var(--primary);
+  --brand-primary-foreground: var(--primary-foreground);
+  --brand-muted: var(--muted);
+  --brand-muted-foreground: var(--muted-foreground);
+  --brand-border: var(--border);
+  --brand-input: var(--input);
+  --brand-ring: var(--ring);
+  --brand-radius-sm: var(--radius-sm);
+  --brand-radius-md: var(--radius-md);
+  --brand-radius-lg: var(--radius-lg);
+}
+
+/* ===== Global Neumorphic Components ===== */
+/* Tab Bar */
+.tab-bar{
+  position:absolute;
+  bottom:max(14px, env(safe-area-inset-bottom));
+  left:50%;
+  transform:translateX(-50%);
+  width:calc(100% - 32px);
+  max-width:360px;
+  height:64px;
+  z-index:100;
+  background:rgba(255,255,255,0.22);
+  backdrop-filter:blur(48px) saturate(210%);
+  -webkit-backdrop-filter:blur(48px) saturate(210%);
+  border:0.5px solid rgba(255,255,255,0.50);
+  border-radius:28px;
+  box-shadow:
+    inset 0 1.5px 3px rgba(255,255,255,0.60),
+    inset 0 -0.5px 1px rgba(255,255,255,0.20),
+    0 0 0 0.5px rgba(0,0,0,0.04),
+    0 2px 10px rgba(0,0,0,0.06),
+    0 12px 36px rgba(0,0,0,0.08);
+  display:flex;
+  align-items:center;
+  justify-content:space-around;
+  padding:0 10px;
+}
+.tab-bar::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  background:linear-gradient(160deg,
+    rgba(255,255,255,0.42) 0%,
+    rgba(255,255,255,0.16) 20%,
+    rgba(255,255,255,0.03) 40%,
+    transparent 60%);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
+  padding:0.5px;
+  pointer-events:none;
+  z-index:1;
+}
+.tab-bar::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  background:linear-gradient(320deg,
+    transparent 60%,
+    rgba(13,148,136,0.06) 80%,
+    rgba(255,255,255,0.04) 100%);
+  pointer-events:none;
+  z-index:1;
+}
+.tab-item{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+  width:68px;
+  height:44px;
+  border-radius:14px;
+  color:var(--text-3);
+  font-size:11px;
+  font-weight:500;
+  text-decoration:none;
+  position:relative;
+  transition:all .2s;
+}
+.tab-item svg{
+  width:20px;
+  height:20px;
+  stroke:currentColor;
+  fill:none;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.tab-item[data-active="true"]{
+  color:var(--brand);
+  font-weight:600;
+}
+.tab-item[data-active="true"]::before{
+  content:"";
+  position:absolute;
+  width:54px;
+  height:42px;
+  border-radius:16px;
+  background:rgba(13,148,136,0.16);
+  backdrop-filter:blur(24px);
+  -webkit-backdrop-filter:blur(24px);
+  border:0.5px solid rgba(13,148,136,0.30);
+  box-shadow:
+    inset 0 1px 3px rgba(255,255,255,0.55),
+    inset 0 -0.5px 1px rgba(255,255,255,0.15),
+    0 2px 10px rgba(13,148,136,0.20),
+    0 0 0 0.5px rgba(13,148,136,0.08);
+  z-index:0;
+}
+.tab-item[data-active="true"] svg{
+  transform:scale(1.08);
+  position:relative;
+  z-index:1;
+}
+
+.btn-neu-primary:active{box-shadow:var(--neu-in);transform:scale(0.94)}
+
+.btn-neu-secondary{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,0.50);color:var(--brand);
+  border:0.5px solid rgba(255,255,255,0.60);border-radius:9999px;
+  padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
+  cursor:pointer;
+  box-shadow:var(--neu-out-sm);
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
+.btn-neu-secondary:active{box-shadow:var(--neu-in);transform:scale(0.94)}
+
+.btn-neu-ghost{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:transparent;color:var(--text-2);
+  border:0.5px solid var(--border);border-radius:9999px;
+  padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
+  cursor:pointer;
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease),color var(--dur) var(--ease);
+}
+.btn-neu-ghost:active{transform:scale(0.94);color:var(--brand)}
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-accent: var(--accent);
+    --radius-sm: var(--radius-sm);
+    --radius-md: var(--radius-md);
+    --radius-lg: var(--radius-lg);
+    --radius-full: var(--radius-full);
+    --font-sans: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+    --font-serif: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+    <style id="semantic-token-fallback">
+      .bg-background { background-color: var(--background); }
+      .text-background { color: var(--background); }
+      .border-background { border-color: var(--background); }
+      .ring-background { --tw-ring-color: var(--background); }
+      .bg-foreground { background-color: var(--foreground); }
+      .text-foreground { color: var(--foreground); }
+      .border-foreground { border-color: var(--foreground); }
+      .ring-foreground { --tw-ring-color: var(--foreground); }
+      .bg-card { background-color: var(--card); }
+      .text-card { color: var(--card); }
+      .border-card { border-color: var(--card); }
+      .ring-card { --tw-ring-color: var(--card); }
+      .bg-card-foreground { background-color: var(--card-foreground); }
+      .text-card-foreground { color: var(--card-foreground); }
+      .border-card-foreground { border-color: var(--card-foreground); }
+      .ring-card-foreground { --tw-ring-color: var(--card-foreground); }
+      .bg-popover { background-color: var(--popover); }
+      .text-popover { color: var(--popover); }
+      .border-popover { border-color: var(--popover); }
+      .ring-popover { --tw-ring-color: var(--popover); }
+      .bg-popover-foreground { background-color: var(--popover-foreground); }
+      .text-popover-foreground { color: var(--popover-foreground); }
+      .border-popover-foreground { border-color: var(--popover-foreground); }
+      .ring-popover-foreground { --tw-ring-color: var(--popover-foreground); }
+      .bg-primary { background-color: var(--primary); }
+      .text-primary { color: var(--primary); }
+      .border-primary { border-color: var(--primary); }
+      .ring-primary { --tw-ring-color: var(--primary); }
+      .bg-primary-foreground { background-color: var(--primary-foreground); }
+      .text-primary-foreground { color: var(--primary-foreground); }
+      .border-primary-foreground { border-color: var(--primary-foreground); }
+      .ring-primary-foreground { --tw-ring-color: var(--primary-foreground); }
+      .bg-muted { background-color: var(--muted); }
+      .text-muted { color: var(--muted); }
+      .border-muted { border-color: var(--muted); }
+      .ring-muted { --tw-ring-color: var(--muted); }
+      .bg-muted-foreground { background-color: var(--muted-foreground); }
+      .text-muted-foreground { color: var(--muted-foreground); }
+      .border-muted-foreground { border-color: var(--muted-foreground); }
+      .ring-muted-foreground { --tw-ring-color: var(--muted-foreground); }
+      .bg-border { background-color: var(--border); }
+      .text-border { color: var(--border); }
+      .border-border { border-color: var(--border); }
+      .ring-border { --tw-ring-color: var(--border); }
+      .bg-input { background-color: var(--input); }
+      .text-input { color: var(--input); }
+      .border-input { border-color: var(--input); }
+      .ring-input { --tw-ring-color: var(--input); }
+      .bg-ring { background-color: var(--ring); }
+      .text-ring { color: var(--ring); }
+      .border-ring { border-color: var(--ring); }
+      .ring-ring { --tw-ring-color: var(--ring); }
+      .bg-accent { background-color: var(--accent); }
+      .text-accent { color: var(--accent); }
+      .border-accent { border-color: var(--accent); }
+      .ring-accent { --tw-ring-color: var(--accent); }
+    </style>
+    <style>
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      [data-icon] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        background-color: currentColor;
+      }
+    </style>
+</head>
+<body>
+
+<div class="phone" data-dom-id="page-client-annual-card">
+
+  <!-- ===== Nav Bar (sticky) ===== -->
+  <div class="nav-bar">
+    <button class="nav-back" data-dom-id="back-btn" aria-label="返回">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg>
+    </button>
+    <span class="nav-title" style="display: flex; justify-content: center; width: 241.195px;">家庭年卡</span>
+  </div>
+
+  <!-- ===== My Annual Card (owned) ===== -->
+  <div class="my-card-wrap">
+    <div class="my-card" data-dom-id="my-annual-card">
+      <div class="my-card-shine"></div>
+      <div class="my-card-top">
+        <div class="my-card-name">全能家护卡</div>
+        <div class="my-card-expire">2027-07-29到期</div>
+      </div>
+      <div class="my-card-usage">
+        <div class="usage-num">
+          <span class="usage-used">4</span><span class="usage-sep">/</span><span class="usage-total">6</span><span class="usage-unit">次</span>
+        </div>
+        <div class="usage-label">剩余次数</div>
+      </div>
+      <div class="progress-track"><div class="progress-fill"></div></div>
+      <div class="my-card-bottom">
+        <button class="btn-neu-primary btn-use" data-dom-id="btn-use-card">立即使用</button>
+        <button class="btn-neu-ghost btn-refund" data-dom-id="btn-refund-card">退卡</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Plan Packages ===== -->
+  <div class="section-title">选择套餐</div>
+
+  <!-- Basic -->
+  <div class="plan-card" data-dom-id="plan-card-basic">
+    <div class="plan-card-head">
+      <div class="plan-name">基础家护卡</div>
+      <div class="plan-price"><span class="cur">&yen;</span><span class="amt">199</span></div>
+    </div>
+    <ul class="plan-benefits">
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>2次上门服务（任意类型）</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>免上门费</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>有效期1年</li>
+    </ul>
+    <button class="btn-neu-secondary plan-choose" data-dom-id="plan-basic">选择</button>
+  </div>
+
+  <!-- All (featured) -->
+  <div class="plan-card plan-card--featured" data-dom-id="plan-card-all">
+    <span class="plan-badge">推荐</span>
+    <div class="plan-card-head">
+      <div class="plan-name">全能家护卡</div>
+      <div class="plan-price"><span class="cur">&yen;</span><span class="amt">499</span></div>
+    </div>
+    <ul class="plan-benefits">
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>6次上门服务</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>免上门费</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>加急服务8折</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>有效期1年</li>
+    </ul>
+    <button class="btn-neu-primary plan-choose" data-dom-id="plan-all">选择</button>
+  </div>
+
+  <!-- Premium -->
+  <div class="plan-card" data-dom-id="plan-card-premium">
+    <div class="plan-card-head">
+      <div class="plan-name">尊享家护卡</div>
+      <div class="plan-price"><span class="cur">&yen;</span><span class="amt">999</span></div>
+    </div>
+    <ul class="plan-benefits">
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>15次上门服务</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>免上门费</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>加急免费</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>专属客服</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>有效期1年</li>
+    </ul>
+    <button class="btn-neu-secondary plan-choose" data-dom-id="plan-premium">选择</button>
+  </div>
+
+  <!-- ===== Applicable Services ===== -->
+  <div class="section-title">适用服务类型</div>
+  <div class="chips-wrap">
+    <span class="chip">水电维修</span>
+    <span class="chip">家电维修</span>
+    <span class="chip">管道疏通</span>
+    <span class="chip">门窗维修</span>
+    <span class="chip">家具安装</span>
+    <span class="chip">墙面修补</span>
+  </div>
+
+  <!-- ===== Bottom Fixed Buy Bar ===== -->
+  <div class="bottom-bar">
+    <button class="btn-buy" data-dom-id="btn-buy">立即购买</button>
+  </div>
+
+</div>
+
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+
+html,body{font-family:var(--font);color:var(--text-1);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh;background:var(--body-bg);letter-spacing:-0.01em}
+
+/* ===== Phone Frame ===== */
+.phone{position:relative;width:414px;min-height:896px;background:var(--background);border-radius:48px;overflow:hidden;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.12),0 4px 16px rgba(0,0,0,.06);padding-bottom:82px}
+.phone::-webkit-scrollbar{display:none}
+.phone{scrollbar-width:none}
+.phone::after{content:'';position:absolute;bottom:0;left:0;right:0;height:260px;background:radial-gradient(ellipse 180px 120px at 20% 90%,rgba(13,148,136,.06) 0%,transparent 70%),radial-gradient(ellipse 160px 100px at 80% 85%,rgba(212,148,76,.06) 0%,transparent 70%);pointer-events:none;z-index:0}
+.phone>*:not(.bottom-bar){position:relative;z-index:1}
+
+/* ===== Nav Bar (sticky top) ===== */
+.nav-bar{background:radial-gradient(ellipse 220px 160px at 78% 45%,rgba(212,148,76,.14) 0%,transparent 70%),radial-gradient(ellipse 180px 140px at 18% 75%,rgba(13,148,136,.16) 0%,transparent 70%),linear-gradient(135deg,rgba(13,148,136,.14) 0%,rgba(212,148,76,.08) 50%,rgba(13,148,136,.06) 100%);position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:12px;padding:max(18px, env(safe-area-inset-top)) 20px 12px; border-radius:0 0 28px 28px; overflow:hidden;}
+.nav-back{
+  width:36px;height:36px;border-radius:50%;
+  background:rgba(255,255,255,0.50);
+  border:0.5px solid rgba(255,255,255,0.60);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--text-1);cursor:pointer;flex-shrink:0;
+  box-shadow:var(--neu-out-sm);
+  transition:transform var(--dur) var(--ease),box-shadow var(--dur) var(--ease);
+}
+.nav-back:active{box-shadow:var(--neu-in);transform:scale(0.88)}
+.nav-back svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.nav-title{font-size:18px;font-weight:700;color:var(--text-1);letter-spacing:-0.2px}
+
+/* ===== btn-neu-primary base (head only defines :active) ===== */
+.btn-neu-primary{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:var(--brand-gradient);
+  color:var(--text-inverse);
+  border:0.5px solid rgba(255,255,255,0.30);border-radius:9999px;
+  padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
+  cursor:pointer;
+  box-shadow:var(--neu-out-sm),0 4px 12px var(--brand-glow);
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
+
+/* ===== My Annual Card (glass gradient) ===== */
+.my-card-wrap{padding:16px 20px 0;position:relative;z-index:2}
+.my-card{
+  position:relative;
+  padding:22px 22px 20px;
+  border-radius:26px;
+  overflow:hidden;
+  background:
+    radial-gradient(ellipse 200px 160px at 80% 15%,rgba(212,148,76,.32) 0%,transparent 70%),
+    radial-gradient(ellipse 180px 140px at 15% 88%,rgba(13,148,136,.36) 0%,transparent 70%),
+    linear-gradient(135deg,rgba(13,148,136,.34) 0%,rgba(20,184,166,.22) 45%,rgba(212,148,76,.20) 100%);
+  border:0.5px solid rgba(255,255,255,0.45);
+  box-shadow:var(--neu-out-md),inset 0 1px 0 rgba(255,255,255,0.35),0 8px 28px rgba(13,148,136,0.10);
+}
+.my-card-shine{
+  content:"";position:absolute;inset:0;border-radius:inherit;
+  background:linear-gradient(165deg,rgba(255,255,255,0.28) 0%,rgba(255,255,255,0.06) 30%,transparent 55%);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;
+  padding:0.5px;pointer-events:none;
+}
+.my-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:16px;position:relative;z-index:1}
+.my-card-name{font-size:17px;font-weight:700;color:var(--text-inverse);letter-spacing:-0.01em;text-shadow:0 1px 3px rgba(0,0,0,0.14)}
+.my-card-expire{font-size:11px;font-weight:600;color:rgba(255,255,255,0.95);background:rgba(255,255,255,0.22);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:0.5px solid rgba(255,255,255,0.38);border-radius:9999px;padding:4px 10px;white-space:nowrap;flex-shrink:0}
+.my-card-usage{position:relative;z-index:1;margin-bottom:14px}
+.usage-num{display:flex;align-items:baseline;gap:1px;color:var(--text-inverse);text-shadow:0 2px 8px rgba(0,0,0,0.16)}
+.usage-used{font-size:44px;font-weight:800;letter-spacing:-1.5px;line-height:1}
+.usage-sep{font-size:26px;font-weight:600;opacity:0.7;margin:0 3px}
+.usage-total{font-size:26px;font-weight:600;opacity:0.7}
+.usage-unit{font-size:15px;font-weight:600;margin-left:6px;opacity:0.88;align-self:flex-end;padding-bottom:3px}
+.usage-label{font-size:12px;color:rgba(255,255,255,0.88);margin-top:5px;font-weight:500;letter-spacing:0.02em}
+.progress-track{height:8px;border-radius:9999px;background:rgba(255,255,255,0.28);box-shadow:inset 1.5px 1.5px 3px rgba(0,0,0,0.10),inset -1px -1px 2px rgba(255,255,255,0.18);overflow:hidden;margin-bottom:18px;position:relative;z-index:1}
+.progress-fill{height:100%;width:66.7%;border-radius:9999px;background:linear-gradient(90deg,#FFFFFF 0%,#FFF8F2 60%,#F5E6D0 100%);box-shadow:0 1px 4px rgba(0,0,0,0.14)}
+.my-card-bottom{display:flex;align-items:center;gap:10px;position:relative;z-index:1}
+.btn-use{flex:1;height:42px;font-size:14px}
+.btn-refund{font-size:13px;padding:8px 16px}
+
+/* ===== Section Title ===== */
+.section-title{font-size:18px;font-weight:700;color:var(--text-1);padding:22px 24px 14px;letter-spacing:-.2px;position:relative;z-index:2}
+
+/* ===== Plan Cards ===== */
+.plan-card{
+  margin:0 20px 12px;
+  padding:18px 18px 16px;
+  border-radius:22px;
+  background:rgba(255,255,255,0.52);
+  backdrop-filter:blur(20px) saturate(150%);
+  -webkit-backdrop-filter:blur(20px) saturate(150%);
+  border:1px solid rgba(255,255,255,0.70);
+  box-shadow:var(--neu-out-sm);
+  position:relative;z-index:2;
+  transition:transform var(--dur) var(--ease),box-shadow var(--dur) var(--ease);
+}
+.plan-card:active{transform:scale(0.98)}
+.plan-card::before{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(165deg,rgba(255,255,255,0.22) 0%,rgba(255,255,255,0.05) 30%,transparent 55%);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;padding:0.5px;pointer-events:none}
+.plan-card--featured{
+  border:1.5px solid var(--brand);
+  box-shadow:var(--neu-out-sm),0 0 0 3px var(--brand-subtle),0 6px 20px var(--brand-glow);
+}
+.plan-badge{
+  position:absolute;top:-9px;right:16px;z-index:3;
+  background:linear-gradient(135deg,var(--brand) 0%,var(--brand-mid) 100%);
+  color:#fff;font-size:11px;font-weight:700;
+  padding:4px 12px;border-radius:9999px;
+  box-shadow:0 3px 10px var(--brand-glow),inset 0 1px 1px rgba(255,255,255,0.30);
+  letter-spacing:0.5px;
+}
+.plan-card-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:12px;position:relative;z-index:1}
+.plan-name{font-size:16px;font-weight:700;color:var(--text-1);letter-spacing:-0.01em}
+.plan-price{display:flex;align-items:baseline;gap:1px}
+.plan-price .cur{font-size:14px;color:var(--accent);font-weight:600}
+.plan-price .amt{font-size:26px;color:var(--accent);font-weight:800;letter-spacing:-0.5px;line-height:1}
+.plan-card--featured .plan-price .cur,
+.plan-card--featured .plan-price .amt{color:var(--brand)}
+.plan-benefits{list-style:none;margin:0 0 14px;padding:0;display:flex;flex-direction:column;gap:8px;position:relative;z-index:1}
+.plan-benefits li{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-2);line-height:1.4}
+.plan-benefits li svg{width:16px;height:16px;flex-shrink:0;color:var(--brand);fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.plan-choose{width:100%;height:42px;font-size:14px;position:relative;z-index:1}
+
+/* ===== Chips ===== */
+.chips-wrap{display:flex;flex-wrap:wrap;gap:10px;padding:0 24px 8px;position:relative;z-index:2}
+.chip{
+  padding:8px 16px;border-radius:9999px;font-size:13px;font-weight:600;
+  cursor:pointer;white-space:nowrap;border:none;font-family:var(--font);
+  background:var(--bg-elevated);color:var(--text-2);
+  box-shadow:var(--neu-out-sm);
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease),color var(--dur) var(--ease);
+}
+.chip:active{transform:scale(0.94);box-shadow:var(--neu-in);color:var(--brand)}
+
+/* ===== Bottom Fixed Buy Bar ===== */
+.bottom-bar{
+  position:absolute;bottom:0;left:0;right:0;z-index:60;
+  padding:14px 20px 22px;
+  background:linear-gradient(to top,rgba(242,237,232,0.98) 72%,rgba(242,237,232,0.80) 88%,rgba(242,237,232,0));
+  backdrop-filter:blur(12px) saturate(160%);
+  -webkit-backdrop-filter:blur(12px) saturate(160%);
+}
+.btn-buy{
+  width:100%;height:50px;border-radius:9999px;
+  background:var(--brand-gradient);
+  color:#fff;font-size:16px;font-weight:700;border:none;cursor:pointer;
+  font-family:var(--font);letter-spacing:0.5px;
+  box-shadow:0 8px 22px var(--brand-glow),var(--neu-out-sm),inset 0 1px 1px rgba(255,255,255,0.25);
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
+.btn-buy:active{transform:scale(0.97);box-shadow:var(--neu-in)}
+
+@media (prefers-reduced-motion:reduce){
+  .nav-back,.btn-neu-primary,.btn-neu-secondary,.btn-neu-ghost,.plan-card,.chip,.btn-buy{transition:none}
+}
+</style>
+
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!-- pages/worker-deposit/index.wxml — 师傅保证金页 像素级复刻 worker-deposit.html -->
+<view class="page">
+  <!-- 背景装饰光斑 -->
+  <view class="blob" style="top: -80rpx; right: -120rpx; width: 480rpx; height: 480rpx; background: radial-gradient(circle, var(--brand-worker) 0%, transparent 70%);"></view>
+  <view class="blob" style="top: 720rpx; left: -160rpx; width: 420rpx; height: 420rpx; background: radial-gradient(circle, var(--sage) 0%, transparent 70%);"></view>
+
+  <!-- ===== TOP BACK BAR ===== -->
+  <view class="topbar {{navScrolled ? 'scrolled' : ''}}" style="padding-top: calc({{statusBarHeight}}px + 36rpx);">
+    <view class="back-btn" bindtap="onBack">
+      <image src="{{icons.back}}" mode="aspectFit" class="back-ic" lazy-load="{{false}}" />
+    </view>
+    <text class="topbar-title">保证金</text>
+    <view class="topbar-spacer"></view>
+  </view>
+
+  <scroll-view scroll-y enable-flex class="page-scroll hide-scroll" bindscroll="onScroll" style="padding-bottom: 200rpx;">
+
+    <!-- ===== DEPOSIT BALANCE HERO ===== -->
+    <view class="dep-hero">
+      <text class="dep-hero-label">保证金余额</text>
+      <text class="dep-hero-amount numeric">¥ {{balanceText}}</text>
+      <view class="dep-hero-meta">
+        <view class="status-badge green">
+          <image src="{{icons.check}}" mode="aspectFit" class="status-badge-ic" lazy-load="{{false}}" />
+          <text>{{statusText}}</text>
+        </view>
+        <view class="level-chip">
+          <image src="{{icons.award}}" mode="aspectFit" class="level-chip-ic" lazy-load="{{false}}" />
+          <text>{{levelName}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== CURRENT LEVEL BENEFITS ===== -->
+    <view class="section">
+      <text class="section-title">当前等级权益</text>
+      <view class="card benefit-card">
+        <view class="benefit-row" wx:for="{{benefits}}" wx:key="*this">
+          <view class="benefit-check">
+            <image src="{{icons.checkGreen}}" mode="aspectFit" class="benefit-check-ic" lazy-load="{{false}}" />
+          </view>
+          <text class="benefit-text">{{item}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== DEPOSIT LEVELS ===== -->
+    <view class="section">
+      <text class="section-title">保证金等级</text>
+      <view class="level-list">
+        <view class="level-card {{item.state}}" wx:for="{{levels}}" wx:key="key">
+          <view class="current-corner" wx:if="{{item.state === 'current'}}">当前</view>
+          <view class="level-head">
+            <view class="level-name-block">
+              <text class="level-name">{{item.name}}</text>
+              <text class="level-amount">¥{{item.amount}}</text>
+            </view>
+            <text class="level-tag {{item.tagTone}}">{{item.tagText}}</text>
+          </view>
+          <view class="level-benefits">
+            <view class="level-benefit" wx:for="{{item.benefits}}" wx:for-item="benefit" wx:key="*this">
+              <text>{{benefit}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== DEPOSIT RECORDS ===== -->
+    <view class="section" wx:if="{{records.length}}">
+      <text class="section-title">保证金记录</text>
+      <view class="card record-card">
+        <view class="record-row" wx:for="{{records}}" wx:key="id">
+          <view class="record-icon {{item.iconTone}}">
+            <image src="{{item.iconUrl}}" mode="aspectFit" class="record-ic" lazy-load="{{false}}" />
+          </view>
+          <view class="record-info">
+            <text class="record-title">{{item.title}}</text>
+            <text class="record-time">{{item.time}}</text>
+          </view>
+          <view class="record-right">
+            <text class="record-amount {{item.amountTone}}">{{item.amountText}}</text>
+            <text class="record-status {{item.statusTone}}">{{item.statusText}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+  </scroll-view>
+
+  <!-- ===== BOTTOM FIXED DUAL BUTTONS ===== -->
+  <view class="bottom-actions">
+    <view class="btn-neu-ghost" bindtap="onRefund">
+      <text>申请退还</text>
+    </view>
+    <view class="btn-neu-primary" bindtap="onPay">
+      <image src="{{icons.shield}}" mode="aspectFit" class="btn-ic" lazy-load="{{false}}" />
+      <text>补缴保证金</text>
+    </view>
+  </view>
+
+</view>

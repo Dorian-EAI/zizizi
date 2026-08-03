@@ -1,0 +1,35 @@
+<!-- components/tab-bar/index.wxml
+  Premium Liquid Glass 浮动 TabBar（忠于设计画布）
+  - Liquid Glass 主体：高 blur + 高 saturate + 双层 rim light
+  - 激活态：玻璃胶囊（区别于新拟态凹陷）
+  - 发布按钮：三色渐变凸起圆形
+-->
+<view class="tab-bar {{role === 'worker' ? 'tab-bar-worker' : ''}}">
+  <view class="tab-bar-inner">
+    <block wx:for="{{tabs}}" wx:key="key">
+      <view
+        class="tab-item {{active === item.key ? 'is-active' : ''}} {{item.elevated ? 'is-elevated' : ''}}"
+        data-key="{{item.key}}"
+        data-path="{{item.path}}"
+        bindtap="onTap"
+        hover-class="tab-item-hover"
+        hover-stay-time="80"
+      >
+        <!-- 凸起按钮（发布）-->
+        <view wx:if="{{item.elevated}}" class="elevated-circle">
+          <image src="{{item.iconActiveLight}}" mode="aspectFit" class="elevated-icon" lazy-load="{{false}}" />
+        </view>
+        <!-- 常规 tab 项 -->
+        <block wx:else>
+          <image
+            src="{{active === item.key ? item.iconActive : item.iconSrc}}"
+            mode="aspectFit"
+            class="tab-icon"
+            lazy-load="{{false}}"
+          />
+          <text class="tab-text">{{item.text}}</text>
+        </block>
+      </view>
+    </block>
+  </view>
+</view>

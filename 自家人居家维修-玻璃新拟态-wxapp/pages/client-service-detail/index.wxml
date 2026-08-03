@@ -1,0 +1,183 @@
+<!-- pages/client-service-detail/index.wxml — 服务详情页 玻璃新拟态（像素级复刻 zjrnew.DESIGN） -->
+<view class="page">
+  <!-- 背景装饰光斑 -->
+  <view class="blob" style="top: -40px; right: -60px; width: 280px; height: 280px; background: var(--brand);"></view>
+  <view class="blob" style="top: 360px; left: -80px; width: 240px; height: 240px; background: var(--accent);"></view>
+
+  <scroll-view scroll-y class="page-scroll hide-scroll" style="padding-bottom: 200rpx;">
+
+    <!-- ===== TOP NAV BAR (client 渐变 + 返回 + 标题 + 底部圆角 56rpx) ===== -->
+    <view class="nav-bar" style="padding-top: {{statusBarHeight}}px;">
+      <view class="nav-btn press-scale" bindtap="onBack">
+        <image src="{{icons.back}}" mode="aspectFit" class="nav-btn-icon" lazy-load="{{false}}" />
+      </view>
+      <text class="nav-title">服务详情</text>
+      <view class="nav-btn press-scale" bindtap="onToggleFavorite">
+        <image src="{{isFavorited ? icons.heartActive : icons.heart}}" mode="aspectFit" class="nav-btn-icon" lazy-load="{{false}}" />
+      </view>
+    </view>
+
+    <!-- ===== SERVICE HERO（品牌渐变 + 装饰光斑 + 水印） ===== -->
+    <view class="service-hero">
+      <view class="hero-deco hero-deco-1"></view>
+      <view class="hero-deco hero-deco-2"></view>
+      <view class="hero-deco hero-deco-3"></view>
+      <view class="hero-watermark">
+        <image src="{{icons.droplet}}" mode="aspectFit" class="hero-watermark-icon" lazy-load="{{false}}" />
+      </view>
+      <view class="hero-content">
+        <view class="hero-tag">{{service.category || '官方认证服务'}}</view>
+        <text class="service-name">{{service.name || '防水维修'}}</text>
+        <view class="service-meta">
+          <text class="meta-star">★ {{service.rating || '4.9'}}</text>
+          <text class="meta-dot">·</text>
+          <text>{{service.serviceCount || 128}}次服务</text>
+          <text class="meta-dot">·</text>
+          <text>{{service.responseTime || '3分钟'}}响应</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== PRICE CARD（服务报价） ===== -->
+    <view class="section">
+      <view class="glass-neu-card price-card">
+        <view class="card-title">
+          <view class="title-bar"></view>
+          <text>服务报价</text>
+        </view>
+        <view class="price-list">
+          <view
+            class="price-row {{index === 1 ? 'price-row-selected' : ''}} press-scale"
+            wx:for="{{priceItems}}"
+            wx:key="label"
+          >
+            <view class="price-left">
+              <view class="price-icon">
+                <image src="{{icons.droplet}}" mode="aspectFit" class="price-icon-img" lazy-load="{{false}}" />
+              </view>
+              <view class="price-info">
+                <text class="price-name">{{item.label}}</text>
+                <text class="price-desc" wx:if="{{item.note}}">{{item.note}}</text>
+              </view>
+            </view>
+            <view class="price-right">
+              <view class="price-value">
+                <text class="cur">¥</text>
+                <text class="amt numeric">{{item.amount}}</text>
+              </view>
+              <view class="price-radio">
+                <image src="{{icons.check}}" mode="aspectFit" class="price-radio-check" lazy-load="{{false}}" />
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== SERVICE CONTENT CARD（服务内容） ===== -->
+    <view class="section">
+      <view class="glass-neu-card content-card">
+        <view class="card-title">
+          <view class="title-bar"></view>
+          <text>服务内容</text>
+        </view>
+        <view class="content-list">
+          <view
+            class="content-item press-scale"
+            wx:for="{{steps}}"
+            wx:key="index"
+          >
+            <view class="check-icon">
+              <image src="{{icons.check}}" mode="aspectFit" class="check-icon-img" lazy-load="{{false}}" />
+            </view>
+            <text class="step-text">{{item.title}}</text>
+            <image src="{{icons.arrowDown}}" mode="aspectFit" class="step-arrow" lazy-load="{{false}}" />
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== RECOMMENDED MASTERS（推荐师傅） ===== -->
+    <view class="section">
+      <view class="section-title">
+        <text>推荐师傅</text>
+        <text class="more">查看全部 ›</text>
+      </view>
+      <scroll-view scroll-x class="master-scroll hide-scroll" enable-flex>
+        <view class="master-card press-scale">
+          <view class="master-avatar">
+            <view class="avatar-inner">王</view>
+          </view>
+          <text class="master-name">王师傅</text>
+          <text class="master-stats"><text class="star">★ 4.9</text> · 326次服务</text>
+          <view class="btn-neu-primary master-book press-scale">
+            <text class="master-book-text">预约</text>
+          </view>
+        </view>
+        <view class="master-card press-scale">
+          <view class="master-avatar">
+            <view class="avatar-inner avatar-amber">陈</view>
+          </view>
+          <text class="master-name">陈师傅</text>
+          <text class="master-stats"><text class="star">★ 4.8</text> · 215次服务</text>
+          <view class="btn-neu-primary master-book press-scale">
+            <text class="master-book-text">预约</text>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+
+    <!-- ===== USER REVIEWS（用户评价） ===== -->
+    <view class="section">
+      <view class="section-title">
+        <text>用户评价</text>
+        <text class="more">查看全部 ›</text>
+      </view>
+      <view class="review-list">
+        <view class="glass-neu-card review-card">
+          <view class="review-head">
+            <view class="review-avatar">
+              <view class="avatar-inner">李</view>
+            </view>
+            <view class="review-info">
+              <text class="review-name">李女士</text>
+              <text class="review-stars">★★★★★</text>
+            </view>
+            <text class="review-date">2026-07-15</text>
+          </view>
+          <text class="review-text">师傅很专业，防水做得很细致，施工后没有再渗水，沟通也很顺畅，强烈推荐！</text>
+        </view>
+        <view class="glass-neu-card review-card">
+          <view class="review-head">
+            <view class="review-avatar">
+              <view class="avatar-inner avatar-amber">张</view>
+            </view>
+            <view class="review-info">
+              <text class="review-name">张先生</text>
+              <text class="review-stars">★★★★★</text>
+            </view>
+            <text class="review-date">2026-07-09</text>
+          </view>
+          <text class="review-text">响应很快，三分钟就有师傅接单，价格透明无隐形消费，整体体验非常好。</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- spacer so content clears the fixed CTA bar -->
+    <view class="cta-spacer"></view>
+
+  </scroll-view>
+
+  <!-- ===== BOTTOM FIXED CTA BAR ===== -->
+  <view class="cta-bar">
+    <view class="cta-icon-btn press-scale" bindtap="onContactService">
+      <image src="{{icons.message}}" mode="aspectFit" class="cta-icon-btn-img" lazy-load="{{false}}" />
+    </view>
+    <view class="cta-icon-btn press-scale" bindtap="onToggleFavorite">
+      <image src="{{isFavorited ? icons.heartActive : icons.heart}}" mode="aspectFit" class="cta-icon-btn-img" lazy-load="{{false}}" />
+    </view>
+    <view class="cta-primary press-scale" bindtap="onPublish">
+      <text class="cta-primary-text">立即预约</text>
+    </view>
+  </view>
+</view>

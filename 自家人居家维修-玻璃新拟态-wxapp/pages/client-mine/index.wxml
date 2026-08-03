@@ -1,0 +1,76 @@
+<!-- pages/client-mine/index.wxml — 客户端个人中心 像素级复刻 zjrnew/pages/client-mine.html -->
+<view class="page">
+  <!-- 背景装饰光斑 -->
+  <view class="blob blob-brand" style="top: -80rpx; right: -120rpx; width: 560rpx; height: 560rpx;"></view>
+  <view class="blob blob-accent" style="top: 720rpx; left: -160rpx; width: 480rpx; height: 480rpx;"></view>
+
+  <scroll-view scroll-y class="page-scroll hide-scroll" enable-flex style="padding-bottom: 220rpx;">
+
+    <!-- ===== HERO：活力渐变光晕 + profile-row ===== -->
+    <!-- HTML: padding: max(38px, env(safe-area-inset-top)) 24px 28px; border-radius: 0 0 32px 32px; -->
+    <view class="hero" style="padding-top: calc({{statusBarHeight}}px + 76rpx);">
+      <view class="profile-row">
+        <!-- 头像：avatar-glass 变体（玻璃质感 + 新拟态凸起） -->
+        <view class="avatar avatar-glass">
+          <image src="{{userInfo.avatarUrl}}" mode="aspectFit" class="avatar-img" lazy-load="{{false}}" />
+        </view>
+        <!-- 姓名 + 手机号 -->
+        <view class="profile-info">
+          <text class="profile-name">{{userInfo.name}}</text>
+          <text class="profile-phone">{{userInfo.phone}}</text>
+        </view>
+        <!-- 编辑按钮：玻璃圆形 -->
+        <view class="edit-btn" bindtap="onEditTap">
+          <image src="{{icons.edit}}" mode="aspectFit" class="edit-icon" lazy-load="{{false}}" />
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== Stats Card：独立玻璃卡片，与 hero 重叠 -24px ===== -->
+    <view class="stats-card">
+      <view class="stat-col">
+        <text class="stat-num numeric">{{userInfo.stats.orders}}</text>
+        <text class="stat-label">个订单</text>
+      </view>
+      <view class="stat-col">
+        <text class="stat-num numeric">{{userInfo.stats.reviews}}</text>
+        <text class="stat-label">个评价</text>
+      </view>
+      <view class="stat-col">
+        <text class="stat-num numeric">{{userInfo.stats.favorites}}</text>
+        <text class="stat-label">个收藏</text>
+      </view>
+    </view>
+
+    <!-- ===== 菜单卡片循环（设计画布完整菜单）===== -->
+    <view class="section" wx:for="{{menuSections}}" wx:key="id">
+      <view class="menu-card">
+        <view
+          class="menu-row"
+          wx:for="{{item.items}}"
+          wx:key="key"
+          data-key="{{item.key}}"
+          bindtap="onMenuTap"
+        >
+          <view class="menu-icon-wrap" style="background: {{item.color}};">
+            <image src="{{icons[item.icon] || icons.chevron}}" mode="aspectFit" class="menu-icon" lazy-load="{{false}}" />
+          </view>
+          <text class="menu-label">{{item.label}}</text>
+          <text class="menu-badge" wx:if="{{item.badge}}">{{item.badge}}</text>
+          <image src="{{icons.chevron}}" mode="aspectFit" class="menu-chevron" lazy-load="{{false}}" />
+        </view>
+      </view>
+    </view>
+
+    <!-- 切换到师傅端按钮 -->
+    <view class="section">
+      <view class="switch-role-btn" bindtap="onSwitchRole">
+        <image src="{{icons.refresh}}" mode="aspectFit" class="switch-icon" lazy-load="{{false}}" />
+        <text class="switch-text">切换到师傅端</text>
+      </view>
+    </view>
+
+  </scroll-view>
+
+  <tab-bar id="tabbar" active="mine" />
+</view>

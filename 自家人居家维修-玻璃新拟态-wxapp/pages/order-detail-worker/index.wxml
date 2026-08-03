@@ -1,0 +1,377 @@
+<!-- pages/order-detail-worker/index.wxml — 师傅端订单详情 玻璃新拟态（像素级复刻 worker-order-detail.html） -->
+<view class="page">
+  <!-- 背景装饰光斑：径向渐变（blue-sage 配色） -->
+  <view class="blob" style="top: -80rpx; right: -120rpx; width: 480rpx; height: 480rpx; background: radial-gradient(circle, var(--brand-worker) 0%, transparent 70%);"></view>
+  <view class="blob" style="top: 880rpx; left: -160rpx; width: 420rpx; height: 420rpx; background: radial-gradient(circle, var(--sage) 0%, transparent 70%);"></view>
+
+  <!-- ===== TOP NAV BAR (sticky) ===== -->
+  <view class="nav-bar worker {{navScrolled ? 'scrolled' : ''}}">
+    <view class="nav-icon-btn" bindtap="onBack">
+      <image src="{{icons.back}}" mode="aspectFit" class="nav-icon" lazy-load="{{false}}" />
+    </view>
+    <text class="nav-title">订单详情</text>
+    <view class="nav-icon-btn more-btn">
+      <view class="dot"></view>
+      <view class="dot"></view>
+      <view class="dot"></view>
+    </view>
+  </view>
+
+  <scroll-view scroll-y enable-flex class="page-scroll hide-scroll" bindscroll="onScroll" style="padding-bottom: 220rpx;">
+
+    <!-- ===== ORDER STATUS CARD ===== -->
+    <view class="section">
+      <view class="glass-neu-card status-card">
+        <view class="status-top-bar"></view>
+        <view class="status-card-body">
+          <view class="status-head">
+            <text class="status-chip">{{order.statusText}}</text>
+            <text class="status-eta">{{order.time}}</text>
+          </view>
+          <text class="status-desc">{{statusSub}}</text>
+
+          <!-- Horizontal Progress Timeline -->
+          <view class="timeline" wx:if="{{timeline.length}}">
+            <view class="timeline-line">
+              <view class="timeline-line-fill" style="width: {{timelineFill}}%;"></view>
+            </view>
+            <view class="timeline-nodes">
+              <view class="tl-node" wx:for="{{timeline}}" wx:key="key">
+                <view class="tl-dot {{item.state}}">
+                  <image src="{{icons.check}}" mode="aspectFit" class="tl-dot-check" lazy-load="{{false}}" wx:if="{{item.state === 'done'}}" />
+                  <view class="tl-dot-inner" wx:if="{{item.state === 'active'}}"></view>
+                  <view class="tl-dot-pulse" wx:if="{{item.state === 'active'}}"></view>
+                </view>
+                <text class="tl-label {{item.state}}">{{item.label}}</text>
+                <text class="tl-time">{{item.time}}</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== CUSTOMER INFO CARD ===== -->
+    <view class="section" wx:if="{{order.userName}}">
+      <view class="glass-neu-card worker-card">
+        <view class="avatar-col">
+          <view class="worker-avatar avatar-glass">
+            <image src="{{customerAvatarUrl}}" mode="aspectFit" class="avatar-img" lazy-load="{{false}}" />
+          </view>
+          <view class="verify-badge">
+            <image src="{{icons.check}}" mode="aspectFit" class="verify-ic" lazy-load="{{false}}" />
+            <text>实名认证</text>
+          </view>
+        </view>
+        <view class="worker-info">
+          <view class="worker-name-row">
+            <text class="worker-name">{{order.userName}}</text>
+          </view>
+          <view class="worker-meta">
+            <text class="worker-star">★ {{order.rating || '4.8'}}</text>
+            <text class="meta-dot">·</text>
+            <text>{{order.orderCount || '12'}}次下单</text>
+          </view>
+        </view>
+        <view class="worker-actions">
+          <view class="action-circle" bindtap="onCall">
+            <image src="{{icons.phone}}" mode="aspectFit" class="action-ic" lazy-load="{{false}}" />
+          </view>
+          <view class="action-circle accent" bindtap="onChat">
+            <image src="{{icons.message}}" mode="aspectFit" class="action-ic" lazy-load="{{false}}" />
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== SERVICE INFO CARD ===== -->
+    <view class="section">
+      <view class="glass-neu-card info-card">
+        <text class="card-title">服务信息</text>
+        <view class="info-list">
+          <view class="info-row">
+            <text class="info-label">订单编号</text>
+            <text class="info-value mono">{{order.id}}</text>
+          </view>
+          <view class="info-row">
+            <text class="info-label">服务类型</text>
+            <text class="info-value">{{order.serviceName}}</text>
+          </view>
+          <view class="info-row info-row-icon">
+            <view class="info-label-row">
+              <image src="{{icons.location}}" mode="aspectFit" class="info-ic" lazy-load="{{false}}" />
+              <text class="info-label">服务地址</text>
+            </view>
+            <text class="info-value">{{order.address}}</text>
+          </view>
+          <view class="info-row info-row-icon" wx:if="{{order.time}}">
+            <view class="info-label-row">
+              <image src="{{icons.calendar}}" mode="aspectFit" class="info-ic" lazy-load="{{false}}" />
+              <text class="info-label">预约时间</text>
+            </view>
+            <text class="info-value mono">{{order.time}}</text>
+          </view>
+          <view class="info-row info-row-icon" wx:if="{{order.distance}}">
+            <view class="info-label-row">
+              <image src="{{icons.location}}" mode="aspectFit" class="info-ic" lazy-load="{{false}}" />
+              <text class="info-label">距离</text>
+            </view>
+            <text class="info-value text-brand-worker">{{order.distance}} km</text>
+          </view>
+          <view class="info-desc-block" wx:if="{{order.description}}">
+            <text class="info-desc-label">问题描述</text>
+            <text class="info-desc-text">{{order.description}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== QUOTE INPUT CARD (available 状态) ===== -->
+    <view class="section" wx:if="{{order.status === 'available'}}">
+      <view class="glass-neu-card fee-card">
+        <text class="card-title">提交报价</text>
+        <view class="quote-input-row">
+          <text class="quote-input-label">您的报价</text>
+          <view class="quote-input-wrap">
+            <text class="quote-input-cur">¥</text>
+            <input
+              class="quote-input-field mono"
+              type="number"
+              placeholder="0"
+              placeholder-class="quote-input-ph"
+              value="{{myQuote}}"
+              bindinput="onQuoteInput"
+            />
+          </view>
+        </view>
+        <view class="quote-input-row">
+          <text class="quote-input-label">预计到达</text>
+          <view class="eta-chips">
+            <view
+              class="eta-chip {{myEta === item ? 'active' : ''}}"
+              wx:for="{{etaOptions}}"
+              wx:key="*this"
+              data-eta="{{item}}"
+              bindtap="onEtaSelect"
+            >{{item}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== FEE DETAIL CARD (非 available 状态) ===== -->
+    <view class="section" wx:if="{{order.status !== 'available'}}">
+      <view class="glass-neu-card fee-card">
+        <text class="card-title">报价信息</text>
+        <view class="fee-list">
+          <view class="fee-row">
+            <text class="fee-label">我的报价</text>
+            <text class="fee-value mono">¥{{order.price || myQuote}}</text>
+          </view>
+          <view class="fee-row" wx:if="{{order.eta}}">
+            <text class="fee-label">预计用时</text>
+            <text class="fee-value">{{order.eta}}</text>
+          </view>
+          <view class="fee-row" wx:if="{{order.materialFee}}">
+            <text class="fee-label">材料费</text>
+            <text class="fee-value mono">¥{{order.materialFee}}</text>
+          </view>
+          <view class="fee-divider" wx:if="{{order.platformFee}}"></view>
+          <view class="fee-row fee-row-coupon" wx:if="{{order.platformFee}}">
+            <text class="fee-label">平台抽成</text>
+            <text class="fee-value fee-value-coupon mono">-¥{{order.platformFee}}</text>
+          </view>
+          <view class="fee-total-row">
+            <text class="fee-total-label">预计到手</text>
+            <text class="fee-total mono">¥{{order.income || order.price}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== LBS CHECK-IN CARD ===== -->
+    <view class="section" wx:if="{{order.status === 'accepted' || order.status === 'departing' || order.status === 'arrived' || order.status === 'serving'}}">
+      <view class="glass-neu-card checkin-card">
+        <text class="card-title">服务签到</text>
+        <view class="checkin-list">
+          <!-- 前往服务 -->
+          <view class="checkin-step {{checkin[0].state}}">
+            <view class="checkin-node">
+              <image src="{{icons.check}}" mode="aspectFit" class="checkin-ic" lazy-load="{{false}}" wx:if="{{checkin[0].state === 'done'}}" />
+              <view class="checkin-pulse" wx:if="{{checkin[0].state === 'current'}}"></view>
+            </view>
+            <view class="checkin-body">
+              <view class="checkin-title-row">
+                <text class="checkin-title">前往服务</text>
+                <text class="checkin-status checkin-status-{{checkin[0].state}}">{{checkin[0].statusText}}</text>
+              </view>
+              <text class="checkin-meta">{{checkin[0].meta}}</text>
+            </view>
+          </view>
+          <!-- 到达签到 -->
+          <view class="checkin-step {{checkin[1].state}}">
+            <view class="checkin-node">
+              <image src="{{icons.check}}" mode="aspectFit" class="checkin-ic" lazy-load="{{false}}" wx:if="{{checkin[1].state === 'done'}}" />
+              <view class="checkin-pulse" wx:if="{{checkin[1].state === 'current'}}"></view>
+            </view>
+            <view class="checkin-body">
+              <view class="checkin-title-row">
+                <text class="checkin-title">到达签到</text>
+                <text class="checkin-status checkin-status-{{checkin[1].state}}">{{checkin[1].statusText}}</text>
+              </view>
+              <text class="checkin-meta">{{checkin[1].meta}}</text>
+            </view>
+          </view>
+          <!-- 开工签到 -->
+          <view class="checkin-step {{checkin[2].state}}">
+            <view class="checkin-node">
+              <image src="{{icons.check}}" mode="aspectFit" class="checkin-ic" lazy-load="{{false}}" wx:if="{{checkin[2].state === 'done'}}" />
+              <view class="checkin-pulse" wx:if="{{checkin[2].state === 'current'}}"></view>
+            </view>
+            <view class="checkin-body">
+              <view class="checkin-title-row">
+                <text class="checkin-title">开工签到</text>
+                <text class="checkin-status checkin-status-{{checkin[2].state}}">{{checkin[2].statusText}}</text>
+              </view>
+              <text class="checkin-meta">{{checkin[2].meta}}</text>
+            </view>
+          </view>
+          <!-- 完工签到 -->
+          <view class="checkin-step {{checkin[3].state}}">
+            <view class="checkin-node">
+              <image src="{{icons.check}}" mode="aspectFit" class="checkin-ic" lazy-load="{{false}}" wx:if="{{checkin[3].state === 'done'}}" />
+              <view class="checkin-pulse" wx:if="{{checkin[3].state === 'current'}}"></view>
+              <image src="{{icons.camera}}" mode="aspectFit" class="checkin-ic" lazy-load="{{false}}" wx:if="{{checkin[3].state === 'current'}}" />
+            </view>
+            <view class="checkin-body">
+              <view class="checkin-title-row">
+                <text class="checkin-title">完工签到</text>
+                <text class="checkin-status checkin-status-{{checkin[3].state}}">{{checkin[3].statusText}}</text>
+              </view>
+              <text class="checkin-meta">{{checkin[3].meta}}</text>
+              <view class="checkin-action" wx:if="{{checkin[3].state === 'current'}}">
+                <view class="btn-neu-primary" bindtap="onNextStep">
+                  <image src="{{icons.upload}}" mode="aspectFit" class="btn-ic" lazy-load="{{false}}" />
+                  <text>上传完工照片并签到</text>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== EXTRA FEE APPLICATION CARD (serving 状态) ===== -->
+    <view class="section" wx:if="{{order.status === 'serving'}}">
+      <view class="glass-neu-card extra-fee-card">
+        <text class="card-title">补差价申请</text>
+        <view class="extra-fee-tip">
+          <image src="{{icons.alertTriangle}}" mode="aspectFit" class="extra-fee-tip-ic" lazy-load="{{false}}" />
+          <text class="extra-fee-tip-text">单次补差价不超过原订单50%，单订单最多2次</text>
+        </view>
+        <view class="extra-fee-record" wx:if="{{extraFeeRecord}}">
+          <view class="extra-fee-record-info">
+            <view class="extra-fee-record-title-row">
+              <text class="extra-fee-record-title">{{extraFeeRecord.title}}</text>
+              <view class="extra-fee-badge">
+                <image src="{{icons.check}}" mode="aspectFit" class="extra-fee-badge-ic" lazy-load="{{false}}" />
+                <text>已确认</text>
+              </view>
+            </view>
+            <text class="extra-fee-record-time">{{extraFeeRecord.time}}</text>
+          </view>
+          <text class="extra-fee-amount mono">¥{{extraFeeRecord.amount}}</text>
+        </view>
+        <view class="extra-fee-action">
+          <view class="btn-neu-secondary" bindtap="onApplyExtraFee">
+            <image src="{{icons.plus}}" mode="aspectFit" class="btn-ic" lazy-load="{{false}}" />
+            <text>申请补差价</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== CUSTOMER REVIEW (completed 状态) ===== -->
+    <view class="section" wx:if="{{order.status === 'completed' && order.rating}}">
+      <view class="glass-neu-card review-card">
+        <text class="card-title">客户评价</text>
+        <view class="review-top">
+          <view class="review-avatar">
+            <image src="{{customerAvatarUrl}}" mode="aspectFit" class="avatar-img" lazy-load="{{false}}" />
+          </view>
+          <view class="review-info">
+            <text class="review-name">{{order.userName}}</text>
+            <view class="review-stars">
+              <text class="star {{index < order.rating ? 'filled' : ''}}" wx:for="{{[1,2,3,4,5]}}" wx:key="*this">★</text>
+            </view>
+          </view>
+          <text class="review-time">{{order.createdAt}}</text>
+        </view>
+        <view class="divider"></view>
+        <text class="review-content">服务态度好，技术专业，准时到达，强烈推荐！</text>
+      </view>
+    </view>
+
+  </scroll-view>
+
+  <!-- ===== BOTTOM FIXED ACTION BAR ===== -->
+  <view class="action-bar">
+    <!-- 可抢订单 -->
+    <block wx:if="{{order.status === 'available'}}">
+      <view class="action-btn-secondary" bindtap="onBack">
+        <text>稍后再说</text>
+      </view>
+      <view class="action-btn-primary" bindtap="onSubmitQuote">
+        <text>提交报价</text>
+      </view>
+    </block>
+    <!-- 已接单 · 待出发 -->
+    <block wx:elif="{{order.status === 'accepted'}}">
+      <view class="action-btn-secondary" bindtap="onCall">
+        <image src="{{icons.phone}}" mode="aspectFit" class="action-btn-ic" lazy-load="{{false}}" />
+        <text>联系客户</text>
+      </view>
+      <view class="action-btn-primary" bindtap="onDepart">
+        <image src="{{icons.shield}}" mode="aspectFit" class="action-btn-ic" lazy-load="{{false}}" />
+        <text>立即出发</text>
+      </view>
+    </block>
+    <!-- 位置上报中 -->
+    <block wx:elif="{{order.status === 'departing'}}">
+      <view class="action-btn-secondary" bindtap="onCall">
+        <image src="{{icons.phone}}" mode="aspectFit" class="action-btn-ic" lazy-load="{{false}}" />
+        <text>联系客户</text>
+      </view>
+      <view class="action-btn-primary" bindtap="onContinueReport">
+        <text>继续上报位置</text>
+      </view>
+    </block>
+    <!-- 已到达现场 -->
+    <block wx:elif="{{order.status === 'arrived'}}">
+      <view class="action-btn-secondary" bindtap="onCall">
+        <image src="{{icons.phone}}" mode="aspectFit" class="action-btn-ic" lazy-load="{{false}}" />
+        <text>联系客户</text>
+      </view>
+      <view class="action-btn-primary" bindtap="onStartService">
+        <text>开始服务</text>
+      </view>
+    </block>
+    <!-- 服务中 -->
+    <block wx:elif="{{order.status === 'serving'}}">
+      <view class="action-btn-secondary" bindtap="onCall">
+        <image src="{{icons.phone}}" mode="aspectFit" class="action-btn-ic" lazy-load="{{false}}" />
+        <text>联系客户</text>
+      </view>
+      <view class="action-btn-primary" bindtap="onNextStep">
+        <text>{{nextStepText}}</text>
+      </view>
+    </block>
+    <!-- 已完成 -->
+    <block wx:else>
+      <view class="action-btn-primary full" bindtap="onBack">
+        <text>返回</text>
+      </view>
+    </block>
+  </view>
+
+</view>

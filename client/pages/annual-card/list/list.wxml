@@ -1,0 +1,60 @@
+<view class="container">
+  <view class="section">
+    <view class="section-title">
+      <text class="st-icon">💳</text>
+      <text class="st-text">我的年卡</text>
+    </view>
+    <scroll-view class="my-scroll" scroll-x="{{true}}" wx:if="{{myCards.length}}">
+      <view class="my-card-wrap" wx:for="{{myCards}}" wx:key="id">
+        <view class="my-card">
+          <view class="mc-header">
+            <text class="mc-name">{{item.name}}</text>
+            <text class="mc-tag">已开通</text>
+          </view>
+          <view class="mc-body">
+            <view class="mc-stat">
+              <text class="mc-num">{{item.remaining_times}}</text>
+              <text class="mc-label">剩余次数</text>
+            </view>
+          </view>
+          <view class="mc-footer">
+            <text>有效期至：{{item.expire_time}}</text>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+    <view class="empty-my" wx:else>
+      <text class="empty-my-icon">📭</text>
+      <text class="empty-my-text">您还未开通年卡，选购下方套餐享更多优惠</text>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="section-title">
+      <text class="st-icon">🛒</text>
+      <text class="st-text">购买年卡</text>
+    </view>
+    <view class="tpl-list">
+      <view class="tpl-card" wx:for="{{templates}}" wx:key="id">
+        <view class="tpl-header">
+          <text class="tpl-name">{{item.name}}</text>
+          <text class="tpl-price"><text class="tpl-symbol">¥</text>{{item.price}}<text class="tpl-unit">/年</text></text>
+        </view>
+        <view class="tpl-times">
+          <text class="tpl-times-num">{{item.times}}</text>
+          <text class="tpl-times-label">次服务</text>
+        </view>
+        <view class="tpl-benefits" wx:if="{{item.benefits && item.benefits.length}}">
+          <view class="benefit-item" wx:for="{{item.benefits}}" wx:key="*this" wx:for-item="b">
+            <text class="b-check">✓</text>
+            <text class="b-text">{{b}}</text>
+          </view>
+        </view>
+        <view class="tpl-btn" bindtap="buyCard" data-id="{{item.id}}" data-name="{{item.name}}">立即购买</view>
+      </view>
+    </view>
+    <view class="empty-tpl" wx:if="{{!templates.length && !loading}}">
+      <text>暂无可购买套餐</text>
+    </view>
+  </view>
+</view>

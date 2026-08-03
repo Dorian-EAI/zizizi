@@ -1,0 +1,132 @@
+<!-- 像素级复刻 client-chat.html -->
+<!-- pages/client-chat/index.wxml — AI智能助手聊天页 玻璃新拟态 -->
+<view class="page">
+  <!-- 背景装饰光斑：teal-amber 径向渐变 -->
+  <view class="blob" style="top: -40px; right: -60px; width: 280px; height: 280px; background: radial-gradient(circle, var(--brand) 0%, transparent 70%);"></view>
+  <view class="blob" style="top: 320px; left: -80px; width: 240px; height: 240px; background: radial-gradient(circle, var(--accent) 0%, transparent 70%);"></view>
+
+  <!-- ===== Top Nav Bar ===== -->
+  <view class="nav-bar" style="padding-top: calc({{statusBarHeight}}px + 36rpx);">
+    <view class="nav-back press-neu" bindtap="onBack">
+      <image class="nav-back-icon" src="{{icons.back}}" mode="aspectFit" lazy-load="{{false}}" />
+    </view>
+    <view class="nav-titles">
+      <text class="nav-title">AI智能助手</text>
+      <text class="nav-subtitle">智能问答 · 语音输入</text>
+    </view>
+    <view class="nav-slot press-scale" bindtap="onMore">
+      <image class="nav-slot-icon" src="{{icons.more}}" mode="aspectFit" lazy-load="{{false}}" />
+    </view>
+  </view>
+
+  <!-- ===== Chat Area ===== -->
+  <scroll-view
+    scroll-y
+    enable-flex
+    class="chat-area hide-scroll"
+    scroll-into-view="{{scrollIntoView}}"
+    scroll-with-animation
+  >
+    <!-- Time divider -->
+    <view class="chat-time">{{chatTime || '今天'}}</view>
+
+    <!-- 消息列表 -->
+    <view
+      class="bubble-row {{item.role === 'user' ? 'bubble-row-right' : 'bubble-row-left'}}"
+      wx:for="{{messages}}"
+      wx:key="id"
+      id="msg-{{item.id}}"
+    >
+      <!-- AI/师傅 头像 -->
+      <view class="bubble-avatar" wx:if="{{item.role !== 'user'}}">
+        <image src="{{icons.bot}}" mode="aspectFit" lazy-load="{{false}}" class="bubble-avatar-img" />
+      </view>
+
+      <view class="bubble-group" wx:if="{{item.role !== 'user'}}">
+        <view class="bubble bubble-assistant">
+          <text>{{item.content}}</text>
+        </view>
+        <!-- 嵌入式推荐卡（仅当消息带 rec 字段时显示） -->
+        <view class="rec-service-card" wx:if="{{item.rec}}">
+          <view class="rec-icon">
+            <image src="{{item.rec.icon}}" mode="aspectFit" lazy-load="{{false}}" class="rec-icon-img" />
+          </view>
+          <view class="rec-info">
+            <text class="rec-name">{{item.rec.name}}</text>
+            <text class="rec-meta">{{item.rec.meta}}</text>
+          </view>
+          <view class="btn-neu-primary rec-btn press-neu" catchtap="onBookRec" data-id="{{item.rec.id}}">
+            <text>立即预约</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 用户气泡 -->
+      <view class="bubble bubble-user" wx:if="{{item.role === 'user'}}">
+        <text>{{item.content}}</text>
+      </view>
+    </view>
+
+    <!-- 正在输入提示 -->
+    <view class="bubble-row bubble-row-left" wx:if="{{sending}}">
+      <view class="bubble-avatar">
+        <image src="{{icons.bot}}" mode="aspectFit" lazy-load="{{false}}" class="bubble-avatar-img" />
+      </view>
+      <view class="bubble bubble-assistant">
+        <view class="typing-dots">
+          <view class="typing-dot"></view>
+          <view class="typing-dot"></view>
+          <view class="typing-dot"></view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 快捷服务标签 -->
+    <scroll-view scroll-x enable-flex class="chips-scroll hide-scroll" enhanced show-scrollbar="{{false}}" wx:if="{{quickServices.length}}">
+      <view
+        class="chip press-neu"
+        wx:for="{{quickServices}}"
+        wx:key="key"
+        data-key="{{item.key}}"
+        bindtap="onQuickService"
+      >{{item.name}}</view>
+    </scroll-view>
+
+    <!-- 底部留白，避免输入栏遮挡 -->
+    <view style="height: 60rpx;"></view>
+  </scroll-view>
+
+  <!-- ===== 底部固定：输入栏 ===== -->
+  <view class="input-bar">
+    <!-- 快捷提问 -->
+    <scroll-view scroll-x enable-flex class="quick-questions hide-scroll" enhanced show-scrollbar="{{false}}" wx:if="{{quickQuestions.length}}">
+      <view
+        class="qq-chip press-scale"
+        wx:for="{{quickQuestions}}"
+        wx:key="*this"
+        data-text="{{item}}"
+        bindtap="onQuickTap"
+      >{{item}}</view>
+    </scroll-view>
+
+    <!-- 输入行 -->
+    <view class="input-row">
+      <view class="mic-btn press-neu" bindtap="onMicTap">
+        <image src="{{icons.mic}}" mode="aspectFit" lazy-load="{{false}}" class="mic-icon" />
+      </view>
+      <input
+        class="chat-input-v2"
+        placeholder="描述你的问题..."
+        placeholder-class="input-ph"
+        value="{{inputValue}}"
+        bindinput="onInput"
+        confirm-type="send"
+        bindconfirm="onSend"
+      />
+      <view class="send-btn {{inputValue && !sending ? 'active' : ''}}" bindtap="onSend">
+        <image src="{{icons.send}}" mode="aspectFit" lazy-load="{{false}}" class="send-icon" />
+      </view>
+    </view>
+  </view>
+
+</view>

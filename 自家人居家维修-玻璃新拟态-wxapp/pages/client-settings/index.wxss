@@ -1,0 +1,368 @@
+/* pages/client-settings/index.wxss — 设置 玻璃新拟态
+ * 像素级复刻 client-settings.html
+ * 换算基准：1px = 2rpx（750rpx 设计稿）
+ * 严格忠于 HTML 参考的尺寸、间距、圆角、阴影、渐变透明度
+ */
+
+.page {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  /* HTML .phone: padding-bottom:82px → 164rpx */
+  padding-bottom: 164rpx;
+}
+
+/* ===== Top Nav Bar (sticky) ===== */
+/* HTML .nav-bar: padding:18px 20px;padding-top:max(18px,env)；
+   border-radius:0 0 28px 28px → 0 0 56rpx 56rpx；
+   background 三层径向 + 线性渐变 */
+.nav-bar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* padding-top 由内联 style 动态提供（statusBarHeight + 36rpx） */
+  padding-right: 40rpx;
+  padding-bottom: 36rpx;
+  padding-left: 40rpx;
+  border-radius: 0 0 56rpx 56rpx;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 440rpx 320rpx at 78% 45%, rgba(212, 148, 76, 0.14) 0%, transparent 70%),
+    radial-gradient(ellipse 360rpx 280rpx at 18% 75%, rgba(13, 148, 136, 0.16) 0%, transparent 70%),
+    linear-gradient(135deg, rgba(13, 148, 136, 0.14) 0%, rgba(212, 148, 76, 0.08) 50%, rgba(13, 148, 136, 0.06) 100%);
+}
+
+/* HTML .nav-icon-btn: width:44px;height:44px → 88rpx；border-radius:50%；
+   background:var(--bg-elevated)；box-shadow:var(--neu-out-sm),inset 0 1px 1px rgba(255,255,255,0.45) */
+/* 全局 .nav-icon-btn 已对齐 */
+
+/* HTML .nav-icon-btn svg: width:22px;height:22px → 44rpx */
+.nav-icon {
+  width: 44rpx;
+  height: 44rpx;
+}
+
+/* HTML .nav-title: font-size:17px;font-weight:700;letter-spacing:-0.02em → 34rpx 700 */
+.nav-title {
+  font-size: 34rpx;
+  font-weight: 700;
+  color: var(--text-1);
+  letter-spacing: -0.02em;
+}
+
+/* HTML .nav-placeholder: width:44px;height:44px → 88rpx */
+.nav-placeholder {
+  width: 88rpx;
+  height: 88rpx;
+  flex-shrink: 0;
+}
+
+/* ===== Sections ===== */
+/* HTML .section: padding:0 20px;margin-top:16px → 0 40rpx / 32rpx */
+.section {
+  padding: 0 40rpx;
+  margin-top: 32rpx;
+  position: relative;
+  z-index: 2;
+}
+
+/* HTML .section:first-of-type: margin-top:18px → 36rpx */
+.section:first-of-type {
+  margin-top: 36rpx;
+}
+
+/* ===== Account Preview Card ===== */
+/* HTML .account-card: gap:14px;padding:18px → 28rpx / 36rpx */
+.account-card {
+  display: flex;
+  align-items: center;
+  gap: 28rpx;
+  padding: 36rpx;
+  position: relative;
+}
+
+/* HTML .account-avatar: width:58px;height:58px → 116rpx；box-shadow:var(--neu-in-deep) */
+.account-avatar {
+  width: 116rpx;
+  height: 116rpx;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: var(--bg-elevated);
+  box-shadow: var(--neu-inset-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--brand);
+  position: relative;
+  z-index: 1;
+}
+
+/* HTML .account-avatar.avatar-glass: 玻璃渐变背景 + 多层 inset 高光 */
+.account-avatar.avatar-glass {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.68) 0%, rgba(255, 255, 255, 0.28) 40%, var(--brand-subtle) 78%, rgba(255, 255, 255, 0.18) 100%);
+  backdrop-filter: blur(20rpx) saturate(160%);
+  -webkit-backdrop-filter: blur(20rpx) saturate(160%);
+  border: 1rpx solid rgba(255, 255, 255, 0.75);
+  box-shadow: inset 0 4rpx 6rpx rgba(255, 255, 255, 0.88), inset 0 -2rpx 4rpx rgba(0, 0, 0, 0.04), var(--neu-raised-sm);
+}
+
+/* HTML .account-avatar.avatar-glass::before: 边缘高光 */
+.account-avatar.avatar-glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.48) 0%, rgba(255, 255, 255, 0.12) 35%, transparent 60%);
+  pointer-events: none;
+}
+
+/* HTML .account-avatar svg: width:30px;height:30px → 60rpx */
+.account-avatar-img {
+  width: 60rpx;
+  height: 60rpx;
+  position: relative;
+  z-index: 1;
+}
+
+.account-info {
+  flex: 1;
+  min-width: 0;
+  position: relative;
+  z-index: 1;
+}
+
+/* HTML .account-name: font-size:18px;font-weight:700;margin-bottom:4px → 36rpx 700 / 8rpx */
+.account-name {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: var(--text-1);
+  letter-spacing: -0.01em;
+  margin-bottom: 8rpx;
+  display: block;
+}
+
+/* HTML .account-phone: font-size:13px;font-weight:500 → 26rpx 500 */
+.account-phone {
+  font-size: 26rpx;
+  color: var(--text-2);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  display: block;
+}
+
+/* HTML .account-edit-btn: min-width:56px;height:32px;padding:0 14px → 112rpx / 64rpx / 0 28rpx；
+   font-size:13px;font-weight:600 → 26rpx 600；border-radius:9999px */
+.account-edit-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 112rpx;
+  height: 64rpx;
+  padding: 0 28rpx;
+  background: rgba(255, 255, 255, 0.55);
+  color: var(--brand);
+  border: 1rpx solid rgba(255, 255, 255, 0.70);
+  border-radius: var(--r-pill);
+  font-size: 26rpx;
+  font-weight: 600;
+  font-family: var(--font-body);
+  box-shadow: var(--neu-raised-sm);
+  transition: transform var(--dur-base) var(--spring), box-shadow var(--dur-base) var(--ease), background var(--dur-base) var(--ease);
+  position: relative;
+  z-index: 1;
+}
+
+/* ===== Group Title ===== */
+/* HTML .group-title: font-size:13px;font-weight:600;padding:0 6px;margin-bottom:8px → 26rpx 600 / 0 12rpx / 16rpx */
+.group-title {
+  font-size: 26rpx;
+  color: var(--text-2);
+  font-weight: 600;
+  padding: 0 12rpx;
+  margin-bottom: 16rpx;
+  letter-spacing: 0.01em;
+}
+
+/* ===== Setting Group & Rows ===== */
+/* HTML .setting-group: padding:4px 0 → 8rpx 0 */
+.setting-group {
+  padding: 8rpx 0;
+  position: relative;
+}
+
+/* HTML .setting-row: gap:12px;min-height:56px;padding:8px 18px → 24rpx / 112rpx / 16rpx 36rpx；
+   border-bottom:0.5px → 1rpx */
+.setting-row {
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+  min-height: 112rpx;
+  padding: 16rpx 36rpx;
+  position: relative;
+  z-index: 1;
+  transition: transform var(--dur-base) var(--spring), background var(--dur-base) var(--ease);
+}
+
+.row-hairline {
+  border-bottom: 1rpx solid var(--sep);
+}
+
+.setting-row:active {
+  transform: scale(0.985);
+  background: var(--fill);
+}
+
+/* HTML .row-icon: width:36px;height:36px → 72rpx；border-radius:50%；
+   background:var(--bg-elevated)；box-shadow:var(--neu-out-sm),inset 0 1px 1px rgba(255,255,255,0.45) */
+.row-icon {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: var(--bg-elevated);
+  box-shadow: var(--neu-raised-sm), inset 0 2rpx 2rpx rgba(255, 255, 255, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* HTML .row-icon svg: width:18px;height:18px → 36rpx */
+.row-icon-img {
+  width: 36rpx;
+  height: 36rpx;
+}
+
+.row-icon-brand { color: var(--brand); }
+.row-icon-green { color: var(--green); }
+.row-icon-blue { color: var(--blue); }
+.row-icon-orange { color: var(--orange); }
+
+/* HTML .row-title: font-size:15px;font-weight:500 → 30rpx 500 */
+.row-title {
+  flex: 1;
+  font-size: 30rpx;
+  color: var(--text-1);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+/* HTML .row-tail: gap:6px → 12rpx */
+.row-tail {
+  display: inline-flex;
+  align-items: center;
+  gap: 12rpx;
+  flex-shrink: 0;
+}
+
+/* HTML .row-value: font-size:13px;font-weight:500 → 26rpx 500 */
+.row-value {
+  font-size: 26rpx;
+  color: var(--text-2);
+  font-weight: 500;
+}
+
+/* HTML .mono: font-variant-numeric:tabular-nums;letter-spacing:-0.01em */
+.mono {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+/* HTML .row-arrow: width:16px;height:16px → 32rpx */
+.row-arrow {
+  width: 32rpx;
+  height: 32rpx;
+  color: var(--text-3);
+  flex-shrink: 0;
+}
+
+/* HTML .row-badge-green: font-size:11px;font-weight:600;padding:2px 8px → 22rpx 600 / 4rpx 16rpx */
+.row-badge-green {
+  display: inline-flex;
+  align-items: center;
+  font-size: 22rpx;
+  font-weight: 600;
+  color: var(--green);
+  background: rgba(91, 140, 90, 0.12);
+  padding: 4rpx 16rpx;
+  border-radius: var(--r-pill);
+}
+
+/* ===== Toggle Switch (neumorphic) — 像素级复刻 HTML .toggle ===== */
+/* HTML .toggle: width:44px;height:26px;border-radius:var(--r-pill) → 88rpx x 52rpx */
+.toggle {
+  width: 88rpx;
+  height: 52rpx;
+  border-radius: var(--r-pill);
+  border: none;
+  position: relative;
+  flex-shrink: 0;
+  padding: 0;
+  transition: background var(--dur-base) var(--ease), box-shadow var(--dur-base) var(--ease);
+}
+
+/* HTML .toggle-on: background:var(--brand);
+   box-shadow:inset 0 1px 3px rgba(0,0,0,0.15),0 2px 6px var(--brand-glow) */
+.toggle-on {
+  background: var(--brand);
+  box-shadow: inset 0 2rpx 6rpx rgba(0, 0, 0, 0.15), 0 4rpx 12rpx var(--brand-glow);
+}
+
+/* HTML .toggle-off: background:var(--neu-dark);box-shadow:var(--neu-in) */
+.toggle-off {
+  background: var(--neu-dark);
+  box-shadow: var(--neu-inset);
+}
+
+/* HTML .toggle-thumb: top:3px;left:3px;width:20px;height:20px → 6rpx / 6rpx / 40rpx / 40rpx；
+   background:#fff；box-shadow:0 2px 4px rgba(0,0,0,0.18) */
+.toggle-thumb {
+  position: absolute;
+  top: 6rpx;
+  left: 6rpx;
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.18);
+  transition: transform var(--dur-base) var(--spring);
+}
+
+/* HTML .toggle-on .toggle-thumb: transform:translateX(18px) → 36rpx */
+.toggle-on .toggle-thumb {
+  transform: translateX(36rpx);
+}
+
+.toggle-off .toggle-thumb {
+  transform: translateX(0);
+}
+
+/* ===== Logout Button ===== */
+/* HTML .logout-section: margin-top:24px → 48rpx */
+.logout-section {
+  margin-top: 48rpx;
+}
+
+/* HTML .logout-btn: width:100%;height:50px → 100rpx；font-size:15px;font-weight:600 → 30rpx 600；
+   background:rgba(255,255,255,0.55)；color:var(--red)；border-radius:var(--r-lg) */
+.logout-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100rpx;
+  background: rgba(255, 255, 255, 0.55);
+  color: var(--red);
+  border: 1rpx solid rgba(255, 255, 255, 0.70);
+  border-radius: var(--r-lg);
+  font-size: 30rpx;
+  font-weight: 600;
+  font-family: var(--font-body);
+  letter-spacing: 0.02em;
+  box-shadow: var(--neu-raised-sm);
+  transition: transform var(--dur-base) var(--spring), box-shadow var(--dur-base) var(--ease), background var(--dur-base) var(--ease);
+}

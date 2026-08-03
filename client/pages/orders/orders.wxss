@@ -1,0 +1,330 @@
+/* ============================================================
+ * 订单页 · 玻璃新拟态样式
+ * 匹配 zjrnew/pages/client-orders.html
+ * 1px = 2rpx
+ * ============================================================ */
+
+.page {
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+/* ===== TOP HEADER ===== */
+.top-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.hero {
+  padding: 152rpx 48rpx 48rpx;
+  position: relative;
+  z-index: 1;
+  background:
+    radial-gradient(ellipse 480rpx 400rpx at 75% 40%, rgba(212, 148, 76, 0.32) 0%, transparent 70%),
+    radial-gradient(ellipse 400rpx 320rpx at 20% 80%, rgba(13, 148, 136, 0.24) 0%, transparent 70%),
+    linear-gradient(135deg, rgba(13, 148, 136, 0.28) 0%, rgba(212, 148, 76, 0.20) 50%, rgba(20, 184, 166, 0.12) 100%);
+  border-radius: 0 0 64rpx 64rpx;
+  overflow: hidden;
+}
+
+.greeting-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  z-index: 2;
+}
+
+.greeting-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.greeting-title {
+  font-size: 52rpx;
+  font-weight: 800;
+  color: var(--text-1);
+  letter-spacing: -0.4rpx;
+  line-height: 1.2;
+  font-family: var(--font-serif);
+}
+
+.greeting-subtitle {
+  font-size: 28rpx;
+  color: var(--text-2);
+  margin-top: 8rpx;
+  font-weight: 500;
+}
+
+.search-btn {
+  width: 84rpx;
+  height: 84rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(32rpx);
+  -webkit-backdrop-filter: blur(32rpx);
+  border: 1rpx solid rgba(255, 255, 255, 0.30);
+  box-shadow: inset 0 2rpx 4rpx rgba(255, 255, 255, 0.30);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-1);
+  transition: transform 0.2s var(--spring), background 0.2s var(--ease);
+}
+
+.search-btn:active {
+  transform: scale(0.85);
+  background: rgba(255, 255, 255, 0.32);
+}
+
+.search-btn-svg {
+  width: 44rpx;
+  height: 44rpx;
+  opacity: 0.7;
+}
+
+/* ===== Filter Tabs ===== */
+.filter-tabs {
+  margin: -36rpx 40rpx 0;
+  background: rgba(255, 255, 255, 0.52);
+  backdrop-filter: blur(40rpx) saturate(150%);
+  -webkit-backdrop-filter: blur(40rpx) saturate(150%);
+  border: 2rpx solid rgba(255, 255, 255, 0.70);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--neu-out-md), 0 12rpx 56rpx rgba(0, 0, 0, 0.06), 0 0 0 2rpx rgba(44, 40, 36, 0.05);
+  padding: 16rpx;
+  display: flex;
+  gap: 12rpx;
+  position: relative;
+  z-index: 10;
+}
+
+.filter-pill {
+  flex: 1;
+  text-align: center;
+  padding: 20rpx 0;
+  border-radius: var(--radius-sm);
+  font-size: 27rpx;
+  font-weight: 600;
+  color: var(--text-2);
+  white-space: nowrap;
+  transition: transform 0.2s var(--spring), all 0.2s var(--ease);
+  background: var(--bg-elevated);
+  box-shadow: var(--neu-out-sm), inset 0 2rpx 2rpx rgba(255, 255, 255, 0.45);
+  font-family: var(--font-serif);
+}
+
+.filter-pill:active {
+  transform: scale(0.94);
+}
+
+.filter-pill.active {
+  background: rgba(13, 148, 136, 0.15);
+  box-shadow: inset 4rpx 4rpx 10rpx var(--neu-dark), inset -4rpx -4rpx 10rpx var(--neu-light);
+  color: var(--brand);
+}
+
+/* ===== ORDER LIST ===== */
+.order-list {
+  position: relative;
+  z-index: 2;
+  padding: 40rpx 40rpx 0;
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+}
+
+.order-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(40rpx) saturate(150%);
+  -webkit-backdrop-filter: blur(40rpx) saturate(150%);
+  border: 2rpx solid rgba(255, 255, 255, 0.70);
+  border-radius: var(--radius-lg);
+  padding: 32rpx;
+  box-shadow:
+    var(--neu-out-md),
+    0 12rpx 56rpx rgba(0, 0, 0, 0.06),
+    0 0 0 2rpx rgba(44, 40, 36, 0.05),
+    0 4rpx 16rpx rgba(13, 148, 136, 0.04);
+  transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
+  position: relative;
+  overflow: hidden;
+}
+
+.order-card:active {
+  box-shadow: var(--neu-in-deep);
+  transform: scale(0.98);
+}
+
+/* Card Top */
+.card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24rpx;
+  position: relative;
+  z-index: 1;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 12rpx;
+  padding: 8rpx 20rpx 8rpx 16rpx;
+  border-radius: var(--radius-full);
+  font-size: 24rpx;
+  font-weight: 600;
+  position: relative;
+}
+
+.badge-dot {
+  width: 12rpx;
+  height: 12rpx;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+}
+
+.badge-pending {
+  background: rgba(212, 148, 76, 0.14);
+  color: var(--orange);
+}
+
+.badge-bidding {
+  background: rgba(196, 83, 58, 0.14);
+  color: var(--red);
+}
+
+.badge-serving {
+  background: rgba(90, 143, 173, 0.14);
+  color: var(--blue);
+}
+
+.badge-done {
+  background: rgba(91, 140, 90, 0.14);
+  color: var(--green);
+}
+
+.badge-review {
+  background: rgba(212, 148, 76, 0.14);
+  color: var(--orange);
+}
+
+.order-date {
+  font-size: 24rpx;
+  color: var(--text-3);
+  font-variant-numeric: tabular-nums;
+  font-family: var(--font-serif);
+}
+
+/* Order Title */
+.order-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: var(--text-1);
+  letter-spacing: -0.2rpx;
+  margin-bottom: 16rpx;
+  line-height: 1.3;
+  font-family: var(--font-serif);
+}
+
+/* Order Address */
+.order-address {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+  font-size: 26rpx;
+  color: var(--text-2);
+  line-height: 1.4;
+}
+
+.address-svg {
+  width: 28rpx;
+  height: 28rpx;
+  flex-shrink: 0;
+  opacity: 0.5;
+}
+
+.address-text {
+  font-size: 26rpx;
+  color: var(--text-2);
+  flex: 1;
+}
+
+/* Separator */
+.card-sep {
+  height: 1rpx;
+  background: var(--border-subtle);
+  margin: 28rpx -32rpx;
+  position: relative;
+  z-index: 1;
+}
+
+/* Card Bottom */
+.card-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20rpx;
+  position: relative;
+  z-index: 1;
+}
+
+.bottom-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4rpx;
+  min-width: 0;
+}
+
+.info-main {
+  font-size: 26rpx;
+  color: var(--text-2);
+  font-weight: 500;
+}
+
+.info-price {
+  font-size: 30rpx;
+  color: var(--accent);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  font-family: var(--font-serif);
+}
+
+.btn-icon {
+  width: 28rpx;
+  height: 28rpx;
+  margin-right: 10rpx;
+}
+
+/* ===== Empty / Loading ===== */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32rpx;
+  padding: 160rpx 0;
+}
+
+.empty-icon-text {
+  font-size: 80rpx;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: var(--text-2);
+}
+
+.loading {
+  text-align: center;
+  padding: 80rpx;
+  color: var(--text-2);
+  font-size: 26rpx;
+}
+
+/* ===== Tabbar placeholder ===== */
+.tabbar-placeholder {
+  height: 180rpx;
+}

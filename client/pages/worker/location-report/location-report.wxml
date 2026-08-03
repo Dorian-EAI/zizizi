@@ -1,0 +1,97 @@
+<view class="page">
+  <view class="nav-bar">
+    <view class="nav-icon-btn" bindtap="onBack">
+      <image class="nav-icon" src="/assets/svg/arrow-left.svg" mode="aspectFit"></image>
+    </view>
+    <text class="nav-title">位置上报</text>
+    <view class="nav-icon-btn nav-placeholder-btn">
+      <image class="nav-icon-hidden" src="/assets/svg/arrow-left.svg" mode="aspectFit"></image>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="location-report-bar">
+      <view class="report-dot">
+        <view class="report-pulse"></view>
+      </view>
+      <text class="report-text">位置上报中 · 每15秒更新</text>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="location-info-card">
+      <view class="location-info-head">
+        <text class="location-info-title">当前位置</text>
+        <text class="location-coords mono">{{location.coords || '39.9042, 116.4074'}}</text>
+      </view>
+      <view class="location-address-row">
+        <image class="location-ic" src="/assets/svg/location.svg" mode="aspectFit"></image>
+        <text class="location-address">{{location.address || '北京市朝阳区建国路88号'}}</text>
+      </view>
+      <view class="location-update">
+        <image class="update-ic" src="/assets/svg/clock.svg" mode="aspectFit"></image>
+        <text>最近上报：<text class="mono">{{location.update_time || '10:35:22'}}</text></text>
+      </view>
+      <view class="location-map-placeholder" bindtap="onOpenMap">
+        <image class="map-bg" src="/assets/svg/location.svg" mode="aspectFit"></image>
+        <view class="map-pin"></view>
+      </view>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="glass-neu-card order-info-card">
+      <text class="card-title">订单信息</text>
+      <view class="order-info-list">
+        <view class="order-info-row">
+          <view class="order-info-label">
+            <image class="label-ic" src="/assets/svg/wrench.svg" mode="aspectFit"></image>
+            <text>服务类型</text>
+          </view>
+          <text class="order-info-value">{{order.service_type || '防水维修'}}</text>
+        </view>
+        <view class="order-info-row">
+          <view class="order-info-label">
+            <image class="label-ic" src="/assets/svg/user.svg" mode="aspectFit"></image>
+            <text>客户信息</text>
+          </view>
+          <text class="order-info-value">{{order.customer || '王女士 138****8888'}}</text>
+        </view>
+        <view class="order-info-row">
+          <view class="order-info-label">
+            <image class="label-ic" src="/assets/svg/location.svg" mode="aspectFit"></image>
+            <text>服务地址</text>
+          </view>
+          <text class="order-info-value">{{order.address || '北京市朝阳区建国路88号'}}</text>
+        </view>
+        <view class="order-info-row">
+          <view class="order-info-label">
+            <image class="label-ic" src="/assets/svg/calendar.svg" mode="aspectFit"></image>
+            <text>预约时间</text>
+          </view>
+          <text class="order-info-value mono">{{order.appoint_time || '今天 15:00-18:00'}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="location-actions">
+      <view class="action-row">
+        <view class="action-btn-secondary" bindtap="onCallClient">
+          <image class="action-ic" src="/assets/svg/phone.svg" mode="aspectFit"></image>
+          <text>联系客户</text>
+        </view>
+        <view class="action-btn-secondary" bindtap="onOpenNav">
+          <image class="action-ic" src="/assets/svg/location.svg" mode="aspectFit"></image>
+          <text>导航前往</text>
+        </view>
+      </view>
+      <view class="action-btn-primary" bindtap="onArrive">
+        <image class="action-ic" src="/assets/svg/location.svg" mode="aspectFit"></image>
+        <text>我已到达</text>
+      </view>
+      <text class="location-note">到达后将自动停止位置上报，并进入服务签到流程。</text>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,134 @@
+<!-- 像素级复刻 client-quote-list.html -->
+<!-- pages/client-quote-list/index.wxml — 师傅报价列表 玻璃新拟态 -->
+<view class="page">
+  <!-- 背景装饰光斑：teal-amber 径向渐变 -->
+  <view class="blob" style="top: -40px; right: -60px; width: 280px; height: 280px; background: radial-gradient(circle, var(--brand) 0%, transparent 70%);"></view>
+  <view class="blob" style="top: 320px; left: -80px; width: 240px; height: 240px; background: radial-gradient(circle, var(--accent) 0%, transparent 70%);"></view>
+
+  <!-- ===== TOP NAV BAR (sticky) ===== -->
+  <view class="nav-bar" style="padding-top: calc({{statusBarHeight}}px + 36rpx);">
+    <view class="nav-icon-btn press-neu" bindtap="onBack">
+      <image class="nav-icon" src="{{icons.back}}" mode="aspectFit" lazy-load="{{false}}" />
+    </view>
+    <text class="nav-title">师傅报价</text>
+    <view class="nav-spacer"></view>
+  </view>
+
+  <!-- ===== ORDER SUMMARY CARD ===== -->
+  <view class="summary-wrap">
+    <view class="glass-neu-card summary-card">
+      <view class="summary-top">
+        <view class="summary-svc">
+          <view class="svc-icon">
+            <image src="{{icons.service}}" mode="aspectFit" lazy-load="{{false}}" class="svc-icon-img" />
+          </view>
+          <text class="svc-name">{{serviceName || '维修服务'}}</text>
+        </view>
+        <text class="status-chip">竞价中</text>
+      </view>
+      <text class="summary-desc">{{serviceDesc || '卫生间墙面渗水'}}</text>
+      <view class="summary-count">
+        <image src="{{icons.count}}" mode="aspectFit" lazy-load="{{false}}" class="count-icon" />
+        <text>已有 {{biddings.length}} 位师傅报价</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- ===== FILTER / SORT BAR ===== -->
+  <scroll-view scroll-x enable-flex class="sort-wrap hide-scroll" enhanced show-scrollbar="{{false}}">
+    <view class="sort-scroll">
+      <view
+        class="sort-chip {{sortKey === item.key ? 'sort-active' : ''}} press-neu"
+        wx:for="{{sortOptions}}"
+        wx:key="key"
+        data-key="{{item.key}}"
+        bindtap="onSortTap"
+      >{{item.name}}</view>
+    </view>
+  </scroll-view>
+
+  <!-- ===== QUOTE CARD LIST ===== -->
+  <view class="quote-list" wx:if="{{biddings.length > 0}}">
+    <view
+      class="glass-neu-card quote-card press-card"
+      wx:for="{{biddings}}"
+      wx:key="id"
+    >
+      <text class="recommend-badge" wx:if="{{index === 0}}">推荐</text>
+
+      <!-- Quote Top Row -->
+      <view class="quote-top">
+        <view class="avatar-inset">
+          <image src="{{item.avatarUrl}}" mode="aspectFit" lazy-load="{{false}}" class="avatar-img" />
+        </view>
+        <view class="worker-info">
+          <view class="worker-name-row">
+            <text class="worker-name">{{item.workerName}}</text>
+            <view class="verify-badge">
+              <image src="{{icons.verify}}" mode="aspectFit" lazy-load="{{false}}" class="verify-icon" />
+              <text>认证</text>
+            </view>
+          </view>
+          <view class="worker-rating">
+            <image src="{{icons.star}}" mode="aspectFit" lazy-load="{{false}}" class="rating-icon" />
+            <text>{{item.ratingText}}</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- Quote Middle Row -->
+      <view class="quote-mid">
+        <view class="quote-price">
+          <text class="currency">¥</text>
+          <text class="amount numeric">{{item.priceText}}</text>
+        </view>
+        <text class="quote-note">{{item.message || '含材料费，保修1年'}}</text>
+      </view>
+
+      <!-- Quote Meta Row -->
+      <view class="quote-meta">
+        <view class="meta-item">
+          <image src="{{icons.location}}" mode="aspectFit" lazy-load="{{false}}" class="meta-icon" />
+          <text>{{item.distanceText}}</text>
+        </view>
+        <text class="meta-dot">·</text>
+        <text class="meta-item">{{item.serviceCountText}}</text>
+        <text class="meta-dot">·</text>
+        <text class="meta-item meta-arrival">预计 {{item.etaText}} 到达</text>
+      </view>
+
+      <!-- Quote Bottom Row -->
+      <view class="quote-bottom">
+        <view class="btn-neu-secondary quote-secondary press-neu" catchtap="onViewWorker" data-id="{{item.id}}">
+          <text>查看主页</text>
+        </view>
+        <view class="btn-neu-primary quote-primary press-neu" catchtap="onSelectTap" data-id="{{item.id}}">
+          <image src="{{icons.check}}" mode="aspectFit" lazy-load="{{false}}" class="btn-icon" />
+          <text>选择师傅</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- ===== 空态 ===== -->
+  <view class="empty" wx:else>
+    <view class="empty-icon neu-icon-inset">
+      <image src="{{icons.empty}}" mode="aspectFit" lazy-load="{{false}}" class="empty-img" />
+    </view>
+    <text class="empty-text">暂无师傅报价</text>
+    <text class="empty-sub">请耐心等待师傅接单</text>
+  </view>
+
+  <!-- ===== BOTTOM SAFETY TIP CARD ===== -->
+  <view class="safety-wrap" wx:if="{{biddings.length > 0}}">
+    <view class="glass-neu-card safety-card">
+      <view class="safety-icon">
+        <image src="{{icons.safety}}" mode="aspectFit" lazy-load="{{false}}" class="safety-icon-img" />
+      </view>
+      <text class="safety-text">平台担保交易，确认服务完成后再付款</text>
+    </view>
+  </view>
+
+  <view class="safe-bottom" style="height: 40rpx;"></view>
+
+</view>

@@ -1,0 +1,104 @@
+<!-- 像素级复刻 client-service.html -->
+<!-- pages/search/index.wxml — 客服中心 玻璃新拟态 -->
+<view class="page">
+  <!-- 背景装饰光斑 -->
+  <view class="blob blob-1"></view>
+  <view class="blob blob-2"></view>
+
+  <!-- ===== Sub Header ===== -->
+  <view class="sub-header" style="padding-top: calc({{statusBarHeight}}px + 16rpx);">
+    <view class="back-row">
+      <view class="back-btn press-neu" bindtap="onBack">
+        <image class="back-icon" src="{{icons.back}}" mode="aspectFit" lazy-load="{{false}}" />
+      </view>
+      <text class="back-title">客服中心</text>
+      <view class="back-spacer"></view>
+    </view>
+  </view>
+
+  <!-- ===== 在线服务卡片 ===== -->
+  <view class="online-card glass-neu-card press-card" bindtap="onConsult">
+    <view class="online-icon online-icon-teal">
+      <image class="online-icon-img" src="{{icons.chat}}" mode="aspectFit" lazy-load="{{false}}" />
+    </view>
+    <view class="online-info">
+      <text class="online-name">在线客服</text>
+      <text class="online-sub">7x24小时在线</text>
+      <text class="online-sub">平均响应30秒</text>
+    </view>
+    <view class="btn-consult btn-neu-primary" catchtap="onConsult">
+      <text class="btn-consult-text">立即咨询</text>
+    </view>
+  </view>
+
+  <view class="online-card glass-neu-card press-card" bindtap="onCall">
+    <view class="online-icon online-icon-amber">
+      <image class="online-icon-img" src="{{icons.phone}}" mode="aspectFit" lazy-load="{{false}}" />
+    </view>
+    <view class="online-info">
+      <text class="online-name">客服热线</text>
+      <text class="hotline-num">400-888-0000</text>
+      <text class="online-sub">工作时间 8:00-22:00</text>
+    </view>
+    <view class="btn-call btn-neu-secondary" catchtap="onCall">
+      <image class="btn-call-icon" src="{{icons.phone}}" mode="aspectFit" lazy-load="{{false}}" />
+      <text class="btn-call-text">拨打</text>
+    </view>
+  </view>
+
+  <!-- ===== 我的工单 ===== -->
+  <view class="section-header">
+    <text class="section-title">我的工单</text>
+    <view class="section-link press-neu" bindtap="onNewTicket">
+      <image class="section-link-icon" src="{{icons.plus}}" mode="aspectFit" lazy-load="{{false}}" />
+      <text class="section-link-text">提交工单</text>
+    </view>
+  </view>
+
+  <!-- 筛选标签 -->
+  <view class="pills">
+    <view class="pill {{activeFilter === 'all' ? 'pill-active' : ''}}" data-filter="all" bindtap="onFilter">全部</view>
+    <view class="pill {{activeFilter === 'processing' ? 'pill-active' : ''}}" data-filter="processing" bindtap="onFilter">进行中</view>
+    <view class="pill {{activeFilter === 'resolved' ? 'pill-active' : ''}}" data-filter="resolved" bindtap="onFilter">已解决</view>
+  </view>
+
+  <!-- 工单列表 -->
+  <block wx:for="{{filteredTickets}}" wx:key="id">
+    <view class="ticket-card glass-neu-card press-card" data-id="{{item.id}}" bindtap="onTicketTap">
+      <view class="ticket-top">
+        <text class="type-badge type-{{item.typeClass}}">{{item.typeLabel}}</text>
+        <text class="status-badge status-{{item.statusClass}}">{{item.statusLabel}}</text>
+      </view>
+      <text class="ticket-title">{{item.title}}</text>
+      <view class="ticket-foot">
+        <text class="ticket-no">#{{item.no}}</text>
+        <text class="ticket-dot">·</text>
+        <text class="ticket-time">{{item.time}}</text>
+        <view class="ticket-view">
+          <text class="ticket-view-text">查看</text>
+          <image class="ticket-view-icon" src="{{icons.chevronRight}}" mode="aspectFit" lazy-load="{{false}}" />
+        </view>
+      </view>
+    </view>
+  </block>
+
+  <!-- ===== 常见问题 ===== -->
+  <text class="faq-section-title">常见问题</text>
+  <view class="faq-card glass-neu-card">
+    <view class="faq-item" wx:for="{{faqList}}" wx:key="id" data-id="{{item.id}}" bindtap="onFaqTap">
+      <text class="faq-q">{{item.question}}</text>
+      <image class="faq-arrow" src="{{icons.chevronDown}}" mode="aspectFit" lazy-load="{{false}}" />
+    </view>
+  </view>
+
+  <!-- 底部留白 -->
+  <view class="bottom-spacer"></view>
+
+  <!-- ===== 底部固定提交按钮 ===== -->
+  <view class="bottom-bar">
+    <view class="btn-submit btn-neu-primary" bindtap="onNewTicket">
+      <text class="btn-submit-text">提交工单</text>
+    </view>
+  </view>
+
+</view>

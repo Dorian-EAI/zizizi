@@ -1,0 +1,132 @@
+<!-- 像素级复刻 client-feedback.html -->
+<view class="page">
+  <!-- 背景装饰光斑：teal-amber 径向渐变 -->
+  <view class="blob" style="top:-80rpx;right:-120rpx;width:560rpx;height:560rpx;background:radial-gradient(circle, var(--brand) 0%, transparent 70%);"></view>
+  <view class="blob" style="top:760rpx;left:-160rpx;width:480rpx;height:480rpx;background:radial-gradient(circle, var(--accent) 0%, transparent 70%);"></view>
+
+  <scroll-view scroll-y class="page-scroll hide-scroll" style="padding-bottom:200rpx;">
+
+    <!-- ===== Top Nav Bar（HTML: nav-bar 返回栏，下圆角 28px → 56rpx） ===== -->
+    <view class="nav-bar" style="padding-top:calc({{statusBarHeight}}px + 36rpx);">
+      <view class="back-btn press-scale" bindtap="onBack">
+        <image src="{{icons.back}}" mode="aspectFit" class="back-btn-icon" lazy-load="{{false}}" />
+      </view>
+      <text class="nav-title">意见反馈</text>
+      <view class="nav-placeholder"></view>
+    </view>
+
+    <!-- ===== 反馈类型（HTML: .section + .section-title + .chips-row） ===== -->
+    <view class="section">
+      <view class="section-title">反馈类型</view>
+      <view class="chips-row">
+        <view
+          class="chip {{selectedType === item.key ? 'chip-active' : ''}} press-scale"
+          wx:for="{{types}}"
+          wx:key="key"
+          data-key="{{item.key}}"
+          bindtap="onTypeTap"
+        >{{item.name}}</view>
+      </view>
+    </view>
+
+    <!-- ===== 问题描述（HTML: .glass-card + .textarea + .textarea-foot） ===== -->
+    <view class="section">
+      <view class="section-title">问题描述</view>
+      <view class="glass-card">
+        <textarea
+          class="textarea"
+          placeholder="请详细描述你的问题或建议，至少10字..."
+          placeholder-class="textarea-ph"
+          maxlength="{{maxContent}}"
+          value="{{content}}"
+          bindinput="onContentInput"
+          auto-height
+        />
+        <view class="textarea-foot">
+          <text class="textarea-tip">真实客观的描述有助于我们更快处理</text>
+          <text class="textarea-count">{{contentCount}}/{{maxContent}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== 上传图片（HTML: .upload-row + .upload-thumb / .upload-add） ===== -->
+    <view class="section">
+      <view class="section-title">上传图片（选填）</view>
+      <view class="upload-row">
+        <!-- 已上传缩略图 -->
+        <view class="upload-thumb" wx:for="{{images}}" wx:key="*this" data-src="{{item}}" bindtap="onPreviewImage">
+          <image src="{{item}}" mode="aspectFill" class="upload-thumb-img" lazy-load="{{false}}" />
+          <view class="upload-del press-scale" catchtap="onRemoveImage" data-index="{{index}}">
+            <image src="{{icons.close}}" mode="aspectFit" class="upload-del-icon" lazy-load="{{false}}" />
+          </view>
+        </view>
+        <!-- 添加图片占位 -->
+        <view class="upload-add press-scale" wx:if="{{images.length < maxImages}}" bindtap="onChooseImage">
+          <image src="{{icons.plus}}" mode="aspectFit" class="upload-add-icon" lazy-load="{{false}}" />
+          <text class="upload-add-text">添加图片</text>
+        </view>
+      </view>
+      <view class="upload-tip">最多{{maxImages}}张，每张不超过5MB</view>
+    </view>
+
+    <!-- ===== 联系方式（HTML: .glass-card.input-card + .input-icon + .text-input） ===== -->
+    <view class="section">
+      <view class="section-title">联系方式（选填）</view>
+      <view class="glass-card input-card">
+        <image src="{{icons.phone}}" mode="aspectFit" class="input-icon" lazy-load="{{false}}" />
+        <input
+          class="text-input"
+          type="tel"
+          inputmode="numeric"
+          maxlength="11"
+          placeholder="便于我们回复你"
+          placeholder-class="text-input-ph"
+          value="{{phone}}"
+          bindinput="onPhoneInput"
+        />
+      </view>
+    </view>
+
+    <!-- ===== 历史反馈（HTML: .history-card 列表） ===== -->
+    <view class="section" wx:if="{{history.length > 0}}">
+      <view class="section-title">历史反馈</view>
+
+      <view
+        class="history-card press-card"
+        wx:for="{{history}}"
+        wx:key="id"
+        data-id="{{item.id}}"
+        bindtap="onHistoryToggle"
+      >
+        <view class="history-top">
+          <view class="type-badge {{item.badgeClass || 'type-badge-teal'}}">{{item.typeText || item.type}}</view>
+          <view class="status-badge {{item.status === 'resolved' || item.status === 'replied' ? 'status-replied' : 'status-pending'}}">{{item.statusText || item.status}}</view>
+        </view>
+        <view class="history-summary">{{item.content}}</view>
+        <view class="history-foot">
+          <text class="history-time">{{item.createdAt}}</text>
+          <view class="history-arrow">
+            <text>{{item.reply ? '查看回复' : '查看详情'}}</text>
+            <image src="{{icons.chevronRight}}" mode="aspectFit" class="history-arrow-icon" lazy-load="{{false}}" />
+          </view>
+        </view>
+        <!-- 展开的官方回复 -->
+        <block wx:if="{{expandedId === item.id && item.reply}}">
+          <view class="divider"></view>
+          <view class="history-reply">
+            <text class="reply-label">官方回复</text>
+            <text class="reply-text">{{item.reply}}</text>
+          </view>
+        </block>
+      </view>
+    </view>
+
+  </scroll-view>
+
+  <!-- ===== 底部固定提交按钮（HTML: .submit-bar + .btn-submit） ===== -->
+  <view class="submit-bar safe-bottom">
+    <view class="btn-submit press-scale {{submitting ? 'disabled' : ''}}" bindtap="onSubmit">
+      <text class="btn-submit-text">{{submitting ? '提交中...' : '提交反馈'}}</text>
+    </view>
+  </view>
+</view>

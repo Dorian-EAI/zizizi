@@ -1,0 +1,579 @@
+/* pages/client-insurance-claim/index.wxss — 理赔申请 像素级复刻 client-insurance-claim.html
+ * 换算基准：1px = 2rpx（750rpx 设计稿）
+ * 严格忠于 HTML 参考的尺寸、间距、圆角、阴影、渐变透明度
+ */
+
+/* ===== Page 容器 ===== */
+.page {
+  position: relative;
+  min-height: 100vh;
+}
+
+/* ===== Top Nav Bar（HTML .nav-bar：sticky, 下圆角 28px → 56rpx） ===== */
+/* HTML: background radial + linear gradient; position:sticky; top:0; z-index:50;
+ * display:flex; align-items:center; justify-content:space-between;
+ * padding:18px 20px; padding-top:max(18px,env); border-radius:0 0 28px 28px; overflow:hidden */
+.nav-bar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 36rpx 40rpx;
+  border-radius: 0 0 56rpx 56rpx;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 440rpx 320rpx at 78% 45%, rgba(212, 148, 76, 0.14) 0%, transparent 70%),
+    radial-gradient(ellipse 360rpx 280rpx at 18% 75%, rgba(13, 148, 136, 0.16) 0%, transparent 70%),
+    linear-gradient(135deg, rgba(13, 148, 136, 0.14) 0%, rgba(212, 148, 76, 0.08) 50%, rgba(13, 148, 136, 0.06) 100%);
+}
+/* HTML .nav-icon-btn: 44x44; circle; border:none; bg bg-elevated;
+ * neu-out-sm + inset 0 1px 1px rgba(255,255,255,0.45); flex center; color text-1 */
+.nav-icon-btn {
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: 50%;
+  border: none;
+  background: var(--bg-elevated);
+  box-shadow: var(--neu-raised-sm), inset 0 2rpx 2rpx rgba(255, 255, 255, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-1);
+  flex-shrink: 0;
+  transition: transform var(--dur-base) var(--spring), box-shadow var(--dur-base) var(--ease);
+}
+.nav-icon-btn:active {
+  box-shadow: var(--neu-inset);
+  transform: scale(0.94);
+}
+/* HTML .nav-icon-btn svg: 22x22 */
+.nav-icon-btn-icon {
+  width: 44rpx;
+  height: 44rpx;
+  display: inline-block;
+}
+/* HTML .nav-title: 17px / 700 / -.02em */
+.nav-title {
+  font-size: 34rpx;
+  font-weight: 700;
+  color: var(--text-1);
+  letter-spacing: -0.4rpx;
+}
+/* HTML .nav-spacer: 44px */
+.nav-spacer {
+  width: 88rpx;
+  flex-shrink: 0;
+}
+
+/* ===== Section（HTML .section: padding:0 20px; margin-top:16px; z-index:2） ===== */
+.section {
+  padding: 0 40rpx;
+  margin-top: 32rpx;
+  position: relative;
+  z-index: 2;
+}
+.section:first-of-type {
+  margin-top: 36rpx;
+}
+/* HTML .section-title: 18px / 700 / padding:4px 0 14px / -.2px */
+.section-title {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: var(--text-1);
+  padding: 8rpx 0 28rpx;
+  letter-spacing: -0.4rpx;
+}
+
+/* ===== Glass + Neumorphic Card（HTML .glass-neu-card） ===== */
+/* HTML: bg rgba(255,255,255,0.52); blur(20px) saturate(150%);
+ * 1px border rgba(255,255,255,0.70); radius radius-lg(1.6rem=25.6px→51.2rpx);
+ * neu-out-md + 6px 28px rgba(0,0,0,0.06) + 2px 8px rgba(13,148,136,0.04) + 0 0 0 1px rgba(44,40,36,0.05);
+ * position:relative; overflow:hidden */
+.glass-neu-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.52);
+  backdrop-filter: blur(40rpx) saturate(150%);
+  -webkit-backdrop-filter: blur(40rpx) saturate(150%);
+  border: 1rpx solid rgba(255, 255, 255, 0.70);
+  border-radius: var(--r-lg);
+  box-shadow: var(--neu-raised), 0 12rpx 56rpx rgba(0, 0, 0, 0.06), 0 4rpx 16rpx rgba(13, 148, 136, 0.04), 0 0 0 2rpx rgba(44, 40, 36, 0.05);
+  overflow: hidden;
+}
+/* HTML .glass-neu-card::before: Rim Light 高光（165deg 线性渐变） */
+.glass-neu-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.05) 30%, transparent 55%);
+  pointer-events: none;
+  z-index: 0;
+}
+.glass-neu-card > view,
+.glass-neu-card > text,
+.glass-neu-card > textarea,
+.glass-neu-card > input,
+.glass-neu-card > scroll-view,
+.glass-neu-card > image {
+  position: relative;
+  z-index: 1;
+}
+
+/* ===== Card Title（HTML .card-title: 16px/700/-.01em/margin-bottom:14px） ===== */
+.card-title {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: var(--text-1);
+  letter-spacing: -0.2rpx;
+  margin-bottom: 28rpx;
+  position: relative;
+  z-index: 1;
+}
+
+/* ===== Policy Card 保单信息卡（HTML .policy-card: padding:18px） ===== */
+.policy-card {
+  padding: 36rpx;
+}
+/* HTML .policy-top: flex; align-items:center; gap:14px; z-index:1 */
+.policy-top {
+  display: flex;
+  align-items: center;
+  gap: 28rpx;
+  position: relative;
+  z-index: 1;
+}
+/* HTML .policy-shield: 52x52; circle; bg bg-elevated; neu-in-deep; color brand */
+.policy-shield {
+  width: 104rpx;
+  height: 104rpx;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: var(--bg-elevated);
+  box-shadow: var(--neu-inset-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--brand);
+}
+/* HTML .policy-shield svg: 26x26 */
+.policy-shield-icon {
+  width: 52rpx;
+  height: 52rpx;
+  display: inline-block;
+}
+/* HTML .policy-head: flex:1; min-width:0 */
+.policy-head {
+  flex: 1;
+  min-width: 0;
+}
+/* HTML .policy-name: 17px/700/-.01em/line-height:1.3 */
+.policy-name {
+  font-size: 34rpx;
+  font-weight: 700;
+  color: var(--text-1);
+  letter-spacing: -0.2rpx;
+  line-height: 1.3;
+  display: block;
+}
+/* HTML .policy-tier: 12.5px/text-2/500/margin-top:4px */
+.policy-tier {
+  font-size: 25rpx;
+  color: var(--text-2);
+  font-weight: 500;
+  margin-top: 8rpx;
+  display: block;
+}
+/* HTML .status-badge: 11.5px/700/.02em; padding:4px 10px; radius-full; flex-shrink:0 */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 23rpx;
+  font-weight: 700;
+  letter-spacing: 0.4rpx;
+  padding: 8rpx 20rpx;
+  border-radius: var(--r-pill);
+  flex-shrink: 0;
+}
+/* HTML .status-active: bg rgba(91,140,90,0.14); color green;
+ * inset 0 1px 1px rgba(255,255,255,0.6) + 2px 6px rgba(91,140,90,0.18);
+ * 0.5px border rgba(91,140,90,0.22) */
+.status-active {
+  background: rgba(91, 140, 90, 0.14);
+  color: var(--green);
+  box-shadow: inset 0 2rpx 2rpx rgba(255, 255, 255, 0.6), 0 4rpx 12rpx rgba(91, 140, 90, 0.18);
+  border: 1rpx solid rgba(91, 140, 90, 0.22);
+}
+/* HTML .policy-meta: margin-top:16px; padding-top:14px; border-top:0.5px solid sep; z-index:1 */
+.policy-meta {
+  margin-top: 32rpx;
+  padding-top: 28rpx;
+  border-top: 1rpx solid var(--sep);
+  position: relative;
+  z-index: 1;
+}
+/* HTML .meta-row: flex; space-between; padding:5px 0; not(:last-child) margin-bottom:2px */
+.meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10rpx 0;
+}
+.meta-row:not(:last-child) {
+  margin-bottom: 4rpx;
+}
+/* HTML .meta-label: 13.5px / text-2 / 500 */
+.meta-label {
+  font-size: 27rpx;
+  color: var(--text-2);
+  font-weight: 500;
+}
+/* HTML .meta-value: 13.5px / text-1 / 600 */
+.meta-value {
+  font-size: 27rpx;
+  color: var(--text-1);
+  font-weight: 600;
+}
+.mono {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.2rpx;
+}
+
+/* ===== Form Card 理赔表单（HTML .form-card: padding:18px） ===== */
+.form-card {
+  padding: 36rpx;
+}
+/* HTML .field: flex column; gap:8px; margin-bottom:18px; z-index:1 */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+  margin-bottom: 36rpx;
+  position: relative;
+  z-index: 1;
+}
+.field-last {
+  margin-bottom: 0;
+}
+/* HTML .field-label: 13.5px/600/-.01em */
+.field-label {
+  font-size: 27rpx;
+  font-weight: 600;
+  color: var(--text-1);
+  letter-spacing: -0.2rpx;
+}
+/* HTML .field-label-row: flex; space-between */
+.field-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+/* HTML .field-hint: 11.5px / text-3 / 500 */
+.field-hint {
+  font-size: 23rpx;
+  color: var(--text-3);
+  font-weight: 500;
+}
+
+/* ===== Neu Textarea 凹陷文本域 ===== */
+/* HTML .neu-textarea: width:100%; resize:none; font:13.5px/1.55; color text-1;
+ * bg bg-elevated; 0.5px border sep; radius radius-md(1.2rem=19.2px);
+ * padding:12px 14px; neu-in; transition */
+.neu-textarea {
+  width: 100%;
+  resize: none;
+  font-family: var(--font-body);
+  font-size: 27rpx;
+  line-height: 1.55;
+  color: var(--text-1);
+  background: var(--bg-elevated);
+  border: 1rpx solid var(--sep);
+  border-radius: var(--r-md);
+  padding: 24rpx 28rpx;
+  box-shadow: var(--neu-inset);
+  transition: box-shadow var(--dur-base) var(--ease), border-color var(--dur-base) var(--ease);
+  box-sizing: border-box;
+  min-height: 160rpx;
+}
+.neu-textarea-ph {
+  color: var(--text-3);
+}
+.neu-textarea:focus {
+  outline: none;
+  border-color: rgba(13, 148, 136, 0.30);
+  box-shadow: var(--neu-inset), 0 0 0 6rpx var(--brand-subtle);
+}
+
+/* ===== Photo Grid 横向照片网格 ===== */
+/* HTML .photo-grid: flex; gap:8px; overflow-x:auto */
+.photo-grid {
+  display: flex;
+  gap: 16rpx;
+  white-space: nowrap;
+  width: 100%;
+}
+/* HTML .photo-slot: 64x64; radius radius-sm(0.75rem=12px); bg bg-elevated;
+ * 1.5px dashed neu-dark; flex center; color text-3; neu-in; transition */
+.photo-slot {
+  flex-shrink: 0;
+  width: 128rpx;
+  height: 128rpx;
+  border-radius: var(--r-sm);
+  background: var(--bg-elevated);
+  border: 3rpx dashed var(--neu-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-3);
+  box-shadow: var(--neu-inset);
+  transition: transform var(--dur-base) var(--spring), box-shadow var(--dur-base) var(--ease), color var(--dur-base) var(--ease), border-color var(--dur-base) var(--ease);
+}
+.photo-slot:active {
+  transform: scale(0.94);
+  box-shadow: var(--neu-raised-sm);
+  color: var(--brand);
+  border-color: rgba(13, 148, 136, 0.30);
+}
+/* HTML .photo-slot svg: 22x22 */
+.photo-slot-icon {
+  width: 44rpx;
+  height: 44rpx;
+  display: inline-block;
+}
+/* 已上传照片项（HTML 无，新增用于已选态） */
+.photo-item {
+  position: relative;
+  flex-shrink: 0;
+  width: 128rpx;
+  height: 128rpx;
+  border-radius: var(--r-sm);
+  overflow: hidden;
+  box-shadow: var(--neu-raised-sm);
+  border: 1rpx solid rgba(255, 255, 255, 0.60);
+}
+.photo-img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.photo-remove {
+  position: absolute;
+  top: 6rpx;
+  right: 6rpx;
+  width: 36rpx;
+  height: 36rpx;
+  border-radius: 50%;
+  background: rgba(44, 40, 36, 0.55);
+  backdrop-filter: blur(8rpx);
+  -webkit-backdrop-filter: blur(8rpx);
+  border: 1rpx solid rgba(255, 255, 255, 0.30);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+.photo-remove-icon {
+  width: 20rpx;
+  height: 20rpx;
+  display: inline-block;
+}
+
+/* ===== Neu Input 凹陷输入框 ===== */
+/* HTML .neu-input-wrap: flex; gap:6px; bg bg-elevated;
+ * 0.5px border sep; radius radius-md; padding:0 14px; neu-in */
+.neu-input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  background: var(--bg-elevated);
+  border: 1rpx solid var(--sep);
+  border-radius: var(--r-md);
+  padding: 0 28rpx;
+  box-shadow: var(--neu-inset);
+  transition: box-shadow var(--dur-base) var(--ease), border-color var(--dur-base) var(--ease);
+}
+.neu-input-wrap:focus-within {
+  border-color: rgba(13, 148, 136, 0.30);
+  box-shadow: var(--neu-inset), 0 0 0 6rpx var(--brand-subtle);
+}
+/* HTML .input-prefix: 15px/700/brand */
+.input-prefix {
+  font-size: 30rpx;
+  font-weight: 700;
+  color: var(--brand);
+  flex-shrink: 0;
+}
+/* HTML .neu-input: flex:1; height:44px; border:none; bg transparent; font:15px/600; color text-1 */
+.neu-input {
+  flex: 1;
+  min-width: 0;
+  height: 88rpx;
+  border: none;
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: 30rpx;
+  font-weight: 600;
+  color: var(--text-1);
+  box-shadow: none;
+}
+.neu-input-ph {
+  color: var(--text-3);
+  font-weight: 500;
+}
+.neu-input:focus {
+  outline: none;
+}
+
+/* ===== Process / Vertical Timeline 理赔流程时间线 ===== */
+/* HTML .process-card: padding:20px 18px */
+.process-card {
+  padding: 40rpx 36rpx;
+}
+/* HTML .v-timeline: flex column; z-index:1 */
+.v-timeline {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 1;
+}
+/* HTML .vt-step: flex; gap:14px */
+.vt-step {
+  display: flex;
+  gap: 28rpx;
+  position: relative;
+}
+/* HTML .vt-rail: flex column; align-items:center; flex-shrink:0 */
+.vt-rail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+}
+/* HTML .vt-dot: 40x40; circle; flex center; z-index:2; color text-inverse */
+.vt-dot {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+  color: var(--text-inverse);
+}
+/* HTML .vt-dot svg: 20x20 */
+.vt-dot-icon {
+  width: 40rpx;
+  height: 40rpx;
+  display: inline-block;
+}
+/* HTML .vt-dot-brand: bg brand; 0 3px 10px brand-glow + inset 0 1px 1px rgba(255,255,255,0.3) */
+.vt-dot-brand {
+  background: var(--brand);
+  box-shadow: 0 6rpx 20rpx var(--brand-glow), inset 0 2rpx 2rpx rgba(255, 255, 255, 0.3);
+}
+/* HTML .vt-dot-accent: bg accent; 0 3px 10px accent-glow + inset 0 1px 1px rgba(255,255,255,0.3) */
+.vt-dot-accent {
+  background: var(--accent);
+  box-shadow: 0 6rpx 20rpx var(--accent-glow), inset 0 2rpx 2rpx rgba(255, 255, 255, 0.3);
+}
+/* HTML .vt-line: 2px wide; flex:1; min-height:24px; margin:4px 0;
+ * bg linear-gradient(180deg, neu-dark, neu-dark); opacity:0.55; radius-full */
+.vt-line {
+  width: 4rpx;
+  flex: 1;
+  min-height: 48rpx;
+  margin: 8rpx 0;
+  background: linear-gradient(180deg, var(--neu-dark) 0%, var(--neu-dark) 100%);
+  opacity: 0.55;
+  border-radius: var(--r-pill);
+}
+/* HTML .vt-content: flex:1; min-width:0; padding-bottom:20px; padding-top:7px */
+.vt-content {
+  flex: 1;
+  min-width: 0;
+  padding-bottom: 40rpx;
+  padding-top: 14rpx;
+}
+/* HTML .vt-step-last .vt-content: padding-bottom:0 */
+.vt-step-last .vt-content {
+  padding-bottom: 0;
+}
+/* HTML .vt-title: 14.5px/700/-.01em/margin-bottom:4px */
+.vt-title {
+  font-size: 29rpx;
+  font-weight: 700;
+  color: var(--text-1);
+  letter-spacing: -0.2rpx;
+  margin-bottom: 8rpx;
+  display: block;
+}
+/* HTML .vt-desc: 12.5px/text-2/line-height:1.5/500 */
+.vt-desc {
+  font-size: 25rpx;
+  color: var(--text-2);
+  line-height: 1.5;
+  font-weight: 500;
+  display: block;
+}
+
+/* ===== Bottom Fixed Action Bar 底部固定提交栏 ===== */
+/* HTML .action-bar: sticky bottom:0; left:0; right:0;
+ * display:flex; gap:12px; padding:14px 20px; padding-bottom:max(14px,env);
+ * bg rgba(242,237,232,0.88); blur(20px) saturate(150%);
+ * border-top:0.5px rgba(255,255,255,0.55); box-shadow:0 -4px 20px rgba(0,0,0,0.05); z-index:60 */
+.action-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+  padding: 28rpx 40rpx;
+  background: rgba(242, 237, 232, 0.88);
+  backdrop-filter: blur(40rpx) saturate(150%);
+  -webkit-backdrop-filter: blur(40rpx) saturate(150%);
+  border-top: 1rpx solid rgba(255, 255, 255, 0.55);
+  box-shadow: 0 -8rpx 40rpx rgba(0, 0, 0, 0.05);
+  z-index: 60;
+}
+/* HTML .action-btn-primary: inline-flex; gap:8px; height:50px; flex:1;
+ * bg brand-gradient; color text-inverse; border:none; radius-full;
+ * font:15px/700; .02em; neu-out-sm + 4px 14px brand-glow */
+.action-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16rpx;
+  height: 100rpx;
+  flex: 1;
+  background: var(--brand-gradient);
+  color: var(--text-inverse);
+  border: none;
+  border-radius: var(--r-pill);
+  font-family: var(--font-body);
+  font-size: 30rpx;
+  font-weight: 700;
+  letter-spacing: 0.4rpx;
+  box-shadow: var(--neu-raised-sm), 0 8rpx 28rpx var(--brand-glow);
+  transition: transform var(--dur-base) var(--spring), box-shadow var(--dur-base) var(--ease);
+}
+.action-btn-primary:active {
+  box-shadow: var(--neu-inset);
+  transform: scale(0.97);
+}
+/* HTML .action-btn-primary svg: 19x19 */
+.action-btn-primary-icon {
+  width: 38rpx;
+  height: 38rpx;
+  display: inline-block;
+}
+.action-btn-primary-text {
+  font-size: 30rpx;
+  font-weight: 700;
+  color: var(--text-inverse);
+  letter-spacing: 0.4rpx;
+}

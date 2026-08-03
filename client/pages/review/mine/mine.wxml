@@ -1,0 +1,45 @@
+<view class="container">
+  <view class="status-tabs">
+    <view class="stab {{activeStatus === item.key ? 'active' : ''}}" wx:for="{{statusTabs}}" wx:key="key" bindtap="switchStatus" data-key="{{item.key}}">{{item.label}}</view>
+  </view>
+
+  <view class="review-list">
+    <view class="review-card" wx:for="{{reviews}}" wx:key="id">
+      <view class="rc-status status-{{item.status}}">
+        {{item.status === 'pending' ? '待审核' : item.status === 'approved' ? '已通过' : '未通过'}}
+      </view>
+      <view class="rc-header">
+        <text class="rc-rating">
+          <text wx:for="{{[1,2,3,4,5]}}" wx:key="*this" wx:for-item="s" class="{{s <= item.rating ? 'star-on' : ''}}">★</text>
+        </text>
+        <text class="rc-service">{{item.service_type}}</text>
+      </view>
+      <view class="rc-tags" wx:if="{{item.review_tags.length}}">
+        <text class="rc-tag" wx:for="{{item.review_tags}}" wx:key="*this">{{item}}</text>
+      </view>
+      <text class="rc-content" wx:if="{{item.review_content}}">{{item.review_content}}</text>
+      <view class="rc-images" wx:if="{{item.review_images.length}}">
+        <image wx:for="{{item.review_images}}" wx:key="*this" wx:for-item="img" src="{{img}}" mode="aspectFill" bindtap="previewImage" data-url="{{img}}" data-urls="{{item.review_images}}"></image>
+      </view>
+      <view class="rc-reject" wx:if="{{item.status === 'rejected'}}">
+        <text class="reject-label">未通过原因：</text>
+        <text class="reject-reason">{{item.reject_reason || '内容不符合规范'}}</text>
+      </view>
+      <view class="rc-reply" wx:if="{{item.worker_reply}}">
+        <text class="reply-label">师傅回复：</text>
+        <text>{{item.worker_reply}}</text>
+      </view>
+      <view class="rc-footer">
+        <text class="rc-time">{{item.created_at}}</text>
+        <text class="view-order" bindtap="viewOrder" data-id="{{item.order_id}}">查看订单 ></text>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty" wx:if="{{!reviews.length && !loading}}">
+    <view class="empty-icon">📝</view>
+    <view class="empty-text">还没有评价记录</view>
+  </view>
+  <view class="loading" wx:if="{{loading}}">加载中...</view>
+  <view class="no-more" wx:if="{{!hasMore && reviews.length}}">没有更多了</view>
+</view>

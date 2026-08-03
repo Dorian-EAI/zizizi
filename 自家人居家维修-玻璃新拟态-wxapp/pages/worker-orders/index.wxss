@@ -1,0 +1,445 @@
+/* pages/worker-orders/index.wxss — 师傅端订单列表 像素级复刻 worker-orders.html
+ * 换算基准：1px = 2rpx（750rpx 设计稿）
+ * 师傅端覆盖 --brand 为 #2D6CDF（蓝），使 var(--brand) 全页解析为蓝色
+ * top-header sticky：Hero + filter-tabs 固定吸顶
+ * Hero 使用 app.wxss .hero + .hero-worker（0.14 轻量渐变）
+ * filter-tabs / filter-pill 使用 app.wxss 全局类 + .worker 蓝色变体
+ */
+
+/* ===== 师傅端品牌色覆盖（对齐 HTML :root --brand: #2D6CDF） ===== */
+.page {
+  --brand: #2D6CDF;
+  --brand-dark: #2456B8;
+  --brand-mid: #5A8EE8;
+  --brand-light: #DCE8FB;
+  --brand-glow: rgba(45, 108, 223, 0.28);
+  --brand-subtle: rgba(45, 108, 223, 0.08);
+  --brand-gradient: linear-gradient(135deg, #2D6CDF 0%, #5A8EE8 50%, #D4944C 100%);
+  --ring: #2D6CDF;
+  --primary: #2D6CDF;
+
+  position: relative;
+  min-height: 100vh;
+  /* 不设 overflow: hidden，避免 scroll-view 内容裁切 */
+}
+
+/* ===== 滚动容器 ===== */
+.page-scroll {
+  height: 100vh;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 1;
+}
+
+/* ===== 顶部固定区（HTML: .top-header sticky top:0 z-index:50） ===== */
+.top-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+/* ===== HERO 内部布局（背景/圆角/光斑来自 app.wxss .hero.hero-worker） ===== */
+/* HTML: padding max(38px, env) 24px 24px → 76rpx 48rpx 48rpx */
+.hero {
+  padding: 0 48rpx 48rpx;
+}
+
+.greeting-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  z-index: 2;
+}
+
+.greeting-text {
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+/* HTML: h1 font-size:26px font-weight:800 */
+.hero-title {
+  font-size: 52rpx;
+  font-weight: 800;
+  color: var(--text-1);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+/* HTML: .subtitle font-size:14px margin-top:4px font-weight:500 */
+.hero-sub {
+  font-size: 28rpx;
+  color: var(--text-2);
+  margin-top: 8rpx;
+  font-weight: 500;
+}
+
+/* ===== Hero 筛选按钮（圆形玻璃，HTML: 42px 圆） ===== */
+.filter-btn {
+  width: 84rpx;
+  height: 84rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(32rpx) saturate(150%);
+  -webkit-backdrop-filter: blur(32rpx) saturate(150%);
+  border: 1rpx solid rgba(255, 255, 255, 0.30);
+  box-shadow: inset 0 2rpx 4rpx rgba(255, 255, 255, 0.30);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-1);
+  flex-shrink: 0;
+  transition: transform var(--dur-base) var(--spring), background 0.2s var(--ease);
+}
+.filter-btn:active {
+  transform: scale(0.85);
+  background: rgba(255, 255, 255, 0.32);
+}
+
+.filter-btn-icon {
+  width: 44rpx;
+  height: 44rpx;
+}
+
+/* ===== 订单列表（HTML: .order-list padding:20px 20px 0 gap:12px） ===== */
+.order-list {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+  padding: 40rpx 40rpx 0;
+}
+
+/* ===== 订单卡片（HTML: glass card padding:16px border-radius:var(--radius-md)） ===== */
+.order-card {
+  background: rgba(255, 255, 255, 0.52);
+  backdrop-filter: blur(40rpx) saturate(150%);
+  -webkit-backdrop-filter: blur(40rpx) saturate(150%);
+  border: 1rpx solid rgba(255, 255, 255, 0.70);
+  border-radius: var(--r-md);
+  padding: 32rpx;
+  box-shadow:
+    var(--neu-raised),
+    0 12rpx 56rpx rgba(0, 0, 0, 0.06),
+    0 0 0 2rpx rgba(44, 40, 36, 0.05),
+    0 4rpx 16rpx rgba(45, 108, 223, 0.04);
+  transition: transform var(--dur-base) var(--ease), box-shadow 0.2s var(--ease);
+  position: relative;
+  overflow: hidden;
+}
+/* 左侧状态色条（主样式规范） */
+.order-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 8rpx;
+  border-radius: 8rpx 0 0 8rpx;
+  z-index: 1;
+}
+.order-card.status-pending::before   { background: var(--blue); }
+.order-card.status-accepted::before  { background: var(--brand-worker); }
+.order-card.status-departing::before { background: var(--brand-worker); }
+.order-card.status-arrived::before   { background: var(--green); }
+.order-card.status-serving::before   { background: var(--sage); }
+.order-card.status-completed::before { background: var(--orange); }
+.order-card.status-paid::before      { background: var(--brand-worker); }
+.order-card.status-reviewed::before  { background: var(--text-3); }
+.order-card.status-bidding::before   { background: var(--blue); }
+.order-card.status-reviewing::before { background: var(--orange); }
+.order-card.status-reviewing-fee::before { background: var(--accent); }
+.order-card.status-expired::before   { background: var(--text-3); }
+.order-card.status-reviewed { opacity: 0.92; }
+.order-card.status-reviewed .order-title,
+.order-card.status-reviewed .order-price { color: var(--text-2); }
+/* Rim Light 边缘高光（HTML ::after） */
+.order-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: inherit;
+  background: linear-gradient(165deg,
+    rgba(255, 255, 255, 0.22) 0%,
+    rgba(255, 255, 255, 0.05) 30%,
+    transparent 55%);
+  pointer-events: none;
+  z-index: 0;
+}
+.order-card:active {
+  box-shadow: var(--neu-inset-lg);
+  transform: scale(0.98);
+}
+/* 卡片内容在 Rim Light 之上 */
+.order-card > view,
+.order-card > text {
+  position: relative;
+  z-index: 1;
+}
+
+/* ===== 强调卡片（服务中：3px 蓝色左边框，HTML: .order-card.accent） ===== */
+.order-card.accent {
+  border-left: 6rpx solid var(--brand);
+  padding-left: 28rpx;
+}
+
+/* ===== 状态徽章（HTML: .status-badge pill） ===== */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 8rpx 22rpx;
+  border-radius: var(--r-pill);
+  font-size: 23rpx;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+  flex-shrink: 0;
+}
+/* 待接单 / 待评价：橙色 */
+.status-pending {
+  color: var(--orange);
+  background: rgba(212, 148, 76, 0.12);
+}
+/* 进行中：蓝色 */
+.status-progress {
+  color: var(--blue);
+  background: rgba(90, 143, 173, 0.12);
+}
+/* 已完成：绿色 */
+.status-done {
+  color: var(--green);
+  background: rgba(91, 140, 90, 0.12);
+}
+
+/* ===== 订单头部（HTML: .order-head flex space-between gap:10px margin-bottom:10px） ===== */
+.order-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20rpx;
+  margin-bottom: 20rpx;
+  position: relative;
+  z-index: 1;
+}
+
+/* HTML: .order-service font-size:16px font-weight:700 */
+.order-service {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: var(--text-1);
+  letter-spacing: -0.01em;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ===== 客户信息（HTML: .order-customer flex gap:6px font-size:13.5px margin-bottom:8px） ===== */
+.order-customer {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  font-size: 27rpx;
+  color: var(--text-1);
+  font-weight: 600;
+  margin-bottom: 16rpx;
+  position: relative;
+  z-index: 1;
+}
+
+/* HTML: user svg 14px → 28rpx；color: var(--brand) */
+.customer-icon {
+  width: 28rpx;
+  height: 28rpx;
+  flex-shrink: 0;
+}
+
+.customer-text {
+  font-size: 27rpx;
+  color: var(--text-1);
+  font-weight: 600;
+}
+
+/* HTML: .customer-sep 3px 圆 */
+.customer-sep {
+  width: 6rpx;
+  height: 6rpx;
+  border-radius: 50%;
+  background: var(--text-3);
+  flex-shrink: 0;
+}
+
+/* HTML: phone svg 13px → 26rpx */
+.customer-icon-sm {
+  width: 26rpx;
+  height: 26rpx;
+  flex-shrink: 0;
+}
+
+/* ===== 地址（HTML: .order-address flex gap:6px font-size:13px color:text-2） ===== */
+.order-address {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  font-size: 26rpx;
+  color: var(--text-2);
+  font-weight: 500;
+  position: relative;
+  z-index: 1;
+}
+
+/* HTML: address svg 13px → 26rpx；color: var(--text-3) */
+.address-icon {
+  width: 26rpx;
+  height: 26rpx;
+  flex-shrink: 0;
+}
+
+.address-text {
+  font-size: 26rpx;
+  color: var(--text-2);
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ===== 分隔线（HTML: .order-sep height:0.5px margin:14px 0） ===== */
+.order-sep {
+  height: 1rpx;
+  background: var(--sep);
+  margin: 28rpx 0;
+  position: relative;
+  z-index: 1;
+}
+
+/* ===== 订单底部（HTML: .order-bottom flex space-between gap:12px） ===== */
+.order-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24rpx;
+  position: relative;
+  z-index: 1;
+}
+
+/* HTML: .order-price font-size:20px font-weight:700 color:brand letter-spacing:-0.02em */
+.order-price {
+  font-size: 40rpx;
+  font-weight: 700;
+  color: var(--brand);
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: baseline;
+}
+
+/* HTML: .yuan font-size:14px font-weight:600 margin-right:1px */
+.yuan {
+  font-size: 28rpx;
+  font-weight: 600;
+  margin-right: 2rpx;
+}
+
+/* HTML: .price-label font-size:12px font-weight:500 color:text-2 margin-right:4px */
+.price-label {
+  font-size: 24rpx;
+  font-weight: 500;
+  color: var(--text-2);
+  margin-right: 8rpx;
+}
+
+/* HTML: .price-green color:var(--green) */
+.price-green {
+  color: var(--green);
+}
+
+.price-amount {
+  font-size: 40rpx;
+  line-height: 1.1;
+}
+
+/* ===== 操作按钮（HTML: .btn-neu-primary 渐变蓝胶囊） ===== */
+.action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12rpx;
+  background: var(--brand-gradient);
+  color: var(--text-inverse);
+  border: 1rpx solid rgba(255, 255, 255, 0.40);
+  border-radius: var(--r-pill);
+  padding: 16rpx 32rpx;
+  font-size: 26rpx;
+  font-weight: 600;
+  font-family: var(--font-body);
+  box-shadow:
+    var(--neu-raised-sm),
+    0 8rpx 28rpx var(--brand-glow),
+    inset 0 2rpx 2rpx rgba(255, 255, 255, 0.30);
+  transition: transform var(--dur-base) var(--spring), box-shadow var(--dur-base) var(--ease);
+  flex-shrink: 0;
+}
+.action-btn:active {
+  box-shadow: var(--neu-inset);
+  transform: scale(0.94);
+}
+
+/* HTML: btn svg 14px → 28rpx */
+.action-icon {
+  width: 28rpx;
+  height: 28rpx;
+}
+
+.action-text {
+  font-size: 26rpx;
+  color: var(--text-inverse);
+  font-weight: 600;
+}
+
+/* ===== 空态 ===== */
+.empty {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 120rpx 40rpx;
+  gap: 16rpx;
+}
+
+.empty-icon {
+  width: 160rpx;
+  height: 160rpx;
+  margin-bottom: 8rpx;
+}
+
+.empty-img {
+  width: 64rpx;
+  height: 64rpx;
+}
+
+.empty-text {
+  font-size: 30rpx;
+  color: var(--text-2);
+  font-weight: 500;
+}
+
+.empty-sub {
+  font-size: 24rpx;
+  color: var(--text-3);
+}
+
+/* ===== 师傅端底部环境光晕（蓝+鼠尾草绿，覆盖全局客户端 teal） ===== */
+.page::after {
+  background:
+    radial-gradient(ellipse 400rpx 280rpx at 20% 90%, rgba(45, 108, 223, 0.07) 0%, transparent 70%),
+    radial-gradient(ellipse 360rpx 240rpx at 80% 85%, rgba(143, 169, 152, 0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 320rpx 200rpx at 50% 95%, rgba(90, 142, 232, 0.04) 0%, transparent 70%);
+}

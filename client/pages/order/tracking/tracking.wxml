@@ -1,0 +1,62 @@
+<view class="container">
+  <!-- 地图 -->
+  <map id="trackMap" class="map"
+       latitude="{{mapCenter.latitude}}"
+       longitude="{{mapCenter.longitude}}"
+       markers="{{markers}}"
+       polyline="{{polyline}}"
+       scale="15"
+       show-location></map>
+
+  <!-- 状态横幅 -->
+  <view class="status-banner">
+    <view class="status-main">{{statusText}}</view>
+    <view class="status-sub" wx:if="{{etaText || distanceText}}">
+      <block wx:if="{{etaText}}">{{etaText}}</block>
+      <block wx:if="{{etaText && distanceText}}"> · </block>
+      <block wx:if="{{distanceText}}">{{distanceText}}</block>
+    </view>
+    <view class="status-stale" wx:if="{{showStaleWarn}}">⚠ 师傅位置可能未更新</view>
+  </view>
+
+  <!-- 师傅信息卡片 -->
+  <view class="card worker-card" wx:if="{{worker}}">
+    <view class="wk-left">
+      <image class="wk-avatar" src="{{worker.avatar || '/assets/default-avatar.png'}}" mode="aspectFill"></image>
+      <view class="wk-info">
+        <text class="wk-name">{{worker.name || '师傅'}}</text>
+        <text class="wk-rating" wx:if="{{worker.rating}}">⭐ {{worker.rating}}</text>
+      </view>
+    </view>
+    <view class="wk-actions">
+      <view class="wk-btn phone-btn" bindtap="callWorker">
+        <text class="btn-icon">📞</text>
+        <text class="btn-text">电话</text>
+      </view>
+      <view class="wk-btn nav-btn" bindtap="openNavigation">
+        <text class="btn-icon">🧭</text>
+        <text class="btn-text">导航</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 服务进度时间线 -->
+  <view class="card timeline-card">
+    <view class="section-title">服务进度</view>
+    <view class="timeline" wx:if="{{timeline.length}}">
+      <view class="tl-item" wx:for="{{timeline}}" wx:key="index" wx:for-index="idx">
+        <view class="tl-marker">
+          <view class="tl-dot {{item.time ? 'done' : 'pending'}}"></view>
+          <view class="tl-line" wx:if="{{idx < timeline.length - 1}}"></view>
+        </view>
+        <view class="tl-content">
+          <text class="tl-text">{{item.text}}</text>
+          <text class="tl-time" wx:if="{{item.time}}">{{item.time}}</text>
+        </view>
+      </view>
+    </view>
+    <view class="empty" wx:else>暂无进度信息</view>
+  </view>
+
+  <view class="bottom-space"></view>
+</view>

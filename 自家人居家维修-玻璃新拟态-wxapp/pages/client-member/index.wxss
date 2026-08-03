@@ -1,0 +1,526 @@
+/* pages/client-member/index.wxss — 会员中心 像素级复刻 client-member.html
+ * 换算基准：1px = 2rpx（750rpx 设计稿）
+ * 严格忠于 HTML 参考的尺寸、间距、圆角、阴影、渐变透明度
+ */
+
+/* ===== Back Bar 局部覆写（HTML .back-bar / .back-btn） ===== */
+/* HTML .back-btn: 34x34 → 68rpx; circle; bg surface-2(0.45); blur(12px)→24rpx;
+ * 0.5px border rgba(255,255,255,0.60); neu-out-sm + inset 0 1px 1.5px rgba(255,255,255,0.50) */
+.back-btn {
+  width: 68rpx;
+  height: 68rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.50);
+  backdrop-filter: blur(24rpx) saturate(140%);
+  -webkit-backdrop-filter: blur(24rpx) saturate(140%);
+  border: 1rpx solid rgba(255, 255, 255, 0.60);
+  box-shadow: var(--neu-raised-sm), inset 0 2rpx 3rpx rgba(255, 255, 255, 0.50);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 0.2s var(--ease), box-shadow 0.15s var(--ease);
+}
+.back-btn:active {
+  box-shadow: var(--neu-inset-sm);
+  transform: scale(0.88);
+}
+/* HTML .back-btn svg: 18x18 → 36rpx */
+.back-icon {
+  width: 36rpx;
+  height: 36rpx;
+  display: inline-block;
+}
+/* nav-spacer 局部覆写：与 back-btn 同宽（68rpx）使标题居中对齐 HTML 布局 */
+.nav-spacer {
+  width: 68rpx;
+  height: 68rpx;
+  flex-shrink: 0;
+}
+
+/* ===== HERO: Member Card（HTML .member-hero：独立卡片，非全宽） ===== */
+/* HTML: padding:24px 24px 26px → 48rpx 48rpx 52rpx; margin:12px 16px 16px → 24rpx 32rpx 32rpx;
+ * border-radius:24px → 48rpx; neu-out-md + 0 8px 28px rgba(13,148,136,0.12) */
+.member-hero {
+  position: relative;
+  z-index: 1;
+  margin: 24rpx 32rpx 32rpx;
+  padding: 48rpx 48rpx 52rpx;
+  background:
+    radial-gradient(ellipse 480rpx 400rpx at 75% 40%, rgba(212, 148, 76, 0.32) 0%, transparent 70%),
+    radial-gradient(ellipse 400rpx 320rpx at 20% 80%, rgba(13, 148, 136, 0.24) 0%, transparent 70%),
+    linear-gradient(135deg, rgba(13, 148, 136, 0.28) 0%, rgba(212, 148, 76, 0.20) 50%, rgba(20, 184, 166, 0.12) 100%);
+  border-radius: 48rpx;
+  box-shadow: var(--neu-raised), 0 16rpx 56rpx rgba(13, 148, 136, 0.12);
+  overflow: hidden;
+}
+
+/* HTML .member-top: flex; align-items:center; gap:14px → 28rpx; z-index:2 */
+.member-top {
+  display: flex;
+  align-items: center;
+  gap: 28rpx;
+  position: relative;
+  z-index: 2;
+}
+
+/* HTML .member-avatar: 56x56 → 112rpx; circle; bg phone-bg;
+ * inset 3px 3px 6px neu-dark + inset -3px -3px 6px neu-light */
+.member-avatar {
+  width: 112rpx;
+  height: 112rpx;
+  flex-shrink: 0;
+}
+/* HTML .member-avatar svg: 28x28 → 56rpx; stroke brand */
+.member-avatar-icon {
+  width: 56rpx;
+  height: 56rpx;
+  display: inline-block;
+}
+
+/* HTML .member-info: flex:1; min-width:0 */
+.member-info {
+  flex: 1;
+  min-width: 0;
+}
+
+/* HTML .member-name-row: flex; align-items:center; gap:8px → 16rpx; flex-wrap:wrap */
+.member-name-row {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  flex-wrap: wrap;
+}
+
+/* HTML .member-name: 20px/700 → 40rpx; -.02em; line-height:1.2 */
+.member-name {
+  font-size: 40rpx;
+  font-weight: 700;
+  color: var(--text-1);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+/* HTML .level-badge: 11px/700 → 22rpx; padding:3px 10px → 6rpx 20rpx;
+ * gradient brand→brand-mid; shadow 0 2px 8px + inset 0 1px 1px */
+.level-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 22rpx;
+  font-weight: 700;
+  color: #FFFFFF;
+  background: linear-gradient(135deg, var(--brand) 0%, var(--brand-mid) 100%);
+  padding: 6rpx 20rpx;
+  border-radius: 9999rpx;
+  box-shadow: 0 4rpx 16rpx rgba(13, 148, 136, 0.30), inset 0 2rpx 2rpx rgba(255, 255, 255, 0.40);
+  letter-spacing: 0.02em;
+  flex-shrink: 0;
+}
+
+/* HTML .member-sub: 13px → 26rpx; text-1; margin-top:6px → 12rpx; 600; opacity 0.85 */
+.member-sub {
+  font-size: 26rpx;
+  color: var(--text-1);
+  margin-top: 12rpx;
+  font-weight: 600;
+  opacity: 0.85;
+}
+
+/* ===== Growth Bar（HTML .growth-bar） ===== */
+/* HTML: margin-top:18px → 36rpx; height:10px → 20rpx; radius-full;
+ * bg rgba(255,255,255,0.45); inset 2px 2px 5px + inset -2px -2px 5px */
+.growth-bar {
+  position: relative;
+  margin-top: 36rpx;
+  height: 20rpx;
+  border-radius: 9999rpx;
+  background: rgba(255, 255, 255, 0.45);
+  box-shadow: inset 4rpx 4rpx 10rpx var(--neu-dark), inset -4rpx -4rpx 10rpx var(--neu-light);
+  overflow: hidden;
+}
+
+/* HTML .growth-bar-fill: gradient 90deg brand→brand-mid 60%→accent 100%;
+ * shadow 0 0 12px rgba(13,148,136,0.45) → 24rpx */
+.growth-bar-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  border-radius: 9999rpx;
+  background: linear-gradient(90deg, var(--brand) 0%, var(--brand-mid) 60%, var(--accent) 100%);
+  box-shadow: 0 0 24rpx rgba(13, 148, 136, 0.45);
+}
+
+/* HTML .growth-hint: margin-top:10px → 20rpx; 12px → 24rpx; text-2; 500 */
+.growth-hint {
+  margin-top: 20rpx;
+  font-size: 24rpx;
+  color: var(--text-2);
+  font-weight: 500;
+}
+
+/* ===== Section Title（HTML .section-title: 18px/700 → 36rpx; padding 20px 24px 14px → 40rpx 48rpx 28rpx; -.2px） ===== */
+.section-title {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: var(--text-1);
+  padding: 40rpx 48rpx 28rpx;
+  letter-spacing: -0.02em;
+  position: relative;
+  z-index: 1;
+}
+
+/* ===== Benefits Grid（HTML .benefits-grid: grid 2col; gap:12px → 24rpx; padding 0 24px 6px → 0 48rpx 12rpx） ===== */
+.benefits-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24rpx;
+  padding: 0 48rpx 12rpx;
+  position: relative;
+  z-index: 1;
+}
+
+/* HTML .benefit-card: flex column; gap:10px → 20rpx; bg surface-1(0.50);
+ * blur(20px) → 40rpx; 0.5px border rgba(255,255,255,0.45); radius 20px → 40rpx;
+ * neu-out-sm; padding 16px 14px 14px → 32rpx 28rpx 28rpx */
+.benefit-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20rpx;
+  background: rgba(255, 255, 255, 0.50);
+  backdrop-filter: blur(40rpx) saturate(150%);
+  -webkit-backdrop-filter: blur(40rpx) saturate(150%);
+  border: 1rpx solid rgba(255, 255, 255, 0.45);
+  border-radius: 40rpx;
+  box-shadow: var(--neu-raised-sm);
+  padding: 32rpx 28rpx 28rpx;
+  transition: transform 0.2s var(--spring), box-shadow 0.2s var(--ease);
+}
+
+.benefit-card:active {
+  transform: scale(0.96);
+  box-shadow: var(--neu-inset-sm);
+}
+
+/* HTML .benefit-icon-wrap: 44x44 → 88rpx; radius 14px → 28rpx;
+ * border 1px rgba(255,255,255,0.32); gradient bg per card */
+.benefit-icon {
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: 28rpx;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2rpx solid rgba(255, 255, 255, 0.32);
+}
+
+.benefit-card:nth-child(1) .benefit-icon {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.28), rgba(13, 148, 136, 0.20));
+}
+
+.benefit-card:nth-child(2) .benefit-icon {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.28), rgba(212, 148, 76, 0.20));
+}
+
+.benefit-card:nth-child(3) .benefit-icon {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.28), rgba(20, 184, 166, 0.20));
+}
+
+.benefit-card:nth-child(4) .benefit-icon {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.28), rgba(245, 158, 11, 0.20));
+}
+
+.benefit-card:nth-child(5) .benefit-icon {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.28), rgba(16, 185, 129, 0.20));
+}
+
+.benefit-card:nth-child(6) .benefit-icon {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.28), rgba(244, 63, 94, 0.20));
+}
+
+/* HTML .benefit-icon svg: 22x22 → 44rpx */
+.benefit-icon-img {
+  width: 44rpx;
+  height: 44rpx;
+  display: inline-block;
+}
+
+/* HTML .benefit-title: 14px/700 → 28rpx; -.01em */
+.benefit-title {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: var(--text-1);
+  letter-spacing: -0.01em;
+}
+
+/* HTML .benefit-desc: 11px → 22rpx; text-2; line-height 1.4 */
+.benefit-desc {
+  font-size: 22rpx;
+  color: var(--text-2);
+  line-height: 1.4;
+}
+
+/* ===== Level Tiers（HTML .level-tiers: grid 3col; gap:10px → 20rpx; padding 0 24px 6px → 0 48rpx 12rpx） ===== */
+.level-tiers {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20rpx;
+  padding: 0 48rpx 12rpx;
+  position: relative;
+  z-index: 1;
+}
+
+/* HTML .level-tier: bg surface-1; blur(20px); 0.5px border 0.45; radius 18px → 36rpx;
+ * neu-out-sm; padding 14px 10px 12px → 28rpx 20rpx 24rpx */
+.level-tier {
+  background: rgba(255, 255, 255, 0.50);
+  backdrop-filter: blur(40rpx) saturate(150%);
+  -webkit-backdrop-filter: blur(40rpx) saturate(150%);
+  border: 1rpx solid rgba(255, 255, 255, 0.45);
+  border-radius: 36rpx;
+  box-shadow: var(--neu-raised-sm);
+  padding: 28rpx 20rpx 24rpx;
+  transition: transform 0.2s var(--spring), box-shadow 0.2s var(--ease);
+}
+
+.level-tier:active {
+  transform: scale(0.96);
+  box-shadow: var(--neu-inset-sm);
+}
+
+/* HTML .level-tier-current: bg rgba(13,148,136,0.10); 1px border 0.30;
+ * neu-out-sm + 0 0 0 0.5px 0.20 + 0 4px 14px 0.18 */
+.level-tier-current {
+  background: rgba(13, 148, 136, 0.10);
+  border: 2rpx solid rgba(13, 148, 136, 0.30);
+  box-shadow: var(--neu-raised-sm), 0 0 0 1rpx rgba(13, 148, 136, 0.20), 0 8rpx 28rpx rgba(13, 148, 136, 0.18);
+}
+
+/* HTML .level-tier-head: flex column; gap:6px → 12rpx; margin-bottom:10px → 20rpx */
+.level-tier-head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12rpx;
+  margin-bottom: 20rpx;
+  position: relative;
+}
+
+/* HTML .level-tier-icon: 40x40 → 80rpx; circle; bg phone-bg; icon-raise */
+.level-tier-icon {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  box-shadow: var(--neu-raised-sm);
+}
+
+/* HTML .level-tier-name: 13px/700 → 26rpx; -.01em */
+.level-tier-name {
+  font-size: 26rpx;
+  font-weight: 700;
+  color: var(--text-1);
+  letter-spacing: -0.01em;
+}
+
+/* HTML .level-current-tag: top:-6px → -12rpx; right:-4px → -8rpx;
+ * 9px/700 → 18rpx; bg brand; padding 2px 6px → 4rpx 12rpx; shadow 0 2px 6px */
+.level-current-tag {
+  position: absolute;
+  top: -12rpx;
+  right: -8rpx;
+  font-size: 18rpx;
+  font-weight: 700;
+  color: #FFFFFF;
+  background: var(--brand);
+  padding: 4rpx 12rpx;
+  border-radius: 9999rpx;
+  box-shadow: 0 4rpx 12rpx rgba(13, 148, 136, 0.35);
+  letter-spacing: 0.02em;
+}
+
+/* HTML .level-perks: flex column; gap:5px → 10rpx */
+.level-perks {
+  display: flex;
+  flex-direction: column;
+  gap: 10rpx;
+}
+
+/* HTML .level-perks li: 11px → 22rpx; text-2; 1.4; padding-left:10px → 20rpx;
+ * ::before 4x4 dot → 8rpx; top:7px → 14rpx */
+.level-perk-item {
+  font-size: 22rpx;
+  color: var(--text-2);
+  line-height: 1.4;
+  position: relative;
+  padding-left: 20rpx;
+}
+
+.level-perk-item::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 14rpx;
+  width: 8rpx;
+  height: 8rpx;
+  border-radius: 50%;
+  background: var(--brand);
+}
+
+.level-tier-current .level-perk-item {
+  color: var(--text-1);
+}
+
+/* ===== Growth Tasks（HTML .task-card） ===== */
+/* HTML: margin 0 24px 6px → 0 48rpx 12rpx; bg 0.52; blur(20px) → 40rpx;
+ * 1px border 0.70; radius radius-md; neu-out-md + 多层阴影; overflow hidden */
+.task-card {
+  margin: 0 48rpx 12rpx;
+  background: rgba(255, 255, 255, 0.52);
+  backdrop-filter: blur(40rpx) saturate(150%);
+  -webkit-backdrop-filter: blur(40rpx) saturate(150%);
+  border: 1rpx solid rgba(255, 255, 255, 0.70);
+  border-radius: var(--r-md);
+  box-shadow: var(--neu-raised), 0 12rpx 56rpx rgba(0, 0, 0, 0.06), 0 0 0 1rpx rgba(44, 40, 36, 0.05), 0 4rpx 16rpx rgba(13, 148, 136, 0.04);
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+
+/* HTML .task-card::before: Rim Light 165deg 线性渐变 */
+.task-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.05) 30%, transparent 55%);
+  pointer-events: none;
+}
+
+/* HTML .task-row: flex; gap:12px → 24rpx; padding 14px 16px → 28rpx 32rpx;
+ * ::after separator left:58px → 116rpx; right:16px → 32rpx; height 0.5px → 1rpx */
+.task-row {
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+  padding: 28rpx 32rpx;
+  position: relative;
+  transition: transform 0.2s var(--ease), background 0.15s ease;
+}
+
+.task-row:active {
+  transform: scale(0.99);
+  background: var(--fill);
+}
+
+.task-row:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: 116rpx;
+  right: 32rpx;
+  bottom: 0;
+  height: 1rpx;
+  background: var(--hairline);
+}
+
+/* HTML .task-icon: 36x36 → 72rpx; circle; bg phone-bg;
+ * 4px 4px 8px + -4px -4px 8px + inset 0 1px 1px */
+.task-icon {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--neu-raised-sm), inset 0 2rpx 2rpx rgba(255, 255, 255, 0.45);
+}
+
+/* HTML .task-icon svg: 18x18 → 36rpx */
+.task-icon-img {
+  width: 36rpx;
+  height: 36rpx;
+  display: inline-block;
+}
+
+/* HTML .task-icon-teal/amber/green/blue: color + bg 0.08 + 0.5px border 0.12 */
+.task-icon-teal {
+  background: rgba(13, 148, 136, 0.08);
+  border: 1rpx solid rgba(13, 148, 136, 0.12);
+}
+
+.task-icon-amber {
+  background: rgba(212, 148, 76, 0.08);
+  border: 1rpx solid rgba(212, 148, 76, 0.12);
+}
+
+.task-icon-green {
+  background: rgba(91, 140, 90, 0.08);
+  border: 1rpx solid rgba(91, 140, 90, 0.12);
+}
+
+.task-icon-blue {
+  background: rgba(90, 143, 173, 0.08);
+  border: 1rpx solid rgba(90, 143, 173, 0.12);
+}
+
+/* HTML .task-info: flex:1; min-width:0 */
+.task-info {
+  flex: 1;
+  min-width: 0;
+}
+
+/* HTML .task-title: 14px/600 → 28rpx; -.01em; line-height 1.3 */
+.task-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: var(--text-1);
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+
+/* HTML .task-sub: 11px → 22rpx; text-2; margin-top:2px → 4rpx; 1.3 */
+.task-sub {
+  font-size: 22rpx;
+  color: var(--text-2);
+  margin-top: 4rpx;
+  line-height: 1.3;
+}
+
+/* HTML .task-reward: 14px/700 → 28rpx; accent; tabular-nums */
+.task-reward {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+}
+
+/* HTML .task-btn (btn-neu-secondary): padding 7px 14px → 14rpx 28rpx;
+ * bg 0.50; 0.5px border 0.60; radius-full; neu-out-sm */
+.task-btn {
+  flex-shrink: 0;
+  padding: 14rpx 28rpx;
+  border-radius: 9999rpx;
+  background: rgba(255, 255, 255, 0.50);
+  border: 1rpx solid rgba(255, 255, 255, 0.60);
+  box-shadow: var(--neu-raised-sm);
+  transition: transform 0.2s var(--spring), box-shadow 0.2s var(--ease);
+}
+
+.task-btn:active {
+  box-shadow: var(--neu-inset-sm);
+  transform: scale(0.94);
+}
+
+/* HTML .task-btn text: 12px/600 → 24rpx; brand */
+.task-btn-text {
+  font-size: 24rpx;
+  font-weight: 600;
+  color: var(--brand);
+}

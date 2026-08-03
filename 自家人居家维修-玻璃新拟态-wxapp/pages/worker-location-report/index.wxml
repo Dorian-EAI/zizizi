@@ -1,0 +1,95 @@
+<!-- pages/worker-location-report/index.wxml — 师傅端位置上报页 玻璃新拟态
+  完整复用 app.wxss 全局组件类：.nav-bar.worker / .location-report-bar / .location-info-card / .location-actions / .btn-arrive
+-->
+<view class="page">
+  <!-- 背景装饰光斑：blue-sage 径向渐变 -->
+  <view class="blob" style="top: -40px; right: -60px; width: 280px; height: 280px; background: radial-gradient(circle, var(--brand-worker) 0%, transparent 70%);"></view>
+  <view class="blob" style="top: 360px; left: -80px; width: 240px; height: 240px; background: radial-gradient(circle, var(--sage) 0%, transparent 70%);"></view>
+
+  <scroll-view scroll-y enable-flex class="page-scroll hide-scroll" style="padding-bottom: 80rpx;">
+
+    <!-- ===== TOP NAV BAR (app.wxss .nav-bar.worker) ===== -->
+    <view class="nav-bar worker" style="padding-top: calc({{statusBarHeight}}px + 36rpx);">
+      <view class="nav-icon-btn press-neu" bindtap="onBack">
+        <image src="{{icons.back}}" mode="aspectFit" class="nav-icon" lazy-load="{{false}}" />
+      </view>
+      <text class="nav-title">位置上报</text>
+      <view class="nav-spacer"></view>
+    </view>
+
+    <!-- ===== LOCATION REPORTING STATUS BAR (app.wxss .location-report-bar + .pulse) ===== -->
+    <view class="location-report-bar" bindtap="onRetryReport">
+      <view class="pulse {{reporting ? '' : 'paused'}}"></view>
+      <text>{{reporting ? '位置上报中 · 每15秒更新' : (failCount > 0 ? '上报异常 · 点击重试' : '上报暂停')}}</text>
+    </view>
+
+    <!-- ===== CURRENT LOCATION INFO CARD (app.wxss .location-info-card) ===== -->
+    <view class="location-info-card">
+      <view class="loc-head">
+        <text class="loc-title">当前位置</text>
+        <text class="loc-coord">{{currentLat ? currentLat + ', ' + currentLng : '定位中...'}}</text>
+      </view>
+      <view class="loc-address-row">
+        <image src="{{icons.location}}" mode="aspectFit" class="loc-address-icon" lazy-load="{{false}}" />
+        <text class="loc-address">{{order.address || '地址解析中...'}}</text>
+      </view>
+      <view class="loc-update">
+        <image src="{{icons.clock}}" mode="aspectFit" class="loc-update-icon" lazy-load="{{false}}" />
+        <text>最近上报：{{lastReportTime || '尚未上报'}}</text>
+      </view>
+    </view>
+
+    <!-- ===== ORDER INFO CARD (page-specific) ===== -->
+    <view class="order-info-card">
+      <text class="card-title">订单信息</text>
+      <view class="order-info-list">
+        <view class="order-info-row">
+          <view class="order-info-label">
+            <image src="{{icons.wrench}}" mode="aspectFit" class="order-info-ic" lazy-load="{{false}}" />
+            <text>服务类型</text>
+          </view>
+          <text class="order-info-value">{{order.serviceName || order.service_type || '服务待确认'}}</text>
+        </view>
+        <view class="order-info-row">
+          <view class="order-info-label">
+            <image src="{{icons.user}}" mode="aspectFit" class="order-info-ic" lazy-load="{{false}}" />
+            <text>客户信息</text>
+          </view>
+          <text class="order-info-value">{{order.userName || '客户'}} {{order.userPhone || '电话未提供'}}</text>
+        </view>
+        <view class="order-info-row">
+          <view class="order-info-label">
+            <image src="{{icons.addrIcon}}" mode="aspectFit" class="order-info-ic" lazy-load="{{false}}" />
+            <text>服务地址</text>
+          </view>
+          <text class="order-info-value">{{order.address || '地址待确认'}}</text>
+        </view>
+        <view class="order-info-row">
+          <view class="order-info-label">
+            <image src="{{icons.calendar}}" mode="aspectFit" class="order-info-ic" lazy-load="{{false}}" />
+            <text>预约时间</text>
+          </view>
+          <text class="order-info-value">{{order.appointmentTime || order.time || '时间待确认'}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== LOCATION ACTIONS (app.wxss .location-actions grid + .btn-arrive span 2) ===== -->
+    <view class="location-actions">
+      <view class="btn-loc-secondary press-neu" bindtap="onCallCustomer">
+        <image src="{{icons.phone}}" mode="aspectFit" class="btn-loc-secondary-icon" lazy-load="{{false}}" />
+        <text>联系客户</text>
+      </view>
+      <view class="btn-loc-secondary press-neu" bindtap="onNavigate">
+        <image src="{{icons.navigate}}" mode="aspectFit" class="btn-loc-secondary-icon" lazy-load="{{false}}" />
+        <text>导航前往</text>
+      </view>
+      <view class="btn-arrive press-neu" bindtap="onArrive">
+        <image src="{{icons.check}}" mode="aspectFit" class="btn-arrive-icon" lazy-load="{{false}}" />
+        <text>我已到达</text>
+      </view>
+      <text class="location-note">到达后将自动停止位置上报，并进入服务签到流程。</text>
+    </view>
+
+  </scroll-view>
+</view>

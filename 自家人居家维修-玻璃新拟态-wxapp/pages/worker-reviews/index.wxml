@@ -1,0 +1,169 @@
+<!-- 像素级复刻 worker-reviews.html -->
+<view class="page">
+  <scroll-view scroll-y enable-flex class="page-scroll hide-scroll" style="padding-bottom: 80rpx;">
+
+    <!-- ===== TOP NAV BAR (sticky) ===== -->
+    <!-- HTML: nav-bar sticky top:0 padding:18px 20px padding-top:max(18px,env(safe-area-inset-top)) border-radius:0 0 28px 28px -->
+    <view class="nav-bar" style="padding-top: calc({{statusBarHeight}}px + 36rpx);">
+      <!-- HTML: nav-icon-btn 44x44 圆 neu-out-sm -->
+      <view class="nav-icon-btn" bindtap="onBack">
+        <image src="{{icons.back}}" mode="aspectFit" class="nav-icon-btn-icon" lazy-load="{{false}}" />
+      </view>
+      <!-- HTML: nav-title 17px/700 -->
+      <text class="nav-title">我的评价</text>
+      <!-- HTML: nav-placeholder 44x44 -->
+      <view class="nav-placeholder"></view>
+    </view>
+
+    <!-- ===== SCORE SUMMARY CARD ===== -->
+    <!-- HTML: section padding:0 20px margin-top:16px(first:18px) -->
+    <view class="section">
+      <!-- HTML: glass-neu-card summary-card padding:0 -->
+      <view class="glass-neu-card summary-card">
+        <!-- HTML: summary-top-bar 5px brand-gradient -->
+        <view class="summary-top-bar"></view>
+        <!-- HTML: summary-body flex gap:20px padding:20px 18px 22px -->
+        <view class="summary-body">
+          <!-- HTML: summary-left flex column -->
+          <view class="summary-left">
+            <!-- HTML: score-big 48px/800 brand mono -->
+            <text class="score-big numeric">{{avgRating}}</text>
+            <!-- HTML: score-label 12px text-2 margin-top:5px -->
+            <text class="score-label">综合评分</text>
+            <!-- HTML: summary-stars gap:2px star-on 16x16 -->
+            <view class="summary-stars">
+              <image
+                wx:for="{{starIndexes}}"
+                wx:key="*this"
+                wx:for-item="si"
+                src="{{si < avgRound ? icons.starOn : icons.starOff}}"
+                mode="aspectFit"
+                class="summary-star-icon"
+                lazy-load="{{false}}"
+              />
+            </view>
+          </view>
+          <!-- HTML: summary-right flex column -->
+          <view class="summary-right">
+            <!-- HTML: summary-count 12.5px text-2 600 right margin-bottom:14px -->
+            <text class="summary-count">{{total}} 次评价</text>
+            <!-- HTML: dist-list flex column gap:9px -->
+            <view class="dist-list">
+              <view class="dist-row" wx:for="{{distribution}}" wx:key="star">
+                <!-- HTML: dist-label 11px text-2 600 width:26px -->
+                <text class="dist-label">{{item.star}}星</text>
+                <!-- HTML: dist-track flex:1 7px pill inset shadow -->
+                <view class="dist-track">
+                  <view class="dist-fill" style="width: {{item.percent}}%"></view>
+                </view>
+                <!-- HTML: dist-pct 11px text-2 700 width:32px right -->
+                <text class="dist-pct numeric">{{item.percent}}%</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== TAG CLOUD CARD ===== -->
+    <view class="section">
+      <!-- HTML: glass-neu-card tag-cloud-card padding:18px -->
+      <view class="glass-neu-card tag-cloud-card">
+        <!-- HTML: card-title 16px/700 margin-bottom:14px -->
+        <text class="card-title">客户印象</text>
+        <!-- HTML: tag-cloud flex wrap gap:10px -->
+        <view class="tag-cloud">
+          <view class="tag-chip {{item.cls}}" wx:for="{{tags}}" wx:key="label">
+            <image src="{{icons[item.icon]}}" mode="aspectFit" class="tag-ic" lazy-load="{{false}}" />
+            <text>{{item.label}}</text>
+            <text class="tag-count numeric">{{item.count}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== REVIEW LIST ===== -->
+    <view class="section">
+      <!-- HTML: review-list flex column gap:16px -->
+      <view class="review-list" wx:if="{{list.length}}">
+        <view class="glass-neu-card review-card" wx:for="{{list}}" wx:key="id" wx:for-index="idx">
+          <!-- HTML: review-head flex gap:12px margin-bottom:10px -->
+          <view class="review-head">
+            <!-- HTML: review-avatar 42x42 圆 inset shadow 16px/700 brand -->
+            <view class="review-avatar {{idx === 1 ? 'review-avatar-accent' : idx === 2 ? 'review-avatar-blue' : idx === 3 ? 'review-avatar-purple' : ''}}">
+              <text>{{item.avatarText}}</text>
+            </view>
+            <!-- HTML: review-user flex:1 -->
+            <view class="review-user">
+              <!-- HTML: review-name-row flex gap:8px margin-bottom:5px -->
+              <view class="review-name-row">
+                <text class="review-name">{{item.displayName}}</text>
+                <text class="review-service" wx:if="{{item.service || item.service_name}}">{{item.service || item.service_name}}</text>
+              </view>
+              <!-- HTML: review-stars gap:2px star-on 14x14 -->
+              <view class="review-stars">
+                <image
+                  wx:for="{{starIndexes}}"
+                  wx:key="*this"
+                  wx:for-item="si"
+                  src="{{si < item.rating ? icons.starOn : icons.starOff}}"
+                  mode="aspectFit"
+                  class="review-star-icon"
+                  lazy-load="{{false}}"
+                />
+              </view>
+            </view>
+            <!-- HTML: review-date 11.5px text-3 500 -->
+            <text class="review-date numeric">{{item.time || item.created_at}}</text>
+          </view>
+          <!-- HTML: review-text 13.5px/500 line-height:1.6 -->
+          <text class="review-text" wx:if="{{item.content}}">{{item.content}}</text>
+
+          <!-- HTML: review-foot flex end margin-top:12px padding-top:10px border-top -->
+          <view class="review-foot">
+            <!-- 已回复状态 -->
+            <view class="review-replied" wx:if="{{item.reply}}">
+              <image src="{{icons.check}}" mode="aspectFit" class="review-replied-icon" lazy-load="{{false}}" />
+              <text>已回复</text>
+            </view>
+            <!-- 回复按钮 -->
+            <view class="review-reply-btn" wx:else data-id="{{item.id}}" bindtap="openReply">
+              <image src="{{icons.reply}}" mode="aspectFit" class="review-reply-icon" lazy-load="{{false}}" />
+              <text>回复</text>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 空态 -->
+      <view class="empty" wx:if="{{!list.length && !loading}}">
+        <text class="empty-text">暂无评价</text>
+      </view>
+    </view>
+
+  </scroll-view>
+
+  <!-- ===== 回复 Modal ===== -->
+  <view class="modal-mask" wx:if="{{showReply}}" bindtap="closeReply">
+    <view class="modal-sheet" catchtap="prevent">
+      <view class="modal-header">
+        <text class="modal-title">回复评价</text>
+        <view class="modal-close" bindtap="closeReply">
+          <text class="modal-close-text">×</text>
+        </view>
+      </view>
+      <textarea
+        class="modal-textarea"
+        value="{{replyContent}}"
+        maxlength="200"
+        placeholder="写下你的回复..."
+        placeholder-class="modal-placeholder"
+        bindinput="onReplyInput"
+        auto-focus
+      />
+      <view class="modal-submit" bindtap="submitReply">
+        <text class="modal-submit-text">发送回复</text>
+      </view>
+    </view>
+  </view>
+</view>

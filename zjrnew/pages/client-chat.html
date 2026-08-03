@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自家人居家维修 · 玻璃新拟态 · AI智能助手</title>
+    <link rel="stylesheet" href="../assets/fonts.css">
+
+    <style id="theme-vars">
+/* 自家人居家维修 - 玻璃新拟态 */
+:root {
+  /* Brand - Client (Teal) */
+  --brand: #0D9488;
+  --brand-dark: #0A7A70;
+  --brand-mid: #14B8A6;
+  --brand-light: #CCFBF1;
+  --brand-glow: rgba(13, 148, 136, 0.24);
+  --brand-subtle: rgba(13, 148, 136, 0.10);
+  --brand-gradient:linear-gradient(135deg,#0D9488 0%,#14B8A6 50%,#D4944C 100%);
+
+  /* Accent (Amber) */
+  --accent: #D4944C;
+  --accent-dark: #A0723C;
+  --accent-mid: #E8C088;
+  --accent-light: #F5E6D0;
+  --accent-glow: rgba(212, 148, 76, 0.20);
+
+  /* Background */
+  --background: #F2EDE8;
+  --foreground: #2C2824;
+  --body-bg: #E8E4DF;
+  --bg-elevated: #F7F3EF;
+
+  /* Neumorphic */
+  --neu-light: #FFF8F2;
+  --neu-dark: #DDD6CE;
+  --neu-highlight: rgba(255, 255, 255, 0.55);
+
+  /* Surface & Card */
+  --card: rgba(255, 255, 255, 0.52);
+  --card-foreground: #2C2824;
+  --popover: #fff;
+  --popover-foreground: #2C2824;
+
+  /* Muted */
+  --muted: #F7F3EF;
+  --muted-foreground: #8B8178;
+
+  /* Border & Input */
+  --border: rgba(44, 40, 36, 0.06);
+  --input: rgba(44, 40, 36, 0.06);
+  --ring: #0D9488;
+
+  /* Primary */
+  --primary: #0D9488;
+  --primary-foreground: #ffffff;
+
+  /* Semantic aliases */
+  --state-success: #5B8C5A;
+  --state-warning: #D4944C;
+  --state-error: #C4533A;
+  --state-info: #5A8FAD;
+
+  /* Text */
+  --text-1: #2C2824;
+  --text-2: #8B8178;
+  --text-3: #B5ADA5;
+  --text-inverse: #ffffff;
+
+  /* Sep & Fill */
+  --sep: rgba(44, 40, 36, 0.06);
+  --fill: rgba(44, 40, 36, 0.04);
+
+  /* Green/Red/Orange/Blue semantic */
+  --green: #5B8C5A;
+  --red: #C4533A;
+  --orange: #D4944C;
+  --blue: #5A8FAD;
+
+  /* Radius */
+  --radius-sm: 0.75rem;
+  --radius-md: 1.2rem;
+  --radius-lg: 1.6rem;
+  --radius-full: 9999px;
+
+    /* Font — 统一衬线系统 */
+  --font-display: 'Cormorant Garamond', 'Noto Serif SC', 'STSong', Georgia, serif;
+  --font-body: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --font-nums: 'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
+  --font: var(--font-body);
+
+  /* Motion */
+  --spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --dur: 0.2s;
+
+  /* Glass */
+  --glass-bg: rgba(255, 255, 255, 0.18);
+  --glass-blur: blur(12px) saturate(140%);
+  --glass-border: rgba(255, 255, 255, 0.60);
+
+  /* Surface presets for glass-neumorphic components */
+  --surface-1: rgba(255, 255, 255, 0.50);
+  --surface-2: rgba(255, 255, 255, 0.45);
+
+  /* Neumorphic shadow presets */
+  --neu-out-sm: 6px 6px 14px var(--neu-dark), -6px -6px 14px var(--neu-light), 0 4px 16px rgba(0, 0, 0, 0.04);
+  --neu-out-md: 8px 8px 18px var(--neu-dark), -8px -8px 18px var(--neu-light), 0 6px 24px rgba(0, 0, 0, 0.05);
+  --neu-out-lg: 10px 10px 24px var(--neu-dark), -10px -10px 24px var(--neu-light), 0 8px 32px rgba(0, 0, 0, 0.06);
+  --neu-in: inset 4px 4px 8px var(--neu-dark), inset -4px -4px 8px var(--neu-light);
+  --neu-in-deep: inset 5px 5px 10px var(--neu-dark), inset -5px -5px 10px var(--neu-light);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --font-sans: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --font-serif: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --radius-full: var(--radius-full);}
+
+/* Semantic token fallback */
+#semantic-token-fallback {
+  --brand-background: var(--background);
+  --brand-foreground: var(--foreground);
+  --brand-card: var(--card);
+  --brand-card-foreground: var(--card-foreground);
+  --brand-popover: var(--popover);
+  --brand-popover-foreground: var(--popover-foreground);
+  --brand-primary: var(--primary);
+  --brand-primary-foreground: var(--primary-foreground);
+  --brand-muted: var(--muted);
+  --brand-muted-foreground: var(--muted-foreground);
+  --brand-border: var(--border);
+  --brand-input: var(--input);
+  --brand-ring: var(--ring);
+  --brand-radius-sm: var(--radius-sm);
+  --brand-radius-md: var(--radius-md);
+  --brand-radius-lg: var(--radius-lg);
+}
+
+/* ===== Global Neumorphic Components ===== */
+/* Tab Bar */
+.tab-bar{
+  position:absolute;
+  bottom:max(14px, env(safe-area-inset-bottom));
+  left:50%;
+  transform:translateX(-50%);
+  width:calc(100% - 32px);
+  max-width:360px;
+  height:64px;
+  z-index:100;
+  background:rgba(255,255,255,0.22);
+  backdrop-filter:blur(48px) saturate(210%);
+  -webkit-backdrop-filter:blur(48px) saturate(210%);
+  border:0.5px solid rgba(255,255,255,0.50);
+  border-radius:28px;
+  box-shadow:
+    inset 0 1.5px 3px rgba(255,255,255,0.60),
+    inset 0 -0.5px 1px rgba(255,255,255,0.20),
+    0 0 0 0.5px rgba(0,0,0,0.04),
+    0 2px 10px rgba(0,0,0,0.06),
+    0 12px 36px rgba(0,0,0,0.08);
+  display:flex;
+  align-items:center;
+  justify-content:space-around;
+  padding:0 10px;
+}
+.tab-bar::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  background:linear-gradient(160deg,
+    rgba(255,255,255,0.42) 0%,
+    rgba(255,255,255,0.16) 20%,
+    rgba(255,255,255,0.03) 40%,
+    transparent 60%);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
+  padding:0.5px;
+  pointer-events:none;
+  z-index:1;
+}
+.tab-bar::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  background:linear-gradient(320deg,
+    transparent 60%,
+    rgba(13,148,136,0.06) 80%,
+    rgba(255,255,255,0.04) 100%);
+  pointer-events:none;
+  z-index:1;
+}
+.tab-item{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+  width:68px;
+  height:44px;
+  border-radius:14px;
+  color:var(--text-3);
+  font-size:11px;
+  font-weight:500;
+  text-decoration:none;
+  position:relative;
+  transition:all .2s;
+}
+.tab-item svg{
+  width:20px;
+  height:20px;
+  stroke:currentColor;
+  fill:none;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.tab-item[data-active="true"]{
+  color:var(--brand);
+  font-weight:600;
+}
+.tab-item[data-active="true"]::before{
+  content:"";
+  position:absolute;
+  width:54px;
+  height:42px;
+  border-radius:16px;
+  background:rgba(13,148,136,0.16);
+  backdrop-filter:blur(24px);
+  -webkit-backdrop-filter:blur(24px);
+  border:0.5px solid rgba(13,148,136,0.30);
+  box-shadow:
+    inset 0 1px 3px rgba(255,255,255,0.55),
+    inset 0 -0.5px 1px rgba(255,255,255,0.15),
+    0 2px 10px rgba(13,148,136,0.20),
+    0 0 0 0.5px rgba(13,148,136,0.08);
+  z-index:0;
+}
+.tab-item[data-active="true"] svg{
+  transform:scale(1.08);
+  position:relative;
+  z-index:1;
+}
+
+.btn-neu-primary:active{box-shadow:var(--neu-in);transform:scale(0.94)}
+
+.btn-neu-secondary{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,0.50);color:var(--brand);
+  border:0.5px solid rgba(255,255,255,0.60);border-radius:9999px;
+  padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
+  cursor:pointer;
+  box-shadow:var(--neu-out-sm);
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
+.btn-neu-secondary:active{box-shadow:var(--neu-in);transform:scale(0.94)}
+
+.btn-neu-ghost{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:transparent;color:var(--text-2);
+  border:0.5px solid var(--border);border-radius:9999px;
+  padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
+  cursor:pointer;
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease),color var(--dur) var(--ease);
+}
+.btn-neu-ghost:active{transform:scale(0.94);color:var(--brand)}
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-accent: var(--accent);
+    --radius-sm: var(--radius-sm);
+    --radius-md: var(--radius-md);
+    --radius-lg: var(--radius-lg);
+    --radius-full: var(--radius-full);
+    --font-sans: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+    --font-serif: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+    <style id="semantic-token-fallback">
+      .bg-background { background-color: var(--background); }
+      .text-background { color: var(--background); }
+      .border-background { border-color: var(--background); }
+      .ring-background { --tw-ring-color: var(--background); }
+      .bg-foreground { background-color: var(--foreground); }
+      .text-foreground { color: var(--foreground); }
+      .border-foreground { border-color: var(--foreground); }
+      .ring-foreground { --tw-ring-color: var(--foreground); }
+      .bg-card { background-color: var(--card); }
+      .text-card { color: var(--card); }
+      .border-card { border-color: var(--card); }
+      .ring-card { --tw-ring-color: var(--card); }
+      .bg-card-foreground { background-color: var(--card-foreground); }
+      .text-card-foreground { color: var(--card-foreground); }
+      .border-card-foreground { border-color: var(--card-foreground); }
+      .ring-card-foreground { --tw-ring-color: var(--card-foreground); }
+      .bg-popover { background-color: var(--popover); }
+      .text-popover { color: var(--popover); }
+      .border-popover { border-color: var(--popover); }
+      .ring-popover { --tw-ring-color: var(--popover); }
+      .bg-popover-foreground { background-color: var(--popover-foreground); }
+      .text-popover-foreground { color: var(--popover-foreground); }
+      .border-popover-foreground { border-color: var(--popover-foreground); }
+      .ring-popover-foreground { --tw-ring-color: var(--popover-foreground); }
+      .bg-primary { background-color: var(--primary); }
+      .text-primary { color: var(--primary); }
+      .border-primary { border-color: var(--primary); }
+      .ring-primary { --tw-ring-color: var(--primary); }
+      .bg-primary-foreground { background-color: var(--primary-foreground); }
+      .text-primary-foreground { color: var(--primary-foreground); }
+      .border-primary-foreground { border-color: var(--primary-foreground); }
+      .ring-primary-foreground { --tw-ring-color: var(--primary-foreground); }
+      .bg-muted { background-color: var(--muted); }
+      .text-muted { color: var(--muted); }
+      .border-muted { border-color: var(--muted); }
+      .ring-muted { --tw-ring-color: var(--muted); }
+      .bg-muted-foreground { background-color: var(--muted-foreground); }
+      .text-muted-foreground { color: var(--muted-foreground); }
+      .border-muted-foreground { border-color: var(--muted-foreground); }
+      .ring-muted-foreground { --tw-ring-color: var(--muted-foreground); }
+      .bg-border { background-color: var(--border); }
+      .text-border { color: var(--border); }
+      .border-border { border-color: var(--border); }
+      .ring-border { --tw-ring-color: var(--border); }
+      .bg-input { background-color: var(--input); }
+      .text-input { color: var(--input); }
+      .border-input { border-color: var(--input); }
+      .ring-input { --tw-ring-color: var(--input); }
+      .bg-ring { background-color: var(--ring); }
+      .text-ring { color: var(--ring); }
+      .border-ring { border-color: var(--ring); }
+      .ring-ring { --tw-ring-color: var(--ring); }
+      .bg-accent { background-color: var(--accent); }
+      .text-accent { color: var(--accent); }
+      .border-accent { border-color: var(--accent); }
+      .ring-accent { --tw-ring-color: var(--accent); }
+    </style>
+    <style>
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      [data-icon] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        background-color: currentColor;
+      }
+    </style>
+</head>
+<body>
+
+<div class="phone" data-dom-id="page-client-chat" style="height: 974.25px;"><div class="status-bar" style="background-image: radial-gradient(circle, rgba(212, 148, 76, 0.14) 0%, rgba(13, 148, 136, 0.16) 0%, rgba(13, 148, 136, 0.14) 0%, rgba(212, 148, 76, 0.08) 50%, rgba(0, 0, 0, 0) 70%, rgba(0, 0, 0, 0) 70%, rgba(13, 148, 136, 0.06) 90.4%, rgba(13, 148, 136, 0.06) 100%); background-color: transparent;">
+    <span>21:30</span>
+    <div class="status-icons">
+      <svg viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0 1 14.08 0"></path><path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path><circle cx="12" cy="20" r="1"></circle></svg>
+      <svg viewBox="0 0 24 24"><rect x="2" y="7" width="18" height="10" rx="2"></rect><path d="M22 11v2"></path></svg>
+    </div>
+  </div>
+
+  <!-- ===== Status Bar ===== -->
+  
+
+  <!-- ===== Top Nav Bar (sub-page) ===== -->
+  <nav class="nav-bar" style="width: 374px; height: 72px; background-image: radial-gradient(circle, rgba(212, 148, 76, 0.14) 0%, rgba(13, 148, 136, 0.16) 0%, rgba(13, 148, 136, 0.14) 0%, rgba(212, 148, 76, 0.08) 50%, rgba(0, 0, 0, 0) 70%, rgba(0, 0, 0, 0) 70%, rgba(13, 148, 136, 0.06) 100%); background-color: transparent;">
+    <button class="nav-back" data-dom-id="back-btn" aria-label="返回">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m15 18-6-6 6-6"></path>
+      </svg>
+    </button>
+    <div class="nav-titles">
+      <h1 class="nav-title">AI智能助手</h1>
+      <div class="nav-subtitle">智能问答 · 语音输入</div>
+    </div>
+    <button class="nav-slot" data-dom-id="chat-more" aria-label="更多">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle>
+      </svg>
+    </button>
+  </nav>
+
+  <!-- ===== Chat Area ===== -->
+  <main class="chat-area" data-dom-id="chat-area" style="width: 375px; height: 682px;">
+
+    <!-- Time divider -->
+    <div class="chat-time">今天 21:30</div>
+
+    <!-- Assistant welcome bubble -->
+    <div class="bubble-row bubble-row-left">
+      <div class="bubble-avatar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="4" y="8" width="16" height="12" rx="4"></rect>
+          <path d="M12 8V4"></path>
+          <circle cx="12" cy="3" r="1"></circle>
+          <circle cx="9" cy="14" r="1.2" fill="currentColor"></circle>
+          <circle cx="15" cy="14" r="1.2" fill="currentColor"></circle>
+          <path d="M2 14v2"></path><path d="M22 14v2"></path>
+        </svg>
+      </div>
+      <div class="bubble bubble-assistant">你好，我是自家人AI助手，描述你的维修问题，我来推荐服务方案。</div>
+    </div>
+
+    <!-- User bubble -->
+    <div class="bubble-row bubble-row-right">
+      <div class="bubble bubble-user">厨房水槽下水很慢，好像堵了，有异味。</div>
+    </div>
+
+    <!-- Assistant reply + embedded recommendation card -->
+    <div class="bubble-row bubble-row-left">
+      <div class="bubble-avatar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="4" y="8" width="16" height="12" rx="4"></rect>
+          <path d="M12 8V4"></path>
+          <circle cx="12" cy="3" r="1"></circle>
+          <circle cx="9" cy="14" r="1.2" fill="currentColor"></circle>
+          <circle cx="15" cy="14" r="1.2" fill="currentColor"></circle>
+          <path d="M2 14v2"></path><path d="M22 14v2"></path>
+        </svg>
+      </div>
+      <div class="bubble-group">
+        <div class="bubble bubble-assistant">根据你的描述，可能是厨房下水管道油污堵塞，推荐以下服务方案：</div>
+        <div class="rec-service-card">
+          <div class="rec-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+            </svg>
+          </div>
+          <div class="rec-info">
+            <div class="rec-name">管道疏通</div>
+            <div class="rec-meta">起价 &yen;80 · 平均45分钟</div>
+          </div>
+          <button class="btn-neu-primary" data-dom-id="book-pipe">立即预约</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Assistant follow-up bubble -->
+    <div class="bubble-row bubble-row-left">
+      <div class="bubble-avatar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="4" y="8" width="16" height="12" rx="4"></rect>
+          <path d="M12 8V4"></path>
+          <circle cx="12" cy="3" r="1"></circle>
+          <circle cx="9" cy="14" r="1.2" fill="currentColor"></circle>
+          <circle cx="15" cy="14" r="1.2" fill="currentColor"></circle>
+          <path d="M2 14v2"></path><path d="M22 14v2"></path>
+        </svg>
+      </div>
+      <div class="bubble bubble-assistant">是否需要加急上门？可选择30分钟急速上门（+&yen;20）。</div>
+    </div>
+
+    <!-- Quick service chips -->
+    <div class="chips-scroll" data-dom-id="quick-services" style="justify-content: flex-start; top: 176px;">
+      <span class="chip" data-dom-id="chip-water">水电维修</span>
+      <span class="chip" data-dom-id="chip-pipe">管道疏通</span>
+      <span class="chip" data-dom-id="chip-appliance">家电维修</span>
+      <span class="chip" data-dom-id="chip-door">门窗维修</span>
+    </div>
+
+  </main>
+
+  <!-- ===== Bottom Input Bar ===== -->
+  <div class="input-bar" style="top: 0px;">
+    <div class="quick-questions">
+      <span class="qq-chip" data-dom-id="qq-1">如何做防水？</span>
+      <span class="qq-chip" data-dom-id="qq-2">空调不制冷？</span>
+      <span class="qq-chip" data-dom-id="qq-3">怎么选师傅？</span>
+    </div>
+    <div class="input-row">
+      <button class="mic-btn" data-dom-id="mic-btn" aria-label="语音输入">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path>
+          <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+          <line x1="12" x2="12" y1="19" y2="22"></line>
+        </svg>
+      </button>
+      <div class="text-input" data-dom-id="msg-input">描述你的问题...</div>
+      <button class="send-btn" data-dom-id="send-btn" aria-label="发送">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m22 2-7 20-4-9-9-4Z"></path>
+          <path d="M22 2 11 13"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --phone-bg:#F2EDE8;
+  --surface-1:rgba(255,255,255,0.50);
+  --surface-2:rgba(255,255,255,0.45);
+  --border-glass:0.5px solid rgba(255,255,255,0.60);
+  --border-glass-soft:0.5px solid rgba(255,255,255,0.45);
+  --icon-raise:5px 5px 10px var(--neu-dark),-5px -5px 10px var(--neu-light);
+  --icon-inset:inset 3px 3px 6px var(--neu-dark),inset -3px -3px 6px var(--neu-light);
+}
+html,body{font-family:var(--font);color:var(--text-1);-webkit-font-smoothing:antialiased}
+body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh;background:var(--body-bg);letter-spacing:-0.01em}
+
+/* ===== Phone Frame ===== */
+.phone{position:relative;width:414px;min-height:896px;background:var(--phone-bg);border-radius:48px;overflow:hidden;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.12),0 4px 16px rgba(0,0,0,.06);padding-bottom:82px}
+.phone::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:220px;
+  background:radial-gradient(ellipse 240px 180px at 78% 30%,rgba(212,148,76,.12) 0%,transparent 70%),
+             radial-gradient(ellipse 200px 150px at 18% 60%,rgba(13,148,136,.14) 0%,transparent 70%);
+  pointer-events:none;z-index:0;
+}
+.phone::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:240px;
+  background:radial-gradient(ellipse 180px 120px at 20% 90%,rgba(13,148,136,.06) 0%,transparent 70%),
+             radial-gradient(ellipse 160px 100px at 80% 85%,rgba(212,148,76,.06) 0%,transparent 70%);
+  pointer-events:none;z-index:0;
+}
+.phone>*{position:relative;z-index:1}
+
+/* ===== Status Bar ===== */
+.status-bar{display:flex;align-items:center;justify-content:space-between;padding:14px 28px 6px;font-size:13px;font-weight:600;color:var(--text-1);flex-shrink:0}
+.status-icons{display:flex;align-items:center;gap:6px}
+.status-icons svg{width:16px;height:16px;stroke:var(--text-1);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+/* ===== Top Nav Bar ===== */
+.nav-bar{background:radial-gradient(ellipse 220px 160px at 78% 45%,rgba(212,148,76,.14) 0%,transparent 70%),radial-gradient(ellipse 180px 140px at 18% 75%,rgba(13,148,136,.16) 0%,transparent 70%),linear-gradient(135deg,rgba(13,148,136,.14) 0%,rgba(212,148,76,.08) 50%,rgba(13,148,136,.06) 100%);display:flex;align-items:center;gap:10px;padding:max(18px, env(safe-area-inset-top)) 16px 12px;flex-shrink:0;position:relative;z-index:5; border-radius:0 0 28px 28px; overflow:hidden;}
+.nav-back{
+  width:42px;height:42px;border-radius:50%;flex-shrink:0;
+  background:var(--bg-elevated);border:0.5px solid rgba(255,255,255,0.60);
+  box-shadow:var(--neu-out-sm),inset 0 1px 1px rgba(255,255,255,0.5);
+  display:flex;align-items:center;justify-content:center;color:var(--text-1);cursor:pointer;
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
+.nav-back:active{box-shadow:var(--neu-in);transform:scale(0.94)}
+.nav-back svg{width:22px;height:22px}
+.nav-titles{flex:1;min-width:0;text-align:center}
+.nav-title{font-size:17px;font-weight:700;color:var(--text-1);letter-spacing:-0.02em;line-height:1.2}
+.nav-subtitle{font-size:11px;color:var(--text-2);margin-top:3px;font-weight:500;letter-spacing:0.01em}
+.nav-slot{
+  width:42px;height:42px;border-radius:50%;flex-shrink:0;
+  background:transparent;border:none;display:flex;align-items:center;justify-content:center;
+  color:var(--text-2);cursor:pointer;
+  transition:transform var(--dur) var(--spring),color var(--dur) var(--ease);
+}
+.nav-slot:active{transform:scale(0.94);color:var(--brand)}
+.nav-slot svg{width:22px;height:22px}
+
+/* ===== Chat Area ===== */
+.chat-area{
+  flex:1 1 0;min-height:0;overflow-y:auto;overflow-x:hidden;
+  padding:6px 16px 16px;display:flex;flex-direction:column;gap:14px;
+  scrollbar-width:none;
+}
+.chat-area::-webkit-scrollbar{display:none}
+.chat-area>*{position:relative;z-index:1}
+
+/* Time divider */
+.chat-time{align-self:center;font-size:11px;color:var(--text-3);padding:5px 12px;background:var(--bg-elevated);border-radius:9999px;box-shadow:var(--neu-out-sm);font-weight:500;letter-spacing:0.02em}
+
+/* ===== Bubbles ===== */
+.bubble-row{display:flex;gap:8px;align-items:flex-end}
+.bubble-row-left{justify-content:flex-start}
+.bubble-row-right{justify-content:flex-end}
+
+.bubble-avatar{
+  width:32px;height:32px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,var(--brand) 0%,var(--brand-mid) 50%,var(--accent) 100%);
+  box-shadow:var(--neu-out-sm);display:flex;align-items:center;justify-content:center;
+  color:var(--text-inverse);
+}
+.bubble-avatar svg{width:18px;height:18px}
+
+.bubble{
+  max-width:75%;padding:11px 14px;font-size:14px;line-height:1.55;letter-spacing:-0.005em;
+  border-radius:18px;position:relative;word-break:break-word;
+}
+.bubble-assistant{
+  background:rgba(255,255,255,0.60);
+  backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);
+  border:1px solid rgba(255,255,255,0.70);
+  box-shadow:var(--neu-out-sm);
+  color:var(--text-1);
+  border-bottom-left-radius:6px;
+}
+.bubble-user{
+  background:var(--brand);color:var(--text-inverse);
+  border-bottom-right-radius:6px;
+  box-shadow:var(--neu-out-sm),0 4px 12px var(--brand-glow);
+}
+
+/* Bubble group (assistant reply + embedded card) */
+.bubble-group{max-width:75%;display:flex;flex-direction:column;gap:8px;align-items:flex-start}
+.bubble-group .bubble{max-width:100%}
+
+/* ===== Embedded Recommendation Card ===== */
+.rec-service-card{
+  width:100%;display:flex;align-items:center;gap:12px;padding:12px;
+  background:rgba(255,255,255,0.52);
+  backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);
+  border:1px solid rgba(255,255,255,0.70);
+  border-radius:var(--radius-lg);
+  box-shadow:var(--neu-out-md);
+  position:relative;overflow:hidden;
+}
+.rec-service-card::before{
+  content:'';position:absolute;inset:0;border-radius:inherit;
+  background:linear-gradient(165deg,rgba(255,255,255,0.22) 0%,rgba(255,255,255,0.05) 30%,transparent 55%);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;padding:0.5px;pointer-events:none;
+}
+.rec-service-card>*{position:relative;z-index:1;flex-shrink:0}
+.rec-service-card .rec-info{flex-shrink:1;min-width:0}
+.rec-icon{
+  width:40px;height:40px;border-radius:12px;flex-shrink:0;
+  background:var(--brand-subtle);display:flex;align-items:center;justify-content:center;
+  color:var(--brand);
+  box-shadow:inset 2px 2px 5px var(--neu-dark),inset -2px -2px 5px var(--neu-light);
+}
+.rec-icon svg{width:20px;height:20px}
+.rec-info{flex:1;min-width:0}
+.rec-name{font-size:14px;font-weight:700;color:var(--text-1);margin-bottom:3px;letter-spacing:-0.01em}
+.rec-meta{font-size:11.5px;color:var(--text-2);letter-spacing:0.01em}
+
+/* Primary button base (head only defines :active) */
+.btn-neu-primary{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:var(--brand-gradient);color:var(--text-inverse);
+  border:none;border-radius:9999px;
+  padding:7px 14px;font-size:12.5px;font-weight:600;font-family:var(--font);
+  cursor:pointer;white-space:nowrap;
+  box-shadow:var(--neu-out-sm),0 2px 8px var(--brand-glow);
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
+
+/* ===== Quick Service Chips (in chat) ===== */
+.chips-scroll{display:flex;gap:8px;overflow-x:auto;padding:6px 0 2px;scrollbar-width:none;margin-top:2px}
+.chips-scroll::-webkit-scrollbar{display:none}
+.chip{
+  flex-shrink:0;padding:7px 14px;border-radius:9999px;font-size:12px;font-weight:600;
+  cursor:pointer;white-space:nowrap;background:var(--bg-elevated);color:var(--text-2);
+  border:0.5px solid rgba(255,255,255,0.60);box-shadow:var(--neu-out-sm);
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease),color var(--dur) var(--ease);
+}
+.chip:active{transform:scale(0.94);box-shadow:var(--neu-in);color:var(--brand)}
+
+/* ===== Bottom Input Bar ===== */
+.input-bar{
+  flex-shrink:0;padding:8px 12px 14px;position:relative;z-index:6;
+  background:rgba(242,237,232,0.88);
+  backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);
+  border-top:0.5px solid var(--border);
+}
+.quick-questions{display:flex;gap:6px;overflow-x:auto;padding:0 2px 8px;scrollbar-width:none}
+.quick-questions::-webkit-scrollbar{display:none}
+.qq-chip{
+  flex-shrink:0;padding:5px 12px;border-radius:9999px;font-size:11.5px;font-weight:500;
+  cursor:pointer;white-space:nowrap;background:var(--brand-subtle);color:var(--brand);
+  border:0.5px solid rgba(13,148,136,0.18);
+  transition:transform var(--dur) var(--spring);
+}
+.qq-chip:active{transform:scale(0.94)}
+.input-row{display:flex;align-items:center;gap:8px}
+.mic-btn{
+  width:40px;height:40px;border-radius:50%;flex-shrink:0;
+  background:var(--bg-elevated);border:0.5px solid rgba(255,255,255,0.60);
+  box-shadow:var(--neu-out-sm),inset 0 1px 1px rgba(255,255,255,0.5);
+  display:flex;align-items:center;justify-content:center;color:var(--brand);cursor:pointer;
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
+.mic-btn:active{box-shadow:var(--neu-in);transform:scale(0.90)}
+.mic-btn svg{width:20px;height:20px}
+.text-input{
+  flex:1;min-width:0;height:40px;display:flex;align-items:center;padding:0 16px;
+  background:var(--bg-elevated);border:0.5px solid rgba(255,255,255,0.60);border-radius:20px;
+  box-shadow:var(--neu-in);color:var(--text-3);font-size:13px;letter-spacing:-0.005em;
+  cursor:text;
+}
+.send-btn{
+  width:40px;height:40px;border-radius:50%;flex-shrink:0;
+  background:var(--brand);color:var(--text-inverse);border:none;
+  box-shadow:var(--neu-out-sm),0 4px 12px var(--brand-glow);
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
+.send-btn:active{box-shadow:var(--neu-in);transform:scale(0.90)}
+.send-btn svg{width:20px;height:20px}
+
+/* ===== Reduced Motion ===== */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{transition:none !important;animation:none !important}
+  .nav-back:active,.nav-slot:active,.bubble-avatar:active,.btn-neu-primary:active,
+  .chip:active,.qq-chip:active,.mic-btn:active,.send-btn:active{transform:none !important}
+}
+</style>
+
+<style>@theme inline{--font-sans: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+--font-serif: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+--color-background:var(--background);--color-foreground:var(--foreground);--color-card:var(--card);--color-card-foreground:var(--card-foreground);--color-popover:var(--popover);--color-popover-foreground:var(--popover-foreground);--color-primary:var(--primary);--color-primary-foreground:var(--primary-foreground);--color-muted:var(--muted);--color-muted-foreground:var(--muted-foreground);--color-border:var(--border);--color-input:var(--input);--color-ring:var(--ring);--radius-md:var(--radius-md);}</style>
+<style>@layer base{body{background:var(--background);color:var(--foreground);font-family:var(--font-body);}}</style>
+</body>
+</html>

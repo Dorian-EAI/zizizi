@@ -1,0 +1,51 @@
+<view class="container">
+  <view wx:if="{{loading}}" class="loading-box">加载中...</view>
+
+  <block wx:elif="{{ticket}}">
+    <view class="ticket-card">
+      <view class="tc-row">
+        <text class="tc-title">{{ticket.title}}</text>
+        <view class="tc-status status-{{ticket.status}}">{{ticket.status_text}}</view>
+      </view>
+      <view class="tc-info">
+        <text class="tc-info-item">工单编号：#{{ticket.id || ticket.ticket_no}}</text>
+        <text class="tc-info-item">优先级：{{ticket.priority_text}}</text>
+        <text class="tc-info-item" wx:if="{{ticket.category}}">分类：{{ticket.category}}</text>
+        <text class="tc-info-item">创建时间：{{ticket.created_at}}</text>
+      </view>
+      <view class="tc-desc">
+        <view class="desc-label">问题描述</view>
+        <view class="desc-content">{{ticket.description}}</view>
+      </view>
+    </view>
+
+    <view class="msg-section">
+      <view class="sec-title">沟通记录</view>
+      <view class="msg-list" wx:if="{{messages.length}}">
+        <view class="msg-item {{item.sender_role === 'user' ? 'is-user' : 'is-staff'}}" wx:for="{{messages}}" wx:key="id">
+          <view class="msg-avatar">{{item.sender_role === 'user' ? '我' : '客'}}</view>
+          <view class="msg-body">
+            <view class="msg-meta">
+              <text class="msg-name">{{item.sender_role === 'user' ? '我' : '客服'}}</text>
+              <text class="msg-time">{{item.created_at}}</text>
+            </view>
+            <view class="msg-content">{{item.content}}</view>
+          </view>
+        </view>
+      </view>
+      <view wx:else class="empty-msg">
+        <text>暂无沟通记录</text>
+      </view>
+    </view>
+
+    <view class="reply-bar">
+      <input class="reply-input" placeholder="输入消息..." value="{{replyText}}" bindinput="onReplyInput" confirm-type="send" bindconfirm="sendReply" />
+      <view class="reply-btn" bindtap="sendReply">发送</view>
+    </view>
+  </block>
+
+  <view wx:else class="empty-box">
+    <text class="empty-icon">📭</text>
+    <text class="empty-text">工单不存在或加载失败</text>
+  </view>
+</view>

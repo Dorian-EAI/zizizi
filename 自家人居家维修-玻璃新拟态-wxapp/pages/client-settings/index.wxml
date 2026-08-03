@@ -1,0 +1,138 @@
+<!-- 像素级复刻 client-settings.html -->
+<!-- pages/client-settings/index.wxml — 设置 玻璃新拟态 -->
+<view class="page">
+  <!-- 背景装饰光斑：teal-amber 径向渐变 -->
+  <view class="blob" style="top: -40px; right: -60px; width: 280px; height: 280px; background: radial-gradient(circle, var(--brand) 0%, transparent 70%);"></view>
+  <view class="blob" style="top: 320px; left: -80px; width: 240px; height: 240px; background: radial-gradient(circle, var(--accent) 0%, transparent 70%);"></view>
+
+  <!-- ===== TOP NAV BAR (sticky) ===== -->
+  <view class="nav-bar" style="padding-top: calc({{statusBarHeight}}px + 36rpx);">
+    <view class="nav-icon-btn press-neu" bindtap="onBack">
+      <image class="nav-icon" src="{{icons.back}}" mode="aspectFit" lazy-load="{{false}}" />
+    </view>
+    <text class="nav-title">设置</text>
+    <view class="nav-placeholder"></view>
+  </view>
+
+  <!-- ===== ACCOUNT PREVIEW CARD ===== -->
+  <view class="section">
+    <view class="glass-neu-card account-card">
+      <view class="account-avatar avatar-glass">
+        <image src="{{icons.account}}" mode="aspectFit" lazy-load="{{false}}" class="account-avatar-img" />
+      </view>
+      <view class="account-info">
+        <text class="account-name">{{accountInfo.name || '未登录'}}</text>
+        <text class="account-phone">{{accountInfo.phone || '—'}}</text>
+      </view>
+      <view class="account-edit-btn press-neu" bindtap="onEditProfile">
+        <text>编辑</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- ===== GROUP 1: 账号与安全 ===== -->
+  <view class="section">
+    <view class="group-title">账号与安全</view>
+    <view class="glass-neu-card setting-group">
+      <view
+        class="setting-row {{index !== securityItems.length - 1 ? 'row-hairline' : ''}}"
+        wx:for="{{securityItems}}"
+        wx:key="key"
+        data-key="{{item.key}}"
+        bindtap="onSecurityTap"
+      >
+        <view class="row-icon row-icon-{{item.color}}">
+          <image src="{{item.iconUrl}}" mode="aspectFit" lazy-load="{{false}}" class="row-icon-img" />
+        </view>
+        <text class="row-title">{{item.name}}</text>
+        <view class="row-tail">
+          <text class="row-value" wx:if="{{item.valueText}}">{{item.valueText}}</text>
+          <text class="row-badge-green" wx:if="{{item.badge}}">{{item.badge}}</text>
+          <image src="{{icons.arrowRight}}" mode="aspectFit" lazy-load="{{false}}" class="row-arrow" />
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- ===== GROUP 2: 消息通知 ===== -->
+  <view class="section">
+    <view class="group-title">消息通知</view>
+    <view class="glass-neu-card setting-group">
+      <view
+        class="setting-row {{index !== notifications.length - 1 ? 'row-hairline' : ''}}"
+        wx:for="{{notifications}}"
+        wx:key="key"
+      >
+        <view class="row-icon row-icon-{{item.color}}">
+          <image src="{{item.iconUrl}}" mode="aspectFit" lazy-load="{{false}}" class="row-icon-img" />
+        </view>
+        <text class="row-title">{{item.name}}</text>
+        <view class="row-tail">
+          <!-- 自定义新拟态开关：像素级复刻 HTML .toggle -->
+          <view
+            class="toggle {{item.value ? 'toggle-on' : 'toggle-off'}}"
+            data-key="{{item.key}}"
+            bindtap="onSwitchChange"
+          >
+            <view class="toggle-thumb"></view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- ===== GROUP 3: 隐私 ===== -->
+  <view class="section">
+    <view class="group-title">隐私</view>
+    <view class="glass-neu-card setting-group">
+      <view
+        class="setting-row {{index !== privacyItems.length - 1 ? 'row-hairline' : ''}}"
+        wx:for="{{privacyItems}}"
+        wx:key="key"
+        data-key="{{item.key}}"
+        bindtap="onPrivacyTap"
+      >
+        <view class="row-icon row-icon-{{item.color}}">
+          <image src="{{item.iconUrl}}" mode="aspectFit" lazy-load="{{false}}" class="row-icon-img" />
+        </view>
+        <text class="row-title">{{item.name}}</text>
+        <view class="row-tail">
+          <image src="{{icons.arrowRight}}" mode="aspectFit" lazy-load="{{false}}" class="row-arrow" />
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- ===== GROUP 4: 其他 ===== -->
+  <view class="section">
+    <view class="group-title">其他</view>
+    <view class="glass-neu-card setting-group">
+      <view
+        class="setting-row {{index !== aboutItems.length - 1 ? 'row-hairline' : ''}}"
+        wx:for="{{aboutItems}}"
+        wx:key="key"
+        data-key="{{item.key}}"
+        bindtap="onAboutTap"
+      >
+        <view class="row-icon row-icon-{{item.color}}">
+          <image src="{{item.iconUrl}}" mode="aspectFit" lazy-load="{{false}}" class="row-icon-img" />
+        </view>
+        <text class="row-title">{{item.name}}</text>
+        <view class="row-tail">
+          <text class="row-value mono" wx:if="{{item.valueText}}">{{item.valueText}}</text>
+          <image src="{{icons.arrowRight}}" mode="aspectFit" lazy-load="{{false}}" class="row-arrow" />
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- ===== LOGOUT BUTTON ===== -->
+  <view class="section logout-section">
+    <view class="logout-btn press-card" bindtap="onLogoutTap">
+      <text>退出登录</text>
+    </view>
+  </view>
+
+  <view class="safe-bottom" style="height: 40rpx;"></view>
+
+</view>

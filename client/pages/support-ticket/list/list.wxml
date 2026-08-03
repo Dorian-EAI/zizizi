@@ -1,0 +1,77 @@
+<view class="container">
+  <view class="tab-bar">
+    <view class="tab-item {{activeTab === item.key ? 'active' : ''}}"
+          wx:for="{{tabs}}" wx:key="key"
+          bindtap="onTabTap" data-key="{{item.key}}">
+      <text>{{item.label}}</text>
+    </view>
+  </view>
+
+  <view class="ticket-list">
+    <view class="ticket-card" wx:for="{{tickets}}" wx:key="id" bindtap="goDetail" data-id="{{item.id}}">
+      <view class="tc-top">
+        <text class="tc-title">{{item.title}}</text>
+        <view class="tc-status status-{{item.status}}">{{item.status_text}}</view>
+      </view>
+      <view class="tc-meta">
+        <text class="tc-meta-item">#{{item.id || item.ticket_no}}</text>
+        <text class="tc-meta-item">优先级：{{item.priority_text}}</text>
+        <text class="tc-meta-item" wx:if="{{item.category}}">{{item.category}}</text>
+      </view>
+      <view class="tc-desc" wx:if="{{item.description}}">
+        {{item.description}}
+      </view>
+      <view class="tc-bottom">
+        <text class="tc-time">{{item.created_at}}</text>
+        <text class="tc-view">查看详情 ›</text>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{!loading && tickets.length === 0}}" class="empty">
+    <text class="empty-icon">🎧</text>
+    <text class="empty-text">暂无相关工单</text>
+  </view>
+
+  <view wx:if="{{loading}}" class="loading">加载中...</view>
+  <view wx:elif="{{!hasMore && tickets.length > 0}}" class="load-end">没有更多了</view>
+
+  <view class="fab" bindtap="openCreateModal">
+    <text class="fab-icon">+</text>
+  </view>
+
+  <view class="modal-mask {{showCreateModal ? 'show' : ''}}" catchtap="closeCreateModal">
+    <view class="modal" catchtap="noop">
+      <view class="modal-header">
+        <text class="modal-title">创建工单</text>
+        <text class="modal-close" catchtap="closeCreateModal">×</text>
+      </view>
+      <view class="modal-body">
+        <view class="form-item">
+          <text class="form-label">标题 *</text>
+          <input class="form-input" placeholder="请简要描述问题" value="{{formData.title}}" bindinput="onFormInput" data-field="title" maxlength="50" />
+        </view>
+        <view class="form-item">
+          <text class="form-label">分类</text>
+          <picker range="{{['售后服务','订单问题','支付问题','账户问题','师傅投诉','功能建议','其他']}}" bindchange="onCategoryChange">
+            <view class="form-picker">{{formData.category}} ›</view>
+          </picker>
+        </view>
+        <view class="form-item">
+          <text class="form-label">优先级</text>
+          <picker range="{{['低','中','高']}}" bindchange="onPriorityChange">
+            <view class="form-picker">{{formData.priority === 'low' ? '低' : formData.priority === 'high' ? '高' : '中'}} ›</view>
+          </picker>
+        </view>
+        <view class="form-item">
+          <text class="form-label">详细描述 *</text>
+          <textarea class="form-textarea" placeholder="请详细描述您遇到的问题..." value="{{formData.description}}" bindinput="onFormInput" data-field="description" maxlength="500"></textarea>
+        </view>
+      </view>
+      <view class="modal-footer">
+        <view class="btn btn-cancel" catchtap="closeCreateModal">取消</view>
+        <view class="btn btn-submit" catchtap="submitTicket">提交</view>
+      </view>
+    </view>
+  </view>
+</view>

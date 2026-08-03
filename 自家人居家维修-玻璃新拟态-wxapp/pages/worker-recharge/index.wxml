@@ -1,0 +1,115 @@
+<!-- pages/worker-recharge/index.wxml — 师傅充值页 像素级复刻 worker-recharge.html -->
+<view class="page">
+  <!-- 背景装饰光斑：径向渐变（blue-sage 配色） -->
+  <view class="blob" style="top: -80rpx; right: -120rpx; width: 480rpx; height: 480rpx; background: radial-gradient(circle, var(--brand-worker) 0%, transparent 70%);"></view>
+  <view class="blob" style="top: 760rpx; left: -160rpx; width: 420rpx; height: 420rpx; background: radial-gradient(circle, var(--sage) 0%, transparent 70%);"></view>
+
+  <!-- ===== Top Back Bar (sticky) ===== -->
+  <view class="back-bar worker {{navScrolled ? 'scrolled' : ''}}">
+    <view class="back-btn press-scale" bindtap="onBack">
+      <image src="{{icons.back}}" mode="aspectFit" class="back-ic" lazy-load="{{false}}" />
+    </view>
+    <text class="back-title">充值</text>
+    <view class="back-spacer"></view>
+  </view>
+
+  <scroll-view scroll-y class="page-scroll hide-scroll" bindscroll="onScroll" style="padding-bottom: 220rpx;">
+
+    <!-- ===== BALANCE CARD (glass gradient) ===== -->
+    <view class="balance-card">
+      <view class="bc-glow"></view>
+      <text class="bc-label">钱包余额</text>
+      <text class="bc-amount mono">¥{{balanceText}}</text>
+      <text class="bc-sub">可提现 ¥{{balanceText}}</text>
+    </view>
+
+    <!-- ===== ACTIVITY BANNER (amber) ===== -->
+    <view class="activity-banner press-scale" bindtap="onActivity" wx:if="{{showActivity}}">
+      <view class="ab-icon">
+        <image src="{{icons.gift}}" mode="aspectFit" class="ab-icon-svg" lazy-load="{{false}}" />
+      </view>
+      <text class="ab-text">充1000送50，限时活动</text>
+      <image src="{{icons.chevron}}" mode="aspectFit" class="ab-chevron" lazy-load="{{false}}" />
+    </view>
+
+    <!-- ===== RECHARGE AMOUNT SECTION ===== -->
+    <view class="section">
+      <text class="section-title">选择金额</text>
+      <view class="amount-grid">
+        <view
+          class="amount-cell {{item.selected ? 'selected' : ''}}"
+          wx:for="{{amounts}}"
+          wx:key="value"
+          data-idx="{{index}}"
+          bindtap="onSelectAmount"
+        >
+          <text class="ac-symbol">¥</text>
+          <text class="ac-value">{{item.label}}</text>
+          <view class="ac-check" wx:if="{{item.selected}}">
+            <image src="{{icons.check}}" mode="aspectFit" class="ac-check-svg" lazy-load="{{false}}" />
+          </view>
+        </view>
+
+        <!-- 自定义金额 -->
+        <view class="amount-cell custom {{customSelected ? 'selected' : ''}}" bindtap="onSelectCustom">
+          <text class="ac-custom-label">自定义</text>
+          <view class="ac-custom-input">
+            <text class="ac-prefix">¥</text>
+            <input
+              class="ac-custom-field mono"
+              type="digit"
+              value="{{customAmount}}"
+              placeholder="输入金额"
+              placeholder-class="ac-custom-placeholder"
+              bindinput="onCustomInput"
+            />
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== PAYMENT METHOD SECTION ===== -->
+    <view class="section">
+      <text class="section-title">支付方式</text>
+      <view class="card pay-card">
+        <view
+          class="pay-row {{item.selected ? 'selected' : ''}}"
+          wx:for="{{payMethods}}"
+          wx:key="key"
+          data-idx="{{index}}"
+          bindtap="onSelectPay"
+        >
+          <view class="pay-icon pay-icon-{{item.iconTone}}">
+            <image src="{{item.iconUrl}}" mode="aspectFit" class="pay-icon-svg" lazy-load="{{false}}" />
+          </view>
+          <text class="pay-name">{{item.label}}</text>
+          <text class="pay-badge" wx:if="{{item.badge}}">{{item.badge}}</text>
+          <view class="pay-radio {{item.selected ? 'pay-radio-on' : ''}}">
+            <view class="pay-radio-dot" wx:if="{{item.selected}}"></view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== RECHARGE NOTES SECTION ===== -->
+    <view class="section notes-section">
+      <text class="section-title">充值说明</text>
+      <view class="notes-card">
+        <view class="note-row" wx:for="{{notes}}" wx:key="index">
+          <view class="note-dot"></view>
+          <text class="note-text">{{item}}</text>
+        </view>
+      </view>
+    </view>
+
+  </scroll-view>
+
+  <!-- ===== BOTTOM FIXED CTA ===== -->
+  <view class="cta-bar safe-bottom">
+    <view class="cta-btn press-scale {{submitting ? 'disabled' : ''}}" bindtap="onSubmit">
+      <image src="{{icons.zap}}" mode="aspectFit" class="cta-btn-icon" lazy-load="{{false}}" />
+      <text class="cta-text">立即充值</text>
+      <text class="cta-amount mono">¥{{displayAmount}}</text>
+    </view>
+  </view>
+</view>

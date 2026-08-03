@@ -1,0 +1,450 @@
+/* pages/client-coupon/index.wxss — 优惠券 像素级复刻 client-coupon.html
+ * 换算基准：1px = 2rpx（750rpx 设计稿）
+ * 严格忠于 HTML 参考的尺寸、间距、圆角、阴影、渐变透明度
+ */
+
+/* ===== Nav Icon 局部覆写（HTML .nav-icon-btn svg: 22x22 → 44rpx；全局 .nav-icon 为 40rpx，需覆写） ===== */
+.nav-icon {
+  width: 44rpx;
+  height: 44rpx;
+  display: inline-block;
+}
+
+/* ===== Sections（HTML .section: padding:0 20px → 40rpx; margin-top:16px → 32rpx; z-index:2） ===== */
+.section {
+  padding: 0 40rpx;
+  margin-top: 32rpx;
+  position: relative;
+  z-index: 2;
+}
+.section:first-of-type {
+  margin-top: 36rpx;
+}
+
+/* ===== Summary Card（HTML .summary-card: flex; align-items:center; justify-content:space-between;
+ * padding:16px 16px → 32rpx; gap:12px → 24rpx） ===== */
+.summary-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 32rpx;
+  gap: 24rpx;
+}
+/* HTML .summary-left: flex column; gap:3px → 6rpx */
+.summary-left {
+  display: flex;
+  flex-direction: column;
+  gap: 6rpx;
+}
+/* HTML .summary-value: 24px/800 → 48rpx; accent; -.02em; line-height:1; tabular-nums */
+.summary-value {
+  font-size: 48rpx;
+  font-weight: 800;
+  color: var(--accent);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+/* HTML .summary-label: 12px → 24rpx; text-2; 500; 0.01em */
+.summary-label {
+  font-size: 24rpx;
+  color: var(--text-2);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+/* HTML .summary-stats: flex; align-items:center */
+.summary-stats {
+  display: flex;
+  align-items: center;
+}
+/* HTML .stat-item: flex column; align-items:center; gap:2px → 4rpx */
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4rpx;
+}
+/* HTML .stat-value: 20px/800 → 40rpx; brand; -.02em */
+.stat-value {
+  font-size: 40rpx;
+  font-weight: 800;
+  color: var(--brand);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  display: inline-flex;
+  align-items: baseline;
+}
+/* HTML .stat-unit: 12px/600 → 24rpx; margin-left:1px → 2rpx; opacity 0.85 */
+.stat-unit {
+  font-size: 24rpx;
+  font-weight: 600;
+  margin-left: 2rpx;
+  opacity: 0.85;
+}
+/* HTML .stat-label: 11px → 22rpx; text-2; 500 */
+.stat-label {
+  font-size: 22rpx;
+  color: var(--text-2);
+  font-weight: 500;
+}
+/* HTML .btn-use-coupon: inline-flex; align-items:center; justify-content:center;
+ * bg brand-gradient; color text-inverse; border none; radius 9999px;
+ * padding 8px 18px → 16rpx 36rpx; font 13px/700 → 26rpx; .02em;
+ * neu-out-sm + 4px 14px brand-glow + inset 0 1px 1px rgba(255,255,255,0.30) */
+.btn-use-coupon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--brand-gradient);
+  color: var(--text-inverse);
+  border: 1rpx solid rgba(255, 255, 255, 0.30);
+  border-radius: 9999rpx;
+  padding: 16rpx 36rpx;
+  box-shadow: var(--neu-raised-sm), 0 8rpx 28rpx var(--brand-glow), inset 0 2rpx 2rpx rgba(255, 255, 255, 0.30);
+  transition: transform 0.2s var(--spring), box-shadow 0.2s var(--ease);
+}
+.btn-use-coupon:active {
+  transform: scale(0.94);
+  box-shadow: var(--neu-inset-sm);
+}
+.btn-use-coupon-text {
+  font-size: 26rpx;
+  font-weight: 700;
+  color: var(--text-inverse);
+  letter-spacing: 0.02em;
+}
+
+/* ===== Segmented Tabs（HTML .segmented-tabs: flex; gap:4px → 8rpx; padding:5px → 10rpx; bg-elevated; r-pill; neu-in + inset） ===== */
+.segmented-tabs {
+  display: flex;
+  gap: 8rpx;
+  padding: 10rpx;
+  background: var(--bg-elevated);
+  border-radius: var(--r-pill);
+  box-shadow: var(--neu-inset), inset 0 2rpx 2rpx rgba(255, 255, 255, 0.35);
+}
+/* HTML .seg-tab: flex:1; height:38px → 76rpx; 13.5px/600 → 27rpx; text-2; r-pill */
+.seg-tab {
+  flex: 1;
+  height: 76rpx;
+  background: transparent;
+  color: var(--text-2);
+  font-size: 27rpx;
+  font-weight: 600;
+  border-radius: var(--r-pill);
+  transition: all 0.2s var(--ease);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+/* HTML .seg-tab.active: bg brand; text-inverse; neu-out-sm + 0 2px 10px brand-glow + inset 0 1px 1px */
+.seg-tab.active {
+  background: var(--brand);
+  color: var(--text-inverse);
+  box-shadow: var(--neu-raised-sm), 0 4rpx 20rpx var(--brand-glow), inset 0 2rpx 2rpx rgba(255, 255, 255, 0.25);
+  letter-spacing: 0.01em;
+}
+.seg-tab:not(.active):active {
+  transform: scale(0.95);
+  color: var(--brand);
+}
+
+/* ===== List Section Title（HTML .list-section-title: flex; gap:8px → 16rpx; 13px/700 → 26rpx; text-2; 0.02em; margin-bottom:14px → 28rpx） ===== */
+.list-section-title {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  font-size: 26rpx;
+  font-weight: 700;
+  color: var(--text-2);
+  letter-spacing: 0.02em;
+  margin-bottom: 28rpx;
+  padding: 0 4rpx;
+}
+/* HTML ::before: 3px wide → 6rpx; 14px tall → 28rpx; brand; radius 2px → 4rpx; shadow 0 0 6px brand-glow → 12rpx */
+.list-section-title::before {
+  content: '';
+  width: 6rpx;
+  height: 28rpx;
+  background: var(--brand);
+  border-radius: 4rpx;
+  box-shadow: 0 0 12rpx var(--brand-glow);
+}
+
+/* ===== Coupon List（HTML .coupon-list: flex column; gap:16px → 32rpx） ===== */
+.coupon-list {
+  display: flex;
+  flex-direction: column;
+  gap: 32rpx;
+}
+
+/* ===== Coupon Ticket Card（HTML .coupon-card） ===== */
+/* HTML: flex; align-items:stretch; bg 0.55; blur(20px) → 40rpx; 1px border 0.70;
+ * radius r-md; neu-out-sm + 0 6px 22px + 0 0 0 1px; overflow visible */
+.coupon-card {
+  display: flex;
+  align-items: stretch;
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(40rpx) saturate(150%);
+  -webkit-backdrop-filter: blur(40rpx) saturate(150%);
+  border: 1rpx solid rgba(255, 255, 255, 0.70);
+  border-radius: var(--r-md);
+  box-shadow: var(--neu-raised-sm), 0 12rpx 44rpx rgba(0, 0, 0, 0.05), 0 0 0 1rpx rgba(44, 40, 36, 0.04);
+  position: relative;
+  overflow: visible;
+  transition: transform 0.2s var(--spring), box-shadow 0.2s var(--ease);
+}
+.coupon-card:active {
+  transform: scale(0.985);
+}
+.coupon-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.05) 30%, transparent 55%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* 金额区（左侧，品牌渐变） HTML .coupon-amount: flex 0 0 110px → 220rpx;
+ * brand-gradient; gap:6px → 12rpx; padding 18px 8px → 36rpx 16rpx; text-inverse;
+ * radius calc(r-md - 1px); inset -1px 0 0 rgba(255,255,255,0.18) */
+.coupon-amount {
+  flex: 0 0 220rpx;
+  background: var(--brand-gradient);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12rpx;
+  padding: 36rpx 16rpx;
+  color: var(--text-inverse);
+  border-radius: calc(var(--r-md) - 2rpx) 0 0 calc(var(--r-md) - 2rpx);
+  position: relative;
+  z-index: 2;
+  box-shadow: inset -2rpx 0 0 rgba(255, 255, 255, 0.18);
+}
+.coupon-amount::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.28) 0%, transparent 42%);
+  pointer-events: none;
+}
+.coupon-amount-val {
+  display: inline-flex;
+  align-items: baseline;
+  justify-content: center;
+}
+/* HTML .cur: 15px/700 → 30rpx; opacity 0.92; margin-right:1px → 2rpx */
+.coupon-amount .cur {
+  font-size: 30rpx;
+  font-weight: 700;
+  opacity: 0.92;
+  margin-right: 2rpx;
+}
+/* HTML .num: 40px/800 → 80rpx; line-height:1; -.03em; tabular-nums */
+.coupon-amount .num {
+  font-size: 80rpx;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+/* HTML .coupon-amount-threshold: 10.5px/600 → 21rpx; 0.01em; bg 0.20;
+ * padding 2px 9px → 4rpx 18rpx; r-pill; inset 0 1px 1px */
+.coupon-amount-threshold {
+  font-size: 21rpx;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  background: rgba(255, 255, 255, 0.20);
+  padding: 4rpx 18rpx;
+  border-radius: var(--r-pill);
+  box-shadow: inset 0 2rpx 2rpx rgba(255, 255, 255, 0.22);
+}
+
+/* 票根虚线分隔（带圆形缺口） HTML .coupon-divider: width 1.5px → 3rpx;
+ * bg-size 1.5px 8px → 3rpx 16rpx; z-index:3; opacity 0.9 */
+.coupon-divider {
+  position: relative;
+  width: 3rpx;
+  align-self: stretch;
+  background-image: linear-gradient(to bottom, var(--sep) 55%, transparent 55%);
+  background-size: 3rpx 16rpx;
+  background-repeat: repeat-y;
+  background-position: center;
+  z-index: 3;
+  opacity: 0.9;
+}
+/* HTML ::before/::after: 16px circle → 32rpx; bg phone-bg; inset shadows;
+ * translateX(-50%); top:-8px → -16rpx; bottom:-8px → -16rpx */
+.coupon-divider::before,
+.coupon-divider::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  width: 32rpx;
+  height: 32rpx;
+  border-radius: 50%;
+  background: var(--bg);
+  box-shadow: inset 0 2rpx 4rpx rgba(0, 0, 0, 0.10), inset 0 -2rpx 2rpx rgba(255, 255, 255, 0.4);
+  transform: translateX(-50%);
+}
+.coupon-divider::before {
+  top: -16rpx;
+}
+.coupon-divider::after {
+  bottom: -16rpx;
+}
+
+/* 信息区（右侧） HTML .coupon-info: flex:1; flex column center; padding 14px 16px → 28rpx 32rpx;
+ * gap:5px → 10rpx; z-index:2 */
+.coupon-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 28rpx 32rpx;
+  gap: 10rpx;
+  position: relative;
+  z-index: 2;
+}
+/* HTML .coupon-name: 15px/700 → 30rpx; -.01em; line-height 1.3 */
+.coupon-name {
+  font-size: 30rpx;
+  font-weight: 700;
+  color: var(--text-1);
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+/* HTML .coupon-validity: 11.5px → 23rpx; text-2; 500; gap:4px → 8rpx; ::before 5px dot → 10rpx */
+.coupon-validity {
+  font-size: 23rpx;
+  color: var(--text-2);
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 8rpx;
+}
+.coupon-validity::before {
+  content: '';
+  width: 10rpx;
+  height: 10rpx;
+  border-radius: 50%;
+  background: var(--text-3);
+  flex-shrink: 0;
+}
+/* HTML .coupon-use-btn: align-self flex-start; margin-top:6px → 12rpx;
+ * bg brand; text-inverse; r-pill; padding 6px 15px → 12rpx 30rpx;
+ * 12px/700 → 24rpx; 0.02em; shadow 0 2px 8px brand-glow + inset 0 1px 1px */
+.coupon-use-btn {
+  align-self: flex-start;
+  margin-top: 12rpx;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--brand);
+  border-radius: var(--r-pill);
+  padding: 12rpx 30rpx;
+  box-shadow: 0 4rpx 16rpx var(--brand-glow), inset 0 2rpx 2rpx rgba(255, 255, 255, 0.25);
+  transition: transform 0.2s var(--spring), box-shadow 0.2s var(--ease);
+}
+.coupon-use-btn:active {
+  transform: scale(0.93);
+  box-shadow: var(--neu-inset);
+}
+.coupon-use-btn-text {
+  font-size: 24rpx;
+  font-weight: 700;
+  color: var(--text-inverse);
+  letter-spacing: 0.02em;
+}
+
+/* 已使用/已过期券（灰化） HTML .coupon-card.coupon-used: opacity 0.55; filter grayscale(0.35) */
+.coupon-card.coupon-used {
+  opacity: 0.55;
+  filter: grayscale(0.35);
+}
+/* HTML .coupon-used .coupon-amount: gray gradient */
+.coupon-card.coupon-used .coupon-amount {
+  background: linear-gradient(135deg, #B5ADA5 0%, #8B8178 60%, #6F665E 100%);
+}
+/* HTML .coupon-used-badge: align-self flex-start; margin-top:6px → 12rpx;
+ * gap:3px → 6rpx; 11.5px/700 → 23rpx; text-3; bg fill; 0.5px border sep;
+ * padding 5px 10px → 10rpx 20rpx; r-pill; 0.02em */
+.coupon-used-badge {
+  align-self: flex-start;
+  margin-top: 12rpx;
+  display: inline-flex;
+  align-items: center;
+  gap: 6rpx;
+  font-size: 23rpx;
+  font-weight: 700;
+  color: var(--text-3);
+  background: var(--fill);
+  border: 1rpx solid var(--sep);
+  padding: 10rpx 20rpx;
+  border-radius: var(--r-pill);
+  letter-spacing: 0.02em;
+}
+/* HTML .coupon-used-badge svg: 13x13 → 26rpx */
+.badge-icon {
+  width: 26rpx;
+  height: 26rpx;
+  display: inline-block;
+}
+/* .badge-text：已使用/已过期状态文案（继承父级字号字色，仅补行高与对齐） */
+.badge-text {
+  line-height: 1;
+  display: inline-block;
+}
+
+/* ===== 空态 ===== */
+.empty {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 140rpx 32rpx;
+  gap: 16rpx;
+}
+.empty-icon {
+  width: 160rpx;
+  height: 160rpx;
+  margin-bottom: 8rpx;
+}
+.empty-img {
+  width: 64rpx;
+  height: 64rpx;
+  display: inline-block;
+}
+.empty-text {
+  font-size: 30rpx;
+  color: var(--text-2);
+  font-weight: 500;
+}
+.empty-sub {
+  font-size: 24rpx;
+  color: var(--text-3);
+}
+
+/* ===== 脚注（HTML .coupon-foot-note: center; 11.5px → 23rpx; text-3; 1.6; padding 14px 40px 4px → 28rpx 80rpx 8rpx; 500; 0.01em） ===== */
+.coupon-foot-note {
+  text-align: center;
+  font-size: 23rpx;
+  color: var(--text-3);
+  line-height: 1.6;
+  padding: 28rpx 80rpx 8rpx;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  position: relative;
+  z-index: 2;
+}

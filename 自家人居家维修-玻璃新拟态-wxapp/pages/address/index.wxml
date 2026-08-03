@@ -1,0 +1,137 @@
+<!-- 像素级复刻 client-address.html -->
+<!-- pages/address/index.wxml — 地址管理 玻璃新拟态 -->
+<view class="page">
+  <!-- 背景装饰光斑：teal-amber 径向渐变 -->
+  <view class="blob" style="top: -40px; right: -60px; width: 280px; height: 280px; background: radial-gradient(circle, var(--brand) 0%, transparent 70%);"></view>
+  <view class="blob" style="top: 520px; left: -80px; width: 240px; height: 240px; background: radial-gradient(circle, var(--accent) 0%, transparent 70%);"></view>
+
+  <!-- ===== 顶部导航栏（对齐 HTML .nav-bar） ===== -->
+  <!-- HTML .nav-bar: position:sticky;top:0;z-index:50;display:flex;align-items:center;
+       justify-content:space-between;padding:max(18px,env) 16px 12px；
+       border-radius:0 0 28px 28px → 0 0 56rpx 56rpx；
+       background 三层径向 + 线性渐变 -->
+  <view class="nav-bar" style="padding-top: calc({{statusBarHeight}}px + 36rpx);">
+    <!-- HTML .nav-back: width:44px;height:44px → 88rpx；border-radius:50%；
+         background:var(--bg)；box-shadow:var(--neu-out-sm),inset 0 1px 1px rgba(255,255,255,0.5) -->
+    <view class="nav-back press-neu" bindtap="onBack">
+      <image class="nav-back-icon" src="{{icons.back}}" mode="aspectFit" lazy-load="{{false}}" />
+    </view>
+    <!-- HTML .nav-title: font-size:17px;font-weight:700;flex:1;text-align:center → 34rpx 700 -->
+    <text class="nav-title">我的地址</text>
+    <!-- HTML .nav-edit: width:42px;height:42px → 84rpx；border-radius:50%；
+         background:rgba(255,255,255,0.18)；backdrop-filter:blur(16px) -->
+    <view class="nav-edit press-scale" bindtap="onNavEdit">
+      <image class="nav-edit-icon" src="{{icons.menu}}" mode="aspectFit" lazy-load="{{false}}" />
+    </view>
+  </view>
+
+  <!-- ===== 当前定位卡（对齐 HTML .loc-card） ===== -->
+  <!-- HTML .section: padding:0 16px;margin-top:18px → 0 32rpx / 36rpx -->
+  <view class="section">
+    <!-- HTML .loc-card: display:flex;gap:12px → 24rpx；padding:14px → 28rpx -->
+    <view class="loc-card glass-neu-card press-card" bindtap="onRelocate">
+      <!-- HTML .loc-icon: width:44px;height:44px → 88rpx；border-radius:50%；
+           background:var(--brand-gradient)；box-shadow:var(--neu-out-sm),0 4px 12px var(--brand-glow) -->
+      <view class="loc-icon">
+        <image src="{{icons.locationWhite}}" mode="aspectFit" lazy-load="{{false}}" class="loc-icon-img" />
+      </view>
+      <view class="loc-info">
+        <!-- HTML .loc-label: font-size:11px → 22rpx；margin-bottom:3px → 6rpx -->
+        <text class="loc-label">当前定位</text>
+        <!-- HTML .loc-addr: font-size:14px → 28rpx；font-weight:600 -->
+        <text class="loc-addr">{{currentLocation}}</text>
+      </view>
+      <!-- HTML .loc-relocate: height:34px → 68rpx；padding:0 12px → 0 24rpx；
+           background:rgba(255,255,255,0.55)；border:0.5px solid rgba(255,255,255,0.70)；
+           border-radius:9999px；font-size:12.5px → 25rpx -->
+      <view class="loc-relocate press-neu" catchtap="onRelocate">
+        <image src="{{icons.refresh}}" mode="aspectFit" lazy-load="{{false}}" class="loc-relocate-icon" />
+        <text class="loc-relocate-text">重新定位</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- ===== 区块标题（对齐 HTML .section-title） ===== -->
+  <view class="section" wx:if="{{addresses.length > 0}}">
+    <!-- HTML .section-title: font-size:15px;font-weight:700;margin-bottom:12px → 30rpx 700 / 24rpx -->
+    <view class="addr-section-head">
+      <text class="addr-section-title">我的收货地址</text>
+      <!-- HTML .count: font-size:12px → 24rpx -->
+      <text class="addr-count">共{{addresses.length}}条</text>
+    </view>
+
+    <!-- ===== 地址列表（对齐 HTML .addr-list） ===== -->
+    <!-- HTML .addr-list: display:flex;flex-direction:column;gap:14px → 28rpx -->
+    <view class="addr-list">
+      <view
+        class="addr-card glass-neu-card press-card {{item.isDefault ? 'addr-default' : ''}}"
+        wx:for="{{addresses}}"
+        wx:key="id"
+        data-id="{{item.id}}"
+        bindtap="onAddrTap"
+        bindlongpress="onAddrLongPress"
+      >
+        <!-- HTML .addr-accent: width:3px → 6rpx；top:14px;bottom:14px → 28rpx；
+             background:var(--brand-gradient)；box-shadow:0 0 12px var(--brand-glow) -->
+        <view class="addr-accent" wx:if="{{item.isDefault}}"></view>
+
+        <view class="addr-body">
+          <!-- HTML .addr-row: display:flex;gap:8px → 16rpx；flex-wrap:wrap -->
+          <view class="addr-row">
+            <!-- HTML .addr-tag: min-width:32px → 64rpx；height:22px → 44rpx；
+                 padding:0 8px → 0 16rpx；border-radius:7px → 14rpx；font-size:12px → 24rpx -->
+            <text class="addr-tag {{item.tag === '家' ? 'tag-home' : item.tag === '公司' ? 'tag-company' : 'tag-school'}}">{{item.tag}}</text>
+            <!-- HTML .addr-name: font-size:15px → 30rpx；font-weight:700 -->
+            <text class="addr-name">{{item.name}}</text>
+            <!-- HTML .addr-phone: font-size:13px → 26rpx；font-weight:500 -->
+            <text class="addr-phone">{{item.phone}}</text>
+            <!-- HTML .addr-default-tag: height:20px → 40rpx；padding:0 7px → 0 14rpx；
+                 border-radius:6px → 12rpx；font-size:10.5px → 21rpx；background:var(--brand) -->
+            <text class="addr-default-tag" wx:if="{{item.isDefault}}">默认</text>
+          </view>
+          <!-- HTML .addr-detail: font-size:13px → 26rpx；line-height:1.5；-webkit-line-clamp:2 -->
+          <text class="addr-detail">{{item.detail}}</text>
+        </view>
+
+        <!-- HTML .addr-actions: display:flex;gap:4px → 8rpx；padding-left:8px → 16rpx -->
+        <view class="addr-actions">
+          <!-- HTML .addr-btn: width:44px;height:44px → 88rpx；border-radius:50%；
+               background:var(--bg-elevated)；box-shadow:var(--neu-out-sm),inset 0 1px 1px rgba(255,255,255,0.5) -->
+          <view class="addr-btn press-neu" catchtap="onEdit" data-id="{{item.id}}">
+            <image src="{{icons.edit}}" mode="aspectFit" lazy-load="{{false}}" class="addr-btn-icon" />
+          </view>
+          <view class="addr-btn addr-btn-danger press-neu" catchtap="onDel" data-id="{{item.id}}">
+            <image src="{{icons.trash}}" mode="aspectFit" lazy-load="{{false}}" class="addr-btn-icon" />
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- ===== 空状态 ===== -->
+  <view class="empty" wx:else>
+    <view class="empty-icon neu-icon">
+      <image src="{{icons.location}}" mode="aspectFit" lazy-load="{{false}}" class="empty-icon-img" />
+    </view>
+    <text class="empty-title">暂无地址</text>
+    <text class="empty-desc">点击下方按钮添加您的第一个服务地址</text>
+  </view>
+
+  <!-- 底部留白，避免 CTA 遮挡 -->
+  <view class="cta-spacer"></view>
+
+  <!-- ===== 底部固定 CTA（对齐 HTML .addr-cta） ===== -->
+  <!-- HTML .addr-cta: position:fixed;bottom:0;padding:14px 16px max(14px,env) → 28rpx 32rpx calc(env+28rpx)；
+       background:linear-gradient(180deg,rgba(242,237,232,0) 0%,rgba(242,237,232,0.92) 30%,rgba(242,237,232,0.98) 100%) -->
+  <view class="addr-cta">
+    <!-- HTML .cta-add: width:100%;height:52px → 104rpx；border-radius:9999px；
+         background:var(--brand-gradient)；font-size:16px → 32rpx；gap:8px → 16rpx；
+         box-shadow:var(--neu-out-md),0 8px 22px var(--brand-glow),inset 0 1.5px 1px rgba(255,255,255,0.35) -->
+    <view class="cta-add press-scale" bindtap="onAdd">
+      <!-- HTML .cta-add svg: width:20px;height:20px → 40rpx -->
+      <image src="{{icons.plus}}" mode="aspectFit" lazy-load="{{false}}" class="cta-add-icon" />
+      <text class="cta-add-text">新增地址</text>
+    </view>
+  </view>
+
+</view>

@@ -1,0 +1,106 @@
+<view class="page">
+  <!-- HERO -->
+  <view class="hero">
+    <view class="hero-head">
+      <view class="back-btn" bindtap="onBack">
+        <text class="back-icon">‹</text>
+      </view>
+      <view class="hero-title">客服中心</view>
+      <view class="hero-spacer"></view>
+    </view>
+
+    <view class="hero-desc">7×24小时专业客服，随时为您服务</view>
+  </view>
+
+  <!-- QUICK CONTACT -->
+  <view class="section">
+    <view class="quick-grid">
+      <view class="quick-card" bindtap="onOnlineService">
+        <view class="quick-icon quick-icon-teal">💬</view>
+        <view class="quick-title">在线客服</view>
+        <view class="quick-desc">立即咨询</view>
+        <view class="quick-status"><view class="status-dot"></view><text>在线</text></view>
+      </view>
+      <view class="quick-card" bindtap="onCallService">
+        <view class="quick-icon quick-icon-gold">📞</view>
+        <view class="quick-title">客服热线</view>
+        <view class="quick-desc">400-888-8888</view>
+        <view class="quick-status"><view class="status-dot status-dot-warm"></view><text>9:00-21:00</text></view>
+      </view>
+    </view>
+  </view>
+
+  <!-- TICKETS -->
+  <view class="section">
+    <view class="section-header">
+      <view class="section-title">我的工单</view>
+      <view class="section-link" bindtap="goAllTickets">全部 ›</view>
+    </view>
+
+    <view class="card ticket-card" wx:for="{{tickets}}" wx:key="id">
+      <view class="ticket-head">
+        <view class="ticket-type {{item.typeClass}}">{{item.type}}</view>
+        <view class="ticket-status ticket-status-{{item.statusClass}}">{{item.status}}</view>
+      </view>
+      <view class="ticket-title">{{item.title}}</view>
+      <view class="ticket-footer">
+        <view class="ticket-time">{{item.time}}</view>
+        <view class="ticket-reply" bindtap="replyTicket" data-id="{{item.id}}">
+          <text>回复</text>
+          <text class="ticket-reply-arrow">›</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="empty-tip" wx:if="{{tickets.length === 0}}">
+      <text>暂无工单记录</text>
+    </view>
+  </view>
+
+  <!-- FAQ -->
+  <view class="section">
+    <view class="section-title">常见问题</view>
+    <view class="card faq-card">
+      <view class="faq-item" wx:for="{{faqs}}" wx:key="id" bindtap="toggleFaq" data-id="{{item.id}}">
+        <view class="faq-question">
+          <text class="faq-q-icon">Q</text>
+          <text class="faq-q-text">{{item.question}}</text>
+          <text class="faq-arrow {{item.open ? 'faq-arrow-open' : ''}}">›</text>
+        </view>
+        <view class="faq-answer" wx:if="{{item.open}}">
+          <text>{{item.answer}}</text>
+        </view>
+      </view>
+      <view class="faq-item" wx:for="{{faqs2}}" wx:key="id">
+        <view class="faq-question">
+          <text class="faq-q-icon">Q</text>
+          <text class="faq-q-text">{{item.question}}</text>
+          <text class="faq-arrow">›</text>
+        </view>
+      </view>
+      <view class="faq-item" wx:for="{{faqs3}}" wx:key="id">
+        <view class="faq-question">
+          <text class="faq-q-icon">Q</text>
+          <text class="faq-q-text">{{item.question}}</text>
+          <text class="faq-arrow">›</text>
+        </view>
+      </view>
+      <view class="faq-item" wx:for="{{faqs4}}" wx:key="id">
+        <view class="faq-question">
+          <text class="faq-q-icon">Q</text>
+          <text class="faq-q-text">{{item.question}}</text>
+          <text class="faq-arrow">›</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- BOTTOM CTA -->
+  <view class="cta-section">
+    <view class="cta-card">
+      <view class="cta-title">还有其他问题？</view>
+      <view class="cta-desc">提交工单，我们会尽快为您解决</view>
+      <view class="btn-neu-primary" bindtap="onSubmitTicket">提交工单</view>
+    </view>
+  </view>
+</view>

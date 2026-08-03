@@ -1,0 +1,94 @@
+<!-- pages/client-orders/index.wxml — 客户端订单列表页 玻璃新拟态（像素级复刻 client-orders.html） -->
+<view class="page">
+  <!-- 背景装饰光斑：径向渐变 -->
+  <view class="blob" style="top: -40px; right: -60px; width: 280px; height: 280px; background: radial-gradient(circle, var(--brand) 0%, transparent 70%);"></view>
+  <view class="blob" style="top: 320px; left: -80px; width: 240px; height: 240px; background: radial-gradient(circle, var(--accent) 0%, transparent 70%);"></view>
+
+  <scroll-view scroll-y class="page-scroll hide-scroll" style="padding-bottom: 220rpx;">
+
+    <!-- ===== 顶部标题栏组合：Hero + Filter Tabs（sticky 定位） ===== -->
+    <view class="top-header">
+
+      <!-- Hero 标题栏：标题"我的订单" + 副标题 + 搜索按钮（圆形玻璃，右侧） -->
+      <view class="hero" style="padding-top: calc({{statusBarHeight}}px + 28rpx);">
+        <view class="greeting-row">
+          <view class="greeting-text">
+            <text class="hero-title">我的订单</text>
+            <text class="hero-subtitle">查看和管理您的服务订单</text>
+          </view>
+          <view class="search-btn" bindtap="onSearchTap">
+            <image src="{{icons.search}}" mode="aspectFit" class="search-btn-icon" lazy-load="{{false}}" />
+          </view>
+        </view>
+      </view>
+
+      <!-- Filter Tabs（-18px 负边距上移叠加在 Hero 上） -->
+      <view class="filter-tabs">
+        <view
+          class="filter-pill {{activeTab === item.key ? 'active' : ''}}"
+          wx:for="{{tabs}}"
+          wx:key="key"
+          data-key="{{item.key}}"
+          bindtap="onTabTap"
+        >{{item.name}}</view>
+      </view>
+    </view>
+
+    <!-- ===== 订单列表 ===== -->
+    <view class="order-list" wx:if="{{orders.length > 0}}">
+      <view
+        class="order-card status-{{item.status}}"
+        wx:for="{{orders}}"
+        wx:key="id"
+        data-id="{{item.id}}"
+        bindtap="onOrderTap"
+      >
+        <!-- 顶部：状态标签 + 时间 -->
+        <view class="card-top">
+          <view class="order-status-tag {{item.statusClass}}">{{item.statusText}}</view>
+          <text class="order-date">{{item.createdAt}}</text>
+        </view>
+
+        <!-- 标题 -->
+        <text class="order-title">{{item.serviceName}}</text>
+
+        <!-- 地址 -->
+        <view class="order-address">
+          <image src="{{icons.location}}" mode="aspectFit" class="order-address-icon" lazy-load="{{false}}" />
+          <text class="order-address-text">{{item.address}}</text>
+        </view>
+
+        <!-- 分隔线 -->
+        <view class="card-sep"></view>
+
+        <!-- 底部操作区 -->
+        <view class="card-bottom">
+          <view class="bottom-info">
+            <block wx:if="{{item.status === 'bidding'}}">
+              <text class="info-main">已有 {{item.quotes || 0}} 位师傅报价</text>
+              <text class="info-price">{{item.priceRange}}</text>
+            </block>
+            <text class="info-main" wx:elif="{{item.status === 'serving'}}">{{item.workerName || '张师傅'}}正在服务</text>
+            <text class="info-main" wx:elif="{{item.status === 'completed'}}">服务已完成</text>
+            <text class="info-main" wx:else>¥{{item.price}}</text>
+          </view>
+          <view class="btn-neu-secondary" catchtap="onActionTap" data-id="{{item.id}}" data-status="{{item.status}}">
+            <text class="btn-neu-secondary-text">{{item.actionText || '查看详情'}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== 空态 ===== -->
+    <view class="empty" wx:else>
+      <view class="empty-icon neu-icon-inset">
+        <image src="{{icons.orders}}" mode="aspectFit" class="empty-img" lazy-load="{{false}}" />
+      </view>
+      <text class="empty-text">暂无相关订单</text>
+      <text class="empty-sub">去发布一个维修需求吧</text>
+    </view>
+
+  </scroll-view>
+
+  <tab-bar id="tabbar" active="orders" />
+</view>

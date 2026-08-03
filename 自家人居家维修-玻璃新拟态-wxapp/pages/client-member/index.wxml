@@ -1,0 +1,87 @@
+<!-- pages/client-member/index.wxml — 会员中心 像素级复刻 client-member.html -->
+<view class="page">
+  <!-- 背景装饰光斑 -->
+  <view class="blob" style="top:-80rpx;right:-120rpx;width:560rpx;height:560rpx;background:var(--brand);"></view>
+  <view class="blob" style="top:1000rpx;left:-160rpx;width:480rpx;height:480rpx;background:var(--accent);"></view>
+
+  <scroll-view scroll-y class="page-scroll hide-scroll" style="padding-bottom:220rpx;">
+
+    <!-- ===== Back Bar ===== -->
+    <view class="back-bar" style="padding-top:calc({{statusBarHeight}}px + 20rpx);">
+      <view class="back-btn press-scale" bindtap="onBack">
+        <image src="{{icons.back}}" mode="aspectFit" class="back-icon" lazy-load="{{false}}" />
+      </view>
+      <text class="back-title">会员中心</text>
+      <view class="nav-spacer"></view>
+    </view>
+
+    <!-- ===== HERO: Member Card ===== -->
+    <view class="member-hero">
+      <view class="member-top">
+        <view class="member-avatar neu-icon-inset">
+          <image src="{{icons.user}}" mode="aspectFit" class="member-avatar-icon" lazy-load="{{false}}" />
+        </view>
+        <view class="member-info">
+          <view class="member-name-row">
+            <text class="member-name">{{member.name}}</text>
+            <text class="level-badge">{{member.level}}</text>
+          </view>
+          <text class="member-sub">成长值 {{member.growth}} / {{member.growthTarget}}</text>
+        </view>
+      </view>
+      <!-- 成长进度条 -->
+      <view class="growth-bar">
+        <view class="growth-bar-fill" style="width:{{growthPercent}}%;"></view>
+      </view>
+      <text class="growth-hint">{{member.growthHint}}</text>
+    </view>
+
+    <!-- ===== 会员权益网格 ===== -->
+    <view class="section-title">会员权益</view>
+    <view class="benefits-grid">
+      <view class="benefit-card press-card" wx:for="{{benefits}}" wx:key="key" data-key="{{item.key}}">
+        <view class="benefit-icon">
+          <image src="{{item.iconUrl}}" mode="aspectFit" class="benefit-icon-img" lazy-load="{{false}}" />
+        </view>
+        <text class="benefit-title">{{item.name}}</text>
+        <text class="benefit-desc">{{item.desc}}</text>
+      </view>
+    </view>
+
+    <!-- ===== 会员等级 ===== -->
+    <view class="section-title">会员等级</view>
+    <view class="level-tiers">
+      <view class="level-tier {{item.current ? 'level-tier-current' : ''}} press-card" wx:for="{{levelTiers}}" wx:key="key">
+        <view class="level-tier-head">
+          <view class="level-tier-icon">
+            <image src="{{item.iconUrl}}" mode="aspectFit" style="width:40rpx;height:40rpx;" lazy-load="{{false}}" />
+          </view>
+          <text class="level-tier-name">{{item.name}}</text>
+          <text class="level-current-tag" wx:if="{{item.current}}">当前</text>
+        </view>
+        <view class="level-perks">
+          <text class="level-perk-item" wx:for="{{item.perks}}" wx:key="*this" wx:for-item="perk">{{perk}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== 成长任务 ===== -->
+    <view class="section-title">成长任务</view>
+    <view class="task-card">
+      <view class="task-row press-card" wx:for="{{tasks}}" wx:key="key" data-key="{{item.key}}" bindtap="onTaskTap">
+        <view class="task-icon task-icon-{{item.color}}">
+          <image src="{{item.iconUrl}}" mode="aspectFit" class="task-icon-img" lazy-load="{{false}}" />
+        </view>
+        <view class="task-info">
+          <text class="task-title">{{item.name}}</text>
+          <text class="task-sub">{{item.desc}}</text>
+        </view>
+        <text class="task-reward">+{{item.reward}}</text>
+        <view class="task-btn press-scale">
+          <text class="task-btn-text">去完成</text>
+        </view>
+      </view>
+    </view>
+
+  </scroll-view>
+</view>

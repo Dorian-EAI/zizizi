@@ -1,0 +1,177 @@
+/* pages/entry/index.wxss — 角色选择入口页（玻璃新拟态规范对齐） */
+.page {
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 背景光斑颜色变体钩子（颜色由内联 style 提供，此处仅作语义标记，
+   确保与全局 .blob 基类配合时无未定义类警告）*/
+.blob-brand,
+.blob-accent,
+.blob-worker {
+  pointer-events: none;
+}
+
+.entry-container {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: calc(100vh - 80rpx);
+  padding: 80rpx 48rpx 48rpx;
+}
+
+/* ===== Logo 区：品牌渐变 + 新拟态凸起 ===== */
+.logo-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 80rpx;
+  margin-bottom: 100rpx;
+}
+
+.logo-circle {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--canvas);
+  box-shadow: var(--neu-raised-lg);
+  margin-bottom: 32rpx;
+}
+
+.logo-inner {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  background: var(--brand-gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-glow-brand), inset 0 3rpx 4rpx rgba(255, 255, 255, 0.30);
+}
+
+.logo-text {
+  color: #FFFFFF;
+  font-size: 28rpx;
+  font-weight: 700;
+  letter-spacing: 2rpx;
+}
+
+.app-title {
+  font-size: 44rpx;
+  font-weight: 700;
+  color: var(--text-1);
+  letter-spacing: -0.02em;
+  margin-bottom: 12rpx;
+}
+
+.app-subtitle {
+  font-size: 26rpx;
+  color: var(--text-3);
+  letter-spacing: 4rpx;
+}
+
+/* ===== 角色选择 ===== */
+.role-section {
+  width: 100%;
+}
+
+.role-title {
+  display: block;
+  font-size: 28rpx;
+  color: var(--text-2);
+  text-align: center;
+  margin-bottom: 40rpx;
+}
+
+/* 角色卡片：使用 .glass-neu-card 玻璃新拟态（app.wxss 已定义） */
+.role-card {
+  display: flex;
+  align-items: center;
+  padding: 36rpx 32rpx;
+  margin-bottom: 28rpx;
+  transition: transform var(--dur-base) var(--spring), box-shadow var(--dur-base) var(--ease);
+}
+
+/* 按压反馈：凸起 → 凹陷 + 微缩放（设计规范签名动效） */
+.role-card:active {
+  transform: scale(0.98);
+  box-shadow: var(--neu-inset);
+}
+
+.role-icon {
+  width: 96rpx;
+  height: 96rpx;
+  margin-right: 28rpx;
+}
+
+.role-icon-img {
+  width: 44rpx;
+  height: 44rpx;
+}
+
+.role-icon-worker {
+  box-shadow: var(--neu-raised-sm), 0 0 0 2rpx var(--brand-worker-subtle);
+}
+
+.role-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.role-name {
+  font-size: 34rpx;
+  font-weight: 700;
+  color: var(--text-1);
+  letter-spacing: -0.01em;
+}
+
+.role-desc {
+  font-size: 24rpx;
+  color: var(--text-3);
+}
+
+.role-arrow {
+  width: 20rpx;
+  height: 20rpx;
+  border-top: 4rpx solid var(--text-4);
+  border-right: 4rpx solid var(--text-4);
+  transform: rotate(45deg);
+}
+
+/* ===== 协议链接：btn-neu-ghost 风格（透明底 + 细边框 + 品牌色） ===== */
+.agreement {
+  margin-top: auto;
+  padding-top: 60rpx;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.agreement-text {
+  font-size: 22rpx;
+  color: var(--text-3);
+}
+
+.agreement-link {
+  font-size: 22rpx;
+  color: var(--brand);
+  padding: 4rpx 12rpx;
+  border: 1rpx solid var(--border);
+  border-radius: var(--r-pill);
+  margin: 0 4rpx;
+  transition: transform var(--dur-base) var(--spring), color var(--dur-base) var(--ease);
+}
+
+.agreement-link:active {
+  transform: scale(0.94);
+  color: var(--brand-dark);
+}

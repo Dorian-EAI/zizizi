@@ -1,0 +1,106 @@
+<!-- pages/worker-wallet/index.wxml — 师傅钱包页 像素级复刻 worker-wallet.html -->
+<view class="page">
+  <!-- 背景装饰光斑 -->
+  <view class="blob" style="top: -80rpx; right: -120rpx; width: 480rpx; height: 480rpx; background: radial-gradient(circle, var(--brand-worker) 0%, transparent 70%);"></view>
+  <view class="blob" style="top: 760rpx; left: -160rpx; width: 420rpx; height: 420rpx; background: radial-gradient(circle, var(--sage) 0%, transparent 70%);"></view>
+
+  <!-- ===== HERO ===== -->
+  <view class="hero {{navScrolled ? 'hero-collapsed' : ''}}" style="padding-top: calc({{statusBarHeight}}px + 76rpx);">
+    <!-- Hero header row -->
+    <view class="hero-header">
+      <view class="hero-title-block">
+        <text class="hero-title">我的钱包</text>
+        <text class="hero-subtitle">管理您的收入</text>
+      </view>
+    </view>
+
+    <!-- Balance block -->
+    <view class="balance-block">
+      <text class="balance-label">累计收入</text>
+      <text class="balance-amount numeric">¥ {{totalIncomeText}}</text>
+      <view class="balance-chips">
+        <view class="chip">
+          <text class="chip-label">本月</text>
+          <text>¥{{monthIncomeText}}</text>
+        </view>
+        <view class="chip">
+          <text class="chip-label">可提现</text>
+          <text>¥{{withdrawableText}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <scroll-view scroll-y enable-flex class="page-scroll hide-scroll" bindscroll="onScroll" style="padding-bottom: 220rpx;">
+
+    <!-- ===== QUICK ACTIONS CARD (overlaps hero -18px) ===== -->
+    <view class="quick-card">
+      <view class="qa-item" bindtap="onWithdraw">
+        <view class="qa-icon">
+          <image src="{{icons.withdraw}}" mode="aspectFit" class="qa-icon-img" lazy-load="{{false}}" />
+        </view>
+        <text class="qa-label">提现</text>
+      </view>
+      <view class="qa-item" bindtap="onTransfer">
+        <view class="qa-icon">
+          <image src="{{icons.transfer}}" mode="aspectFit" class="qa-icon-img" lazy-load="{{false}}" />
+        </view>
+        <text class="qa-label">转账</text>
+      </view>
+      <view class="qa-item" bindtap="onDetail">
+        <view class="qa-icon">
+          <image src="{{icons.detail}}" mode="aspectFit" class="qa-icon-img" lazy-load="{{false}}" />
+        </view>
+        <text class="qa-label">明细</text>
+      </view>
+    </view>
+
+    <!-- ===== INCOME STATS CARD ===== -->
+    <view class="section">
+      <text class="section-title">收入统计</text>
+      <view class="card income-card">
+        <text class="income-card-title">本周收入趋势</text>
+
+        <view class="chart-wrap">
+          <view class="y-axis">
+            <text class="y-label">¥500</text>
+            <text class="y-label">¥0</text>
+          </view>
+          <view class="bars-area">
+            <view class="bar-col {{item.today ? 'today-col' : ''}}" wx:for="{{chartData}}" wx:key="day">
+              <view class="bar-track">
+                <view class="bar {{item.today ? 'today' : ''}}" style="height: {{item.height}}%;"></view>
+              </view>
+              <text class="bar-label">{{item.day}}</text>
+            </view>
+          </view>
+        </view>
+
+        <view class="chart-summary">
+          <text class="cs-label">本周收入</text>
+          <text class="cs-value numeric">¥{{weekIncomeText}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== RECENT TRANSACTIONS ===== -->
+    <view class="section">
+      <text class="section-title">最近交易</text>
+      <view class="card tx-card">
+        <view class="tx-row" wx:for="{{transactions}}" wx:key="id">
+          <view class="tx-icon {{item.type}}">
+            <image src="{{item.iconUrl}}" mode="aspectFit" class="tx-icon-img" lazy-load="{{false}}" />
+          </view>
+          <view class="tx-info">
+            <text class="tx-title">{{item.title}}</text>
+            <text class="tx-time">{{item.time}}</text>
+          </view>
+          <text class="tx-amount {{item.type}}">{{item.amountText}}</text>
+        </view>
+      </view>
+    </view>
+
+  </scroll-view>
+
+  <tab-bar id="tabbar" active="wallet" />
+</view>

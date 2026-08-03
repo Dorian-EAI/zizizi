@@ -1,0 +1,257 @@
+<!-- pages/order-detail-client/index.wxml — 客户端订单详情 像素级复刻 zjrnew.DESIGN -->
+<view class="page">
+
+  <!-- ===== TOP NAV BAR（渐变 + 返回 + 标题"订单详情" + 更多） ===== -->
+  <view class="nav-bar" style="padding-top: calc({{statusBarHeight}}px + 36rpx);">
+    <view class="nav-icon-btn" bindtap="onBack">
+      <image src="{{icons.back}}" mode="aspectFit" class="nav-icon" lazy-load="{{false}}" />
+    </view>
+    <text class="nav-title">订单详情</text>
+    <view class="nav-icon-btn" bindtap="onMore">
+      <image src="{{icons.more}}" mode="aspectFit" class="nav-icon" lazy-load="{{false}}" />
+    </view>
+  </view>
+
+  <scroll-view
+    scroll-y
+    class="page-scroll hide-scroll"
+    enhanced
+    show-scrollbar="{{false}}"
+    scroll-with-animation
+    style="padding-bottom: 200rpx;"
+  >
+
+    <!-- ===== ORDER STATUS CARD（状态标签 + 订单号 + 下单时间 + 进度时间轴） ===== -->
+    <view class="section">
+      <view class="glass-neu-card status-card">
+        <view class="status-top-bar"></view>
+        <view class="status-card-body">
+          <view class="status-head">
+            <text class="status-chip">{{order.statusText}}</text>
+            <text class="status-eta" wx:if="{{order.etaText}}">{{order.etaText}}</text>
+          </view>
+          <text class="status-desc">{{statusTitle}}</text>
+
+          <!-- 进度时间轴（横向） -->
+          <view class="timeline">
+            <view class="timeline-line">
+              <view class="timeline-line-fill" style="width: {{timelineProgress}}%;"></view>
+            </view>
+            <view class="timeline-nodes">
+              <view class="tl-node" wx:for="{{timelineNodes}}" wx:key="key">
+                <view class="tl-dot {{item.state}}">
+                  <image src="{{icons.check}}" mode="aspectFit" class="tl-check" lazy-load="{{false}}" wx:if="{{item.state === 'done'}}" />
+                  <view class="tl-dot-inner" wx:if="{{item.state === 'active'}}"></view>
+                  <view class="tl-dot-pulse" wx:if="{{item.state === 'active'}}"></view>
+                </view>
+                <text class="tl-label tl-label-{{item.state}}">{{item.label}}</text>
+                <text class="tl-time">{{item.time}}</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== WORKER INFO CARD（头像 + 已认证 + 姓名 + 评分 + 电话/消息按钮） ===== -->
+    <view class="section" wx:if="{{order.workerName}}">
+      <view class="glass-neu-card worker-card">
+        <view class="avatar-col">
+          <view class="worker-avatar avatar-glass">
+            <image src="{{workerAvatarUrl}}" mode="aspectFit" class="worker-avatar-img" lazy-load="{{false}}" />
+          </view>
+          <view class="verify-badge">
+            <image src="{{icons.check}}" mode="aspectFit" class="verify-icon" lazy-load="{{false}}" />
+            <text class="verify-text">已认证</text>
+          </view>
+        </view>
+        <view class="worker-info">
+          <view class="worker-name-row">
+            <text class="worker-name">{{order.workerName}}</text>
+          </view>
+          <view class="worker-meta">
+            <text class="worker-star">★ {{order.workerRating || '4.9'}}</text>
+            <text class="meta-dot">·</text>
+            <text>{{order.workerServices || 328}}次服务</text>
+          </view>
+        </view>
+        <view class="worker-actions">
+          <view class="action-circle press-neu" bindtap="onCall">
+            <image src="{{icons.phone}}" mode="aspectFit" class="action-icon" lazy-load="{{false}}" />
+          </view>
+          <view class="action-circle press-neu action-circle-accent" bindtap="onChat">
+            <image src="{{icons.message}}" mode="aspectFit" class="action-icon" lazy-load="{{false}}" />
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== SERVICE INFO CARD（订单编号 + 服务类型 + 地址 + 时间 + 问题描述） ===== -->
+    <view class="section">
+      <view class="glass-neu-card info-card">
+        <text class="card-title">服务信息</text>
+        <view class="info-list">
+          <view class="info-row">
+            <text class="info-label">订单编号</text>
+            <text class="info-value mono">{{order.orderNo || order.id}}</text>
+          </view>
+          <view class="info-row">
+            <text class="info-label">服务类型</text>
+            <text class="info-value">{{order.serviceName}}</text>
+          </view>
+          <view class="info-row info-row-icon">
+            <view class="info-label-row">
+              <image src="{{icons.location}}" mode="aspectFit" class="info-ic" lazy-load="{{false}}" />
+              <text class="info-label">服务地址</text>
+            </view>
+            <text class="info-value">{{order.address}}</text>
+          </view>
+          <view class="info-row info-row-icon">
+            <view class="info-label-row">
+              <image src="{{icons.clock}}" mode="aspectFit" class="info-ic" lazy-load="{{false}}" />
+              <text class="info-label">预约时间</text>
+            </view>
+            <text class="info-value mono">{{order.time}}</text>
+          </view>
+          <view class="info-desc-block" wx:if="{{order.description}}">
+            <text class="info-desc-label">问题描述</text>
+            <text class="info-desc-text">{{order.description}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== FEE DETAIL CARD（基础维修费 + 材料费 + 上门费 + 优惠券 + 合计） ===== -->
+    <view class="section" wx:if="{{order.price || order.priceRange}}">
+      <view class="glass-neu-card fee-card">
+        <text class="card-title">费用明细</text>
+        <view class="fee-list">
+          <view class="fee-row">
+            <text class="fee-label">基础维修费</text>
+            <text class="fee-value mono">¥{{order.price || order.priceRange}}</text>
+          </view>
+          <view class="fee-row" wx:if="{{order.materialFee}}">
+            <text class="fee-label">材料费</text>
+            <text class="fee-value mono">¥{{order.materialFee}}</text>
+          </view>
+          <view class="fee-row">
+            <text class="fee-label">上门费<text class="fee-tag" wx:if="{{order.visitFeeFree}}">优惠</text></text>
+            <text class="fee-value fee-value-free mono">¥0</text>
+          </view>
+          <view class="fee-divider"></view>
+          <view class="fee-row fee-row-coupon" wx:if="{{order.coupon}}">
+            <text class="fee-label">优惠券</text>
+            <text class="fee-value fee-value-coupon mono">-¥{{order.coupon}}</text>
+          </view>
+          <view class="fee-total-row">
+            <text class="fee-total-label">合计</text>
+            <text class="fee-total mono">¥{{order.totalPrice || order.price || order.priceRange}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== SERVICE TRACK TIMELINE（服务轨迹） ===== -->
+    <view class="section" wx:if="{{tracks.length > 0}}">
+      <view class="glass-neu-card track-card">
+        <text class="card-title">服务轨迹</text>
+        <view class="track-list">
+          <view class="track-item {{item.state}}" wx:for="{{tracks}}" wx:key="key">
+            <view class="track-rail">
+              <view class="track-dot">
+                <image src="{{icons.check}}" mode="aspectFit" class="track-check" lazy-load="{{false}}" wx:if="{{item.state === 'track-done'}}" />
+              </view>
+              <view class="track-line" wx:if="{{index < tracks.length - 1}}"></view>
+            </view>
+            <view class="track-content">
+              <view class="track-head">
+                <text class="track-title {{item.state === 'track-pending' ? 'track-title-pending' : ''}}">{{item.title}}</text>
+                <text class="track-time mono {{item.state === 'track-pending' ? 'track-time-pending' : ''}}">{{item.time}}</text>
+              </view>
+              <view class="track-meta">
+                <view class="track-loc" wx:if="{{item.loc}}">
+                  <image src="{{icons.location}}" mode="aspectFit" class="track-loc-icon" lazy-load="{{false}}" />
+                  <text>{{item.loc}}</text>
+                </view>
+                <text class="track-status track-status-{{item.state}}">{{item.statusText}}</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== ANXIN INSURANCE（安心保保障） ===== -->
+    <view class="section" wx:if="{{order.insurance}}">
+      <view class="glass-neu-card insure-card">
+        <text class="card-title">安心保保障</text>
+        <view class="insure-body">
+          <view class="insure-icon">
+            <image src="{{icons.shield}}" mode="aspectFit" class="insure-icon-img" lazy-load="{{false}}" />
+          </view>
+          <view class="insure-info">
+            <text class="insure-name">{{order.insurance.name || '安心保 · 标准版'}}</text>
+            <text class="insure-fee mono">保费 ¥{{order.insurance.fee || 5}} · 最高赔付 ¥{{order.insurance.coverage || '2,000'}}</text>
+          </view>
+          <text class="insure-status">生效中</text>
+        </view>
+        <view class="btn-neu-secondary insure-claim press-neu" bindtap="onClaim">
+          <image src="{{icons.file}}" mode="aspectFit" class="insure-claim-icon" lazy-load="{{false}}" />
+          <text>申请理赔</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== SUPPLEMENT PRICE RECORD（补差价记录） ===== -->
+    <view class="section" wx:if="{{order.supplement}}">
+      <view class="glass-neu-card supplement-card">
+        <text class="card-title">补差价记录</text>
+        <view class="supplement-record">
+          <view class="supplement-head">
+            <text class="supplement-name">{{order.supplement.name}}</text>
+            <text class="supplement-amount mono">+¥{{order.supplement.amount}}</text>
+          </view>
+          <view class="supplement-meta">
+            <text class="supplement-status">已确认</text>
+            <text class="supplement-time mono">{{order.supplement.time}}</text>
+          </view>
+          <text class="supplement-desc">{{order.supplement.desc}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== WORKER REVIEW BUBBLES（师傅评价） ===== -->
+    <view class="section" wx:if="{{reviewBubbles.length > 0}}">
+      <view class="glass-neu-card review-card">
+        <text class="card-title">师傅评价</text>
+        <view class="bubble-canvas">
+          <text
+            class="bubble bubble-{{item.size}} bubble-{{item.type}}"
+            style="left: {{item.left}}; top: {{item.top}};"
+            wx:for="{{reviewBubbles}}"
+            wx:key="index"
+          >{{item.text}}</text>
+        </view>
+        <view class="review-summary">
+          <text>综合评分 <text class="review-strong">★{{order.workerRating || '4.9'}}</text></text>
+          <text class="review-dot">·</text>
+          <text>{{order.workerServices || 320}}次服务</text>
+        </view>
+      </view>
+    </view>
+
+  </scroll-view>
+
+  <!-- ===== BOTTOM FIXED ACTION BAR（联系客服 + 查看实时位置） ===== -->
+  <view class="action-bar safe-bottom" wx:if="{{order.status}}">
+    <view class="action-btn-secondary press-neu" bindtap="onContactService">
+      <image src="{{icons.headset}}" mode="aspectFit" class="action-btn-icon-secondary" lazy-load="{{false}}" />
+      <text>联系客服</text>
+    </view>
+    <view class="action-btn-primary press-scale" bindtap="onPrimaryAction">
+      <image src="{{icons.location}}" mode="aspectFit" class="action-btn-icon-primary" lazy-load="{{false}}" />
+      <text>{{primaryActionText}}</text>
+    </view>
+  </view>
+
+</view>

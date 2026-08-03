@@ -1,0 +1,138 @@
+<!-- pages/worker-withdraw/index.wxml — 师傅提现页 玻璃新拟态（像素级复刻 worker-withdraw.html） -->
+<view class="page">
+  <!-- 背景装饰光斑：径向渐变（blue-sage 配色） -->
+  <view class="blob" style="top: -80rpx; right: -120rpx; width: 480rpx; height: 480rpx; background: radial-gradient(circle, var(--brand-worker) 0%, transparent 70%);"></view>
+  <view class="blob" style="top: 760rpx; left: -160rpx; width: 420rpx; height: 420rpx; background: radial-gradient(circle, var(--sage) 0%, transparent 70%);"></view>
+
+  <!-- ===== TOP NAV BAR (sticky) ===== -->
+  <view class="nav-bar worker {{navScrolled ? 'scrolled' : ''}}">
+    <view class="nav-icon-btn" bindtap="onBack">
+      <image src="{{icons.back}}" mode="aspectFit" class="nav-icon" lazy-load="{{false}}" />
+    </view>
+    <text class="nav-title">提现</text>
+    <view class="nav-spacer"></view>
+  </view>
+
+  <scroll-view scroll-y class="page-scroll hide-scroll" bindscroll="onScroll" style="padding-bottom: 220rpx;">
+
+    <!-- ===== BALANCE CARD ===== -->
+    <view class="section">
+      <view class="glass-neu-card balance-card">
+        <view class="status-top-bar"></view>
+        <view class="balance-body">
+          <view class="balance-head">
+            <text class="balance-label">可提现余额</text>
+            <view class="balance-all-btn press-scale" bindtap="onWithdrawAll">
+              <text class="balance-all-btn-text">全部提现</text>
+            </view>
+          </view>
+          <text class="balance-amount mono">¥{{balanceText}}</text>
+          <view class="balance-meta">
+            <text class="bm-item">冻结中 ¥{{frozenText}}</text>
+            <text class="bm-dot">·</text>
+            <text class="bm-item">累计提现 ¥{{totalWithdrawnText}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== WITHDRAW AMOUNT CARD ===== -->
+    <view class="section">
+      <view class="glass-neu-card amount-card">
+        <text class="card-title">提现金额</text>
+        <view class="amount-input-row">
+          <text class="amount-currency">¥</text>
+          <input
+            class="amount-input mono"
+            type="digit"
+            value="{{amount}}"
+            placeholder="0.00"
+            placeholder-class="amount-placeholder"
+            bindinput="onAmountInput"
+          />
+        </view>
+        <view class="amount-divider"></view>
+        <view class="amount-foot">
+          <text class="amount-tip">最低提现 ¥10.00</text>
+          <view class="amount-all-link press-scale" bindtap="onWithdrawAll">
+            <text class="amount-all-link-text">全部提现</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== PAYMENT METHOD CARD ===== -->
+    <view class="section">
+      <view class="glass-neu-card method-card">
+        <text class="card-title">到账方式</text>
+        <view class="method-list">
+          <view
+            class="method-row {{item.selected ? 'method-row-selected' : ''}}"
+            wx:for="{{methods}}"
+            wx:key="key"
+            data-idx="{{index}}"
+            bindtap="selectMethod"
+          >
+            <view class="method-icon method-icon-{{item.iconTone}}">
+              <image src="{{item.iconUrl}}" mode="aspectFit" class="method-icon-svg" lazy-load="{{false}}" />
+            </view>
+            <view class="method-info">
+              <text class="method-name">{{item.label}}</text>
+              <text class="method-desc mono">{{item.desc}}</text>
+            </view>
+            <view class="method-radio {{item.selected ? 'method-radio-on' : ''}}">
+              <view class="method-radio-dot" wx:if="{{item.selected}}"></view>
+            </view>
+          </view>
+          <view class="method-change-row" wx:if="{{selectedBank}}">
+            <view class="method-change-link press-scale" bindtap="onChangeBank">
+              <text class="method-change-link-text">更换</text>
+            </view>
+          </view>
+          <view class="method-divider"></view>
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== WITHDRAW TIPS CARD ===== -->
+    <view class="section">
+      <view class="glass-neu-card tips-card">
+        <view class="tips-list">
+          <view class="tips-item">
+            <view class="tips-dot"></view>
+            <text class="tips-text">最小提现金额 ¥10</text>
+          </view>
+          <view class="tips-item">
+            <view class="tips-dot"></view>
+            <text class="tips-text">2 小时内到账</text>
+          </view>
+          <view class="tips-item">
+            <view class="tips-dot"></view>
+            <text class="tips-text">单笔手续费 ¥0</text>
+          </view>
+          <view class="tips-item">
+            <view class="tips-dot"></view>
+            <text class="tips-text">每日最多提现 3 次</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== WITHDRAW RECORDS LINK ===== -->
+    <view class="section section-link">
+      <view class="records-link press-scale" bindtap="onWithdrawRecords">
+        <text class="records-link-text">提现记录</text>
+        <image src="{{icons.chevron}}" mode="aspectFit" class="records-link-icon" lazy-load="{{false}}" />
+      </view>
+    </view>
+
+  </scroll-view>
+
+  <!-- ===== BOTTOM FIXED ACTION BAR ===== -->
+  <view class="action-bar action-bar-single">
+    <view class="action-btn-primary press-scale {{submitting ? 'disabled' : ''}}" bindtap="onSubmit">
+      <image src="{{icons.download}}" mode="aspectFit" class="action-btn-icon" lazy-load="{{false}}" />
+      <text class="action-btn-text">{{submitting ? '处理中...' : '确认提现'}}</text>
+    </view>
+  </view>
+</view>

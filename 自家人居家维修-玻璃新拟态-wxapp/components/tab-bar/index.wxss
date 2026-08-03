@@ -1,0 +1,212 @@
+/* components/tab-bar/index.wxss
+ * Premium Liquid Glass 浮动 TabBar（对齐主样式规范与评审画布）
+ * 核心：高 blur + 高 saturate + 低透明度 + 双层 rim light + 玻璃胶囊活跃态
+ * 区别于 Glass Neumorphism：活跃态用玻璃胶囊而非新拟态凹陷
+ */
+
+.tab-bar {
+  position: fixed;
+  bottom: calc(env(safe-area-inset-bottom) + 28rpx);
+  left: 32rpx;
+  right: 32rpx;
+  z-index: 100;
+}
+
+/* ===== Liquid Glass 主体 ===== */
+.tab-bar-inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 128rpx;
+  padding: 0 20rpx;
+
+  /* Liquid Glass 核心：高 blur + 高 saturate + 低透明度 */
+  background: rgba(255, 255, 255, 0.22);
+  backdrop-filter: var(--glass-tab-blur);      /* blur(96rpx) saturate(210%) */
+  -webkit-backdrop-filter: var(--glass-tab-blur);
+  border: 1rpx solid rgba(255, 255, 255, 0.50);
+  border-radius: 56rpx;
+
+  /* 多层阴影：内高光 + 内反射 + 外浮起（设计画布规范） */
+  box-shadow:
+    inset 0 3rpx 6rpx rgba(255, 255, 255, 0.60),    /* 顶部内高光 */
+    inset 0 -1rpx 2rpx rgba(255, 255, 255, 0.20),   /* 底部内反射 */
+    0 0 0 1rpx rgba(0, 0, 0, 0.04),                  /* 外环描边 */
+    0 4rpx 20rpx rgba(0, 0, 0, 0.06),                /* 近距投影 */
+    0 24rpx 72rpx rgba(0, 0, 0, 0.08);               /* 远距浮起投影 */
+}
+
+/* ===== Rim Light 第一层 — 左上高光（伪元素） ===== */
+.tab-bar-inner::before {
+  content: "";
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  border-radius: inherit;
+  background: linear-gradient(160deg,
+    rgba(255, 255, 255, 0.42) 0%,
+    rgba(255, 255, 255, 0.16) 20%,
+    rgba(255, 255, 255, 0.03) 40%,
+    transparent 60%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ===== 环境色反射 第二层 — 右下品牌色（伪元素） ===== */
+.tab-bar-inner::after {
+  content: "";
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  border-radius: inherit;
+  background: linear-gradient(320deg,
+    transparent 60%,
+    rgba(13, 148, 136, 0.06) 80%,
+    rgba(212, 148, 76, 0.04) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ===== 师傅端环境色反射 — 蓝色 + 鼠尾草绿 ===== */
+.tab-bar-worker .tab-bar-inner::after {
+  background: linear-gradient(320deg,
+    transparent 60%,
+    rgba(45, 108, 223, 0.06) 80%,
+    rgba(143, 169, 152, 0.04) 100%);
+}
+
+/* ===== Tab 项 ===== */
+.tab-item {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 10rpx;
+  width: 136rpx;
+  height: 88rpx;
+  border-radius: 28rpx;
+  color: var(--text-3);
+  transition: all 0.2s var(--ease);
+  z-index: 2;   /* 在 rim light 之上 */
+}
+
+.tab-icon {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.tab-text {
+  font-size: 22rpx;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+/* ===== 活跃态：Liquid Glass 玻璃胶囊（设计画布签名特性） ===== */
+/* 区别于 Glass Neumorphism 的新拟态凹陷，本风格用玻璃胶囊 */
+.tab-item.is-active {
+  color: var(--brand);
+}
+
+.tab-item.is-active::before {
+  content: "";
+  position: absolute;
+  width: 108rpx;
+  height: 84rpx;
+  border-radius: 32rpx;
+  /* 玻璃胶囊：品牌色半透明 + blur + 内高光 + 品牌色辉光 */
+  background: rgba(13, 148, 136, 0.16);
+  backdrop-filter: blur(48rpx);
+  -webkit-backdrop-filter: blur(48rpx);
+  border: 1rpx solid rgba(13, 148, 136, 0.30);
+  box-shadow:
+    inset 0 2rpx 6rpx rgba(255, 255, 255, 0.55),    /* 顶部内高光 */
+    inset 0 -1rpx 2rpx rgba(255, 255, 255, 0.15),   /* 底部内反射 */
+    0 4rpx 20rpx rgba(13, 148, 136, 0.20),           /* 品牌色辉光 */
+    0 0 0 1rpx rgba(13, 148, 136, 0.08);             /* 外环描边 */
+  z-index: 0;
+}
+
+/* 活跃图标放大 + 弹簧过渡（设计画布签名动效） */
+.tab-item.is-active .tab-icon {
+  color: var(--brand);
+  transform: scale(1.08);
+  transition: transform 0.25s var(--spring);
+  position: relative;
+  z-index: 1;
+}
+
+.tab-item.is-active .tab-text {
+  font-weight: 600;
+  position: relative;
+  z-index: 1;
+}
+
+/* ===== 师傅端活跃态：蓝色玻璃胶囊 ===== */
+.tab-bar-worker .tab-item.is-active {
+  color: var(--brand-worker);
+}
+
+.tab-bar-worker .tab-item.is-active::before {
+  background: rgba(45, 108, 223, 0.16);
+  border-color: rgba(45, 108, 223, 0.30);
+  box-shadow:
+    inset 0 2rpx 6rpx rgba(255, 255, 255, 0.55),
+    inset 0 -1rpx 2rpx rgba(255, 255, 255, 0.15),
+    0 4rpx 20rpx rgba(45, 108, 223, 0.20),
+    0 0 0 1rpx rgba(45, 108, 223, 0.08);
+}
+
+.tab-bar-worker .tab-item.is-active .tab-icon {
+  color: var(--brand-worker);
+}
+
+/* ===== 按压反馈（设计画布签名动效） ===== */
+.tab-item:active {
+  transform: scale(0.88);
+  transition: transform 0.15s var(--spring);
+}
+
+/* ===== 凸起发布按钮（保留，增强为三色渐变） ===== */
+.is-elevated {
+  width: 96rpx;
+  height: 96rpx;
+  margin-top: -32rpx;
+}
+
+.elevated-circle {
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: 50%;
+  background: var(--brand-gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* 三层阴影：新拟态凸起 + 品牌色辉光 + 顶部内高光（设计画布规范） */
+  box-shadow:
+    8rpx 8rpx 18rpx var(--neu-dark),
+    -8rpx -8rpx 18rpx var(--neu-light),
+    0 12rpx 40rpx var(--brand-glow),
+    inset 0 3rpx 4rpx rgba(255, 255, 255, 0.40);
+}
+
+.tab-bar-worker .elevated-circle {
+  background: var(--brand-worker-gradient);
+  box-shadow:
+    8rpx 8rpx 18rpx var(--neu-dark),
+    -8rpx -8rpx 18rpx var(--neu-light),
+    0 12rpx 40rpx var(--brand-worker-glow),
+    inset 0 3rpx 4rpx rgba(255, 255, 255, 0.40);
+}
+
+.elevated-circle:active {
+  transform: scale(0.94);
+  box-shadow:
+    inset 4rpx 4rpx 10rpx rgba(0, 0, 0, 0.15),
+    0 4rpx 12rpx var(--brand-glow);
+  transition: all 0.15s var(--ease);
+}
+
+.elevated-icon {
+  width: 44rpx;
+  height: 44rpx;
+}

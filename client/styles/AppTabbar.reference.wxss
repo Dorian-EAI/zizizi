@@ -1,0 +1,46 @@
+/* AppTabbar · 参考 lilu-value-investing-30.html 风格 */
+.tabbar.data-v-b934c064 {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 110rpx;
+  background: #ffffff;
+  display: flex;
+  border-top: 1rpx solid #f4f4f5;
+  box-shadow: 0 -2rpx 16rpx rgba(24, 24, 27, 0.04);
+  padding-bottom: env(safe-area-inset-bottom);
+  z-index: 999;
+}
+.tabbar-item.data-v-b934c064 {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 12rpx 0;
+}
+.tabbar-icon.data-v-b934c064 {
+  margin-bottom: 4rpx;
+}
+.tab-emoji.data-v-b934c064 {
+  font-size: 40rpx;
+  line-height: 44rpx;
+  opacity: 0.55;
+}
+.tabbar-item.active .tab-emoji.data-v-b934c064 {
+  opacity: 1;
+}
+.tabbar-text.data-v-b934c064 {
+  font-size: 22rpx;
+  color: #a1a1aa;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+.tabbar-item.active .tabbar-text.data-v-b934c064 {
+  color: #4f46e5;
+  font-weight: 700;
+}
+.worker-tabbar .tabbar-item.active .tabbar-text.data-v-b934c064 {
+  color: #9b59b6;
+}

@@ -1,0 +1,241 @@
+/* ===== 全局主题变量（参考 lilu-value-investing-30.html 风格） ===== */
+page {
+  --bg: #fafaf9;          /* stone-50 米白暖色底色 */
+  --bg-soft: #f5f5f4;     /* stone-100 更柔一层 */
+  --surface: #ffffff;     /* 卡片白底 */
+  --border: #e7e5e4;      /* stone-200 极细边框 */
+  --divider: #f4f4f5;     /* stone-100 分割线 */
+  --text-1: #18181b;      /* zinc-900 主标题 */
+  --text-2: #52525b;      /* zinc-600 正文 */
+  --text-3: #a1a1aa;      /* zinc-400 辅助 */
+  --text-4: #d4d4d8;      /* zinc-300 占位 */
+
+  /* 四色主题系统 */
+  --indigo: #4f46e5;
+  --indigo-soft: #eef2ff;
+  --indigo-text: #4338ca;
+
+  --teal: #0d9488;
+  --teal-soft: #ccfbf1;
+  --teal-text: #0f766e;
+
+  --amber: #d97706;
+  --amber-soft: #fef3c7;
+  --amber-text: #b45309;
+
+  --rose: #e11d48;
+  --rose-soft: #ffe4e6;
+  --rose-text: #be123c;
+
+  --sky: #0284c7;
+  --sky-soft: #e0f2fe;
+  --sky-text: #0369a1;
+
+  --success: #16a34a;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+
+  /* 圆角与阴影 */
+  --radius-lg: 20rpx;
+  --radius-md: 16rpx;
+  --radius-sm: 12rpx;
+  --shadow-card: 0 2rpx 16rpx rgba(24, 24, 27, 0.04);
+  --shadow-card-hover: 0 6rpx 24rpx rgba(24, 24, 27, 0.06);
+
+  /* 字号 */
+  --fs-h1: 44rpx;
+  --fs-h2: 36rpx;
+  --fs-h3: 30rpx;
+  --fs-body: 28rpx;
+  --fs-small: 24rpx;
+  --fs-tiny: 20rpx;
+}
+
+/* ===== 全局 body ===== */
+page {
+  background-color: var(--bg);
+  color: var(--text-1);
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC",
+    "Helvetica Neue", "Microsoft YaHei", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+#app {
+  min-height: 100vh;
+}
+
+/* ===== 通用卡片 ===== */
+.u-card {
+  background: var(--surface);
+  border: 1rpx solid var(--divider);
+  border-radius: var(--radius-lg);
+  padding: 30rpx;
+  box-shadow: var(--shadow-card);
+}
+
+/* 左侧彩色边条（参考 讲座卡片 lecture-card） */
+.u-card--indigo { border-left: 8rpx solid var(--indigo); }
+.u-card--teal   { border-left: 8rpx solid var(--teal); }
+.u-card--amber  { border-left: 8rpx solid var(--amber); }
+.u-card--rose   { border-left: 8rpx solid var(--rose); }
+.u-card--sky    { border-left: 8rpx solid var(--sky); }
+
+/* ===== 通用标签 tag（胶囊形） ===== */
+.u-tag {
+  display: inline-block;
+  padding: 6rpx 18rpx;
+  border-radius: 999rpx;
+  font-size: var(--fs-tiny);
+  font-weight: 500;
+  line-height: 1.4;
+}
+.u-tag--indigo { background: var(--indigo-soft); color: var(--indigo-text); }
+.u-tag--teal   { background: var(--teal-soft);   color: var(--teal-text); }
+.u-tag--amber  { background: var(--amber-soft);  color: var(--amber-text); }
+.u-tag--rose   { background: var(--rose-soft);   color: var(--rose-text); }
+.u-tag--sky    { background: var(--sky-soft);    color: var(--sky-text); }
+
+/* ===== 章节标题 ===== */
+.u-section-title {
+  font-size: var(--fs-h3);
+  font-weight: 700;
+  color: var(--text-1);
+  letter-spacing: 0.02em;
+}
+.u-section-sub {
+  font-size: var(--fs-small);
+  color: var(--text-3);
+}
+
+/* ===== 大号装饰编号（类似 mod-bg-num） ===== */
+.u-deco-num {
+  font-size: 120rpx;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--indigo);
+  opacity: 0.08;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+/* ===== 分割线 ===== */
+.u-divider {
+  height: 1rpx;
+  background: linear-gradient(90deg, transparent, var(--border), transparent);
+  margin: 24rpx 0;
+}
+
+/* ===== 按钮 ===== */
+.u-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 80rpx;
+  padding: 0 36rpx;
+  border-radius: 999rpx;
+  font-size: var(--fs-body);
+  font-weight: 500;
+  border: 1rpx solid transparent;
+}
+.u-btn--primary {
+  background: var(--text-1);
+  color: #fff;
+}
+.u-btn--ghost {
+  background: var(--bg-soft);
+  color: var(--text-1);
+  border-color: var(--border);
+}
+.u-btn--indigo {
+  background: var(--indigo);
+  color: #fff;
+}
+.u-btn--sm { height: 64rpx; padding: 0 24rpx; font-size: var(--fs-small); }
+
+/* ===== 文字层次工具类 ===== */
+.u-t1 { color: var(--text-1); }
+.u-t2 { color: var(--text-2); }
+.u-t3 { color: var(--text-3); }
+.u-t4 { color: var(--text-4); }
+
+.u-bold { font-weight: 700; }
+.u-serif { font-family: Georgia, "Times New Roman", "PingFang SC", serif; }
+
+/* ===== 兼容旧的 tab-bar ===== */
+.tab-bar.data-v-8f6cabe5 {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 110rpx;
+  background: #fff;
+  border-top: 1rpx solid var(--divider);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding-bottom: env(safe-area-inset-bottom);
+  z-index: 999;
+}
+.tab-item.data-v-8f6cabe5 {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10rpx 0;
+}
+.tab-emoji.data-v-8f6cabe5 {
+  font-size: 40rpx;
+  line-height: 44rpx;
+  margin-bottom: 4rpx;
+  opacity: 0.6;
+}
+.tab-item.active .tab-emoji.data-v-8f6cabe5 { opacity: 1; }
+.tab-text.data-v-8f6cabe5 {
+  font-size: 22rpx;
+  color: var(--text-3);
+  letter-spacing: 0.02em;
+}
+.tab-item.active .tab-text.data-v-8f6cabe5 {
+  color: var(--indigo);
+  font-weight: 600;
+}
+
+/* ===== 顶部导航通用 ===== */
+.custom-nav {
+  position: sticky;
+  top: 0;
+  z-index: 101;
+  padding-top: max(env(safe-area-inset-top), 59px);
+  background: var(--surface);
+  border-bottom: 1rpx solid var(--divider);
+}
+.nav-title {
+  height: 88rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  font-weight: 600;
+  color: var(--text-1);
+  letter-spacing: 0.04em;
+}
+
+/* ===== 页面容器 ===== */
+.page-container {
+  min-height: 100vh;
+  background: var(--bg);
+  padding-bottom: calc(140rpx + env(safe-area-inset-bottom, 0px));
+}
+
+/* 防止尾部预加载动画占位（保留以兼容编译产物） */
+page::after {
+  position: fixed;
+  content: '';
+  left: -1000px;
+  top: -1000px;
+  width: 0;
+  height: 0;
+  opacity: 0;
+}

@@ -1,0 +1,60 @@
+<view class="container">
+  <!-- 统计卡片 -->
+  <view class="stats-card" wx:if="{{stats}}">
+    <view class="score-row">
+      <view class="score-main">
+        <text class="score-num">{{stats.avg_rating}}</text>
+        <text class="score-total">/{{stats.total_count}}条</text>
+      </view>
+      <view class="score-bars">
+        <view class="bar-item" wx:for="{{[5,4,3,2,1]}}" wx:key="*this">
+          <text class="star-label">{{item}}星</text>
+          <view class="bar-wrap">
+            <view class="bar-fill" style="width: {{stats.total_count ? (stats['rating_' + item + '_count'] / stats.total_count * 100) : 0}}%"></view>
+          </view>
+          <text class="bar-count">{{stats['rating_' + item + '_count'] || 0}}</text>
+        </view>
+      </view>
+    </view>
+    <view class="highlight" wx:if="{{stats.highlight_summary}}">{{stats.highlight_summary}}</view>
+    <view class="tag-cloud" wx:if="{{tags.length}}">
+      <text class="tag {{activeTag === item ? 'active' : ''}}" wx:for="{{tags}}" wx:key="*this" bindtap="onTagTap" data-tag="{{item}}">{{item}}</text>
+    </view>
+  </view>
+
+  <!-- 评价列表 -->
+  <view class="review-list">
+    <view class="review-item" wx:for="{{reviews}}" wx:key="id">
+      <view class="review-header">
+        <view class="user-info">
+          <text class="avatar">{{item.is_anonymous ? '匿' : '用'}}</text>
+          <text class="nickname">{{item.is_anonymous ? '匿名用户' : ('用户' + item.user_id)}}</text>
+        </view>
+        <view class="stars">
+          <text wx:for="{{[1,2,3,4,5]}}" wx:key="*this" wx:for-item="s" class="star {{s <= item.rating ? 'on' : ''}}">★</text>
+        </view>
+      </view>
+      <view class="tags" wx:if="{{item.review_tags && item.review_tags.length}}">
+        <text class="rtag" wx:for="{{item.review_tags}}" wx:key="*this">{{item}}</text>
+      </view>
+      <view class="content" wx:if="{{item.review_content}}">{{item.review_content}}</view>
+      <view class="images" wx:if="{{item.review_images && item.review_images.length}}">
+        <image wx:for="{{item.review_images}}" wx:key="*this" wx:for-item="img" src="{{img}}" mode="aspectFill" bindtap="previewImage" data-url="{{img}}" data-urls="{{item.review_images}}"></image>
+      </view>
+      <view class="review-footer">
+        <text class="time">{{item.created_at}}</text>
+        <view class="actions">
+          <text class="like {{item.liked ? 'liked' : ''}}" bindtap="onLikeTap" data-id="{{item.id}}" data-index="{{index}}">❤ {{item.like_count || 0}}</text>
+        </view>
+      </view>
+      <view class="worker-reply" wx:if="{{item.worker_reply}}">
+        <text class="reply-label">师傅回复：</text>
+        <text class="reply-text">{{item.worker_reply}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="loading-more" wx:if="{{loading}}">加载中...</view>
+  <view class="no-more" wx:if="{{!hasMore && reviews.length}}">没有更多了</view>
+  <view class="empty" wx:if="{{!reviews.length && !loading}}">暂无评价</view>
+</view>

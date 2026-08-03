@@ -1,0 +1,129 @@
+/* components/glass-bar/index.wxss
+ * 忠于 zjrnew：导航栏带径向光斑渐变 + 下部倒圆角 56rpx
+ * 客户端：teal + 琥珀；师傅端通过 .worker 类切换蓝色 + 鼠尾草绿
+ */
+
+.glass-bar {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 90;
+}
+
+/* 玻璃 + 渐变光斑容器 */
+.bar-gradient {
+  position: relative;
+  overflow: hidden;
+  padding: 36rpx 40rpx 36rpx;
+  padding-top: calc(env(safe-area-inset-top) + 36rpx);
+  border-radius: 0 0 56rpx 56rpx;
+  background:
+    radial-gradient(ellipse 440rpx 320rpx at 78% 45%, rgba(212, 148, 76, 0.14) 0%, transparent 70%),
+    radial-gradient(ellipse 360rpx 280rpx at 18% 75%, rgba(13, 148, 136, 0.16) 0%, transparent 70%),
+    linear-gradient(135deg, rgba(13, 148, 136, 0.14) 0%, rgba(212, 148, 76, 0.08) 50%, rgba(13, 148, 136, 0.06) 100%);
+}
+
+/* 师傅端配色 */
+.glass-bar.worker .bar-gradient,
+.glass-bar-worker .bar-gradient {
+  background:
+    radial-gradient(ellipse 440rpx 320rpx at 78% 45%, rgba(143, 169, 152, 0.14) 0%, transparent 70%),
+    radial-gradient(ellipse 360rpx 280rpx at 18% 75%, rgba(45, 108, 223, 0.16) 0%, transparent 70%),
+    linear-gradient(135deg, rgba(45, 108, 223, 0.14) 0%, rgba(143, 169, 152, 0.08) 50%, rgba(45, 108, 223, 0.06) 100%);
+}
+
+.bar-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16rpx;
+}
+
+.bar-left,
+.bar-right {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.bar-left-placeholder,
+.bar-right-placeholder {
+  width: 88rpx;
+  height: 88rpx;
+}
+
+.nav-icon-btn {
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: 50%;
+  background: var(--bg-elevated);
+  border: none;
+  box-shadow: var(--neu-raised-sm), inset 0 2rpx 2rpx rgba(255, 255, 255, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-1);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: transform var(--dur-base) var(--spring), box-shadow var(--dur-base) var(--ease);
+}
+.nav-icon-btn:active {
+  box-shadow: var(--neu-inset);
+  transform: scale(0.94);
+}
+
+/* 玻璃导航栏下的返回箭头（保持与旧类名兼容） */
+.back-btn {
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: 50%;
+  background: var(--bg-elevated);
+  box-shadow: var(--neu-raised-sm), inset 0 2rpx 2rpx rgba(255, 255, 255, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.back-btn:active {
+  box-shadow: var(--neu-inset);
+  transform: scale(0.94);
+}
+
+.back-arrow {
+  width: 22rpx;
+  height: 22rpx;
+  border-left: 4rpx solid var(--text-1);
+  border-bottom: 4rpx solid var(--text-1);
+  transform: rotate(45deg);
+  margin-left: 6rpx;
+}
+
+/* 中间标题 */
+.bar-title {
+  flex: 1;
+  text-align: center;
+  font-size: 34rpx;
+  font-weight: 700;
+  color: var(--text-1);
+  letter-spacing: -0.02em;
+  max-width: 460rpx;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.bar-right {
+  justify-content: flex-end;
+  gap: 16rpx;
+}
+
+.glass-bar-placeholder {
+  width: 100%;
+}
+
+.nav-icon {
+  width: 40rpx;
+  height: 40rpx;
+}

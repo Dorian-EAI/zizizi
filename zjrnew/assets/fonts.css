@@ -1,0 +1,30 @@
+/* 自家人居家维修 - 玻璃新拟态 */
+/* 衬线字体本地化加载：Cormorant Garamond + Noto Serif SC */
+/* 中文字体已按页面实际用字做子集化，显著减小文件体积，避免画布渲染时内存压力过大 */
+
+/* 拉丁/数字展示字体：Cormorant Garamond 700 */
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('./CormorantGaramond-Bold.woff2') format('woff2');
+}
+
+/* 中文正文：Noto Serif SC 400 */
+@font-face {
+  font-family: 'Noto Serif SC';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./NotoSerifSC-Regular.subset.woff2') format('woff2');
+}
+
+/* 中文粗体：Noto Serif SC 700 */
+@font-face {
+  font-family: 'Noto Serif SC';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('./NotoSerifSC-Bold.subset.woff2') format('woff2');
+}

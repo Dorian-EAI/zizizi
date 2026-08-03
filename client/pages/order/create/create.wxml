@@ -1,0 +1,150 @@
+<view class="container" wx:if="{{service}}">
+  <!-- 服务信息 -->
+  <view class="card service-info">
+    <image wx:if="{{service.icon}}" class="svc-icon" src="{{service.icon}}"></image>
+    <view class="svc-detail">
+      <text class="svc-name">{{service.name}}</text>
+      <text class="svc-price">¥{{service.price_min}}{{service.price_max > service.price_min ? '-' + service.price_max : ''}}/{{service.price_unit}}</text>
+    </view>
+  </view>
+
+  <!-- 选择师傅 -->
+  <view class="card worker-select" wx:if="{{workers.length > 0}}">
+    <view class="section-title">选择师傅</view>
+    <view class="wk-list">
+      <view class="wk-item {{selectedWorker.id === item.id ? 'active' : ''}}"
+            wx:for="{{workers}}" wx:key="id"
+            bindtap="selectWorker" data-id="{{item.id}}">
+        <image class="wk-avatar" src="{{item.avatar || '/assets/default-avatar.png'}}"></image>
+        <text class="wk-name">{{item.name}}</text>
+        <text class="wk-rating">★{{item.rating}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 预约日期 -->
+  <view class="card date-card">
+    <view class="section-title">选择预约时间</view>
+    <scroll-view scroll-x class="date-scroll">
+      <view class="date-list">
+        <view class="date-item {{form.appoint_date === item.key ? 'active' : ''}}"
+              wx:for="{{dateList}}" wx:key="key"
+              bindtap="selectDate" data-date="{{item.key}}">
+          <text class="date-label">{{item.label}}</text>
+          <text class="date-weekday">周{{item.weekday}}</text>
+        </view>
+      </view>
+    </scroll-view>
+    <view class="time-list" wx:if="{{form.appoint_date}}">
+      <view class="time-item {{form.appoint_time === item ? 'active' : ''}}"
+            wx:for="{{timeList}}" wx:key="*this"
+            bindtap="selectTime" data-time="{{item}}">{{item}}</view>
+    </view>
+  </view>
+
+  <!-- 问题描述 -->
+  <view class="card desc-card">
+    <view class="section-title">问题描述</view>
+    <textarea class="desc-textarea" placeholder="请描述您的问题，便于师傅准确报价"
+              value="{{form.description}}" bindinput="onDescriptionInput" maxlength="500"/>
+    <text class="desc-count">{{form.description.length || 0}}/500</text>
+  </view>
+
+  <!-- 图片上传 -->
+  <view class="card image-card">
+    <view class="section-title">上传图片</view>
+    <view class="image-list">
+      <view class="image-item" wx:for="{{form.images}}" wx:key="*this">
+        <image class="image-preview" src="{{item}}" mode="aspectFill"></image>
+        <view class="image-remove" bindtap="removeImage" data-idx="{{index}}">×</view>
+      </view>
+      <view class="image-add" bindtap="chooseImage" wx:if="{{form.images.length < 9}}">
+        <text class="image-add-icon">+</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 加急服务 -->
+  <view class="card option-card">
+    <view class="section-title">加急服务</view>
+    <view class="option-list">
+      <view class="option-item {{form.urgent_amount === item.value ? 'active' : ''}}"
+            wx:for="{{urgentOptions}}" wx:key="value"
+            bindtap="selectUrgent" data-value="{{item.value}}">
+        {{item.label}}
+      </view>
+    </view>
+  </view>
+
+  <!-- 安心保 -->
+  <view class="card option-card">
+    <view class="section-title">安心保</view>
+    <view class="option-list">
+      <view class="option-item {{form.insurance_level === item.value ? 'active' : ''}}"
+            wx:for="{{insuranceOptions}}" wx:key="value"
+            bindtap="selectInsurance" data-item="{{item}}">
+        <text class="option-label">{{item.label}}</text>
+        <text class="option-desc">{{item.desc}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 优惠券 -->
+  <view class="card coupon-card">
+    <view class="section-title">优惠券</view>
+    <view class="coupon-list">
+      <view class="coupon-item {{form.coupon_id === item.id ? 'active' : ''}}"
+            wx:for="{{coupons}}" wx:key="id"
+            bindtap="selectCoupon" data-id="{{item.id}}">
+        <text class="coupon-name">{{item.name || item.title}}</text>
+        <text class="coupon-value" wx:if="{{item.value}}">-¥{{item.value}}</text>
+      </view>
+      <view class="coupon-empty" wx:if="{{coupons.length === 0}}">暂无可用优惠券</view>
+    </view>
+  </view>
+
+  <!-- 联系信息 -->
+  <view class="card contact-card">
+    <view class="section-title">联系信息</view>
+    <view class="form-group form-group-address">
+      <text class="form-label">服务地址</text>
+      <view class="form-value address">
+        <input class="form-input address-input" placeholder="请选择或输入服务地址"
+               value="{{form.address_text}}" bindinput="onInput" data-field="address_text"/>
+        <view class="choose-loc-btn" catchtap="chooseLocation">📍 选择位置</view>
+      </view>
+      <view class="use-current-link" catchtap="useCurrentLocation">使用当前位置</view>
+      <map wx:if="{{form.latitude}}"
+           class="address-map"
+           longitude="{{form.longitude}}"
+           latitude="{{form.latitude}}"
+           scale="16"
+           markers="{{[{ id: 1, latitude: form.latitude, longitude: form.longitude, width: 28, height: 28 }]}}"
+           show-location></map>
+    </view>
+    <view class="form-group">
+      <text class="form-label">联系人</text>
+      <input class="form-input" placeholder="请输入联系人姓名"
+             value="{{form.contact_name}}" bindinput="onInput" data-field="contact_name"/>
+    </view>
+    <view class="form-group">
+      <text class="form-label">联系电话</text>
+      <input class="form-input" type="number" placeholder="请输入联系电话"
+             value="{{form.phone}}" bindinput="onInput" data-field="phone"/>
+    </view>
+    <view class="form-group">
+      <text class="form-label">备注</text>
+      <input class="form-input" placeholder="选填，如特殊需求"
+             value="{{form.remark}}" bindinput="onInput" data-field="remark"/>
+    </view>
+  </view>
+
+  <!-- 底部提交 -->
+  <view class="bottom-bar">
+    <view class="total-display">
+      <text class="total-label">预估价格</text>
+      <text class="total-value">¥{{estimatedTotal}}起</text>
+    </view>
+    <view class="submit-btn" bindtap="submitOrder">立即预约</view>
+  </view>
+</view>

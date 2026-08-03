@@ -1,0 +1,535 @@
+/* pages/client-chat/index.wxss — AI智能助手聊天页 玻璃新拟态
+ * 像素级复刻 client-chat.html
+ * 换算基准：1px = 2rpx（750rpx 设计稿）
+ * 严格忠于 HTML 参考的尺寸、间距、圆角、阴影、渐变透明度
+ */
+
+.page {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--canvas);
+  overflow: hidden;
+}
+
+/* ===== Top Nav Bar ===== */
+/* HTML .nav-bar: gap:10px;padding:max(18px,env) 16px 12px；
+   border-radius:0 0 28px 28px → 0 0 56rpx 56rpx；
+   background 三层径向 + 线性渐变 */
+.nav-bar {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  /* padding-top 由内联 style 动态提供（statusBarHeight + 36rpx） */
+  padding-right: 32rpx;
+  padding-bottom: 24rpx;
+  padding-left: 32rpx;
+  border-radius: 0 0 56rpx 56rpx;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 440rpx 320rpx at 78% 45%, rgba(212, 148, 76, 0.14) 0%, transparent 70%),
+    radial-gradient(ellipse 360rpx 280rpx at 18% 75%, rgba(13, 148, 136, 0.16) 0%, transparent 70%),
+    linear-gradient(135deg, rgba(13, 148, 136, 0.14) 0%, rgba(212, 148, 76, 0.08) 50%, rgba(13, 148, 136, 0.06) 100%);
+  flex-shrink: 0;
+}
+
+/* HTML .nav-back: width:42px;height:42px → 84rpx；border-radius:50%；
+   background:var(--bg-elevated)；border:0.5px solid rgba(255,255,255,0.60)；
+   box-shadow:var(--neu-out-sm),inset 0 1px 1px rgba(255,255,255,0.5) */
+.nav-back {
+  width: 84rpx;
+  height: 84rpx;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: var(--bg-elevated);
+  border: 1rpx solid rgba(255, 255, 255, 0.60);
+  box-shadow: var(--neu-raised-sm), inset 0 2rpx 2rpx rgba(255, 255, 255, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-1);
+  transition: transform var(--dur-base) var(--spring), box-shadow var(--dur-base) var(--ease);
+}
+
+.nav-back:active {
+  box-shadow: var(--neu-inset);
+  transform: scale(0.94);
+}
+
+/* HTML .nav-back svg: width:22px;height:22px → 44rpx */
+.nav-back-icon {
+  width: 44rpx;
+  height: 44rpx;
+}
+
+/* HTML .nav-titles: flex:1;min-width:0;text-align:center */
+.nav-titles {
+  flex: 1;
+  min-width: 0;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 6rpx;
+}
+
+/* HTML .nav-title: font-size:17px;font-weight:700;line-height:1.2 → 34rpx 700 */
+.nav-title {
+  font-size: 34rpx;
+  font-weight: 700;
+  color: var(--text-1);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+/* HTML .nav-subtitle: font-size:11px;margin-top:3px;font-weight:500 → 22rpx / 6rpx / 500 */
+.nav-subtitle {
+  font-size: 22rpx;
+  color: var(--text-2);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+/* HTML .nav-slot: width:42px;height:42px → 84rpx；background:transparent;border:none */
+.nav-slot {
+  width: 84rpx;
+  height: 84rpx;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-2);
+  transition: transform var(--dur-base) var(--spring), color var(--dur-base) var(--ease);
+}
+
+.nav-slot:active {
+  transform: scale(0.94);
+  color: var(--brand);
+}
+
+/* HTML .nav-slot svg: width:22px;height:22px → 44rpx */
+.nav-slot-icon {
+  width: 44rpx;
+  height: 44rpx;
+}
+
+/* ===== Chat Area ===== */
+/* HTML .chat-area: flex:1;padding:6px 16px 16px;gap:14px → 12rpx 32rpx 32rpx / 28rpx */
+.chat-area {
+  flex: 1 1 0;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 12rpx 32rpx 16rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 28rpx;
+  position: relative;
+  z-index: 1;
+  /* 底部预留：避免被固定输入栏遮挡 */
+  padding-bottom: calc(env(safe-area-inset-bottom) + 240rpx);
+  box-sizing: border-box;
+}
+
+/* Time divider */
+/* HTML .chat-time: font-size:11px;padding:5px 12px;border-radius:9999px → 22rpx / 10rpx 24rpx */
+.chat-time {
+  align-self: center;
+  font-size: 22rpx;
+  color: var(--text-3);
+  padding: 10rpx 24rpx;
+  background: var(--bg-elevated);
+  border-radius: var(--r-pill);
+  box-shadow: var(--neu-raised-sm);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  margin: 8rpx 0;
+}
+
+/* ===== Bubbles ===== */
+/* HTML .bubble-row: gap:8px;align-items:flex-end → 16rpx */
+.bubble-row {
+  display: flex;
+  gap: 16rpx;
+  align-items: flex-end;
+}
+
+.bubble-row-left {
+  justify-content: flex-start;
+}
+
+.bubble-row-right {
+  justify-content: flex-end;
+}
+
+/* HTML .bubble-avatar: width:32px;height:32px → 64rpx；
+   background:linear-gradient(135deg,var(--brand) 0%,var(--brand-mid) 50%,var(--accent) 100%) */
+.bubble-avatar {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: linear-gradient(135deg, var(--brand) 0%, var(--brand-mid) 50%, var(--accent) 100%);
+  box-shadow: var(--neu-raised-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-inverse);
+  overflow: hidden;
+}
+
+/* HTML .bubble-avatar svg: width:18px;height:18px → 36rpx */
+.bubble-avatar-img {
+  width: 36rpx;
+  height: 36rpx;
+}
+
+/* HTML .bubble: max-width:75%;padding:11px 14px;font-size:14px;line-height:1.55;
+   border-radius:18px → 36rpx */
+.bubble {
+  max-width: 75%;
+  padding: 22rpx 28rpx;
+  font-size: 28rpx;
+  line-height: 1.55;
+  letter-spacing: -0.005em;
+  border-radius: 36rpx;
+  position: relative;
+  word-break: break-word;
+}
+
+/* HTML .bubble-assistant: background:rgba(255,255,255,0.60);
+   backdrop-filter:blur(20px) saturate(150%)；border:1px solid rgba(255,255,255,0.70)；
+   border-bottom-left-radius:6px → 12rpx */
+.bubble-assistant {
+  background: rgba(255, 255, 255, 0.60);
+  backdrop-filter: blur(40rpx) saturate(150%);
+  -webkit-backdrop-filter: blur(40rpx) saturate(150%);
+  border: 1rpx solid rgba(255, 255, 255, 0.70);
+  box-shadow: var(--neu-raised-sm);
+  color: var(--text-1);
+  border-bottom-left-radius: 12rpx;
+}
+
+/* HTML .bubble-user: background:var(--brand);border-bottom-right-radius:6px → 12rpx；
+   box-shadow:var(--neu-out-sm),0 4px 12px var(--brand-glow) */
+.bubble-user {
+  background: var(--brand);
+  color: var(--text-inverse);
+  border-bottom-right-radius: 12rpx;
+  box-shadow: var(--neu-raised-sm), 0 8rpx 24rpx var(--brand-glow);
+}
+
+/* HTML .bubble-group: max-width:75%;gap:8px → 16rpx */
+.bubble-group {
+  max-width: 75%;
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+  align-items: flex-start;
+}
+
+.bubble-group .bubble {
+  max-width: 100%;
+}
+
+/* ===== Typing dots ===== */
+.typing-dots {
+  display: flex;
+  gap: 8rpx;
+  padding: 4rpx 0;
+}
+
+.typing-dot {
+  width: 12rpx;
+  height: 12rpx;
+  border-radius: 50%;
+  background: var(--text-3);
+  animation: typing-bounce 1.4s infinite ease-in-out both;
+}
+
+.typing-dot:nth-child(1) { animation-delay: -0.32s; }
+.typing-dot:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes typing-bounce {
+  0%, 80%, 100% { transform: scale(0.6); opacity: 0.6; }
+  40% { transform: scale(1); opacity: 1; }
+}
+
+/* ===== Embedded Recommendation Card ===== */
+/* HTML .rec-service-card: width:100%;gap:12px;padding:12px → 24rpx / 24rpx；
+   border-radius:var(--radius-lg)；background:rgba(255,255,255,0.52) */
+.rec-service-card {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+  padding: 24rpx;
+  background: rgba(255, 255, 255, 0.52);
+  backdrop-filter: blur(40rpx) saturate(150%);
+  -webkit-backdrop-filter: blur(40rpx) saturate(150%);
+  border: 1rpx solid rgba(255, 255, 255, 0.70);
+  border-radius: var(--r-lg);
+  box-shadow: var(--neu-raised);
+  position: relative;
+  overflow: hidden;
+}
+
+/* HTML .rec-icon: width:40px;height:40px;border-radius:12px → 80rpx / 24rpx；
+   background:var(--brand-subtle)；box-shadow:inset 2px 2px 5px neu-dark,inset -2px -2px 5px neu-light */
+.rec-icon {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: var(--r-sm);
+  flex-shrink: 0;
+  background: var(--brand-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--brand);
+  box-shadow: var(--neu-inset-sm);
+  position: relative;
+  z-index: 1;
+}
+
+/* HTML .rec-icon svg: width:20px;height:20px → 40rpx */
+.rec-icon-img {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.rec-info {
+  flex: 1;
+  min-width: 0;
+  position: relative;
+  z-index: 1;
+}
+
+/* HTML .rec-name: font-size:14px;font-weight:700;margin-bottom:3px → 28rpx 700 / 6rpx */
+.rec-name {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: var(--text-1);
+  margin-bottom: 6rpx;
+  letter-spacing: -0.01em;
+  display: block;
+}
+
+/* HTML .rec-meta: font-size:11.5px → 23rpx */
+.rec-meta {
+  font-size: 23rpx;
+  color: var(--text-2);
+  letter-spacing: 0.01em;
+  display: block;
+}
+
+/* HTML .btn-neu-primary: 品牌渐变按钮（背景 + 反色文字 + 阴影 + 按压反馈）
+   注：app.wxss 未提供该全局类，此处按 HTML 参考补页面级定义 */
+.btn-neu-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--brand-gradient);
+  color: var(--text-inverse);
+  border: none;
+  border-radius: var(--r-pill);
+  padding: 14rpx 28rpx;
+  font-size: 25rpx;
+  font-weight: 600;
+  font-family: var(--font-body);
+  white-space: nowrap;
+  box-shadow: var(--neu-raised-sm), 0 4rpx 16rpx var(--brand-glow);
+  transition: transform var(--dur-base) var(--spring), box-shadow var(--dur-base) var(--ease);
+}
+
+.btn-neu-primary:active {
+  box-shadow: var(--neu-inset);
+  transform: scale(0.94);
+}
+
+/* .rec-btn：推荐卡按钮的页面级尺寸/层级覆写（背景与配色由 .btn-neu-primary 提供） */
+.rec-btn {
+  flex-shrink: 0;
+  padding: 14rpx 28rpx;
+  font-size: 25rpx;
+  font-weight: 600;
+  font-family: var(--font-body);
+  border-radius: var(--r-pill);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  position: relative;
+  z-index: 1;
+}
+
+/* ===== Quick Service Chips (in chat) ===== */
+/* HTML .chips-scroll: gap:8px;padding:6px 0 2px → 16rpx / 12rpx 0 4rpx */
+.chips-scroll {
+  display: flex;
+  gap: 16rpx;
+  padding: 12rpx 0 4rpx;
+  margin-top: 4rpx;
+  white-space: nowrap;
+}
+
+/* HTML .chip: padding:7px 14px;font-size:12px;font-weight:600 → 14rpx 28rpx / 24rpx 600；
+   background:var(--bg-elevated)；border:0.5px solid rgba(255,255,255,0.60) */
+.chip {
+  flex-shrink: 0;
+  padding: 14rpx 28rpx;
+  border-radius: var(--r-pill);
+  font-size: 24rpx;
+  font-weight: 600;
+  white-space: nowrap;
+  background: var(--bg-elevated);
+  color: var(--text-2);
+  border: 1rpx solid rgba(255, 255, 255, 0.60);
+  box-shadow: var(--neu-raised-sm);
+  font-family: var(--font-body);
+  transition: transform var(--dur-base) var(--spring), box-shadow var(--dur-base) var(--ease), color var(--dur-base) var(--ease);
+}
+
+.chip:active {
+  transform: scale(0.94);
+  box-shadow: var(--neu-inset-sm);
+  color: var(--brand);
+}
+
+/* ===== 底部固定输入栏 ===== */
+/* HTML .input-bar: position:fixed;left:0;right:0;bottom:0;
+   padding:10px 16px calc(10px + env(safe-area-inset-bottom));
+   background:rgba(255,255,255,0.92);border-top:0.5px solid var(--sep);
+   backdrop-filter:blur(20px) saturate(150%);z-index:100 */
+.input-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 20rpx 32rpx calc(20rpx + env(safe-area-inset-bottom));
+  background: rgba(255, 255, 255, 0.92);
+  border-top: 1rpx solid var(--sep);
+  z-index: 100;
+}
+
+/* HTML .quick-questions: gap:6px;padding:0 2px 8px → 12rpx / 0 4rpx 16rpx */
+.quick-questions {
+  display: flex;
+  gap: 12rpx;
+  padding: 0 4rpx 16rpx;
+  white-space: nowrap;
+}
+
+/* HTML .qq-chip: padding:5px 12px;font-size:11.5px;font-weight:500 → 10rpx 24rpx / 23rpx 500；
+   background:var(--brand-subtle)；border:0.5px solid rgba(13,148,136,0.18) */
+.qq-chip {
+  flex-shrink: 0;
+  padding: 10rpx 24rpx;
+  border-radius: var(--r-pill);
+  font-size: 23rpx;
+  font-weight: 500;
+  white-space: nowrap;
+  background: var(--brand-subtle);
+  color: var(--brand);
+  border: 1rpx solid rgba(13, 148, 136, 0.18);
+  transition: transform var(--dur-base) var(--spring);
+}
+
+/* HTML .input-row: gap:8px → 16rpx */
+.input-row {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+/* HTML .mic-btn: width:40px;height:40px → 80rpx；border-radius:50%；
+   background:var(--bg-elevated)；border:0.5px solid rgba(255,255,255,0.60) */
+.mic-btn {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: var(--bg-elevated);
+  border: 1rpx solid rgba(255, 255, 255, 0.60);
+  box-shadow: var(--neu-raised-sm), inset 0 2rpx 2rpx rgba(255, 255, 255, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--brand);
+  transition: transform var(--dur-base) var(--spring), box-shadow var(--dur-base) var(--ease);
+}
+
+/* HTML .mic-btn svg: width:20px;height:20px → 40rpx */
+.mic-icon {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+/* HTML .text-input / miniapp .chat-input-v2:
+   flex:1;height:40px;padding:0 16px;border-radius:20px → 80rpx / 0 32rpx / 40rpx；
+   background:var(--bg-elevated)；box-shadow:var(--neu-in) */
+.chat-input-v2 {
+  flex: 1;
+  min-width: 0;
+  height: 80rpx;
+  padding: 0 32rpx;
+  background: var(--bg-elevated);
+  border: 1rpx solid rgba(255, 255, 255, 0.60);
+  border-radius: 40rpx;
+  box-shadow: var(--neu-inset-sm);
+  color: var(--text-1);
+  font-size: 26rpx;
+  letter-spacing: -0.005em;
+}
+
+.text-input {
+  flex: 1;
+  min-width: 0;
+  height: 80rpx;
+  padding: 0 32rpx;
+  background: var(--bg-elevated);
+  border: 1rpx solid rgba(255, 255, 255, 0.60);
+  border-radius: 40rpx;
+  box-shadow: var(--neu-inset-sm);
+  color: var(--text-1);
+  font-size: 26rpx;
+  letter-spacing: -0.005em;
+}
+
+.input-ph {
+  color: var(--text-3);
+}
+
+/* HTML .send-btn: width:40px;height:40px → 80rpx；border-radius:50%；
+   background:var(--brand)；box-shadow:var(--neu-out-sm),0 4px 12px var(--brand-glow) */
+.send-btn {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: var(--bg-elevated);
+  color: var(--text-3);
+  border: none;
+  box-shadow: var(--neu-raised-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--dur-base) var(--spring), box-shadow var(--dur-base) var(--ease), background var(--dur-base) var(--ease);
+}
+
+/* 激活态：对齐 HTML 实色 brand + brand-glow */
+.send-btn.active {
+  background: var(--brand);
+  color: var(--text-inverse);
+  box-shadow: var(--neu-raised-sm), 0 8rpx 24rpx var(--brand-glow);
+}
+
+/* HTML .send-btn svg: width:20px;height:20px → 40rpx */
+.send-icon {
+  width: 40rpx;
+  height: 40rpx;
+}

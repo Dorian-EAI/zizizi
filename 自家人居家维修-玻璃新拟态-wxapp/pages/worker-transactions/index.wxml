@@ -1,0 +1,97 @@
+<!-- pages/worker-transactions/index.wxml — 师傅交易明细页 像素级复刻 worker-transactions.html -->
+<view class="page">
+  <!-- 背景装饰光斑：径向渐变（blue-sage 配色） -->
+  <view class="blob" style="top: -80rpx; right: -120rpx; width: 480rpx; height: 480rpx; background: radial-gradient(circle, var(--brand-worker) 0%, transparent 70%);"></view>
+  <view class="blob" style="top: 760rpx; left: -160rpx; width: 420rpx; height: 420rpx; background: radial-gradient(circle, var(--sage) 0%, transparent 70%);"></view>
+
+  <!-- ===== TOP NAV BAR (sticky) ===== -->
+  <view class="nav-bar worker {{navScrolled ? 'scrolled' : ''}}">
+    <view class="nav-icon-btn" bindtap="onBack">
+      <image src="{{icons.back}}" mode="aspectFit" class="nav-icon" lazy-load="{{false}}" />
+    </view>
+    <text class="nav-title">交易明细</text>
+    <view class="nav-spacer"></view>
+  </view>
+
+  <scroll-view scroll-y class="page-scroll hide-scroll" bindscroll="onScroll" style="padding-bottom: 80rpx;">
+
+    <!-- ===== SUMMARY CARD (收支汇总) ===== -->
+    <view class="section">
+      <view class="glass-neu-card summary-card">
+        <view class="summary-top-bar"></view>
+        <view class="summary-body">
+          <view class="summary-cols">
+            <view class="summary-col summary-col-left">
+              <text class="summary-label">本月收入</text>
+              <text class="summary-value summary-value-brand mono">¥{{monthIncomeText}}</text>
+            </view>
+            <view class="summary-divider"></view>
+            <view class="summary-col summary-col-right">
+              <text class="summary-label">累计提现</text>
+              <text class="summary-value mono">¥{{totalWithdrawnText}}</text>
+            </view>
+          </view>
+          <text class="summary-foot">本月订单 {{monthOrders}} 单 · 好评率 {{goodRate}}%</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== FILTER SEGMENT (筛选选项卡) ===== -->
+    <view class="section">
+      <view class="filter-segment">
+        <view
+          class="filter-item {{item.selected ? 'filter-item-active' : ''}}"
+          wx:for="{{tabs}}"
+          wx:key="key"
+          data-idx="{{index}}"
+          bindtap="onTab"
+        >
+          <text class="filter-item-text">{{item.label}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== TX GROUPS (按日期分组) ===== -->
+    <view class="section" wx:for="{{groups}}" wx:key="date" wx:for-item="group">
+      <view class="glass-neu-card tx-group">
+        <view class="tx-group-head">
+          <text class="tx-date">{{group.date}}</text>
+          <text class="tx-subtotal mono">小计 {{group.subtotalText}}</text>
+        </view>
+
+        <view
+          class="tx-row"
+          wx:for="{{group.items}}"
+          wx:for-item="item"
+          wx:key="id"
+        >
+          <view class="tx-icon tx-icon-{{item.type}}">
+            <image src="{{item.iconUrl}}" mode="aspectFit" class="tx-icon-svg" lazy-load="{{false}}" />
+          </view>
+          <view class="tx-main">
+            <text class="tx-title">{{item.title}}</text>
+            <text class="tx-sub" wx:if="{{item.sub}}">{{item.sub}}</text>
+          </view>
+          <view class="tx-right">
+            <text class="tx-amount tx-amount-{{item.type}} mono">{{item.amountText}}</text>
+            <text class="tx-time">{{item.timeText}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 空态 -->
+    <view class="section" wx:if="{{!groups.length && !loading}}">
+      <view class="glass-neu-card tx-group">
+        <view class="empty">
+          <text class="empty-text">暂无交易记录</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 加载提示 -->
+    <view class="foot-note" wx:if="{{groups.length}}">{{hasMore ? '上拉加载更多' : '仅显示近 30 天记录'}}</view>
+    <view class="foot-note" wx:if="{{loading}}">加载中...</view>
+
+  </scroll-view>
+</view>

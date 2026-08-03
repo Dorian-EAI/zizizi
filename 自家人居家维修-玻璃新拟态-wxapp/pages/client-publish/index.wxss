@@ -1,0 +1,829 @@
+/* pages/client-publish/index.wxss — 像素级复刻 zjrnew/pages/client-publish.html
+ * 换算基准：1px = 2rpx（750rpx 设计稿）
+ * 严格忠于 HTML 参考的尺寸、间距、圆角、阴影、渐变透明度
+ */
+
+/* ===== 页面容器（不设 overflow:hidden，避免 scroll-view 内容裁剪） ===== */
+.page {
+  position: relative;
+  min-height: 100vh;
+  background: var(--canvas);
+}
+
+.page-scroll {
+  height: 100vh;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 1;
+}
+
+/* ===== HERO — 活力渐变光晕（HTML 参考：加重版 0.32/0.24/0.28） ===== */
+/* HTML: padding: max(38px, env(safe-area-inset-top)) 24px 36px; border-radius: 0 0 32px 32px; */
+.hero {
+  padding: 0 48rpx 72rpx;
+  position: relative;
+  z-index: 1;
+  background:
+    radial-gradient(ellipse 480rpx 400rpx at 75% 40%, rgba(212, 148, 76, 0.32) 0%, transparent 70%),
+    radial-gradient(ellipse 400rpx 320rpx at 20% 80%, rgba(13, 148, 136, 0.24) 0%, transparent 70%),
+    linear-gradient(135deg, rgba(13, 148, 136, 0.28) 0%, rgba(212, 148, 76, 0.20) 50%, rgba(20, 184, 166, 0.12) 100%);
+  border-radius: 0 0 64rpx 64rpx;
+  overflow: hidden;
+  color: var(--text-1);
+}
+
+/* HTML: hero-head flex space-between; margin-bottom 20px; z-index 2 */
+.hero-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 40rpx;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-title {
+  display: flex;
+  flex-direction: column;
+}
+
+/* HTML: h1 22px / 700 / text-1 / -0.02em / line-height 1.2 */
+.hero-h1 {
+  font-size: 44rpx;
+  font-weight: 700;
+  color: var(--text-1);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+/* HTML: p 13px / text-2 / margin-top 2px / 500 */
+.hero-sub {
+  font-size: 26rpx;
+  color: var(--text-2);
+  margin-top: 4rpx;
+  font-weight: 500;
+}
+
+/* ===== 3-step Indicator（玻璃 on gradient Hero） ===== */
+/* HTML: steps flex; gap:0; padding 0 4px; margin-top 20px; z-index 2 */
+.steps {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding: 0 8rpx;
+  margin-top: 40rpx;
+  position: relative;
+  z-index: 2;
+}
+
+/* HTML: step-circle 32x32; radius 50%; font 13px; 700; font-nums; flex-shrink 0 */
+.step-circle {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26rpx;
+  font-weight: 700;
+  font-family: var(--font-nums);
+  flex-shrink: 0;
+  transition: transform var(--dur-base) var(--spring);
+  box-sizing: border-box;
+}
+
+.step-text {
+  line-height: 1;
+}
+
+/* HTML: step-done bg rgba(255,255,255,0.85); color brand; shadow 0 2px 8px rgba(0,0,0,0.08) */
+.step-done {
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--brand);
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.08);
+}
+
+/* HTML: step-current transparent; border 1.5px solid rgba(255,255,255,0.8); color text-1 */
+.step-current {
+  background: transparent;
+  border: 3rpx solid rgba(255, 255, 255, 0.80);
+  color: var(--text-1);
+}
+
+/* HTML: step-pending bg rgba(255,255,255,0.15); border 1.5px solid rgba(255,255,255,0.25); color rgba(44,40,36,0.6) */
+.step-pending {
+  background: rgba(255, 255, 255, 0.15);
+  border: 3rpx solid rgba(255, 255, 255, 0.25);
+  color: rgba(44, 40, 36, 0.6);
+}
+
+/* HTML: step-line flex:1; height 2px; bg rgba(255,255,255,0.25); margin 0 8px; radius 1px */
+.step-line {
+  flex: 1;
+  height: 4rpx;
+  background: rgba(255, 255, 255, 0.25);
+  margin: 0 16rpx;
+  border-radius: 2rpx;
+  transition: background 0.25s var(--ease);
+}
+
+/* HTML: step-line.active bg rgba(255,255,255,0.7) */
+.step-line.active {
+  background: rgba(255, 255, 255, 0.70);
+}
+
+/* ===== Section ===== */
+/* HTML: section padding 0 24px; margin-top 20px; +section margin-top 16px; z-index 2 */
+.section {
+  padding: 0 48rpx;
+  margin-top: 40rpx;
+  position: relative;
+  z-index: 2;
+}
+
+.section + .section { margin-top: 32rpx; }
+
+/* HTML: section-label 13px / 600 / text-2 / margin-bottom 10px / padding-left 2px / letter-spacing 0.2px / flex align center gap 6px */
+.section-label {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: var(--text-2);
+  margin-bottom: 20rpx;
+  padding-left: 4rpx;
+  letter-spacing: 0.2px;
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+
+/* ===== Glass Card ===== */
+/* HTML: glass bg 0.52 / blur 20px / border 1px / radius var(--r) [38rpx] / neu-out-md + 多层 */
+.card {
+  background: rgba(255, 255, 255, 0.52);
+  backdrop-filter: blur(40rpx) saturate(150%);
+  -webkit-backdrop-filter: blur(40rpx) saturate(150%);
+  border: 1rpx solid rgba(255, 255, 255, 0.70);
+  border-radius: var(--r-md);
+  box-shadow:
+    var(--neu-raised),
+    0 12rpx 56rpx rgba(0, 0, 0, 0.06),
+    0 0 0 2rpx rgba(44, 40, 36, 0.05),
+    0 4rpx 16rpx rgba(13, 148, 136, 0.04);
+  position: relative;
+  overflow: hidden;
+}
+
+/* HTML: card::before Rim Light */
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(165deg,
+    rgba(255, 255, 255, 0.22) 0%,
+    rgba(255, 255, 255, 0.05) 30%,
+    transparent 55%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* 卡片内容在 Rim Light 之上 */
+.card > view,
+.card > text {
+  position: relative;
+  z-index: 1;
+}
+
+/* ===== Service Grid (4-column) ===== */
+/* HTML: service-card padding 16px 12px; z-index 1 */
+.service-card {
+  padding: 32rpx 24rpx;
+  position: relative;
+  z-index: 1;
+}
+
+/* HTML: service-grid grid 4 col; gap 16px 4px */
+.service-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32rpx 8rpx;
+}
+
+/* HTML: service-item flex column; align center; gap 8px; transition */
+.service-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16rpx;
+  transition: transform var(--dur-base) var(--spring);
+}
+
+.service-item:active { transform: scale(0.88); }
+
+/* HTML: service-icon-chip 52x52; radius 50%; bg var(--bg); neu-out-sm + inset 0 1px 1px rgba(255,255,255,0.45); color brand */
+.service-icon-chip {
+  width: 104rpx;
+  height: 104rpx;
+  border-radius: 50%;
+  background: var(--bg);
+  box-shadow:
+    var(--neu-raised-sm),
+    inset 0 2rpx 2rpx rgba(255, 255, 255, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--brand);
+  transition: all 0.2s var(--ease);
+}
+
+/* HTML: service-item.selected .service-icon-chip bg rgba(13,148,136,0.12); color brand; neu-in */
+.service-item:active .service-icon-chip,
+.service-item.selected .service-icon-chip {
+  box-shadow: var(--neu-inset);
+}
+
+.service-item.selected .service-icon-chip {
+  background: rgba(13, 148, 136, 0.12);
+  color: var(--brand);
+}
+
+/* HTML: service-icon (svg 24x24) */
+.service-icon {
+  width: 48rpx;
+  height: 48rpx;
+}
+
+/* HTML: service-label 12px / 500 / text-1 / line-height 1.25 / center */
+.service-label {
+  font-size: 24rpx;
+  font-weight: 500;
+  color: var(--text-1);
+  text-align: center;
+  line-height: 1.25;
+}
+
+/* HTML: service-item.selected .service-label color brand; 600 */
+.service-item.selected .service-label {
+  color: var(--brand);
+  font-weight: 600;
+}
+
+/* ===== Problem Description Card ===== */
+/* HTML: desc-card padding 16px; z-index 1 */
+.desc-card {
+  padding: 32rpx;
+  position: relative;
+  z-index: 1;
+}
+
+/* HTML: desc-textarea width 100%; min-height 96px; no border; radius var(--r-sm); bg var(--bg); padding 12px 14px; font 14px; color text-1; line-height 1.55; neu-in */
+.desc-textarea {
+  width: 100%;
+  min-height: 192rpx;
+  border: none;
+  border-radius: var(--r-sm);
+  background: var(--bg);
+  padding: 24rpx 28rpx;
+  font-family: var(--font-body);
+  font-size: 28rpx;
+  color: var(--text-1);
+  resize: none;
+  line-height: 1.55;
+  box-shadow: var(--neu-inset);
+  box-sizing: border-box;
+}
+
+.desc-placeholder {
+  color: var(--text-3);
+}
+
+/* HTML: char-count text-align right; font 11.5px; color text-3; margin-top 6px; padding-right 2px; 500; tabular-nums; z-index 1 */
+.char-count {
+  text-align: right;
+  margin-top: 12rpx;
+  padding-right: 4rpx;
+  position: relative;
+  z-index: 1;
+}
+
+.char-count-text {
+  font-size: 23rpx;
+  color: var(--text-3);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+/* HTML: info-row flex; gap 12px; padding 13px 6px; border-top 0.5px sep; cursor pointer; radius var(--r-sm); margin 0 -6px; transition */
+.info-row {
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+  padding: 26rpx 12rpx;
+  border-top: 1rpx solid var(--sep);
+  border-radius: var(--r-sm);
+  margin: 0 -12rpx;
+  transition: background 0.2s ease, transform var(--dur-base) var(--spring);
+}
+
+.info-row:active {
+  background: var(--fill);
+  transform: scale(0.98);
+}
+
+/* HTML: info-icon 22x22; color brand; flex-shrink 0; flex center */
+.info-icon {
+  width: 44rpx;
+  height: 44rpx;
+  color: var(--brand);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.info-icon-img {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+/* HTML: info-text flex:1; font 14.5px; 500; text-1; -0.01em */
+.info-text {
+  flex: 1;
+  font-size: 29rpx;
+  font-weight: 500;
+  color: var(--text-1);
+  letter-spacing: -0.01em;
+}
+
+.info-text.placeholder {
+  color: var(--text-3);
+  font-weight: 400;
+}
+
+/* HTML: info-chevron color text-3; flex-shrink 0; flex center */
+.info-chevron {
+  color: var(--text-3);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.info-chevron-img {
+  width: 36rpx;
+  height: 36rpx;
+}
+
+/* HTML: tag-row flex; gap 8px; flex-wrap; margin-top 14px; padding-top 14px; border-top 0.5px sep */
+.tag-row {
+  display: flex;
+  gap: 16rpx;
+  flex-wrap: wrap;
+  margin-top: 28rpx;
+  padding-top: 28rpx;
+  border-top: 1rpx solid var(--sep);
+}
+
+/* HTML: tag-chip bg rgba(13,148,136,0.10); color brand; border 0.5px solid rgba(13,148,136,0.16); radius pill; padding 7px 16px; font 12.5px; 600; transition */
+.tag-chip {
+  background: rgba(13, 148, 136, 0.10);
+  color: var(--brand);
+  border: 1rpx solid rgba(13, 148, 136, 0.16);
+  border-radius: var(--r-pill);
+  padding: 14rpx 32rpx;
+  font-size: 25rpx;
+  font-weight: 600;
+  font-family: var(--font-body);
+  transition: transform var(--dur-base) var(--spring), background 0.2s ease;
+}
+
+.tag-chip:active {
+  transform: scale(0.9);
+  background: rgba(13, 148, 136, 0.18);
+}
+
+.tag-chip.active {
+  background: rgba(13, 148, 136, 0.18);
+  border-color: rgba(13, 148, 136, 0.30);
+}
+
+/* ===== 图片上传（HTML 无对应参考，沿用玻璃新拟态） ===== */
+.img-grid {
+  display: flex;
+  gap: 18rpx;
+  padding: 24rpx;
+  position: relative;
+  z-index: 1;
+}
+
+.img-slot {
+  flex: 1;
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8rpx;
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--r-sm);
+  background: var(--bg);
+  box-shadow: var(--neu-inset);
+}
+
+.img-camera {
+  width: 56rpx;
+  height: 56rpx;
+}
+
+.img-text {
+  font-size: 22rpx;
+  color: var(--text-3);
+}
+
+.img-preview {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.img-remove {
+  position: absolute;
+  top: 8rpx;
+  right: 8rpx;
+  width: 44rpx;
+  height: 44rpx;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.5);
+  color: #FFFFFF;
+  font-size: 28rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+/* ===== Order Mode Selection (3 mode cards) ===== */
+/* HTML: mode-grid grid 3 col; gap 10px */
+.mode-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20rpx;
+}
+
+/* HTML: mode-card padding 16px 8px; text-align center; transition */
+.mode-card {
+  padding: 32rpx 16rpx;
+  text-align: center;
+  transition: transform var(--dur-base) var(--spring), all 0.2s ease;
+}
+
+.mode-card:active { transform: scale(0.94); }
+
+/* HTML: mode-card.selected border 1.5px solid brand; bg rgba(13,148,136,0.06); neu-out-sm + 0 4px 14px brand-glow + 0 0 0 0.5px rgba(13,148,136,0.04) */
+.mode-card.selected {
+  border: 3rpx solid var(--brand);
+  background: rgba(13, 148, 136, 0.06);
+  box-shadow:
+    var(--neu-raised-sm),
+    0 8rpx 28rpx var(--brand-glow),
+    0 0 0 1rpx rgba(13, 148, 136, 0.04);
+}
+
+/* HTML: mode-icon 44x44; radius 50%; bg var(--bg); neu-out-sm + inset; color text-2; margin 0 auto 10px */
+.mode-icon {
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: 50%;
+  background: var(--bg);
+  box-shadow:
+    var(--neu-raised-sm),
+    inset 0 2rpx 2rpx rgba(255, 255, 255, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20rpx;
+  color: var(--text-2);
+  transition: all 0.2s ease;
+}
+
+/* HTML: mode-card.selected .mode-icon bg rgba(13,148,136,0.12); color brand */
+.mode-card.selected .mode-icon {
+  background: rgba(13, 148, 136, 0.12);
+  color: var(--brand);
+  box-shadow: var(--neu-inset);
+}
+
+/* mode-icon-img: 默认不可见，选中时显示 */
+.mode-icon-img {
+  width: 44rpx;
+  height: 44rpx;
+  opacity: 0;
+  transition: opacity 0.2s var(--ease);
+}
+
+.mode-icon-img.visible {
+  opacity: 1;
+}
+
+/* HTML: mode-title 14px / 700 / text-1 / margin-bottom 4px / -0.01em */
+.mode-title {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: var(--text-1);
+  margin-bottom: 8rpx;
+  letter-spacing: -0.01em;
+  display: block;
+}
+
+/* HTML: mode-card.selected .mode-title color brand */
+.mode-card.selected .mode-title {
+  color: var(--brand);
+}
+
+/* HTML: mode-desc 11px / text-2 / line-height 1.4 */
+.mode-desc {
+  font-size: 22rpx;
+  color: var(--text-2);
+  line-height: 1.4;
+  display: block;
+}
+
+/* ===== Step 3 确认订单卡 ===== */
+.confirm-card {
+  padding: 32rpx;
+  position: relative;
+  z-index: 1;
+}
+
+.confirm-service {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+}
+
+.confirm-icon {
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: 50%;
+  background: var(--bg);
+  box-shadow:
+    var(--neu-raised-sm),
+    inset 0 2rpx 2rpx rgba(255, 255, 255, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.confirm-icon-img {
+  width: 44rpx;
+  height: 44rpx;
+}
+
+.confirm-service-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4rpx;
+  min-width: 0;
+}
+
+.confirm-service-name {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: var(--text-1);
+  letter-spacing: -0.02em;
+}
+
+.confirm-service-desc {
+  font-size: 24rpx;
+  color: var(--text-3);
+}
+
+.confirm-divider {
+  height: 1rpx;
+  background: var(--sep);
+  margin: 24rpx 0;
+}
+
+.confirm-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20rpx;
+  padding: 4rpx 0;
+}
+
+.confirm-label {
+  font-size: 26rpx;
+  color: var(--text-3);
+  flex-shrink: 0;
+}
+
+.confirm-value {
+  font-size: 26rpx;
+  color: var(--text-1);
+  text-align: right;
+  flex: 1;
+  word-break: break-all;
+}
+
+/* ===== 费用卡 ===== */
+.fee-card {
+  padding: 32rpx;
+  position: relative;
+  z-index: 1;
+}
+
+.fee-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12rpx 0;
+}
+
+.fee-row.total {
+  padding-top: 4rpx;
+}
+
+.fee-label {
+  font-size: 26rpx;
+  color: var(--text-2);
+}
+
+.fee-value {
+  font-size: 26rpx;
+  color: var(--text-1);
+  font-weight: 600;
+}
+
+/* ===== Bottom Summary Bar (Fixed) — Liquid Glass 胶囊 ===== */
+/* HTML: position:fixed; bottom: calc(64px + max(14px, env(safe-area-inset-bottom))); left 50%; transform translateX(-50%); width: calc(100% - 32px); max-width: 360px; padding: 14px 18px; radius 28px; glass tab bg; z-index 99 */
+.summary-bar.fixed {
+  position: fixed;
+  bottom: calc(128rpx + max(28rpx, env(safe-area-inset-bottom)));
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 64rpx);
+  max-width: 720rpx;
+  padding: 28rpx 36rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24rpx;
+  background: rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(96rpx) saturate(210%);
+  -webkit-backdrop-filter: blur(96rpx) saturate(210%);
+  border: 1rpx solid rgba(255, 255, 255, 0.50);
+  border-radius: 56rpx;
+  box-shadow:
+    inset 0 3rpx 6rpx rgba(255, 255, 255, 0.60),
+    inset 0 -1rpx 2rpx rgba(255, 255, 255, 0.20),
+    0 0 0 1rpx rgba(0, 0, 0, 0.04),
+    0 4rpx 20rpx rgba(0, 0, 0, 0.06),
+    0 24rpx 72rpx rgba(0, 0, 0, 0.08);
+  z-index: 99;
+  box-sizing: border-box;
+}
+
+/* HTML: summary-bar::before Rim Light with mask */
+.summary-bar.fixed::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(160deg,
+    rgba(255, 255, 255, 0.42) 0%,
+    rgba(255, 255, 255, 0.16) 20%,
+    rgba(255, 255, 255, 0.03) 40%,
+    transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* HTML: summary-bar::after gradient 320deg */
+.summary-bar.fixed::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(320deg,
+    transparent 60%,
+    rgba(13, 148, 136, 0.06) 80%,
+    rgba(255, 255, 255, 0.04) 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* HTML: summary-left flex column; gap 3px; z-index 2 */
+.summary-left {
+  display: flex;
+  flex-direction: column;
+  gap: 6rpx;
+  position: relative;
+  z-index: 2;
+  min-width: 0;
+}
+
+/* HTML: summary-label 12.5px / text-2 / 500 */
+.summary-label {
+  font-size: 25rpx;
+  color: var(--text-2);
+  font-weight: 500;
+}
+
+/* HTML: summary-price 26px / 700 / font-nums / color brand / line-height 1.1 / -0.02em */
+.summary-price {
+  font-size: 52rpx;
+  font-weight: 700;
+  font-family: var(--font-nums);
+  color: var(--brand);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: baseline;
+}
+
+/* HTML: .currency 15px / 600 / margin-right 1px */
+.summary-price .currency {
+  font-size: 30rpx;
+  font-weight: 600;
+  margin-right: 2rpx;
+}
+
+/* 底部操作按钮组 */
+.summary-actions {
+  display: flex;
+  gap: 16rpx;
+  position: relative;
+  z-index: 2;
+  flex-shrink: 0;
+}
+
+/* 上一步按钮：玻璃 secondary */
+.btn-back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 72rpx;
+  padding: 0 32rpx;
+  border-radius: var(--r-pill);
+  background: rgba(255, 255, 255, 0.50);
+  color: var(--text-2);
+  border: 1rpx solid rgba(255, 255, 255, 0.60);
+  font-size: 26rpx;
+  font-weight: 600;
+  font-family: var(--font-body);
+  box-shadow: var(--neu-raised-sm);
+  transition: transform var(--dur-base) var(--spring), box-shadow var(--dur-base) var(--ease);
+}
+
+.btn-back:active {
+  box-shadow: var(--neu-inset);
+  transform: scale(0.94);
+}
+
+/* 发布按钮：HTML .btn-neu-primary */
+/* HTML: inline-flex; gap 6px; bg var(--brand-gradient); color text-inverse; border 0.5px solid rgba(255,255,255,0.40); radius pill; padding 10px 20px; font 14px; 600; neu-out-sm + 0 4px 14px brand-glow + inset 0 1px 1px rgba(255,255,255,0.30) */
+.btn-publish {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12rpx;
+  height: 72rpx;
+  padding: 0 40rpx;
+  border-radius: var(--r-pill);
+  background: var(--brand-gradient);
+  color: var(--text-inverse);
+  border: 1rpx solid rgba(255, 255, 255, 0.40);
+  font-size: 28rpx;
+  font-weight: 600;
+  font-family: var(--font-body);
+  box-shadow:
+    var(--neu-raised-sm),
+    0 8rpx 28rpx var(--brand-glow),
+    inset 0 2rpx 2rpx rgba(255, 255, 255, 0.30);
+  transition: transform var(--dur-base) var(--spring), box-shadow var(--dur-base) var(--ease);
+}
+
+.btn-publish:active {
+  box-shadow: var(--neu-inset);
+  transform: scale(0.94);
+}
+
+/* ===== 背景装饰光斑颜色（配合全局 .blob 基类）===== */
+.blob-brand {
+  background: radial-gradient(circle, var(--brand) 0%, transparent 70%);
+}
+
+.blob-accent {
+  background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+}
+
+/* ===== .amount 语义钩子（实际样式由同元素 .numeric 提供）===== */
+.amount {
+  font-family: var(--font-number);
+}

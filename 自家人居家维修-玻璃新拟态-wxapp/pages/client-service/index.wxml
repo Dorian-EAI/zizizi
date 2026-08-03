@@ -1,0 +1,119 @@
+<!-- pages/client-service/index.wxml — 客服中心 玻璃新拟态（像素级复刻 zjrnew.DESIGN） -->
+<view class="page">
+  <!-- 背景装饰光斑 -->
+  <view class="blob" style="top: -40px; right: -60px; width: 280px; height: 280px; background: var(--brand);"></view>
+  <view class="blob" style="top: 360px; left: -80px; width: 240px; height: 240px; background: var(--accent);"></view>
+
+  <scroll-view scroll-y class="page-scroll hide-scroll" style="padding-bottom: 200rpx;">
+
+    <!-- ===== Sub Header (client 渐变 + 返回 + 标题) ===== -->
+    <view class="sub-header" style="padding-top: calc({{statusBarHeight}}px + 16rpx);">
+      <view class="back-row">
+        <view class="back-btn press-scale" bindtap="onBack">
+          <image src="{{icons.back}}" mode="aspectFit" class="back-icon" lazy-load="{{false}}" />
+        </view>
+        <text class="back-title">客服中心</text>
+        <view class="back-spacer"></view>
+      </view>
+    </view>
+
+    <!-- ===== 在线客服卡片 ===== -->
+    <view class="online-card press-card" bindtap="onOnlineService">
+      <view class="online-icon online-icon-teal">
+        <image src="{{icons.message}}" mode="aspectFit" class="online-icon-img" lazy-load="{{false}}" />
+      </view>
+      <view class="online-info">
+        <text class="online-name">在线客服</text>
+        <text class="online-sub">7x24小时在线</text>
+        <text class="online-sub">平均响应30秒</text>
+      </view>
+      <view class="btn-neu-primary btn-consult press-scale">
+        <text class="btn-consult-text">立即咨询</text>
+      </view>
+    </view>
+
+    <view class="online-card press-card" bindtap="onCallHotline">
+      <view class="online-icon online-icon-amber">
+        <image src="{{icons.phone}}" mode="aspectFit" class="online-icon-img" lazy-load="{{false}}" />
+      </view>
+      <view class="online-info">
+        <text class="online-name">客服热线</text>
+        <text class="hotline-num">400-888-0000</text>
+        <text class="online-sub">工作时间 8:00-22:00</text>
+      </view>
+      <view class="btn-neu-secondary btn-call press-scale">
+        <image src="{{icons.phone}}" mode="aspectFit" class="call-icon" lazy-load="{{false}}" />
+        <text class="btn-call-text">拨打</text>
+      </view>
+    </view>
+
+    <!-- ===== 我的工单 ===== -->
+    <view class="section-header">
+      <text class="section-title">我的工单</text>
+      <view class="section-link press-scale" bindtap="onNewTicket">
+        <image src="{{icons.plus}}" mode="aspectFit" class="link-icon" lazy-load="{{false}}" />
+        <text>提交工单</text>
+      </view>
+    </view>
+
+    <!-- 筛选 Pills -->
+    <view class="pills">
+      <view
+        class="pill {{activePill === item ? 'pill-active' : ''}} press-scale"
+        wx:for="{{pills}}"
+        wx:key="*this"
+        data-key="{{item}}"
+        bindtap="onPillTap"
+      >{{item}}</view>
+    </view>
+
+    <!-- 工单列表 -->
+    <view class="ticket-list">
+      <view
+        class="ticket-card press-card"
+        wx:for="{{tickets}}"
+        wx:key="id"
+        data-id="{{item.id}}"
+        bindtap="onTicketTap"
+      >
+        <view class="ticket-top">
+          <text class="type-badge type-{{item.type}}">{{item.typeLabel}}</text>
+          <text class="status-badge status-{{item.status}}">{{item.statusLabel}}</text>
+        </view>
+        <text class="ticket-title">{{item.title}}</text>
+        <view class="ticket-foot">
+          <text class="ticket-no">#{{item.ticketNo || item.id}}</text>
+          <text class="ticket-dot">·</text>
+          <text class="ticket-time">{{item.time}}</text>
+          <view class="ticket-view">
+            <text>查看</text>
+            <image src="{{icons.arrowRight}}" mode="aspectFit" class="view-arrow" lazy-load="{{false}}" />
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== 常见问题 ===== -->
+    <text class="section-title">常见问题</text>
+    <view class="faq-card">
+      <view
+        class="faq-item press-card"
+        wx:for="{{faqs}}"
+        wx:key="*this"
+        data-idx="{{index}}"
+        bindtap="onFaqTap"
+      >
+        <text class="faq-q">{{item}}</text>
+        <image src="{{icons.arrowRight}}" mode="aspectFit" class="faq-arrow" lazy-load="{{false}}" />
+      </view>
+    </view>
+
+  </scroll-view>
+
+  <!-- ===== 底部固定提交按钮 ===== -->
+  <view class="bottom-bar">
+    <view class="btn-neu-primary btn-submit press-scale" bindtap="onNewTicket">
+      <text class="btn-submit-text">提交工单</text>
+    </view>
+  </view>
+</view>

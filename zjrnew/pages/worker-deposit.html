@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自家人居家维修 · 玻璃新拟态 · 保证金</title>
+    <link rel="stylesheet" href="../assets/fonts.css">
+
+    <style id="theme-vars">
+/* 自家人居家维修 - 玻璃新拟态 */
+:root {
+  /* Brand - Worker (Blue) */
+  --brand: #2D6CDF;
+  --brand-dark: #2456B8;
+  --brand-mid: #5A8EE8;
+  --brand-light: #DCE8FB;
+  --brand-glow: rgba(45, 108, 223, 0.28);
+  --brand-subtle: rgba(45, 108, 223, 0.08);
+
+  /* Accent (Amber) */
+  --accent: #D4944C;
+  --accent-dark: #A0723C;
+  --accent-mid: #E8C088;
+  --accent-light: #F5E6D0;
+  --accent-glow: rgba(212, 148, 76, 0.20);
+
+  /* Background */
+  --background: #F2EDE8;
+  --foreground: #2C2824;
+  --body-bg: #E8E4DF;
+  --bg-elevated: #F7F3EF;
+
+  /* Neumorphic */
+  --neu-light: #FFF8F2;
+  --neu-dark: #DDD6CE;
+  --neu-highlight: rgba(255, 255, 255, 0.55);
+
+  /* Surface & Card */
+  --card: rgba(255, 255, 255, 0.52);
+  --card-foreground: #2C2824;
+  --popover: #fff;
+  --popover-foreground: #2C2824;
+
+  /* Muted */
+  --muted: #F7F3EF;
+  --muted-foreground: #8B8178;
+
+  /* Border & Input */
+  --border: rgba(44, 40, 36, 0.06);
+  --input: rgba(44, 40, 36, 0.06);
+  --ring: #2D6CDF;
+
+  /* Primary */
+  --primary: #2D6CDF;
+  --primary-foreground: #ffffff;
+
+  /* Semantic aliases */
+  --state-success: #5B8C5A;
+  --state-warning: #D4944C;
+  --state-error: #C4533A;
+  --state-info: #5A8FAD;
+
+  /* Text */
+  --text-1: #2C2824;
+  --text-2: #8B8178;
+  --text-3: #B5ADA5;
+  --text-inverse: #ffffff;
+
+  /* Sep & Fill */
+  --sep: rgba(44, 40, 36, 0.06);
+  --fill: rgba(44, 40, 36, 0.04);
+
+  /* Green/Red/Orange/Blue semantic */
+  --green: #5B8C5A;
+  --red: #C4533A;
+  --orange: #D4944C;
+  --blue: #5A8FAD;
+
+  /* Radius */
+  --radius-sm: 0.75rem;
+  --radius-md: 1.2rem;
+  --radius-lg: 1.6rem;
+  --radius-full: 9999px;
+
+    /* Font — 统一衬线系统 */
+  --font-display: 'Cormorant Garamond', 'Noto Serif SC', 'STSong', Georgia, serif;
+  --font-body: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --font-nums: 'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
+  --font: var(--font-body);
+
+  /* Motion */
+  --spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --dur: 0.2s;
+
+  /* Glass */
+  --glass-bg: rgba(255, 255, 255, 0.18);
+  --glass-blur: blur(12px) saturate(140%);
+  --glass-border: rgba(255, 255, 255, 0.60);
+
+  /* Surface presets for glass-neumorphic components */
+  --surface-1: rgba(255, 255, 255, 0.50);
+  --surface-2: rgba(255, 255, 255, 0.45);
+
+  /* Neumorphic shadow presets */
+  --neu-out-sm: 6px 6px 14px var(--neu-dark), -6px -6px 14px var(--neu-light), 0 4px 16px rgba(0, 0, 0, 0.04);
+  --neu-out-md: 8px 8px 18px var(--neu-dark), -8px -8px 18px var(--neu-light), 0 6px 24px rgba(0, 0, 0, 0.05);
+  --neu-out-lg: 10px 10px 24px var(--neu-dark), -10px -10px 24px var(--neu-light), 0 8px 32px rgba(0, 0, 0, 0.06);
+  --neu-in: inset 4px 4px 8px var(--neu-dark), inset -4px -4px 8px var(--neu-light);
+  --neu-in-deep: inset 5px 5px 10px var(--neu-dark), inset -5px -5px 10px var(--neu-light);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --font-sans: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --font-serif: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --radius-full: var(--radius-full);}
+
+/* Semantic token fallback */
+#semantic-token-fallback {
+  --brand-background: var(--background);
+  --brand-foreground: var(--foreground);
+  --brand-card: var(--card);
+  --brand-card-foreground: var(--card-foreground);
+  --brand-popover: var(--popover);
+  --brand-popover-foreground: var(--popover-foreground);
+  --brand-primary: var(--primary);
+  --brand-primary-foreground: var(--primary-foreground);
+  --brand-muted: var(--muted);
+  --brand-muted-foreground: var(--muted-foreground);
+  --brand-border: var(--border);
+  --brand-input: var(--input);
+  --brand-ring: var(--ring);
+  --brand-radius-sm: var(--radius-sm);
+  --brand-radius-md: var(--radius-md);
+  --brand-radius-lg: var(--radius-lg);
+}
+
+/* ===== Global Neumorphic Components ===== */
+/* Tab Bar */
+.tab-bar{
+  position:absolute;
+  bottom:max(14px, env(safe-area-inset-bottom));
+  left:50%;
+  transform:translateX(-50%);
+  width:calc(100% - 32px);
+  max-width:360px;
+  height:64px;
+  z-index:100;
+  background:rgba(255,255,255,0.22);
+  backdrop-filter:blur(48px) saturate(210%);
+  -webkit-backdrop-filter:blur(48px) saturate(210%);
+  border:0.5px solid rgba(255,255,255,0.50);
+  border-radius:28px;
+  box-shadow:
+    inset 0 1.5px 3px rgba(255,255,255,0.60),
+    inset 0 -0.5px 1px rgba(255,255,255,0.20),
+    0 0 0 0.5px rgba(0,0,0,0.04),
+    0 2px 10px rgba(0,0,0,0.06),
+    0 12px 36px rgba(0,0,0,0.08);
+  display:flex;
+  align-items:center;
+  justify-content:space-around;
+  padding:0 10px;
+}
+.tab-bar::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  background:linear-gradient(160deg,
+    rgba(255,255,255,0.42) 0%,
+    rgba(255,255,255,0.16) 20%,
+    rgba(255,255,255,0.03) 40%,
+    transparent 60%);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
+  padding:0.5px;
+  pointer-events:none;
+  z-index:1;
+}
+.tab-bar::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  background:linear-gradient(320deg,
+    transparent 60%,
+    rgba(45,108,223,0.06) 80%,
+    rgba(255,255,255,0.04) 100%);
+  pointer-events:none;
+  z-index:1;
+}
+.tab-item{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+  width:68px;
+  height:44px;
+  border-radius:14px;
+  color:var(--text-3);
+  font-size:11px;
+  font-weight:500;
+  text-decoration:none;
+  position:relative;
+  transition:all .2s;
+}
+.tab-item svg{
+  width:20px;
+  height:20px;
+  stroke:currentColor;
+  fill:none;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.tab-item[data-active="true"]{
+  color:var(--brand);
+  font-weight:600;
+}
+.tab-item[data-active="true"]::before{
+  content:"";
+  position:absolute;
+  width:54px;
+  height:42px;
+  border-radius:16px;
+  background:rgba(45,108,223,0.16);
+  backdrop-filter:blur(24px);
+  -webkit-backdrop-filter:blur(24px);
+  border:0.5px solid rgba(45,108,223,0.30);
+  box-shadow:
+    inset 0 1px 3px rgba(255,255,255,0.55),
+    inset 0 -0.5px 1px rgba(255,255,255,0.15),
+    0 2px 10px rgba(45,108,223,0.20),
+    0 0 0 0.5px rgba(45,108,223,0.08);
+  z-index:0;
+}
+.tab-item[data-active="true"] svg{
+  transform:scale(1.08);
+  position:relative;
+  z-index:1;
+}
+
+.btn-neu-primary:active{box-shadow:var(--neu-in);transform:scale(0.94)}
+
+.btn-neu-secondary{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,0.50);color:var(--brand);
+  border:0.5px solid rgba(255,255,255,0.60);border-radius:9999px;
+  padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
+  cursor:pointer;
+  box-shadow:var(--neu-out-sm);
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
+.btn-neu-secondary:active{box-shadow:var(--neu-in);transform:scale(0.94)}
+
+.btn-neu-ghost{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:transparent;color:var(--text-2);
+  border:0.5px solid var(--border);border-radius:9999px;
+  padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
+  cursor:pointer;
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease),color var(--dur) var(--ease);
+}
+.btn-neu-ghost:active{transform:scale(0.94);color:var(--brand)}
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-accent: var(--accent);
+    --radius-sm: var(--radius-sm);
+    --radius-md: var(--radius-md);
+    --radius-lg: var(--radius-lg);
+    --radius-full: var(--radius-full);
+    --font-sans: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+    --font-serif: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+    <style id="semantic-token-fallback">
+      .bg-background { background-color: var(--background); }
+      .text-background { color: var(--background); }
+      .border-background { border-color: var(--background); }
+      .ring-background { --tw-ring-color: var(--background); }
+      .bg-foreground { background-color: var(--foreground); }
+      .text-foreground { color: var(--foreground); }
+      .border-foreground { border-color: var(--foreground); }
+      .ring-foreground { --tw-ring-color: var(--foreground); }
+      .bg-card { background-color: var(--card); }
+      .text-card { color: var(--card); }
+      .border-card { border-color: var(--card); }
+      .ring-card { --tw-ring-color: var(--card); }
+      .bg-card-foreground { background-color: var(--card-foreground); }
+      .text-card-foreground { color: var(--card-foreground); }
+      .border-card-foreground { border-color: var(--card-foreground); }
+      .ring-card-foreground { --tw-ring-color: var(--card-foreground); }
+      .bg-popover { background-color: var(--popover); }
+      .text-popover { color: var(--popover); }
+      .border-popover { border-color: var(--popover); }
+      .ring-popover { --tw-ring-color: var(--popover); }
+      .bg-popover-foreground { background-color: var(--popover-foreground); }
+      .text-popover-foreground { color: var(--popover-foreground); }
+      .border-popover-foreground { border-color: var(--popover-foreground); }
+      .ring-popover-foreground { --tw-ring-color: var(--popover-foreground); }
+      .bg-primary { background-color: var(--primary); }
+      .text-primary { color: var(--primary); }
+      .border-primary { border-color: var(--primary); }
+      .ring-primary { --tw-ring-color: var(--primary); }
+      .bg-primary-foreground { background-color: var(--primary-foreground); }
+      .text-primary-foreground { color: var(--primary-foreground); }
+      .border-primary-foreground { border-color: var(--primary-foreground); }
+      .ring-primary-foreground { --tw-ring-color: var(--primary-foreground); }
+      .bg-muted { background-color: var(--muted); }
+      .text-muted { color: var(--muted); }
+      .border-muted { border-color: var(--muted); }
+      .ring-muted { --tw-ring-color: var(--muted); }
+      .bg-muted-foreground { background-color: var(--muted-foreground); }
+      .text-muted-foreground { color: var(--muted-foreground); }
+      .border-muted-foreground { border-color: var(--muted-foreground); }
+      .ring-muted-foreground { --tw-ring-color: var(--muted-foreground); }
+      .bg-border { background-color: var(--border); }
+      .text-border { color: var(--border); }
+      .border-border { border-color: var(--border); }
+      .ring-border { --tw-ring-color: var(--border); }
+      .bg-input { background-color: var(--input); }
+      .text-input { color: var(--input); }
+      .border-input { border-color: var(--input); }
+      .ring-input { --tw-ring-color: var(--input); }
+      .bg-ring { background-color: var(--ring); }
+      .text-ring { color: var(--ring); }
+      .border-ring { border-color: var(--ring); }
+      .ring-ring { --tw-ring-color: var(--ring); }
+      .bg-accent { background-color: var(--accent); }
+      .text-accent { color: var(--accent); }
+      .border-accent { border-color: var(--accent); }
+      .ring-accent { --tw-ring-color: var(--accent); }
+    </style>
+    <style>
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      [data-icon] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        background-color: currentColor;
+      }
+    </style>
+</head>
+<body>
+<div class="phone" data-dom-id="page-worker-deposit">
+
+  <!-- ===== TOP BACK BAR ===== -->
+  <div class="topbar">
+    <button class="back-btn" data-dom-id="back-btn" aria-label="返回">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg>
+    </button>
+    <span class="topbar-title">保证金</span>
+  </div>
+
+  <!-- ===== DEPOSIT BALANCE HERO ===== -->
+  <section class="dep-hero" style="width: 327px; border-radius: 26px; border-top-left-radius: 26px; border-top-right-radius: 26px; border-bottom-left-radius: 26px; border-bottom-right-radius: 26px; justify-content: normal; align-items: normal; display: block; padding-left: 24px; padding-right: 24px; padding-top: 8px; padding-bottom: 40px; left: 25px; top: 10px;">
+    <div class="dep-hero-label" style="display: flex; justify-content: center;">保证金余额</div>
+    <div class="dep-hero-amount" style="display: flex; justify-content: center;">¥ 2,000.00</div>
+    <div class="dep-hero-meta" style="justify-content: center;">
+      <span class="status-badge green" data-dom-id="deposit-status">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 12l2 2 4-4"></path>
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+        </svg>
+        正常
+      </span>
+      <span class="level-chip" data-dom-id="deposit-level">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="8" r="5"></circle>
+          <path d="M8.5 12.5L7 22l5-3 5 3-1.5-9.5"></path>
+        </svg>
+        金牌师傅
+      </span>
+    </div>
+  </section>
+
+  <!-- ===== CURRENT LEVEL BENEFITS ===== -->
+  <div class="section">
+    <div class="section-title">
+      <span>当前等级权益</span>
+    </div>
+    <div class="card benefit-card">
+      <div class="benefit-row">
+        <span class="benefit-check">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+        </span>
+        <span class="benefit-text">不限抢单</span>
+      </div>
+      <div class="benefit-row">
+        <span class="benefit-check">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+        </span>
+        <span class="benefit-text">平台抽成 10%</span>
+      </div>
+      <div class="benefit-row">
+        <span class="benefit-check">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+        </span>
+        <span class="benefit-text">首页推荐位 + 专属客服</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== DEPOSIT LEVELS ===== -->
+  <div class="section">
+    <div class="section-title">
+      <span>保证金等级</span>
+    </div>
+    <div class="level-list">
+
+      <!-- 见习师傅 -->
+      <div class="level-card locked" data-dom-id="level-novice">
+        <div class="level-head">
+          <div class="level-name-block">
+            <span class="level-name">见习师傅</span>
+            <span class="level-amount">¥0</span>
+          </div>
+          <span class="level-tag gray">未达</span>
+        </div>
+        <div class="level-benefits">
+          <span class="level-benefit">每日限抢 3 单</span>
+          <span class="level-benefit">平台抽成 15%</span>
+        </div>
+      </div>
+
+      <!-- 正式师傅 -->
+      <div class="level-card locked" data-dom-id="level-formal">
+        <div class="level-head">
+          <div class="level-name-block">
+            <span class="level-name">正式师傅</span>
+            <span class="level-amount">¥500</span>
+          </div>
+          <span class="level-tag gray">未达</span>
+        </div>
+        <div class="level-benefits">
+          <span class="level-benefit">每日限抢 10 单</span>
+          <span class="level-benefit">平台抽成 12%</span>
+        </div>
+      </div>
+
+      <!-- 金牌师傅 (current) -->
+      <div class="level-card current" data-dom-id="level-gold" style="border-image: none; border-image-source: none; border-color: rgba(212, 148, 76, 0.42); background-image: linear-gradient(135deg, rgba(45, 108, 223, 0.2) 0%, rgba(45, 108, 223, 0.08) 100%); background-color: rgba(0, 0, 0, 0);">
+        <span class="current-corner" style="background-image: linear-gradient(90deg, rgb(212, 148, 76) 0%, rgb(232, 192, 136) 100%); background-color: transparent;">当前</span>
+        <div class="level-head">
+          <div class="level-name-block">
+            <span class="level-name">金牌师傅</span>
+            <span class="level-amount">¥2,000</span>
+          </div>
+          <span class="level-tag brand">已达成</span>
+        </div>
+        <div class="level-benefits">
+          <span class="level-benefit">不限抢单</span>
+          <span class="level-benefit">平台抽成 10%</span>
+          <span class="level-benefit">首页推荐</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== DEPOSIT RECORDS ===== -->
+  <div class="section">
+    <div class="section-title">
+      <span>保证金记录</span>
+    </div>
+    <div class="card record-card">
+
+      <div class="record-row" data-dom-id="record-pay">
+        <div class="record-icon income">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <polyline points="19 12 12 19 5 12"></polyline>
+          </svg>
+        </div>
+        <div class="record-info">
+          <span class="record-title">缴纳保证金</span>
+          <span class="record-time">2026-06-01</span>
+        </div>
+        <div class="record-right">
+          <span class="record-amount plus">+¥2,000</span>
+          <span class="record-status green">已完成</span>
+        </div>
+      </div>
+
+      <div class="record-row" data-dom-id="record-deduct">
+        <div class="record-icon outcome">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="19" x2="12" y2="5"></line>
+            <polyline points="5 12 12 5 19 12"></polyline>
+          </svg>
+        </div>
+        <div class="record-info">
+          <span class="record-title">工单 WO20260720 扣除</span>
+          <span class="record-time">2026-07-20</span>
+        </div>
+        <div class="record-right">
+          <span class="record-amount minus">-¥200</span>
+          <span class="record-status red">已扣除</span>
+        </div>
+      </div>
+
+      <div class="record-row" data-dom-id="record-refund">
+        <div class="record-icon pending">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="9"></circle>
+            <polyline points="12 7 12 12 15 14"></polyline>
+          </svg>
+        </div>
+        <div class="record-info">
+          <span class="record-title">退还申请</span>
+          <span class="record-time">2026-07-25</span>
+        </div>
+        <div class="record-right">
+          <span class="record-amount zero">+¥0</span>
+          <span class="record-status orange">审核中</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== BOTTOM FIXED DUAL BUTTONS ===== -->
+  <div class="bottom-actions">
+    <button class="btn-neu-ghost" data-dom-id="btn-refund" type="button">申请退还</button>
+    <button class="btn-neu-primary" data-dom-id="btn-pay" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+        <path d="m9 12 2 2 4-4"></path>
+      </svg>
+      补缴保证金
+    </button>
+  </div>
+
+</div>
+
+    <style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --brand:#2D6CDF;--brand-dark:#2456B8;--brand-light:#DCE8FB;
+  --brand-glow:rgba(45,108,223,0.28);--brand-subtle:rgba(45,108,223,0.08);
+  --brand-gradient:linear-gradient(135deg,#2D6CDF 0%,#5A8EE8 50%,#D4944C 100%);
+  --accent:#D4944C;--accent-light:#F5E6D0;--accent-glow:rgba(212,148,76,0.25);
+  --bg:#F2EDE8;--bg-elevated:#F7F3EF;
+  --neu-light:#FFF8F2;--neu-dark:#DDD6CE;
+  --text-1:#2C2824;--text-2:#8B8178;--text-3:#B5ADA5;--text-inverse:#FFFFFF;
+  --sep:rgba(44,40,36,0.06);--fill:rgba(44,40,36,0.04);
+  --green:#5B8C5A;--red:#C4533A;--orange:#D4944C;--blue:#5A8FAD;
+  --r:1.2rem;--r-lg:1.6rem;--r-sm:0.75rem;--r-pill:9999px;--r-tab:24px;
+  /* Font */--font-display:'Cormorant Garamond', 'Noto Serif SC', 'STSong', Georgia, serif;
+  --font-body:'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --font-nums:'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
+  --font:var(--font-body);
+  --neu-out-sm:5px 5px 12px var(--neu-dark),-5px -5px 12px var(--neu-light);
+  --neu-out-md:8px 8px 18px var(--neu-dark),-8px -8px 18px var(--neu-light);
+  --neu-out-lg:10px 10px 24px var(--neu-dark),-10px -10px 24px var(--neu-light);
+  --neu-in:inset 4px 4px 8px var(--neu-dark),inset -4px -4px 8px var(--neu-light);
+  --neu-in-deep:inset 5px 5px 10px var(--neu-dark),inset -5px -5px 10px var(--neu-light);
+  --glass-tab-bg:rgba(255,255,255,0.18);--glass-tab-blur:blur(48px) saturate(210%);--glass-tab-border:rgba(255,255,255,0.45);
+  --spring:cubic-bezier(0.175,0.885,0.32,1.275);--ease:cubic-bezier(0.25,0.46,0.45,0.94);--dur:0.2s;
+}
+html,body{font-family:var(--font);color:var(--text-1);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh;background:#E8E4DF;letter-spacing:-0.01em}
+.phone{position:relative;width:414px;min-height:896px;background:var(--bg);border-radius:48px;overflow:hidden;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.12),0 4px 16px rgba(0,0,0,.06);padding-bottom:96px}
+.phone::after{content:'';position:absolute;bottom:0;left:0;right:0;height:260px;background:radial-gradient(ellipse 200px 140px at 20% 90%,rgba(45,108,223,.07) 0%,transparent 70%),radial-gradient(ellipse 180px 120px at 80% 85%,rgba(143,169,152,.06) 0%,transparent 70%),radial-gradient(ellipse 160px 100px at 50% 95%,rgba(124,142,212,.04) 0%,transparent 70%);pointer-events:none;z-index:0}
+.phone>*:not(.tab-bar){position:relative;z-index:1}
+
+/* ===== Top Back Bar ===== */
+.topbar{display:flex;align-items:center;gap:12px;padding:18px 20px 10px;position:relative;z-index:20;background:radial-gradient(ellipse 220px 160px at 78% 45%,rgba(143,169,152,.14) 0%,transparent 70%),radial-gradient(ellipse 180px 140px at 18% 75%,rgba(45,108,223,.16) 0%,transparent 70%),linear-gradient(135deg,rgba(45,108,223,.14) 0%,rgba(143,169,152,.08) 50%,rgba(45,108,223,.06) 100%); border-radius:0 0 28px 28px; overflow:hidden;}
+.back-btn{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,0.50);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:0.5px solid rgba(255,255,255,0.60);box-shadow:var(--neu-out-sm),inset 0 1px 1.5px rgba(255,255,255,0.50);display:flex;align-items:center;justify-content:center;color:var(--text-1);cursor:pointer;flex-shrink:0;transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease)}
+.back-btn:active{box-shadow:var(--neu-in);transform:scale(0.90)}
+.back-btn svg{width:19px;height:19px}
+.topbar-title{font-size:17px;font-weight:700;color:var(--text-1);letter-spacing:-0.02em}
+
+/* ===== Deposit Balance Hero ===== */
+.dep-hero{padding:8px 24px 40px;position:relative;z-index:1;background:radial-gradient(ellipse 240px 200px at 25% 40%,rgba(143,169,152,0.32) 0%,transparent 70%),radial-gradient(ellipse 200px 160px at 80% 80%,rgba(45,108,223,0.24) 0%,transparent 70%),linear-gradient(135deg,rgba(45,108,223,0.28) 0%,rgba(143,169,152,0.20) 50%,rgba(45,108,223,0.12) 100%);border-radius:0 0 32px 32px;overflow:hidden}
+.dep-hero::before{content:"";position:absolute;top:-30%;right:-15%;width:220px;height:220px;background:radial-gradient(circle,rgba(255,255,255,0.15) 0%,transparent 70%);border-radius:50%;pointer-events:none}
+.dep-hero::after{content:"";position:absolute;bottom:-25%;left:-8%;width:180px;height:180px;background:radial-gradient(circle,rgba(255,255,255,0.08) 0%,transparent 70%);border-radius:50%;pointer-events:none}
+.dep-hero-label{font-size:13px;color:var(--text-2);font-weight:500;margin-bottom:8px;letter-spacing:0.02em;position:relative;z-index:2}
+.dep-hero-amount{font-size:38px;font-weight:800;color:var(--brand);letter-spacing:-1.2px;line-height:1.1;font-variant-numeric:tabular-nums;position:relative;z-index:2}
+.dep-hero-meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;position:relative;z-index:2}
+.status-badge{display:inline-flex;align-items:center;gap:5px;padding:6px 12px;border-radius:var(--r-pill);background:rgba(255,255,255,0.50);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:0.5px solid rgba(255,255,255,0.55);box-shadow:var(--neu-out-sm),inset 0 1px 1.5px rgba(255,255,255,0.50);font-size:12.5px;color:var(--text-1);font-weight:600}
+.status-badge svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.status-badge.green{color:var(--green)}
+.level-chip{display:inline-flex;align-items:center;gap:5px;padding:6px 12px;border-radius:var(--r-pill);background:rgba(255,255,255,0.50);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:0.5px solid rgba(255,255,255,0.55);box-shadow:var(--neu-out-sm),inset 0 1px 1.5px rgba(255,255,255,0.50);font-size:12.5px;color:var(--brand);font-weight:600}
+.level-chip svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+
+/* ===== Section + card ===== */
+.section{padding:0 24px;margin-top:20px;position:relative;z-index:5}
+.section-title{font-size:17px;font-weight:700;color:var(--text-1);margin-bottom:12px;letter-spacing:-0.02em;display:flex;align-items:center;justify-content:space-between}
+.section-title .more{font-size:13px;font-weight:500;color:var(--text-3)}
+.card{background:rgba(255,255,255,0.52);backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);border:1px solid rgba(255,255,255,0.70);border-radius:var(--r);box-shadow:var(--neu-out-md),0 6px 24px rgba(0,0,0,0.06),0 0 0 1px rgba(44,40,36,0.05),0 2px 8px rgba(20,184,166,0.04);overflow:hidden;position:relative}
+.card::before{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(165deg,rgba(255,255,255,0.22) 0%,rgba(255,255,255,0.05) 30%,transparent 55%);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;padding:0.5px;pointer-events:none}
+
+/* ===== Benefit Card (current level perks) ===== */
+.benefit-card{padding:6px 18px}
+.benefit-row{display:flex;align-items:center;gap:12px;padding:13px 0;position:relative;z-index:1}
+.benefit-row+.benefit-row::before{content:"";position:absolute;top:0;left:34px;right:0;height:0.5px;background:var(--sep)}
+.benefit-check{width:26px;height:26px;border-radius:50%;background:rgba(91,140,90,0.12);display:flex;align-items:center;justify-content:center;color:var(--green);flex-shrink:0}
+.benefit-check svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.benefit-text{font-size:15px;color:var(--text-1);font-weight:500;letter-spacing:-0.01em}
+
+/* ===== Level Cards ===== */
+.level-list{display:flex;flex-direction:column;gap:12px}
+.level-card{position:relative;background:rgba(255,255,255,0.52);backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);border:1px solid rgba(255,255,255,0.70);border-radius:var(--r);box-shadow:var(--neu-out-sm),0 4px 16px rgba(0,0,0,0.04);padding:16px 18px;overflow:hidden;transition:transform var(--dur) var(--ease)}
+.level-card::before{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(165deg,rgba(255,255,255,0.22) 0%,rgba(255,255,255,0.05) 30%,transparent 55%);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;padding:0.5px;pointer-events:none}
+.level-card.locked{opacity:0.62}
+.level-card.current{background:linear-gradient(135deg,rgba(45,108,223,0.20) 0%,rgba(45,108,223,0.08) 100%);border-color:rgba(45,108,223,0.42);box-shadow:var(--neu-out-sm),0 6px 22px var(--brand-glow);opacity:1}
+.level-card.current::after{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(135deg,rgba(45,108,223,0.10) 0%,transparent 60%);pointer-events:none}
+
+.level-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;position:relative;z-index:1}
+.level-name-block{display:flex;align-items:baseline;gap:8px}
+.level-name{font-size:16px;font-weight:700;color:var(--text-1);letter-spacing:-0.01em}
+.level-card.locked .level-name{color:var(--text-2)}
+.level-card.current .level-name{color:var(--brand)}
+.level-amount{font-size:15px;font-weight:700;color:var(--brand);font-variant-numeric:tabular-nums}
+.level-card.locked .level-amount{color:var(--text-2)}
+.level-tag{font-size:11px;font-weight:600;padding:3px 9px;border-radius:var(--r-pill);letter-spacing:0.01em}
+.level-tag.gray{color:var(--text-2);background:rgba(44,40,36,0.06)}
+.level-tag.brand{color:#fff;background:var(--brand)}
+
+.level-benefits{display:flex;flex-direction:column;gap:5px;position:relative;z-index:1}
+.level-benefit{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--text-2);font-weight:500}
+.level-benefit::before{content:"";width:4px;height:4px;border-radius:50%;background:var(--text-3);flex-shrink:0}
+.level-card.current .level-benefit{color:var(--text-1)}
+.level-card.current .level-benefit::before{background:var(--brand)}
+
+.current-corner{position:absolute;top:0;right:0;z-index:3;font-size:11px;font-weight:700;color:#fff;background:var(--brand);padding:4px 12px;border-radius:0 var(--r) 0 10px;box-shadow:0 2px 8px var(--brand-glow);letter-spacing:0.02em}
+
+/* ===== Record Card ===== */
+.record-card{padding:2px 0}
+.record-row{display:flex;align-items:center;gap:12px;padding:14px 18px;position:relative;cursor:pointer;transition:transform var(--dur) var(--ease);z-index:1}
+.record-row:active{transform:scale(0.98)}
+.record-row+.record-row::before{content:"";position:absolute;top:0;left:60px;right:18px;height:0.5px;background:var(--sep)}
+.record-icon{width:40px;height:40px;border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg);box-shadow:4px 4px 8px var(--neu-dark),-4px -4px 8px var(--neu-light),inset 0 1px 1px rgba(255,255,255,0.45)}
+.record-icon svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.record-icon.income{color:var(--green)}
+.record-icon.outcome{color:var(--red)}
+.record-icon.pending{color:var(--orange)}
+.record-info{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
+.record-title{font-size:15px;font-weight:600;color:var(--text-1);letter-spacing:-0.01em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.record-time{font-size:12px;color:var(--text-2);font-variant-numeric:tabular-nums}
+.record-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0}
+.record-amount{font-size:16px;font-weight:700;letter-spacing:-0.02em;font-variant-numeric:tabular-nums}
+.record-amount.plus{color:var(--green)}
+.record-amount.minus{color:var(--red)}
+.record-amount.zero{color:var(--text-2)}
+.record-status{font-size:11px;font-weight:600;padding:2px 8px;border-radius:var(--r-pill)}
+.record-status.green{color:var(--green);background:rgba(91,140,90,0.10)}
+.record-status.red{color:var(--red);background:rgba(196,83,58,0.10)}
+.record-status.orange{color:var(--orange);background:rgba(212,148,76,0.12)}
+
+/* ===== Primary Button (base) ===== */
+.btn-neu-primary{
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  background:var(--brand-gradient);color:#fff;
+  border:0.5px solid rgba(255,255,255,0.40);border-radius:9999px;
+  padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
+  cursor:pointer;
+  box-shadow:var(--neu-out-sm),0 4px 14px var(--brand-glow),inset 0 1px 1px rgba(255,255,255,0.30);
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
+
+/* ===== Bottom Fixed Dual Buttons ===== */
+.bottom-actions{position:absolute;bottom:0;left:0;right:0;display:flex;gap:12px;padding:14px 20px 24px;background:linear-gradient(180deg,rgba(242,237,232,0) 0%,rgba(242,237,232,0.92) 32%,var(--bg) 60%);z-index:60}
+.bottom-actions .btn-neu-ghost,
+.bottom-actions .btn-neu-primary{flex:1;height:48px;font-size:15px;border-radius:var(--r-pill)}
+
+@media (prefers-reduced-motion:reduce){
+  .back-btn,.record-row,.level-card{transition:none}
+  .back-btn:active,.record-row:active{transform:none}
+}
+    </style>
+    <style>@theme inline{--font-sans: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+--font-serif: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+--color-background:var(--background);--color-foreground:var(--foreground);--color-card:var(--card);--color-card-foreground:var(--card-foreground);--color-popover:var(--popover);--color-popover-foreground:var(--popover-foreground);--color-primary:var(--primary);--color-primary-foreground:var(--primary-foreground);--color-muted:var(--muted);--color-muted-foreground:var(--muted-foreground);--color-border:var(--border);--color-input:var(--input);--color-ring:var(--ring);--radius-md:var(--radius-md);}</style>
+    <style>@layer base{body{background:var(--background);color:var(--foreground);font-family:var(--font-body);}}</style>
+</body>
+</html>

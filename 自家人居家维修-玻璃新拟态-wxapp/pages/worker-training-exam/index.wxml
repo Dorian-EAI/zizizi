@@ -1,0 +1,157 @@
+<!-- 像素级复刻 worker-training-exam.html -->
+<view class="page">
+  <!-- 背景装饰光斑：blue-sage 径向渐变 -->
+  <view class="blob" style="top: -40px; right: -60px; width: 280px; height: 280px; background: radial-gradient(circle, var(--brand) 0%, transparent 70%);"></view>
+  <view class="blob" style="top: 420px; left: -80px; width: 240px; height: 240px; background: radial-gradient(circle, var(--sage) 0%, transparent 70%);"></view>
+
+  <scroll-view scroll-y enable-flex class="page-scroll hide-scroll" style="padding-bottom: 180rpx;">
+
+    <!-- ===== 返回栏 + 标题 ===== -->
+    <!-- HTML: exam-hero padding: max(24px, env(safe-area-inset-top)) 24px 16px; border-radius:0 0 32px 32px -->
+    <view class="exam-hero" style="padding-top: calc({{statusBarHeight}}px + 48rpx);">
+      <!-- HTML: exam-nav display:flex; justify-content:space-between; gap:12px -->
+      <view class="exam-nav">
+        <!-- HTML: back-btn 44x44 圆形玻璃 brand 色 -->
+        <view class="back-btn" bindtap="onBack">
+          <image src="{{icons.back}}" mode="aspectFit" class="back-btn-icon" lazy-load="{{false}}" />
+        </view>
+        <!-- HTML: exam-nav-title-block flex:1 text-align:center -->
+        <view class="exam-nav-title-block">
+          <text class="exam-nav-title">{{course.title || '课程考试'}}</text>
+          <text class="exam-nav-sub">在线考试</text>
+        </view>
+        <!-- HTML: withdraw-circle 44x44 圆形玻璃 brand 色 -->
+        <view class="withdraw-circle" bindtap="onSubmitExam">
+          <image src="{{icons.upload}}" mode="aspectFit" class="withdraw-circle-icon" lazy-load="{{false}}" />
+        </view>
+      </view>
+      <!-- HTML: exit-hint display:flex; gap:5px; margin-top:14px; 11.5px -->
+      <view class="exit-hint">
+        <image src="{{icons.alertTriangle}}" mode="aspectFit" class="exit-hint-icon" lazy-load="{{false}}" />
+        <text>退出将不保存进度</text>
+      </view>
+    </view>
+
+    <!-- ===== 考试进度条卡 ===== -->
+    <!-- HTML: exam-progress-section margin-top:-10px; z-index:10 -->
+    <view class="section exam-progress-section">
+      <!-- HTML: exam-progress-card padding:16px 18px -->
+      <view class="card exam-progress-card">
+        <!-- HTML: progress-top display:flex; justify-content:space-between; margin-bottom:12px -->
+        <view class="progress-top">
+          <!-- HTML: progress-label 14px/600 em brand 700 -->
+          <text class="progress-label">第 <text class="em">{{currentQuestionIndex + 1}}</text> / {{totalQuestions}} 题</text>
+          <!-- HTML: progress-timer 15px/700 orange + svg 16x16 -->
+          <view class="progress-timer">
+            <image src="{{icons.clock}}" mode="aspectFit" class="progress-timer-icon" lazy-load="{{false}}" />
+            <text class="numeric">{{timer}}</text>
+          </view>
+        </view>
+        <!-- HTML: progress-bar-wrap 8px pill inset shadow -->
+        <view class="progress-bar-wrap">
+          <view class="progress-bar" style="width: {{progressPercent}}%"></view>
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== 题目卡 ===== -->
+    <view class="section">
+      <!-- HTML: question-card padding:20px 20px 16px -->
+      <view class="card question-card">
+        <!-- HTML: question-head display:flex; justify-content:space-between; margin-bottom:14px -->
+        <view class="question-head">
+          <!-- HTML: question-type-badge 4px 11px pill brand-subtle 11.5px/600 -->
+          <text class="question-type-badge">{{question.type || '单选题'}}</text>
+          <!-- HTML: question-no 12.5px text-2 500 -->
+          <text class="question-no">第 {{currentQuestionIndex + 1}} 题 · 共 {{totalQuestions}} 题</text>
+        </view>
+        <!-- HTML: question-stem 17px/600 line-height:1.55 margin-bottom:18px -->
+        <text class="question-stem">{{question.stem}}</text>
+
+        <!-- HTML: option-list flex column gap:10px -->
+        <view class="option-list">
+          <block wx:for="{{question.options}}" wx:key="letter">
+            <!-- HTML: option-item flex gap:12px padding:14px 16px r radius -->
+            <view
+              class="option-item {{selectedAnswers[question.id] === item.letter ? 'selected' : ''}}"
+              data-qid="{{question.id}}"
+              data-option="{{item.letter}}"
+              bindtap="onOptionSelect"
+            >
+              <!-- HTML: option-letter 30x30 圆 inset shadow 14px/700 -->
+              <text class="option-letter">{{item.letter}}</text>
+              <!-- HTML: option-text flex:1 15px/500 -->
+              <text class="option-text">{{item.text}}</text>
+              <!-- HTML: option-check 20x20 brand (仅 selected 显示) -->
+              <image
+                wx:if="{{selectedAnswers[question.id] === item.letter}}"
+                src="{{icons.check}}"
+                mode="aspectFit"
+                class="option-check"
+                lazy-load="{{false}}"
+              />
+            </view>
+          </block>
+        </view>
+
+        <!-- HTML: question-foot 12px text-2 center margin-top:14px -->
+        <text class="question-foot">选择最符合题意的答案</text>
+      </view>
+    </view>
+
+    <!-- ===== 答题卡 ===== -->
+    <view class="section">
+      <!-- HTML: section-title 17px/700 flex space-between -->
+      <view class="section-title">
+        <text>答题卡</text>
+        <!-- HTML: more 13px/500 text-3 -->
+        <text class="more">已答 {{answeredCount}} / {{totalQuestions}}</text>
+      </view>
+      <!-- HTML: answer-sheet-card padding:18px -->
+      <view class="card answer-sheet-card">
+        <!-- HTML: answer-grid grid 5列 gap:10px -->
+        <view class="answer-grid">
+          <block wx:for="{{questions}}" wx:key="id">
+            <!-- HTML: ans-cell 1:1 r-sm radius 14px/600 -->
+            <view
+              class="ans-cell {{selectedAnswers[item.id] ? 'answered' : ''}} {{index === currentQuestionIndex ? 'current' : ''}}"
+              data-idx="{{index}}"
+              bindtap="onAnsCellTap"
+            >{{index + 1}}</view>
+          </block>
+        </view>
+        <!-- HTML: answer-legend flex center gap:18px margin-top:16px border-top -->
+        <view class="answer-legend">
+          <view class="legend-item"><view class="dot answered"></view><text>已答</text></view>
+          <view class="legend-item"><view class="dot current"></view><text>当前</text></view>
+          <view class="legend-item"><view class="dot"></view><text>未答</text></view>
+        </view>
+      </view>
+    </view>
+
+  </scroll-view>
+
+  <!-- ===== 底部固定双按钮 ===== -->
+  <!-- HTML: exam-footer position:absolute bottom:0 padding:14px 24px 18px -->
+  <view class="exam-footer">
+    <!-- HTML: btn-neu-ghost exam-btn-prev flex:1 14px 20px 15px -->
+    <view
+      class="btn-neu-ghost exam-btn-prev {{currentQuestionIndex === 0 ? 'disabled' : ''}}"
+      bindtap="onPrevQuestion"
+    >
+      <image src="{{icons.chevronLeft}}" mode="aspectFit" class="exam-btn-icon" lazy-load="{{false}}" />
+      <text>上一题</text>
+    </view>
+    <!-- HTML: btn-neu-primary exam-btn-next flex:1.5 14px 20px 15px -->
+    <view class="btn-neu-primary exam-btn-next" bindtap="onNextQuestion">
+      <text>{{currentQuestionIndex === totalQuestions - 1 ? '提交考试' : '下一题'}}</text>
+      <image
+        wx:if="{{currentQuestionIndex < totalQuestions - 1}}"
+        src="{{icons.chevronRight}}"
+        mode="aspectFit"
+        class="exam-btn-icon"
+        lazy-load="{{false}}"
+      />
+    </view>
+  </view>
+</view>

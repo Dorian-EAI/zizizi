@@ -1,0 +1,182 @@
+<!-- pages/client-order-tracking/index.wxml — 实时追踪页 像素级复刻 zjrnew.DESIGN（滚动变形） -->
+<view class="page">
+
+  <!-- ===== TOP HEADER（Hero 渐变 + 导航栏 + 状态横幅，滚动驱动变形） ===== -->
+  <view class="top-header" style="padding-top: calc({{statusBarHeight}}px + 36rpx); --morph-p: {{morphP}}; --nav-radius: {{navRadius}}rpx; --nav-ph: {{navPh}}rpx; --nav-pb: {{navPb}}rpx; --btn-size: {{btnSize}}rpx;">
+
+    <!-- Hero 渐变背景层 -->
+    <view class="hero-gradient"></view>
+    <view class="hero-blob hero-blob-1"></view>
+    <view class="hero-blob hero-blob-2"></view>
+
+    <!-- 导航内容：返回 / 标题 / 刷新（使用 Grid 布局确保标题居中） -->
+    <view class="nav-content">
+      <view class="nav-icon-btn nav-back glass-btn" bindtap="onBack">
+        <image src="{{icons.back}}" mode="aspectFit" class="nav-icon" lazy-load="{{false}}" />
+      </view>
+      <text class="nav-title" style="font-size: {{navTitleSize}}rpx;">实时追踪</text>
+      <view class="nav-icon-btn nav-refresh glass-btn" bindtap="onRefresh">
+        <image src="{{icons.refresh}}" mode="aspectFit" class="nav-icon" lazy-load="{{false}}" />
+      </view>
+    </view>
+
+    <!-- 状态横幅（下拉后嵌入此处，成为 .filter-tabs） -->
+    <view class="filter-tabs status-tabs" wx:if="{{statusFixed}}">
+      <view class="status-bar-main">
+        <view class="status-bar-title">
+          <view class="status-pulse-dot"></view>
+          <text>{{statusTitle}}</text>
+        </view>
+        <view class="status-bar-meta">{{statusMeta}}</view>
+      </view>
+      <view class="status-bar-arrow">
+        <image src="{{icons.arrowRight}}" mode="aspectFit" class="status-bar-arrow-icon" lazy-load="{{false}}" />
+      </view>
+    </view>
+  </view>
+
+  <scroll-view
+    scroll-y
+    class="page-scroll hide-scroll"
+    enhanced
+    show-scrollbar="{{false}}"
+    bindscroll="onTrackingScroll"
+    scroll-with-animation
+    style="padding-bottom: 200rpx;"
+  >
+
+    <!-- ===== 加载态 ===== -->
+    <view class="state-container" wx:if="{{loading}}">
+      <view class="state-icon neu-icon-inset">
+        <view class="state-spinner"></view>
+      </view>
+      <text class="state-text">正在获取师傅位置...</text>
+    </view>
+
+    <!-- ===== 错误态 ===== -->
+    <view class="state-container" wx:elif="{{loadError}}">
+      <view class="state-icon neu-icon-inset">
+        <text class="state-emoji">⚠️</text>
+      </view>
+      <text class="state-text">位置加载失败</text>
+      <text class="state-sub">请检查网络后重试</text>
+      <view class="state-retry-btn press-scale" bindtap="onRetry">
+        <text class="state-retry-text">重新加载</text>
+      </view>
+    </view>
+
+    <!-- ===== 正常态（地图 + 状态横幅 + 师傅卡 + 时间线 + 详情链接） ===== -->
+    <view wx:else>
+
+      <!-- ===== TRACKING MAP AREA（高度 420px=840rpx → 120px=240rpx，滚动收缩） ===== -->
+      <view class="tracking-map-section" style="height: {{mapHeight}}px;">
+        <view class="tracking-map" style="transform: scale({{mapScale}}); opacity: {{mapOpacity}};">
+          <!-- 真实地图组件 -->
+          <map
+            class="map-canvas"
+            latitude="{{mapLat}}"
+            longitude="{{mapLng}}"
+            markers="{{markers}}"
+            polyline="{{polyline}}"
+            scale="{{14}}"
+            show-location="{{true}}"
+          ></map>
+
+          <!-- 模拟道路装饰层（HTML 参考中用于增强地图视觉） -->
+          <view class="map-overlay">
+            <view class="map-grid"></view>
+            <view class="map-road map-road-1"></view>
+            <view class="map-road map-road-2"></view>
+            <view class="map-road map-road-3"></view>
+            <view class="map-park"></view>
+          </view>
+        </view>
+      </view>
+
+      <!-- ===== TRACKING STATUS BAR（状态横幅：浮在地图下沿 -32px=−64rpx） ===== -->
+      <view class="tracking-status-bar" wx:if="{{!statusFixed}}" style="transform: translateY({{statusTranslate}}px); margin-top: {{statusMt}}px;">
+        <view class="status-bar-main">
+          <view class="status-bar-title">
+            <view class="status-pulse-dot"></view>
+            <text>{{statusTitle}}</text>
+          </view>
+          <view class="status-bar-meta" wx:if="{{statusMeta}}">{{statusMeta}}</view>
+          <view class="chip chip-warning" wx:if="{{staleWarning}}">位置可能未更新</view>
+        </view>
+        <view class="status-bar-arrow">
+          <image src="{{icons.arrowRight}}" mode="aspectFit" class="status-bar-arrow-icon" lazy-load="{{false}}" />
+        </view>
+      </view>
+
+      <!-- ===== WORKER INFO CARD（师傅信息卡：头像 + 已认证 + 姓名 + 评分 + 电话/导航按钮） ===== -->
+      <view class="section">
+        <view class="glass-neu-card tracking-worker-card" wx:if="{{tracking.worker}}">
+          <view class="avatar-col">
+            <view class="worker-avatar avatar-glass">
+              <image src="{{icons.user}}" mode="aspectFit" class="worker-avatar-img" lazy-load="{{false}}" />
+            </view>
+            <view class="verify-badge">
+              <image src="{{icons.check}}" mode="aspectFit" class="verify-icon" lazy-load="{{false}}" />
+              <text class="verify-text">已认证</text>
+            </view>
+          </view>
+          <view class="worker-info">
+            <view class="worker-name-row">
+              <text class="worker-name">{{tracking.worker.name || '师傅'}}</text>
+            </view>
+            <view class="worker-meta">
+              <text class="worker-star">★ {{tracking.worker.rating || '4.8'}}</text>
+              <text class="meta-dot">·</text>
+              <text>{{tracking.worker.services || 158}}次服务</text>
+            </view>
+          </view>
+          <view class="worker-actions">
+            <view class="action-circle press-neu" bindtap="onCallWorker">
+              <image src="{{icons.phone}}" mode="aspectFit" class="action-icon" lazy-load="{{false}}" />
+            </view>
+            <view class="action-circle press-neu action-circle-accent" bindtap="onNavigate">
+              <image src="{{icons.navigation}}" mode="aspectFit" class="action-icon" lazy-load="{{false}}" />
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <!-- ===== SERVICE PROGRESS TIMELINE（服务进度时间线：done/active/pending 三态） ===== -->
+      <view class="section">
+        <view class="glass-neu-card tracking-timeline-card">
+          <text class="card-title">服务进度</text>
+          <view class="tracking-timeline">
+            <view class="tt-item tt-{{item.state}}" wx:for="{{steps}}" wx:key="key">
+              <view class="tt-rail">
+                <view class="tt-dot">
+                  <image src="{{icons.check}}" mode="aspectFit" class="tt-check" lazy-load="{{false}}" wx:if="{{item.state === 'done'}}" />
+                  <view class="tt-dot-inner" wx:if="{{item.state === 'active'}}"></view>
+                  <view class="tt-dot-pulse" wx:if="{{item.state === 'active'}}"></view>
+                </view>
+                <view class="tt-line" wx:if="{{index < steps.length - 1}}"></view>
+              </view>
+              <view class="tt-content">
+                <view class="tt-head">
+                  <text class="tt-title">{{item.title}}</text>
+                  <text class="tt-time mono">{{item.time}}</text>
+                </view>
+                <text class="tt-desc">{{item.desc}}</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <!-- ===== ORDER DETAIL LINK（底部"查看订单详情"链接） ===== -->
+      <view class="section section-link">
+        <view class="order-detail-link press-scale" bindtap="onViewOrderDetail">
+          <text>查看订单详情</text>
+          <image src="{{icons.arrowRight}}" mode="aspectFit" class="order-detail-link-icon" lazy-load="{{false}}" />
+        </view>
+      </view>
+
+    </view>
+
+  </scroll-view>
+
+</view>

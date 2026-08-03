@@ -1,0 +1,308 @@
+/* =========================================================
+ * 订单页面样式 · 参考 lilu-value-investing-30.html
+ * - Tab 标签使用 indigo 胶囊激活态
+ * - 订单卡片使用左侧彩色边条（按状态色区分）
+ *   待服务 indigo / 服务中 teal / 已完成 amber / 已取消 rose
+ * ========================================================= */
+
+.page-container.data-v-367c56f0 {
+  min-height: 100vh;
+  background: var(--bg);
+  padding-bottom: calc(130rpx + env(safe-area-inset-bottom, 0px));
+}
+
+/* ---------- 顶部导航 ---------- */
+.custom-nav.data-v-367c56f0 {
+  position: sticky;
+  top: 0;
+  z-index: 101;
+  padding-top: max(env(safe-area-inset-top), 59px);
+  background: var(--surface);
+  border-bottom: 1rpx solid var(--divider);
+}
+.nav-title.data-v-367c56f0 {
+  height: 92rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  font-weight: 700;
+  color: var(--text-1);
+  letter-spacing: 0.08em;
+}
+
+/* ---------- Tab 标签 ---------- */
+.tabs.data-v-367c56f0 {
+  position: sticky;
+  top: calc(max(env(safe-area-inset-top), 59px) + 92rpx);
+  z-index: 100;
+  display: flex;
+  background: var(--surface);
+  margin: 16rpx 30rpx 0;
+  padding: 8rpx;
+  border-radius: 999rpx;
+  border: 1rpx solid var(--border);
+  box-shadow: var(--shadow-card);
+}
+.tab-item.data-v-367c56f0 {
+  flex: 1;
+  text-align: center;
+  padding: 18rpx 0;
+  font-size: 24rpx;
+  color: var(--text-3);
+  position: relative;
+  border-radius: 999rpx;
+  transition: background 0.2s, color 0.2s;
+  font-weight: 500;
+}
+.tab-item.active.data-v-367c56f0 {
+  color: #fff;
+  background: var(--text-1);
+  font-weight: 600;
+}
+.tab-badge.data-v-367c56f0 {
+  position: absolute;
+  top: 6rpx;
+  right: 16%;
+  padding: 2rpx 10rpx;
+  background: var(--rose);
+  color: #fff;
+  font-size: 18rpx;
+  border-radius: 999rpx;
+  min-width: 26rpx;
+  line-height: 1.4;
+}
+.tab-item.active .tab-badge.data-v-367c56f0 {
+  background: #fff;
+  color: var(--rose-text);
+}
+
+/* ---------- 空状态 ---------- */
+.order-list.data-v-367c56f0 {
+  padding: 20rpx 30rpx 40rpx;
+}
+.empty-state.data-v-367c56f0 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 140rpx 0;
+}
+.empty-icon.data-v-367c56f0 {
+  font-size: 120rpx;
+  margin-bottom: 20rpx;
+  opacity: 0.5;
+}
+.empty-text.data-v-367c56f0 {
+  font-size: 26rpx;
+  color: var(--text-3);
+}
+
+/* ---------- 订单卡片 ---------- */
+.order-card.data-v-367c56f0 {
+  background: var(--surface);
+  border: 1rpx solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 26rpx;
+  margin-bottom: 20rpx;
+  box-shadow: var(--shadow-card);
+}
+/* 按状态色区分左侧边条 */
+.order-card.pending    { border-left: 8rpx solid var(--indigo); }
+.order-card.servicing  { border-left: 8rpx solid var(--teal); }
+.order-card.completed  { border-left: 8rpx solid var(--amber); }
+.order-card.cancelled  { border-left: 8rpx solid var(--rose); }
+
+.order-header.data-v-367c56f0 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16rpx;
+  padding-bottom: 16rpx;
+  border-bottom: 1rpx solid var(--divider);
+}
+.order-type.data-v-367c56f0 {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+.type-icon.data-v-367c56f0 {
+  font-size: 30rpx;
+}
+.type-name.data-v-367c56f0 {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: var(--text-1);
+}
+
+.order-status.data-v-367c56f0 {
+  font-size: 22rpx;
+  font-weight: 600;
+  padding: 6rpx 16rpx;
+  border-radius: 999rpx;
+  letter-spacing: 0.02em;
+}
+.order-status.pending    { background: var(--indigo-soft); color: var(--indigo-text); }
+.order-status.servicing  { background: var(--teal-soft);   color: var(--teal-text); }
+.order-status.completed  { background: var(--amber-soft);  color: var(--amber); }
+.order-status.cancelled  { background: var(--rose-soft);   color: var(--rose-text); }
+
+.order-content.data-v-367c56f0 {
+  display: flex;
+  flex-direction: column;
+  gap: 10rpx;
+  margin-bottom: 16rpx;
+}
+.order-desc.data-v-367c56f0 {
+  font-size: 26rpx;
+  color: var(--text-2);
+  line-height: 1.5;
+}
+.order-meta.data-v-367c56f0 {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20rpx;
+}
+.meta-item.data-v-367c56f0 {
+  font-size: 22rpx;
+  color: var(--text-3);
+  line-height: 1.5;
+}
+
+.order-footer.data-v-367c56f0 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 16rpx;
+  border-top: 1rpx solid var(--divider);
+}
+.order-price.data-v-367c56f0 {
+  display: flex;
+  flex-direction: column;
+  gap: 2rpx;
+}
+.price-label.data-v-367c56f0 {
+  font-size: 20rpx;
+  color: var(--text-3);
+}
+.price-value.data-v-367c56f0 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 36rpx;
+  font-weight: 700;
+  color: var(--indigo);
+}
+
+.order-actions.data-v-367c56f0 {
+  display: flex;
+  gap: 12rpx;
+}
+.action-btn.data-v-367c56f0 {
+  padding: 12rpx 22rpx;
+  border-radius: 999rpx;
+  font-size: 22rpx;
+  font-weight: 600;
+  background: var(--bg-soft);
+  color: var(--text-2);
+  border: 1rpx solid var(--border);
+}
+.action-btn.primary.data-v-367c56f0 {
+  background: var(--text-1);
+  color: #fff;
+  border-color: var(--text-1);
+}
+.action-btn.indigo.data-v-367c56f0 {
+  background: var(--indigo);
+  color: #fff;
+  border-color: var(--indigo);
+}
+
+/* ---------- 报价弹窗（参考风格：柔和半透明背景） ---------- */
+.quote-modal.data-v-367c56f0 {
+  position: fixed;
+  inset: 0;
+  background: rgba(24, 24, 27, 0.4);
+  z-index: 200;
+  display: flex;
+  align-items: flex-end;
+}
+.modal-content.data-v-367c56f0 {
+  width: 100%;
+  background: var(--surface);
+  border-radius: 28rpx 28rpx 0 0;
+  padding: 30rpx 30rpx calc(30rpx + env(safe-area-inset-bottom));
+  max-height: 80vh;
+  overflow-y: auto;
+}
+.modal-header.data-v-367c56f0 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20rpx;
+}
+.modal-title.data-v-367c56f0 {
+  font-size: 30rpx;
+  font-weight: 700;
+  color: var(--text-1);
+  letter-spacing: 0.02em;
+}
+.modal-close.data-v-367c56f0 {
+  font-size: 36rpx;
+  color: var(--text-3);
+  padding: 0 10rpx;
+  line-height: 1;
+}
+.quote-list.data-v-367c56f0 {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+.quote-item.data-v-367c56f0 {
+  background: var(--bg-soft);
+  border: 1rpx solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 22rpx;
+}
+.quote-row.data-v-367c56f0 {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+.quote-label.data-v-367c56f0 {
+  font-size: 24rpx;
+  color: var(--text-2);
+}
+.quote-value.data-v-367c56f0 {
+  font-family: Georgia, serif;
+  font-size: 30rpx;
+  font-weight: 700;
+  color: var(--indigo);
+}
+.quote-sub.data-v-367c56f0 {
+  font-size: 22rpx;
+  color: var(--text-3);
+  margin-top: 6rpx;
+}
+.modal-actions.data-v-367c56f0 {
+  display: flex;
+  gap: 16rpx;
+  margin-top: 30rpx;
+}
+.modal-actions .confirm-btn.data-v-367c56f0,
+.modal-actions .cancel-btn.data-v-367c56f0 {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 22rpx 0;
+  border-radius: 999rpx;
+  font-size: 26rpx;
+  font-weight: 600;
+}
+.modal-actions .confirm-btn.data-v-367c56f0 {
+  background: var(--text-1);
+  color: #fff;
+}
+.modal-actions .cancel-btn.data-v-367c56f0 {
+  background: var(--bg-soft);
+  color: var(--text-2);
+  border: 1rpx solid var(--border);
+}

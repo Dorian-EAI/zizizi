@@ -1,0 +1,106 @@
+<!-- pages/worker-profile/index.wxml — 师傅端个人中心 像素级复刻 worker-profile.html -->
+<view class="page">
+  <!-- 背景装饰光斑 -->
+  <view class="blob" style="top: -80rpx; right: -120rpx; width: 560rpx; height: 560rpx; background: var(--brand-worker);"></view>
+  <view class="blob" style="top: 720rpx; left: -160rpx; width: 480rpx; height: 480rpx; background: var(--sage);"></view>
+
+  <scroll-view scroll-y enable-flex class="page-scroll hide-scroll" bindscroll="onScroll" style="padding-bottom: 220rpx;">
+
+    <!-- ===== HERO ===== -->
+    <view class="hero {{navScrolled ? 'hero-collapsed' : ''}}" style="padding-top: calc({{statusBarHeight}}px + 76rpx);">
+      <!-- Profile Row -->
+      <view class="profile-row">
+        <view class="avatar-col">
+          <view class="avatar avatar-glass">
+            <image src="{{workerInfo.avatarUrl}}" mode="aspectFit" class="avatar-img" lazy-load="{{false}}" />
+          </view>
+          <view class="verify-badge badge-below">
+            <image src="{{icons.verify}}" mode="aspectFit" class="verify-ic" lazy-load="{{false}}" />
+            <text>已认证</text>
+          </view>
+        </view>
+        <view class="profile-info">
+          <view class="name-row">
+            <text class="profile-name">{{workerInfo.name}}</text>
+          </view>
+        </view>
+        <view class="edit-btn" bindtap="onEdit">
+          <image src="{{icons.edit}}" mode="aspectFit" class="edit-ic" lazy-load="{{false}}" />
+        </view>
+      </view>
+      <!-- Rating Row -->
+      <view class="rating-row">
+        <view class="rating-chip">
+          <image src="{{icons.star}}" mode="aspectFit" class="rating-star-ic" lazy-load="{{false}}" />
+          <text class="rating-num">{{workerInfo.rating}}分</text>
+        </view>
+        <view class="rating-divider"></view>
+        <text class="service-count">{{workerInfo.serviceTimes}}次服务</text>
+      </view>
+    </view>
+
+    <!-- ===== STATS CARD（overlap hero -48rpx） ===== -->
+    <view class="stats-card">
+      <view class="stat-col">
+        <text class="stat-num numeric">{{workerInfo.completedOrders}}</text>
+        <text class="stat-label">完成订单</text>
+      </view>
+      <view class="stat-col">
+        <text class="stat-num numeric brand">{{workerInfo.rating}}</text>
+        <text class="stat-label">服务评分</text>
+      </view>
+      <view class="stat-col">
+        <text class="stat-num numeric">{{workerInfo.praiseRate}}</text>
+        <text class="stat-label">好评率</text>
+      </view>
+    </view>
+
+    <!-- ===== BASIC INFO ===== -->
+    <view class="section">
+      <text class="section-title">基本信息</text>
+      <view class="info-card">
+        <view class="info-menu-card">
+          <view
+            class="info-menu-row press-card"
+            wx:for="{{basicInfo}}"
+            wx:key="key"
+            data-key="{{item.key}}"
+            bindtap="onInfoTap"
+          >
+            <view class="info-menu-icon info-menu-icon-{{item.tone}}">
+              <image src="{{item.iconUrl}}" mode="aspectFit" class="info-menu-ic" lazy-load="{{false}}" />
+            </view>
+            <text class="info-menu-label">{{item.label}}</text>
+            <text class="info-menu-value {{item.valueTone ? 'text-green' : ''}}">{{item.value}}</text>
+            <image src="{{icons.chevron}}" mode="aspectFit" class="info-menu-chevron" lazy-load="{{false}}" />
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== MORE FUNCTIONS ===== -->
+    <view class="section">
+      <text class="section-title">更多功能</text>
+      <view class="info-card">
+        <view class="info-menu-card">
+          <view
+            class="info-menu-row press-card"
+            wx:for="{{features}}"
+            wx:key="key"
+            data-key="{{item.key}}"
+            bindtap="onFeatureTap"
+          >
+            <view class="info-menu-icon info-menu-icon-{{item.tone}}">
+              <image src="{{item.iconUrl}}" mode="aspectFit" class="info-menu-ic" lazy-load="{{false}}" />
+            </view>
+            <text class="info-menu-label">{{item.name}}</text>
+            <image src="{{icons.chevron}}" mode="aspectFit" class="info-menu-chevron" lazy-load="{{false}}" />
+          </view>
+        </view>
+      </view>
+    </view>
+
+  </scroll-view>
+
+  <tab-bar id="tabbar" active="mine" />
+</view>

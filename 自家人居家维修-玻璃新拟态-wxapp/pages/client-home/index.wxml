@@ -1,0 +1,146 @@
+<!-- pages/client-home/index.wxml — 客户端首页 像素级复刻 zjrnew.DESIGN -->
+<view class="page {{scrolled ? 'scrolled' : ''}} {{scrolled2 ? 'scrolled-2' : ''}}">
+
+  <!-- ===== 固定标题栏（滚动变形：visible / search-mode） ===== -->
+  <view class="title-bar {{titleBarVisible ? 'visible' : ''}} {{titleBarSearchMode ? 'search-mode' : ''}}">
+    <text class="title-bar__name">自家人维修</text>
+    <view class="title-bar__search" bindtap="onSearch">
+      <image src="{{icons.search}}" mode="aspectFit" class="title-bar__search-icon" lazy-load="{{false}}" />
+      <text class="title-bar__search-text">搜索维修服务、师傅</text>
+    </view>
+  </view>
+
+  <!-- ===== 滚动容器（绑定 scroll 事件驱动标题栏变形） ===== -->
+  <scroll-view
+    scroll-y
+    class="page-scroll hide-scroll"
+    enhanced
+    show-scrollbar="{{false}}"
+    bindscroll="onPageScroll"
+    scroll-with-animation
+    style="padding-bottom: 200rpx;"
+  >
+
+    <!-- ===== HERO 区域（轻量渐变 0.14 + 玻璃控件） ===== -->
+    <view class="hero" style="padding-top: calc({{statusBarHeight}}px + 28rpx);">
+
+      <!-- 问候语 + 应用名（微信系统状态栏在 Hero 之上） -->
+      <view class="greeting">{{greeting}}</view>
+      <view class="app-name">自家人维修</view>
+
+      <!-- 玻璃搜索栏 -->
+      <view class="search-bar" bindtap="onSearch">
+        <image src="{{icons.search}}" mode="aspectFit" class="search-icon" lazy-load="{{false}}" />
+        <text class="search-text">搜索维修服务、师傅</text>
+      </view>
+
+      <!-- 统计卡片（3 列网格，颜色由 :nth-child 控制） -->
+      <view class="stats">
+        <view class="stat-card" wx:for="{{stats}}" wx:key="key">
+          <view class="stat-value">{{item.value}}</view>
+          <view class="stat-label">{{item.label}}</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== 热门服务标题 ===== -->
+    <view class="section-title">热门服务</view>
+
+    <!-- ===== 服务网格（3 列 × 101px × 90px，玻璃新拟态实体按键） ===== -->
+    <view class="service-grid">
+      <view
+        class="service-card"
+        wx:for="{{services}}"
+        wx:key="key"
+        data-key="{{item.key}}"
+        bindtap="onServiceTap"
+      >
+        <view class="icon-circle">
+          <image src="{{item.iconUrl}}" mode="aspectFit" class="service-icon" lazy-load="{{false}}" />
+        </view>
+        <text class="service-name">{{item.name}}</text>
+      </view>
+    </view>
+
+    <!-- ===== AI 智能助手卡片（加重渐变 0.32 + 三种材质融合） ===== -->
+    <view class="ai-card" bindtap="onAiTap">
+      <view class="ai-icon">
+        <image src="{{icons.bot}}" mode="aspectFit" class="ai-icon-img" lazy-load="{{false}}" />
+      </view>
+      <view class="ai-text">
+        <view class="ai-title">AI 智能助手</view>
+        <view class="ai-desc">描述问题，智能匹配最优方案</view>
+      </view>
+      <view class="ai-btn">去问问</view>
+    </view>
+
+    <!-- ===== 推荐师傅标题 ===== -->
+    <view class="section-title">推荐师傅</view>
+
+    <!-- ===== 分类筛选 Chips（在推荐师傅标题后、推荐卡片前） ===== -->
+    <scroll-view scroll-x class="chips-row hide-scroll" enhanced show-scrollbar="{{false}}" enable-flex>
+      <view
+        class="chip {{activeCat === index ? 'chip-active' : ''}}"
+        wx:for="{{categories}}"
+        wx:key="index"
+        data-index="{{index}}"
+        bindtap="onCatTap"
+      >{{item}}</view>
+    </scroll-view>
+
+    <!-- ===== 推荐师傅卡片列表 ===== -->
+    <view
+      class="recommend-card"
+      wx:for="{{workers}}"
+      wx:key="id"
+      data-id="{{item.id}}"
+      bindtap="onWorkerTap"
+    >
+      <view class="avatar">
+        <image src="{{item.avatarUrl}}" mode="aspectFit" class="avatar-img" lazy-load="{{false}}" />
+      </view>
+      <view class="recommend-info">
+        <view class="recommend-name">{{item.name}}</view>
+        <view class="recommend-sub">{{item.skill}} · {{item.exp}}年经验 · 好评{{item.rating}}%</view>
+      </view>
+      <view class="recommend-price">¥{{item.price}}起</view>
+    </view>
+
+    <!-- ===== 推荐服务标题 ===== -->
+    <view class="section-title">推荐服务</view>
+
+    <!-- ===== 推荐服务横滑卡片（180px 宽，含彩色图块 + 评分 + 价格 + 预约按钮） ===== -->
+    <scroll-view scroll-x class="rec-scroll hide-scroll" enhanced show-scrollbar="{{false}}" enable-flex>
+      <view
+        class="rec-card"
+        wx:for="{{recommendServices}}"
+        wx:key="index"
+        data-index="{{index}}"
+        bindtap="onRecTap"
+      >
+        <view class="rec-img" style="background: {{item.gradient}};">
+          <text class="rec-img-label">{{item.name}}</text>
+        </view>
+        <view class="rec-title">{{item.name}}</view>
+        <view class="rec-meta">
+          <view class="rec-star">
+            <image src="{{icons.star}}" mode="aspectFit" class="rec-star-icon" lazy-load="{{false}}" />
+            <text class="rec-star-num">{{item.rating}}</text>
+          </view>
+          <text class="rec-count">· {{item.count}}次服务</text>
+        </view>
+        <view class="rec-bottom">
+          <view class="rec-price">
+            <text class="rec-currency">¥</text>
+            <text class="rec-amount numeric">{{item.price}}</text>
+          </view>
+          <view class="rec-btn" catchtap="onRecBook" data-index="{{index}}">预约</view>
+        </view>
+      </view>
+    </scroll-view>
+
+  </scroll-view>
+
+  <!-- ===== 浮动 Tab Bar ===== -->
+  <tab-bar id="tabbar" active="home" />
+</view>

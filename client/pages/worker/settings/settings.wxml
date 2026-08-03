@@ -1,0 +1,228 @@
+<view class="page">
+  <view class="nav-bar">
+    <view class="nav-icon-btn" bindtap="onBack">
+      <image class="nav-icon" src="/assets/svg/arrow-left.svg" mode="aspectFit"></image>
+    </view>
+    <text class="nav-title">设置</text>
+    <view class="nav-placeholder"></view>
+  </view>
+
+  <view class="section">
+    <view class="glass-neu-card worker-profile-card">
+      <view class="worker-profile-main">
+        <view class="avatar-col">
+          <view class="worker-profile-avatar avatar-glass">
+            <image class="avatar-icon" src="/assets/svg/user.svg" mode="aspectFit"></image>
+          </view>
+          <view class="worker-gold-tag avatar-verify">
+            <image class="gold-icon" src="/assets/svg/crown.svg" mode="aspectFit"></image>
+            <text>金牌师傅</text>
+          </view>
+        </view>
+        <view class="worker-profile-info">
+          <view class="worker-profile-name-row">
+            <text class="worker-profile-name">{{workerInfo.name || '张师傅'}}</text>
+          </view>
+        </view>
+        <view class="online-pill">
+          <view class="online-dot"></view>
+          <text>在线接单</text>
+        </view>
+      </view>
+      <view class="worker-profile-stats">
+        <text>已完成 {{workerInfo.completed_orders || 328}} 单</text>
+        <text class="stats-dot">&middot;</text>
+        <text>好评率 {{workerInfo.rating || 98}}%</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="section">
+    <text class="group-title">接单设置</text>
+    <view class="glass-neu-card setting-group">
+      <view class="setting-row" bindtap="onReceiveRange">
+        <view class="row-icon row-icon-brand">
+          <image class="row-icon-svg" src="/assets/svg/location.svg" mode="aspectFit"></image>
+        </view>
+        <text class="row-title">接单范围</text>
+        <view class="row-tail">
+          <text class="row-value">{{settings.receive_range || 5}} 公里</text>
+          <image class="row-arrow" src="/assets/svg/chevron-right.svg" mode="aspectFit"></image>
+        </view>
+      </view>
+      <view class="setting-row" bindtap="onServiceCategory">
+        <view class="row-icon row-icon-blue">
+          <image class="row-icon-svg" src="/assets/svg/appliance.svg" mode="aspectFit"></image>
+        </view>
+        <text class="row-title">服务分类</text>
+        <view class="row-tail">
+          <text class="row-value">{{settings.service_categories || '防水/家电/管道'}}</text>
+          <image class="row-arrow" src="/assets/svg/chevron-right.svg" mode="aspectFit"></image>
+        </view>
+      </view>
+
+      <view class="setting-row">
+        <view class="row-icon row-icon-green">
+          <image class="row-icon-svg" src="/assets/svg/zap.svg" mode="aspectFit"></image>
+        </view>
+        <text class="row-title">接单开关</text>
+        <view class="row-tail">
+          <view class="toggle {{settings.receive_enabled ? 'toggle-on' : 'toggle-off'}}" catchtap="onToggleReceive">
+            <view class="toggle-thumb"></view>
+          </view>
+        </view>
+      </view>
+
+      <view class="setting-row">
+        <view class="row-icon row-icon-orange">
+          <image class="row-icon-svg" src="/assets/svg/bolt.svg" mode="aspectFit"></image>
+        </view>
+        <text class="row-title">自动接单</text>
+        <view class="row-tail">
+          <view class="toggle {{settings.auto_receive ? 'toggle-on' : 'toggle-off'}}" catchtap="onToggleAutoReceive">
+            <view class="toggle-thumb"></view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="section">
+    <text class="group-title">账号与安全</text>
+    <view class="glass-neu-card setting-group">
+      <view class="setting-row" bindtap="onChangePassword">
+        <view class="row-icon row-icon-brand">
+          <image class="row-icon-svg" src="/assets/svg/lock.svg" mode="aspectFit"></image>
+        </view>
+        <text class="row-title">修改密码</text>
+        <view class="row-tail">
+          <image class="row-arrow" src="/assets/svg/chevron-right.svg" mode="aspectFit"></image>
+        </view>
+      </view>
+
+      <view class="setting-row" bindtap="onBindPhone">
+        <view class="row-icon row-icon-blue">
+          <image class="row-icon-svg" src="/assets/svg/phone.svg" mode="aspectFit"></image>
+        </view>
+        <text class="row-title">绑定手机</text>
+        <view class="row-tail">
+          <text class="row-value">已绑定</text>
+          <image class="row-arrow" src="/assets/svg/chevron-right.svg" mode="aspectFit"></image>
+        </view>
+      </view>
+
+      <view class="setting-row" bindtap="onRealname">
+        <view class="row-icon row-icon-green">
+          <image class="row-icon-svg" src="/assets/svg/shield.svg" mode="aspectFit"></image>
+        </view>
+        <text class="row-title">实名认证</text>
+        <view class="row-tail">
+          <text class="row-badge-green">已认证</text>
+          <image class="row-arrow" src="/assets/svg/chevron-right.svg" mode="aspectFit"></image>
+        </view>
+      </view>
+
+      <view class="setting-row" bindtap="onCertificates">
+        <view class="row-icon row-icon-orange">
+          <image class="row-icon-svg" src="/assets/svg/crown.svg" mode="aspectFit"></image>
+        </view>
+        <text class="row-title">资质证书</text>
+        <view class="row-tail">
+          <text class="row-value">3 张</text>
+          <image class="row-arrow" src="/assets/svg/chevron-right.svg" mode="aspectFit"></image>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="section">
+    <text class="group-title">消息通知</text>
+    <view class="glass-neu-card setting-group">
+      <view class="setting-row">
+        <view class="row-icon row-icon-orange">
+          <image class="row-icon-svg" src="/assets/svg/message.svg" mode="aspectFit"></image>
+        </view>
+        <text class="row-title">新订单提醒</text>
+        <view class="row-tail">
+          <view class="toggle {{settings.notify_new_order ? 'toggle-on' : 'toggle-off'}}" catchtap="onToggleNewOrderNotify">
+            <view class="toggle-thumb"></view>
+          </view>
+        </view>
+      </view>
+
+      <view class="setting-row">
+        <view class="row-icon row-icon-blue">
+          <image class="row-icon-svg" src="/assets/svg/message.svg" mode="aspectFit"></image>
+        </view>
+        <text class="row-title">系统消息</text>
+        <view class="row-tail">
+          <view class="toggle {{settings.notify_system ? 'toggle-on' : 'toggle-off'}}" catchtap="onToggleSystemNotify">
+            <view class="toggle-thumb"></view>
+          </view>
+        </view>
+      </view>
+
+      <view class="setting-row">
+        <view class="row-icon row-icon-brand">
+          <image class="row-icon-svg" src="/assets/svg/money.svg" mode="aspectFit"></image>
+        </view>
+        <text class="row-title">收益到账提醒</text>
+        <view class="row-tail">
+          <view class="toggle {{settings.notify_income ? 'toggle-on' : 'toggle-off'}}" catchtap="onToggleIncomeNotify">
+            <view class="toggle-thumb"></view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="section">
+    <text class="group-title">其他</text>
+    <view class="glass-neu-card setting-group">
+      <view class="setting-row" bindtap="onClearCache">
+        <view class="row-icon row-icon-orange">
+          <image class="row-icon-svg" src="/assets/svg/plus.svg" mode="aspectFit"></image>
+        </view>
+        <text class="row-title">清除缓存</text>
+        <view class="row-tail">
+          <text class="row-value mono">2.4MB</text>
+          <image class="row-arrow" src="/assets/svg/chevron-right.svg" mode="aspectFit"></image>
+        </view>
+      </view>
+
+      <view class="setting-row" bindtap="onAbout">
+        <view class="row-icon row-icon-brand">
+          <image class="row-icon-svg" src="/assets/svg/bot.svg" mode="aspectFit"></image>
+        </view>
+        <text class="row-title">关于我们</text>
+        <view class="row-tail">
+          <image class="row-arrow" src="/assets/svg/chevron-right.svg" mode="aspectFit"></image>
+        </view>
+      </view>
+
+      <view class="setting-row" bindtap="onUserAgreement">
+        <view class="row-icon row-icon-blue">
+          <image class="row-icon-svg" src="/assets/svg/document.svg" mode="aspectFit"></image>
+        </view>
+        <text class="row-title">用户协议</text>
+        <view class="row-tail">
+          <image class="row-arrow" src="/assets/svg/chevron-right.svg" mode="aspectFit"></image>
+        </view>
+      </view>
+
+      <view class="setting-row" bindtap="onPrivacyPolicy">
+        <view class="row-icon row-icon-green">
+          <image class="row-icon-svg" src="/assets/svg/lock.svg" mode="aspectFit"></image>
+        </view>
+        <text class="row-title">隐私政策</text>
+        <view class="row-tail">
+          <image class="row-arrow" src="/assets/svg/chevron-right.svg" mode="aspectFit"></image>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="section logout-section">
+    <view class="logout-btn" bindtap="onLogout">退出登录</view>
+  </view>
+</view>

@@ -1,0 +1,359 @@
+/* pages/client-orders/index.wxss — 客户端订单列表页 玻璃新拟态
+ * 像素级复刻 client-orders.html
+ * 换算基准：1px = 2rpx（750rpx 设计稿）
+ * 严格忠于 HTML 参考的尺寸、间距、圆角、阴影、渐变透明度
+ */
+
+.page {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+/* ===== 顶部标题栏组合（sticky 定位） ===== */
+/* HTML: position:sticky; top:0; z-index:50 */
+.top-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+/* ===== Hero 标题栏 ===== */
+/* 使用全局 .hero（client 0.14 轻量版渐变 + 底部圆角 0 0 64rpx 64rpx） */
+/* padding-top 由内联 style 动态提供（statusBarHeight + 28rpx） */
+
+/* HTML: display:flex; align-items:center; justify-content:space-between; position:relative; z-index:2 */
+.greeting-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  z-index: 2;
+}
+
+.greeting-text {
+  display: flex;
+  flex-direction: column;
+}
+
+/* HTML: font-size:26px; font-weight:800; color:var(--text-1); letter-spacing:-0.02em; line-height:1.2 */
+.hero-title {
+  display: block;
+  font-size: 52rpx;
+  font-weight: 700;
+  color: var(--text-1);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+/* HTML: font-size:14px; color:var(--text-2); margin-top:4px; font-weight:500 */
+.hero-subtitle {
+  display: block;
+  font-size: 28rpx;
+  color: var(--text-2);
+  margin-top: 8rpx;
+  font-weight: 500;
+}
+
+/* HTML: width:42px; height:42px; border-radius:50%; background:rgba(255,255,255,0.18); 
+   backdrop-filter:blur(16px); border:0.5px solid rgba(255,255,255,0.30); 
+   box-shadow:inset 0 1px 2px rgba(255,255,255,0.3) */
+.search-btn {
+  width: 84rpx;
+  height: 84rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(32rpx) saturate(160%);
+  -webkit-backdrop-filter: blur(32rpx) saturate(160%);
+  border: 1rpx solid rgba(255, 255, 255, 0.30);
+  box-shadow: inset 0 2rpx 4rpx rgba(255, 255, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-1);
+  flex-shrink: 0;
+  transition: transform var(--dur-base) var(--spring), background 0.2s var(--ease);
+}
+
+.search-btn:active {
+  transform: scale(0.85);
+  background: rgba(255, 255, 255, 0.32);
+}
+
+/* HTML: width:22px; height:22px */
+.search-btn-icon {
+  width: 44rpx;
+  height: 44rpx;
+}
+
+/* ===== Filter Tabs ===== */
+/* 使用全局 .filter-tabs + .filter-pill（app.wxss 已定义，与 HTML 参考一致） */
+/* HTML: margin:-18px 20px 0 → -36rpx 40rpx 0; padding:8px → 16rpx; gap:6px → 12rpx */
+
+/* ===== 订单列表 ===== */
+/* HTML: padding:20px 20px 0; display:flex; flex-direction:column; gap:12px */
+.order-list {
+  position: relative;
+  z-index: 2;
+  padding: 40rpx 40rpx 0;
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+}
+
+/* ===== 订单卡片 ===== */
+/* 覆盖全局 .order-card：HTML 使用 --radius-md（38rpx），无 margin，4 层阴影（含品牌辉光） */
+.order-card {
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+  border-radius: var(--r-md);
+  box-shadow:
+    var(--neu-raised),
+    0 12rpx 56rpx rgba(0, 0, 0, 0.06),
+    0 0 0 2rpx rgba(44, 40, 36, 0.05),
+    0 4rpx 16rpx rgba(13, 148, 136, 0.04);
+}
+.order-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 8rpx;
+  border-radius: 8rpx 0 0 8rpx;
+  z-index: 1;
+}
+.order-card.status-pending::before   { background: var(--blue); }
+.order-card.status-bidding::before   { background: var(--blue); }
+.order-card.status-accepted::before  { background: var(--brand); }
+.order-card.status-departing::before { background: var(--brand); }
+.order-card.status-arrived::before   { background: var(--green); }
+.order-card.status-serving::before   { background: var(--accent); }
+.order-card.status-completed::before { background: var(--orange); }
+.order-card.status-paid::before      { background: var(--brand); }
+.order-card.status-reviewed::before  { background: var(--text-3); }
+.order-card.status-pending-review::before { background: var(--orange); }
+.order-card.status-canceled::before  { background: var(--text-3); }
+.order-card.status-reviewing::before { background: var(--orange); }
+.order-card.status-reviewing-fee::before { background: var(--accent); }
+.order-card.status-expired::before   { background: var(--text-3); }
+.order-card.status-reviewed { opacity: 0.92; }
+.order-card.status-reviewed .order-title,
+.order-card.status-reviewed .order-price { color: var(--text-2); }
+
+/* HTML: display:flex; align-items:center; justify-content:space-between; margin-bottom:14px */
+.card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28rpx;
+  position: relative;
+  z-index: 1;
+}
+
+/* ===== 订单状态标签（主样式规范 .order-status-tag） ===== */
+/* HTML .status-badge + 主样式规范 .order-status-tag 融合：
+   ::before 圆点 + 状态色背景 + 状态色文字 */
+.order-status-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 12rpx;
+  padding: 8rpx 20rpx 8rpx 16rpx;
+  border-radius: var(--r-pill);
+  font-size: 24rpx;
+  font-weight: 600;
+  font-family: var(--font-body);
+  background: var(--fill);
+  color: var(--text-2);
+  box-shadow: inset 0 2rpx 2rpx rgba(255, 255, 255, 0.35);
+  position: relative;
+}
+
+.order-status-tag::before {
+  content: '';
+  width: 12rpx;
+  height: 12rpx;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+}
+
+/* 各状态色（对齐主样式规范状态色映射） */
+.order-status-pending        { color: var(--blue);   background: rgba(90, 143, 173, 0.10); }
+.order-status-bidding        { color: var(--red);    background: rgba(196, 83, 58, 0.10); }
+.order-status-accepted       { color: var(--brand);  background: var(--brand-subtle); }
+.order-status-departing      { color: var(--brand);  background: var(--brand-subtle); }
+.order-status-departing::before { animation: dotPulse 1.8s var(--ease) infinite; }
+.order-status-arrived        { color: var(--green);  background: rgba(91, 140, 90, 0.10); }
+.order-status-serving        { color: var(--accent); background: rgba(212, 148, 76, 0.10); }
+.order-status-completed      { color: var(--orange); background: rgba(212, 148, 76, 0.10); }
+.order-status-paid           { color: var(--brand);  background: var(--brand-subtle); }
+.order-status-pending-review { color: var(--brand);  background: var(--brand-subtle); }
+.order-status-reviewed       { color: var(--text-3); background: var(--fill); }
+.order-status-canceled       { color: var(--text-3); background: var(--fill); }
+
+/* departing 状态脉冲动画 */
+@keyframes dotPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.35); opacity: 0.65; }
+}
+
+/* HTML: font-size:12px; color:var(--text-3); font-variant-numeric:tabular-nums */
+.order-date {
+  font-size: 24rpx;
+  color: var(--text-3);
+  font-variant-numeric: tabular-nums;
+}
+
+/* HTML: font-size:16px; font-weight:600; color:var(--text-1); letter-spacing:-0.01em; margin-bottom:8px; line-height:1.3 */
+.order-title {
+  display: block;
+  font-size: 32rpx;
+  font-weight: 600;
+  color: var(--text-1);
+  letter-spacing: -0.01em;
+  margin-bottom: 16rpx;
+  line-height: 1.3;
+  position: relative;
+  z-index: 1;
+}
+
+/* HTML: display:flex; align-items:center; gap:5px; font-size:13px; color:var(--text-2); line-height:1.4 */
+.order-address {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+  font-size: 26rpx;
+  color: var(--text-2);
+  line-height: 1.4;
+  position: relative;
+  z-index: 1;
+}
+
+/* HTML: width:14px; height:14px */
+.order-address-icon {
+  width: 28rpx;
+  height: 28rpx;
+  flex-shrink: 0;
+}
+
+.order-address-text {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* HTML: height:0.5px; background:var(--sep); margin:14px -16px */
+.card-sep {
+  height: 1rpx;
+  background: var(--sep);
+  margin: 28rpx -32rpx;
+  position: relative;
+  z-index: 1;
+}
+
+/* HTML: display:flex; align-items:center; justify-content:space-between; gap:10px */
+.card-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20rpx;
+  position: relative;
+  z-index: 1;
+}
+
+/* HTML: display:flex; flex-direction:column; gap:2px; min-width:0 */
+.bottom-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4rpx;
+  min-width: 0;
+  flex: 1;
+}
+
+/* HTML: font-size:13px; color:var(--text-2); font-weight:500 */
+.info-main {
+  font-size: 26rpx;
+  color: var(--text-2);
+  font-weight: 500;
+}
+
+/* HTML: font-size:15px; color:var(--accent); font-weight:700; font-variant-numeric:tabular-nums */
+.info-price {
+  font-size: 30rpx;
+  color: var(--accent);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  font-family: var(--font-number);
+}
+
+/* ===== 操作按钮 .btn-neu-secondary（HTML 参考） ===== */
+/* HTML: display:inline-flex; gap:6px; background:rgba(255,255,255,0.92); color:var(--brand);
+   border:0.5px solid rgba(255,255,255,0.95); border-radius:9999px; padding:8px 16px;
+   font-size:13px; font-weight:600; box-shadow:var(--neu-out-md),inset 0 1.5px 2px rgba(255,255,255,0.65),inset 0 -1px 1px rgba(0,0,0,0.03) */
+.btn-neu-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12rpx;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--brand);
+  border: 1rpx solid rgba(255, 255, 255, 0.95);
+  border-radius: var(--r-pill);
+  padding: 16rpx 32rpx;
+  font-size: 26rpx;
+  font-weight: 600;
+  font-family: var(--font-body);
+  box-shadow: var(--neu-raised), inset 0 3rpx 4rpx rgba(255, 255, 255, 0.65), inset 0 -2rpx 2rpx rgba(0, 0, 0, 0.03);
+  transition: transform var(--dur-base) var(--spring), box-shadow var(--dur-base) var(--ease), background var(--dur-base) var(--ease);
+  flex-shrink: 0;
+}
+
+.btn-neu-secondary:active {
+  box-shadow: var(--neu-inset-lg);
+  transform: scale(0.94);
+  background: rgba(255, 255, 255, 0.78);
+}
+
+.btn-neu-secondary-text {
+  font-size: 26rpx;
+  color: var(--brand);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* ===== 空态 ===== */
+.empty {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 120rpx 32rpx;
+  gap: 16rpx;
+}
+
+.empty-icon {
+  width: 160rpx;
+  height: 160rpx;
+  margin-bottom: 8rpx;
+}
+
+.empty-img {
+  width: 64rpx;
+  height: 64rpx;
+}
+
+.empty-text {
+  font-size: 30rpx;
+  color: var(--text-2);
+  font-weight: 500;
+}
+
+.empty-sub {
+  font-size: 24rpx;
+  color: var(--text-3);
+}
