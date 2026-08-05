@@ -16,6 +16,8 @@ Desktop.ini
 **/uploads/
 **/logs/
 *.log
+.tmp_wechat_localappdata_cli/
+.codex-tools/
 
 # Python environments and generated files
 **/.venv/
