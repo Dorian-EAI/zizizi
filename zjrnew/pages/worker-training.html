@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>自家人居家维修 · 玻璃新拟态 · 培训中心</title>
-    <link rel="stylesheet" href="../assets/fonts.css">
-
     <style id="theme-vars">
 /* 自家人居家维修 - 玻璃新拟态 */
 :root {
@@ -14,7 +12,7 @@
   --brand-dark: #2456B8;
   --brand-mid: #5A8EE8;
   --brand-light: #DCE8FB;
-  --brand-glow: rgba(45, 108, 223, 0.28);
+  --brand-glow: rgba(45, 108, 223, 0.18);
   --brand-subtle: rgba(45, 108, 223, 0.08);
 
   /* Accent (Amber) */
@@ -82,11 +80,11 @@
   --radius-lg: 1.6rem;
   --radius-full: 9999px;
 
-    /* Font — 统一衬线系统 */
+  /* Font — unified serif system */
   --font-display: 'Cormorant Garamond', 'Noto Serif SC', 'STSong', Georgia, serif;
-  --font-body: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-  --font-nums: 'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
-  --font: var(--font-body);
+  --font-body:    'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --font-nums:    'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
+  --font:         var(--font-body);
 
   /* Motion */
   --spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -127,9 +125,8 @@
   --radius-sm: var(--radius-sm);
   --radius-md: var(--radius-md);
   --radius-lg: var(--radius-lg);
-  --font-sans: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-  --font-serif: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-  --radius-full: var(--radius-full);}
+  --radius-full: var(--radius-full);
+}
 
 /* Semantic token fallback */
 #semantic-token-fallback {
@@ -152,21 +149,21 @@
 }
 
 /* ===== Global Neumorphic Components ===== */
-/* Tab Bar */
+/* Tab Bar — Premium Liquid Glass, absolute-positioned within .phone frame */
 .tab-bar{
   position:absolute;
-  bottom:max(14px, env(safe-area-inset-bottom));
+  bottom:10px;
   left:50%;
   transform:translateX(-50%);
   width:calc(100% - 32px);
   max-width:360px;
-  height:64px;
+  height:56px;
   z-index:100;
-  background:rgba(255,255,255,0.22);
+  background:rgba(255,255,255,0.18);
   backdrop-filter:blur(48px) saturate(210%);
   -webkit-backdrop-filter:blur(48px) saturate(210%);
-  border:0.5px solid rgba(255,255,255,0.50);
-  border-radius:28px;
+  border:0.5px solid rgba(255,255,255,0.45);
+  border-radius:24px;
   box-shadow:
     inset 0 1.5px 3px rgba(255,255,255,0.60),
     inset 0 -0.5px 1px rgba(255,255,255,0.20),
@@ -176,7 +173,7 @@
   display:flex;
   align-items:center;
   justify-content:space-around;
-  padding:0 10px;
+  padding:0 6px;
 }
 .tab-bar::before{
   content:"";
@@ -203,7 +200,7 @@
   border-radius:inherit;
   background:linear-gradient(320deg,
     transparent 60%,
-    rgba(45,108,223,0.06) 80%,
+    rgba(13,148,136,0.06) 80%,
     rgba(255,255,255,0.04) 100%);
   pointer-events:none;
   z-index:1;
@@ -242,15 +239,15 @@
   width:54px;
   height:42px;
   border-radius:16px;
-  background:rgba(45,108,223,0.16);
+  background:rgba(13,148,136,0.16);
   backdrop-filter:blur(24px);
   -webkit-backdrop-filter:blur(24px);
-  border:0.5px solid rgba(45,108,223,0.30);
+  border:0.5px solid rgba(13,148,136,0.30);
   box-shadow:
     inset 0 1px 3px rgba(255,255,255,0.55),
     inset 0 -0.5px 1px rgba(255,255,255,0.15),
-    0 2px 10px rgba(45,108,223,0.20),
-    0 0 0 0.5px rgba(45,108,223,0.08);
+    0 2px 10px rgba(13,148,136,0.20),
+    0 0 0 0.5px rgba(13,148,136,0.08);
   z-index:0;
 }
 .tab-item[data-active="true"] svg{
@@ -259,6 +256,16 @@
   z-index:1;
 }
 
+/* Buttons */
+.btn-neu-primary{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:var(--brand);color:var(--text-inverse);
+  border:none;border-radius:9999px;
+  padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
+  cursor:pointer;
+  box-shadow:var(--neu-out-sm),0 2px 8px var(--brand-glow);
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
 .btn-neu-primary:active{box-shadow:var(--neu-in);transform:scale(0.94)}
 
 .btn-neu-secondary{
@@ -305,8 +312,6 @@
     --radius-md: var(--radius-md);
     --radius-lg: var(--radius-lg);
     --radius-full: var(--radius-full);
-    --font-sans: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-    --font-serif: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
   }
   @layer base {
     body { background: var(--background); color: var(--foreground); }
@@ -394,7 +399,7 @@
 
   <!-- ===== BACK BAR ===== -->
   <div class="back-bar">
-    <button class="back-btn" type="button" data-dom-id="back-btn" aria-label="返回">
+    <button class="back-btn" type="button" data-dom-id="training-back" data-target-page="page-worker-profile" aria-label="返回">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
         <polyline points="15 18 9 12 15 6"/>
       </svg>
@@ -451,7 +456,7 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
             已完成
           </span>
-          <button class="btn-neu-secondary course-btn" type="button" data-dom-id="exam-1">参加考试</button>
+          <button class="btn-neu-secondary course-btn" type="button" data-dom-id="exam-1" data-target-page="page-worker-training-exam">参加考试</button>
         </div>
       </div>
 
@@ -474,7 +479,7 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
             已完成
           </span>
-          <button class="btn-neu-secondary course-btn" type="button" data-dom-id="exam-2">参加考试</button>
+          <button class="btn-neu-secondary course-btn" type="button" data-dom-id="exam-2" data-target-page="page-worker-training-exam">参加考试</button>
         </div>
       </div>
 
@@ -494,7 +499,7 @@
         </div>
         <div class="course-right">
           <span class="course-status learning">学习中 60%</span>
-          <button class="btn-neu-primary course-btn" type="button" data-dom-id="course-3">继续学习</button>
+          <button class="btn-neu-primary course-btn" type="button" data-dom-id="course-3" data-target-page="page-worker-lesson">继续学习</button>
         </div>
       </div>
 
@@ -511,7 +516,7 @@
         </div>
         <div class="course-right">
           <span class="course-status todo">未开始</span>
-          <button class="btn-neu-primary course-btn" type="button" data-dom-id="course-4">开始学习</button>
+          <button class="btn-neu-primary course-btn" type="button" data-dom-id="course-4" data-target-page="page-worker-lesson">开始学习</button>
         </div>
       </div>
 
@@ -556,7 +561,7 @@
 
   <!-- ===== VIEW RECORDS LINK ===== -->
   <div class="records-link-wrap">
-    <a class="records-link" data-dom-id="view-records">
+    <a class="records-link" data-dom-id="view-records" data-action="show-learning-records">
       查看学习记录
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <polyline points="9 18 15 12 9 6"/>
@@ -570,9 +575,9 @@
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{
   --brand:#2D6CDF;--brand-dark:#2456B8;--brand-mid:#5A8EE8;--brand-light:#DCE8FB;
-  --brand-glow:rgba(45,108,223,0.28);--brand-subtle:rgba(45,108,223,0.08);
-  --brand-gradient:linear-gradient(135deg,#2D6CDF 0%,#5A8EE8 50%,#D4944C 100%);
-  --accent:#D4944C;--accent-dark:#A0723C;--accent-light:#F5E6D0;--accent-glow:rgba(212,148,76,0.25);
+  --brand-glow:rgba(45,108,223,0.18);--brand-subtle:rgba(45,108,223,0.08);
+  --brand-gradient:linear-gradient(135deg,#2D6CDF 0%,#5A8EE8 48%,#D4944C 100%);
+  --accent:#D4944C;--accent-dark:#A0723C;--accent-light:#F5E6D0;--accent-glow:rgba(212,148,76,0.16);
   --bg:#F2EDE8;--bg-elevated:#F7F3EF;
   --neu-light:#FFF8F2;--neu-dark:#DDD6CE;
   --text-1:#2C2824;--text-2:#8B8178;--text-3:#B5ADA5;--text-inverse:#FFFFFF;
@@ -593,11 +598,11 @@
 html,body{font-family:var(--font);color:var(--text-1);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
 body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh;background:#E8E4DF;letter-spacing:-0.01em}
 .phone{position:relative;width:414px;min-height:896px;background:var(--bg);border-radius:48px;overflow:hidden;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.12),0 4px 16px rgba(0,0,0,.06);padding-bottom:82px}
-.phone::after{content:'';position:absolute;bottom:0;left:0;right:0;height:260px;background:radial-gradient(ellipse 200px 140px at 20% 90%,rgba(45,108,223,.07) 0%,transparent 70%),radial-gradient(ellipse 180px 120px at 80% 85%,rgba(143,169,152,.06) 0%,transparent 70%),radial-gradient(ellipse 160px 100px at 50% 95%,rgba(124,142,212,.04) 0%,transparent 70%);pointer-events:none;z-index:0}
+.phone::after{content:'';position:absolute;bottom:0;left:0;right:0;height:260px;background:radial-gradient(ellipse 200px 140px at 20% 90%,rgba(45,108,223,.04) 0%,transparent 70%),radial-gradient(ellipse 180px 120px at 80% 85%,rgba(212,148,76,.04) 0%,transparent 70%),radial-gradient(ellipse 160px 100px at 50% 95%,rgba(45,108,223,.04) 0%,transparent 70%);pointer-events:none;z-index:0}
 .phone>*:not(.tab-bar){position:relative;z-index:1}
 
 /* ===== Back Bar ===== */
-.back-bar{background:radial-gradient(ellipse 220px 160px at 78% 45%,rgba(143,169,152,.14) 0%,transparent 70%),radial-gradient(ellipse 180px 140px at 18% 75%,rgba(45,108,223,.16) 0%,transparent 70%),linear-gradient(135deg,rgba(45,108,223,.14) 0%,rgba(143,169,152,.08) 50%,rgba(45,108,223,.06) 100%); display:flex;align-items:center;gap:12px;padding: max(16px, env(safe-area-inset-top)) 24px 16px;position:relative;z-index:5; border-radius:0 0 28px 28px; overflow:hidden;}
+.back-bar{background:radial-gradient(ellipse 220px 160px at 78% 45%,rgba(212,148,76,.10) 0%,transparent 70%),radial-gradient(ellipse 180px 140px at 18% 75%,rgba(45,108,223,.10) 0%,transparent 70%),linear-gradient(135deg,rgba(45,108,223,.08) 0%,rgba(212,148,76,.04) 50%,rgba(45,108,223,.05) 100%); display:flex;align-items:center;gap:12px;padding: max(16px, env(safe-area-inset-top)) 24px 16px;position:relative;z-index:5; border-radius:0 0 28px 28px; overflow:hidden;}
 .back-btn{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.50);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:0.5px solid rgba(255,255,255,0.55);box-shadow:var(--neu-out-sm),inset 0 1px 2px rgba(255,255,255,0.50);display:flex;align-items:center;justify-content:center;color:var(--brand);cursor:pointer;flex-shrink:0;transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease)}
 .back-btn:active{box-shadow:var(--neu-in);transform:scale(0.9)}
 .back-btn svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
@@ -605,7 +610,7 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
 .back-spacer{width:40px;flex-shrink:0}
 
 /* ===== Training Stats Hero (glass gradient) ===== */
-.training-hero{margin:4px 24px 0;padding:22px 22px 20px;border-radius:var(--r-lg);position:relative;overflow:hidden;z-index:5;background:radial-gradient(ellipse 220px 180px at 20% 30%,rgba(143,169,152,0.30) 0%,transparent 70%),radial-gradient(ellipse 200px 160px at 85% 80%,rgba(45,108,223,0.30) 0%,transparent 70%),linear-gradient(135deg,rgba(45,108,223,0.30) 0%,rgba(143,169,152,0.22) 50%,rgba(45,108,223,0.16) 100%);backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);border:1px solid rgba(255,255,255,0.60);box-shadow:var(--neu-out-md),0 10px 36px rgba(0,0,0,0.08),0 0 0 1px rgba(44,40,36,0.05)}
+.training-hero{margin:4px 24px 0;padding:22px 22px 20px;border-radius:var(--r-lg);position:relative;overflow:hidden;z-index:5;background:radial-gradient(ellipse 220px 180px at 20% 30%,rgba(212,148,76,.12) 0%,transparent 70%),radial-gradient(ellipse 200px 160px at 85% 80%,rgba(45,108,223,.12) 0%,transparent 70%),linear-gradient(135deg,rgba(45,108,223,.12) 0%,rgba(212,148,76,.09) 50%,rgba(45,108,223,.08) 100%);backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);border:1px solid rgba(255,255,255,0.60);box-shadow:var(--neu-out-md),0 10px 36px rgba(0,0,0,0.08),0 0 0 1px rgba(44,40,36,0.05)}
 .training-hero::before{content:"";position:absolute;top:-30%;right:-15%;width:200px;height:200px;background:radial-gradient(circle,rgba(255,255,255,0.18) 0%,transparent 70%);border-radius:50%;pointer-events:none}
 .training-hero::after{content:"";position:absolute;bottom:-30%;left:-10%;width:170px;height:170px;background:radial-gradient(circle,rgba(255,255,255,0.10) 0%,transparent 70%);border-radius:50%;pointer-events:none}
 
@@ -637,8 +642,8 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
 
 .course-icon{width:46px;height:46px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;box-shadow:var(--neu-out-sm),inset 0 1px 1.5px rgba(255,255,255,0.55);border:0.5px solid rgba(255,255,255,0.45);position:relative;z-index:1}
 .course-icon svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.icon-indigo{color:var(--brand);background:linear-gradient(135deg,rgba(45,108,223,0.18),rgba(45,108,223,0.06))}
-.icon-amber{color:var(--accent-dark);background:linear-gradient(135deg,rgba(212,148,76,0.22),rgba(212,148,76,0.08))}
+.icon-indigo{color:var(--brand);background:linear-gradient(135deg,rgba(45,108,223,.09),rgba(45,108,223,.04))}
+.icon-amber{color:var(--accent-dark);background:linear-gradient(135deg,rgba(212,148,76,.14),rgba(212,148,76,.05))}
 .icon-blue{color:var(--blue);background:linear-gradient(135deg,rgba(90,143,173,0.20),rgba(90,143,173,0.06))}
 .icon-green{color:var(--green);background:linear-gradient(135deg,rgba(91,140,90,0.20),rgba(91,140,90,0.06))}
 
@@ -655,13 +660,13 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
 .course-status{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;font-weight:600;padding:3px 9px;border-radius:var(--r-pill);line-height:1.4;letter-spacing:0.01em}
 .course-status svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
 .course-status.done{color:var(--green);background:rgba(91,140,90,0.12);border:0.5px solid rgba(91,140,90,0.22)}
-.course-status.learning{color:var(--brand);background:rgba(45,108,223,0.12);border:0.5px solid rgba(45,108,223,0.24)}
+.course-status.learning{color:var(--brand);background:rgba(45,108,223,.06);border:0.5px solid rgba(45,108,223,.12)}
 .course-status.todo{color:var(--text-2);background:rgba(139,129,120,0.10);border:0.5px solid rgba(139,129,120,0.18)}
 
 /* Primary button base (head only defines :active) */
 .btn-neu-primary{
   display:inline-flex;align-items:center;justify-content:center;
-  background:var(--brand);color:#fff;
+  background:var(--brand-gradient);color:#fff;
   border:0.5px solid rgba(255,255,255,0.30);border-radius:9999px;
   padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
   cursor:pointer;

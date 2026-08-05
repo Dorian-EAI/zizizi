@@ -91,7 +91,7 @@ async def my_training_records(
     from app.models.training import WorkerTrainingRecord
     items = db.query(WorkerTrainingRecord).filter(
         WorkerTrainingRecord.worker_id == worker.id
-    ).order_by(WorkerTrainingRecord.created_at.desc()).all()
+    ).order_by(WorkerTrainingRecord.created_at.desc()).limit(500).all()
     return success(data=[
         WorkerTrainingRecordResponse.model_validate(i).model_dump(mode="json")
         for i in items

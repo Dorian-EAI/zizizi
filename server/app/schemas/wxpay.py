@@ -1,7 +1,7 @@
 """微信支付相关 Pydantic 模型"""
 
-from typing import Optional
-from pydantic import BaseModel
+from typing import Literal, Optional
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class JSAPIPayResponse(BaseModel):
@@ -36,14 +36,19 @@ class WechatRefundNotifyResult(BaseModel):
 
 class RechargeJSAPIRequest(BaseModel):
     """充值 JSAPI 请求"""
-    amount: float
-    method: str = "wechat"
+    model_config = ConfigDict(extra="forbid")
+
+    amount: float = Field(..., gt=0, le=1_000_000)
+    method: Literal["wechat"] = "wechat"
 
 
 class OrderJSAPIRequest(BaseModel):
     """订单 JSAPI 支付请求"""
-    order_no: str
-    coupon_id: Optional[int] = None
+    model_config = ConfigDict(extra="forbid")
+
+    order_no: str = Field(..., min_length=1, max_length=64)
+    coupon_id: Optional[int] = Field(None, gt=0)
+    order_version: Optional[int] = Field(None, ge=0)
 
 
 class ToggleActiveRequest(BaseModel):

@@ -5,7 +5,7 @@ from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session
 
 from app.database import get_db
-from app.dependencies import get_current_user, get_current_account, get_current_admin
+from app.dependencies import get_current_user, get_current_account, get_current_admin, require_admin_operator
 from app.models.user import User
 from app.schemas.quality import (
     InspectionFeedbackRequest,
@@ -21,7 +21,7 @@ router = APIRouter(prefix="/api/quality", tags=["质检回访"])
 @router.post("/orders/{order_id}/inspect")
 async def create_inspection(
     order_id: int,
-    admin=Depends(get_current_admin),
+    admin=Depends(require_admin_operator),
     db: Session = Depends(get_db),
 ):
     """为订单创建回访任务（内部调用或管理员）"""
@@ -54,7 +54,7 @@ async def my_inspections(
     q = db.query(QualityInspection).filter(QualityInspection.user_id == user.id)
     if status:
         q = q.filter(QualityInspection.status == status)
-    items = q.order_by(QualityInspection.created_at.desc()).all()
+    items = q.order_by(QualityInspection.created_at.desc()).limit(200).all()
     return success(data=[
         QualityInspectionResponse.model_validate(i).model_dump(mode="json")
         for i in items
@@ -68,7 +68,7 @@ async def admin_inspections(
     status: Optional[str] = Query(None, pattern="^(pending|done|need_follow)$"),
     page: int = Query(1, ge=1),
     size: int = Query(20, ge=1, le=100),
-    admin=Depends(get_current_admin),
+    admin=Depends(require_admin_operator),
     db: Session = Depends(get_db),
 ):
     """回访任务列表（后台）"""
@@ -88,7 +88,7 @@ async def admin_inspections(
 async def audit_inspection(
     inspection_id: int,
     req: AdminAuditInspectionRequest,
-    admin=Depends(get_current_admin),
+    admin=Depends(require_admin_operator),
     db: Session = Depends(get_db),
 ):
     """客服处理回访"""

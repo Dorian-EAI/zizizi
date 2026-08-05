@@ -6,6 +6,7 @@ Page({
   data: {
     statusBarHeight: 20,
     servicePhoneDisplay: '暂未配置',
+    servicePhoneConfigured: false,
     allTickets: [],
     tickets: [],
     faqItems: [],
@@ -23,6 +24,7 @@ Page({
       orderId: query && query.orderId ? String(query.orderId) : '',
       statusBarHeight: app.globalData.statusBarHeight || 20,
       servicePhoneDisplay: app.globalData.servicePhone || '暂未配置',
+      servicePhoneConfigured: !!String(app.globalData.servicePhone || '').trim(),
       icons: {
         back: buildIcon('arrowLeft', COLORS.text1),
         message: buildIcon('message', COLORS.brand),
@@ -127,27 +129,8 @@ Page({
 
   async onTicketTap(e) {
     const id = e.currentTarget.dataset.id
-    const api = app.getApi()
-    wx.showLoading({ title: '加载中', mask: true })
-    try {
-      const detail = await api.ticket.detail(id)
-      wx.hideLoading()
-      const ticket = this.normalizeTicket(detail || {})
-      const content = [
-        '状态：' + ticket.statusLabel,
-        ticket.description || '',
-        ticket.resolution ? ('处理结果：' + ticket.resolution) : ''
-      ].filter(Boolean).join('\n\n')
-      wx.showModal({
-        title: ticket.title || ('工单 #' + (ticket.ticketNo || id)),
-        content: content || '暂无更多详情',
-        showCancel: false,
-        confirmColor: '#0D9488'
-      })
-    } catch (error) {
-      wx.hideLoading()
-      console.error('加载工单详情失败', error)
-    }
+    if (!id) return
+    wx.navigateTo({ url: '/pages/client-customer-service/index?ticketId=' + id })
   },
 
   onFaqTap(e) {
@@ -163,7 +146,8 @@ Page({
   },
 
   onOnlineService() {
-    this.openTicketPrompt('consult', '在线咨询')
+    const suffix = this.data.orderId ? ('?orderId=' + this.data.orderId) : ''
+    wx.navigateTo({ url: '/pages/client-customer-service/index' + suffix })
   },
 
   onCallHotline() {

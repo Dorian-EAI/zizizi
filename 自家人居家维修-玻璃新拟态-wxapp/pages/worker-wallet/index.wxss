@@ -15,9 +15,9 @@
   position: relative;
   z-index: 1;
   background:
-    radial-gradient(ellipse 480rpx 400rpx at 25% 40%, rgba(143, 169, 152, 0.32) 0%, transparent 70%),
+    radial-gradient(ellipse 480rpx 400rpx at 25% 40%, rgba(212,148,76,.12) 0%, transparent 70%),
     radial-gradient(ellipse 400rpx 320rpx at 80% 80%, rgba(45, 108, 223, 0.24) 0%, transparent 70%),
-    linear-gradient(135deg, rgba(45, 108, 223, 0.28) 0%, rgba(143, 169, 152, 0.20) 50%, rgba(45, 108, 223, 0.12) 100%);
+    linear-gradient(135deg, rgba(45, 108, 223, 0.28) 0%, rgba(212,148,76,.10) 50%, rgba(45, 108, 223, 0.12) 100%);
   border-radius: 0 0 64rpx 64rpx;
   overflow: hidden;
   transition: padding var(--dur-base) var(--ease);

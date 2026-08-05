@@ -1,0 +1,30 @@
+<!-- AUTO-GENERATED DESIGN VIEW sourceHash=fnv1a-6163d512; edit source HTML or generator bindings, then rerun. -->
+<view class="phone-page design-detail-page worker-theme" data-dom-id="page-worker-chat">
+    <view class="status-bar"><text class="tag-span">9:41</text><text class="status-icons tag-span">●●●</text></view>
+    <view class="topbar">
+      <view class="icon-button design-button" data-dom-id="chat-back" data-route="/pages/order-detail-worker/index?order_id=WX20260803001" bindtap="onNavigate"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m15%2018-6-6%206-6M9%2012h10%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view>
+      <view class="top-action design-button" data-dom-id="chat-open-customer" data-route="/pages/worker-customer-profile/index?user_id=user-8831" bindtap="onNavigate">张先生 · 在线</view>
+      <view class="icon-button design-button" data-dom-id="chat-call" data-action="call-customer" bindtap="onAction"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232D6CDF%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M22%2016.92v3a2%202%200%200%201-2.18%202%2019.8%2019.8%200%200%201-8.63-3.07%2019.5%2019.5%200%200%201-6-6A19.8%2019.8%200%200%201%202.12%204.18%202%202%200%200%201%204.11%202h3a2%202%200%200%201%202%201.72c.12.9.33%201.78.62%202.63a2%202%200%200%201-.45%202.11L8%209.73a16%2016%200%200%200%206%206l1.27-1.27a2%202%200%200%201%202.11-.45c.85.29%201.73.5%202.63.62A2%202%200%200%201%2022%2016.92z%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view>
+    </view>
+    <view class="page-body">
+      <view class="notice info design-button" data-dom-id="chat-linked-order" data-route="/pages/order-detail-worker/index?order_id=WX20260803001" bindtap="onNavigate">#WX20260803001 · 水管维修 · 已接单　›</view>
+
+      <view class="section chat-thread">
+        <view class="section-title"><text class="tag-span"></text><text class="tag-span">今天 10:30</text></view>
+        <view class="card chat-bubble incoming"><view class="card-copy tag-p">您好，厨房水槽下面一直漏水，请问您大概多久能到？</view></view>
+        <view class="card chat-bubble outgoing"><view class="card-copy tag-p">您好，我已经出发，预计 25 分钟到达。麻烦先关闭水槽下方的角阀。</view></view>
+        <view class="card list-row design-button" data-dom-id="chat-location-card" data-route="/pages/client-order-tracking/index?mode=shared-location&order_id=WX20260803001" bindtap="onNavigate">
+          <view class="row-icon tag-span"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232D6CDF%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M20%2010c0%205-8%2011-8%2011S4%2015%204%2010a8%208%200%201%201%2016%200z%22%2F%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2210%22%20r%3D%222.5%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view><text class="row-main tag-span"><text class="row-title tag-span">客户分享了位置</text><text class="row-copy tag-span">北京市朝阳区广渠路 88 号</text></text><text class="row-action tag-span">查看地图</text>
+        </view>
+        <view class="card chat-bubble incoming"><view class="card-copy tag-p">好的，我在小区东门等您。</view></view>
+      </view>
+
+      <view class="notice">仅用于当前订单沟通；订单号与服务标签会始终保留。</view>
+    </view>
+    <view class="fixed-actions">
+      <view class="icon-button design-button" data-dom-id="chat-camera" data-action="choose-image" bindtap="onAction"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%223%22%20y%3D%224%22%20width%3D%2218%22%20height%3D%2216%22%20rx%3D%223%22%2F%3E%3Ccircle%20cx%3D%229%22%20cy%3D%2210%22%20r%3D%222%22%2F%3E%3Cpath%20d%3D%22m21%2015-4-4L5%2020%22%2F%3E%3C%2Fsvg%3E" style="width:36rpx;height:32rpx" mode="aspectFill" /></view>
+      <view class="icon-button design-button" data-dom-id="chat-voice" data-action="toggle-voice-input" bindtap="onAction"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%229%22%20y%3D%223%22%20width%3D%226%22%20height%3D%2212%22%20rx%3D%223%22%2F%3E%3Cpath%20d%3D%22M5%2011a7%207%200%200%200%2014%200M12%2018v3M9%2021h6%22%2F%3E%3C%2Fsvg%3E" style="width:12rpx;height:24rpx" mode="aspectFill" /></view>
+      <input class="input" data-dom-id="chat-message-input" data-action="input-message" placeholder="沟通上门时间或服务情况" bindchange="onAction" />
+      <view class="btn primary design-button" data-dom-id="chat-send" data-action="send-message" bindtap="onAction">发送</view>
+    </view>
+  </view>

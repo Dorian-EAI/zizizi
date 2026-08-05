@@ -2,9 +2,6 @@
 const app = getApp()
 const { buildIcon, COLORS } = require('../../utils/icons')
 
-// 平台抽成比例（与 HTML 参考的 hint-card 一致：5%）
-const PLATFORM_FEE_RATE = 0.05
-
 const QUICK_AMOUNTS = [
   { key: '100', label: '¥100', value: '100' },
   { key: '150', label: '¥150', value: '150' },
@@ -29,10 +26,8 @@ Page({
     quickAmounts: QUICK_AMOUNTS,
     durationOptions: DURATION_OPTIONS,
     activeDuration: '1.5',
-    materialFee: '',
     visitTime: '',
     quoteNote: '',
-    payout: '142.5',
     submitting: false,
     icons: {}
   },
@@ -80,8 +75,7 @@ Page({
     const matched = QUICK_AMOUNTS.find(q => q.value === val)
     this.setData({
       amount: val,
-      activeQuick: matched ? matched.key : 'custom',
-      payout: this.computePayout(val)
+      activeQuick: matched ? matched.key : 'custom'
     })
   },
 
@@ -96,8 +90,7 @@ Page({
     }
     this.setData({
       amount: item.value,
-      activeQuick: key,
-      payout: this.computePayout(item.value)
+      activeQuick: key
     })
   },
 
@@ -107,33 +100,14 @@ Page({
     this.setData({ activeDuration: key })
   },
 
-  // ===== 材料费输入 =====
-  onMaterialFeeInput(e) {
-    let val = (e.detail.value || '').replace(/[^\d.]/g, '')
-    const parts = val.split('.')
-    if (parts.length > 2) val = parts[0] + '.' + parts.slice(1).join('')
-    if (parts[1] && parts[1].length > 2) val = parts[0] + '.' + parts[1].slice(0, 2)
-    this.setData({ materialFee: val })
-  },
-
   // ===== 报价说明 =====
   onNoteInput(e) {
     this.setData({ quoteNote: e.detail.value })
   },
 
-  // ===== 计算预计到手金额（扣除平台抽成 5%） =====
-  computePayout(amount) {
-    const num = Number(amount) || 0
-    if (num <= 0) return '0'
-    const net = num * (1 - PLATFORM_FEE_RATE)
-    // 保留最多 1 位小数，去掉多余的 0
-    const rounded = Math.round(net * 100) / 100
-    return String(rounded)
-  },
-
   // ===== 保存草稿（本地缓存） =====
   onSaveDraft() {
-    const { orderId, amount, activeDuration, materialFee, quoteNote } = this.data
+    const { orderId, amount, activeDuration, quoteNote } = this.data
     if (!amount) {
       wx.showToast({ title: '请先填写报价金额', icon: 'none' })
       return
@@ -142,7 +116,6 @@ Page({
       wx.setStorageSync('quote_draft_' + orderId, {
         amount,
         duration: activeDuration,
-        materialFee,
         note: quoteNote,
         savedAt: Date.now()
       })
@@ -155,7 +128,7 @@ Page({
 
   // ===== 提交报价 =====
   async onSubmit() {
-    const { orderId, amount, activeDuration, materialFee, quoteNote, submitting } = this.data
+    const { orderId, amount, activeDuration, quoteNote, submitting } = this.data
     if (submitting) return
     const numPrice = Number(amount)
     if (!amount || numPrice <= 0) {

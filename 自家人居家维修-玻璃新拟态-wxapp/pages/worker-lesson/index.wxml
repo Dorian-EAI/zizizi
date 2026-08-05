@@ -1,0 +1,41 @@
+<!-- AUTO-GENERATED DESIGN VIEW sourceHash=fnv1a-ad30c329; edit source HTML or generator bindings, then rerun. -->
+<view class="phone-page design-detail-page worker-theme" data-dom-id="page-worker-lesson">
+    <view class="status-bar"><text class="tag-span">9:41</text><text class="status-icons tag-span">●●●</text></view>
+    <view class="topbar">
+      <view class="icon-button design-button" data-dom-id="lesson-back" data-route="/pages/worker-training-detail/index?course=electrical-advanced" bindtap="onNavigate"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m15%2018-6-6%206-6M9%2012h10%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view>
+      <view class="tag-h1">课时学习</view>
+      <view class="icon-button design-button" data-dom-id="lesson-more" data-action="open-lesson-actions" bindtap="onAction"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%225%22%20cy%3D%2212%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2212%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%2219%22%20cy%3D%2212%22%20r%3D%221%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view>
+    </view>
+    <view class="page-body">
+      <view class="media-placeholder media-visual design-button" data-dom-id="lesson-video" data-action="play-lesson-video" bindtap="onAction">
+        <image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232D6CDF%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2212%22%20r%3D%229%22%2F%3E%3Cpath%20d%3D%22m10%208%206%204-6%204z%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" />
+      </view>
+
+      <view class="section card">
+        <text class="badge warning tag-span">学习至 08:26 / 20:00</text>
+        <view class="card-title tag-h2">03 复杂线路定位</view>
+        <view class="card-copy tag-p">高级水电维修实战技巧 · 完成本课并通过随堂练习后解锁下一课。</view>
+      </view>
+
+      <view class="section">
+        <view class="section-title"><text class="tag-strong">本课章节</text><text class="tag-span">3 节</text></view>
+        <view class="card list-card">
+          <view class="list-row design-button" data-dom-id="lesson-chapter-1" data-action="seek-lesson-video" bindtap="onAction"><view class="row-icon tag-span"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232D6CDF%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2212%22%20r%3D%229%22%2F%3E%3Cpath%20d%3D%22m8%2012%202.6%202.6L16.5%209%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view><text class="row-main tag-span"><text class="row-title tag-span">故障现象与安全检查</text><text class="row-copy tag-span">00:00—05:20 · 已看完</text></text></view>
+          <view class="list-row design-button" data-dom-id="lesson-chapter-2" data-action="seek-lesson-video" bindtap="onAction"><view class="row-icon tag-span"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232D6CDF%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2212%22%20r%3D%229%22%2F%3E%3Cpath%20d%3D%22m10%208%206%204-6%204z%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view><text class="row-main tag-span"><text class="row-title tag-span">万用表定位方法</text><text class="row-copy tag-span">05:21—13:40 · 学习中</text></text><text class="badge warning tag-span">当前</text></view>
+          <view class="list-row design-button" data-dom-id="lesson-chapter-3" data-action="seek-lesson-video" bindtap="onAction"><view class="row-icon tag-span"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%23D4944C%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2212%22%20r%3D%229%22%2F%3E%3Cpath%20d%3D%22M12%207v5l3%202%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view><text class="row-main tag-span"><text class="row-title tag-span">常见误判与复检</text><text class="row-copy tag-span">13:41—20:00</text></text><text class="chevron tag-span">›</text></view>
+        </view>
+      </view>
+
+      <view class="section card">
+        <view class="section-title"><text class="tag-strong">课时资料</text><text class="tag-span">2 份</text></view>
+        <view class="list-row design-button" data-dom-id="lesson-material-checklist" data-action="open-course-material" bindtap="onAction"><view class="row-icon tag-span"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232D6CDF%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M6%203h9l3%203v15H6z%22%2F%3E%3Cpath%20d%3D%22M15%203v4h4M9%2012h6M9%2016h4%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view><text class="row-main tag-span"><text class="row-title tag-span">线路排查检查表</text><text class="row-copy tag-span">PDF · 1.2 MB</text></text><text class="chevron tag-span">›</text></view>
+        <view class="list-row design-button" data-dom-id="lesson-material-diagram" data-action="open-course-material" bindtap="onAction"><view class="row-icon tag-span"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232D6CDF%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%224%22%20y%3D%225%22%20width%3D%2216%22%20height%3D%2214%22%20rx%3D%222%22%2F%3E%3Ccircle%20cx%3D%229%22%20cy%3D%2210%22%20r%3D%221.5%22%2F%3E%3Cpath%20d%3D%22m5%2017%204-4%203%203%202-2%205%204%22%2F%3E%3C%2Fsvg%3E" style="width:32rpx;height:28rpx" mode="aspectFill" /></view><text class="row-main tag-span"><text class="row-title tag-span">常见线路示意图</text><text class="row-copy tag-span">图片 · 6 张</text></text><text class="chevron tag-span">›</text></view>
+      </view>
+
+      <view class="notice info">学习进度会自动保存。视频全屏播放属于系统播放器能力，不另建业务页面。</view>
+    </view>
+    <view class="fixed-actions">
+      <view class="btn secondary design-button" data-dom-id="lesson-previous" data-route="/pages/worker-lesson/index?course=electrical-advanced&lesson=2" bindtap="onNavigate">上一课</view>
+      <view class="btn primary design-button" data-dom-id="lesson-complete-next" data-action="complete-lesson-and-next" bindtap="onAction">完成并进入下一课</view>
+    </view>
+  </view>

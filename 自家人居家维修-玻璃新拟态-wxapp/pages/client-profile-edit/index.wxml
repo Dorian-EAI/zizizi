@@ -1,0 +1,35 @@
+<!-- AUTO-GENERATED DESIGN VIEW sourceHash=fnv1a-d6911470; edit source HTML or generator bindings, then rerun. -->
+<view class="phone-page design-detail-page" data-page-id="page-client-profile-edit">
+  <view class="status-bar"><text class="tag-span">9:41</text><text class="status-icons tag-span">● WiFi 100%</text></view>
+  <view class="topbar">
+    <view class="icon-button design-button" data-dom-id="profile-edit-back" data-route="/pages/client-profile/index" bindtap="onNavigate"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m15%2018-6-6%206-6M9%2012h10%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view>
+    <view class="tag-h1">编辑资料</view>
+    <view class="top-action design-button" data-dom-id="profile-edit-save-top" data-action="save-profile" data-route="/pages/client-profile/index" bindtap="onNavigate">保存</view>
+  </view>
+  <view class="page-body">
+    <view class="hero">
+      <view class="hero-kicker tag-p">EDIT PROFILE</view>
+      <view class="avatar" data-dom-id="profile-edit-avatar" data-action="open-photo-picker" bindtap="onAction">张</view>
+      <view class="tag-h2">完善个人名片</view><view class="tag-p">头像清晰、资料真实，更容易获得可信服务推荐。</view>
+    </view>
+    <view class="notice info"><text class="badge info tag-span">草稿已保存</text> 最近保存于 09:38，离开页面不会丢失当前输入。</view>
+    <view class="section">
+      <view class="section-title"><text class="tag-strong">基本资料</text><text class="tag-span">必填</text></view>
+      <view class="card">
+        <view class="field"><text for="edit-name" class="tag-label">昵称</text><input class="input" id="edit-name" value="张先生" /></view>
+        <view class="field"><text class="tag-label">性别</text><view class="select-like" data-dom-id="profile-edit-gender" data-action="open-gender-picker" bindtap="onAction"><text class="tag-span">男</text><text class="tag-span">›</text></view></view>
+        <view class="field"><text class="tag-label">生日</text><view class="select-like" data-dom-id="profile-edit-birthday" data-action="open-date-picker" bindtap="onAction"><text class="tag-span">1990-01-01</text><text class="tag-span">›</text></view></view>
+        <view class="field"><text class="tag-label">所在城市</text><view class="select-like" data-dom-id="profile-edit-city" data-action="open-city-picker" bindtap="onAction"><text class="tag-span">北京市</text><text class="tag-span">›</text></view></view>
+      </view>
+    </view>
+    <view class="section">
+      <view class="section-title"><text class="tag-strong">个人简介</text><text class="tag-span">28/200</text></view>
+      <textarea class="textarea" data-dom-id="profile-edit-bio">喜欢把家打理得井井有条，也愿意分享真实服务体验。</textarea>
+    </view>
+    <view class="section">
+      <view class="section-title"><text class="tag-strong">职业标签</text><text class="tag-span">最多 5 个</text></view>
+      <view class="chips"><view class="chip active design-button" data-dom-id="profile-edit-tag-home" data-action="remove-profile-tag" bindtap="onAction">居家达人 ×</view><view class="chip active design-button" data-dom-id="profile-edit-tag-design" data-action="remove-profile-tag" bindtap="onAction">设计从业者 ×</view><view class="chip design-button" data-dom-id="profile-edit-add-tag" data-action="open-tag-picker" bindtap="onAction">＋ 添加标签</view></view>
+    </view>
+  </view>
+  <view class="fixed-actions"><view class="btn primary design-button" data-dom-id="profile-edit-save-primary" data-action="save-profile" data-route="/pages/client-profile/index" bindtap="onNavigate">保存修改</view></view>
+</view>

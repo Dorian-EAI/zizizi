@@ -1,0 +1,19 @@
+<view class="phone-page design-detail-page" data-page-id="page-client-invoice-title-edit">
+  <view class="status-bar"><text class="tag-span">9:41</text><text class="status-icons tag-span">● WiFi 100%</text></view>
+  <view class="topbar"><view class="icon-button design-button" data-route="/pages/client-invoice/index" bindtap="onNavigate"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m15%2018-6-6%206-6M9%2012h10%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view><view class="tag-h1">编辑发票抬头</view><text class="tag-span"></text></view>
+  <view class="page-body">
+    <view class="segmented"><view class="segment">个人</view><view class="segment active">公司</view></view>
+    <view class="notice info">保存契约尚未接入。为保护税务与银行敏感信息，当前字段保持禁用且不预填画布示例。</view>
+    <view class="section"><view class="section-title"><text class="tag-strong">抬头信息</text><text class="badge warning tag-span">不收集</text></view><view class="card">
+      <view class="field"><text class="tag-label">抬头名称</text><input class="input" value="" disabled="{{true}}" placeholder="当前不收集" /></view>
+      <view class="field"><text class="tag-label">纳税人识别号</text><input class="input" value="" disabled="{{true}}" placeholder="当前不收集" /></view>
+      <view class="field"><text class="tag-label">单位地址</text><input class="input" value="" disabled="{{true}}" placeholder="当前不收集" /></view>
+      <view class="field"><text class="tag-label">单位电话</text><input class="input" value="" disabled="{{true}}" placeholder="当前不收集" /></view>
+      <view class="field"><text class="tag-label">开户银行</text><input class="input" value="" disabled="{{true}}" placeholder="当前不收集" /></view>
+      <view class="field"><text class="tag-label">银行账号</text><input class="input" value="" disabled="{{true}}" placeholder="当前不收集" /></view>
+    </view></view>
+    <view class="section"><view class="section-title"><text class="tag-strong">收票信息</text></view><view class="card"><view class="field"><text class="tag-label">收票邮箱</text><input class="input" value="" disabled="{{true}}" placeholder="当前不收集" /></view><view class="field"><text class="tag-label">收票手机</text><input class="input" value="" disabled="{{true}}" placeholder="当前不收集" /></view></view></view>
+    <view class="card list-row is-disabled" bindtap="onUnavailable"><view class="row-icon tag-span"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20fill%3D%22none%22%20stroke%3D%22%230D9488%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m7%2012%203%203%207-7%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view><view class="row-main"><view class="row-title">设为默认抬头</view><view class="row-copy">保存服务未开放</view></view><text class="badge warning tag-span">不可用</text></view>
+    <view class="spacer"></view><view class="btn primary block design-button is-disabled" bindtap="onUnavailable">保存抬头</view>
+  </view>
+</view>

@@ -204,7 +204,7 @@ Page({
     try {
       const evidenceImages = await this.uploadEvidence()
       // 后端 SubmitClaimRequest 字段：policy_id / reason / claim_amount / evidence_images
-      await api.insurance.claim({
+      const claim = await api.insurance.claim({
         policy_id: Number(policyId),
         reason: lossDesc.trim() + '\n责任说明：' + liability.trim(),
         // 后端保险金额统一使用“分”。
@@ -212,11 +212,10 @@ Page({
         evidence_images: evidenceImages
       })
       wx.hideLoading()
-      wx.showModal({
-        title: '提交成功',
-        content: '理赔申请已提交，专属客服将在24小时内联系您',
-        confirmText: '知道了',
-        success: () => wx.navigateBack({ delta: 1 })
+      if (!claim || !claim.id) throw new Error('服务端未返回理赔记录编号')
+      wx.redirectTo({
+        url: '/pages/client-claim-result/index?claimId=' + encodeURIComponent(String(claim.id)) +
+          '&orderId=' + encodeURIComponent(String(this.data.orderId || claim.order_id || ''))
       })
     } catch (error) {
       wx.hideLoading()

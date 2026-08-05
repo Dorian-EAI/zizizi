@@ -1,0 +1,35 @@
+<view class="phone-page design-detail-page" data-page-id="page-client-wallet">
+  <view class="status-bar"><text class="tag-span">9:41</text><text class="status-icons tag-span">● WiFi 100%</text></view>
+  <view class="topbar"><view class="icon-button design-button" data-route="/pages/client-mine/index" bindtap="onNavigate"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m15%2018-6-6%206-6M9%2012h10%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view><view class="tag-h1">我的钱包</view><view class="top-action design-button" data-route="/pages/client-balance-transactions/index" bindtap="onNavigate">账单</view></view>
+  <view class="page-body">
+    <view class="hero">
+      <view class="hero-kicker tag-p">账户余额 <text class="badge {{loadError ? 'warning' : 'success'}} tag-span">{{fundStatusText}}</text></view>
+      <view class="hero-number">¥ {{balanceText}}</view>
+      <view class="tag-p">余额仅用于平台内订单支付，资金明细可随时追溯。</view>
+      <view class="spacer"></view>
+      <view class="grid-2"><view class="btn secondary design-button" data-route="/pages/client-wallet-recharge/index" bindtap="onNavigate">充值</view><view class="btn secondary design-button" data-route="/pages/client-wallet-withdraw/index" bindtap="onNavigate">提现</view></view>
+    </view>
+    <view class="notice error" wx:if="{{loadError}}">{{loadError}}</view>
+    <view class="section">
+      <view class="section-title"><text class="tag-strong">快捷服务</text></view>
+      <view class="grid-2">
+        <view class="card metric" data-route="/pages/client-recharge-record/index" bindtap="onNavigate"><text class="tag-strong">充</text><text class="tag-span">充值记录</text></view>
+        <view class="card metric" data-route="/pages/client-withdraw-record/index" bindtap="onNavigate"><text class="tag-strong">提</text><text class="tag-span">提现记录</text></view>
+        <view class="card metric" data-route="/pages/client-coupon/index" bindtap="onNavigate"><text class="tag-strong">券</text><text class="tag-span">优惠券</text></view>
+        <view class="card metric" data-route="/pages/client-bank-cards/index" bindtap="onNavigate"><text class="tag-strong">卡</text><text class="tag-span">银行卡</text></view>
+      </view>
+    </view>
+    <view class="section">
+      <view class="section-title"><text class="tag-strong">本月收支</text><text class="badge info tag-span">{{monthLabel}}</text></view>
+      <view class="grid-2"><view class="card metric"><text class="tag-strong">¥{{monthIncomeText}}</text><text class="tag-span">本月收入</text></view><view class="card metric"><text style="color:var(--danger)" class="tag-strong">¥{{monthExpenseText}}</text><text class="tag-span">本月支出</text></view></view>
+    </view>
+    <view class="section">
+      <view class="section-title"><text class="tag-strong">最近交易</text><text class="tag-span">{{loading ? '同步中' : transactions.length + ' 笔'}}</text></view>
+      <view class="card list-card" wx:if="{{transactions.length}}">
+        <view class="list-row" wx:for="{{transactions}}" wx:key="id" data-id="{{item.id}}" bindtap="onTransaction"><text class="row-icon tag-span">{{item.iconText}}</text><view class="row-main"><view class="row-title">{{item.title}}</view><view class="row-copy">{{item.orderText || item.timeText}}</view></view><text class="row-value tag-span amount-{{item.amountTone}}">{{item.amountText}}</text><text class="chevron tag-span">›</text></view>
+      </view>
+      <view class="empty-state" wx:elif="{{!loading}}"><view class="tag-h3">暂无交易</view><view class="tag-p">真实账户流水会显示在这里</view></view>
+    </view>
+  </view>
+  <view class="fixed-actions"><view class="btn primary design-button" data-route="/pages/client-balance-transactions/index" bindtap="onNavigate">查看全部账单</view></view>
+</view>

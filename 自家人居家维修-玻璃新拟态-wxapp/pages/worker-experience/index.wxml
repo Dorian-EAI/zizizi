@@ -1,0 +1,52 @@
+<!-- AUTO-GENERATED DESIGN VIEW sourceHash=fnv1a-521bccbb; edit source HTML or generator bindings, then rerun. -->
+<view class="phone-page design-detail-page worker-theme" data-dom-id="page-worker-experience">
+    <view class="status-bar"><text class="tag-span">9:41</text><text class="status-icons tag-span">●●●</text></view>
+    <view class="topbar">
+      <view class="icon-button design-button" data-dom-id="experience-back" data-route="/pages/worker-profile/index" bindtap="onNavigate"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m15%2018-6-6%206-6M9%2012h10%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view>
+      <view><view class="eyebrow tag-p">个人能力</view><view class="tag-h1">从业经验</view></view>
+      <view class="top-action design-button" data-dom-id="experience-save-top" data-action="save-experience" bindtap="onAction">保存</view>
+    </view>
+
+    <view class="page-body">
+
+    <view class="hero">
+      <view><view class="eyebrow tag-p">从业年限</view><view class="display-number">8<text class="tag-small">年</text></view><view class="tag-p">平台将结合证书和履约记录核验展示。</view></view>
+      <view class="stepper">
+        <view data-dom-id="experience-years-minus" data-action="decrease-years" bindtap="onAction" class="design-button">−</view><text class="tag-strong">8</text><view data-dom-id="experience-years-plus" data-action="increase-years" bindtap="onAction" class="design-button">＋</view>
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="section-title">
+        <view><view class="eyebrow tag-p">职业履历</view><view class="tag-h2">工作经历</view></view>
+        <view class="top-action design-button" data-dom-id="experience-add-item" data-route="/pages/worker-experience-item-edit/index?mode=add" bindtap="onNavigate">＋ 添加</view>
+      </view>
+      <view class="card list-row design-button" data-dom-id="experience-edit-item-1" data-route="/pages/worker-experience-item-edit/index?mode=edit&id=exp-001" bindtap="onNavigate">
+        <view class="row-icon experience-icon tag-span"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232D6CDF%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%223%22%20y%3D%227%22%20width%3D%2218%22%20height%3D%2212%22%20rx%3D%222%22%2F%3E%3Cpath%20d%3D%22M9%207V4h6v3M3%2012h18M10%2012v2h4v-2%22%2F%3E%3C%2Fsvg%3E" style="width:36rpx;height:24rpx" mode="aspectFill" /></view><text class="row-main tag-span"><text class="row-title tag-span">北京安居维修服务有限公司</text><text class="row-copy tag-span">高级水电工程师 · 2018.03—2022.12</text></text><text class="chevron tag-span">›</text>
+      </view>
+      <view class="card list-row design-button" data-dom-id="experience-edit-item-2" data-route="/pages/worker-experience-item-edit/index?mode=edit&id=exp-002" bindtap="onNavigate">
+        <view class="row-icon experience-icon tag-span"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232D6CDF%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m3%2011%209-8%209%208%22%2F%3E%3Cpath%20d%3D%22M5%2010v10h14V10M9%2020v-6h6v6%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view><text class="row-main tag-span"><text class="row-title tag-span">自营上门维修</text><text class="row-copy tag-span">综合维修师傅 · 2023.01—至今</text></text><text class="chevron tag-span">›</text>
+      </view>
+    </view>
+
+    <view class="section card">
+      <view class="section-title">
+        <view><view class="eyebrow tag-p">资质证明</view><view class="tag-h2">技能证书</view></view>
+        <view class="top-action design-button" data-dom-id="experience-open-cert-manager" data-route="/pages/worker-cert-manage/index" bindtap="onNavigate">管理全部</view>
+      </view>
+      <view class="certificate-card">
+        <view class="row-icon certificate-icon"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232D6CDF%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M6%203h12v13H6z%22%2F%3E%3Cpath%20d%3D%22M9%207h6M9%2011h4%22%2F%3E%3Cpath%20d%3D%22m10%2016-1%205%203-2%203%202-1-5%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view><view class="row-main"><view class="row-title">低压电工作业证</view><view class="row-copy">高级 · 有效至 2027-06</view><text class="badge success tag-span">已认证</text></view>
+        <view class="icon-button design-button" data-dom-id="experience-cert-detail" data-action="open-certificate-detail" bindtap="onAction"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%235B8C5A%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m9%2018%206-6-6-6%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view>
+      </view>
+      <view class="btn secondary block design-button" data-dom-id="experience-add-certificate" data-route="/pages/worker-certificate-edit/index?mode=add" bindtap="onNavigate">＋ 添加证书</view>
+    </view>
+
+    <view class="section card field">
+      <text for="worker-bio" class="tag-label">个人简介</text>
+      <textarea id="worker-bio" class="textarea" maxlength="200" placeholder="介绍专业背景、擅长问题与服务特点">持证水电维修师傅，熟悉老房线路改造、漏水排查与厨卫安装。</textarea>
+      <view class="field-help"><text class="tag-span">真实清晰的介绍更容易获得客户信任</text><text class="tag-span">38 / 200</text></view>
+    </view>
+
+    </view>
+    <view class="fixed-actions"><view class="btn primary design-button" data-dom-id="experience-save" data-action="save-experience" bindtap="onAction">保存资料</view></view>
+  </view>

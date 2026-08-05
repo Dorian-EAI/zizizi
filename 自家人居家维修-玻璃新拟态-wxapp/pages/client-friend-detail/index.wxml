@@ -1,0 +1,13 @@
+<view class="phone-page design-detail-page" data-page-id="page-client-friend-detail">
+  <view class="status-bar"><text>9:41</text><text class="status-icons">● WiFi 100%</text></view>
+  <view class="topbar"><view class="icon-button design-button" data-route="/pages/client-invite-record/index" bindtap="onNavigate"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m15%2018-6-6%206-6M9%2012h10%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view><view class="tag-h1">邀请详情</view><text></text></view>
+  <view class="page-body">
+    <view class="hero"><view class="hero-kicker tag-p">INVITED FRIEND</view><view class="avatar">—</view><view class="tag-h2">邀请详情待核验</view><view class="tag-p">好友身份、手机号、注册来源与首单状态必须由服务端邀请关系返回。</view><view class="spacer"></view><text class="badge warning">接口未接入</text></view>
+    <view class="section-title"><text class="tag-strong">奖励状态</text><text class="badge warning">待核算</text></view>
+    <view class="section"><view class="section-title"><text class="tag-strong">邀请进度</text><text>— / —</text></view><view class="card timeline"><view class="timeline-item pending"><text class="tag-strong">邀请链接状态</text><text class="tag-span">等待服务端返回可核验事件</text></view><view class="timeline-item pending"><text class="tag-strong">好友注册状态</text><text class="tag-span">不展示画布示例姓名和手机号</text></view><view class="timeline-item pending"><text class="tag-strong">首单完成状态</text><text class="tag-span">奖励条件由服务端最终判定</text></view></view></view>
+    <view class="section"><view class="section-title"><text class="tag-strong">奖励说明</text></view><view class="grid-2"><view class="card metric"><text class="tag-strong">—</text><text class="tag-span">好友优惠券</text></view><view class="card metric"><text class="tag-strong">—</text><text class="tag-span">我的奖励</text></view></view></view>
+    <view class="notice info">页面不会伪造好友姓名、手机号、首单进度或奖励金额。接入真实邀请服务后，这里将按服务端返回展示。</view>
+    <view class="empty-state"><view class="tag-h3">暂无可核验的邀请详情</view><view class="tag-p">请返回邀请页面查看当前功能状态。</view></view>
+  </view>
+  <view class="fixed-actions"><view class="btn secondary design-button" data-route="/pages/client-invite-record/index" bindtap="onNavigate">返回邀请记录</view><view class="btn primary design-button" data-route="/pages/client-invite/index" bindtap="onNavigate">继续邀请</view></view>
+</view>

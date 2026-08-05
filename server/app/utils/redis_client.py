@@ -125,6 +125,123 @@ class RedisClient:
         except Exception:
             return False
 
+    def consume_verification_code(
+        self,
+        code_key: str,
+        failure_key: str,
+        candidate: str,
+        *,
+        max_attempts: int = 5,
+        ttl_seconds: int = 300,
+    ) -> Optional[bool]:
+        """原子比较并消费验证码；``None`` 表示 Redis 不可用。"""
+        if not self._connect():
+            return None
+        script = """
+local expected = redis.call('GET', KEYS[1])
+if not expected then return -1 end
+if expected == ARGV[1] then
+  redis.call('DEL', KEYS[1])
+  redis.call('DEL', KEYS[2])
+  return 1
+end
+local attempts = redis.call('INCR', KEYS[2])
+if attempts == 1 then redis.call('EXPIRE', KEYS[2], ARGV[3]) end
+if attempts >= tonumber(ARGV[2]) then redis.call('DEL', KEYS[1]) end
+return 0
+"""
+        try:
+            result = int(
+                self._client.eval(
+                    script,
+                    2,
+                    code_key,
+                    failure_key,
+                    candidate,
+                    max_attempts,
+                    ttl_seconds,
+                )
+            )
+            return result == 1
+        except Exception:
+            self._client = None
+            self._enabled = False
+            return None
+
+    def reserve_verification_send(
+        self,
+        rate_key: str,
+        code_key: str,
+        failure_key: str,
+        code: str,
+        *,
+        rate_ttl: int = 60,
+        code_ttl: int = 300,
+    ) -> Optional[bool]:
+        """原子占用发送冷却并写入新码；``False`` 表示仍在冷却期。"""
+        if not self._connect():
+            return None
+        script = """
+local reserved = redis.call('SET', KEYS[1], '1', 'NX', 'EX', ARGV[1])
+if not reserved then return 0 end
+redis.call('SET', KEYS[2], ARGV[3], 'EX', ARGV[2])
+redis.call('DEL', KEYS[3])
+return 1
+"""
+        try:
+            return bool(
+                self._client.eval(
+                    script,
+                    3,
+                    rate_key,
+                    code_key,
+                    failure_key,
+                    rate_ttl,
+                    code_ttl,
+                    code,
+                )
+            )
+        except Exception:
+            self._client = None
+            self._enabled = False
+            return None
+
+    def get_security_counter(self, key: str) -> int:
+        """读取安全计数器；部署环境 Redis 不可用时失败关闭。"""
+        if not self._connect():
+            if settings.is_deployed:
+                raise RedisUnavailableError("Redis 不可用，无法执行登录风控")
+            return 0
+        try:
+            value = self._client.get(key)
+            return int(value or 0)
+        except Exception as exc:
+            self._client = None
+            self._enabled = False
+            if settings.is_deployed:
+                raise RedisUnavailableError("Redis 不可用，无法执行登录风控") from exc
+            return 0
+
+    def increment_security_counter(self, key: str, ttl_seconds: int) -> int:
+        """原子递增并在首次写入时设置 TTL。"""
+        if not self._connect():
+            if settings.is_deployed:
+                raise RedisUnavailableError("Redis 不可用，无法执行登录风控")
+            return 0
+        script = """
+local count = redis.call('INCR', KEYS[1])
+if count == 1 then redis.call('EXPIRE', KEYS[1], ARGV[1]) end
+return count
+"""
+        try:
+            return int(self._client.eval(script, 1, key, ttl_seconds))
+        except Exception as exc:
+            self._client = None
+            self._enabled = False
+            if settings.is_deployed:
+                raise RedisUnavailableError("Redis 不可用，无法执行登录风控") from exc
+            return 0
+
     # ---------- Token 黑名单（登出/风控） ----------
 
     def blacklist_token(self, token_jti: str, expire_seconds: int = 604800) -> bool:

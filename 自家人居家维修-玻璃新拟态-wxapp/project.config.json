@@ -12,7 +12,7 @@
   "setting": {
     "bundle": false,
     "userConfirmedBundleSwitch": false,
-    "urlCheck": false,
+    "urlCheck": true,
     "scopeDataCheck": false,
     "coverView": true,
     "es6": true,

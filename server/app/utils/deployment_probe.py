@@ -43,6 +43,20 @@ def _validate_wechat_private_key(errors: list[str]) -> None:
         errors.append(f"WX_MERCHANT_PRIVATE_KEY 无法解析：{exc}")
 
 
+def _validate_wechat_cert_dir(errors: list[str]) -> None:
+    value = (settings.WX_PLATFORM_CERT_DIR or "").strip()
+    if not value:
+        return
+    if not os.path.isabs(value):
+        errors.append("WX_PLATFORM_CERT_DIR 必须为绝对路径")
+        return
+    if not os.path.isdir(value):
+        errors.append("WX_PLATFORM_CERT_DIR 不存在或不是目录")
+        return
+    if not os.access(value, os.R_OK | os.W_OK):
+        errors.append("WX_PLATFORM_CERT_DIR 必须可读写")
+
+
 def deployment_dependency_errors() -> list[str]:
     """检查部署环境必需 SDK 与本地密钥格式，不发起外部请求。"""
     if not settings.is_deployed:
@@ -68,6 +82,7 @@ def deployment_dependency_errors() -> list[str]:
         _require_module("qcloud_cos", "腾讯云 COS SDK", errors)
 
     _validate_wechat_private_key(errors)
+    _validate_wechat_cert_dir(errors)
     return errors
 
 

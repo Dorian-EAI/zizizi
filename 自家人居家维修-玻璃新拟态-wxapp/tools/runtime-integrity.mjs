@@ -8,7 +8,17 @@ const errors = []
 const warnings = []
 const activeFiles = new Set()
 const parsedJson = new Map()
-const EXPECTED_ROUTE_COUNT = 37
+const AUXILIARY_ROUTES = new Set(['pages/entry/index', 'pages/search/index'])
+
+function targetForDesignSource(source) {
+  const name = String(source || '').split('/').pop().replace(/\.html$/, '')
+  if (name.startsWith('client-home-glass-neu')) return 'client-home'
+  if (name === 'client-address') return 'address'
+  if (name === 'client-order-detail') return 'order-detail-client'
+  if (name === 'worker-order-detail') return 'order-detail-worker'
+  if (name === 'client-order-tracking-2') return 'client-order-tracking'
+  return name
+}
 
 const stats = {
   routes: 0,
@@ -21,7 +31,9 @@ const stats = {
   styleImports: 0,
   localResources: 0,
   jsSyntax: 0,
-  runtimeConfigCases: 0
+  wxmlSyntax: 0,
+  runtimeConfigCases: 0,
+  truthfulnessRules: 0
 }
 
 function rel(file) {
@@ -73,6 +85,63 @@ function addRequiredFile(file, label) {
   return true
 }
 
+function checkWxmlStructure(file, source) {
+  const stack = []
+  const voidTags = new Set(['image', 'input', 'import', 'include', 'wxs', 'icon', 'progress', 'slider', 'switch'])
+  let cursor = 0
+  while (cursor < source.length) {
+    const start = source.indexOf('<', cursor)
+    if (start < 0) break
+    if (source.startsWith('<!--', start)) {
+      const end = source.indexOf('-->', start + 4)
+      if (end < 0) {
+        issue(file, 'WXML 注释未闭合', source, start)
+        return
+      }
+      cursor = end + 3
+      continue
+    }
+    let quote = ''
+    let end = start + 1
+    for (; end < source.length; end += 1) {
+      const char = source[end]
+      if (quote) {
+        if (char === quote) quote = ''
+      } else if (char === '"' || char === "'") {
+        quote = char
+      } else if (char === '>') {
+        break
+      }
+    }
+    if (end >= source.length) {
+      issue(file, 'WXML 标签未闭合', source, start)
+      return
+    }
+    const body = source.slice(start + 1, end).trim()
+    cursor = end + 1
+    if (!body || body[0] === '!' || body[0] === '?') continue
+    const closing = body[0] === '/'
+    const nameMatch = body.match(/^\/?([A-Za-z][\w-]*)/)
+    if (!nameMatch) continue
+    const name = nameMatch[1]
+    if (closing) {
+      const opened = stack.pop()
+      if (!opened || opened.name !== name) {
+        issue(file, `WXML 标签错配：期望 </${opened ? opened.name : '无'}>，实际 </${name}>`, source, start)
+        return
+      }
+    } else if (!body.endsWith('/') && !voidTags.has(name)) {
+      stack.push({ name, index: start })
+    }
+  }
+  if (stack.length) {
+    const opened = stack[stack.length - 1]
+    issue(file, `WXML 标签未闭合：<${opened.name}>`, source, opened.index)
+    return
+  }
+  stats.wxmlSyntax += 1
+}
+
 function checkRuntimeEnvironmentGate() {
   const file = join(root, 'config', 'env.js')
   const source = read(file)
@@ -111,6 +180,280 @@ function checkRuntimeEnvironmentGate() {
       }
     } catch (error) {
       issue(file, `${testCase.label}环境门禁测试失败：${error.message}`)
+    }
+  }
+}
+
+function checkTruthfulRuntimeSemantics() {
+  const rules = [
+    {
+      file: 'pages/client-service/index.wxml',
+      forbidden: [/400[-\d ]{6,}/, /7x24小时在线/, /平均响应\s*30秒/, /8:00-22:00/],
+      required: [/servicePhoneDisplay/, /servicePhoneConfigured/]
+    },
+    {
+      file: 'pages/search/index.wxml',
+      forbidden: [/400[-\d ]{6,}/, /7x24小时在线/, /平均响应\s*30秒/, /8:00-22:00/],
+      required: [/servicePhoneDisplay/, /servicePhoneConfigured/]
+    },
+    {
+      file: 'pages/worker-appeal/index.wxml',
+      forbidden: [/工单WO20260720/, /限制抢单3天/, /扣除保证金 ¥200/, /3个工作日内复核/],
+      required: [/wx:for="{{appeals}}"/, /暂无申诉记录/]
+    },
+    {
+      file: 'pages/worker-appeal/index.js',
+      required: [/api\.ticket\.mine\(/, /ticket_type:\s*'appeal'/]
+    },
+    {
+      file: 'pages/worker-training/index.js',
+      forbidden: [/高客单价订单/, /优先派单权益/, /平台抽成降低/],
+      required: [/LEARNING_NOTES/, /duration_minutes/, /total_credits/]
+    },
+    {
+      file: 'pages/worker-quote-submit/index.wxml',
+      forbidden: [/平台抽成\s*<text/, /预计到手/, /\b5%/],
+      required: [/服务端结算规则/]
+    },
+    {
+      file: 'pages/worker-quote-submit/index.js',
+      forbidden: [/PLATFORM_FEE_RATE/, /computePayout/, /materialFee/]
+    },
+    {
+      file: 'pages/worker-deposit/index.js',
+      forbidden: [/DEPOSIT_LEVELS/, /优先派单/, /平台补贴/, /T\+\d/],
+      required: [/accountFacts/, /platform_cut_rate/, /daily_order_limit/]
+    },
+    {
+      file: 'pages/worker-settings/index.wxml',
+      forbidden: [/张师傅/, /已完成\s*328/, /好评率\s*98%/, /5 公里/, /防水\/家电\/管道/],
+      required: [/workerProfile\.phoneStatusText/, /workerProfile\.certificationText/, /workerProfile\.praiseRateText/]
+    },
+    {
+      file: 'pages/client-service-detail/index.wxml',
+      forbidden: [/王师傅/, /陈师傅/, /李女士/, /张先生/, /326次服务/, /215次服务/],
+      required: [/wx:for="{{workers}}"/, /wx:for="{{reviews}}"/]
+    },
+    {
+      file: 'pages/client-service-detail/index.js',
+      required: [/api\.services\.workers\(/, /api\.reviews\.list\(/, /api\.reviews\.stats\(/]
+    },
+    {
+      file: 'pages/client-order-tracking/index.wxml',
+      forbidden: [/rating\s*\|\|\s*'4\.8'/, /services\s*\|\|\s*158/],
+      required: [/tracking\.worker\.certified === true/]
+    },
+    {
+      file: 'pages/worker-profile/index.wxml',
+      required: [/workerInfo\.verifyStatus/]
+    },
+    {
+      file: 'pages/worker-recharge/index.js',
+      forbidden: [
+        /title:\s*'充值成功'/,
+        /充值金额即时到账/,
+        /wallet\.recharge\s*\(/,
+        /wxpay\.rechargeJsapi\s*\(/,
+        /requestPayment\s*\(/
+      ],
+      required: [/不开放师傅充值/, /不发起任何资金请求/]
+    },
+    {
+      file: 'pages/client-login/index.js',
+      required: [/api\.auth\.wxLogin\(/, /client-agreement\/index\?document=/, /AUTH_REQUIRED/, /请先阅读并同意协议/]
+    },
+    {
+      file: 'pages/client-agreement/index.js',
+      forbidden: [/slice\(0,\s*1800\)/],
+      required: [/pages\.agreement\(/, /pages\.privacy\(/, /pages\.byKey\(/]
+    },
+    {
+      file: 'pages/client-customer-service/index.js',
+      forbidden: [/小佳/, /人工客服.*在线/],
+      required: [/\.ticket\.create\(/, /\.ticket\.detail\(/, /\.ticket\.reply\(/]
+    },
+    {
+      file: 'pages/client-points/index.js',
+      forbidden: [/2680/, /got_points\s*\|\|\s*10/],
+      required: [/\.points\.detail\(/, /\.points\.logs\(/, /\.points\.signin\(/]
+    },
+    {
+      file: 'pages/client-invite/index.wxml',
+      forbidden: [/ZJR8866/, /累计奖励.*240/, /已邀请人数.*12/],
+      required: [/邀请关系与奖励结算/, /不会生成邀请码/]
+    },
+    {
+      file: 'pages/client-payment/index.js',
+      forbidden: [/168\.00/, /支付宝/, /银行卡/, /status === 'success'/, /status === 'paid'\s*\|\|/],
+      required: [
+        /allowed_actions/,
+        /payment_methods/,
+        /getPaymentAttemptKey\(/,
+        /\.wxpay\.orderJsapi\([^)]*idempotencyKey[^)]*\)/s,
+        /\.wallet\.pay\([^)]*idempotencyKey\)/s,
+        /\.wxpay\.paymentStatus\(/,
+        /status === 'paid'/
+      ]
+    },
+    {
+      file: 'pages/client-review/index.js',
+      forbidden: [/张师傅/, /rating:\s*5/],
+      required: [/allowed_actions/, /\.orders\.review\(/, /\.upload\.image\(/]
+    },
+    {
+      file: 'pages/client-price-adjust/index.js',
+      forbidden: [/50\.00/, /158\.00/, /208\.00/],
+      required: [/allowed_actions/, /\.extraFee\.list\(/, /\.extraFee\.approve\(/, /\.extraFee\.reject\(/]
+    },
+    {
+      file: 'pages/client-wallet/index.wxml',
+      forbidden: [/1,280\.50/, /2,580/, /1,300/, /202608030001/, /张师傅/],
+      required: [/balanceText/, /monthIncomeText/, /wx:for="{{transactions}}"/, /暂无交易/]
+    },
+    {
+      file: 'pages/client-wallet/index.js',
+      required: [/api\.wallet\.detail\(/, /api\.wallet\.transactions\(/]
+    },
+    {
+      file: 'pages/client-wallet-recharge/index.js',
+      forbidden: [/title:\s*'充值成功'/, /status === 'success'/],
+      required: [
+        /idempotency\.getOrCreate\(/,
+        /\.wxpay\.rechargeJsapi\([^)]*key\)/s,
+        /\.wxpay\.paymentStatus\(/,
+        /status === 'paid'/,
+        /PENDING_STORAGE_KEY/
+      ]
+    },
+    {
+      file: 'pages/client-wallet-recharge/index.wxml',
+      forbidden: [/1,280\.50/, /确认充值 ¥500<\/view>/],
+      required: [/balanceText/, /statusText/, /刷新上笔充值结果/, /支付结果以服务端验签回调为准/]
+    },
+    {
+      file: 'pages/client-payment-result/index.js',
+      forbidden: [/status === 'success'/, /title:\s*'支付成功'/],
+      required: [/\.wxpay\.paymentStatus\(/, /status === 'paid'/, /applyPaid\(/]
+    },
+    {
+      file: 'pages/client-payment-result/index.wxml',
+      forbidden: [/268\.00/, /202608030001/, /恭喜获得 26 积分/],
+      required: [/paymentNo/, /只有服务端支付单状态为 paid/, /刷新服务端结果/]
+    },
+    {
+      file: 'pages/client-wallet-withdraw/index.js',
+      forbidden: [/\.wallet\.withdraw\(/, /title:\s*'提现成功'/],
+      required: [/仅允许师傅收入账户/, /未提交、未冻结、未扣减任何资金/]
+    },
+    {
+      file: 'pages/client-wallet-withdraw/index.wxml',
+      forbidden: [/1,280\.50/, /招商银行/, /尾号 6688/, /确认提现 ¥500/],
+      required: [/客户端提现尚未开放/, /不会调用师傅提现接口/, /提现暂未开放/]
+    },
+    {
+      file: 'utils/transaction-list-page.js',
+      required: [/\.wallet\.transactions\(/, /size:\s*100/, /transactionView/]
+    },
+    {
+      file: 'pages/client-transaction-detail/index.wxml',
+      forbidden: [/TX20260803001/, /水管维修/, /张师傅/, /268\.00/],
+      required: [/transaction\.id/, /transaction\.statusText/, /服务端流水/]
+    },
+    {
+      file: 'pages/client-bank-cards/index.wxml',
+      forbidden: [/8888/, /6666/, /张先生/, /招商银行/, /工商银行/],
+      required: [/银行卡服务暂未开放/, /不展示画布示例卡号/]
+    },
+    {
+      file: 'pages/client-bank-card-add/index.wxml',
+      forbidden: [/110\*+5219/, /张先生/, /138\*+8888/],
+      required: [/当前不收集/, /实名校验与令牌化存储尚未接入/]
+    },
+    {
+      file: 'pages/client-refund/index.js',
+      forbidden: [/\.wallet\.refund\(/],
+      required: [/\.ticket\.create\(/, /ticket_type:\s*'refund_review'/, /不会立即退款或变更资金/]
+    },
+    {
+      file: 'pages/client-refund/index.wxml',
+      forbidden: [/张师傅/, /水管维修服务/, /268\.00/],
+      required: [/退款审核工单/, /不直接执行退款/]
+    },
+    {
+      file: 'pages/client-refund-card/index.js',
+      forbidden: [/\.annualCard\.refund\(/, /title:\s*'退卡成功'/],
+      required: [/年卡退款服务当前明确返回未实现/, /不会冻结年卡/]
+    },
+    {
+      file: 'pages/client-annual-card/index.js',
+      forbidden: [/\.annualCard\.refund\(/, /title:\s*'退卡成功'/],
+      required: [/client-refund-card\/index\?cardId=/]
+    },
+    {
+      file: 'pages/client-refund-card-result/index.js',
+      forbidden: [/titleText:\s*'退卡申请已提交'/],
+      required: [/status === 'refunded'/, /status === 'refunding'/, /未提交退卡申请/]
+    },
+    {
+      file: 'pages/client-claim-result/index.js',
+      required: [/\.insurance\.claims\(/, /STATUS_VIEW/, /未找到理赔记录/]
+    },
+    {
+      file: 'pages/client-insurance-claim/index.js',
+      forbidden: [/24小时内联系/, /title:\s*'提交成功'/],
+      required: [/const claim = await api\.insurance\.claim\(/, /client-claim-result\/index\?claimId=/]
+    },
+    {
+      file: 'pages/client-claim-result/index.wxml',
+      forbidden: [/2,580/, /202608030001/, /理赔申请已提交/],
+      required: [/amountText/, /statusText/, /只按服务端真实理赔状态/]
+    },
+    {
+      file: 'pages/client-invoice/index.wxml',
+      forbidden: [/1,247\.00/, /299\.00/, /948\.00/, /张先生/, /北京自家人科技有限公司/],
+      required: [/暂未接入/, /暂无可验证的发票记录/, /不会在当前版本收集或伪造/]
+    },
+    {
+      file: 'pages/client-invoice-orders/index.wxml',
+      forbidden: [/202608030001/, /202608010016/, /202607300088/, /1,247\.00/, /¥559/],
+      required: [/开票资格待接入/, /不能把普通已完成订单推断成可开票订单/]
+    },
+    {
+      file: 'pages/client-invoice-detail/index.wxml',
+      forbidden: [/00123456/, /299\.00/, /8\.71/, /91110/, /张先生/],
+      required: [/未提供可验证的发票记录/, /不会生成占位 PDF/]
+    },
+    {
+      file: 'pages/client-invoice-title-edit/index.wxml',
+      forbidden: [/91110/, /zhang@example\.com/, /138\*+8888/, /自家人科技有限公司/],
+      required: [/当前不收集/, /保存契约尚未接入/]
+    },
+    {
+      file: 'pages/client-coupon-select/index.js',
+      required: [/\.orders\.paymentQuote\(/, /\.coupon\.available\(/, /couponSelected/]
+    },
+    {
+      file: 'pages/client-payment/index.js',
+      required: [/client-coupon-select\/index/, /couponSelected/, /refreshQuoteForCoupon\(selected\)/]
+    },
+    {
+      file: 'pages/client-coupon-detail/index.wxml',
+      forbidden: [/¥20/, /满 ¥100/, /预计省 ¥20/],
+      required: [/coupon\.minSpendText/, /支付创建时服务端会再次锁定并校验/]
+    }
+  ]
+
+  for (const rule of rules) {
+    const file = join(root, rule.file)
+    const source = read(file)
+    for (const pattern of rule.forbidden || []) {
+      stats.truthfulnessRules += 1
+      const match = source.match(pattern)
+      if (match) issue(file, '检测到禁止的演示/固定业务文案：' + pattern, source, match.index)
+    }
+    for (const pattern of rule.required || []) {
+      stats.truthfulnessRules += 1
+      if (!pattern.test(source)) issue(file, '缺少真实数据绑定或确认流程：' + pattern)
     }
   }
 }
@@ -204,19 +547,35 @@ function checkExactLocalRef(fromFile, value, label, text, index) {
 
 const appJsonFile = join(root, 'app.json')
 const appJson = readJson(appJsonFile)
+const designFile = resolve(root, '..', 'zjrnew', 'zjrnew.design')
+const design = readJson(designFile)
+const expectedRoutes = new Set(AUXILIARY_ROUTES)
+for (const node of Array.isArray(design.data) ? design.data : []) {
+  const source = node && node.devMetadata && node.devMetadata.htmlSrc
+  const target = targetForDesignSource(source)
+  if (target) expectedRoutes.add(`pages/${target}/index`)
+}
+const expectedRouteCount = expectedRoutes.size
 addRequiredFile(join(root, 'app.js'), '应用入口脚本')
 addRequiredFile(appJsonFile, '应用配置')
 addRequiredFile(join(root, 'app.wxss'), '应用全局样式')
 checkRuntimeEnvironmentGate()
+checkTruthfulRuntimeSemantics()
 
 const routes = Array.isArray(appJson.pages) ? appJson.pages.map(route => String(route).replace(/^\//, '')) : []
 const routeSet = new Set(routes)
 stats.routes = routes.length
 
-if (routes.length !== EXPECTED_ROUTE_COUNT) {
-  issue(appJsonFile, `正式路由应为 ${EXPECTED_ROUTE_COUNT} 条，当前为 ${routes.length} 条`)
+if (routes.length !== expectedRouteCount) {
+  issue(appJsonFile, `当前画布与辅助页应为 ${expectedRouteCount} 条正式路由，当前为 ${routes.length} 条`)
 }
 if (routeSet.size !== routes.length) issue(appJsonFile, 'pages 中存在重复路由')
+for (const route of expectedRoutes) {
+  if (!routeSet.has(route)) issue(appJsonFile, '缺少画布或辅助页路由：' + route)
+}
+for (const route of routeSet) {
+  if (!expectedRoutes.has(route)) issue(appJsonFile, '存在未登记正式路由：' + route)
+}
 if (appJson.entryPagePath && !routeSet.has(String(appJson.entryPagePath).replace(/^\//, ''))) {
   issue(appJsonFile, 'entryPagePath 未注册到 pages：' + appJson.entryPagePath)
 }
@@ -357,6 +716,7 @@ while (scanQueue.length) {
   }
 
   if (extension === '.wxml') {
+    checkWxmlStructure(file, text)
     const importRegex = /<(import|include|wxs)\b[^>]*\bsrc\s*=\s*(['"])([^'"]+)\2[^>]*>/g
     for (const match of text.matchAll(importRegex)) {
       stats.templateImports += 1
@@ -377,6 +737,13 @@ while (scanQueue.length) {
   }
 
   if (extension === '.wxss') {
+    if (file === join(root, 'styles', 'generated-detail-page.wxss')) {
+      const brokenGeneratedSelectors = [/\.\./, /-\.design-/, /page-page/, /icon-\.design/, /\btranslate\s*:/]
+      for (const pattern of brokenGeneratedSelectors) {
+        const match = text.match(pattern)
+        if (match) issue(file, '生成共享样式包含损坏选择器：' + pattern, text, match.index)
+      }
+    }
     const importRegex = /@import\s+(?:url\()?\s*(['"])([^'"]+)\1\s*\)?\s*;/g
     for (const match of text.matchAll(importRegex)) {
       stats.styleImports += 1
@@ -417,8 +784,8 @@ if (errors.length) {
   process.exitCode = 1
 } else {
   console.log('运行完整性检查通过')
-  console.log(`- app.json 正式路由：${stats.routes}/${EXPECTED_ROUTE_COUNT}`)
-  console.log(`- 页面四件套：${stats.pageFiles}/${EXPECTED_ROUTE_COUNT * 4}`)
+  console.log(`- app.json 正式路由：${stats.routes}/${expectedRouteCount}`)
+  console.log(`- 页面四件套：${stats.pageFiles}/${expectedRouteCount * 4}`)
   console.log(`- 本地组件引用：${stats.components}`)
   console.log(`- 静态导航引用：${stats.navigationRefs}`)
   console.log(`- 动态导航调用（已校验同文件静态候选）：${stats.dynamicNavigationCalls}`)
@@ -427,7 +794,9 @@ if (errors.length) {
   console.log(`- WXSS import：${stats.styleImports}`)
   console.log(`- 本地资源引用：${stats.localResources}`)
   console.log(`- 运行 JS 语法：${stats.jsSyntax}`)
+  console.log(`- WXML 结构：${stats.wxmlSyntax}`)
   console.log(`- 运行环境 fail-closed 用例：${stats.runtimeConfigCases}`)
+  console.log(`- 真实运行语义规则：${stats.truthfulnessRules}`)
   console.log(`- .backups：已排除上传包，未纳入运行扫描`)
   if (warnings.length) {
     console.warn(`无法静态确认：${warnings.length} 项`)

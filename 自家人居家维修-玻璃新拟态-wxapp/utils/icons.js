@@ -102,7 +102,7 @@ const COLORS = {
   success: '#16A34A',
   green: '#5B8C5A',
   blue: '#5A8FAD',
-  purple: '#8B6FA8',
+  purple: '#A0723C',
   warning: '#D97706',
   danger: '#DC2626',
   orange: '#D4944C',

@@ -201,3 +201,86 @@ page {
   margin-top: 8rpx; /* 4px */
   display: block;
 }
+
+/* ===== zjrnew.DESIGN aliases: keep canvas class names present in WXML/WXSS ===== */
+.location-report-bar .report-dot {
+  position: relative;
+  overflow: visible;
+}
+
+.location-report-bar .report-pulse {
+  position: absolute;
+  inset: -8rpx;
+  border-radius: 50%;
+  background: var(--brand-worker);
+  opacity: 0.18;
+  animation: reportPulse 1.8s var(--ease) infinite;
+}
+
+@keyframes reportPulse {
+  0% { transform: scale(0.8); opacity: 0.28; }
+  70% { transform: scale(1.8); opacity: 0; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+
+.location-info-card.glass-neu-card {
+  position: relative;
+}
+
+.location-info-card .location-info-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.location-info-card .location-info-title {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: var(--text-1);
+  letter-spacing: -0.01em;
+}
+
+.location-info-card .location-coords {
+  font-variant-numeric: tabular-nums;
+}
+
+.location-info-card .location-address-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 16rpx;
+}
+
+.location-info-card .location-address {
+  flex: 1;
+  min-width: 0;
+}
+
+.location-info-card .location-update {
+  display: flex;
+  align-items: center;
+}
+
+.location-actions .action-row {
+  grid-column: span 2;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24rpx;
+}
+
+.location-actions .action-btn-secondary {
+  min-width: 0;
+}
+
+.location-actions .action-btn-primary {
+  grid-column: span 2;
+  background: linear-gradient(135deg, #2D6CDF 0%, #5A8FAD 50%, #D4944C 100%);
+  color: #FFFFFF;
+  box-shadow: var(--neu-raised-sm), 0 8rpx 28rpx rgba(45, 108, 223, 0.26);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .location-report-bar .report-pulse {
+    animation: none;
+    opacity: 0;
+  }
+}

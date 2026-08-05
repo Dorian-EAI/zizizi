@@ -10,6 +10,11 @@ Page({
     steps: [],
     priceItems: [],
     faqs: [],
+    workers: [],
+    reviews: [],
+    reviewSummary: null,
+    relatedLoading: true,
+    favoriteWorkerId: '',
     openedFaq: -1,
     isFavorited: false,
     icons: {}
@@ -39,7 +44,8 @@ Page({
     const api = app.getApi()
     try {
       const detail = await api.services.detail(serviceKey)
-      const service = detail || {}
+      const rawService = detail || {}
+      const service = Object.assign({}, rawService)
       // 服务流程：后端字段 process_steps（每项 {step,title,desc}），前端旧字段 steps
       const rawSteps = service.process_steps != null ? service.process_steps : (service.steps || [])
       const steps = rawSteps.map((s, i) => ({
@@ -47,19 +53,101 @@ Page({
         title: s.title || s.name || '',
         desc: s.desc || s.description || ''
       }))
-      // 价格明细：后端字段 price_details（种子数据未填充→null），兜底用 price_min
-      const priceItems = service.price_details != null ? service.price_details : (service.priceItems || [
-        { label: '服务费', amount: service.price_min || service.serviceFee || 0 },
-        { label: '材料费', amount: service.materialFee || 0, note: '按实结算' },
-        { label: '上门费', amount: service.visitFee || 0 }
-      ])
+      // 只展示后端已配置的价格明细，不在客户端拆分虚构费用。
+      let priceItems = Array.isArray(service.price_details)
+        ? service.price_details.map(item => ({
+            label: item.label || item.name || '价格项',
+            amount: item.amount != null ? item.amount : item.price,
+            note: item.note || item.description || ''
+          })).filter(item => item.amount != null)
+        : []
+      if (!priceItems.length && (Number(service.price_min) > 0 || Number(service.price_max) > 0)) {
+        const min = Number(service.price_min) || 0
+        const max = Number(service.price_max) || min
+        priceItems = [{
+          label: '参考价格',
+          amount: min === max ? String(min) : (min + '-' + max),
+          note: '单位：/' + (service.price_unit || '次')
+        }]
+      }
       // FAQ：后端字段 faq（每项 {q,a}），前端旧字段 faqs
       const faqs = service.faq != null ? service.faq : (service.faqs || [])
       this.setData({ service, steps, priceItems, faqs })
+      await this.loadRelated(service.key || serviceKey)
     } catch (e) {
       console.error('加载服务详情失败', e)
+      this.setData({ service: null, steps: [], priceItems: [], faqs: [], workers: [], reviews: [], relatedLoading: false })
       wx.showToast({ title: '加载失败', icon: 'none' })
     }
+  },
+
+  async loadRelated(serviceKey) {
+    const api = app.getApi()
+    this.setData({ relatedLoading: true })
+    const settle = promise => promise
+      .then(value => ({ fulfilled: true, value }))
+      .catch(error => ({ fulfilled: false, error }))
+    const [workersResult, reviewsResult, statsResult] = await Promise.all([
+      settle(api.services.workers({ service_key: serviceKey, limit: 6 })),
+      settle(api.reviews.list({ service_type: serviceKey, page: 1, size: 4 })),
+      settle(api.reviews.stats({ service_type: serviceKey }))
+    ])
+    const rawWorkers = workersResult.fulfilled && Array.isArray(workersResult.value)
+      ? workersResult.value
+      : []
+    const workers = rawWorkers.map(worker => ({
+      id: worker.id,
+      name: worker.name || worker.nickname || '师傅',
+      avatar: worker.avatar || '',
+      avatarText: String(worker.name || worker.nickname || '师').slice(0, 1),
+      certified: Number(worker.certified) === 2,
+      ratingText: worker.rating != null ? String(worker.rating) : '—',
+      serviceCountText: worker.service_count != null ? String(worker.service_count) : '—'
+    }))
+    const reviewsPayload = reviewsResult.fulfilled ? reviewsResult.value : null
+    const rawReviews = Array.isArray(reviewsPayload)
+      ? reviewsPayload
+      : ((reviewsPayload && (reviewsPayload.list || reviewsPayload.items)) || [])
+    const reviews = rawReviews.map(review => {
+      const rating = Math.max(0, Math.min(5, Number(review.rating) || 0))
+      return {
+        id: review.id,
+        displayName: review.is_anonymous ? '匿名用户' : '平台用户',
+        avatarText: review.is_anonymous ? '匿' : '用',
+        stars: '★'.repeat(rating) + '☆'.repeat(5 - rating),
+        date: this.formatDate(review.created_at),
+        content: review.review_content || '用户未填写文字评价'
+      }
+    })
+    const stats = statsResult.fulfilled ? statsResult.value : null
+    const reviewSummary = stats && stats.total_count != null
+      ? {
+          total: Number(stats.total_count) || 0,
+          average: stats.avg_rating != null ? String(stats.avg_rating) : '—'
+        }
+      : null
+    this.setData({ workers, reviews, reviewSummary, relatedLoading: false })
+  },
+
+  formatDate(value) {
+    if (!value) return ''
+    const date = new Date(value)
+    if (Number.isNaN(date.getTime())) return String(value).slice(0, 10)
+    const pad = number => String(number).padStart(2, '0')
+    return date.getFullYear() + '-' + pad(date.getMonth() + 1) + '-' + pad(date.getDate())
+  },
+
+  onWorkerTap(e) {
+    const id = e.currentTarget.dataset.id
+    const worker = this.data.workers.find(item => String(item.id) === String(id))
+    if (!worker) return
+    this.setData({ favoriteWorkerId: worker.id })
+    wx.showModal({
+      title: worker.name,
+      content: '评分：' + worker.ratingText + '\n服务次数：' + worker.serviceCountText + '\n认证状态：' + (worker.certified ? '已认证' : '未认证'),
+      showCancel: false,
+      confirmColor: '#0D9488'
+    })
   },
 
   onBack() {
@@ -77,9 +165,9 @@ Page({
 
   async onToggleFavorite() {
     const api = app.getApi()
-    const workerId = this.data.service && this.data.service.recommendWorkerId
+    const workerId = this.data.favoriteWorkerId
     if (!workerId) {
-      wx.showToast({ title: '当前服务未关联可收藏师傅', icon: 'none' })
+      wx.showToast({ title: '请先选择一位师傅', icon: 'none' })
       return
     }
     try {

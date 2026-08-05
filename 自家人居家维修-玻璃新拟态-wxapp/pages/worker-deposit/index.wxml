@@ -31,35 +31,38 @@
       </view>
     </view>
 
-    <!-- ===== CURRENT LEVEL BENEFITS ===== -->
+    <!-- ===== CURRENT ACCOUNT FACTS ===== -->
     <view class="section">
-      <text class="section-title">当前等级权益</text>
+      <text class="section-title">保证金账户信息</text>
       <view class="card benefit-card">
-        <view class="benefit-row" wx:for="{{benefits}}" wx:key="*this">
+        <view class="benefit-row" wx:for="{{accountFacts}}" wx:key="*this">
           <view class="benefit-check">
             <image src="{{icons.checkGreen}}" mode="aspectFit" class="benefit-check-ic" lazy-load="{{false}}" />
           </view>
           <text class="benefit-text">{{item}}</text>
         </view>
+        <view class="benefit-row" wx:if="{{!accountFacts.length}}">
+          <text class="benefit-text">账户信息暂未加载</text>
+        </view>
       </view>
     </view>
 
-    <!-- ===== DEPOSIT LEVELS ===== -->
+    <!-- ===== DEPOSIT RULES ===== -->
     <view class="section">
-      <text class="section-title">保证金等级</text>
+      <text class="section-title">账户规则</text>
       <view class="level-list">
-        <view class="level-card {{item.state}}" wx:for="{{levels}}" wx:key="key">
-          <view class="current-corner" wx:if="{{item.state === 'current'}}">当前</view>
+        <view class="level-card current">
+          <view class="current-corner">实时</view>
           <view class="level-head">
             <view class="level-name-block">
-              <text class="level-name">{{item.name}}</text>
-              <text class="level-amount">¥{{item.amount}}</text>
+              <text class="level-name">服务端当前规则</text>
+              <text class="level-amount">{{levelName}}</text>
             </view>
-            <text class="level-tag {{item.tagTone}}">{{item.tagText}}</text>
+            <text class="level-tag brand">{{statusText}}</text>
           </view>
           <view class="level-benefits">
-            <view class="level-benefit" wx:for="{{item.benefits}}" wx:for-item="benefit" wx:key="*this">
-              <text>{{benefit}}</text>
+            <view class="level-benefit" wx:for="{{accountNotes}}" wx:key="*this">
+              <text>{{item}}</text>
             </view>
           </view>
         </view>
@@ -95,7 +98,7 @@
     </view>
     <view class="btn-neu-primary" bindtap="onPay">
       <image src="{{icons.shield}}" mode="aspectFit" class="btn-ic" lazy-load="{{false}}" />
-      <text>补缴保证金</text>
+      <text>缴纳保证金</text>
     </view>
   </view>
 

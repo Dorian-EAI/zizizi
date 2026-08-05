@@ -23,26 +23,26 @@
     </view>
     <view class="online-info">
       <text class="online-name">在线客服</text>
-      <text class="online-sub">7x24小时在线</text>
-      <text class="online-sub">平均响应30秒</text>
+      <text class="online-sub">提交客服工单</text>
+      <text class="online-sub">处理状态可在本页查看</text>
     </view>
     <view class="btn-consult btn-neu-primary" catchtap="onConsult">
       <text class="btn-consult-text">立即咨询</text>
     </view>
   </view>
 
-  <view class="online-card glass-neu-card press-card" bindtap="onCall">
+  <view class="online-card glass-neu-card press-card {{servicePhoneConfigured ? '' : 'disabled'}}" bindtap="onCall">
     <view class="online-icon online-icon-amber">
       <image class="online-icon-img" src="{{icons.phone}}" mode="aspectFit" lazy-load="{{false}}" />
     </view>
     <view class="online-info">
       <text class="online-name">客服热线</text>
-      <text class="hotline-num">400-888-0000</text>
-      <text class="online-sub">工作时间 8:00-22:00</text>
+      <text class="hotline-num">{{servicePhoneDisplay}}</text>
+      <text class="online-sub">{{servicePhoneConfigured ? '点击可拨打' : '请先配置服务热线'}}</text>
     </view>
     <view class="btn-call btn-neu-secondary" catchtap="onCall">
       <image class="btn-call-icon" src="{{icons.phone}}" mode="aspectFit" lazy-load="{{false}}" />
-      <text class="btn-call-text">拨打</text>
+      <text class="btn-call-text">{{servicePhoneConfigured ? '拨打' : '未配置'}}</text>
     </view>
   </view>
 

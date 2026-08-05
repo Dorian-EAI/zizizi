@@ -2,7 +2,7 @@
 <view class="page">
 
   <!-- ===== TOP HEADER（Hero 渐变 + 导航栏 + 状态横幅，滚动驱动变形） ===== -->
-  <view class="top-header" style="padding-top: calc({{statusBarHeight}}px + 36rpx); --morph-p: {{morphP}}; --nav-radius: {{navRadius}}rpx; --nav-ph: {{navPh}}rpx; --nav-pb: {{navPb}}rpx; --btn-size: {{btnSize}}rpx;">
+  <view class="top-header nav-bar" style="padding-top: calc({{statusBarHeight}}px + 36rpx); --morph-p: {{morphP}}; --nav-radius: {{navRadius}}rpx; --nav-ph: {{navPh}}rpx; --nav-pb: {{navPb}}rpx; --btn-size: {{btnSize}}rpx;">
 
     <!-- Hero 渐变背景层 -->
     <view class="hero-gradient"></view>
@@ -89,6 +89,14 @@
             <view class="map-road map-road-2"></view>
             <view class="map-road map-road-3"></view>
             <view class="map-park"></view>
+            <view class="map-marker worker-marker force-visible" wx:if="{{tracking.worker}}">
+              <view class="marker-pulse"></view>
+              <view class="marker-core worker-marker-core"><image src="{{icons.user}}" mode="aspectFit" class="marker-icon" lazy-load="{{false}}" /></view>
+            </view>
+            <view class="map-marker dest-marker">
+              <view class="marker-core dest-marker-core"><image src="{{icons.location}}" mode="aspectFit" class="marker-icon" lazy-load="{{false}}" /></view>
+              <view class="marker-pin"></view>
+            </view>
           </view>
         </view>
       </view>
@@ -109,13 +117,13 @@
       </view>
 
       <!-- ===== WORKER INFO CARD（师傅信息卡：头像 + 已认证 + 姓名 + 评分 + 电话/导航按钮） ===== -->
-      <view class="section">
+      <view class="section copied-below-anchor">
         <view class="glass-neu-card tracking-worker-card" wx:if="{{tracking.worker}}">
           <view class="avatar-col">
             <view class="worker-avatar avatar-glass">
-              <image src="{{icons.user}}" mode="aspectFit" class="worker-avatar-img" lazy-load="{{false}}" />
+              <image src="{{tracking.worker.avatar || icons.user}}" mode="{{tracking.worker.avatar ? 'aspectFill' : 'aspectFit'}}" class="worker-avatar-img" lazy-load="{{false}}" />
             </view>
-            <view class="verify-badge">
+            <view class="verify-badge avatar-verify" wx:if="{{tracking.worker.certified === true}}">
               <image src="{{icons.check}}" mode="aspectFit" class="verify-icon" lazy-load="{{false}}" />
               <text class="verify-text">已认证</text>
             </view>
@@ -125,9 +133,10 @@
               <text class="worker-name">{{tracking.worker.name || '师傅'}}</text>
             </view>
             <view class="worker-meta">
-              <text class="worker-star">★ {{tracking.worker.rating || '4.8'}}</text>
-              <text class="meta-dot">·</text>
-              <text>{{tracking.worker.services || 158}}次服务</text>
+              <text class="worker-star" wx:if="{{tracking.worker.rating !== '—'}}">★ {{tracking.worker.rating}}</text>
+              <text class="meta-dot" wx:if="{{tracking.worker.rating !== '—' && tracking.worker.services !== '—'}}">·</text>
+              <text wx:if="{{tracking.worker.services !== '—'}}">{{tracking.worker.services}}次服务</text>
+              <text wx:if="{{tracking.worker.rating === '—' && tracking.worker.services === '—'}}">详细资料未提供</text>
             </view>
           </view>
           <view class="worker-actions">

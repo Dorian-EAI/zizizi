@@ -1,5 +1,7 @@
 """运营后台业务逻辑"""
 
+import json
+import hashlib
 from datetime import datetime, timedelta
 from typing import Optional
 
@@ -7,12 +9,13 @@ from fastapi import HTTPException
 from sqlalchemy import extract, func, or_
 from sqlalchemy.orm import Session
 
-from app.models.admin import Admin
+from app.models.admin import Admin, AdminAuditLog
 from app.models.order import Order
 from app.models.user import User, Worker
 from app.models.wallet import Transaction
 from app.services import wechat_pay_service
 from app.utils.security import create_access_token, hash_password, verify_password
+from app.utils.redis_client import redis_client, RedisUnavailableError
 
 try:
     from app.models.coupon import CouponTemplate
@@ -20,6 +23,11 @@ try:
 except ImportError:
     CouponTemplate = None
     _COUPON_MODEL_AVAILABLE = False
+
+
+_ADMIN_DUMMY_PASSWORD_HASH = "$2b$12$CN.Uh.KLCKACw523NIWav.2DxxEJfdo42yFqG/a17AeRHdJuOg4e2"
+_ADMIN_LOGIN_MAX_FAILURES = 5
+_ADMIN_LOGIN_LOCK_SECONDS = 15 * 60
 
 
 # ===== 辅助函数 =====
@@ -51,23 +59,83 @@ def _admin_to_dict(admin: Admin) -> dict:
     }
 
 
-def _user_to_dict(u: User) -> dict:
+def add_admin_audit(
+    db: Session,
+    actor_admin_id: int,
+    action: str,
+    target_type: str,
+    target_id=None,
+    detail: Optional[dict] = None,
+    *,
+    commit: bool = False,
+) -> AdminAuditLog:
+    """写入结构化审计日志；调用方可与业务变更同事务提交。"""
+    record = AdminAuditLog(
+        actor_admin_id=actor_admin_id,
+        action=action,
+        target_type=target_type,
+        target_id=str(target_id) if target_id is not None else None,
+        detail=json.dumps(detail, ensure_ascii=False, sort_keys=True) if detail else None,
+    )
+    db.add(record)
+    if commit:
+        db.commit()
+        db.refresh(record)
+    else:
+        db.flush()
+    return record
+
+
+def list_admin_audits(
+    db: Session,
+    page: int = 1,
+    size: int = 50,
+    action: Optional[str] = None,
+) -> dict:
+    query = db.query(AdminAuditLog)
+    if action:
+        query = query.filter(AdminAuditLog.action == action)
+    query = query.order_by(AdminAuditLog.created_at.desc(), AdminAuditLog.id.desc())
+    result = _paginate_query(query, page, size)
+    result["list"] = [
+        {
+            "id": item.id,
+            "actor_admin_id": item.actor_admin_id,
+            "action": item.action,
+            "target_type": item.target_type,
+            "target_id": item.target_id,
+            "detail": json.loads(item.detail) if item.detail else None,
+            "created_at": item.created_at.strftime("%Y-%m-%d %H:%M:%S"),
+        }
+        for item in result["list"]
+    ]
+    return result
+
+
+def _mask_phone(phone: Optional[str]) -> Optional[str]:
+    if not phone:
+        return None
+    if len(phone) < 7:
+        return "***"
+    return f"{phone[:3]}****{phone[-4:]}"
+
+
+def _user_to_dict(u: User, *, reveal_sensitive: bool = False) -> dict:
     return {
         "id": u.id,
-        "openid": u.openid,
         "nickname": u.nickname,
         "avatar": u.avatar,
-        "phone": u.phone,
+        "phone": u.phone if reveal_sensitive else _mask_phone(u.phone),
         "role": u.role,
         "member_level": u.member_level,
         "growth_value": u.growth_value,
-        "balance": float(u.balance or 0),
+        "balance": float(u.balance or 0) if reveal_sensitive else None,
         "is_active": u.is_active,
         "created_at": u.created_at.strftime("%Y-%m-%d %H:%M:%S") if u.created_at else None,
     }
 
 
-def _worker_to_dict(w: Worker) -> dict:
+def _worker_to_dict(w: Worker, *, reveal_sensitive: bool = False) -> dict:
     # 身份证号脱敏：DB 中存的是密文，展示时解密+掩码
     from app.utils.aes import decrypt_field, mask_id_card
     id_card_plain = None
@@ -79,20 +147,19 @@ def _worker_to_dict(w: Worker) -> dict:
 
     return {
         "id": w.id,
-        "openid": w.openid,
         "nickname": w.nickname,
         "avatar": w.avatar,
-        "phone": w.phone,
-        "real_name": w.real_name,
+        "phone": w.phone if reveal_sensitive else _mask_phone(w.phone),
+        "real_name": w.real_name if reveal_sensitive else None,
         # 永远不返回明文身份证号，仅返回掩码
         "id_card_masked": mask_id_card(id_card_plain) if id_card_plain else None,
         "certified": w.certified,
         "skills": w.skills,
-        "certificates": w.certificates,
+        "certificates": w.certificates if reveal_sensitive else [],
         "rating": float(w.rating or 0),
         "service_count": w.service_count,
         "level": w.level,
-        "balance": float(w.balance or 0),
+        "balance": float(w.balance or 0) if reveal_sensitive else None,
         "is_online": w.is_online,
         "service_area": w.service_area,
         "service_types": w.service_types,
@@ -151,7 +218,8 @@ def admin_login(db: Session, username: str, password: str) -> dict:
 
     安全说明：
     - 不再支持 "admin/admin123" 自动创建后门账号
-    - 默认管理员账号由 init_db.seed_admin 在首次启动时写入（仅在 DB 为空时）
+    - development/testing 的种子账号由 init_db.seed_admin 写入
+    - staging/production 首个账号必须通过 scripts/bootstrap_super_admin.py 引导
     - 用户名不存在与密码错误统一返回 401，防止用户名枚举
 
     Returns:
@@ -160,19 +228,36 @@ def admin_login(db: Session, username: str, password: str) -> dict:
     if not username or not password:
         raise HTTPException(status_code=400, detail="用户名和密码不能为空")
 
+    normalized_username = username.strip().casefold()
+    username_digest = hashlib.sha256(normalized_username.encode("utf-8")).hexdigest()
+    failure_key = f"admin:login:failure:{username_digest}"
+    try:
+        failure_count = redis_client.get_security_counter(failure_key)
+    except RedisUnavailableError as exc:
+        raise HTTPException(status_code=503, detail="登录风控服务暂不可用") from exc
+    if failure_count >= _ADMIN_LOGIN_MAX_FAILURES:
+        raise HTTPException(status_code=429, detail="登录尝试过多，请稍后再试")
+
     admin = db.query(Admin).filter(Admin.username == username).first()
+    candidate_hash = admin.password_hash if admin else _ADMIN_DUMMY_PASSWORD_HASH
+    password_valid = verify_password(password, candidate_hash)
 
-    # 统一错误信息，避免用户名枚举
-    cred_error = HTTPException(status_code=401, detail="用户名或密码错误")
-
-    if not admin:
-        raise cred_error
+    # 用户名不存在也执行同成本 bcrypt，并使用相同失败计数和错误文案。
+    if not admin or not password_valid:
+        try:
+            failure_count = redis_client.increment_security_counter(
+                failure_key, _ADMIN_LOGIN_LOCK_SECONDS
+            )
+        except RedisUnavailableError as exc:
+            raise HTTPException(status_code=503, detail="登录风控服务暂不可用") from exc
+        if failure_count >= _ADMIN_LOGIN_MAX_FAILURES:
+            raise HTTPException(status_code=429, detail="登录尝试过多，请稍后再试")
+        raise HTTPException(status_code=401, detail="用户名或密码错误")
 
     if not admin.is_active:
         raise HTTPException(status_code=403, detail="账号已禁用")
 
-    if not verify_password(password, admin.password_hash):
-        raise cred_error
+    redis_client.delete(failure_key)
 
     admin.last_login_at = datetime.utcnow()
     db.commit()
@@ -193,6 +278,7 @@ def admin_login(db: Session, username: str, password: str) -> dict:
         "token": token,
         "admin_id": admin.id,
         "role": admin.role,
+        "must_change_password": bool(admin.must_change_password),
     }
 
 
@@ -224,9 +310,20 @@ def create_admin(db: Session, data, creator: Admin = None) -> Admin:
         password_hash=hash_password(data.password),
         real_name=data.real_name,
         role=role,
+        must_change_password=True,
         is_active=True,
     )
     db.add(admin)
+    db.flush()
+    if creator:
+        add_admin_audit(
+            db,
+            creator.id,
+            "admin.create",
+            "admin",
+            admin.id,
+            {"role": admin.role},
+        )
     db.commit()
     db.refresh(admin)
 
@@ -248,6 +345,96 @@ def create_admin(db: Session, data, creator: Admin = None) -> Admin:
         pass
 
     return admin
+
+
+def change_admin_password(
+    db: Session,
+    admin: Admin,
+    current_password: str,
+    new_password: str,
+) -> None:
+    if not verify_password(current_password, admin.password_hash):
+        raise HTTPException(status_code=400, detail="当前密码错误")
+    if verify_password(new_password, admin.password_hash):
+        raise HTTPException(status_code=400, detail="新密码不能与当前密码相同")
+    admin.password_hash = hash_password(new_password)
+    admin.must_change_password = False
+    admin.token_version = int(admin.token_version or 1) + 1
+    add_admin_audit(db, admin.id, "admin.password.change", "admin", admin.id)
+    db.commit()
+
+
+def list_admin_accounts(db: Session, page: int = 1, size: int = 50) -> dict:
+    query = db.query(Admin).order_by(Admin.created_at.desc(), Admin.id.desc())
+    result = _paginate_query(query, page, size)
+    result["list"] = [
+        _admin_to_dict(item)
+        | {"must_change_password": bool(item.must_change_password)}
+        for item in result["list"]
+    ]
+    return result
+
+
+def set_admin_active(
+    db: Session,
+    target_id: int,
+    is_active: bool,
+    actor: Admin,
+) -> Admin:
+    target_preview = db.query(Admin).filter(Admin.id == target_id).first()
+    if not target_preview:
+        raise HTTPException(status_code=404, detail="管理员不存在")
+    active_super_admins = []
+    if target_preview.role == "super_admin" and target_preview.is_active and not is_active:
+        # 对所有启用 super_admin 按固定顺序加锁，避免并发互相禁用后归零。
+        active_super_admins = (
+            db.query(Admin)
+            .filter(Admin.role == "super_admin", Admin.is_active.is_(True))
+            .order_by(Admin.id.asc())
+            .with_for_update()
+            .all()
+        )
+    target = db.query(Admin).filter(Admin.id == target_id).with_for_update().first()
+    if not target:
+        raise HTTPException(status_code=404, detail="管理员不存在")
+    if target.id == actor.id and not is_active:
+        raise HTTPException(status_code=400, detail="不能禁用当前登录账号")
+    if target.role == "super_admin" and target.is_active and not is_active:
+        if len(active_super_admins) <= 1:
+            raise HTTPException(status_code=409, detail="不能禁用最后一个超级管理员")
+    target.is_active = is_active
+    target.token_version = int(target.token_version or 1) + 1
+    add_admin_audit(
+        db,
+        actor.id,
+        "admin.active.update",
+        "admin",
+        target.id,
+        {"is_active": is_active},
+    )
+    db.commit()
+    db.refresh(target)
+    return target
+
+
+def reset_admin_password(
+    db: Session,
+    target_id: int,
+    new_password: str,
+    actor: Admin,
+) -> Admin:
+    target = db.query(Admin).filter(Admin.id == target_id).with_for_update().first()
+    if not target:
+        raise HTTPException(status_code=404, detail="管理员不存在")
+    if target.id == actor.id:
+        raise HTTPException(status_code=400, detail="请使用当前管理员改密接口")
+    target.password_hash = hash_password(new_password)
+    target.must_change_password = True
+    target.token_version = int(target.token_version or 1) + 1
+    add_admin_audit(db, actor.id, "admin.password.reset", "admin", target.id)
+    db.commit()
+    db.refresh(target)
+    return target
 
 
 # ===== Dashboard 统计 =====
@@ -311,16 +498,16 @@ def list_users(
     size: int = 20,
     keyword: Optional[str] = None,
     status: Optional[str] = None,
+    reveal_sensitive: bool = False,
 ) -> dict:
     query = db.query(User)
 
     if keyword:
         like = f"%{keyword}%"
-        query = query.filter(or_(
-            User.nickname.like(like),
-            User.phone.like(like),
-            User.openid.like(like),
-        ))
+        predicates = [User.nickname.like(like)]
+        if reveal_sensitive:
+            predicates.extend([User.phone.like(like), User.openid.like(like)])
+        query = query.filter(or_(*predicates))
 
     if status is not None:
         is_active = True if str(status).lower() in ("1", "true", "active") else False
@@ -328,15 +515,30 @@ def list_users(
 
     query = query.order_by(User.created_at.desc())
     result = _paginate_query(query, page, size)
-    result["list"] = [_user_to_dict(u) for u in result["list"]]
+    result["list"] = [
+        _user_to_dict(u, reveal_sensitive=reveal_sensitive) for u in result["list"]
+    ]
     return result
 
 
-def toggle_user_active(db: Session, user_id: int, is_active: bool) -> dict:
+def toggle_user_active(
+    db: Session,
+    user_id: int,
+    is_active: bool,
+    actor_admin_id: int,
+) -> dict:
     user = db.query(User).filter(User.id == user_id).first()
     if not user:
         raise HTTPException(status_code=404, detail="用户不存在")
     user.is_active = is_active
+    add_admin_audit(
+        db,
+        actor_admin_id,
+        "user.active.update",
+        "user",
+        user.id,
+        {"is_active": is_active},
+    )
     db.commit()
     db.refresh(user)
     return _user_to_dict(user)
@@ -351,6 +553,7 @@ def list_workers(
     certified: Optional[int] = None,
     is_online: Optional[bool] = None,
     keyword: Optional[str] = None,
+    reveal_sensitive: bool = False,
 ) -> dict:
     query = db.query(Worker)
 
@@ -362,28 +565,67 @@ def list_workers(
 
     if keyword:
         like = f"%{keyword}%"
-        query = query.filter(or_(
-            Worker.nickname.like(like),
-            Worker.phone.like(like),
-            Worker.real_name.like(like),
-        ))
+        predicates = [Worker.nickname.like(like)]
+        if reveal_sensitive:
+            predicates.extend([Worker.phone.like(like), Worker.real_name.like(like)])
+        query = query.filter(or_(*predicates))
 
     query = query.order_by(Worker.created_at.desc())
     result = _paginate_query(query, page, size)
-    result["list"] = [_worker_to_dict(w) for w in result["list"]]
+    result["list"] = [
+        _worker_to_dict(w, reveal_sensitive=reveal_sensitive) for w in result["list"]
+    ]
     return result
 
 
-def update_worker_certified(db: Session, worker_id: int, certified_status: int) -> dict:
+def update_worker_certified(
+    db: Session,
+    worker_id: int,
+    certified_status: int,
+    actor_admin_id: int,
+) -> dict:
     if certified_status not in (0, 1, 2, 3):
         raise HTTPException(status_code=400, detail="认证状态不合法")
     worker = db.query(Worker).filter(Worker.id == worker_id).first()
     if not worker:
         raise HTTPException(status_code=404, detail="师傅不存在")
     worker.certified = certified_status
+    add_admin_audit(
+        db,
+        actor_admin_id,
+        "worker.certification.update",
+        "worker",
+        worker.id,
+        {"certified": certified_status},
+    )
     db.commit()
     db.refresh(worker)
     return _worker_to_dict(worker)
+
+
+def get_worker_certification(db: Session, worker_id: int) -> dict:
+    worker = db.query(Worker).filter(Worker.id == worker_id).first()
+    if not worker:
+        raise HTTPException(status_code=404, detail="师傅不存在")
+    if not worker.certification_data:
+        raise HTTPException(status_code=404, detail="该师傅尚未提交认证申请")
+
+    from app.services.upload_service import sign_private_download_url
+
+    snapshot = dict(worker.certification_data)
+    for field in ("id_front", "id_back", "health_certificate"):
+        if snapshot.get(field):
+            snapshot[field] = sign_private_download_url(snapshot[field], worker.id)
+    snapshot["certificate_images"] = [
+        sign_private_download_url(url, worker.id)
+        for url in snapshot.get("certificate_images", [])
+        if url
+    ]
+    return {
+        "worker_id": worker.id,
+        "certified": worker.certified,
+        "application": snapshot,
+    }
 
 
 # ===== 订单管理 =====
@@ -417,8 +659,8 @@ def update_order_status_admin(
     db: Session,
     order_id: int,
     new_status: str,
+    operator_id: int,
     remark: Optional[str] = None,
-    operator_id: Optional[int] = None,
 ) -> dict:
     order = db.query(Order).filter(Order.id == order_id).with_for_update().first()
     if not order:
@@ -439,6 +681,14 @@ def update_order_status_admin(
         "cancelled",
         allowed_from=["pending", "accepted"],
         cancelled_at=datetime.utcnow(),
+    )
+    add_admin_audit(
+        db,
+        operator_id,
+        "order.cancel",
+        "order",
+        order.id,
+        {"reason": remark},
     )
     db.commit()
     db.refresh(order)
@@ -516,6 +766,16 @@ async def approve_withdraw(db: Session, tx_id: int, admin_id: int) -> dict:
     if tx.status == "success":
         from app.services import message_service
         await message_service.notify_withdraw_success(db, tx)
+
+    add_admin_audit(
+        db,
+        admin_id,
+        "withdraw.approve",
+        "transaction",
+        tx.id,
+        {"status": tx.status},
+        commit=True,
+    )
 
     return {
         "tx_id": tx.id,

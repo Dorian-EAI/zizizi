@@ -1,0 +1,36 @@
+<!-- REVIEWED BUSINESS VIEW: policy fields come from /api/insurance/orders/{orderId}/policy. -->
+<view class="phone-page design-detail-page" data-page-id="page-client-policy-detail">
+  <view class="status-bar"><text class="tag-span">9:41</text><text class="status-icons tag-span">● WiFi 100%</text></view>
+  <view class="topbar"><view class="icon-button design-button" bindtap="onBack"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m15%2018-6-6%206-6M9%2012h10%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view><view class="tag-h1">保单详情</view><text class="tag-span"></text></view>
+  <view class="page-body">
+    <view class="section card" wx:if="{{loading}}"><view class="tag-p">正在核验保单…</view></view>
+    <view class="section card" wx:elif="{{loadError}}"><view class="tag-h2">保单加载失败</view><view class="tag-p">{{loadError}}</view><view class="btn secondary design-button" bindtap="onRetry">重新加载</view></view>
+    <view class="section card" wx:elif="{{empty}}"><view class="tag-h2">未查询到保单</view><view class="tag-p">当前订单没有可展示的保单记录。</view></view>
+    <block wx:elif="{{policy}}">
+      <view class="hero">
+        <view class="hero-kicker tag-p">{{policy.policyNoText}}</view>
+        <view class="tag-h2">{{policy.levelText}}</view>
+        <view class="tag-p">保障期限：{{policy.startDateText}} 至 {{policy.endDateText}}</view>
+        <view class="tag-h2">¥ {{policy.coverageText}}</view>
+        <view class="tag-p">服务端记录保额</view>
+        <view class="badge success tag-span">{{policy.statusText}}</view>
+      </view>
+      <view class="section">
+        <view class="section-title"><text class="tag-strong">保障信息</text><text class="tag-span">以服务端保单记录为准</text></view>
+        <view class="card list-card">
+          <view class="list-row"><view class="row-icon tag-span"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%235B8C5A%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20aria-hidden%3D%22true%22%3E%3Cpath%20d%3D%22M12%2022s8-4%208-10V5l-8-3-8%203v7c0%206%208%2010%208%2010Z%22%2F%3E%3Cpath%20d%3D%22M8%2012h8M12%208v8%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view><view class="row-main"><view class="row-title">保费</view><view class="row-copy">¥{{policy.premiumText}}</view></view></view>
+          <view class="list-row"><view class="row-icon tag-span"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%230D9488%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20aria-hidden%3D%22true%22%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%228%22%20r%3D%224%22%2F%3E%3Cpath%20d%3D%22M4%2021a8%208%200%200%201%2016%200%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view><view class="row-main"><view class="row-title">关联订单</view><view class="row-copy">{{policy.orderText}}</view></view></view>
+          <view class="list-row"><view class="row-icon tag-span"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%230D9488%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20aria-hidden%3D%22true%22%3E%3Ccircle%20cx%3D%229%22%20cy%3D%229%22%20r%3D%226%22%2F%3E%3Cpath%20d%3D%22M7%209h4M9%207v4M15%207a6%206%200%201%201-6%208%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view><view class="row-main"><view class="row-title">已申请金额</view><view class="row-copy">¥{{policy.claimedText}}</view></view></view>
+        </view>
+      </view>
+      <view class="section card">
+        <view class="section-title"><text class="tag-strong">保障内容</text><text class="tag-span">以电子保单为准</text></view>
+        <view class="tag-p">当前接口只返回方案、保费、保额、期限与状态，不返回保障条款明细。页面不会展示画布里的示例责任范围。</view>
+      </view>
+    </block>
+  </view>
+  <view class="fixed-actions" wx:if="{{policy}}">
+    <view class="btn secondary design-button" bindtap="onElectronicPolicy">查看电子保单</view>
+    <view class="btn primary design-button" bindtap="onClaim">{{canClaim ? '申请理赔' : '当前状态不可理赔'}}</view>
+  </view>
+</view>

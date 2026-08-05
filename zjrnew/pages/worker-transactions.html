@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>自家人居家维修 · 玻璃新拟态 · 交易明细</title>
-    <link rel="stylesheet" href="../assets/fonts.css">
-
     <style id="theme-vars">
 /* 自家人居家维修 - 玻璃新拟态 */
 :root {
@@ -14,7 +12,7 @@
   --brand-dark: #2456B8;
   --brand-mid: #5A8EE8;
   --brand-light: #DCE8FB;
-  --brand-glow: rgba(45, 108, 223, 0.28);
+  --brand-glow: rgba(45, 108, 223, 0.18);
   --brand-subtle: rgba(45, 108, 223, 0.08);
 
   /* Accent (Amber) */
@@ -82,11 +80,11 @@
   --radius-lg: 1.6rem;
   --radius-full: 9999px;
 
-    /* Font — 统一衬线系统 */
+  /* Font — unified serif system */
   --font-display: 'Cormorant Garamond', 'Noto Serif SC', 'STSong', Georgia, serif;
-  --font-body: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-  --font-nums: 'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
-  --font: var(--font-body);
+  --font-body:    'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --font-nums:    'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
+  --font:         var(--font-body);
 
   /* Motion */
   --spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -127,9 +125,8 @@
   --radius-sm: var(--radius-sm);
   --radius-md: var(--radius-md);
   --radius-lg: var(--radius-lg);
-  --font-sans: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-  --font-serif: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-  --radius-full: var(--radius-full);}
+  --radius-full: var(--radius-full);
+}
 
 /* Semantic token fallback */
 #semantic-token-fallback {
@@ -152,6 +149,113 @@
 }
 
 /* ===== Global Neumorphic Components ===== */
+/* Tab Bar — Premium Liquid Glass, absolute-positioned within .phone frame */
+.tab-bar{
+  position:absolute;
+  bottom:10px;
+  left:50%;
+  transform:translateX(-50%);
+  width:calc(100% - 32px);
+  max-width:360px;
+  height:56px;
+  z-index:100;
+  background:rgba(255,255,255,0.18);
+  backdrop-filter:blur(48px) saturate(210%);
+  -webkit-backdrop-filter:blur(48px) saturate(210%);
+  border:0.5px solid rgba(255,255,255,0.45);
+  border-radius:24px;
+  box-shadow:
+    inset 0 1.5px 3px rgba(255,255,255,0.60),
+    inset 0 -0.5px 1px rgba(255,255,255,0.20),
+    0 0 0 0.5px rgba(0,0,0,0.04),
+    0 2px 10px rgba(0,0,0,0.06),
+    0 12px 36px rgba(0,0,0,0.08);
+  display:flex;
+  align-items:center;
+  justify-content:space-around;
+  padding:0 6px;
+}
+.tab-bar::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  background:linear-gradient(160deg,
+    rgba(255,255,255,0.42) 0%,
+    rgba(255,255,255,0.16) 20%,
+    rgba(255,255,255,0.03) 40%,
+    transparent 60%);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
+  padding:0.5px;
+  pointer-events:none;
+  z-index:1;
+}
+.tab-bar::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  background:linear-gradient(320deg,
+    transparent 60%,
+    rgba(13,148,136,0.06) 80%,
+    rgba(255,255,255,0.04) 100%);
+  pointer-events:none;
+  z-index:1;
+}
+.tab-item{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+  width:68px;
+  height:44px;
+  border-radius:14px;
+  color:var(--text-3);
+  font-size:11px;
+  font-weight:500;
+  text-decoration:none;
+  position:relative;
+  transition:all .2s;
+}
+.tab-item svg{
+  width:20px;
+  height:20px;
+  stroke:currentColor;
+  fill:none;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.tab-item[data-active="true"]{
+  color:var(--brand);
+  font-weight:600;
+}
+.tab-item[data-active="true"]::before{
+  content:"";
+  position:absolute;
+  width:54px;
+  height:42px;
+  border-radius:16px;
+  background:rgba(13,148,136,0.16);
+  backdrop-filter:blur(24px);
+  -webkit-backdrop-filter:blur(24px);
+  border:0.5px solid rgba(13,148,136,0.30);
+  box-shadow:
+    inset 0 1px 3px rgba(255,255,255,0.55),
+    inset 0 -0.5px 1px rgba(255,255,255,0.15),
+    0 2px 10px rgba(13,148,136,0.20),
+    0 0 0 0.5px rgba(13,148,136,0.08);
+  z-index:0;
+}
+.tab-item[data-active="true"] svg{
+  transform:scale(1.08);
+  position:relative;
+  z-index:1;
+}
+
 /* Buttons */
 .btn-neu-primary{
   display:inline-flex;align-items:center;justify-content:center;
@@ -208,8 +312,6 @@
     --radius-md: var(--radius-md);
     --radius-lg: var(--radius-lg);
     --radius-full: var(--radius-full);
-    --font-sans: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-    --font-serif: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
   }
   @layer base {
     body { background: var(--background); color: var(--foreground); }
@@ -297,7 +399,7 @@
 
   <!-- ===== TOP NAV BAR (sticky) ===== -->
   <header class="nav-bar">
-    <button class="nav-icon-btn" data-dom-id="back-btn" aria-label="返回">
+    <button class="nav-icon-btn" data-dom-id="transactions-back" data-target-page="page-worker-wallet" aria-label="返回">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
         <path d="m15 18-6-6 6-6"/>
       </svg>
@@ -330,10 +432,10 @@
   <!-- ===== FILTER SEGMENT (筛选选项卡) ===== -->
   <section class="section">
     <div class="filter-segment" data-dom-id="tx-filter">
-      <button class="filter-item filter-item-active" data-filter="all">全部</button>
-      <button class="filter-item" data-filter="income">收入</button>
-      <button class="filter-item" data-filter="withdraw">提现</button>
-      <button class="filter-item" data-filter="deduct">扣款</button>
+      <button class="filter-item filter-item-active" data-filter="all" data-dom-id="transactions-filter-all" data-action="filter-transactions">全部</button>
+      <button class="filter-item" data-filter="income" data-dom-id="transactions-filter-income" data-action="filter-transactions">收入</button>
+      <button class="filter-item" data-filter="withdraw" data-dom-id="transactions-filter-withdraw" data-action="filter-transactions">提现</button>
+      <button class="filter-item" data-filter="deduct" data-dom-id="transactions-filter-deduct" data-action="filter-transactions">扣款</button>
     </div>
   </section>
 
@@ -345,7 +447,7 @@
         <span class="tx-subtotal mono">小计 +&yen;128.00</span>
       </div>
 
-      <div class="tx-row" data-tx-type="income">
+      <div class="tx-row" data-tx-type="income" data-dom-id="tx-row-1" data-target-page="page-client-transaction-detail">
         <div class="tx-icon tx-icon-income">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg>
         </div>
@@ -359,7 +461,7 @@
         </div>
       </div>
 
-      <div class="tx-row" data-tx-type="withdraw">
+      <div class="tx-row" data-tx-type="withdraw" data-dom-id="tx-row-2" data-target-page="page-client-transaction-detail">
         <div class="tx-icon tx-icon-withdraw">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
         </div>
@@ -383,7 +485,7 @@
         <span class="tx-subtotal mono">小计 +&yen;83.00</span>
       </div>
 
-      <div class="tx-row" data-tx-type="income">
+      <div class="tx-row" data-tx-type="income" data-dom-id="tx-row-3" data-target-page="page-client-transaction-detail">
         <div class="tx-icon tx-icon-income">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg>
         </div>
@@ -397,7 +499,7 @@
         </div>
       </div>
 
-      <div class="tx-row" data-tx-type="deduct">
+      <div class="tx-row" data-tx-type="deduct" data-dom-id="tx-row-4" data-target-page="page-client-transaction-detail">
         <div class="tx-icon tx-icon-deduct">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 5 5 19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg>
         </div>
@@ -421,7 +523,7 @@
         <span class="tx-subtotal mono">小计 +&yen;68.00</span>
       </div>
 
-      <div class="tx-row" data-tx-type="income">
+      <div class="tx-row" data-tx-type="income" data-dom-id="tx-row-5" data-target-page="page-client-transaction-detail">
         <div class="tx-icon tx-icon-income">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg>
         </div>
@@ -435,7 +537,7 @@
         </div>
       </div>
 
-      <div class="tx-row" data-tx-type="income">
+      <div class="tx-row" data-tx-type="income" data-dom-id="tx-row-6" data-target-page="page-client-transaction-detail">
         <div class="tx-icon tx-icon-income">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg>
         </div>
@@ -460,9 +562,9 @@
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{
   --brand:#2D6CDF;--brand-dark:#2456B8;--brand-mid:#5A8EE8;--brand-light:#DCE8FB;
-  --brand-glow:rgba(45,108,223,0.28);--brand-subtle:rgba(45,108,223,0.08);
-  --brand-gradient:linear-gradient(135deg,#2D6CDF 0%,#5A8EE8 50%,#D4944C 100%);
-  --accent:#D4944C;--accent-dark:#A0723C;--accent-light:#F5E6D0;--accent-glow:rgba(212,148,76,0.25);
+  --brand-glow:rgba(45,108,223,0.18);--brand-subtle:rgba(45,108,223,0.08);
+  --brand-gradient:linear-gradient(135deg,#2D6CDF 0%,#5A8EE8 48%,#D4944C 100%);
+  --accent:#D4944C;--accent-dark:#A0723C;--accent-light:#F5E6D0;--accent-glow:rgba(212,148,76,0.16);
   --bg:#F2EDE8;--bg-elevated:#F7F3EF;
   --neu-light:#FFF8F2;--neu-dark:#DDD6CE;
   --text-1:#2C2824;--text-2:#8B8178;--text-3:#B5ADA5;--text-inverse:#FFFFFF;
@@ -490,7 +592,7 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
 .mono{font-variant-numeric:tabular-nums;letter-spacing:-0.01em}
 
 /* ===== Top Nav Bar (sticky) ===== */
-.nav-bar{background:radial-gradient(ellipse 220px 160px at 78% 45%,rgba(143,169,152,.14) 0%,transparent 70%),radial-gradient(ellipse 180px 140px at 18% 75%,rgba(45,108,223,.16) 0%,transparent 70%),linear-gradient(135deg,rgba(45,108,223,.14) 0%,rgba(143,169,152,.08) 50%,rgba(45,108,223,.06) 100%);position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:18px 20px;padding-top:max(18px,env(safe-area-inset-top)); border-radius:0 0 28px 28px; overflow:hidden;}
+.nav-bar{background:radial-gradient(ellipse 220px 160px at 78% 45%,rgba(212,148,76,.10) 0%,transparent 70%),radial-gradient(ellipse 180px 140px at 18% 75%,rgba(45,108,223,.10) 0%,transparent 70%),linear-gradient(135deg,rgba(45,108,223,.08) 0%,rgba(212,148,76,.04) 50%,rgba(45,108,223,.05) 100%);position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:18px 20px;padding-top:max(18px,env(safe-area-inset-top)); border-radius:0 0 28px 28px; overflow:hidden;}
 .nav-icon-btn{
   width:44px;height:44px;border-radius:50%;border:none;
   background:var(--bg-elevated);
@@ -515,7 +617,7 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
   backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);
   border:1px solid rgba(255,255,255,0.70);
   border-radius:var(--r-lg);
-  box-shadow:var(--neu-out-md),0 6px 28px rgba(0,0,0,0.06),0 2px 8px rgba(45,108,223,0.04),0 0 0 1px rgba(44,40,36,0.05);
+  box-shadow:var(--neu-out-md),0 6px 28px rgba(0,0,0,0.06),0 2px 8px rgba(45,108,223,.04),0 0 0 1px rgba(44,40,36,0.05);
   position:relative;overflow:hidden;
 }
 .glass-neu-card::before{

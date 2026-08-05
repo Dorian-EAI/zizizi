@@ -93,6 +93,13 @@
   overflow: hidden;
 }
 
+.top-header.nav-bar {
+  display: block;
+  align-items: initial;
+  justify-content: initial;
+  background: transparent;
+}
+
 /* Hero 渐变背景层 */
 .hero-gradient {
   position: absolute;
@@ -243,6 +250,10 @@
   padding-bottom: 40rpx;
 }
 
+.section.copied-below-anchor {
+  margin-top: 32rpx;
+}
+
 /* ===== 地图区 ===== */
 .tracking-map-section {
   position: relative;
@@ -320,6 +331,94 @@
   background: rgba(91, 140, 90, 0.16);
   border-radius: 50%;
   filter: blur(4rpx);
+}
+
+.map-marker {
+  position: absolute;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.map-marker.force-visible,
+.force-visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.marker-core {
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--neu-raised-sm), 0 8rpx 28rpx rgba(0, 0, 0, 0.12);
+  position: relative;
+  z-index: 2;
+}
+
+.marker-icon {
+  width: 44rpx;
+  height: 44rpx;
+}
+
+.worker-marker {
+  top: 24%;
+  right: 22%;
+  width: 88rpx;
+  height: 88rpx;
+}
+
+.worker-marker-core {
+  background: var(--brand);
+}
+
+.marker-pulse {
+  position: absolute;
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--brand);
+  opacity: 0.25;
+  animation: markerPulse 2s var(--ease) infinite;
+}
+
+@keyframes markerPulse {
+  0% { transform: translate(-50%, -50%) scale(1); opacity: 0.25; }
+  70% { transform: translate(-50%, -50%) scale(1.6); opacity: 0; }
+  100% { transform: translate(-50%, -50%) scale(1.6); opacity: 0; }
+}
+
+.dest-marker {
+  bottom: 22%;
+  left: 26%;
+}
+
+.dest-marker-core {
+  width: 80rpx;
+  height: 80rpx;
+  background: var(--red);
+}
+
+.dest-marker-core .marker-icon {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.marker-pin {
+  width: 0;
+  height: 0;
+  border-left: 16rpx solid transparent;
+  border-right: 16rpx solid transparent;
+  border-top: 24rpx solid var(--red);
+  margin-top: -8rpx;
 }
 
 /* ===== 状态横幅（浮动在地图下沿，初始 margin:-32px 20px 0 → -64rpx 40rpx 0） ===== */

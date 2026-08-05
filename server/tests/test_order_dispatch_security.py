@@ -11,6 +11,7 @@ from app.api.orders import available_orders, get_order, list_orders, worker_orde
 from app.api.reviews import worker_detail as public_review_worker_detail
 from app.api.services import _worker_to_dict
 from app.database import Base
+from app.models.extra_fee import OrderExtraFee
 from app.models.order import Bidding, Order
 from app.models.user import User, Worker
 from app.schemas.order import BiddingRequest
@@ -25,6 +26,7 @@ class OrderDispatchSecurityTests(unittest.IsolatedAsyncioTestCase):
             Worker.__table__,
             Order.__table__,
             Bidding.__table__,
+            OrderExtraFee.__table__,
         ]
         Base.metadata.create_all(self.engine, tables=self.tables)
         self.Session = session_factory(self.engine)

@@ -1,0 +1,57 @@
+<view class="phone-page design-detail-page" data-page-id="page-client-income-stat">
+  <view class="status-bar"><text class="tag-span">9:41</text><text class="status-icons tag-span">● WiFi 100%</text></view>
+  <view class="topbar"><view class="icon-button design-button" data-dom-id="income-stat-back" data-route="/pages/client-wallet/index" bindtap="onNavigate"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m15%2018-6-6%206-6M9%2012h10%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view><view class="tag-h1">收支统计</view><view class="top-action design-button" data-dom-id="income-stat-calendar" data-action="open-income-calendar" bindtap="onAction">月份</view></view>
+
+  <!-- 加载态 -->
+  <view class="page-body" wx:if="{{loading}}">
+    <view class="hero"><view class="hero-kicker tag-p">{{periodLabel}}</view><view class="tag-h2">本月净支出</view><view class="hero-number">¥ 0.00</view><view class="tag-p">正在加载真实收支数据…</view></view>
+    <view class="section"><view class="grid-3"><view class="card metric"><text class="tag-strong">¥--</text><text class="tag-span">收入</text></view><view class="card metric"><text style="color:var(--danger)" class="tag-strong">¥--</text><text class="tag-span">支出</text></view><view class="card metric"><text class="tag-strong">¥--</text><text class="tag-span">净支出</text></view></view></view>
+  </view>
+
+  <!-- 错误态 -->
+  <view class="page-body" wx:elif="{{loadError}}">
+    <view class="hero"><view class="hero-kicker tag-p">{{periodLabel}}</view><view class="tag-h2">加载失败</view><view class="hero-number">⚠</view><view class="tag-p">{{loadError}}</view></view>
+    <view class="section"><view class="card list-card" bindtap="onRefresh"><view class="list-row" style="justify-content:center;"><text class="tag-strong">点击重试</text></view></view></view>
+  </view>
+
+  <!-- 正常态 -->
+  <view class="page-body" wx:else>
+    <view class="hero"><view class="hero-kicker tag-p">{{periodLabel}}</view><view class="tag-h2">本期净支出</view><view class="hero-number">¥ {{netText}}</view><view class="tag-p">{{netTrendText}}</view></view>
+    <view class="section-title"><text class="tag-strong">统计状态</text><text class="badge success tag-span">{{updatedText}}</text></view>
+    <view class="segmented">
+      <view class="segment {{activePeriod === 'month' ? 'active' : ''}} design-button" data-dom-id="income-stat-month" data-action="show-month-stat" data-period="month" bindtap="onPeriodChange">月</view>
+      <view class="segment {{activePeriod === 'quarter' ? 'active' : ''}} design-button" data-dom-id="income-stat-quarter" data-action="show-quarter-stat" data-period="quarter" bindtap="onPeriodChange">季</view>
+      <view class="segment {{activePeriod === 'year' ? 'active' : ''}} design-button" data-dom-id="income-stat-year" data-action="show-year-stat" data-period="year" bindtap="onPeriodChange">年</view>
+    </view>
+    <view class="section"><view class="grid-3">
+      <view class="card metric"><text class="tag-strong">{{incomeText}}</text><text class="tag-span">收入</text></view>
+      <view class="card metric"><text style="color:var(--danger)" class="tag-strong">{{expenseText}}</text><text class="tag-span">支出</text></view>
+      <view class="card metric"><text class="tag-strong">{{netText}}</text><text class="tag-span">净支出</text></view>
+    </view></view>
+
+    <!-- 空态 -->
+    <view class="section" wx:if="{{isEmpty}}">
+      <view class="section-title"><text class="tag-strong">支出构成</text><text class="tag-span">0%</text></view>
+      <view class="card list-card">
+        <view class="list-row" style="justify-content:center;"><text class="tag-span">{{emptyText}}</text></view>
+      </view>
+    </view>
+
+    <!-- 支出构成列表 -->
+    <view class="section" wx:else>
+      <view class="section-title"><text class="tag-strong">支出构成</text><text class="tag-span">100%</text></view>
+      <view class="card list-card">
+        <view class="list-row" wx:for="{{expenseCategories}}" wx:key="key">
+          <text class="row-icon tag-span">{{item.icon}}</text>
+          <view class="row-main">
+            <view class="row-title">{{item.title}}</view>
+            <view class="row-copy">{{item.copy}}</view>
+          </view>
+          <text class="row-value tag-span">{{item.amountText}} · {{item.percentText}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="fixed-actions"><view class="btn primary design-button" data-dom-id="income-stat-transactions" data-route="/pages/client-balance-transactions/index" bindtap="onNavigate">查看对应流水</view></view>
+</view>

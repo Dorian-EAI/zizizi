@@ -1,0 +1,43 @@
+<!-- AUTO-GENERATED DESIGN VIEW sourceHash=fnv1a-a851a8a5; edit source HTML or generator bindings, then rerun. -->
+<view class="phone-page design-detail-page worker-theme" data-dom-id="page-worker-help">
+    <view class="status-bar"><text class="tag-span">9:41</text><text class="status-icons tag-span">●●●</text></view>
+    <view class="topbar">
+      <view class="icon-button design-button" data-dom-id="help-back" data-route="/pages/worker-profile/index" bindtap="onNavigate"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m15%2018-6-6%206-6M9%2012h10%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view>
+      <view><view class="eyebrow tag-p">平台支持</view><view class="tag-h1">帮助中心</view></view>
+      <text class="badge success tag-span">在线</text>
+    </view>
+
+    <view class="page-body">
+
+    <view class="hero">
+      <view class="hero-kicker tag-p">需要什么帮助？</view><view class="tag-h2">快速找到答案</view>
+      <text class="field tag-label"><input class="input" data-dom-id="help-search" data-action="search-help" placeholder="搜索接单、提现、认证问题" bindchange="onAction" /></text>
+    </view>
+
+    <view class="section">
+      <view class="section-title"><text class="tag-strong">常见问题分类</text><text class="tag-span">按主题查找</text></view>
+      <view class="grid-3">
+        <view class="card metric design-button" data-dom-id="help-category-orders" data-route="/pages/worker-help-category/index?category=orders" bindtap="onNavigate"><text class="tag-strong">单</text><text class="tag-span">接单 · 报价</text></view>
+        <view class="card metric design-button" data-dom-id="help-category-service" data-route="/pages/worker-help-category/index?category=service" bindtap="onNavigate"><text class="tag-strong">修</text><text class="tag-span">履约 · 完工</text></view>
+        <view class="card metric design-button" data-dom-id="help-category-wallet" data-route="/pages/worker-help-category/index?category=wallet" bindtap="onNavigate"><text class="tag-strong">钱</text><text class="tag-span">钱包 · 提现</text></view>
+        <view class="card metric design-button" data-dom-id="help-category-cert" data-route="/pages/worker-help-category/index?category=certification" bindtap="onNavigate"><text class="tag-strong">证</text><text class="tag-span">认证 · 审核</text></view>
+        <view class="card metric design-button" data-dom-id="help-category-review" data-route="/pages/worker-help-category/index?category=reviews" bindtap="onNavigate"><text class="tag-strong">评</text><text class="tag-span">评价 · 申诉</text></view>
+        <view class="card metric design-button" data-dom-id="help-category-account" data-route="/pages/worker-help-category/index?category=account" bindtap="onNavigate"><text class="tag-strong">账</text><text class="tag-span">账号 · 设置</text></view>
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="section-title"><text class="tag-strong">热门问题</text><text class="tag-span">大家都在看</text></view>
+      <view class="card list-card">
+        <view class="list-row design-button" data-dom-id="help-faq-accept-rate" data-action="toggle-faq" bindtap="onAction"><text class="row-main tag-span"><text class="row-title tag-span">如何提高报价成功率？</text><text class="row-copy tag-span">报价与接单</text></text><text class="expand-toggle tag-span"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M12%205v14M5%2012h14%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></text></view>
+        <view class="list-row design-button" data-dom-id="help-faq-withdraw" data-action="toggle-faq" bindtap="onAction"><text class="row-main tag-span"><text class="row-title tag-span">提现一般多久到账？</text><text class="row-copy tag-span">钱包与资金</text></text><text class="expand-toggle tag-span"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M12%205v14M5%2012h14%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></text></view>
+        <view class="list-row design-button" data-dom-id="help-faq-complaint" data-action="toggle-faq" bindtap="onAction"><text class="row-main tag-span"><text class="row-title tag-span">收到投诉后怎么办？</text><text class="row-copy tag-span">评价与申诉</text></text><text class="expand-toggle tag-span"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M12%205v14M5%2012h14%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></text></view>
+      </view>
+    </view>
+
+    <view class="section card">
+      <view><view class="eyebrow tag-p">仍未解决</view><view class="tag-h2">联系平台客服</view><view class="tag-p">自动携带师傅身份和当前页面，减少重复说明。</view></view>
+      <view class="btn secondary block design-button" data-dom-id="help-contact-service" data-route="/pages/client-customer-service/index?role=worker" bindtap="onNavigate">联系客服</view>
+    </view>
+    </view>
+  </view>

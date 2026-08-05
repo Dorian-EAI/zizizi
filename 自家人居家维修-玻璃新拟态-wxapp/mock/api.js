@@ -181,6 +181,7 @@ const namespacedMock = {
   // 微信支付
   wxpay: {
     rechargeJsapi: async (amount) => ({ timeStamp: '', nonceStr: '', package: '', signType: 'MD5', paySign: '' }),
+    paymentStatus: async () => ({ status: 'pending' }),
     orderJsapi: async (orderId, paymentMethod) => ({ timeStamp: '', nonceStr: '', package: '', signType: 'MD5', paySign: '' })
   },
 

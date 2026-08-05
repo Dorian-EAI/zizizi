@@ -26,14 +26,13 @@
         <image src="{{icons.droplet}}" mode="aspectFit" class="hero-watermark-icon" lazy-load="{{false}}" />
       </view>
       <view class="hero-content">
-        <view class="hero-tag">{{service.category || '官方认证服务'}}</view>
-        <text class="service-name">{{service.name || '防水维修'}}</text>
+        <view class="hero-tag">{{service.category || '服务项目'}}</view>
+        <text class="service-name">{{service.name || '服务详情'}}</text>
         <view class="service-meta">
-          <text class="meta-star">★ {{service.rating || '4.9'}}</text>
-          <text class="meta-dot">·</text>
-          <text>{{service.serviceCount || 128}}次服务</text>
-          <text class="meta-dot">·</text>
-          <text>{{service.responseTime || '3分钟'}}响应</text>
+          <text class="meta-star" wx:if="{{reviewSummary}}">★ {{reviewSummary.average}}</text>
+          <text class="meta-dot" wx:if="{{reviewSummary}}">·</text>
+          <text wx:if="{{reviewSummary}}">{{reviewSummary.total}}条评价</text>
+          <text wx:else>服务数据以平台实时配置为准</text>
         </view>
       </view>
     </view>
@@ -70,6 +69,12 @@
               </view>
             </view>
           </view>
+          <view class="price-row" wx:if="{{!priceItems.length}}">
+            <view class="price-info">
+              <text class="price-name">暂无服务端价格明细</text>
+              <text class="price-desc">提交需求后可查看师傅实际报价</text>
+            </view>
+          </view>
         </view>
       </view>
     </view>
@@ -93,6 +98,9 @@
             <text class="step-text">{{item.title}}</text>
             <image src="{{icons.arrowDown}}" mode="aspectFit" class="step-arrow" lazy-load="{{false}}" />
           </view>
+          <view class="content-item" wx:if="{{!steps.length}}">
+            <text class="step-text">暂无服务端流程说明</text>
+          </view>
         </view>
       </view>
     </view>
@@ -101,28 +109,23 @@
     <view class="section">
       <view class="section-title">
         <text>推荐师傅</text>
-        <text class="more">查看全部 ›</text>
+        <text class="more" wx:if="{{workers.length}}">{{workers.length}}位</text>
       </view>
       <scroll-view scroll-x class="master-scroll hide-scroll" enable-flex>
-        <view class="master-card press-scale">
+        <view class="master-card press-scale" wx:for="{{workers}}" wx:key="id" data-id="{{item.id}}" bindtap="onWorkerTap">
           <view class="master-avatar">
-            <view class="avatar-inner">王</view>
+            <image wx:if="{{item.avatar}}" src="{{item.avatar}}" mode="aspectFill" class="avatar-inner" lazy-load="{{false}}" />
+            <view wx:else class="avatar-inner">{{item.avatarText}}</view>
           </view>
-          <text class="master-name">王师傅</text>
-          <text class="master-stats"><text class="star">★ 4.9</text> · 326次服务</text>
+          <text class="master-name">{{item.name}}</text>
+          <text class="master-stats"><text class="star">★ {{item.ratingText}}</text> · {{item.serviceCountText}}次服务</text>
           <view class="btn-neu-primary master-book press-scale">
-            <text class="master-book-text">预约</text>
+            <text class="master-book-text">查看</text>
           </view>
         </view>
-        <view class="master-card press-scale">
-          <view class="master-avatar">
-            <view class="avatar-inner avatar-amber">陈</view>
-          </view>
-          <text class="master-name">陈师傅</text>
-          <text class="master-stats"><text class="star">★ 4.8</text> · 215次服务</text>
-          <view class="btn-neu-primary master-book press-scale">
-            <text class="master-book-text">预约</text>
-          </view>
+        <view class="master-card" wx:if="{{!relatedLoading && !workers.length}}">
+          <text class="master-name">暂无可展示的师傅</text>
+          <text class="master-stats">请稍后再试</text>
         </view>
       </scroll-view>
     </view>
@@ -131,34 +134,24 @@
     <view class="section">
       <view class="section-title">
         <text>用户评价</text>
-        <text class="more">查看全部 ›</text>
+        <text class="more" wx:if="{{reviewSummary}}">共{{reviewSummary.total}}条</text>
       </view>
       <view class="review-list">
-        <view class="glass-neu-card review-card">
+        <view class="glass-neu-card review-card" wx:for="{{reviews}}" wx:key="id">
           <view class="review-head">
             <view class="review-avatar">
-              <view class="avatar-inner">李</view>
+              <view class="avatar-inner">{{item.avatarText}}</view>
             </view>
             <view class="review-info">
-              <text class="review-name">李女士</text>
-              <text class="review-stars">★★★★★</text>
+              <text class="review-name">{{item.displayName}}</text>
+              <text class="review-stars">{{item.stars}}</text>
             </view>
-            <text class="review-date">2026-07-15</text>
+            <text class="review-date">{{item.date}}</text>
           </view>
-          <text class="review-text">师傅很专业，防水做得很细致，施工后没有再渗水，沟通也很顺畅，强烈推荐！</text>
+          <text class="review-text">{{item.content}}</text>
         </view>
-        <view class="glass-neu-card review-card">
-          <view class="review-head">
-            <view class="review-avatar">
-              <view class="avatar-inner avatar-amber">张</view>
-            </view>
-            <view class="review-info">
-              <text class="review-name">张先生</text>
-              <text class="review-stars">★★★★★</text>
-            </view>
-            <text class="review-date">2026-07-09</text>
-          </view>
-          <text class="review-text">响应很快，三分钟就有师傅接单，价格透明无隐形消费，整体体验非常好。</text>
+        <view class="glass-neu-card review-card" wx:if="{{!relatedLoading && !reviews.length}}">
+          <text class="review-text">暂无已通过审核的用户评价</text>
         </view>
       </view>
     </view>

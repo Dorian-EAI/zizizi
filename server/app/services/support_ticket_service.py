@@ -1,7 +1,5 @@
 """客服工单业务逻辑"""
 
-import time
-import random
 from datetime import datetime
 from typing import List, Optional
 from fastapi import HTTPException
@@ -9,10 +7,11 @@ from sqlalchemy.orm import Session
 
 from app.models.support_ticket import SupportTicket, TicketReply
 from app.models.admin import Admin
+from app.utils.snowflake import generate_business_no
 
 
 def _gen_ticket_no() -> str:
-    return f"TK{int(time.time())}{random.randint(1000, 9999)}"
+    return generate_business_no("TK")
 
 
 def create_ticket(db: Session, creator_type: str, creator_id: int,

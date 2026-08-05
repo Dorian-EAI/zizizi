@@ -32,15 +32,15 @@ Page({
     statusBarHeight: 20,
     orderId: '',
     tracking: {},
-    mapLat: 39.9042,
-    mapLng: 116.4074,
+    mapLat: 0,
+    mapLng: 0,
     markers: [],
     polyline: [],
     steps: [],
     staleWarning: false,
     loading: true,
     loadError: false,
-    statusTitle: '师傅正在赶来',
+    statusTitle: '位置状态待加载',
     statusMeta: '',
     icons: {},
     // ===== 滚动变形状态（忠于 HTML 参考脚本 syncMorph，1px=2rpx） =====
@@ -107,6 +107,7 @@ Page({
     const api = app.getApi()
     try {
       const data = await api.track.tracking(this.data.orderId)
+      if (!data || !(data.status || data.order_status)) throw new Error('追踪接口未返回有效订单状态')
       this.applyTracking(data)
       this.setData({ loading: false, loadError: false })
     } catch (e) {
@@ -121,13 +122,39 @@ Page({
   },
 
   applyTracking(data) {
-    const tracking = data || {}
-    const worker = tracking.worker || {}
-    const dest = tracking.destination || {}
-    const workerLat = Number(worker.lat) || 0
-    const workerLng = Number(worker.lng) || 0
-    const destLat = Number(dest.lat) || 0
-    const destLng = Number(dest.lng) || 0
+    const rawTracking = data || {}
+    const rawLocation = rawTracking.location || {}
+    const rawDestination = rawTracking.destination || {}
+    const rawWorker = rawTracking.worker || null
+    const workerLat = Number(rawWorker && (rawWorker.lat || rawWorker.latitude)) || Number(rawLocation.latitude || rawLocation.lat) || 0
+    const workerLng = Number(rawWorker && (rawWorker.lng || rawWorker.longitude)) || Number(rawLocation.longitude || rawLocation.lng) || 0
+    const destLat = Number(rawDestination.lat || rawDestination.latitude) || 0
+    const destLng = Number(rawDestination.lng || rawDestination.longitude) || 0
+    const worker = rawWorker ? Object.assign({}, rawWorker, {
+      lat: workerLat,
+      lng: workerLng,
+      rating: Number(rawWorker.rating) > 0 ? rawWorker.rating : '—',
+      services: rawWorker.services != null
+        ? rawWorker.services
+        : (rawWorker.service_count != null ? rawWorker.service_count : '—'),
+      certified: rawWorker.certified == null ? null : Number(rawWorker.certified) === 2
+    }) : {}
+    const dest = (destLat && destLng) ? Object.assign({}, rawDestination, { lat: destLat, lng: destLng }) : null
+    const timelineMap = {}
+    ;(Array.isArray(rawTracking.timeline) ? rawTracking.timeline : []).forEach(item => {
+      if (item && (item.status || item.key)) timelineMap[item.status || item.key] = item.time || ''
+    })
+    const tracking = Object.assign({}, rawTracking, {
+      status: rawTracking.status || rawTracking.order_status,
+      worker: rawWorker ? worker : null,
+      destination: dest,
+      route: rawTracking.route || rawTracking.route_points || [],
+      lastUpdate: rawTracking.lastUpdate || rawTracking.last_update || rawLocation.last_reported_at,
+      steps: rawTracking.steps || timelineMap
+    })
+    if (!(workerLat && workerLng) && !(destLat && destLng)) {
+      throw new Error('追踪接口未返回有效坐标')
+    }
 
     // 构建 markers：师傅位置（蓝）+ 服务地点（红）
     // 不依赖本地图片资源，避免小程序包缺少 /assets 时地图标记丢失。
@@ -139,7 +166,7 @@ Page({
         longitude: workerLng,
         title: worker.name || '师傅位置',
         callout: {
-          content: worker.name ? (worker.name + ' 正在赶来') : '师傅正在赶来',
+          content: worker.name || '师傅位置',
           color: '#2C2824',
           fontSize: 12,
           borderRadius: 8,
@@ -203,15 +230,16 @@ Page({
     }
 
     // 位置是否超过 60 秒未更新
-    const lastUpdate = tracking.lastUpdate ? new Date(tracking.lastUpdate).getTime() : Date.now()
-    const staleWarning = (Date.now() - lastUpdate) > STALE_THRESHOLD
+    const lastUpdateValue = tracking.lastUpdate
+    const lastUpdate = lastUpdateValue ? new Date(lastUpdateValue).getTime() : 0
+    const staleWarning = !!(workerLat && workerLng) && (rawLocation.is_stale === true || !lastUpdate || (Date.now() - lastUpdate) > STALE_THRESHOLD)
 
     // 服务进度时间线（state: done/active/pending，desc: HTML 参考描述）
-    const status = tracking.status || 'departing'
+    const status = tracking.status
     const currentIdx = getStepIndex(status)
     const distanceText = (function () {
       const eta = tracking.eta || {}
-      const d = eta.distance || tracking.distance
+      const d = eta.distance || eta.distance_text || tracking.distance
       return d ? ('，距离' + d) : ''
     })()
     const steps = TRACKING_STEPS.map(function (s, i) {
@@ -235,18 +263,21 @@ Page({
 
     // 状态横幅文案
     const eta = tracking.eta || {}
-    const statusTitle = TRACKING_STATUS_TITLE[status] || STATUS_TEXT[status] || '师傅正在赶来'
+    const statusTitle = TRACKING_STATUS_TITLE[status] || STATUS_TEXT[status] || '订单状态待确认'
     const metaParts = []
-    const etaMinutes = eta.minutes || tracking.etaMinutes || (tracking.eta_seconds ? Math.ceil(Number(tracking.eta_seconds) / 60) : '')
-    const distance = eta.distance || tracking.distance || (tracking.distance_meters ? (Number(tracking.distance_meters) / 1000).toFixed(1) + 'km' : '')
-    if (etaMinutes) metaParts.push('约' + etaMinutes + '分钟到达')
+    const etaSeconds = eta.eta_seconds || tracking.eta_seconds
+    const etaMinutes = eta.minutes || tracking.etaMinutes || (etaSeconds ? Math.ceil(Number(etaSeconds) / 60) : '')
+    const distance = eta.distance || eta.distance_text || tracking.distance ||
+      (eta.distance_meters ? (Number(eta.distance_meters) / 1000).toFixed(1) + 'km' : '')
+    if (eta.eta_text) metaParts.push(eta.eta_text)
+    else if (etaMinutes) metaParts.push('约' + etaMinutes + '分钟到达')
     if (distance) metaParts.push(distance)
     const statusMeta = metaParts.join(' · ')
 
     this.setData({
       tracking,
-      mapLat: workerLat || destLat || 39.9042,
-      mapLng: workerLng || destLng || 116.4074,
+      mapLat: workerLat || destLat,
+      mapLng: workerLng || destLng,
       markers,
       polyline,
       steps,
@@ -262,11 +293,12 @@ Page({
 
   onCallWorker() {
     const phone = this.data.tracking.worker && this.data.tracking.worker.phone
-    if (!phone) {
-      wx.showToast({ title: '暂无师傅电话', icon: 'none' })
+    const value = String(phone || '').trim()
+    if (!value || value.indexOf('*') >= 0 || !/^1[3-9]\d{9}$/.test(value)) {
+      wx.showToast({ title: '师傅电话未提供或已脱敏', icon: 'none' })
       return
     }
-    wx.makePhoneCall({ phoneNumber: String(phone) })
+    wx.makePhoneCall({ phoneNumber: value })
   },
 
   onNavigate() {

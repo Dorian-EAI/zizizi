@@ -5,7 +5,8 @@ from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session
 
 from app.database import get_db
-from app.dependencies import get_current_account, get_current_admin
+from app.dependencies import get_current_account, require_super_admin
+from app.config import settings
 from app.schemas.message import (
     MessageResponse,
     MessageListResponse,
@@ -87,10 +88,14 @@ async def delete_message(
 @router.post("/test/send")
 async def test_send_message(
     req: TestSendMessageRequest,
-    admin=Depends(get_current_admin),
+    admin=Depends(require_super_admin),
     db: Session = Depends(get_db),
 ):
     """开发调试：手动发送一条消息"""
+    if settings.is_deployed:
+        from fastapi import HTTPException
+
+        raise HTTPException(status_code=404, detail="调试接口在当前环境不可用")
     msg = message_service.send_inbox_message(
         db=db,
         owner_type=req.owner_type,

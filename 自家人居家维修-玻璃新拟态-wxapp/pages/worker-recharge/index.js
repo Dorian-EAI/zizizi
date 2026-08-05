@@ -2,7 +2,6 @@
 const app = getApp()
 const api = app.getApi()
 const { buildIcon, COLORS } = require('../../utils/icons')
-const { requestPayment, isPaymentCancelled } = require('../../utils/wx-payment')
 
 // 千分位金额格式化：1286.5 → "1,286.50"
 function formatMoney(num) {
@@ -36,11 +35,11 @@ Page({
     ],
     // 充值说明（对应 HTML notes-card）
     notes: [
-      '充值金额即时到账，可用于平台服务抵扣。',
-      '充值金额不可退款、不可提现，请按需充值。',
-      '仅用于平台服务抵扣，活动赠送金额有效期以活动规则为准。'
+      '微信支付完成后，需等待服务端支付回调确认。',
+      '是否到账以钱包余额和服务端交易记录为准。',
+      '如长时间未确认，请通过客服工单提交支付单号。'
     ],
-    showActivity: true,
+    showActivity: false,
     submitting: false,
     icons: {}
   },
@@ -139,38 +138,15 @@ Page({
     return sel ? sel.value : 0
   },
 
-  async onSubmit() {
-    const { submitting, payMethods } = this.data
-    if (submitting) return
-    const amt = this.getAmount()
-    if (!amt || amt <= 0) {
-      wx.showToast({ title: '请选择充值金额', icon: 'none' })
-      return
-    }
-    const method = payMethods.find(m => m.selected)
-    if (!method || method.key !== 'wxpay') {
-      wx.showToast({ title: '支付宝充值暂未开放', icon: 'none' })
-      return
-    }
-    this.setData({ submitting: true })
-    wx.showLoading({ title: '处理中...' })
-    try {
-      const payParams = await api.wxpay.rechargeJsapi(amt)
-      await requestPayment(payParams)
-      wx.hideLoading()
-      wx.showToast({ title: '充值成功', icon: 'success' })
-      setTimeout(() => wx.navigateBack(), 800)
-    } catch (e) {
-      wx.hideLoading()
-      console.error('充值失败', e)
-      if (isPaymentCancelled(e)) {
-        wx.showToast({ title: '已取消支付', icon: 'none' })
-      } else {
-        wx.showToast({ title: '充值失败', icon: 'none' })
-      }
-    } finally {
-      this.setData({ submitting: false })
-    }
+  onSubmit() {
+    // PRD v6.2 明确不开放师傅收入钱包充值或师傅间转账。
+    // 本页只保留为 .design 历史画布的视觉对照，不发起任何资金请求。
+    wx.showModal({
+      title: '当前版本不开放师傅充值',
+      content: '师傅收入只来自已结算订单，保证金请从独立的保证金流程处理。',
+      showCancel: false,
+      confirmColor: '#2D6CDF'
+    })
   },
 
   onBack() {

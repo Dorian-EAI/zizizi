@@ -16,7 +16,7 @@
           </view>
           <view class="verify-badge badge-below">
             <image src="{{icons.verify}}" mode="aspectFit" class="verify-ic" lazy-load="{{false}}" />
-            <text>已认证</text>
+            <text>{{workerInfo.verifyStatus}}</text>
           </view>
         </view>
         <view class="profile-info">
@@ -58,21 +58,21 @@
     <!-- ===== BASIC INFO ===== -->
     <view class="section">
       <text class="section-title">基本信息</text>
-      <view class="info-card">
-        <view class="info-menu-card">
+      <view class="info-card card">
+        <view class="info-menu-card menu-card">
           <view
-            class="info-menu-row press-card"
+            class="info-menu-row menu-row press-card"
             wx:for="{{basicInfo}}"
             wx:key="key"
             data-key="{{item.key}}"
             bindtap="onInfoTap"
           >
-            <view class="info-menu-icon info-menu-icon-{{item.tone}}">
+            <view class="info-menu-icon info-menu-icon-{{item.tone}} menu-icon menu-icon-{{item.tone}}">
               <image src="{{item.iconUrl}}" mode="aspectFit" class="info-menu-ic" lazy-load="{{false}}" />
             </view>
-            <text class="info-menu-label">{{item.label}}</text>
-            <text class="info-menu-value {{item.valueTone ? 'text-green' : ''}}">{{item.value}}</text>
-            <image src="{{icons.chevron}}" mode="aspectFit" class="info-menu-chevron" lazy-load="{{false}}" />
+            <text class="info-menu-label menu-label">{{item.label}}</text>
+            <text class="info-menu-value menu-value {{item.valueTone ? 'text-green green' : ''}}">{{item.value}}</text>
+            <image src="{{icons.chevron}}" mode="aspectFit" class="info-menu-chevron menu-chevron" lazy-load="{{false}}" />
           </view>
         </view>
       </view>
@@ -81,20 +81,20 @@
     <!-- ===== MORE FUNCTIONS ===== -->
     <view class="section">
       <text class="section-title">更多功能</text>
-      <view class="info-card">
-        <view class="info-menu-card">
+      <view class="info-card card">
+        <view class="info-menu-card menu-card">
           <view
-            class="info-menu-row press-card"
+            class="info-menu-row menu-row press-card"
             wx:for="{{features}}"
             wx:key="key"
             data-key="{{item.key}}"
             bindtap="onFeatureTap"
           >
-            <view class="info-menu-icon info-menu-icon-{{item.tone}}">
+            <view class="info-menu-icon info-menu-icon-{{item.tone}} menu-icon menu-icon-{{item.tone}}">
               <image src="{{item.iconUrl}}" mode="aspectFit" class="info-menu-ic" lazy-load="{{false}}" />
             </view>
-            <text class="info-menu-label">{{item.name}}</text>
-            <image src="{{icons.chevron}}" mode="aspectFit" class="info-menu-chevron" lazy-load="{{false}}" />
+            <text class="info-menu-label menu-label">{{item.name}}</text>
+            <image src="{{icons.chevron}}" mode="aspectFit" class="info-menu-chevron menu-chevron" lazy-load="{{false}}" />
           </view>
         </view>
       </view>
@@ -102,5 +102,5 @@
 
   </scroll-view>
 
-  <tab-bar id="tabbar" active="mine" />
+  <tab-bar id="tabbar" class="tab-bar" active="mine" />
 </view>

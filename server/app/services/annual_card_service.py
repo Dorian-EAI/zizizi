@@ -20,7 +20,7 @@ def list_templates(db: Session, is_active: bool = True) -> List[AnnualCardTempla
     q = db.query(AnnualCardTemplate)
     if is_active is not None:
         q = q.filter(AnnualCardTemplate.is_active == is_active)
-    return q.order_by(AnnualCardTemplate.sort_order.asc()).all()
+    return q.order_by(AnnualCardTemplate.sort_order.asc()).limit(200).all()
 
 
 def purchase_card(db: Session, user_id: int, template_id: int) -> UserAnnualCard:
@@ -47,7 +47,7 @@ def get_my_cards(db: Session, user_id: int, status: str = None) -> List[UserAnnu
     q = db.query(UserAnnualCard).filter(UserAnnualCard.user_id == user_id)
     if status:
         q = q.filter(UserAnnualCard.status == status)
-    return q.order_by(UserAnnualCard.created_at.desc()).all()
+    return q.order_by(UserAnnualCard.created_at.desc()).limit(200).all()
 
 
 def refund_card(db: Session, user_id: int, card_id: int) -> dict:

@@ -55,6 +55,10 @@
   overflow: hidden;
 }
 
+.member-hero.hero {
+  color: var(--text-1);
+}
+
 /* HTML .member-top: flex; align-items:center; gap:14px → 28rpx; z-index:2 */
 .member-top {
   display: flex;
@@ -216,6 +220,36 @@
   border: 2rpx solid rgba(255, 255, 255, 0.32);
 }
 
+.benefit-icon-teal {
+  color: var(--brand);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.28), rgba(13, 148, 136, 0.20));
+}
+
+.benefit-icon-amber {
+  color: var(--accent);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.28), rgba(212, 148, 76, 0.20));
+}
+
+.benefit-icon-green {
+  color: var(--green);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.28), rgba(91, 140, 90, 0.18));
+}
+
+.benefit-icon-blue {
+  color: var(--blue);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.28), rgba(90, 143, 173, 0.20));
+}
+
+.benefit-icon-purple {
+  color: var(--purple);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.28), rgba(160, 114, 60, 0.16));
+}
+
+.benefit-icon-red {
+  color: var(--red);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.28), rgba(196, 83, 58, 0.16));
+}
+
 .benefit-card:nth-child(1) .benefit-icon {
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.28), rgba(13, 148, 136, 0.20));
 }
@@ -318,6 +352,18 @@
   justify-content: center;
   background: var(--bg);
   box-shadow: var(--neu-raised-sm);
+}
+
+.level-tier-icon-silver {
+  color: #9CA3AF;
+}
+
+.level-tier-icon-gold {
+  color: var(--accent);
+}
+
+.level-tier-icon-diamond {
+  color: var(--blue);
 }
 
 /* HTML .level-tier-name: 13px/700 → 26rpx; -.01em */
@@ -511,6 +557,15 @@
   border: 1rpx solid rgba(255, 255, 255, 0.60);
   box-shadow: var(--neu-raised-sm);
   transition: transform 0.2s var(--spring), box-shadow 0.2s var(--ease);
+}
+
+.task-btn.btn-neu-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.50);
+  border: 1rpx solid rgba(255, 255, 255, 0.60);
+  box-shadow: var(--neu-raised-sm);
 }
 
 .task-btn:active {

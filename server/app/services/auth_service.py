@@ -154,10 +154,20 @@ def submit_worker_certification(
     身份证明文只在本函数的局部变量中短暂存在；数据库仅保存 AES 密文，
     certification_data 与返回值均只包含脱敏号段。
     """
-    from app.services import sms_service
+    from app.services import sms_service, upload_service
+
+    certificate_refs = [data.id_front, data.id_back, *data.certificate_images]
+    if data.health_certificate:
+        certificate_refs.append(data.health_certificate)
+    for reference in certificate_refs:
+        upload_service.validate_certificate_reference(reference, worker.id)
 
     verification_code = data.phone_verification_code.get_secret_value()
-    if not sms_service.verify_code(data.phone, verification_code):
+    if not sms_service.verify_code(
+        data.phone,
+        verification_code,
+        purpose="worker_certification",
+    ):
         raise HTTPException(status_code=400, detail="验证码错误或已过期")
 
     existing_phone = (
@@ -219,7 +229,7 @@ def submit_worker_certification(
 def bind_phone(db: Session, user: User, phone: str, verification_code: str) -> User:
     """校验一次性短信验证码后绑定或换绑手机号。"""
     from app.services import sms_service
-    if not sms_service.verify_code(phone, verification_code):
+    if not sms_service.verify_code(phone, verification_code, purpose="bind_phone"):
         raise HTTPException(status_code=400, detail="验证码错误或已过期")
     existing = db.query(User).filter(User.phone == phone, User.id != user.id).first()
     if existing:
@@ -270,6 +280,7 @@ def get_addresses(db: Session, user: User) -> List[Address]:
         db.query(Address)
         .filter(Address.user_id == user.id)
         .order_by(Address.is_default.desc(), Address.updated_at.desc())
+        .limit(50)
         .all()
     )
 

@@ -6,14 +6,14 @@ from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session
 
 from app.database import get_db
-from app.dependencies import get_current_user, get_current_admin
+from app.dependencies import get_current_user, require_super_admin
 from app.models.user import User
 from app.models.coupon import CouponTemplate
 from app.schemas.coupon import (
     CreateCouponTemplate,
     CouponTemplateResponse,
 )
-from app.services import coupon_service
+from app.services import coupon_service, admin_service
 from app.utils.response import success
 
 router = APIRouter(prefix="/api/coupons", tags=["优惠券"])
@@ -77,10 +77,13 @@ async def available_for_order(
 @router.post("/templates")
 async def create_template(
     req: CreateCouponTemplate,
-    admin=Depends(get_current_admin),
+    admin=Depends(require_super_admin),
     db: Session = Depends(get_db),
 ):
     """管理员创建优惠券模板。"""
     tmpl = coupon_service.create_template(db, req)
+    admin_service.add_admin_audit(
+        db, admin.id, "coupon_template.create", "coupon_template", tmpl.id, commit=True
+    )
     data = CouponTemplateResponse.model_validate(tmpl).model_dump(mode="json")
     return success(data=data, message="模板创建成功")

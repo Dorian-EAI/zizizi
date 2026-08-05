@@ -1,0 +1,40 @@
+<!-- AUTO-GENERATED DESIGN VIEW sourceHash=fnv1a-a94940ae; edit source HTML or generator bindings, then rerun. -->
+<view class="phone-page design-detail-page worker-theme" data-dom-id="page-worker-exam-result">
+    <view class="status-bar"><text class="tag-span">9:41</text><text class="status-icons tag-span">●●●</text></view>
+    <view class="topbar">
+      <view class="icon-button design-button" data-dom-id="exam-result-close" data-route="/pages/worker-training/index" bindtap="onNavigate"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M6%206l12%2012M18%206%206%2018%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view>
+      <view class="tag-h1">考试结果</view><text class="tag-span"></text>
+    </view>
+    <view class="page-body">
+      <view class="hero result-state success">
+        <view class="result-icon"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%235B8C5A%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2212%22%20r%3D%229%22%2F%3E%3Cpath%20d%3D%22m8%2012%202.6%202.6L16.5%209%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view>
+        <view class="hero-kicker tag-p">中级水电维修认证考试</view><view class="tag-h2">恭喜通过</view><view class="hero-number">86<text class="tag-small"> 分</text></view><view class="tag-p">及格线 80 分 · 证书状态将在审核完成后更新</view>
+      </view>
+
+      <view class="section">
+        <view class="section-title"><text class="tag-strong">答题表现</text><text class="tag-span">20 题</text></view>
+        <view class="grid-3">
+          <view class="card metric"><text class="tag-strong">17</text><text class="tag-span">答对</text></view>
+          <view class="card metric"><text class="tag-strong">3</text><text class="tag-span">答错</text></view>
+          <view class="card metric"><text class="tag-strong">18:42</text><text class="tag-span">用时</text></view>
+        </view>
+      </view>
+
+      <view class="section card">
+        <view class="section-title"><text class="tag-strong">知识点分析</text><text class="tag-span">继续巩固</text></view>
+        <view class="list-row"><text class="row-main tag-span"><text class="row-title tag-span">安全规范</text><text class="row-copy tag-span">正确率 100%</text></text><text class="badge success tag-span">掌握良好</text></view>
+        <view class="list-row"><text class="row-main tag-span"><text class="row-title tag-span">故障排查</text><text class="row-copy tag-span">正确率 80%</text></text><text class="badge warning tag-span">建议复习</text></view>
+        <view class="list-row"><text class="row-main tag-span"><text class="row-title tag-span">完工验收</text><text class="row-copy tag-span">正确率 75%</text></text><text class="badge warning tag-span">建议复习</text></view>
+      </view>
+
+      <view class="section card">
+        <view class="card-title tag-h2">下一步</view><view class="card-copy tag-p">考试已通过。平台将结合实名、证书、保证金与服务区域更新接单资格，预计几分钟内完成。</view>
+        <view class="spacer"></view>
+        <view class="btn secondary block design-button" data-dom-id="exam-result-review" data-route="/pages/worker-training-exam/index?mode=review&attempt=EX20260803012" bindtap="onNavigate">查看错题解析</view>
+      </view>
+    </view>
+    <view class="fixed-actions">
+      <view class="btn secondary design-button" data-dom-id="exam-result-course" data-route="/pages/worker-training-detail/index?course=electrical-advanced" bindtap="onNavigate">复习课程</view>
+      <view class="btn primary design-button" data-dom-id="exam-result-training" data-route="/pages/worker-training/index" bindtap="onNavigate">返回培训中心</view>
+    </view>
+  </view>

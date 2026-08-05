@@ -3,6 +3,7 @@ const app = getApp()
 const { buildIcon, COLORS } = require('../../utils/icons')
 const { STATUS_TEXT } = require('../../utils/order-status')
 const { requestPayment, isPaymentCancelled } = require('../../utils/wx-payment')
+const idempotency = require('../../utils/idempotency')
 
 // 状态文案映射
 const STATUS_TITLE = {
@@ -108,7 +109,7 @@ Page({
   },
 
   onContactService() {
-    wx.showToast({ title: '正在接入客服', icon: 'none' })
+    wx.navigateTo({ url: '/pages/client-customer-service/index?orderId=' + this.data.orderId })
   },
 
   async onClaim() {
@@ -170,6 +171,9 @@ Page({
         reviewBubbles,
         workerAvatarUrl: buildIcon('user', '#0D9488')
       })
+      if (['paid', 'pending_review', 'reviewed'].indexOf(order.status) >= 0 && withIcon.orderNo) {
+        idempotency.clear('order-jsapi:' + withIcon.orderNo)
+      }
       // 竞价中：加载报价
       if (order.status === 'bidding') {
         this.loadQuotes(id)
@@ -346,12 +350,11 @@ Page({
     } else if (status === 'accepted' || status === 'arrived' || status === 'serving') {
       this.onCall()
     } else if (status === 'completed') {
-      this.onPayOrder()
+      wx.navigateTo({ url: '/pages/client-payment/index?orderId=' + this.data.orderId })
     } else if (status === 'pending_review') {
-      // 跳评价 — 暂用页面内 modal（如有 review 页可改为跳转）
-      wx.showToast({ title: '请在订单完成后于详情页评价', icon: 'none' })
+      wx.navigateTo({ url: '/pages/client-review/index?orderId=' + this.data.orderId })
     } else if (status === 'paid') {
-      wx.showToast({ title: '请对本次服务评价', icon: 'none' })
+      wx.navigateTo({ url: '/pages/client-review/index?orderId=' + this.data.orderId })
     }
   },
 
@@ -377,7 +380,9 @@ Page({
         wx.showLoading({ title: '发起支付', mask: true })
         try {
           const api = app.getApi()
-          const payParams = await api.wxpay.orderJsapi(order.orderNo)
+          const slot = 'order-jsapi:' + order.orderNo
+          const idempotencyKey = idempotency.getOrCreate(slot)
+          const payParams = await api.wxpay.orderJsapi(order.orderNo, undefined, idempotencyKey)
           await requestPayment(payParams)
           wx.hideLoading()
           wx.showToast({ title: '支付已提交', icon: 'success' })

@@ -1,0 +1,15 @@
+<view class="phone-page design-detail-page" data-page-id="page-client-balance-transactions">
+  <view class="status-bar"><text class="tag-span">9:41</text><text class="status-icons tag-span">● WiFi 100%</text></view>
+  <view class="topbar"><view class="icon-button design-button" data-route="/pages/client-wallet/index" bindtap="onNavigate"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m15%2018-6-6%206-6M9%2012h10%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view><view class="tag-h1">收支明细</view><view class="top-action design-button" bindtap="onRefresh">刷新</view></view>
+  <view class="page-body">
+    <view class="hero"><view class="hero-kicker tag-p">ACCOUNT LEDGER</view><view class="tag-h2">{{summaryLabel}}</view><view class="hero-number">¥ {{summaryText}}</view><view class="tag-p">{{summaryCopy}}</view></view>
+    <view class="segmented"><view class="segment design-button {{activeFilter === 'all' ? 'active' : ''}}" data-filter="all" bindtap="onFilter">全部</view><view class="segment design-button {{activeFilter === 'income' ? 'active' : ''}}" data-filter="income" bindtap="onFilter">收入</view><view class="segment design-button {{activeFilter === 'expense' ? 'active' : ''}}" data-filter="expense" bindtap="onFilter">支出</view></view>
+    <view class="notice error" wx:if="{{loadError}}">{{loadError}}</view>
+    <view class="section">
+      <view class="section-title"><text class="tag-strong">账户流水</text><text class="tag-span">{{loading ? '同步中' : total + ' 笔'}}</text></view>
+      <view class="card list-card" wx:if="{{transactions.length}}"><view class="list-row" wx:for="{{transactions}}" wx:key="id" data-id="{{item.id}}" bindtap="onTransaction"><text class="row-icon tag-span">{{item.iconText}}</text><view class="row-main"><view class="row-title">{{item.title}}</view><view class="row-copy">{{item.orderText || item.timeText}}</view></view><text class="row-value tag-span amount-{{item.amountTone}}">{{item.amountText}}</text><text class="chevron tag-span">›</text></view></view>
+      <view class="empty-state truthful-empty" wx:elif="{{!loading}}"><view class="tag-h3">暂无收支记录</view><view class="tag-p">本页只展示服务端返回的真实账户流水</view></view>
+    </view>
+  </view>
+  <view class="fixed-actions"><view class="btn secondary design-button" data-route="/pages/client-wallet-recharge/index" bindtap="onNavigate">充值</view><view class="btn primary design-button" data-route="/pages/client-wallet-withdraw/index" bindtap="onNavigate">提现</view></view>
+</view>

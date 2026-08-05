@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 
 from app.config import settings
 from app.database import get_db
-from app.dependencies import get_current_admin, require_super_admin
+from app.dependencies import get_current_admin, require_admin_operator, require_super_admin
 from app.services import content_service
 from app.schemas.content import PageUpdateRequest
 from app.utils.response import success
@@ -67,7 +67,7 @@ async def update_page(
     body: PageUpdateRequest,
     key: str = Path(..., min_length=1, max_length=64, pattern="^[a-z0-9_-]+$"),
     db: Session = Depends(get_db),
-    admin=Depends(get_current_admin),
+    admin=Depends(require_admin_operator),
 ):
     """管理员：创建或更新页面内容"""
     page = content_service.upsert_page(db, key, body.title, body.content)

@@ -1,6 +1,6 @@
 <!-- pages/order-detail-worker/index.wxml — 师傅端订单详情 玻璃新拟态（像素级复刻 worker-order-detail.html） -->
 <view class="page">
-  <!-- 背景装饰光斑：径向渐变（blue-sage 配色） -->
+  <!-- 背景装饰光斑：径向渐变（blue-gold 配色） -->
   <view class="blob" style="top: -80rpx; right: -120rpx; width: 480rpx; height: 480rpx; background: radial-gradient(circle, var(--brand-worker) 0%, transparent 70%);"></view>
   <view class="blob" style="top: 880rpx; left: -160rpx; width: 420rpx; height: 420rpx; background: radial-gradient(circle, var(--sage) 0%, transparent 70%);"></view>
 
@@ -68,9 +68,11 @@
             <text class="worker-name">{{order.userName}}</text>
           </view>
           <view class="worker-meta">
-            <text class="worker-star">★ {{order.rating || '4.8'}}</text>
+            <text class="worker-star" wx:if="{{order.rating != null}}">★ {{order.rating}}</text>
+            <text class="worker-star" wx:else>暂无评分</text>
             <text class="meta-dot">·</text>
-            <text>{{order.orderCount || '12'}}次下单</text>
+            <text wx:if="{{order.orderCount != null}}">{{order.orderCount}}次下单</text>
+            <text wx:else>下单次数未提供</text>
           </view>
         </view>
         <view class="worker-actions">

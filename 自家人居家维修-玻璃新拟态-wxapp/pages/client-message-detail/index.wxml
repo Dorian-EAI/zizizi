@@ -1,0 +1,10 @@
+<view class="phone-page design-detail-page" data-page-id="page-client-message-detail">
+  <view class="status-bar"><text>9:41</text><text class="status-icons">● WiFi 100%</text></view>
+  <view class="topbar"><view class="icon-button design-button" data-route="/pages/client-notification/index" bindtap="onNavigate"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m15%2018-6-6%206-6M9%2012h10%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view><view class="tag-h1">消息详情</view><view class="top-action design-button" bindtap="onDelete">删除</view></view>
+  <view class="page-body">
+    <view class="notice info" wx:if="{{loading}}">正在加载消息…</view>
+    <view class="empty-state" wx:elif="{{loadError}}"><view class="tag-h3">无法查看消息</view><view class="tag-p">{{loadError}}</view></view>
+    <block wx:elif="{{message}}"><view class="hero"><view class="hero-kicker tag-p">{{message.typeText}} · {{message.createdText}}</view><view class="tag-h2">{{message.title}}</view><view class="tag-p">{{message.content}}</view><view class="spacer"></view><text class="badge {{message.is_read ? 'success' : 'warning'}}">{{message.is_read ? '已读' : '未读'}}</text></view><view class="section"><view class="section-title"><text class="tag-strong">消息来源</text><text class="badge info">服务端消息</text></view><view class="card"><view class="card-copy tag-p">该内容来自平台消息记录，不使用本地演示订单、师傅或电话数据。</view></view></view></block>
+  </view>
+  <view class="fixed-actions"><view class="btn secondary design-button" data-route="/pages/client-notification/index" bindtap="onNavigate">消息中心</view><view class="btn primary design-button" wx:if="{{targetRoute}}" bindtap="onOpenTarget">{{targetLabel}}</view></view>
+</view>

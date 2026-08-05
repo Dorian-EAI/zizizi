@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>自家人居家维修 · 玻璃新拟态 · 实时追踪</title>
-    <link rel="stylesheet" href="../assets/fonts.css">
-
     <style id="theme-vars">
 /* 自家人居家维修 - 玻璃新拟态 */
 :root {
@@ -82,11 +80,11 @@
   --radius-lg: 1.6rem;
   --radius-full: 9999px;
 
-    /* Font — 统一衬线系统 */
+  /* Font — unified serif system */
   --font-display: 'Cormorant Garamond', 'Noto Serif SC', 'STSong', Georgia, serif;
-  --font-body: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-  --font-nums: 'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
-  --font: var(--font-body);
+  --font-body:    'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --font-nums:    'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
+  --font:         var(--font-body);
 
   /* Motion */
   --spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -127,9 +125,8 @@
   --radius-sm: var(--radius-sm);
   --radius-md: var(--radius-md);
   --radius-lg: var(--radius-lg);
-  --font-sans: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-  --font-serif: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-  --radius-full: var(--radius-full);}
+  --radius-full: var(--radius-full);
+}
 
 /* Semantic token fallback */
 #semantic-token-fallback {
@@ -152,6 +149,113 @@
 }
 
 /* ===== Global Neumorphic Components ===== */
+/* Tab Bar — Premium Liquid Glass, absolute-positioned within .phone frame */
+.tab-bar{
+  position:absolute;
+  bottom:10px;
+  left:50%;
+  transform:translateX(-50%);
+  width:calc(100% - 32px);
+  max-width:360px;
+  height:56px;
+  z-index:100;
+  background:rgba(255,255,255,0.18);
+  backdrop-filter:blur(48px) saturate(210%);
+  -webkit-backdrop-filter:blur(48px) saturate(210%);
+  border:0.5px solid rgba(255,255,255,0.45);
+  border-radius:24px;
+  box-shadow:
+    inset 0 1.5px 3px rgba(255,255,255,0.60),
+    inset 0 -0.5px 1px rgba(255,255,255,0.20),
+    0 0 0 0.5px rgba(0,0,0,0.04),
+    0 2px 10px rgba(0,0,0,0.06),
+    0 12px 36px rgba(0,0,0,0.08);
+  display:flex;
+  align-items:center;
+  justify-content:space-around;
+  padding:0 6px;
+}
+.tab-bar::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  background:linear-gradient(160deg,
+    rgba(255,255,255,0.42) 0%,
+    rgba(255,255,255,0.16) 20%,
+    rgba(255,255,255,0.03) 40%,
+    transparent 60%);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
+  padding:0.5px;
+  pointer-events:none;
+  z-index:1;
+}
+.tab-bar::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  background:linear-gradient(320deg,
+    transparent 60%,
+    rgba(13,148,136,0.06) 80%,
+    rgba(255,255,255,0.04) 100%);
+  pointer-events:none;
+  z-index:1;
+}
+.tab-item{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+  width:68px;
+  height:44px;
+  border-radius:14px;
+  color:var(--text-3);
+  font-size:11px;
+  font-weight:500;
+  text-decoration:none;
+  position:relative;
+  transition:all .2s;
+}
+.tab-item svg{
+  width:20px;
+  height:20px;
+  stroke:currentColor;
+  fill:none;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.tab-item[data-active="true"]{
+  color:var(--brand);
+  font-weight:600;
+}
+.tab-item[data-active="true"]::before{
+  content:"";
+  position:absolute;
+  width:54px;
+  height:42px;
+  border-radius:16px;
+  background:rgba(13,148,136,0.16);
+  backdrop-filter:blur(24px);
+  -webkit-backdrop-filter:blur(24px);
+  border:0.5px solid rgba(13,148,136,0.30);
+  box-shadow:
+    inset 0 1px 3px rgba(255,255,255,0.55),
+    inset 0 -0.5px 1px rgba(255,255,255,0.15),
+    0 2px 10px rgba(13,148,136,0.20),
+    0 0 0 0.5px rgba(13,148,136,0.08);
+  z-index:0;
+}
+.tab-item[data-active="true"] svg{
+  transform:scale(1.08);
+  position:relative;
+  z-index:1;
+}
+
 /* Buttons */
 .btn-neu-primary{
   display:inline-flex;align-items:center;justify-content:center;
@@ -184,6 +288,7 @@
   transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease),color var(--dur) var(--ease);
 }
 .btn-neu-ghost:active{transform:scale(0.94);color:var(--brand)}
+
     </style>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
     <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
@@ -207,8 +312,6 @@
     --radius-md: var(--radius-md);
     --radius-lg: var(--radius-lg);
     --radius-full: var(--radius-full);
-    --font-sans: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-    --font-serif: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
   }
   @layer base {
     body { background: var(--background); color: var(--foreground); }
@@ -290,102 +393,19 @@
         background-color: currentColor;
       }
     </style>
-    <style id="scroll-morph">
-      /* === 实时追踪页滚动变形（client-order-tracking → client-order-tracking-2）=== */
-      /* 在微信小程序中：这些变量通过 setData 注入 WXML 的 style；HTML 原型用 scroll 事件直接更新。 */
-      .phone {
-        --morph-p: 0;
-        --reveal-p: 0;
-        --nav-pt: 18px;
-        --nav-pb: 18px;
-        --nav-ph: 20px;
-        --nav-radius: 28px;
-        --btn-size: 44px;
-        --map-h: 420px;
-        --status-translate: 0px;
-        --status-mt: -32px;
-      }
-
-      .nav-bar.morphing {
-        display: grid;
-        grid-template-columns: var(--btn-size) 1fr var(--btn-size);
-        gap: 8px;
-        align-items: center;
-        padding: var(--nav-pt) var(--nav-ph) var(--nav-pb);
-        border-radius: 0 0 var(--nav-radius) var(--nav-radius);
-        will-change: padding, border-radius;
-      }
-      /* Hero 渐变在滚动中渐入覆盖原导航栏渐变 */
-      .nav-bar.morphing::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        z-index: -1;
-        border-radius: inherit;
-        pointer-events: none;
-        opacity: var(--morph-p);
-        background:
-          radial-gradient(ellipse 240px 200px at 75% 40%, rgba(212,148,76,.32) 0%, transparent 70%),
-          radial-gradient(ellipse 200px 160px at 20% 80%, rgba(13,148,136,.24) 0%, transparent 70%),
-          linear-gradient(135deg, rgba(13,148,136,.28) 0%, rgba(212,148,76,.20) 50%, rgba(20,184,166,.12) 100%);
-        transition: opacity 0.05s linear;
-      }
-      .nav-bar.morphing .nav-title {
-        font-size: calc(17px + 5px * var(--morph-p));
-        text-align: center;
-        justify-self: center;
-        transition: font-size 0.05s linear;
-      }
-      .nav-bar.morphing .nav-icon-btn {
-        width: var(--btn-size);
-        height: var(--btn-size);
-        transition: width 0.05s linear, height 0.05s linear;
-      }
-
-      /* 地图区域收缩 */
-      .tracking-map-section .tracking-map {
-        height: var(--map-h);
-        transform: scale(calc(1 - 0.08 * var(--morph-p)));
-        opacity: calc(1 - 0.7 * var(--morph-p));
-        transform-origin: center center;
-        transition: height 0.05s linear, transform 0.05s linear, opacity 0.05s linear;
-      }
-      .tracking-map-section::before {
-        opacity: calc(1 - var(--morph-p));
-        transition: opacity 0.05s linear;
-      }
-
-      /* 状态横幅从地图底部漂浮到 Hero 下方（filter-tabs 位置） */
-      .phone .tracking-status-bar {
-        position: relative;
-        z-index: 40;
-        transform: translateY(var(--status-translate));
-        margin-top: var(--status-mt);
-        padding: calc(16px - 2px * var(--morph-p)) 18px;
-        transition: transform 0.05s linear, margin-top 0.05s linear, padding 0.05s linear;
-      }
-
-      /* 内容区域滚动揭示 */
-      .morph-reveal,
-      .morph-reveal-item {
-        opacity: var(--item-reveal-p, var(--reveal-p, 0));
-        transform: translateY(calc(16px * (1 - var(--item-reveal-p, var(--reveal-p, 0)))));
-        transition: opacity 0.05s linear, transform 0.05s linear;
-      }
-    </style>
 </head>
 <body>
 <div class="phone" data-dom-id="page-client-order-tracking">
 
   <!-- ===== TOP NAV BAR (sticky) ===== -->
   <header class="nav-bar" style="border-bottom-left-radius: 2px; border-bottom-right-radius: 2px;">
-    <button class="nav-icon-btn" data-dom-id="back-btn" aria-label="返回">
+    <button class="nav-icon-btn" data-dom-id="back-btn" data-target-page="page-client-order-detail" aria-label="返回">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
         <path d="m15 18-6-6 6-6"></path>
       </svg>
     </button>
     <h1 class="nav-title">实时追踪</h1>
-    <button class="nav-icon-btn" data-dom-id="refresh-btn" aria-label="刷新">
+    <button class="nav-icon-btn" data-dom-id="refresh-btn" data-action="refresh-tracking" aria-label="刷新">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
         <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
         <path d="M3 3v5h5"></path>
@@ -396,7 +416,7 @@
   </header>
 
   <!-- ===== TRACKING MAP AREA ===== -->
-  <section class="tracking-map-section">
+  <section class="tracking-map-section" data-dom-id="tracking-map-area" data-action="pan-zoom-map">
     <div class="tracking-map">
       <!-- Simulated map background grid + roads -->
       <div class="map-grid"></div>
@@ -412,7 +432,7 @@
       </svg>
 
       <!-- Worker marker -->
-      <div class="map-marker worker-marker">
+      <div class="map-marker worker-marker" data-dom-id="worker-map-marker" data-target-page="page-client-worker-detail">
         <div class="marker-pulse"></div>
         <div class="marker-core worker-marker-core">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -435,7 +455,7 @@
     </div>
 
     <!-- Status banner overlapping map bottom edge -->
-    <div class="tracking-status-bar">
+    <div class="tracking-status-bar" data-dom-id="tracking-status-summary" data-action="expand-tracking-status">
       <div class="status-bar-main">
         <div class="status-bar-title">
           <span class="status-pulse-dot"></span>
@@ -454,7 +474,7 @@
 
   <!-- ===== Copied: Worker Info Card (below status bar) ===== -->
   <section class="section copied-below-anchor">
-    <div class="glass-neu-card tracking-worker-card force-visible" style="top: 0px;">
+    <div class="glass-neu-card tracking-worker-card force-visible" style="top: 0px;" data-dom-id="tracking-worker-card" data-target-page="page-client-worker-detail">
       <div class="avatar-col">
         <div class="worker-avatar avatar-glass">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -480,12 +500,12 @@
         </div>
       </div>
       <div class="worker-actions">
-        <button class="action-circle" data-dom-id="call-worker-copy" aria-label="拨打电话">
+        <button class="action-circle" data-dom-id="call-worker-copy" data-action="call-worker" aria-label="拨打电话">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
             <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path>
           </svg>
         </button>
-        <button class="action-circle" data-dom-id="open-nav-copy" aria-label="导航">
+        <button class="action-circle" data-dom-id="open-nav-copy" data-action="open-system-navigation" aria-label="导航">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
             <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
           </svg>
@@ -586,7 +606,7 @@
 
   <!-- ===== Copied: Order Detail Link ===== -->
   <section class="section section-link">
-    <button class="order-detail-link force-visible" data-dom-id="view-order-detail">
+    <button class="order-detail-link force-visible" data-dom-id="view-order-detail" data-target-page="page-client-order-detail">
       查看订单详情
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
         <path d="m9 18 6-6-6-6"></path>
@@ -602,9 +622,9 @@
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{
   --brand:#0D9488;--brand-dark:#0A7A70;--brand-mid:#14B8A6;--brand-light:#CCFBF1;
-  --brand-glow:rgba(13,148,136,0.28);--brand-subtle:rgba(13,148,136,0.08);
-  --brand-gradient:linear-gradient(135deg,#0D9488 0%,#14B8A6 50%,#D4944C 100%);
-  --accent:#D4944C;--accent-dark:#A0723C;--accent-light:#F5E6D0;--accent-glow:rgba(212,148,76,0.25);
+  --brand-glow:rgba(13,148,136,0.18);--brand-subtle:rgba(13,148,136,0.08);
+  --brand-gradient:linear-gradient(135deg,#0D9488 0%,#14B8A6 48%,#D4944C 100%);
+  --accent:#D4944C;--accent-dark:#A0723C;--accent-light:#F5E6D0;--accent-glow:rgba(212,148,76,0.16);
   --bg:#F2EDE8;--bg-elevated:#F7F3EF;
   --neu-light:#FFF8F2;--neu-dark:#DDD6CE;
   --text-1:#2C2824;--text-2:#8B8178;--text-3:#B5ADA5;--text-inverse:#FFFFFF;
@@ -632,7 +652,7 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
 .mono{font-variant-numeric:tabular-nums;letter-spacing:-0.01em}
 
 /* ===== Top Nav Bar (sticky) ===== */
-.nav-bar{background:radial-gradient(ellipse 220px 160px at 78% 45%,rgba(212,148,76,.14) 0%,transparent 70%),radial-gradient(ellipse 180px 140px at 18% 75%,rgba(13,148,136,.16) 0%,transparent 70%),linear-gradient(135deg,rgba(13,148,136,.14) 0%,rgba(212,148,76,.08) 50%,rgba(13,148,136,.06) 100%);position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:18px 20px;padding-top:max(18px,env(safe-area-inset-top)); border-radius:0 0 28px 28px; overflow:hidden;}
+.nav-bar{background:radial-gradient(ellipse 220px 160px at 78% 45%,rgba(212,148,76,.10) 0%,transparent 70%),radial-gradient(ellipse 180px 140px at 18% 75%,rgba(13,148,136,.10) 0%,transparent 70%),linear-gradient(135deg,rgba(13,148,136,.08) 0%,rgba(212,148,76,.06) 50%,rgba(13,148,136,.05) 100%);position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:18px 20px;padding-top:max(18px,env(safe-area-inset-top)); border-radius:0 0 28px 28px; overflow:hidden;}
 .nav-icon-btn{
   width:44px;height:44px;border-radius:50%;border:none;
   background:var(--bg-elevated);
@@ -657,7 +677,7 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
   backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);
   border:1px solid rgba(255,255,255,0.70);
   border-radius:var(--r-lg);
-  box-shadow:var(--neu-out-md),0 6px 28px rgba(0,0,0,0.06),0 2px 8px rgba(13,148,136,0.04),0 0 0 1px rgba(44,40,36,0.05);
+  box-shadow:var(--neu-out-md),0 6px 28px rgba(0,0,0,0.06),0 2px 8px rgba(13,148,136,.04),0 0 0 1px rgba(44,40,36,0.05);
   position:relative;overflow:hidden;
 }
 .glass-neu-card::before{
@@ -675,7 +695,7 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
 .tracking-map-section{position:relative;margin-top:0;z-index:1}
 .tracking-map-section::before{
   content:'';position:absolute;top:0;left:0;right:0;height:44px;z-index:3;
-  background:linear-gradient(180deg,rgba(13,148,136,0.16) 0%,rgba(212,148,76,0.08) 45%,transparent 100%);
+  background:linear-gradient(180deg,rgba(13,148,136,.09) 0%,rgba(212,148,76,.05) 45%,transparent 100%);
   pointer-events:none;
 }
 .tracking-map{
@@ -758,7 +778,7 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
 .worker-marker{top:24%;right:22%;width:44px;height:44px}
 .worker-marker-core{background:var(--brand)}
 .marker-pulse{
-  position:absolute;width:60px;height:60px;border-radius:50%;
+  position:absolute;width:48px;height:48px;border-radius:50%;
   top:50%;left:50%;transform:translate(-50%,-50%);
   background:var(--brand);
   opacity:0.25;animation:markerPulse 2s var(--ease) infinite;
@@ -806,7 +826,7 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
 }
 .status-pulse-dot{
   width:10px;height:10px;border-radius:50%;background:var(--brand);
-  box-shadow:0 0 0 4px rgba(13,148,136,0.18);
+  box-shadow:0 0 0 4px rgba(13,148,136,.10);
   animation:dotPulse 1.8s var(--ease) infinite;
 }
 @keyframes dotPulse{
@@ -828,7 +848,7 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
 .tracking-worker-card{display:flex;align-items:center;gap:14px;padding:16px 18px}
 .avatar-col{display:flex;flex-direction:column;align-items:center;gap:5px;flex-shrink:0}
 .worker-avatar{
-  width:52px;height:52px;border-radius:50%;flex-shrink:0;
+  width:44px;height:44px;border-radius:50%;flex-shrink:0;
   background:var(--bg-elevated);
   box-shadow:var(--neu-in-deep);
   display:flex;align-items:center;justify-content:center;
@@ -851,7 +871,7 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
   background:var(--brand-subtle);color:var(--brand);
   font-size:10.5px;font-weight:600;
   padding:2px 8px;border-radius:var(--r-pill);
-  border:0.5px solid rgba(13,148,136,0.18);
+  border:0.5px solid rgba(13,148,136,.10);
 }
 .verify-badge svg{width:11px;height:11px}
 .worker-meta{display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--text-2);font-weight:500}
@@ -904,7 +924,7 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
 /* Active */
 .tt-active .tt-dot{
   background:var(--accent);color:var(--text-inverse);
-  box-shadow:0 0 0 4px rgba(212,148,76,0.16),0 2px 8px var(--accent-glow);
+  box-shadow:0 0 0 4px rgba(212,148,76,.10),0 2px 8px var(--accent-glow);
 }
 .tt-active .tt-line{background:linear-gradient(180deg,var(--accent) 0%,var(--text-3) 100%)}
 .tt-active .tt-title{color:var(--accent-dark)}
@@ -1060,5 +1080,89 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
         window.addEventListener('resize', syncMorph, { passive: true });
       })();
     </script>
+
+    <style id="scroll-morph">
+      /* === 实时追踪页滚动变形（client-order-tracking → client-order-tracking-2）=== */
+      /* 在微信小程序中：这些变量通过 setData 注入 WXML 的 style；HTML 原型用 scroll 事件直接更新。 */
+      .phone {
+        --morph-p: 0;
+        --reveal-p: 0;
+        --nav-pt: 18px;
+        --nav-pb: 18px;
+        --nav-ph: 20px;
+        --nav-radius: 28px;
+        --btn-size: 44px;
+        --map-h: 420px;
+        --status-translate: 0px;
+        --status-mt: -32px;
+      }
+
+      .nav-bar.morphing {
+        display: grid;
+        grid-template-columns: var(--btn-size) 1fr var(--btn-size);
+        gap: 8px;
+        align-items: center;
+        padding: var(--nav-pt) var(--nav-ph) var(--nav-pb);
+        border-radius: 0 0 var(--nav-radius) var(--nav-radius);
+        will-change: padding, border-radius;
+      }
+      /* Hero 渐变在滚动中渐入覆盖原导航栏渐变 */
+      .nav-bar.morphing::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        border-radius: inherit;
+        pointer-events: none;
+        opacity: var(--morph-p);
+        background:
+          radial-gradient(ellipse 240px 200px at 75% 40%, rgba(212,148,76,.16) 0%, transparent 70%),
+          radial-gradient(ellipse 200px 160px at 20% 80%, rgba(13,148,136,.12) 0%, transparent 70%),
+          linear-gradient(135deg, rgba(13,148,136,.12) 0%, rgba(212,148,76,.14) 50%, rgba(20,184,166,.12) 100%);
+        transition: opacity 0.05s linear;
+      }
+      .nav-bar.morphing .nav-title {
+        font-size: calc(17px + 5px * var(--morph-p));
+        text-align: center;
+        justify-self: center;
+        transition: font-size 0.05s linear;
+      }
+      .nav-bar.morphing .nav-icon-btn {
+        width: var(--btn-size);
+        height: var(--btn-size);
+        transition: width 0.05s linear, height 0.05s linear;
+      }
+
+      /* 地图区域收缩 */
+      .tracking-map-section .tracking-map {
+        height: var(--map-h);
+        transform: scale(calc(1 - 0.08 * var(--morph-p)));
+        opacity: calc(1 - 0.7 * var(--morph-p));
+        transform-origin: center center;
+        transition: height 0.05s linear, transform 0.05s linear, opacity 0.05s linear;
+      }
+      .tracking-map-section::before {
+        opacity: calc(1 - var(--morph-p));
+        transition: opacity 0.05s linear;
+      }
+
+      /* 状态横幅从地图底部漂浮到 Hero 下方（filter-tabs 位置） */
+      .phone .tracking-status-bar {
+        position: relative;
+        z-index: 40;
+        transform: translateY(var(--status-translate));
+        margin-top: var(--status-mt);
+        padding: calc(16px - 2px * var(--morph-p)) 18px;
+        transition: transform 0.05s linear, margin-top 0.05s linear, padding 0.05s linear;
+      }
+
+      /* 内容区域滚动揭示 */
+      .morph-reveal,
+      .morph-reveal-item {
+        opacity: var(--item-reveal-p, var(--reveal-p, 0));
+        transform: translateY(calc(16px * (1 - var(--item-reveal-p, var(--reveal-p, 0)))));
+        transition: opacity 0.05s linear, transform 0.05s linear;
+      }
+    </style>
 </body>
 </html>

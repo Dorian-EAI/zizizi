@@ -118,6 +118,7 @@ function request(options) {
   const method = String(config.method || 'GET').toUpperCase()
   const silent = config.silent === true
   const finalData = method === 'GET' ? cleanParams(config.data) : config.data
+  const finalHeader = buildHeader(config.header)
   let requestURL
 
   try {
@@ -127,7 +128,9 @@ function request(options) {
     return Promise.reject(error)
   }
 
-  const key = method + '::' + requestURL + '::' + stableKey(finalData)
+  // 幂等键等自定义请求头也是命令身份的一部分，不能把
+  // 两个不同金融命令错误合并为同一个 in-flight Promise。
+  const key = method + '::' + requestURL + '::' + stableKey(finalData) + '::' + stableKey(finalHeader)
   if (IN_FLIGHT.has(key)) return IN_FLIGHT.get(key)
 
   const promise = new Promise((resolve, reject) => {
@@ -135,7 +138,7 @@ function request(options) {
       url: requestURL,
       method,
       data: finalData,
-      header: buildHeader(config.header),
+      header: finalHeader,
       timeout: config.timeout || 15000,
       success(res) {
         try {

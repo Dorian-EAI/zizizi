@@ -25,7 +25,13 @@ Page({
     }
   },
 
-  onClient() { this.loginAndEnter('client') },
+  onClient() {
+    if (app.globalData.token && app.globalData.role === 'client') {
+      this.goRole('client')
+      return
+    }
+    wx.navigateTo({ url: '/pages/client-login/index' })
+  },
   onWorker() { this.loginAndEnter('worker') },
 
   getWxLoginCode() {

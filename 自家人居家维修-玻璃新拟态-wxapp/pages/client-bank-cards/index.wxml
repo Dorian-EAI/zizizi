@@ -1,0 +1,11 @@
+<view class="phone-page design-detail-page" data-page-id="page-client-bank-cards">
+  <view class="status-bar"><text class="tag-span">9:41</text><text class="status-icons tag-span">● WiFi 100%</text></view>
+  <view class="topbar"><view class="icon-button design-button" data-route="/pages/client-wallet/index" bindtap="onNavigate"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m15%2018-6-6%206-6M9%2012h10%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view><view class="tag-h1">我的银行卡</view><text class="tag-span"></text></view>
+  <view class="page-body">
+    <view class="section-title"><text class="tag-strong">已绑定银行卡</text><text class="tag-span">0 / 5</text></view>
+    <view class="empty-state truthful-empty"><view class="avatar">卡</view><view class="tag-h3">银行卡服务暂未开放</view><view class="tag-p">没有可验证的后端数据，因此不展示画布示例卡号或持卡人姓名。</view></view>
+    <view class="btn secondary block design-button" data-route="/pages/client-bank-card-add/index" bindtap="onNavigate">＋ 添加银行卡</view>
+    <view class="notice warning">银行卡查询、绑定、设默认和解绑均未接入；本页不会在本地保存敏感卡信息。</view>
+    <view class="btn secondary block design-button" bindtap="onUnavailable">查看服务状态</view>
+  </view>
+</view>

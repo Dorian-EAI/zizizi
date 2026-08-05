@@ -1,6 +1,6 @@
 <!-- pages/worker-appeal/index.wxml — 师傅申诉页 玻璃新拟态（像素级复刻 worker-appeal.html） -->
 <view class="page">
-  <!-- 背景装饰光斑：blue-sage 径向渐变 -->
+  <!-- 背景装饰光斑：blue-gold 径向渐变 -->
   <view class="blob" style="top: -40px; right: -60px; width: 280px; height: 280px; background: radial-gradient(circle, var(--brand) 0%, transparent 70%);"></view>
   <view class="blob" style="top: 320px; left: -80px; width: 240px; height: 240px; background: radial-gradient(circle, var(--sage) 0%, transparent 70%);"></view>
 
@@ -22,7 +22,7 @@
       </view>
       <view class="appeal-hero-text">
         <text class="appeal-hero-title">对平台处罚有异议？</text>
-        <text class="appeal-hero-desc">提交申诉后客服将在3个工作日内复核，请提供充分证据</text>
+        <text class="appeal-hero-desc">提交后可在“我的申诉”查看处理状态，请提供充分证据</text>
       </view>
     </view>
 
@@ -32,35 +32,30 @@
         <text class="section-title-text">我的申诉</text>
       </view>
       <view class="appeal-card">
-        <view class="appeal-item">
+        <view
+          class="appeal-item"
+          wx:for="{{appeals}}"
+          wx:key="id"
+          data-id="{{item.id}}"
+          bindtap="onAppealTap"
+        >
           <view class="appeal-item-top">
-            <text class="penalty-tag">扣除保证金</text>
-            <text class="status-badge status-pending">待复核</text>
+            <text class="penalty-tag">{{item.typeLabel}}</text>
+            <text class="status-badge status-{{item.statusTone}}">{{item.statusText}}</text>
           </view>
-          <text class="appeal-item-title">扣除保证金 ¥200</text>
-          <text class="appeal-item-reason">工单WO20260720</text>
+          <text class="appeal-item-title">{{item.title}}</text>
+          <text class="appeal-item-reason">{{item.reason}}</text>
           <view class="appeal-item-bottom">
-            <text class="appeal-item-time">2小时前</text>
+            <text class="appeal-item-time">{{item.time}}</text>
             <view class="appeal-view-btn press-neu">
               <text class="appeal-view-text">查看</text>
               <image src="{{icons.chevronRight}}" mode="aspectFit" class="appeal-view-icon" lazy-load="{{false}}" />
             </view>
           </view>
         </view>
-        <view class="appeal-item">
-          <view class="appeal-item-top">
-            <text class="penalty-tag">限制抢单</text>
-            <text class="status-badge status-rejected">已驳回</text>
-          </view>
-          <text class="appeal-item-title">限制抢单3天</text>
-          <text class="appeal-item-reason">拒单率超标</text>
-          <view class="appeal-item-bottom">
-            <text class="appeal-item-time">2026-07-22</text>
-            <view class="appeal-view-btn press-neu">
-              <text class="appeal-view-text">查看</text>
-              <image src="{{icons.chevronRight}}" mode="aspectFit" class="appeal-view-icon" lazy-load="{{false}}" />
-            </view>
-          </view>
+        <view class="appeal-item" wx:if="{{!appealsLoading && !appeals.length}}">
+          <text class="appeal-item-title">暂无申诉记录</text>
+          <text class="appeal-item-reason">新提交的申诉会在这里显示</text>
         </view>
       </view>
     </view>
@@ -72,11 +67,11 @@
       </view>
       <view class="form-card">
         <view class="form-field">
-          <text class="form-label">处罚单号</text>
+          <text class="form-label">关联订单ID（选填）</text>
           <input
             class="form-input"
             type="text"
-            placeholder="请输入处罚单号"
+            placeholder="请输入平台订单ID"
             placeholder-class="form-ph"
             value="{{orderId}}"
             data-field="orderId"

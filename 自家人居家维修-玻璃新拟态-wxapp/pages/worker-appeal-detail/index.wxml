@@ -1,0 +1,47 @@
+<!-- AUTO-GENERATED DESIGN VIEW sourceHash=fnv1a-924a7b88; edit source HTML or generator bindings, then rerun. -->
+<view class="phone-page design-detail-page worker-theme" data-dom-id="page-worker-appeal-detail">
+    <view class="status-bar"><text class="tag-span">9:41</text><text class="status-icons tag-span">●●●</text></view>
+    <view class="topbar">
+      <view class="icon-button design-button" data-dom-id="appeal-detail-back" data-route="/pages/worker-appeal/index" bindtap="onNavigate"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m15%2018-6-6%206-6M9%2012h10%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view>
+      <view class="tag-h1">申诉详情</view>
+      <view class="icon-button design-button" data-dom-id="appeal-detail-help" data-route="/pages/client-customer-service/index?role=worker&topic=appeal" bindtap="onNavigate"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M21%2015a4%204%200%200%201-4%204H8l-5%203V7a4%204%200%200%201%204-4h10a4%204%200%200%201%204%204z%22%2F%3E%3Cpath%20d%3D%22M8%209h8M8%2013h5%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view>
+    </view>
+    <view class="page-body">
+      <view class="hero result-state pending">
+        <view class="result-icon"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%23D4944C%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2212%22%20r%3D%229%22%2F%3E%3Cpath%20d%3D%22M12%207v5l3%202%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view>
+        <view class="hero-kicker tag-p">申诉单 #AP20260803016</view><view class="tag-h2">平台审核中</view><view class="tag-p">当前由平台风控专员处理 · 预计明天 18:00 前完成</view>
+      </view>
+
+      <view class="section">
+        <view class="section-title"><text class="tag-strong">处理进度</text><text class="tag-span">刚刚更新</text></view>
+        <view class="card timeline">
+          <view class="timeline-item"><text class="tag-strong">提交差评申诉</text><text class="tag-span">08-03 14:20 · 资料已完整提交</text></view>
+          <view class="timeline-item"><text class="tag-strong">平台审核</text><text class="tag-span">08-03 15:02 · 当前责任方：平台</text></view>
+          <view class="timeline-item pending"><text class="tag-strong">处理结果</text><text class="tag-span">预计 1 个工作日内</text></view>
+        </view>
+      </view>
+
+      <view class="section">
+        <view class="section-title"><text class="tag-strong">关联订单</text><text class="badge info tag-span">已完成</text></view>
+        <view class="card list-row design-button" data-dom-id="appeal-detail-order" data-route="/pages/order-detail-worker/index?order_id=WX20260728001" bindtap="onNavigate">
+          <view class="row-icon tag-span"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%235A8FAD%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M6%203h12v18l-3-2-3%202-3-2-3%202z%22%2F%3E%3Cpath%20d%3D%22M9%208h6M9%2012h6%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view><text class="row-main tag-span"><text class="row-title tag-span">空调清洗服务</text><text class="row-copy tag-span">#WX20260728001 · 07-28 · ¥158</text></text><text class="chevron tag-span">›</text>
+        </view>
+      </view>
+
+      <view class="section card">
+        <view class="card-title tag-h2">申诉理由</view><view class="card-copy tag-p">客户评价所述“迟到 40 分钟”与订单轨迹不符。位置记录显示我于预约时间前 8 分钟到达，已上传签到截图和聊天记录。</view>
+        <view class="divider"></view>
+        <view class="upload-grid">
+          <view class="upload-tile design-button" data-dom-id="appeal-detail-evidence-1" data-action="preview-evidence" bindtap="onAction"><view class="upload-icon tag-span"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232D6CDF%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M20%2010c0%205-8%2011-8%2011S4%2015%204%2010a8%208%200%201%201%2016%200z%22%2F%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2210%22%20r%3D%222.5%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view><text class="tag-span">轨迹</text></view>
+          <view class="upload-tile design-button" data-dom-id="appeal-detail-evidence-2" data-action="preview-evidence" bindtap="onAction"><view class="upload-icon tag-span"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232D6CDF%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M20%2015a3%203%200%200%201-3%203H8l-4%203V7a3%203%200%200%201%203-3h10a3%203%200%200%201%203%203z%22%2F%3E%3Cpath%20d%3D%22M8%209h8M8%2013h5%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view><text class="tag-span">聊天</text></view>
+          <view class="upload-tile design-button" data-dom-id="appeal-detail-evidence-3" data-action="preview-evidence" bindtap="onAction"><view class="upload-icon tag-span"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232D6CDF%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2212%22%20r%3D%229%22%2F%3E%3Cpath%20d%3D%22m8%2012%202.6%202.6L16.5%209%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view><text class="tag-span">签到</text></view>
+        </view>
+      </view>
+
+      <view class="notice">审核中仍可补充一次材料；补充后预计处理时间可能重新计算。</view>
+    </view>
+    <view class="fixed-actions">
+      <view class="btn secondary design-button" data-dom-id="appeal-detail-contact" data-route="/pages/client-customer-service/index?role=worker&appeal_id=AP20260803016" bindtap="onNavigate">联系客服</view>
+      <view class="btn primary design-button" data-dom-id="appeal-detail-supplement" data-action="supplement-appeal-material" bindtap="onAction">补充材料</view>
+    </view>
+  </view>

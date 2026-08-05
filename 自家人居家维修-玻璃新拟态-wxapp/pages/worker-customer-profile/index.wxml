@@ -1,0 +1,37 @@
+<!-- AUTO-GENERATED DESIGN VIEW sourceHash=fnv1a-e1b266cf; edit source HTML or generator bindings, then rerun. -->
+<view class="phone-page design-detail-page worker-theme" data-dom-id="page-worker-customer-profile">
+    <view class="status-bar"><text class="tag-span">9:41</text><text class="status-icons tag-span">●●●</text></view>
+    <view class="topbar">
+      <view class="icon-button design-button" data-dom-id="customer-profile-back" data-route="/pages/worker-chat/index?order_id=WX20260803001" bindtap="onNavigate"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m15%2018-6-6%206-6M9%2012h10%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view>
+      <view class="tag-h1">客户资料</view>
+      <view class="icon-button design-button" data-dom-id="customer-profile-more" data-action="open-customer-actions" bindtap="onAction"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%225%22%20cy%3D%2212%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2212%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%2219%22%20cy%3D%2212%22%20r%3D%221%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view>
+    </view>
+    <view class="page-body">
+      <view class="hero">
+        <view class="avatar">张</view><view class="hero-kicker tag-p">本单客户</view><view class="tag-h2">张先生</view><view class="tag-p">已完成实名认证 · 平台服务 3 年 · 资料仅限当前订单履约使用</view>
+      </view>
+
+      <view class="section">
+        <view class="section-title"><text class="tag-strong">当前订单</text><text class="badge success tag-span">已接单</text></view>
+        <view class="card list-row design-button" data-dom-id="customer-profile-current-order" data-route="/pages/order-detail-worker/index?order_id=WX20260803001" bindtap="onNavigate">
+          <view class="row-icon tag-span"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%235B8C5A%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20aria-hidden%3D%22true%22%3E%3Cpath%20d%3D%22M12%202s7%207.2%207%2012a7%207%200%200%201-14%200c0-4.8%207-12%207-12Z%22%2F%3E%3Cpath%20d%3D%22M9%2016c.7%201%201.7%201.5%203%201.5%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view><text class="row-main tag-span"><text class="row-title tag-span">厨房水管漏水</text><text class="row-copy tag-span">今天 14:00 · 朝阳区 · #WX20260803001</text></text><text class="chevron tag-span">›</text>
+        </view>
+      </view>
+
+      <view class="section">
+        <view class="section-title"><text class="tag-strong">履约联系</text><text class="tag-span">订单结束后收回</text></view>
+        <view class="card list-card">
+          <view class="list-row design-button" data-dom-id="customer-profile-phone" data-action="call-customer" bindtap="onAction"><view class="row-icon tag-span"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%232D6CDF%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20aria-hidden%3D%22true%22%3E%3Cpath%20d%3D%22M22%2016.9v3a2%202%200%200%201-2.2%202%2019.8%2019.8%200%200%201-8.6-3.1%2019.5%2019.5%200%200%201-6-6A19.8%2019.8%200%200%201%202.1%204.2%202%202%200%200%201%204.1%202h3a2%202%200%200%201%202%201.7c.1%201%20.4%202%20.7%202.9a2%202%200%200%201-.5%202.1L8.1%209.9a16%2016%200%200%200%206%206l1.2-1.2a2%202%200%200%201%202.1-.5c1%20.4%201.9.6%202.9.7a2%202%200%200%201%201.7%202Z%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view><text class="row-main tag-span"><text class="row-title tag-span">138 **** 8888</text><text class="row-copy tag-span">平台隐私号 · 仅当前订单有效</text></text><text class="row-action tag-span">拨打</text></view>
+          <view class="list-row design-button" data-dom-id="customer-profile-chat" data-route="/pages/worker-chat/index?order_id=WX20260803001" bindtap="onNavigate"><view class="row-icon tag-span"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%232D6CDF%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20aria-hidden%3D%22true%22%3E%3Cpath%20d%3D%22M21%2015a4%204%200%200%201-4%204H8l-5%203v-7a4%204%200%200%201-1-2.6V7a4%204%200%200%201%204-4h11a4%204%200%200%201%204%204Z%22%2F%3E%3Cpath%20d%3D%22M8%209h8M8%2013h5%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view><text class="row-main tag-span"><text class="row-title tag-span">订单聊天</text><text class="row-copy tag-span">沟通上门时间与服务情况</text></text><text class="chevron tag-span">›</text></view>
+        </view>
+      </view>
+
+      <view class="section card">
+        <view class="card-title tag-h2">服务备注</view><view class="card-copy tag-p">家中有老人，敲门后请稍等；维修位置在厨房水槽下方。</view>
+        <view class="divider"></view>
+        <view class="chips"><text class="chip active tag-span">已核验地址</text><text class="chip tag-span">首次合作</text><text class="chip tag-span">无历史纠纷</text></view>
+      </view>
+
+      <view class="notice">为保护客户隐私，本页不展示生日、账号安全、完整地址历史等与本单无关的信息。</view>
+    </view>
+  </view>

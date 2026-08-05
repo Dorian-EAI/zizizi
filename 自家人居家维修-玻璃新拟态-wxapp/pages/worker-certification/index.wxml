@@ -1,6 +1,6 @@
 <!-- pages/worker-certification/index.wxml — 师傅资质认证 玻璃新拟态（像素级复刻 worker-certification.html） -->
 <view class="page">
-  <!-- 背景装饰光斑：blue-sage 径向渐变 -->
+  <!-- 背景装饰光斑：blue-gold 径向渐变 -->
   <view class="blob" style="top: -40px; right: -60px; width: 280px; height: 280px; background: radial-gradient(circle, var(--brand) 0%, transparent 70%);"></view>
   <view class="blob" style="top: 360px; left: -80px; width: 240px; height: 240px; background: radial-gradient(circle, var(--sage) 0%, transparent 70%);"></view>
 

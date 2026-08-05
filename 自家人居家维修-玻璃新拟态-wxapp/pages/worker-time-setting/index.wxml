@@ -1,0 +1,44 @@
+<!-- AUTO-GENERATED DESIGN VIEW sourceHash=fnv1a-07e70af4; edit source HTML or generator bindings, then rerun. -->
+<view class="phone-page design-detail-page worker-theme" data-dom-id="page-worker-time-setting">
+    <view class="status-bar"><text class="tag-span">9:41</text><text class="status-icons tag-span">●●●</text></view>
+    <view class="topbar">
+      <view class="icon-button design-button" data-dom-id="time-setting-back" data-route="/pages/worker-order-setting/index" bindtap="onNavigate"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m15%2018-6-6%206-6M9%2012h10%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view>
+      <view class="tag-h1">接单时间</view>
+      <view class="top-action design-button" data-dom-id="time-setting-save-top" data-action="save-time-setting" bindtap="onAction">保存</view>
+    </view>
+    <view class="page-body">
+      <view class="notice info">通过 <text class="tag-strong">mode=weekday / weekend</text> 回填工作日或周末设置；同一模板也支持按单日覆盖。</view>
+
+      <view class="hero">
+        <view class="hero-kicker tag-p">工作日</view><view class="tag-h2">09:00—18:00</view><view class="tag-p">仅影响新订单推荐与报价入口，不影响已经接下的订单。</view>
+      </view>
+
+      <view class="section card">
+        <view class="section-title"><text class="tag-strong">适用日期</text><text class="tag-span">可多选</text></view>
+        <view class="chips">
+          <view class="chip active design-button" data-dom-id="time-setting-mon" data-action="toggle-working-day" bindtap="onAction">周一</view>
+          <view class="chip active design-button" data-dom-id="time-setting-tue" data-action="toggle-working-day" bindtap="onAction">周二</view>
+          <view class="chip active design-button" data-dom-id="time-setting-wed" data-action="toggle-working-day" bindtap="onAction">周三</view>
+          <view class="chip active design-button" data-dom-id="time-setting-thu" data-action="toggle-working-day" bindtap="onAction">周四</view>
+          <view class="chip active design-button" data-dom-id="time-setting-fri" data-action="toggle-working-day" bindtap="onAction">周五</view>
+          <view class="chip design-button" data-dom-id="time-setting-sat" data-action="toggle-working-day" bindtap="onAction">周六</view>
+          <view class="chip design-button" data-dom-id="time-setting-sun" data-action="toggle-working-day" bindtap="onAction">周日</view>
+        </view>
+      </view>
+
+      <view class="section card">
+        <view class="grid-2">
+          <view class="field"><text class="tag-label">开始时间</text><view class="select-like design-button" data-dom-id="time-setting-start" data-action="open-time-picker" bindtap="onAction"><text class="tag-span">09:00</text><text class="tag-span">⌄</text></view></view>
+          <view class="field"><text class="tag-label">结束时间</text><view class="select-like design-button" data-dom-id="time-setting-end" data-action="open-time-picker" bindtap="onAction"><text class="tag-span">18:00</text><text class="tag-span">⌄</text></view></view>
+        </view>
+        <view class="select-like design-button" data-dom-id="time-setting-break" data-action="open-break-setting" bindtap="onAction"><text class="tag-span"><text class="tag-strong">午间休息</text><text class="row-copy tag-small">12:00—13:00</text></text><text class="tag-span">›</text></view>
+      </view>
+
+      <view class="section card">
+        <view class="section-title"><text class="tag-strong">临时停接</text><text class="tag-span">可选</text></view>
+        <view class="select-like design-button" data-dom-id="time-setting-pause-date" data-action="open-date-range-picker" bindtap="onAction"><text class="tag-span">设置不接单日期</text><text class="tag-span">›</text></view>
+        <view class="card-copy tag-p">适合休假、培训或已有排期；到期后自动恢复原时间表。</view>
+      </view>
+    </view>
+    <view class="fixed-actions"><view class="btn primary design-button" data-dom-id="time-setting-save" data-action="save-time-setting" bindtap="onAction">保存时间设置</view></view>
+  </view>

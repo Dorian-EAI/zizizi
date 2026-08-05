@@ -24,9 +24,9 @@ page {
 /* HTML: 渐变背景（蓝-鼠尾草） + border-radius:0 0 28px 28px */
 .nav-bar {
   background:
-    radial-gradient(ellipse 220px 160px at 78% 45%, rgba(143, 169, 152, 0.14) 0%, transparent 70%),
+    radial-gradient(ellipse 220px 160px at 78% 45%, rgba(212,148,76,.10) 0%, transparent 70%),
     radial-gradient(ellipse 180px 140px at 18% 75%, rgba(45, 108, 223, 0.16) 0%, transparent 70%),
-    linear-gradient(135deg, rgba(45, 108, 223, 0.14) 0%, rgba(143, 169, 152, 0.08) 50%, rgba(45, 108, 223, 0.06) 100%);
+    linear-gradient(135deg, rgba(45, 108, 223, 0.14) 0%, rgba(212,148,76,.04) 50%, rgba(45, 108, 223, 0.06) 100%);
   position: sticky;
   top: 0;
   z-index: 50;

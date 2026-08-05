@@ -1,6 +1,6 @@
 <!-- pages/worker-quote-submit/index.wxml — 师傅报价提交页 玻璃新拟态（像素级复刻 worker-quote-submit.html） -->
 <view class="page">
-  <!-- 背景装饰光斑：blue-sage 径向渐变 -->
+  <!-- 背景装饰光斑：blue-gold 径向渐变 -->
   <view class="blob" style="top: -40px; right: -60px; width: 280px; height: 280px; background: radial-gradient(circle, var(--brand) 0%, transparent 70%);"></view>
   <view class="blob" style="top: 360px; left: -80px; width: 240px; height: 240px; background: radial-gradient(circle, var(--sage) 0%, transparent 70%);"></view>
 
@@ -96,19 +96,11 @@
           </view>
         </view>
 
-        <!-- 材料费（选填） -->
+        <!-- 费用口径说明 -->
         <view class="form-row">
-          <text class="form-label">材料费<text class="form-label-opt">选填</text></text>
+          <text class="form-label">费用口径</text>
           <view class="neu-input">
-            <text class="neu-input-prefix">¥</text>
-            <input
-              class="neu-input-el"
-              type="digit"
-              value="{{materialFee}}"
-              placeholder="0.00"
-              placeholder-class="neu-input-ph"
-              bindinput="onMaterialFeeInput"
-            />
+            <text class="neu-input-el">材料等费用请计入报价，并在说明中注明</text>
           </view>
         </view>
 
@@ -150,7 +142,7 @@
         <view class="hint-ic">
           <image src="{{icons.lightbulb}}" mode="aspectFit" class="hint-ic-img" lazy-load="{{false}}" />
         </view>
-        <text class="hint-text">合理报价更易被客户选中，平台抽成 <text class="hi-strong">5%</text>，预计到手 <text class="hi-net">¥{{payout}}</text></text>
+        <text class="hint-text">请按实际服务内容报价；平台费用与最终到账金额以服务端结算规则为准。</text>
       </view>
     </view>
 

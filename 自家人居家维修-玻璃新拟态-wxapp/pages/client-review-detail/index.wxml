@@ -1,0 +1,15 @@
+<view class="phone-page design-detail-page" data-page-id="page-client-review-detail">
+  <view class="status-bar"><text>9:41</text><text class="status-icons">● WiFi 100%</text></view>
+  <view class="topbar"><view class="icon-button design-button" data-route="/pages/client-review-list/index" bindtap="onNavigate">←</view><view class="tag-h1">评价详情</view><text></text></view>
+  <view class="page-body">
+    <view class="notice info" wx:if="{{loading}}">正在同步评价详情…</view>
+    <view class="empty-state" wx:elif="{{loadError}}"><view class="tag-h3">暂无评价详情</view><view class="tag-p">{{loadError}}</view><view class="btn secondary design-button" bindtap="loadReview">重新加载</view></view>
+    <block wx:elif="{{review}}">
+      <view class="card"><view class="list-row"><text class="avatar">评</text><view class="row-main"><view class="row-title">{{review.workerText}}</view><view class="row-copy">{{review.createdText}} · {{review.serviceText}}</view></view><view class="row-value"><text class="badge {{review.status === 'rejected' ? 'danger' : review.status === 'approved' ? 'success' : 'warning'}}">{{review.statusText}}</text><view class="tag-b" style="color:var(--accent)">{{review.starsText}}</view></view></view></view>
+      <view class="section"><view class="section-title"><text class="tag-strong">评价内容</text><text>{{review.is_anonymous ? '匿名提交' : '实名提交'}}</text></view><view class="card"><view class="card-copy tag-p">{{review.contentText}}</view><view class="upload-grid" wx:if="{{images.length}}"><image class="upload-tile" wx:for="{{images}}" wx:key="*this" src="{{item}}" mode="aspectFill" data-index="{{index}}" bindtap="onPreview" /></view></view></view>
+      <view class="section"><view class="section-title"><text class="tag-strong">服务信息</text></view><view class="card list-card"><view class="list-row"><view class="row-main"><view class="row-title">服务项目</view></view><text class="row-value">{{review.serviceText}}</text></view><view class="list-row"><view class="row-main"><view class="row-title">服务师傅</view></view><text class="row-value">{{review.workerText}}</text></view><view class="list-row"><view class="row-main"><view class="row-title">关联订单</view></view><text class="row-value">{{review.orderText}}</text></view></view><view class="chips" wx:if="{{review.tags.length}}"><view class="chip active" wx:for="{{review.tags}}" wx:key="*this">{{item}}</view></view></view>
+      <view class="section" wx:if="{{review.reject_reason}}"><view class="section-title"><text class="tag-strong">审核说明</text></view><view class="notice warning">{{review.reject_reason}}</view></view>
+      <view class="section"><view class="section-title"><text class="tag-strong">师傅回复</text><text wx:if="{{review.replyTimeText}}">{{review.replyTimeText}}</text></view><view class="notice info" wx:if="{{review.worker_reply}}">{{review.worker_reply}}</view><view class="notice info" wx:else>师傅尚未回复该评价。</view></view>
+    </block>
+  </view>
+</view>

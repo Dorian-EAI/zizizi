@@ -1085,6 +1085,34 @@
             localStorage.setItem("admin_role", adminRole.value);
             adminName.value = loginForm.username;
             localStorage.setItem("admin_name", adminName.value);
+            if (data.must_change_password) {
+              const currentPassword = loginForm.password;
+              const first = await ElementPlus.ElMessageBox.prompt(
+                "这是初始或已重置密码，请设置至少 12 位的新密码。",
+                "必须修改密码",
+                { inputType: "password", closeOnClickModal: false, closeOnPressEscape: false }
+              );
+              const newPassword = String(first.value || "");
+              if (newPassword.length < 12 || new TextEncoder().encode(newPassword).length > 72) {
+                throw new Error("新密码必须至少 12 位且 UTF-8 编码不超过 72 字节");
+              }
+              const second = await ElementPlus.ElMessageBox.prompt(
+                "请再次输入新密码。",
+                "确认新密码",
+                { inputType: "password", closeOnClickModal: false, closeOnPressEscape: false }
+              );
+              if (newPassword !== String(second.value || "")) {
+                throw new Error("两次输入的新密码不一致");
+              }
+              await request("/api/admin/password", {
+                method: "PUT",
+                body: { current_password: currentPassword, new_password: newPassword },
+              });
+              clearAdminSession();
+              loginForm.password = "";
+              ElementPlus.ElMessage.success("密码已修改，请使用新密码重新登录");
+              return;
+            }
             ElementPlus.ElMessage.success("登录成功");
             loginForm.username = "";
             loginForm.password = "";

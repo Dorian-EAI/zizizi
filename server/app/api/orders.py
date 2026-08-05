@@ -5,6 +5,7 @@ from typing import Literal, Optional
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
+from starlette.concurrency import run_in_threadpool
 
 from app.database import get_db
 from app.dependencies import get_current_user, get_current_worker, get_current_account
@@ -19,7 +20,7 @@ from app.schemas.order import (
     OrderResponse,
     AvailableOrderResponse,
 )
-from app.services import order_service
+from app.services import order_service, payment_service
 from app.services.map_service import (
     calculate_distance,
     get_order_coords,
@@ -73,6 +74,18 @@ async def list_orders(
     return success(data=data)
 
 
+@router.get("/{order_id}/payment-quote")
+async def get_payment_quote(
+    order_id: int,
+    coupon_id: Optional[int] = Query(None, gt=0),
+    user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    """返回短时有效的服务端权威应付金额与可用渠道。"""
+    quote = payment_service.get_order_payment_quote(db, user, order_id, coupon_id)
+    return success(data=quote)
+
+
 @router.get("/available")
 async def available_orders(
     lat: Optional[float] = Query(None, ge=-90, le=90, description="师傅当前纬度"),
@@ -99,7 +112,13 @@ async def available_orders(
         if lat is not None and lng is not None:
             order_lat, order_lng = get_order_coords(o.address or "")
             if order_lat is not None and order_lng is not None:
-                dist_info = calculate_distance(lat, lng, order_lat, order_lng)
+                dist_info = await run_in_threadpool(
+                    calculate_distance,
+                    lat,
+                    lng,
+                    order_lat,
+                    order_lng,
+                )
                 item["distance_meters"] = dist_info["distance_meters"]
                 item["distance_text"] = dist_info["distance_text"]
                 item["duration_seconds"] = dist_info.get("duration_seconds")
@@ -154,6 +173,7 @@ async def get_order(
         raise HTTPException(status_code=403, detail="无权查看此订单")
 
     data = OrderResponse.model_validate(order).model_dump(mode="json")
+    data.update(order_service.build_order_projection(db, order, account_type, account_obj))
     # 联系方式只在双方已经建立订单关系后，按当前查看角色单向放行。
     # 列表和可抢单接口不经过这里，因此永远不会携带联系方式。
     if account_type == "user" and order.worker_id is not None:

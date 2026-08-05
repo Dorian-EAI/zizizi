@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url'
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const checks = [
   { name: '小程序运行完整性', script: 'tools/runtime-integrity.mjs' },
+  { name: '支付确认运行行为', script: 'tools/runtime-behavior-tests.mjs' },
   { name: 'zjrnew.design 同步状态', script: 'tools/design-sync.mjs' }
 ]
 

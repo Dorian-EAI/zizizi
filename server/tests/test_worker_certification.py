@@ -29,19 +29,20 @@ from app.utils.security import create_access_token
 VALID_ID_CARD = "11010519491231002X"
 
 
-def _application(id_card: str = VALID_ID_CARD) -> dict:
+def _application(id_card: str = VALID_ID_CARD, worker_id: int = 1) -> dict:
+    base = f"https://private.example.com/certificate/{worker_id}"
     return {
         "real_name": "张师傅",
         "phone": "13800000001",
         "phone_verification_code": "123456",
         "id_card": id_card,
-        "id_front": "/uploads/certificate/id-front.jpg",
-        "id_back": "/uploads/certificate/id-back.jpg",
+        "id_front": f"{base}/id-front.jpg",
+        "id_back": f"{base}/id-back.jpg",
         "certificate_images": [
-            "/uploads/certificate/electrician.jpg",
-            "https://cdn.example.com/certificate/plumbing.jpg",
+            f"{base}/electrician.jpg",
+            f"{base}/plumbing.jpg",
         ],
-        "health_certificate": "/uploads/certificate/health.jpg",
+        "health_certificate": f"{base}/health.jpg",
         "service_city": "北京市",
         "service_districts": ["朝阳区", "海淀区"],
         "service_types": ["水电维修", "管道疏通"],
@@ -103,11 +104,15 @@ class WorkerCertificationTests(unittest.TestCase):
             response = self.client.post(
                 "/api/auth/worker/certification",
                 headers=self._worker_headers(),
-                json=_application(),
+                json=_application(worker_id=self.worker_id),
             )
 
         self.assertEqual(response.status_code, 200, response.text)
-        verify_code.assert_called_once_with("13800000001", "123456")
+        verify_code.assert_called_once_with(
+            "13800000001",
+            "123456",
+            purpose="worker_certification",
+        )
         self.assertNotIn(VALID_ID_CARD, response.text)
         self.assertNotIn(VALID_ID_CARD, str(logged.mock_calls))
         body = response.json()["data"]
@@ -142,7 +147,7 @@ class WorkerCertificationTests(unittest.TestCase):
         response = self.client.post(
             "/api/auth/worker/certification",
             headers=self._worker_headers(),
-            json=_application(invalid_id),
+            json=_application(invalid_id, self.worker_id),
         )
         self.assertEqual(response.status_code, 422, response.text)
         self.assertNotIn(invalid_id, response.text)

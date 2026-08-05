@@ -97,4 +97,4 @@ def get_inspections_to_send(db: Session) -> List[QualityInspection]:
         QualityInspection.status == "pending",
         QualityInspection.send_at.is_(None),
         QualityInspection.created_at < deadline,
-    ).all()
+    ).order_by(QualityInspection.created_at.asc()).limit(200).all()

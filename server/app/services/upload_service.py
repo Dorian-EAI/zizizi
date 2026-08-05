@@ -7,6 +7,7 @@
 """
 
 import os
+import re
 import uuid
 from datetime import datetime
 from pathlib import Path
@@ -70,6 +71,12 @@ def _build_oss_host(bucket: str, endpoint: str, cdn_domain: str = "") -> str:
 # 扩展名 → MIME 期望映射
 ALLOWED_IMAGE_EXTS = {"jpg", "jpeg", "png", "webp", "pdf"}
 _CATEGORY_RE = __import__("re").compile(r"^[a-z][a-z0-9_-]{0,31}$")
+_MANAGED_OBJECT_KEY_RE = re.compile(
+    r"^(?P<category>[a-z][a-z0-9_-]{0,31})/"
+    r"(?:(?P<owner_id>[1-9][0-9]*)/)?"
+    r"[0-9]{4}/[0-9]{2}/[0-9]{2}/[0-9a-f]{32}\."
+    r"(?:jpg|jpeg|png|webp|pdf)$"
+)
 
 # 文件头魔数（magic bytes）校验表 — 防止 HTML/JS/SVG 伪装成图片上传
 # 仅校验前若干字节即可确定真实类型
@@ -137,7 +144,7 @@ def _ensure_dir(full_path: str) -> None:
 def _save_local(file_bytes: bytes, filename: str, category: str) -> Dict[str, Any]:
     """本地保存文件"""
     ext = _get_ext(filename)
-    rel_path = _random_filename(ext)
+    rel_path = f"{category}/{_random_filename(ext)}"
     base_dir = os.path.realpath(_get_upload_dir())
     full_path = os.path.realpath(os.path.join(base_dir, rel_path))
 
@@ -191,9 +198,16 @@ def upload_to_oss(file_bytes: bytes, filename: str, category: str = "images") ->
 
     auth = oss2.Auth(access_key, secret_key)
     bucket = oss2.Bucket(auth, endpoint, bucket_name)
-    bucket.put_object(key, file_bytes)
+    is_certificate = category == "certificate" or category.startswith("certificate/")
+    headers = {"x-oss-object-acl": oss2.OBJECT_ACL_PRIVATE} if is_certificate else None
+    bucket.put_object(key, file_bytes, headers=headers)
 
-    base = _build_oss_host(bucket_name, endpoint, cdn_domain or "")
+    # 认证材料永远绕过公共 CDN；只保存私有 origin 引用，读取时再签短时 URL。
+    base = _build_oss_host(
+        bucket_name,
+        endpoint,
+        "" if is_certificate else (cdn_domain or ""),
+    )
     return f"{base}/{key}"
 
 
@@ -228,14 +242,24 @@ def upload_to_cos(file_bytes: bytes, filename: str, category: str = "images") ->
     client = CosS3Client(config)
 
     import io
-    client.put_object(Bucket=bucket_name, Body=io.BytesIO(file_bytes), Key=key)
+    put_options = {"Bucket": bucket_name, "Body": io.BytesIO(file_bytes), "Key": key}
+    is_certificate = category == "certificate" or category.startswith("certificate/")
+    if is_certificate:
+        put_options["ACL"] = "private"
+    client.put_object(**put_options)
 
-    if cdn_domain:
+    if cdn_domain and not is_certificate:
         return f"{cdn_domain.rstrip('/')}/{key}"
     return f"https://{bucket_name}.cos.{region}.myqcloud.com/{key}"
 
 
-def upload_image(category: str, file_bytes: bytes, filename: str) -> Dict[str, Any]:
+def upload_image(
+    category: str,
+    file_bytes: bytes,
+    filename: str,
+    *,
+    owner_id: Optional[int] = None,
+) -> Dict[str, Any]:
     """上传单张图片/文件
 
     Args:
@@ -244,6 +268,11 @@ def upload_image(category: str, file_bytes: bytes, filename: str) -> Dict[str, A
         filename: 原始文件名
     """
     category = normalize_category(category)
+    storage_category = category
+    if category == "certificate":
+        if owner_id is None or int(owner_id) <= 0:
+            raise HTTPException(status_code=400, detail="认证材料缺少所属师傅")
+        storage_category = f"certificate/{int(owner_id)}"
     if not _is_allowed_ext(filename):
         raise HTTPException(
             status_code=400,
@@ -271,20 +300,20 @@ def upload_image(category: str, file_bytes: bytes, filename: str) -> Dict[str, A
 
     if provider == "aliyun":
         try:
-            url = upload_to_oss(file_bytes, filename, category)
+            url = upload_to_oss(file_bytes, filename, storage_category)
             return {"url": url, "size": len(file_bytes), "filename": filename}
         except Exception as exc:
             if settings.is_deployed:
                 raise HTTPException(status_code=503, detail="对象存储暂不可用") from exc
     elif provider == "tencent":
         try:
-            url = upload_to_cos(file_bytes, filename, category)
+            url = upload_to_cos(file_bytes, filename, storage_category)
             return {"url": url, "size": len(file_bytes), "filename": filename}
         except Exception as exc:
             if settings.is_deployed:
                 raise HTTPException(status_code=503, detail="对象存储暂不可用") from exc
 
-    return _save_local(file_bytes, filename, category)
+    return _save_local(file_bytes, filename, storage_category)
 
 
 def upload_images_batch(
@@ -299,25 +328,251 @@ def upload_images_batch(
     return results
 
 
+def _certificate_object_key(stored_url: str, worker_id: int) -> str:
+    parsed = urlsplit(stored_url or "")
+    marker = f"/certificate/{int(worker_id)}/"
+    if marker not in parsed.path:
+        raise HTTPException(status_code=400, detail="认证材料不属于该师傅")
+    key = f"certificate/{int(worker_id)}/" + parsed.path.split(marker, 1)[1].lstrip("/")
+    if ".." in key.split("/"):
+        raise HTTPException(status_code=400, detail="认证材料对象键无效")
+    return key
+
+
+def validate_certificate_reference(stored_url: str, worker_id: int) -> None:
+    """校验证件来自当前师傅的受检上传，并确认云端对象存在。"""
+    from app.config import settings
+
+    key = _certificate_object_key(stored_url, worker_id)
+    parsed = urlsplit(stored_url)
+    if not settings.is_deployed:
+        if stored_url.startswith("/uploads/"):
+            base_dir = os.path.realpath(_get_upload_dir())
+            path = os.path.realpath(os.path.join(base_dir, key))
+            if os.path.commonpath([base_dir, path]) != base_dir or not os.path.isfile(path):
+                raise HTTPException(status_code=400, detail="认证材料不存在")
+        return
+
+    provider = settings.OSS_PROVIDER.strip().lower()
+    try:
+        if provider == "aliyun":
+            import oss2
+
+            expected_host = urlsplit(_build_oss_host(settings.OSS_BUCKET, settings.OSS_ENDPOINT)).hostname
+            if parsed.hostname != expected_host:
+                raise HTTPException(status_code=400, detail="认证材料来源无效")
+            bucket = oss2.Bucket(
+                oss2.Auth(settings.OSS_ACCESS_KEY, settings.OSS_SECRET_KEY),
+                settings.OSS_ENDPOINT,
+                settings.OSS_BUCKET,
+            )
+            bucket.head_object(key)
+            return
+        if provider == "tencent":
+            from qcloud_cos import CosConfig, CosS3Client
+
+            expected_host = f"{settings.COS_BUCKET}.cos.{settings.COS_REGION}.myqcloud.com"
+            if parsed.hostname != expected_host:
+                raise HTTPException(status_code=400, detail="认证材料来源无效")
+            client = CosS3Client(
+                CosConfig(
+                    Region=settings.COS_REGION,
+                    SecretId=settings.COS_SECRET_ID,
+                    SecretKey=settings.COS_SECRET_KEY,
+                )
+            )
+            client.head_object(Bucket=settings.COS_BUCKET, Key=key)
+            return
+    except HTTPException:
+        raise
+    except Exception as exc:
+        raise HTTPException(status_code=400, detail="认证材料不存在或暂不可读") from exc
+    raise HTTPException(status_code=503, detail="认证材料私有存储未配置")
+
+
+def sign_private_download_url(
+    stored_url: str,
+    worker_id: int,
+    expires_seconds: int = 600,
+) -> str:
+    """为私有认证材料生成短时 GET URL；拒绝签名非 certificate 对象。"""
+    from app.config import settings
+
+    key = _certificate_object_key(stored_url, worker_id)
+
+    provider = settings.OSS_PROVIDER.strip().lower()
+    try:
+        if provider == "aliyun":
+            import oss2
+
+            auth = oss2.Auth(settings.OSS_ACCESS_KEY, settings.OSS_SECRET_KEY)
+            bucket = oss2.Bucket(auth, settings.OSS_ENDPOINT, settings.OSS_BUCKET)
+            return bucket.sign_url("GET", key, expires_seconds)
+        if provider == "tencent":
+            from qcloud_cos import CosConfig, CosS3Client
+
+            config = CosConfig(
+                Region=settings.COS_REGION,
+                SecretId=settings.COS_SECRET_ID,
+                SecretKey=settings.COS_SECRET_KEY,
+            )
+            client = CosS3Client(config)
+            return client.get_presigned_url(
+                Method="GET",
+                Bucket=settings.COS_BUCKET,
+                Key=key,
+                Expired=expires_seconds,
+            )
+    except Exception as exc:
+        if settings.is_deployed:
+            raise HTTPException(status_code=503, detail="认证材料暂时无法读取") from exc
+
+    if settings.is_deployed:
+        raise HTTPException(status_code=503, detail="认证材料私有存储未配置")
+    return stored_url
+
+
 # ===== 删除 =====
 
-def delete_file_by_url(url: str) -> bool:
-    """根据 URL 删除本地文件（防路径穿越）
+def _normalize_host(host: Optional[str]) -> str:
+    return (host or "").rstrip(".").lower()
 
-    安全说明：
-    - 用 os.path.realpath 解析最终绝对路径，再校验是否在上传目录内
-    - 防止 url="/uploads/../../etc/passwd" 类攻击逃逸上传目录
-    """
-    if not url or not url.startswith("/uploads/"):
+
+def _validate_managed_object_key(key: str) -> str:
+    """只接受本服务生成的对象 key，避免把删除接口变成任意 bucket 删除器。"""
+    if not key or len(key) > 384 or "\\" in key or "%" in key:
+        raise HTTPException(status_code=400, detail="文件对象键无效")
+    if key.startswith("/") or "//" in key or any(
+        segment in {"", ".", ".."} for segment in key.split("/")
+    ):
+        raise HTTPException(status_code=400, detail="文件对象键无效")
+    matched = _MANAGED_OBJECT_KEY_RE.fullmatch(key)
+    if not matched:
+        raise HTTPException(status_code=400, detail="文件对象键不是受管上传对象")
+    # 只有认证材料允许（且必须）携带师傅归属目录。
+    category = matched.group("category")
+    owner_id = matched.group("owner_id")
+    if (category == "certificate") != bool(owner_id):
+        raise HTTPException(status_code=400, detail="文件对象归属目录无效")
+    return key
+
+
+def _strict_cloud_url_key(url: str, allowed_hosts: set[str]) -> str:
+    """从云端 URL 提取受管 key；拒绝歧义 URL、非 HTTPS 和伪造相似域名。"""
+    try:
+        parsed = urlsplit(url)
+        port = parsed.port
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail="文件 URL 格式无效") from exc
+    host = _normalize_host(parsed.hostname)
+    if (
+        parsed.scheme.lower() != "https"
+        or not host
+        or parsed.username is not None
+        or parsed.password is not None
+        or port not in (None, 443)
+        or parsed.query
+        or parsed.fragment
+        or not parsed.path.startswith("/")
+        or parsed.path.startswith("//")
+        or host not in {_normalize_host(item) for item in allowed_hosts if item}
+    ):
+        raise HTTPException(status_code=400, detail="文件 URL 不属于受管对象存储")
+    return _validate_managed_object_key(parsed.path.lstrip("/"))
+
+
+def get_managed_object_identity(url: str) -> Tuple[str, str]:
+    """返回 ``(provider, object_key)``，同时完成删除目标的严格边界校验。"""
+    from app.config import settings
+
+    if not url or len(url) > 512:
         raise HTTPException(status_code=400, detail="无效的文件 URL")
 
-    # 解析相对路径，禁止 .. 与绝对路径
-    rel = url[len("/uploads/"):]
-    if not rel or ".." in rel.split("/"):
-        raise HTTPException(status_code=400, detail="非法的文件路径")
+    if url.startswith("/uploads/"):
+        if settings.is_deployed or settings.OSS_PROVIDER.strip().lower() != "local":
+            raise HTTPException(status_code=400, detail="本地文件 URL 不属于当前存储环境")
+        return "local", _validate_managed_object_key(url[len("/uploads/"):])
+
+    provider = settings.OSS_PROVIDER.strip().lower()
+    if provider == "aliyun":
+        origin_host = urlsplit(
+            _build_oss_host(settings.OSS_BUCKET, settings.OSS_ENDPOINT)
+        ).hostname
+        cdn_host = (
+            urlsplit(
+                _build_oss_host(
+                    settings.OSS_BUCKET,
+                    settings.OSS_ENDPOINT,
+                    settings.OSS_CDN_DOMAIN,
+                )
+            ).hostname
+            if settings.OSS_CDN_DOMAIN
+            else None
+        )
+        key = _strict_cloud_url_key(url, {origin_host or "", cdn_host or ""})
+        if key.startswith("certificate/") and _normalize_host(
+            urlsplit(url).hostname
+        ) != _normalize_host(origin_host):
+            raise HTTPException(status_code=400, detail="认证材料必须使用私有 origin URL")
+        return provider, key
+    if provider == "tencent":
+        origin_host = f"{settings.COS_BUCKET}.cos.{settings.COS_REGION}.myqcloud.com"
+        cdn_host = None
+        if settings.COS_CDN_DOMAIN:
+            cdn_value = settings.COS_CDN_DOMAIN.strip()
+            cdn_host = urlsplit(
+                cdn_value if "://" in cdn_value else f"https://{cdn_value}"
+            ).hostname
+        key = _strict_cloud_url_key(url, {origin_host, cdn_host or ""})
+        if key.startswith("certificate/") and _normalize_host(
+            urlsplit(url).hostname
+        ) != _normalize_host(origin_host):
+            raise HTTPException(status_code=400, detail="认证材料必须使用私有 origin URL")
+        return provider, key
+    raise HTTPException(status_code=400, detail="当前存储提供商不支持该文件 URL")
+
+def delete_file_by_url(url: str) -> bool:
+    """删除本服务产生的本地/OSS/COS 对象。
+
+    安全说明：
+    - URL 主机必须与当前 provider 的 origin/CDN 精确匹配；
+    - key 必须匹配服务端随机命名格式，不能删除 bucket 中的任意对象；
+    - 本地文件仍用 realpath/commonpath 防符号链接和路径穿越。
+    """
+    from app.config import settings
+
+    provider, key = get_managed_object_identity(url)
+    if provider == "aliyun":
+        try:
+            import oss2
+
+            bucket = oss2.Bucket(
+                oss2.Auth(settings.OSS_ACCESS_KEY, settings.OSS_SECRET_KEY),
+                settings.OSS_ENDPOINT,
+                settings.OSS_BUCKET,
+            )
+            bucket.delete_object(key)
+            return True
+        except Exception as exc:
+            raise HTTPException(status_code=503, detail="阿里云 OSS 删除暂不可用") from exc
+    if provider == "tencent":
+        try:
+            from qcloud_cos import CosConfig, CosS3Client
+
+            client = CosS3Client(
+                CosConfig(
+                    Region=settings.COS_REGION,
+                    SecretId=settings.COS_SECRET_ID,
+                    SecretKey=settings.COS_SECRET_KEY,
+                )
+            )
+            client.delete_object(Bucket=settings.COS_BUCKET, Key=key)
+            return True
+        except Exception as exc:
+            raise HTTPException(status_code=503, detail="腾讯云 COS 删除暂不可用") from exc
 
     base_dir = os.path.realpath(_get_upload_dir())
-    full_path = os.path.realpath(os.path.join(base_dir, rel))
+    full_path = os.path.realpath(os.path.join(base_dir, key))
 
     # 关键：二次校验最终路径必须仍在上传根目录下
     # 防止通过符号链接或特殊路径绕过前缀校验

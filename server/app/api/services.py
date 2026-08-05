@@ -14,7 +14,7 @@ from app.schemas.service import (
     ServiceTypeListResponse,
     ToggleServiceActiveRequest,
 )
-from app.services import service_service
+from app.services import service_service, admin_service
 from app.utils.response import success
 from app.models.user import Worker
 from app.models.service import ServiceType
@@ -109,7 +109,7 @@ async def list_services(
     if keyword:
         k = f"%{keyword}%"
         q = q.filter(or_(ServiceType.name.like(k), ServiceType.description.like(k), ServiceType.category.like(k)))
-    services = q.order_by(ServiceType.sort_order.asc(), ServiceType.id.asc()).all()
+    services = q.order_by(ServiceType.sort_order.asc(), ServiceType.id.asc()).limit(500).all()
     data = [_service_to_list_dict(s) for s in services]
     return success(data=data)
 
@@ -126,6 +126,7 @@ async def list_categories(db: Session = Depends(get_db)):
         .filter(ServiceType.is_active == True)  # noqa: E712
         .group_by(ServiceType.category)
         .order_by(func.count(ServiceType.id).desc())
+        .limit(200)
         .all()
     )
     data = [
@@ -305,10 +306,13 @@ async def get_service(key_or_id: str, db: Session = Depends(get_db)):
 async def create_service(
     req: ServiceTypeCreateRequest,
     db: Session = Depends(get_db),
-    admin=Depends(get_current_admin),
+    admin=Depends(require_super_admin),
 ):
     """创建服务类型（管理后台）"""
     svc = service_service.create_service(db, req.model_dump())
+    admin_service.add_admin_audit(
+        db, admin.id, "service.create", "service_type", svc.id, commit=True
+    )
     data = _service_to_detail_dict(svc)
     return success(data=data, message="创建成功")
 
@@ -318,10 +322,13 @@ async def update_service(
     svc_id: int,
     req: ServiceTypeCreateRequest,
     db: Session = Depends(get_db),
-    admin=Depends(get_current_admin),
+    admin=Depends(require_super_admin),
 ):
     """更新服务类型（管理后台）"""
     svc = service_service.update_service(db, svc_id, req.model_dump())
+    admin_service.add_admin_audit(
+        db, admin.id, "service.update", "service_type", svc.id, commit=True
+    )
     data = _service_to_detail_dict(svc)
     return success(data=data, message="更新成功")
 
@@ -331,10 +338,19 @@ async def toggle_active(
     svc_id: int,
     body: ToggleServiceActiveRequest,
     db: Session = Depends(get_db),
-    admin=Depends(get_current_admin),
+    admin=Depends(require_super_admin),
 ):
     """切换服务启用状态"""
     svc = service_service.toggle_active(db, svc_id, body.is_active)
+    admin_service.add_admin_audit(
+        db,
+        admin.id,
+        "service.active.update",
+        "service_type",
+        svc.id,
+        {"is_active": svc.is_active},
+        commit=True,
+    )
     return success(data={"id": svc.id, "is_active": svc.is_active}, message="状态更新成功")
 
 

@@ -6,7 +6,7 @@ from unittest.mock import patch
 from fastapi import HTTPException
 
 from tests._support import isolated_engine, session_factory
-from app.dependencies import get_current_admin, require_super_admin
+from app.dependencies import get_current_admin, require_admin_operator, require_super_admin
 from app.models.admin import Admin
 
 
@@ -69,6 +69,19 @@ class PermissionTests(unittest.TestCase):
         )
         with self.assertRaises(HTTPException) as raised:
             require_super_admin(operator)
+        self.assertEqual(raised.exception.status_code, 403)
+
+    def test_auditor_cannot_use_operator_write_action(self) -> None:
+        auditor = Admin(
+            id=2,
+            username="auditor",
+            password_hash="not-used",
+            role="auditor",
+            must_change_password=False,
+            is_active=True,
+        )
+        with self.assertRaises(HTTPException) as raised:
+            require_admin_operator(auditor)
         self.assertEqual(raised.exception.status_code, 403)
 
 

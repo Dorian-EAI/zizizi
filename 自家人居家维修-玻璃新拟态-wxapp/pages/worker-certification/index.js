@@ -274,7 +274,7 @@ Page({
     const api = app.getApi()
     try {
       wx.showLoading({ title: '发送验证码', mask: true })
-      const sendResult = await api.sms.sendCode(f.phone)
+      const sendResult = await api.sms.sendCode(f.phone, 'worker_certification')
       wx.hideLoading()
       const verificationCode = await this.promptVerificationCode(f.phone, sendResult)
       if (!verificationCode) return

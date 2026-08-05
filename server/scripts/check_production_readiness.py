@@ -15,6 +15,7 @@ import shutil
 import subprocess
 import sys
 from pathlib import Path
+from urllib.parse import urlsplit
 
 
 SERVER_ROOT = Path(__file__).resolve().parents[1]
@@ -89,12 +90,49 @@ def load_production_settings(gate: Gate, env_file: Path):
     return config
 
 
-def check_wxapp_environment(gate: Gate) -> None:
+def check_wxapp_environment(gate: Gate, config) -> None:
     env_js = WXAPP_ROOT / "config" / "env.js"
     if not env_js.is_file():
         gate.failures.append(f"缺少小程序环境配置：{env_js}")
         return
     text = env_js.read_text(encoding="utf-8")
+    project_config_path = WXAPP_ROOT / "project.config.json"
+    try:
+        project_config = json.loads(project_config_path.read_text(encoding="utf-8"))
+    except Exception as exc:
+        gate.failures.append(f"无法读取小程序 project.config.json：{exc}")
+        project_config = {}
+
+    project_appid = str(project_config.get("appid") or "").strip()
+    configured_appid = str(getattr(config, "WX_APPID", "") or "").strip()
+    appid_valid = (
+        bool(project_appid)
+        and project_appid == configured_appid
+        and not re.search(r"(?:tourist|example|your_|placeholder)", project_appid, re.I)
+    )
+    gate.require(
+        appid_valid,
+        "小程序 AppID 与后端 WX_APPID 一致",
+        "project.config.json appid 必须与后端 WX_APPID 完全一致且不能是占位值",
+    )
+    gate.require(
+        project_config.get("setting", {}).get("urlCheck") is True,
+        "小程序已启用合法域名校验",
+        "project.config.json setting.urlCheck 必须为 true",
+    )
+    private_config_path = WXAPP_ROOT / "project.private.config.json"
+    if private_config_path.is_file():
+        try:
+            private_config = json.loads(private_config_path.read_text(encoding="utf-8"))
+            private_url_check = private_config.get("setting", {}).get("urlCheck") is True
+        except Exception as exc:
+            private_url_check = False
+            gate.failures.append(f"无法读取 project.private.config.json：{exc}")
+        gate.require(
+            private_url_check,
+            "小程序私有配置未关闭合法域名校验",
+            "project.private.config.json setting.urlCheck 必须为 true",
+        )
     for name in ("trial", "release"):
         block_match = re.search(rf"\b{name}\s*:\s*\{{(?P<body>.*?)\n\s*\}}", text, re.S)
         if not block_match:
@@ -103,11 +141,27 @@ def check_wxapp_environment(gate: Gate) -> None:
         body = block_match.group("body")
         url_match = re.search(r"\bbaseURL\s*:\s*(['\"])(?P<url>.*?)\1", body)
         url = url_match.group("url").strip().rstrip("/") if url_match else ""
+        parsed_url = urlsplit(url)
+        url_valid = (
+            parsed_url.scheme == "https"
+            and bool(parsed_url.hostname)
+            and parsed_url.username is None
+            and parsed_url.password is None
+            and not parsed_url.query
+            and not parsed_url.fragment
+            and ".example." not in url
+        )
         gate.require(
-            url.startswith("https://") and ".example." not in url,
+            url_valid,
             f"小程序 {name} 使用真实 HTTPS API 域名",
             f"小程序 {name}.baseURL 必须填写真实 HTTPS API 域名",
         )
+        if url_valid:
+            gate.require(
+                parsed_url.hostname in config.allowed_hosts_list,
+                f"小程序 {name} API 域名属于后端 ALLOWED_HOSTS",
+                f"小程序 {name}.baseURL 域名必须同时出现在后端 ALLOWED_HOSTS",
+            )
         phone_match = re.search(r"\bservicePhone\s*:\s*(['\"])(?P<phone>.*?)\1", body)
         phone = re.sub(r"\D", "", phone_match.group("phone")) if phone_match else ""
         gate.require(
@@ -186,6 +240,8 @@ from alembic.script import ScriptDirectory
 from sqlalchemy import inspect, text
 from app.database import engine
 from app.utils.redis_client import redis_client
+from app.utils.rate_limit import _get_storage_uri
+import redis
 with engine.connect() as conn:
     conn.execute(text('SELECT 1'))
     table_names = set(inspect(conn).get_table_names())
@@ -208,10 +264,20 @@ with engine.connect() as conn:
         raise SystemExit('FAQ 内容尚未发布')
     if not conn.execute(text('SELECT COUNT(*) FROM service_types WHERE is_active = 1')).scalar_one():
         raise SystemExit('没有启用的服务类目')
-    if not conn.execute(text("SELECT COUNT(*) FROM admins WHERE is_active = 1 AND role = 'super_admin'")).scalar_one():
-        raise SystemExit('没有启用的超级管理员')
+    if not conn.execute(text(
+        "SELECT COUNT(*) FROM admins WHERE is_active = 1 AND role = 'super_admin' "
+        "AND must_change_password = 0"
+    )).scalar_one():
+        raise SystemExit('没有已完成首次改密的启用超级管理员')
 if not redis_client.ping():
     raise SystemExit('Redis ping 失败')
+try:
+    if not redis.Redis.from_url(
+        _get_storage_uri(), socket_connect_timeout=2, socket_timeout=2
+    ).ping():
+        raise SystemExit('限流 Redis ping 失败')
+except Exception as exc:
+    raise SystemExit(f'限流 Redis ping 失败：{exc}')
 print('数据库、迁移 head、运营内容、服务目录、管理员与 Redis 均可用')
 """.strip()
     gate.run(
@@ -283,7 +349,10 @@ def main() -> int:
     config = load_production_settings(gate, env_file) if env_file.is_file() else None
     if config is not None and config.APP_ENV.strip().lower() == "production":
         check_provider_dependencies(gate, config)
-    check_wxapp_environment(gate)
+    if config is not None:
+        check_wxapp_environment(gate, config)
+    else:
+        gate.failures.append("后端配置无效，无法交叉校验小程序环境")
     check_wxapp_sources(gate)
 
     node = shutil.which("node")

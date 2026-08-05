@@ -6,7 +6,13 @@ from fastapi import APIRouter, Depends, Query, Header, HTTPException
 from sqlalchemy.orm import Session
 
 from app.database import get_db
-from app.dependencies import get_current_user, get_current_worker, get_current_account, get_current_admin
+from app.dependencies import (
+    get_current_user,
+    get_current_worker,
+    get_current_account,
+    get_current_admin,
+    require_admin_operator,
+)
 from app.models.user import User, Worker
 from app.schemas.review import ReviewAuditRequest, WorkerReplyRequest
 from app.services import review_service
@@ -184,7 +190,7 @@ async def worker_detail(
 async def pending_reviews(
     page: int = Query(1, ge=1),
     size: int = Query(20, ge=1, le=100),
-    admin=Depends(get_current_admin),
+    admin=Depends(require_admin_operator),
     db: Session = Depends(get_db),
 ):
     """运营后台：待审核评价列表"""
@@ -211,7 +217,7 @@ async def pending_reviews(
 async def audit_review_api(
     review_id: int,
     req: ReviewAuditRequest,
-    admin=Depends(get_current_admin),
+    admin=Depends(require_admin_operator),
     db: Session = Depends(get_db),
 ):
     """运营后台：审核评价"""

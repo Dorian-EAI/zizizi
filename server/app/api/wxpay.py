@@ -1,15 +1,14 @@
 """微信支付相关路由"""
 
-import random
 from datetime import datetime
 
-from fastapi import APIRouter, Depends, Request, HTTPException
+from fastapi import APIRouter, Depends, Header, Request, HTTPException
 from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
 
 from app.config import settings
 from app.database import get_db
-from app.dependencies import get_current_user, require_super_admin
+from app.dependencies import get_current_account, get_current_user, require_super_admin
 from app.models.order import Order
 from app.models.user import Worker
 from app.models.wallet import PaymentOrder, Transaction
@@ -19,62 +18,100 @@ from app.schemas.wxpay import (
     RechargeJSAPIRequest,
 )
 from app.services import wechat_pay_service
+from app.services.idempotency_service import (
+    claim_financial_request,
+    complete_financial_request,
+    fail_financial_request,
+)
 from app.utils.response import success
+from app.utils.snowflake import generate_business_no
 
 router = APIRouter(prefix="/api/wxpay", tags=["微信支付"])
 
 
 def _gen_payment_no() -> str:
-    return "PAY" + datetime.utcnow().strftime("%Y%m%d%H%M%S") + str(random.randint(1000, 9999))
+    return generate_business_no("PAY")
 
 
 @router.post("/recharge/jsapi")
 async def recharge_jsapi(
     req: RechargeJSAPIRequest,
+    idempotency_key: str | None = Header(None, alias="Idempotency-Key"),
     user=Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
-    """用户端：创建充值 JSAPI 支付订单"""
-    if req.amount <= 0:
-        raise HTTPException(status_code=400, detail="充值金额必须大于 0")
-    if req.method != "wechat":
-        raise HTTPException(status_code=400, detail="JSAPI 充值仅支持微信支付")
-    if not user.openid:
-        raise HTTPException(status_code=400, detail="当前账号未绑定微信 openid")
+    """用户端：创建充值 JSAPI 支付订单（师傅收入钱包不可充值）。"""
+    from app.services.payment_service import _to_cents
 
-    payer_type = "worker" if user.role == "worker" else "user"
-    payment = PaymentOrder(
-        payment_no=_gen_payment_no(),
-        order_no=None,
-        amount=req.amount,
-        method=req.method or "wechat",
-        payer_type=payer_type,
-        payer_id=user.id,
-        status="pending",
+    claim = claim_financial_request(
+        db,
+        raw_key=idempotency_key,
+        owner_type="user",
+        owner_id=user.id,
+        operation="wxpay.recharge_jsapi",
+        payload={"amount_cents": _to_cents(req.amount), "method": req.method},
     )
-    db.add(payment)
-    db.flush()
-
+    if claim.is_replay:
+        return claim.replay_response
     try:
+        if not user.openid:
+            raise HTTPException(status_code=400, detail="当前账号未绑定微信 openid")
+        payment = PaymentOrder(
+            payment_no=_gen_payment_no(),
+            order_no=None,
+            amount=req.amount,
+            method=req.method,
+            payer_type="user",
+            payer_id=user.id,
+            status="pending",
+        )
+        db.add(payment)
+        db.flush()
         pay_params = wechat_pay_service.create_jsapi_order(db, payment, user.openid)
-        db.commit()
-    except Exception:
-        db.rollback()
+        resp = JSAPIPayResponse(**pay_params).model_dump()
+        resp["payment_no"] = payment.payment_no
+        response = success(data=resp, message="支付参数生成成功")
+        return complete_financial_request(
+            db,
+            claim,
+            response,
+            resource_type="payment_order",
+            resource_id=payment.payment_no,
+        )
+    except Exception as exc:
+        fail_financial_request(db, claim, exc)
         raise
-    db.refresh(payment)
-
-    resp = JSAPIPayResponse(**pay_params).model_dump()
-    resp["payment_no"] = payment.payment_no
-    return success(data=resp, message="支付参数生成成功")
 
 
-@router.post("/order/jsapi")
-async def order_jsapi(
-    req: OrderJSAPIRequest,
-    user=Depends(get_current_user),
+@router.get("/payments/{payment_no}")
+async def payment_status(
+    payment_no: str,
+    account_data=Depends(get_current_account),
     db: Session = Depends(get_db),
 ):
-    """用户端：创建订单 JSAPI 支付订单"""
+    """按支付单号查询服务端最终状态，供客户端等待异步回调。"""
+    payer, payer_type = account_data
+    payment = db.query(PaymentOrder).filter(PaymentOrder.payment_no == payment_no).first()
+    if not payment:
+        raise HTTPException(status_code=404, detail="支付单不存在")
+    if payment.payer_type != payer_type or payment.payer_id != payer.id:
+        raise HTTPException(status_code=403, detail="无权查看该支付单")
+    return success(
+        data={
+            "payment_no": payment.payment_no,
+            "status": payment.status,
+            "amount": float(payment.amount),
+            "paid_at": payment.paid_at.isoformat() + "Z" if payment.paid_at else None,
+        }
+    )
+
+
+def _create_order_jsapi_response(
+    db: Session,
+    user,
+    req: OrderJSAPIRequest,
+) -> dict:
+    """Create or re-sign one order payment inside the caller's transaction."""
     order = (
         db.query(Order)
         .filter(Order.order_no == req.order_no)
@@ -87,9 +124,17 @@ async def order_jsapi(
         raise HTTPException(status_code=400, detail="无权支付该订单")
     if order.status != "completed":
         raise HTTPException(status_code=400, detail="订单未完成，无法支付")
+    if settings.is_deployed and req.order_version is None:
+        raise HTTPException(status_code=428, detail="支付请求缺少权威报价的订单版本")
+    if req.order_version is not None and int(order.version or 0) != req.order_version:
+        raise HTTPException(status_code=409, detail="订单金额或状态已更新，请刷新支付报价")
 
     if not user.openid:
         raise HTTPException(status_code=400, detail="当前账号未绑定微信 openid")
+
+    from app.services.payment_service import _from_cents, _to_cents
+
+    final_price = _from_cents(_to_cents(order.final_price or 0))
 
     active_payment = (
         db.query(PaymentOrder)
@@ -100,17 +145,21 @@ async def order_jsapi(
         .first()
     )
     if active_payment:
-        if active_payment.method != "wechat" or active_payment.payer_id != user.id:
+        if (
+            active_payment.method != "wechat"
+            or active_payment.payer_type != "user"
+            or active_payment.payer_id != user.id
+        ):
             raise HTTPException(status_code=409, detail="订单已有其他待处理支付")
+        if active_payment.coupon_id != req.coupon_id:
+            raise HTTPException(status_code=409, detail="待支付单与本次优惠券参数不一致")
         pay_params = wechat_pay_service.create_jsapi_order(db, active_payment, user.openid)
-        db.commit()
         resp = JSAPIPayResponse(**pay_params).model_dump()
         resp["payment_no"] = active_payment.payment_no
+        resp["pay_amount"] = _from_cents(_to_cents(active_payment.amount))
+        resp["discount_amount"] = _from_cents(_to_cents(active_payment.discount_amount or 0))
+        resp["order_version"] = int(order.version or 0)
         return success(data=resp, message="返回待支付订单")
-
-    from app.services.payment_service import _from_cents, _to_cents
-
-    final_price = _from_cents(_to_cents(order.final_price or 0))
     discount_amount = 0.0
     if req.coupon_id:
         from app.services.coupon_service import apply_coupon
@@ -150,18 +199,49 @@ async def order_jsapi(
     )
     db.add(payment)
     db.flush()
-
-    try:
-        pay_params = wechat_pay_service.create_jsapi_order(db, payment, user.openid)
-        db.commit()
-    except Exception:
-        db.rollback()
-        raise
-    db.refresh(payment)
-
+    pay_params = wechat_pay_service.create_jsapi_order(db, payment, user.openid)
     resp = JSAPIPayResponse(**pay_params).model_dump()
     resp["payment_no"] = payment.payment_no
+    resp["pay_amount"] = pay_amount
+    resp["discount_amount"] = discount_amount
+    resp["order_version"] = int(order.version or 0)
     return success(data=resp, message="支付参数生成成功")
+
+
+@router.post("/order/jsapi")
+async def order_jsapi(
+    req: OrderJSAPIRequest,
+    idempotency_key: str | None = Header(None, alias="Idempotency-Key"),
+    user=Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    """用户端：幂等创建订单 JSAPI 支付订单。"""
+    claim = claim_financial_request(
+        db,
+        raw_key=idempotency_key,
+        owner_type="user",
+        owner_id=user.id,
+        operation="wxpay.order_jsapi",
+        payload={
+            "order_no": req.order_no,
+            "coupon_id": req.coupon_id,
+            "order_version": req.order_version,
+        },
+    )
+    if claim.is_replay:
+        return claim.replay_response
+    try:
+        response = _create_order_jsapi_response(db, user, req)
+        return complete_financial_request(
+            db,
+            claim,
+            response,
+            resource_type="payment_order",
+            resource_id=response["data"]["payment_no"],
+        )
+    except Exception as exc:
+        fail_financial_request(db, claim, exc)
+        raise
 
 
 @router.post("/notify/payment")

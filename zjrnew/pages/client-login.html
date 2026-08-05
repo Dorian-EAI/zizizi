@@ -4,82 +4,394 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>自家人居家维修 · 玻璃新拟态 · 登录授权</title>
-    <link rel="stylesheet" href="../assets/fonts.css">
+    <style id="theme-vars">
+/* 自家人居家维修 - 玻璃新拟态 */
+:root {
+  /* Brand - Client (Teal) */
+  --brand: #0D9488;
+  --brand-dark: #0A7A70;
+  --brand-mid: #14B8A6;
+  --brand-light: #CCFBF1;
+  --brand-glow: rgba(13, 148, 136, 0.24);
+  --brand-subtle: rgba(13, 148, 136, 0.10);
+
+  /* Accent (Amber) */
+  --accent: #D4944C;
+  --accent-dark: #A0723C;
+  --accent-mid: #E8C088;
+  --accent-light: #F5E6D0;
+  --accent-glow: rgba(212, 148, 76, 0.20);
+
+  /* Background */
+  --background: #F2EDE8;
+  --foreground: #2C2824;
+  --body-bg: #E8E4DF;
+  --bg-elevated: #F7F3EF;
+
+  /* Neumorphic */
+  --neu-light: #FFF8F2;
+  --neu-dark: #DDD6CE;
+  --neu-highlight: rgba(255, 255, 255, 0.55);
+
+  /* Surface & Card */
+  --card: rgba(255, 255, 255, 0.52);
+  --card-foreground: #2C2824;
+  --popover: #fff;
+  --popover-foreground: #2C2824;
+
+  /* Muted */
+  --muted: #F7F3EF;
+  --muted-foreground: #8B8178;
+
+  /* Border & Input */
+  --border: rgba(44, 40, 36, 0.06);
+  --input: rgba(44, 40, 36, 0.06);
+  --ring: #0D9488;
+
+  /* Primary */
+  --primary: #0D9488;
+  --primary-foreground: #ffffff;
+
+  /* Semantic aliases */
+  --state-success: #5B8C5A;
+  --state-warning: #D4944C;
+  --state-error: #C4533A;
+  --state-info: #5A8FAD;
+
+  /* Text */
+  --text-1: #2C2824;
+  --text-2: #8B8178;
+  --text-3: #B5ADA5;
+  --text-inverse: #ffffff;
+
+  /* Sep & Fill */
+  --sep: rgba(44, 40, 36, 0.06);
+  --fill: rgba(44, 40, 36, 0.04);
+
+  /* Green/Red/Orange/Blue semantic */
+  --green: #5B8C5A;
+  --red: #C4533A;
+  --orange: #D4944C;
+  --blue: #5A8FAD;
+
+  /* Radius */
+  --radius-sm: 0.75rem;
+  --radius-md: 1.2rem;
+  --radius-lg: 1.6rem;
+  --radius-full: 9999px;
+
+  /* Font — unified serif system */
+  --font-display: 'Cormorant Garamond', 'Noto Serif SC', 'STSong', Georgia, serif;
+  --font-body:    'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --font-nums:    'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
+  --font:         var(--font-body);
+
+  /* Motion */
+  --spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --dur: 0.2s;
+
+  /* Glass */
+  --glass-bg: rgba(255, 255, 255, 0.18);
+  --glass-blur: blur(12px) saturate(140%);
+  --glass-border: rgba(255, 255, 255, 0.60);
+
+  /* Surface presets for glass-neumorphic components */
+  --surface-1: rgba(255, 255, 255, 0.50);
+  --surface-2: rgba(255, 255, 255, 0.45);
+
+  /* Neumorphic shadow presets */
+  --neu-out-sm: 6px 6px 14px var(--neu-dark), -6px -6px 14px var(--neu-light), 0 4px 16px rgba(0, 0, 0, 0.04);
+  --neu-out-md: 8px 8px 18px var(--neu-dark), -8px -8px 18px var(--neu-light), 0 6px 24px rgba(0, 0, 0, 0.05);
+  --neu-out-lg: 10px 10px 24px var(--neu-dark), -10px -10px 24px var(--neu-light), 0 8px 32px rgba(0, 0, 0, 0.06);
+  --neu-in: inset 4px 4px 8px var(--neu-dark), inset -4px -4px 8px var(--neu-light);
+  --neu-in-deep: inset 5px 5px 10px var(--neu-dark), inset -5px -5px 10px var(--neu-light);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-full: var(--radius-full);
+}
+
+/* Semantic token fallback */
+#semantic-token-fallback {
+  --brand-background: var(--background);
+  --brand-foreground: var(--foreground);
+  --brand-card: var(--card);
+  --brand-card-foreground: var(--card-foreground);
+  --brand-popover: var(--popover);
+  --brand-popover-foreground: var(--popover-foreground);
+  --brand-primary: var(--primary);
+  --brand-primary-foreground: var(--primary-foreground);
+  --brand-muted: var(--muted);
+  --brand-muted-foreground: var(--muted-foreground);
+  --brand-border: var(--border);
+  --brand-input: var(--input);
+  --brand-ring: var(--ring);
+  --brand-radius-sm: var(--radius-sm);
+  --brand-radius-md: var(--radius-md);
+  --brand-radius-lg: var(--radius-lg);
+}
+
+/* ===== Global Neumorphic Components ===== */
+/* Tab Bar — Premium Liquid Glass, absolute-positioned within .phone frame */
+.tab-bar{
+  position:absolute;
+  bottom:10px;
+  left:50%;
+  transform:translateX(-50%);
+  width:calc(100% - 32px);
+  max-width:360px;
+  height:56px;
+  z-index:100;
+  background:rgba(255,255,255,0.18);
+  backdrop-filter:blur(48px) saturate(210%);
+  -webkit-backdrop-filter:blur(48px) saturate(210%);
+  border:0.5px solid rgba(255,255,255,0.45);
+  border-radius:24px;
+  box-shadow:
+    inset 0 1.5px 3px rgba(255,255,255,0.60),
+    inset 0 -0.5px 1px rgba(255,255,255,0.20),
+    0 0 0 0.5px rgba(0,0,0,0.04),
+    0 2px 10px rgba(0,0,0,0.06),
+    0 12px 36px rgba(0,0,0,0.08);
+  display:flex;
+  align-items:center;
+  justify-content:space-around;
+  padding:0 6px;
+}
+.tab-bar::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  background:linear-gradient(160deg,
+    rgba(255,255,255,0.42) 0%,
+    rgba(255,255,255,0.16) 20%,
+    rgba(255,255,255,0.03) 40%,
+    transparent 60%);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
+  padding:0.5px;
+  pointer-events:none;
+  z-index:1;
+}
+.tab-bar::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  background:linear-gradient(320deg,
+    transparent 60%,
+    rgba(13,148,136,0.06) 80%,
+    rgba(255,255,255,0.04) 100%);
+  pointer-events:none;
+  z-index:1;
+}
+.tab-item{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+  width:68px;
+  height:44px;
+  border-radius:14px;
+  color:var(--text-3);
+  font-size:11px;
+  font-weight:500;
+  text-decoration:none;
+  position:relative;
+  transition:all .2s;
+}
+.tab-item svg{
+  width:20px;
+  height:20px;
+  stroke:currentColor;
+  fill:none;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.tab-item[data-active="true"]{
+  color:var(--brand);
+  font-weight:600;
+}
+.tab-item[data-active="true"]::before{
+  content:"";
+  position:absolute;
+  width:54px;
+  height:42px;
+  border-radius:16px;
+  background:rgba(13,148,136,0.16);
+  backdrop-filter:blur(24px);
+  -webkit-backdrop-filter:blur(24px);
+  border:0.5px solid rgba(13,148,136,0.30);
+  box-shadow:
+    inset 0 1px 3px rgba(255,255,255,0.55),
+    inset 0 -0.5px 1px rgba(255,255,255,0.15),
+    0 2px 10px rgba(13,148,136,0.20),
+    0 0 0 0.5px rgba(13,148,136,0.08);
+  z-index:0;
+}
+.tab-item[data-active="true"] svg{
+  transform:scale(1.08);
+  position:relative;
+  z-index:1;
+}
+
+/* Buttons */
+.btn-neu-primary{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:var(--brand);color:var(--text-inverse);
+  border:none;border-radius:9999px;
+  padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
+  cursor:pointer;
+  box-shadow:var(--neu-out-sm),0 2px 8px var(--brand-glow);
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
+.btn-neu-primary:active{box-shadow:var(--neu-in);transform:scale(0.94)}
+
+.btn-neu-secondary{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,0.50);color:var(--brand);
+  border:0.5px solid rgba(255,255,255,0.60);border-radius:9999px;
+  padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
+  cursor:pointer;
+  box-shadow:var(--neu-out-sm);
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
+.btn-neu-secondary:active{box-shadow:var(--neu-in);transform:scale(0.94)}
+
+.btn-neu-ghost{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:transparent;color:var(--text-2);
+  border:0.5px solid var(--border);border-radius:9999px;
+  padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
+  cursor:pointer;
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease),color var(--dur) var(--ease);
+}
+.btn-neu-ghost:active{transform:scale(0.94);color:var(--brand)}
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-accent: var(--accent);
+    --radius-sm: var(--radius-sm);
+    --radius-md: var(--radius-md);
+    --radius-lg: var(--radius-lg);
+    --radius-full: var(--radius-full);
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+    <style id="semantic-token-fallback">
+      .bg-background { background-color: var(--background); }
+      .text-background { color: var(--background); }
+      .border-background { border-color: var(--background); }
+      .ring-background { --tw-ring-color: var(--background); }
+      .bg-foreground { background-color: var(--foreground); }
+      .text-foreground { color: var(--foreground); }
+      .border-foreground { border-color: var(--foreground); }
+      .ring-foreground { --tw-ring-color: var(--foreground); }
+      .bg-card { background-color: var(--card); }
+      .text-card { color: var(--card); }
+      .border-card { border-color: var(--card); }
+      .ring-card { --tw-ring-color: var(--card); }
+      .bg-card-foreground { background-color: var(--card-foreground); }
+      .text-card-foreground { color: var(--card-foreground); }
+      .border-card-foreground { border-color: var(--card-foreground); }
+      .ring-card-foreground { --tw-ring-color: var(--card-foreground); }
+      .bg-popover { background-color: var(--popover); }
+      .text-popover { color: var(--popover); }
+      .border-popover { border-color: var(--popover); }
+      .ring-popover { --tw-ring-color: var(--popover); }
+      .bg-popover-foreground { background-color: var(--popover-foreground); }
+      .text-popover-foreground { color: var(--popover-foreground); }
+      .border-popover-foreground { border-color: var(--popover-foreground); }
+      .ring-popover-foreground { --tw-ring-color: var(--popover-foreground); }
+      .bg-primary { background-color: var(--primary); }
+      .text-primary { color: var(--primary); }
+      .border-primary { border-color: var(--primary); }
+      .ring-primary { --tw-ring-color: var(--primary); }
+      .bg-primary-foreground { background-color: var(--primary-foreground); }
+      .text-primary-foreground { color: var(--primary-foreground); }
+      .border-primary-foreground { border-color: var(--primary-foreground); }
+      .ring-primary-foreground { --tw-ring-color: var(--primary-foreground); }
+      .bg-muted { background-color: var(--muted); }
+      .text-muted { color: var(--muted); }
+      .border-muted { border-color: var(--muted); }
+      .ring-muted { --tw-ring-color: var(--muted); }
+      .bg-muted-foreground { background-color: var(--muted-foreground); }
+      .text-muted-foreground { color: var(--muted-foreground); }
+      .border-muted-foreground { border-color: var(--muted-foreground); }
+      .ring-muted-foreground { --tw-ring-color: var(--muted-foreground); }
+      .bg-border { background-color: var(--border); }
+      .text-border { color: var(--border); }
+      .border-border { border-color: var(--border); }
+      .ring-border { --tw-ring-color: var(--border); }
+      .bg-input { background-color: var(--input); }
+      .text-input { color: var(--input); }
+      .border-input { border-color: var(--input); }
+      .ring-input { --tw-ring-color: var(--input); }
+      .bg-ring { background-color: var(--ring); }
+      .text-ring { color: var(--ring); }
+      .border-ring { border-color: var(--ring); }
+      .ring-ring { --tw-ring-color: var(--ring); }
+      .bg-accent { background-color: var(--accent); }
+      .text-accent { color: var(--accent); }
+      .border-accent { border-color: var(--accent); }
+      .ring-accent { --tw-ring-color: var(--accent); }
+    </style>
     <style>
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-:root{
-  --brand:#0D9488;--brand-dark:#0A7A70;--brand-mid:#14B8A6;--brand-light:#CCFBF1;
-  --brand-glow:rgba(13,148,136,0.28);--brand-subtle:rgba(13,148,136,0.08);
-  --brand-gradient:linear-gradient(135deg,#0D9488 0%,#14B8A6 50%,#D4944C 100%);
-  --accent:#D4944C;--accent-dark:#A0723C;--accent-light:#F5E6D0;--accent-glow:rgba(212,148,76,0.25);
-  --bg:#F2EDE8;--bg-elevated:#F7F3EF;
-  --neu-light:#FFF8F2;--neu-dark:#DDD6CE;
-  --text-1:#2C2824;--text-2:#8B8178;--text-3:#B5ADA5;--text-inverse:#FFFFFF;
-  --sep:rgba(44,40,36,0.06);--fill:rgba(44,40,36,0.04);
-  --green:#5B8C5A;--red:#C4533A;--orange:#D4944C;--blue:#5A8FAD;
-  --r:1.2rem;--r-lg:1.6rem;--r-sm:0.75rem;--r-pill:9999px;
-  --font-display:'Cormorant Garamond', 'Noto Serif SC', 'STSong', Georgia, serif;
-  --font-body:'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-  --font-nums:'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
-  --font:var(--font-body);
-  --neu-out-sm:6px 6px 14px var(--neu-dark),-6px -6px 14px var(--neu-light),0 4px 16px rgba(0,0,0,0.04);
-  --neu-out-md:8px 8px 18px var(--neu-dark),-8px -8px 18px var(--neu-light),0 6px 24px rgba(0,0,0,0.05);
-  --neu-out-lg:10px 10px 24px var(--neu-dark),-10px -10px 24px var(--neu-light),0 8px 32px rgba(0,0,0,0.06);
-  --neu-in:inset 4px 4px 8px var(--neu-dark),inset -4px -4px 8px var(--neu-light);
-  --spring:cubic-bezier(0.175,0.885,0.32,1.275);--ease:cubic-bezier(0.25,0.46,0.45,0.94);--dur:0.2s;
-}
-html,body{font-family:var(--font);color:var(--text-1);-webkit-font-smoothing:antialiased}
-body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh;background:#E8E4DF;letter-spacing:-0.01em}
-
-.phone{position:relative;width:414px;min-height:896px;background:var(--bg);border-radius:48px;overflow:hidden;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.12),0 4px 16px rgba(0,0,0,.06)}
-
-/* ===== Hero Section ===== */
-.login-hero{position:relative;padding:80px 32px 40px;background:
-  radial-gradient(ellipse 300px 200px at 80% 20%,rgba(212,148,76,.18) 0%,transparent 60%),
-  radial-gradient(ellipse 250px 180px at 15% 60%,rgba(13,148,136,.20) 0%,transparent 60%),
-  linear-gradient(160deg,rgba(13,148,136,.10) 0%,rgba(212,148,76,.06) 50%,rgba(13,148,136,.08) 100%);
-  border-radius:0 0 40px 40px;
-  text-align:center;
-}
-.logo-circle{width:96px;height:96px;border-radius:28px;margin:0 auto 24px;background:var(--brand-gradient);display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:var(--neu-out-lg),0 8px 32px var(--brand-glow)}
-.app-name{font-size:28px;font-weight:700;font-family:var(--font-display);letter-spacing:-0.02em;margin-bottom:8px}
-.app-slogan{font-size:14px;color:var(--text-2);letter-spacing:0.02em}
-
-/* ===== Content ===== */
-.login-content{padding:32px 24px}
-.welcome-title{font-size:20px;font-weight:700;margin-bottom:8px}
-.welcome-desc{font-size:13.5px;color:var(--text-2);line-height:1.6;margin-bottom:32px}
-
-/* ===== Login Options ===== */
-.login-option{display:flex;align-items:center;padding:18px 20px;margin-bottom:14px;background:rgba(255,255,255,0.52);border-radius:var(--r-lg);border:0.5px solid rgba(255,255,255,0.60);box-shadow:var(--neu-out-md);cursor:pointer;transition:all var(--dur) var(--spring)}
-.login-option:active{box-shadow:var(--neu-in);transform:scale(0.98)}
-.login-option-icon{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin-right:16px;flex-shrink:0}
-.login-option-icon.wechat{background:linear-gradient(135deg,#07C160,#06AE56);color:#fff}
-.login-option-icon.phone{background:linear-gradient(135deg,var(--brand),var(--brand-mid));color:#fff}
-.login-option-text{flex:1}
-.login-option-title{font-size:15px;font-weight:600;margin-bottom:3px}
-.login-option-desc{font-size:12px;color:var(--text-2)}
-.login-option-arrow{color:var(--text-3)}
-
-/* ===== Agreement ===== */
-.agreement-section{display:flex;align-items:flex-start;gap:10px;padding:20px 24px 0}
-.agreement-checkbox{width:18px;height:18px;border-radius:6px;border:2px solid var(--neu-dark);flex-shrink:0;margin-top:1px;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.agreement-checkbox.checked{background:var(--brand);border-color:var(--brand)}
-.agreement-text{font-size:12px;color:var(--text-2);line-height:1.6}
-.agreement-text a{color:var(--brand);text-decoration:none}
-
-/* ===== Other Login ===== */
-.other-login{padding:32px 24px 16px;text-align:center}
-.other-login-title{font-size:12px;color:var(--text-3);margin-bottom:20px;position:relative}
-.other-login-title::before,.other-login-title::after{content:"";position:absolute;top:50%;width:60px;height:1px;background:var(--sep)}
-.other-login-title::before{left:40px}
-.other-login-title::after{right:40px}
-.other-login-icons{display:flex;justify-content:center;gap:32px}
-.other-icon{width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,0.52);box-shadow:var(--neu-out-sm);display:flex;align-items:center;justify-content:center;color:var(--text-2);cursor:pointer;transition:all var(--dur) var(--spring)}
-.other-icon:active{box-shadow:var(--neu-in);transform:scale(0.92)}
-
-/* ===== Footer ===== */
-.login-footer{position:absolute;bottom:24px;left:0;right:0;text-align:center;font-size:11px;color:var(--text-3)}
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      [data-icon] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        background-color: currentColor;
+      }
     </style>
 </head>
 <body>
@@ -103,7 +415,7 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
     <div class="welcome-desc">登录后享受完整服务体验<br>发布维修需求，专业师傅极速上门</div>
 
     <!-- 微信一键登录 -->
-    <div class="login-option" data-dom-id="login-wechat">
+    <div class="login-option" data-dom-id="login-wechat" data-action="invoke-wechat-login">
       <div class="login-option-icon wechat">
         <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 0 1 .213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 0 0 .167-.054l1.903-1.114a.864.864 0 0 1 .717-.098 10.16 10.16 0 0 0 2.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348zM5.785 5.991c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178A1.17 1.17 0 0 1 4.623 7.17c0-.651.52-1.18 1.162-1.18zm5.813 0c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178 1.17 1.17 0 0 1-1.162-1.178c0-.651.52-1.18 1.162-1.18z"/></svg>
       </div>
@@ -115,8 +427,8 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
     </div>
 
     <!-- 手机号登录 -->
-    <div class="login-option" data-dom-id="login-phone">
-      <div class="login-option-icon phone">
+    <div class="login-option" data-dom-id="login-phone" data-action="open-phone-login-form">
+      <div class="login-option-icon mobile">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><rect width="14" height="20" x="5" y="2" rx="2"/><path d="M12 18h.01"/></svg>
       </div>
       <div class="login-option-text">
@@ -129,27 +441,9 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
 
   <!-- ===== AGREEMENT ===== -->
   <div class="agreement-section" data-dom-id="agreement">
-    <div class="agreement-checkbox checked">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" width="12" height="12"><path d="M20 6 9 17l-5-5"/></svg>
-    </div>
+    <div class="agreement-checkbox" data-dom-id="agreement-checkbox" data-action="toggle-login-agreement" aria-label="尚未同意用户协议与隐私政策"></div>
     <div class="agreement-text">
-      已阅读并同意<a href="#">《用户服务协议》</a>和<a href="#">《隐私政策》</a>
-    </div>
-  </div>
-
-  <!-- ===== OTHER LOGIN ===== -->
-  <div class="other-login">
-    <div class="other-login-title">其他登录方式</div>
-    <div class="other-login-icons">
-      <div class="other-icon" data-dom-id="login-qq">
-        <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"/></svg>
-      </div>
-      <div class="other-icon" data-dom-id="login-apple">
-        <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-      </div>
-      <div class="other-icon" data-dom-id="login-password">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-      </div>
+      已阅读并同意<a href="#" data-dom-id="user-agreement-link" data-target-page="page-client-agreement">《用户服务协议》</a>和<a href="#" data-dom-id="privacy-policy-link" data-target-page="page-client-privacy">《隐私政策》</a>
     </div>
   </div>
 
@@ -159,5 +453,82 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
   </div>
 
 </div>
+
+    <style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --brand:#0D9488;--brand-dark:#0A7A70;--brand-mid:#14B8A6;--brand-light:#CCFBF1;
+  --brand-glow:rgba(13,148,136,0.18);--brand-subtle:rgba(13,148,136,0.08);
+  --brand-gradient:linear-gradient(135deg,#0D9488 0%,#14B8A6 48%,#D4944C 100%);
+  --accent:#D4944C;--accent-dark:#A0723C;--accent-light:#F5E6D0;--accent-glow:rgba(212,148,76,0.16);
+  --bg:#F2EDE8;--bg-elevated:#F7F3EF;
+  --neu-light:#FFF8F2;--neu-dark:#DDD6CE;
+  --text-1:#2C2824;--text-2:#8B8178;--text-3:#B5ADA5;--text-inverse:#FFFFFF;
+  --sep:rgba(44,40,36,0.06);--fill:rgba(44,40,36,0.04);
+  --green:#5B8C5A;--red:#C4533A;--orange:#D4944C;--blue:#5A8FAD;
+  --r:1.2rem;--r-lg:1.6rem;--r-sm:0.75rem;--r-pill:9999px;
+  --font-display:'Cormorant Garamond', 'Noto Serif SC', 'STSong', Georgia, serif;
+  --font-body:'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --font-nums:'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
+  --font:var(--font-body);
+  --neu-out-sm:6px 6px 14px var(--neu-dark),-6px -6px 14px var(--neu-light),0 4px 16px rgba(0,0,0,0.04);
+  --neu-out-md:8px 8px 18px var(--neu-dark),-8px -8px 18px var(--neu-light),0 6px 24px rgba(0,0,0,0.05);
+  --neu-out-lg:10px 10px 24px var(--neu-dark),-10px -10px 24px var(--neu-light),0 8px 32px rgba(0,0,0,0.06);
+  --neu-in:inset 4px 4px 8px var(--neu-dark),inset -4px -4px 8px var(--neu-light);
+  --spring:cubic-bezier(0.175,0.885,0.32,1.275);--ease:cubic-bezier(0.25,0.46,0.45,0.94);--dur:0.2s;
+}
+html,body{font-family:var(--font);color:var(--text-1);-webkit-font-smoothing:antialiased}
+body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh;background:#E8E4DF;letter-spacing:-0.01em}
+
+.phone{position:relative;width:min(375px,100vw);height:900px;min-height:900px;background:var(--bg);border-radius:48px;overflow:hidden;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.12),0 4px 16px rgba(0,0,0,.06)}
+
+/* ===== Hero Section ===== */
+.login-hero{position:relative;padding:80px 32px 40px;background:
+  radial-gradient(ellipse 300px 200px at 80% 20%,rgba(212,148,76,.12) 0%,transparent 60%),
+  radial-gradient(ellipse 250px 180px at 15% 60%,rgba(13,148,136,.11) 0%,transparent 60%),
+  linear-gradient(160deg,rgba(13,148,136,.08) 0%,rgba(212,148,76,.05) 50%,rgba(13,148,136,.06) 100%);
+  border-radius:0 0 40px 40px;
+  text-align:center;
+}
+.logo-circle{width:96px;height:96px;border-radius:28px;margin:0 auto 24px;background:var(--brand-gradient);display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:var(--neu-out-lg),0 8px 32px var(--brand-glow)}
+.app-name{font-size:28px;font-weight:700;font-family:var(--font-display);letter-spacing:-0.02em;margin-bottom:8px}
+.app-slogan{font-size:14px;color:var(--text-2);letter-spacing:0.02em}
+
+/* ===== Content ===== */
+.login-content{padding:32px 24px}
+.welcome-title{font-size:20px;font-weight:700;margin-bottom:8px}
+.welcome-desc{font-size:13.5px;color:var(--text-2);line-height:1.6;margin-bottom:32px}
+
+/* ===== Login Options ===== */
+.login-option{display:flex;align-items:center;padding:18px 20px;margin-bottom:14px;background:rgba(255,255,255,0.52);border-radius:var(--r-lg);border:0.5px solid rgba(255,255,255,0.60);box-shadow:var(--neu-out-md);cursor:pointer;transition:all var(--dur) var(--spring)}
+.login-option:active{box-shadow:var(--neu-in);transform:scale(0.98)}
+.login-option-icon{width:40px;height:40px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin-right:16px;flex-shrink:0}
+.login-option-icon.wechat{background:linear-gradient(135deg,#07C160,#06AE56);color:#fff}
+.login-option-icon.mobile{background:linear-gradient(135deg,var(--brand),var(--brand-mid));color:#fff}
+.login-option-text{flex:1}
+.login-option-title{font-size:15px;font-weight:600;margin-bottom:3px}
+.login-option-desc{font-size:12px;color:var(--text-2)}
+.login-option-arrow{color:var(--text-3)}
+
+/* ===== Agreement ===== */
+.agreement-section{display:flex;align-items:flex-start;gap:10px;padding:20px 24px 0}
+.agreement-checkbox{width:18px;height:18px;border-radius:6px;border:2px solid var(--neu-dark);flex-shrink:0;margin-top:1px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.agreement-checkbox.checked{background:var(--brand);border-color:var(--brand)}
+.agreement-text{font-size:12px;color:var(--text-2);line-height:1.6}
+.agreement-text a{color:var(--brand);text-decoration:none}
+
+/* ===== Other Login ===== */
+.other-login{padding:32px 24px 16px;text-align:center}
+.other-login-title{font-size:12px;color:var(--text-3);margin-bottom:20px;position:relative}
+.other-login-title::before,.other-login-title::after{content:"";position:absolute;top:50%;width:60px;height:1px;background:var(--sep)}
+.other-login-title::before{left:40px}
+.other-login-title::after{right:40px}
+.other-login-icons{display:flex;justify-content:center;gap:32px}
+.other-icon{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.52);box-shadow:var(--neu-out-sm);display:flex;align-items:center;justify-content:center;color:var(--text-2);cursor:pointer;transition:all var(--dur) var(--spring)}
+.other-icon:active{box-shadow:var(--neu-in);transform:scale(0.92)}
+
+/* ===== Footer ===== */
+.login-footer{position:absolute;bottom:24px;left:0;right:0;text-align:center;font-size:11px;color:var(--text-3)}
+    </style>
 </body>
 </html>

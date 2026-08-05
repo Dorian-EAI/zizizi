@@ -1,7 +1,7 @@
 /* pages/order-detail-worker/index.wxss — 师傅端订单详情 玻璃新拟态
  * 像素级复刻 worker-order-detail.html
  * 换算基准：1px = 2rpx（750rpx 设计稿）
- * 师傅端品牌色：--brand-worker #2D6CDF（蓝色），光斑 blue-sage 渐变
+ * 师傅端品牌色：--brand-worker #2D6CDF（蓝色），光斑 blue-gold 渐变
  * 严格忠于 HTML 参考的尺寸、间距、圆角、阴影、渐变透明度
  */
 
@@ -1033,9 +1033,9 @@
 /* 滚动超过阈值时：加深背景不透明度 + 增加底部投影，过渡平滑 */
 .nav-bar.worker.scrolled {
   background:
-    radial-gradient(ellipse 440rpx 320rpx at 78% 45%, rgba(143, 169, 152, 0.18) 0%, transparent 70%),
+    radial-gradient(ellipse 440rpx 320rpx at 78% 45%, rgba(212,148,76,.10) 0%, transparent 70%),
     radial-gradient(ellipse 360rpx 280rpx at 18% 75%, rgba(45, 108, 223, 0.20) 0%, transparent 70%),
-    linear-gradient(135deg, rgba(45, 108, 223, 0.18) 0%, rgba(143, 169, 152, 0.12) 50%, rgba(45, 108, 223, 0.10) 100%),
+    linear-gradient(135deg, rgba(45, 108, 223, 0.18) 0%, rgba(212,148,76,.04) 50%, rgba(45, 108, 223, 0.10) 100%),
     rgba(247, 243, 239, 0.72);
   backdrop-filter: blur(40rpx) saturate(160%);
   -webkit-backdrop-filter: blur(40rpx) saturate(160%);

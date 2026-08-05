@@ -63,6 +63,30 @@ class AdminLoginResponse(BaseModel):
     token: str = Field(..., max_length=256)
     admin_id: int
     role: str = Field(..., max_length=32)
+    must_change_password: bool
+
+
+class AdminChangePasswordRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    current_password: str = Field(..., max_length=128)
+    new_password: str = Field(..., min_length=12, max_length=128)
+
+    @field_validator("current_password", "new_password")
+    @classmethod
+    def validate_password(cls, value: str) -> str:
+        return _validate_bcrypt_password(value)
+
+
+class AdminResetPasswordRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    new_password: str = Field(..., min_length=12, max_length=128)
+
+    @field_validator("new_password")
+    @classmethod
+    def validate_password(cls, value: str) -> str:
+        return _validate_bcrypt_password(value)
 
 
 class AdminInfoResponse(BaseModel):

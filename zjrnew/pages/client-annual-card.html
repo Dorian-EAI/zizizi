@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>自家人居家维修 · 玻璃新拟态 · 家庭年卡</title>
-    <link rel="stylesheet" href="../assets/fonts.css">
-
     <style id="theme-vars">
 /* 自家人居家维修 - 玻璃新拟态 */
 :root {
@@ -16,7 +14,6 @@
   --brand-light: #CCFBF1;
   --brand-glow: rgba(13, 148, 136, 0.24);
   --brand-subtle: rgba(13, 148, 136, 0.10);
-  --brand-gradient:linear-gradient(135deg,#0D9488 0%,#14B8A6 50%,#D4944C 100%);
 
   /* Accent (Amber) */
   --accent: #D4944C;
@@ -83,11 +80,11 @@
   --radius-lg: 1.6rem;
   --radius-full: 9999px;
 
-    /* Font — 统一衬线系统 */
+  /* Font — unified serif system */
   --font-display: 'Cormorant Garamond', 'Noto Serif SC', 'STSong', Georgia, serif;
-  --font-body: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-  --font-nums: 'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
-  --font: var(--font-body);
+  --font-body:    'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --font-nums:    'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
+  --font:         var(--font-body);
 
   /* Motion */
   --spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -128,9 +125,8 @@
   --radius-sm: var(--radius-sm);
   --radius-md: var(--radius-md);
   --radius-lg: var(--radius-lg);
-  --font-sans: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-  --font-serif: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-  --radius-full: var(--radius-full);}
+  --radius-full: var(--radius-full);
+}
 
 /* Semantic token fallback */
 #semantic-token-fallback {
@@ -153,21 +149,21 @@
 }
 
 /* ===== Global Neumorphic Components ===== */
-/* Tab Bar */
+/* Tab Bar — Premium Liquid Glass, absolute-positioned within .phone frame */
 .tab-bar{
   position:absolute;
-  bottom:max(14px, env(safe-area-inset-bottom));
+  bottom:10px;
   left:50%;
   transform:translateX(-50%);
   width:calc(100% - 32px);
   max-width:360px;
-  height:64px;
+  height:56px;
   z-index:100;
-  background:rgba(255,255,255,0.22);
+  background:rgba(255,255,255,0.18);
   backdrop-filter:blur(48px) saturate(210%);
   -webkit-backdrop-filter:blur(48px) saturate(210%);
-  border:0.5px solid rgba(255,255,255,0.50);
-  border-radius:28px;
+  border:0.5px solid rgba(255,255,255,0.45);
+  border-radius:24px;
   box-shadow:
     inset 0 1.5px 3px rgba(255,255,255,0.60),
     inset 0 -0.5px 1px rgba(255,255,255,0.20),
@@ -177,7 +173,7 @@
   display:flex;
   align-items:center;
   justify-content:space-around;
-  padding:0 10px;
+  padding:0 6px;
 }
 .tab-bar::before{
   content:"";
@@ -260,6 +256,16 @@
   z-index:1;
 }
 
+/* Buttons */
+.btn-neu-primary{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:var(--brand);color:var(--text-inverse);
+  border:none;border-radius:9999px;
+  padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
+  cursor:pointer;
+  box-shadow:var(--neu-out-sm),0 2px 8px var(--brand-glow);
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
 .btn-neu-primary:active{box-shadow:var(--neu-in);transform:scale(0.94)}
 
 .btn-neu-secondary{
@@ -306,8 +312,6 @@
     --radius-md: var(--radius-md);
     --radius-lg: var(--radius-lg);
     --radius-full: var(--radius-full);
-    --font-sans: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-    --font-serif: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
   }
   @layer base {
     body { background: var(--background); color: var(--foreground); }
@@ -396,7 +400,7 @@
 
   <!-- ===== Nav Bar (sticky) ===== -->
   <div class="nav-bar">
-    <button class="nav-back" data-dom-id="back-btn" aria-label="返回">
+    <button class="nav-back" data-dom-id="back-btn" data-target-page="page-client-mine" aria-label="返回">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg>
     </button>
     <span class="nav-title" style="display: flex; justify-content: center; width: 241.195px;">家庭年卡</span>
@@ -404,7 +408,7 @@
 
   <!-- ===== My Annual Card (owned) ===== -->
   <div class="my-card-wrap">
-    <div class="my-card" data-dom-id="my-annual-card">
+  <div class="my-card" data-dom-id="my-annual-card" data-target-page="page-client-annual-card-record">
       <div class="my-card-shine"></div>
       <div class="my-card-top">
         <div class="my-card-name">全能家护卡</div>
@@ -418,8 +422,8 @@
       </div>
       <div class="progress-track"><div class="progress-fill"></div></div>
       <div class="my-card-bottom">
-        <button class="btn-neu-primary btn-use" data-dom-id="btn-use-card">立即使用</button>
-        <button class="btn-neu-ghost btn-refund" data-dom-id="btn-refund-card">退卡</button>
+        <button class="btn-neu-primary btn-use" data-dom-id="btn-use-card" data-target-page="page-client-publish">立即使用</button>
+        <button class="btn-neu-ghost btn-refund" data-dom-id="btn-refund-card" data-target-page="page-client-refund-card">退卡</button>
       </div>
     </div>
   </div>
@@ -428,7 +432,7 @@
   <div class="section-title">选择套餐</div>
 
   <!-- Basic -->
-  <div class="plan-card" data-dom-id="plan-card-basic">
+    <div class="plan-card" data-dom-id="plan-card-basic" data-action="select-basic-plan">
     <div class="plan-card-head">
       <div class="plan-name">基础家护卡</div>
       <div class="plan-price"><span class="cur">&yen;</span><span class="amt">199</span></div>
@@ -438,11 +442,11 @@
       <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>免上门费</li>
       <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>有效期1年</li>
     </ul>
-    <button class="btn-neu-secondary plan-choose" data-dom-id="plan-basic">选择</button>
+      <button class="btn-neu-secondary plan-choose" data-dom-id="plan-basic" data-action="select-basic-plan">选择</button>
   </div>
 
   <!-- All (featured) -->
-  <div class="plan-card plan-card--featured" data-dom-id="plan-card-all">
+    <div class="plan-card plan-card--featured" data-dom-id="plan-card-all" data-action="select-all-plan">
     <span class="plan-badge">推荐</span>
     <div class="plan-card-head">
       <div class="plan-name">全能家护卡</div>
@@ -454,11 +458,11 @@
       <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>加急服务8折</li>
       <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>有效期1年</li>
     </ul>
-    <button class="btn-neu-primary plan-choose" data-dom-id="plan-all">选择</button>
+      <button class="btn-neu-primary plan-choose" data-dom-id="plan-all" data-action="select-all-plan">选择</button>
   </div>
 
   <!-- Premium -->
-  <div class="plan-card" data-dom-id="plan-card-premium">
+    <div class="plan-card" data-dom-id="plan-card-premium" data-action="select-premium-plan">
     <div class="plan-card-head">
       <div class="plan-name">尊享家护卡</div>
       <div class="plan-price"><span class="cur">&yen;</span><span class="amt">999</span></div>
@@ -470,7 +474,7 @@
       <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>专属客服</li>
       <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>有效期1年</li>
     </ul>
-    <button class="btn-neu-secondary plan-choose" data-dom-id="plan-premium">选择</button>
+      <button class="btn-neu-secondary plan-choose" data-dom-id="plan-premium" data-action="select-premium-plan">选择</button>
   </div>
 
   <!-- ===== Applicable Services ===== -->
@@ -486,7 +490,7 @@
 
   <!-- ===== Bottom Fixed Buy Bar ===== -->
   <div class="bottom-bar">
-    <button class="btn-buy" data-dom-id="btn-buy">立即购买</button>
+  <button class="btn-buy" data-dom-id="btn-buy" data-target-page="page-client-payment">立即购买</button>
   </div>
 
 </div>
@@ -501,11 +505,11 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
 .phone{position:relative;width:414px;min-height:896px;background:var(--background);border-radius:48px;overflow:hidden;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.12),0 4px 16px rgba(0,0,0,.06);padding-bottom:82px}
 .phone::-webkit-scrollbar{display:none}
 .phone{scrollbar-width:none}
-.phone::after{content:'';position:absolute;bottom:0;left:0;right:0;height:260px;background:radial-gradient(ellipse 180px 120px at 20% 90%,rgba(13,148,136,.06) 0%,transparent 70%),radial-gradient(ellipse 160px 100px at 80% 85%,rgba(212,148,76,.06) 0%,transparent 70%);pointer-events:none;z-index:0}
+.phone::after{content:'';position:absolute;bottom:0;left:0;right:0;height:260px;background:radial-gradient(ellipse 180px 120px at 20% 90%,rgba(13,148,136,.05) 0%,transparent 70%),radial-gradient(ellipse 160px 100px at 80% 85%,rgba(212,148,76,.05) 0%,transparent 70%);pointer-events:none;z-index:0}
 .phone>*:not(.bottom-bar){position:relative;z-index:1}
 
 /* ===== Nav Bar (sticky top) ===== */
-.nav-bar{background:radial-gradient(ellipse 220px 160px at 78% 45%,rgba(212,148,76,.14) 0%,transparent 70%),radial-gradient(ellipse 180px 140px at 18% 75%,rgba(13,148,136,.16) 0%,transparent 70%),linear-gradient(135deg,rgba(13,148,136,.14) 0%,rgba(212,148,76,.08) 50%,rgba(13,148,136,.06) 100%);position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:12px;padding:max(18px, env(safe-area-inset-top)) 20px 12px; border-radius:0 0 28px 28px; overflow:hidden;}
+.nav-bar{background:radial-gradient(ellipse 220px 160px at 78% 45%,rgba(212,148,76,.10) 0%,transparent 70%),radial-gradient(ellipse 180px 140px at 18% 75%,rgba(13,148,136,.10) 0%,transparent 70%),linear-gradient(135deg,rgba(13,148,136,.08) 0%,rgba(212,148,76,.06) 50%,rgba(13,148,136,.05) 100%);position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:12px;padding:max(18px, env(safe-area-inset-top)) 20px 12px; border-radius:0 0 28px 28px; overflow:hidden;}
 .nav-back{
   width:36px;height:36px;border-radius:50%;
   background:rgba(255,255,255,0.50);
@@ -539,11 +543,11 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
   border-radius:26px;
   overflow:hidden;
   background:
-    radial-gradient(ellipse 200px 160px at 80% 15%,rgba(212,148,76,.32) 0%,transparent 70%),
-    radial-gradient(ellipse 180px 140px at 15% 88%,rgba(13,148,136,.36) 0%,transparent 70%),
-    linear-gradient(135deg,rgba(13,148,136,.34) 0%,rgba(20,184,166,.22) 45%,rgba(212,148,76,.20) 100%);
+    radial-gradient(ellipse 200px 160px at 80% 15%,rgba(212,148,76,.16) 0%,transparent 70%),
+    radial-gradient(ellipse 180px 140px at 15% 88%,rgba(13,148,136,.12) 0%,transparent 70%),
+    linear-gradient(135deg,rgba(13,148,136,.12) 0%,rgba(20,184,166,.22) 45%,rgba(212,148,76,.14) 100%);
   border:0.5px solid rgba(255,255,255,0.45);
-  box-shadow:var(--neu-out-md),inset 0 1px 0 rgba(255,255,255,0.35),0 8px 28px rgba(13,148,136,0.10);
+  box-shadow:var(--neu-out-md),inset 0 1px 0 rgba(255,255,255,0.35),0 8px 28px rgba(13,148,136,.06);
 }
 .my-card-shine{
   content:"";position:absolute;inset:0;border-radius:inherit;

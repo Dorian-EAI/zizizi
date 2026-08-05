@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>自家人居家维修 · 玻璃新拟态 · 客服中心</title>
-    <link rel="stylesheet" href="../assets/fonts.css">
-
     <style id="theme-vars">
 /* 自家人居家维修 - 玻璃新拟态 */
 :root {
@@ -16,7 +14,6 @@
   --brand-light: #CCFBF1;
   --brand-glow: rgba(13, 148, 136, 0.24);
   --brand-subtle: rgba(13, 148, 136, 0.10);
-  --brand-gradient:linear-gradient(135deg,#0D9488 0%,#14B8A6 50%,#D4944C 100%);
 
   /* Accent (Amber) */
   --accent: #D4944C;
@@ -83,11 +80,11 @@
   --radius-lg: 1.6rem;
   --radius-full: 9999px;
 
-    /* Font — 统一衬线系统 */
+  /* Font — unified serif system */
   --font-display: 'Cormorant Garamond', 'Noto Serif SC', 'STSong', Georgia, serif;
-  --font-body: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-  --font-nums: 'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
-  --font: var(--font-body);
+  --font-body:    'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --font-nums:    'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
+  --font:         var(--font-body);
 
   /* Motion */
   --spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -128,9 +125,8 @@
   --radius-sm: var(--radius-sm);
   --radius-md: var(--radius-md);
   --radius-lg: var(--radius-lg);
-  --font-sans: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-  --font-serif: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-  --radius-full: var(--radius-full);}
+  --radius-full: var(--radius-full);
+}
 
 /* Semantic token fallback */
 #semantic-token-fallback {
@@ -153,21 +149,21 @@
 }
 
 /* ===== Global Neumorphic Components ===== */
-/* Tab Bar */
+/* Tab Bar — Premium Liquid Glass, absolute-positioned within .phone frame */
 .tab-bar{
   position:absolute;
-  bottom:max(14px, env(safe-area-inset-bottom));
+  bottom:10px;
   left:50%;
   transform:translateX(-50%);
   width:calc(100% - 32px);
   max-width:360px;
-  height:64px;
+  height:56px;
   z-index:100;
-  background:rgba(255,255,255,0.22);
+  background:rgba(255,255,255,0.18);
   backdrop-filter:blur(48px) saturate(210%);
   -webkit-backdrop-filter:blur(48px) saturate(210%);
-  border:0.5px solid rgba(255,255,255,0.50);
-  border-radius:28px;
+  border:0.5px solid rgba(255,255,255,0.45);
+  border-radius:24px;
   box-shadow:
     inset 0 1.5px 3px rgba(255,255,255,0.60),
     inset 0 -0.5px 1px rgba(255,255,255,0.20),
@@ -177,7 +173,7 @@
   display:flex;
   align-items:center;
   justify-content:space-around;
-  padding:0 10px;
+  padding:0 6px;
 }
 .tab-bar::before{
   content:"";
@@ -260,6 +256,16 @@
   z-index:1;
 }
 
+/* Buttons */
+.btn-neu-primary{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:var(--brand);color:var(--text-inverse);
+  border:none;border-radius:9999px;
+  padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
+  cursor:pointer;
+  box-shadow:var(--neu-out-sm),0 2px 8px var(--brand-glow);
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
 .btn-neu-primary:active{box-shadow:var(--neu-in);transform:scale(0.94)}
 
 .btn-neu-secondary{
@@ -306,8 +312,6 @@
     --radius-md: var(--radius-md);
     --radius-lg: var(--radius-lg);
     --radius-full: var(--radius-full);
-    --font-sans: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-    --font-serif: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
   }
   @layer base {
     body { background: var(--background); color: var(--foreground); }
@@ -404,7 +408,7 @@
       </div>
     </div>
     <div class="back-row">
-      <button class="back-btn" data-dom-id="back-btn" aria-label="返回">
+      <button class="back-btn" data-dom-id="back-btn" data-target-page="page-client-mine" aria-label="返回">
         <svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg>
       </button>
       <span class="back-title">客服中心</span>
@@ -422,7 +426,7 @@
       <div class="online-sub">7x24小时在线</div>
       <div class="online-sub">平均响应30秒</div>
     </div>
-    <button class="btn-neu-primary btn-consult" data-dom-id="btn-online-service">立即咨询</button>
+    <button class="btn-neu-primary btn-consult" data-dom-id="btn-online-service" data-target-page="page-client-customer-service">立即咨询</button>
   </div>
 
   <div class="online-card">
@@ -434,7 +438,7 @@
       <div class="hotline-num">400-888-0000</div>
       <div class="online-sub">工作时间 8:00-22:00</div>
     </div>
-    <button class="btn-neu-secondary btn-call" data-dom-id="btn-call-hotline">
+    <button class="btn-neu-secondary btn-call" data-dom-id="btn-call-hotline" data-action="call-customer-service-hotline">
       <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
       拨打
     </button>
@@ -443,19 +447,19 @@
   <!-- ===== My Tickets ===== -->
   <div class="section-header">
     <div class="section-title">我的工单</div>
-    <button class="section-link" data-dom-id="btn-new-ticket">
+    <button class="section-link" data-dom-id="btn-new-ticket" data-target-page="page-client-ticket-submit">
       <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
       提交工单
     </button>
   </div>
 
   <div class="pills">
-    <span class="pill pill-active">全部</span>
-    <span class="pill">进行中</span>
-    <span class="pill">已解决</span>
+    <span class="pill pill-active" data-dom-id="ticket-filter-all" data-action="filter-all-tickets">全部</span>
+    <span class="pill" data-dom-id="ticket-filter-open" data-action="filter-open-tickets">进行中</span>
+    <span class="pill" data-dom-id="ticket-filter-resolved" data-action="filter-resolved-tickets">已解决</span>
   </div>
 
-  <div class="ticket-card" data-dom-id="ticket-1">
+  <div class="ticket-card" data-dom-id="ticket-1" data-target-page="page-client-ticket-detail">
     <div class="ticket-top">
       <span class="type-badge type-complaint">投诉</span>
       <span class="status-badge status-processing">处理中</span>
@@ -469,7 +473,7 @@
     </div>
   </div>
 
-  <div class="ticket-card" data-dom-id="ticket-2">
+  <div class="ticket-card" data-dom-id="ticket-2" data-target-page="page-client-ticket-detail">
     <div class="ticket-top">
       <span class="type-badge type-refund">退款</span>
       <span class="status-badge status-reply">待回复</span>
@@ -483,7 +487,7 @@
     </div>
   </div>
 
-  <div class="ticket-card" data-dom-id="ticket-3">
+  <div class="ticket-card" data-dom-id="ticket-3" data-target-page="page-client-ticket-detail">
     <div class="ticket-top">
       <span class="type-badge type-claim">理赔</span>
       <span class="status-badge status-resolved">已解决</span>
@@ -500,23 +504,23 @@
   <!-- ===== FAQ ===== -->
   <div class="section-title">常见问题</div>
   <div class="faq-card">
-    <div class="faq-item" data-dom-id="faq-1">
+    <div class="faq-item" data-dom-id="faq-1" data-action="toggle-faq-answer">
       <span class="faq-q">服务保障说明</span>
       <svg class="faq-arrow" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
     </div>
-    <div class="faq-item" data-dom-id="faq-2">
+    <div class="faq-item" data-dom-id="faq-2" data-action="toggle-faq-answer">
       <span class="faq-q">退款规则</span>
       <svg class="faq-arrow" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
     </div>
-    <div class="faq-item" data-dom-id="faq-3">
+    <div class="faq-item" data-dom-id="faq-3" data-action="toggle-faq-answer">
       <span class="faq-q">理赔流程</span>
       <svg class="faq-arrow" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
     </div>
-    <div class="faq-item" data-dom-id="faq-4">
+    <div class="faq-item" data-dom-id="faq-4" data-action="toggle-faq-answer">
       <span class="faq-q">30天质保范围</span>
       <svg class="faq-arrow" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
     </div>
-    <div class="faq-item" data-dom-id="faq-5">
+    <div class="faq-item" data-dom-id="faq-5" data-action="toggle-faq-answer">
       <span class="faq-q">如何选择师傅</span>
       <svg class="faq-arrow" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
     </div>
@@ -524,7 +528,7 @@
 
   <!-- ===== Bottom Fixed Submit Button ===== -->
   <div class="bottom-bar">
-    <button class="btn-neu-primary btn-submit" data-dom-id="btn-new-ticket-bottom">提交工单</button>
+    <button class="btn-neu-primary btn-submit" data-dom-id="btn-new-ticket-bottom" data-target-page="page-client-ticket-submit">提交工单</button>
   </div>
 
 </div>
@@ -547,7 +551,7 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
 .phone{position:relative;width:414px;min-height:896px;background:var(--phone-bg);border-radius:48px;overflow:hidden;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.12),0 4px 16px rgba(0,0,0,.06);padding-bottom:82px}
 .phone::-webkit-scrollbar{display:none}
 .phone{scrollbar-width:none}
-.phone::after{content:'';position:absolute;bottom:0;left:0;right:0;height:260px;background:radial-gradient(ellipse 180px 120px at 20% 90%,rgba(13,148,136,.06) 0%,transparent 70%),radial-gradient(ellipse 160px 100px at 80% 85%,rgba(212,148,76,.06) 0%,transparent 70%);pointer-events:none;z-index:0}
+.phone::after{content:'';position:absolute;bottom:0;left:0;right:0;height:260px;background:radial-gradient(ellipse 180px 120px at 20% 90%,rgba(13,148,136,.05) 0%,transparent 70%),radial-gradient(ellipse 160px 100px at 80% 85%,rgba(212,148,76,.05) 0%,transparent 70%);pointer-events:none;z-index:0}
 .phone>*{position:relative;z-index:1}
 
 /* ===== btn-neu-primary base (head only defines :active) ===== */
@@ -564,7 +568,7 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
 }
 
 /* ===== Sub Header (status + back) ===== */
-.sub-header{position:sticky;top:0;z-index:50;background:radial-gradient(ellipse 220px 160px at 78% 45%,rgba(212,148,76,.14) 0%,transparent 70%),radial-gradient(ellipse 180px 140px at 18% 75%,rgba(13,148,136,.16) 0%,transparent 70%),linear-gradient(135deg,rgba(13,148,136,.14) 0%,rgba(212,148,76,.08) 50%,rgba(13,148,136,.06) 100%); border-radius:0 0 28px 28px; overflow:hidden;}
+.sub-header{position:sticky;top:0;z-index:50;background:radial-gradient(ellipse 220px 160px at 78% 45%,rgba(212,148,76,.10) 0%,transparent 70%),radial-gradient(ellipse 180px 140px at 18% 75%,rgba(13,148,136,.10) 0%,transparent 70%),linear-gradient(135deg,rgba(13,148,136,.08) 0%,rgba(212,148,76,.06) 50%,rgba(13,148,136,.05) 100%); border-radius:0 0 28px 28px; overflow:hidden;}
 .status-bar{display:flex;align-items:center;justify-content:space-between;padding:14px 24px 4px;font-size:13px;font-weight:600;color:var(--text-1)}
 .status-icons{display:flex;align-items:center;gap:6px}
 .status-icons svg{width:16px;height:16px;stroke:var(--text-1);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
@@ -609,7 +613,7 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
 .ticket-card:active{transform:scale(0.97);box-shadow:var(--neu-in)}
 .ticket-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
 .type-badge{display:inline-flex;align-items:center;font-size:11px;font-weight:700;padding:3px 10px;border-radius:9999px;letter-spacing:.02em}
-.type-complaint{color:var(--orange);background:rgba(212,148,76,0.12);border:0.5px solid rgba(212,148,76,0.22)}
+.type-complaint{color:var(--orange);background:rgba(212,148,76,.07);border:0.5px solid rgba(212,148,76,.14)}
 .type-refund{color:var(--blue);background:rgba(90,143,173,0.12);border:0.5px solid rgba(90,143,173,0.22)}
 .type-claim{color:var(--red);background:rgba(196,83,58,0.12);border:0.5px solid rgba(196,83,58,0.22)}
 .status-badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;padding:3px 10px;border-radius:9999px}

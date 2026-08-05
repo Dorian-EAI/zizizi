@@ -35,7 +35,7 @@ def _require_order_access(db: Session, order_id: int, current):
 # ============================================================
 
 @router.post("/api/worker/orders/{order_id}/checkin")
-async def worker_checkin(
+def worker_checkin(
     order_id: int,
     req: CheckinRequest,
     worker: Worker = Depends(get_current_worker),
@@ -51,7 +51,7 @@ async def worker_checkin(
 
 
 @router.post("/api/worker/orders/{order_id}/checkin-abnormal")
-async def worker_checkin_abnormal(
+def worker_checkin_abnormal(
     order_id: int,
     req: CheckinRequest,
     worker: Worker = Depends(get_current_worker),
@@ -68,7 +68,7 @@ async def worker_checkin_abnormal(
 
 
 @router.get("/api/orders/{order_id}/track")
-async def get_order_track(
+def get_order_track(
     order_id: int,
     current=Depends(get_current_account),
     db: Session = Depends(get_db),
@@ -91,7 +91,7 @@ class ReportLocationRequest(BaseModel):
 
 
 @router.post("/api/worker/location/report")
-async def report_location(
+def report_location(
     req: ReportLocationRequest,
     worker: Worker = Depends(get_current_worker),
     db: Session = Depends(get_db),
@@ -107,7 +107,7 @@ async def report_location(
 
 
 @router.post("/api/worker/orders/{order_id}/depart")
-async def start_departure(
+def start_departure(
     order_id: int,
     worker: Worker = Depends(get_current_worker),
     db: Session = Depends(get_db),
@@ -120,7 +120,7 @@ async def start_departure(
     from app.models.order import Order
     order = db.query(Order).filter(Order.id == order_id).first()
     if order:
-        await message_service.send_inbox_message(
+        message_service.send_inbox_message(
             db, "user", order.user_id, "order",
             "师傅已出发",
             f"您的订单「{order.service_name}」师傅已出发，正在赶来",
@@ -131,7 +131,7 @@ async def start_departure(
 
 
 @router.post("/api/worker/orders/{order_id}/arrive")
-async def arrive_destination(
+def arrive_destination(
     order_id: int,
     req: ReportLocationRequest = None,
     worker: Worker = Depends(get_current_worker),
@@ -147,7 +147,7 @@ async def arrive_destination(
     from app.models.order import Order
     order = db.query(Order).filter(Order.id == order_id).first()
     if order:
-        await message_service.send_inbox_message(
+        message_service.send_inbox_message(
             db, "user", order.user_id, "order",
             "师傅已到达",
             f"您的订单「{order.service_name}」师傅已到达服务地点，请准备开门",
@@ -158,7 +158,7 @@ async def arrive_destination(
 
 
 @router.post("/api/worker/orders/{order_id}/start-service")
-async def start_service(
+def start_service(
     order_id: int,
     req: ReportLocationRequest = None,
     worker: Worker = Depends(get_current_worker),
@@ -172,7 +172,7 @@ async def start_service(
 
 
 @router.get("/api/orders/{order_id}/tracking")
-async def get_tracking_info(
+def get_tracking_info(
     order_id: int,
     user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
@@ -188,7 +188,7 @@ async def get_tracking_info(
 
 
 @router.get("/api/orders/{order_id}/route-history")
-async def get_route_history(
+def get_route_history(
     order_id: int,
     limit: int = Query(100, ge=1, le=500),
     current=Depends(get_current_account),

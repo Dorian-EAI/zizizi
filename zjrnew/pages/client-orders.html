@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>自家人居家维修 · 玻璃新拟态 · 我的订单</title>
-    <link rel="stylesheet" href="../assets/fonts.css">
-
     <style id="theme-vars">
 /* 自家人居家维修 - 玻璃新拟态 */
 :root {
@@ -82,11 +80,11 @@
   --radius-lg: 1.6rem;
   --radius-full: 9999px;
 
-    /* Font — 统一衬线系统 */
+  /* Font — unified serif system */
   --font-display: 'Cormorant Garamond', 'Noto Serif SC', 'STSong', Georgia, serif;
-  --font-body: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-  --font-nums: 'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
-  --font: var(--font-body);
+  --font-body:    'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --font-nums:    'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
+  --font:         var(--font-body);
 
   /* Motion */
   --spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -127,9 +125,8 @@
   --radius-sm: var(--radius-sm);
   --radius-md: var(--radius-md);
   --radius-lg: var(--radius-lg);
-  --font-sans: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-  --font-serif: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-  --radius-full: var(--radius-full);}
+  --radius-full: var(--radius-full);
+}
 
 /* Semantic token fallback */
 #semantic-token-fallback {
@@ -152,21 +149,21 @@
 }
 
 /* ===== Global Neumorphic Components ===== */
-/* Tab Bar */
+/* Tab Bar — Premium Liquid Glass, absolute-positioned within .phone frame */
 .tab-bar{
   position:absolute;
-  bottom:max(14px, env(safe-area-inset-bottom));
+  bottom:10px;
   left:50%;
   transform:translateX(-50%);
   width:calc(100% - 32px);
   max-width:360px;
-  height:64px;
+  height:56px;
   z-index:100;
-  background:rgba(255,255,255,0.22);
+  background:rgba(255,255,255,0.18);
   backdrop-filter:blur(48px) saturate(210%);
   -webkit-backdrop-filter:blur(48px) saturate(210%);
-  border:0.5px solid rgba(255,255,255,0.50);
-  border-radius:28px;
+  border:0.5px solid rgba(255,255,255,0.45);
+  border-radius:24px;
   box-shadow:
     inset 0 1.5px 3px rgba(255,255,255,0.60),
     inset 0 -0.5px 1px rgba(255,255,255,0.20),
@@ -176,7 +173,7 @@
   display:flex;
   align-items:center;
   justify-content:space-around;
-  padding:0 10px;
+  padding:0 6px;
 }
 .tab-bar::before{
   content:"";
@@ -259,29 +256,28 @@
   z-index:1;
 }
 
+/* Buttons */
 .btn-neu-primary{
-  display:inline-flex;align-items:center;justify-content:center;gap:6px;
-  background:var(--brand-gradient);
-  color:var(--text-inverse);
-  border:0.5px solid rgba(255,255,255,0.40);border-radius:9999px;
+  display:inline-flex;align-items:center;justify-content:center;
+  background:var(--brand);color:var(--text-inverse);
+  border:none;border-radius:9999px;
   padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
   cursor:pointer;
-  box-shadow:var(--neu-out-sm),0 4px 14px var(--brand-glow),inset 0 1px 1px rgba(255,255,255,0.30);
+  box-shadow:var(--neu-out-sm),0 2px 8px var(--brand-glow);
   transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
 }
 .btn-neu-primary:active{box-shadow:var(--neu-in);transform:scale(0.94)}
 
 .btn-neu-secondary{
-  display:inline-flex;align-items:center;justify-content:center;gap:6px;
-  background:rgba(255,255,255,0.92);
-  color:var(--brand);
-  border:0.5px solid rgba(255,255,255,0.95);border-radius:9999px;
+  display:inline-flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,0.50);color:var(--brand);
+  border:0.5px solid rgba(255,255,255,0.60);border-radius:9999px;
   padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
   cursor:pointer;
-  box-shadow:var(--neu-out-md),inset 0 1.5px 2px rgba(255,255,255,0.65),inset 0 -1px 1px rgba(0,0,0,0.03);
-  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease),background var(--dur) var(--ease);
+  box-shadow:var(--neu-out-sm);
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
 }
-.btn-neu-secondary:active{box-shadow:var(--neu-in-deep);transform:scale(0.94);background:rgba(255,255,255,0.78)}
+.btn-neu-secondary:active{box-shadow:var(--neu-in);transform:scale(0.94)}
 
 .btn-neu-ghost{
   display:inline-flex;align-items:center;justify-content:center;
@@ -316,8 +312,6 @@
     --radius-md: var(--radius-md);
     --radius-lg: var(--radius-lg);
     --radius-full: var(--radius-full);
-    --font-sans: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-    --font-serif: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
   }
   @layer base {
     body { background: var(--background); color: var(--foreground); }
@@ -410,7 +404,7 @@
           <h1>我的订单</h1>
           <p class="subtitle">查看和管理您的服务订单</p>
         </div>
-        <button class="search-btn" aria-label="搜索订单" data-dom-id="btn-search">
+      <button class="search-btn" aria-label="搜索订单" data-dom-id="btn-search" data-target-page="page-client-order-search">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="11" cy="11" r="7"></circle>
             <line x1="16.5" y1="16.5" x2="21" y2="21"></line>
@@ -420,18 +414,18 @@
     </section>
 
     <div class="filter-tabs">
-      <button class="filter-pill active">全部</button>
-      <button class="filter-pill">竞价中</button>
-      <button class="filter-pill">服务中</button>
-      <button class="filter-pill">已完成</button>
-      <button class="filter-pill">待评价</button>
+    <button class="filter-pill active" data-dom-id="orders-filter-all" data-action="filter-all-orders">全部</button>
+    <button class="filter-pill" data-dom-id="orders-filter-bidding" data-action="filter-bidding-orders">竞价中</button>
+    <button class="filter-pill" data-dom-id="orders-filter-serving" data-action="filter-serving-orders">服务中</button>
+    <button class="filter-pill" data-dom-id="orders-filter-finished" data-action="filter-finished-orders">已完成</button>
+    <button class="filter-pill" data-dom-id="orders-filter-review" data-action="filter-review-orders">待评价</button>
     </div>
   </header>
 
   <!-- Order list -->
   <div class="order-list">
     <!-- Order 1 - 竞价中 -->
-    <div class="order-card" data-dom-id="order-item-1">
+    <div class="order-card" data-dom-id="order-item-1" data-target-page="page-client-order-detail">
       <div class="card-top">
         <span class="status-badge badge-bidding">竞价中</span>
         <span class="order-date">2024-06-20 14:30</span>
@@ -450,7 +444,7 @@
           <span class="info-main">已有 3 位师傅报价</span>
           <span class="info-price">¥128-268</span>
         </div>
-        <button class="btn-neu-secondary">
+        <button class="btn-neu-secondary" data-dom-id="orders-view-quotes" data-target-page="page-client-quote-list">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;margin-right:5px">
             <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
             <circle cx="12" cy="12" r="3"></circle>
@@ -461,7 +455,7 @@
     </div>
 
     <!-- Order 2 - 服务中 -->
-    <div class="order-card" data-dom-id="order-item-2">
+    <div class="order-card" data-dom-id="order-item-2" data-target-page="page-client-order-detail">
       <div class="card-top">
         <span class="status-badge badge-serving">服务中</span>
         <span class="order-date">2024-06-19 09:00</span>
@@ -479,7 +473,7 @@
         <div class="bottom-info">
           <span class="info-main">张师傅正在服务</span>
         </div>
-        <button class="btn-neu-secondary">
+        <button class="btn-neu-secondary" data-dom-id="orders-contact-worker" data-action="open-worker-contact-sheet">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;margin-right:5px">
             <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path>
           </svg>
@@ -489,7 +483,7 @@
     </div>
 
     <!-- Order 3 - 已完成 -->
-    <div class="order-card" data-dom-id="order-item-3">
+    <div class="order-card" data-dom-id="order-item-3" data-target-page="page-client-order-detail">
       <div class="card-top">
         <span class="status-badge badge-done">已完成</span>
         <span class="order-date">2024-06-15 16:20</span>
@@ -507,7 +501,7 @@
         <div class="bottom-info">
           <span class="info-main">服务已完成</span>
         </div>
-        <button class="btn-neu-secondary">
+        <button class="btn-neu-secondary" data-dom-id="orders-review-worker" data-target-page="page-client-review">
           <svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;margin-right:5px">
             <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
           </svg>
@@ -519,19 +513,19 @@
 
   <!-- Tab Bar -->
   <nav class="tab-bar" data-mobile-nav="global">
-  <a class="tab-item" data-dom-id="nav-home" data-nav-key="home" aria-label="首页">
+  <a class="tab-item" data-dom-id="nav-home" data-nav-key="home" data-target-page="page-client-home-glass-neu-contrast-1" aria-label="首页">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
     <span class="tab-label whitespace-nowrap">首页</span>
   </a>
-  <a class="tab-item" data-dom-id="nav-publish" data-nav-key="publish" aria-label="发布">
+  <a class="tab-item" data-dom-id="nav-publish" data-nav-key="publish" data-target-page="page-client-publish" aria-label="发布">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
     <span class="tab-label whitespace-nowrap">发布</span>
   </a>
-  <a class="tab-item" data-active="true" data-dom-id="nav-orders" data-nav-key="orders" aria-label="订单">
+  <a class="tab-item" data-active="true" data-dom-id="nav-orders" data-nav-key="orders" data-target-page="page-client-orders" aria-label="订单">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
     <span class="tab-label whitespace-nowrap">订单</span>
   </a>
-  <a class="tab-item" data-dom-id="nav-mine" data-nav-key="mine" aria-label="我的">
+  <a class="tab-item" data-dom-id="nav-mine" data-nav-key="mine" data-target-page="page-client-mine" aria-label="我的">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
     <span class="tab-label whitespace-nowrap">我的</span>
   </a>
@@ -542,9 +536,9 @@
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{
   --brand:#0D9488;--brand-dark:#0A7A70;--brand-light:#CCFBF1;
-  --brand-glow:rgba(13,148,136,0.28);--brand-subtle:rgba(13,148,136,0.08);
-  --brand-gradient:linear-gradient(135deg,#0D9488 0%,#14B8A6 50%,#D4944C 100%);
-  --accent:#D4944C;--accent-light:#F5E6D0;--accent-glow:rgba(212,148,76,0.25);
+  --brand-glow:rgba(13,148,136,0.18);--brand-subtle:rgba(13,148,136,0.08);
+  --brand-gradient:linear-gradient(135deg,#0D9488 0%,#14B8A6 48%,#D4944C 100%);
+  --accent:#D4944C;--accent-light:#F5E6D0;--accent-glow:rgba(212,148,76,0.16);
   --bg:#F2EDE8;--bg-elevated:#F7F3EF;
   --neu-light:#FFF8F2;--neu-dark:#DDD6CE;
   --text-1:#2C2824;--text-2:#8B8178;--text-3:#B5ADA5;
@@ -565,14 +559,14 @@
 html,body{font-family:var(--font);color:var(--text-1);-webkit-font-smoothing:antialiased}
 body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh;background:#E8E4DF;letter-spacing:-0.01em}
 .phone{position:relative;width:414px;min-height:896px;background:var(--bg);border-radius:48px;overflow:hidden;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.12),0 4px 16px rgba(0,0,0,.06);padding-bottom:82px}
-.phone::after{content:'';position:absolute;bottom:0;left:0;right:0;height:260px;background:radial-gradient(ellipse 200px 140px at 20% 90%,rgba(13,148,136,.07) 0%,transparent 70%),radial-gradient(ellipse 180px 120px at 80% 85%,rgba(212,148,76,.06) 0%,transparent 70%),radial-gradient(ellipse 160px 100px at 50% 95%,rgba(20,184,166,.04) 0%,transparent 70%);pointer-events:none;z-index:0}
+.phone::after{content:'';position:absolute;bottom:0;left:0;right:0;height:260px;background:radial-gradient(ellipse 200px 140px at 20% 90%,rgba(13,148,136,.06) 0%,transparent 70%),radial-gradient(ellipse 180px 120px at 80% 85%,rgba(212,148,76,.05) 0%,transparent 70%),radial-gradient(ellipse 160px 100px at 50% 95%,rgba(20,184,166,.04) 0%,transparent 70%);pointer-events:none;z-index:0}
 .phone>*:not(.tab-bar):not(.top-header){position:relative;z-index:1}
 
 /* Top Header */
 .top-header{position:sticky;top:0;z-index:50}
 
 /* Hero */
-.hero{padding: max(38px, env(safe-area-inset-top)) 24px 24px;position:relative;z-index:1;background:radial-gradient(ellipse 240px 200px at 75% 40%,rgba(212,148,76,.32) 0%,transparent 70%),radial-gradient(ellipse 200px 160px at 20% 80%,rgba(13,148,136,.24) 0%,transparent 70%),linear-gradient(135deg,rgba(13,148,136,.28) 0%,rgba(212,148,76,.20) 50%,rgba(20,184,166,.12) 100%);border-radius:0 0 32px 32px}
+.hero{padding: max(38px, env(safe-area-inset-top)) 24px 24px;position:relative;z-index:1;background:radial-gradient(ellipse 240px 200px at 75% 40%,rgba(212,148,76,.16) 0%,transparent 70%),radial-gradient(ellipse 200px 160px at 20% 80%,rgba(13,148,136,.12) 0%,transparent 70%),linear-gradient(135deg,rgba(13,148,136,.12) 0%,rgba(212,148,76,.14) 50%,rgba(20,184,166,.12) 100%);border-radius:0 0 32px 32px}
 .hero::before{content:"";position:absolute;top:-40%;right:-20%;width:300px;height:300px;background:radial-gradient(circle,rgba(255,255,255,0.15) 0%,transparent 70%);border-radius:50%;pointer-events:none}
 .hero::after{content:"";position:absolute;bottom:-30%;left:-10%;width:220px;height:220px;background:radial-gradient(circle,rgba(200,255,250,0.10) 0%,transparent 70%);border-radius:50%;pointer-events:none}
 .greeting-row{display:flex;align-items:center;justify-content:space-between;position:relative;z-index:2}
@@ -592,11 +586,11 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
 .filter-pill{flex:1;text-align:center;padding:10px 0;border-radius:var(--radius-sm);font-size:13.5px;font-weight:600;color:var(--text-2);cursor:pointer;white-space:nowrap;transition:transform var(--dur) var(--spring),all 0.2s var(--ease);border:none;background:transparent;font-family:var(--font)}
 .filter-pill:active{transform:scale(0.94)}
 .filter-pill:not(.active){background:var(--bg);box-shadow:var(--neu-out-sm),inset 0 1px 1px rgba(255,255,255,0.45)}
-.filter-pill.active{background:rgba(13,148,136,0.15);box-shadow:inset 2px 2px 5px var(--neu-dark),inset -2px -2px 5px var(--neu-light);color:var(--brand)}
+.filter-pill.active{background:rgba(13,148,136,.08);box-shadow:inset 2px 2px 5px var(--neu-dark),inset -2px -2px 5px var(--neu-light);color:var(--brand)}
 
 /* Order list */
 .order-list{position:relative;z-index:2;padding:20px 20px 0;display:flex;flex-direction:column;gap:12px}
-.order-card{background:rgba(255,255,255,0.52);backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);border:1px solid rgba(255,255,255,0.70);border-radius:var(--radius-md);padding:16px;box-shadow:var(--neu-out-md),0 6px 28px rgba(0,0,0,0.06),0 0 0 1px rgba(44,40,36,0.05),0 2px 8px rgba(13,148,136,0.04);cursor:pointer;transition:transform var(--dur) var(--ease),box-shadow 0.2s var(--ease);position:relative}
+.order-card{background:rgba(255,255,255,0.52);backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);border:1px solid rgba(255,255,255,0.70);border-radius:var(--radius-md);padding:16px;box-shadow:var(--neu-out-md),0 6px 28px rgba(0,0,0,0.06),0 0 0 1px rgba(44,40,36,0.05),0 2px 8px rgba(13,148,136,.04);cursor:pointer;transition:transform var(--dur) var(--ease),box-shadow 0.2s var(--ease);position:relative}
 .order-card::before{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(165deg,rgba(255,255,255,0.22) 0%,rgba(255,255,255,0.05) 30%,transparent 55%);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;padding:0.5px;pointer-events:none}
 .order-card:active{box-shadow:var(--neu-in-deep);transform:scale(0.98)}
 
@@ -605,7 +599,7 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
 .card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;position:relative;z-index:1}
 .status-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 10px 4px 8px;border-radius:var(--radius-full);font-size:12px;font-weight:600;position:relative}
 .status-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:currentColor;flex-shrink:0}
-.badge-pending{background:rgba(212,148,76,0.14);color:var(--orange)}
+.badge-pending{background:rgba(212,148,76,.09);color:var(--orange)}
 .badge-bidding{background:rgba(196,83,58,0.14);color:var(--red)}
 .badge-serving{background:rgba(90,143,173,0.14);color:var(--blue)}
 .badge-done{background:rgba(91,140,90,0.14);color:var(--green)}

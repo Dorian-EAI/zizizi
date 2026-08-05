@@ -5,7 +5,7 @@ from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session
 
 from app.database import get_db
-from app.dependencies import get_current_user, get_current_admin
+from app.dependencies import get_current_user, get_current_admin, require_super_admin
 from app.models.user import User
 from app.schemas.pricing import (
     CalculateAmountRequest,
@@ -13,7 +13,7 @@ from app.schemas.pricing import (
     PeakTimeConfigRequest,
     PeakTimeConfigResponse,
 )
-from app.services import pricing_service
+from app.services import pricing_service, admin_service
 from app.utils.response import success
 
 router = APIRouter(prefix="/api/pricing", tags=["动态定价"])
@@ -56,7 +56,7 @@ async def list_peak_configs(
 ):
     """高峰配置列表"""
     from app.models.pricing import PeakTimeConfig
-    items = db.query(PeakTimeConfig).order_by(PeakTimeConfig.created_at.desc()).all()
+    items = db.query(PeakTimeConfig).order_by(PeakTimeConfig.created_at.desc()).limit(500).all()
     return success(data=[
         PeakTimeConfigResponse.model_validate(i).model_dump(mode="json")
         for i in items
@@ -66,7 +66,7 @@ async def list_peak_configs(
 @router.post("/admin/peak-configs")
 async def create_peak_config(
     req: PeakTimeConfigRequest,
-    admin=Depends(get_current_admin),
+    admin=Depends(require_super_admin),
     db: Session = Depends(get_db),
 ):
     """创建高峰配置"""
@@ -74,5 +74,8 @@ async def create_peak_config(
         db, req.name,
         [tr.model_dump() for tr in req.time_ranges],
         req.surcharge_rate, req.surcharge_max
+    )
+    admin_service.add_admin_audit(
+        db, admin.id, "pricing_peak.create", "peak_time_config", cfg.id, commit=True
     )
     return success(data=PeakTimeConfigResponse.model_validate(cfg).model_dump(mode="json"))

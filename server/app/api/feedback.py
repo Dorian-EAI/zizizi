@@ -7,7 +7,7 @@ from fastapi import APIRouter, Depends, Query, Header
 from sqlalchemy.orm import Session
 
 from app.database import get_db
-from app.dependencies import get_current_user, get_current_admin
+from app.dependencies import get_current_user, get_current_admin, require_admin_operator
 from app.models.user import User
 from app.schemas.feedback import FeedbackCreateRequest, FeedbackUpdateRequest
 from app.services import feedback_service
@@ -78,7 +78,7 @@ async def list_all_feedback(
     size: int = Query(20, ge=1, le=200, description="每页条数"),
     status: Optional[str] = Query(None, description="状态筛选 pending/processing/resolved"),
     db: Session = Depends(get_db),
-    admin=Depends(get_current_admin),
+    admin=Depends(require_admin_operator),
 ):
     """管理员：获取全部反馈（可按状态筛选）"""
     data = feedback_service.list_all(db, page=page, size=size, status=status)
@@ -90,7 +90,7 @@ async def update_feedback(
     fb_id: int,
     body: FeedbackUpdateRequest,
     db: Session = Depends(get_db),
-    admin=Depends(get_current_admin),
+    admin=Depends(require_admin_operator),
 ):
     """管理员：更新反馈状态与回复"""
     fb = feedback_service.update_status(db, fb_id, body.status, body.reply)

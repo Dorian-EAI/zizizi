@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>自家人居家维修 · 玻璃新拟态实体感 · 客户端首页</title>
-    <link rel="stylesheet" href="../assets/fonts.css">
-
     <style id="theme-vars">
 /* 自家人居家维修 - 玻璃新拟态 */
 :root {
@@ -82,11 +80,11 @@
   --radius-lg: 1.6rem;
   --radius-full: 9999px;
 
-    /* Font — 统一衬线系统 */
+  /* Font — unified serif system */
   --font-display: 'Cormorant Garamond', 'Noto Serif SC', 'STSong', Georgia, serif;
-  --font-body: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-  --font-nums: 'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
-  --font: var(--font-body);
+  --font-body:    'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --font-nums:    'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
+  --font:         var(--font-body);
 
   /* Motion */
   --spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -127,9 +125,8 @@
   --radius-sm: var(--radius-sm);
   --radius-md: var(--radius-md);
   --radius-lg: var(--radius-lg);
-  --font-sans: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-  --font-serif: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-  --radius-full: var(--radius-full);}
+  --radius-full: var(--radius-full);
+}
 
 /* Semantic token fallback */
 #semantic-token-fallback {
@@ -152,21 +149,21 @@
 }
 
 /* ===== Global Neumorphic Components ===== */
-/* Tab Bar */
+/* Tab Bar — Premium Liquid Glass, absolute-positioned within .phone frame */
 .tab-bar{
   position:absolute;
-  bottom:max(14px, env(safe-area-inset-bottom));
+  bottom:10px;
   left:50%;
   transform:translateX(-50%);
   width:calc(100% - 32px);
   max-width:360px;
-  height:64px;
+  height:56px;
   z-index:100;
-  background:rgba(255,255,255,0.22);
+  background:rgba(255,255,255,0.18);
   backdrop-filter:blur(48px) saturate(210%);
   -webkit-backdrop-filter:blur(48px) saturate(210%);
-  border:0.5px solid rgba(255,255,255,0.50);
-  border-radius:28px;
+  border:0.5px solid rgba(255,255,255,0.45);
+  border-radius:24px;
   box-shadow:
     inset 0 1.5px 3px rgba(255,255,255,0.60),
     inset 0 -0.5px 1px rgba(255,255,255,0.20),
@@ -176,7 +173,7 @@
   display:flex;
   align-items:center;
   justify-content:space-around;
-  padding:0 10px;
+  padding:0 6px;
 }
 .tab-bar::before{
   content:"";
@@ -259,16 +256,17 @@
   z-index:1;
 }
 
+/* Buttons */
 .btn-neu-primary{
   display:inline-flex;align-items:center;justify-content:center;
-  background:var(--bg-elevated);color:var(--brand);
-  border:0.5px solid rgba(255,255,255,0.75);border-radius:9999px;
-  padding:8px 18px;font-size:13px;font-weight:700;font-family:var(--font);
+  background:var(--brand);color:var(--text-inverse);
+  border:none;border-radius:9999px;
+  padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
   cursor:pointer;
-  box-shadow:var(--neu-out-sm),inset 0 1px 1px rgba(255,255,255,0.55);
-  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease),background var(--dur) var(--ease);
+  box-shadow:var(--neu-out-sm),0 2px 8px var(--brand-glow);
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
 }
-.btn-neu-primary:active{box-shadow:var(--neu-in);transform:scale(0.94);background:var(--brand-subtle)}
+.btn-neu-primary:active{box-shadow:var(--neu-in);transform:scale(0.94)}
 
 .btn-neu-secondary{
   display:inline-flex;align-items:center;justify-content:center;
@@ -314,8 +312,6 @@
     --radius-md: var(--radius-md);
     --radius-lg: var(--radius-lg);
     --radius-full: var(--radius-full);
-    --font-sans: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-    --font-serif: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
   }
   @layer base {
     body { background: var(--background); color: var(--foreground); }
@@ -425,14 +421,14 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
 .phone{position:relative;width:414px;min-height:896px;background:var(--phone-bg);border-radius:48px;overflow:hidden;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.12),0 4px 16px rgba(0,0,0,.06);padding-bottom:82px}
 .phone::-webkit-scrollbar{display:none}
 .phone{scrollbar-width:none}
-.phone::after{content:'';position:absolute;bottom:0;left:0;right:0;height:260px;background:radial-gradient(ellipse 180px 120px at 20% 90%,rgba(13,148,136,.06) 0%,transparent 70%),radial-gradient(ellipse 160px 100px at 80% 85%,rgba(212,148,76,.06) 0%,transparent 70%);pointer-events:none;z-index:0}
+.phone::after{content:'';position:absolute;bottom:0;left:0;right:0;height:260px;background:radial-gradient(ellipse 180px 120px at 20% 90%,rgba(13,148,136,.05) 0%,transparent 70%),radial-gradient(ellipse 160px 100px at 80% 85%,rgba(212,148,76,.05) 0%,transparent 70%);pointer-events:none;z-index:0}
 .phone>*:not(.tab-bar){position:relative;z-index:1}
 
 /* ===== Style Label ===== */
 .style-label{position:absolute;top:16px;left:16px;z-index:100;background:var(--surface-2);backdrop-filter:blur(12px) saturate(130%);-webkit-backdrop-filter:blur(12px) saturate(130%);border:var(--border-glass-soft);border-radius:10px;padding:6px 12px;font-size:11px;font-weight:600;color:var(--brand);letter-spacing:.3px}
 
 /* ===== HERO ===== */
-.hero{padding:14px 24px 24px;position:relative;z-index:1;background:radial-gradient(ellipse 220px 180px at 75% 45%,rgba(212,148,76,.14) 0%,transparent 70%),radial-gradient(ellipse 180px 140px at 20% 80%,rgba(13,148,136,.14) 0%,transparent 70%),linear-gradient(135deg,rgba(13,148,136,.16) 0%,rgba(212,148,76,.10) 50%,rgba(13,148,136,.06) 100%);border-radius:0 0 32px 32px;overflow:hidden}
+.hero{padding:14px 24px 24px;position:relative;z-index:1;background:radial-gradient(ellipse 220px 180px at 75% 45%,rgba(212,148,76,.10) 0%,transparent 70%),radial-gradient(ellipse 180px 140px at 20% 80%,rgba(13,148,136,.08) 0%,transparent 70%),linear-gradient(135deg,rgba(13,148,136,.10) 0%,rgba(212,148,76,.08) 50%,rgba(13,148,136,.05) 100%);border-radius:0 0 32px 32px;overflow:hidden}
 
 /* Status bar */
 .status-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;font-size:13px;font-weight:600;color:var(--text-1)}
@@ -452,7 +448,7 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
 .service-grid{display:grid;grid-template-columns:repeat(3,101px);gap:11px;justify-content:center;padding:11px 24px}
 .service-card{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;width:101px;height:90px;background:var(--surface-1);backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);border:0.5px solid rgba(255,255,255,0.75);border-radius:22px;box-shadow:var(--neu-out-md),inset 0 1.5px 2px rgba(255,255,255,0.65);padding:8px 6px;cursor:pointer;text-decoration:none;transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease)}
 .service-card:active{transform:scale(0.95);box-shadow:var(--neu-in)}
-.icon-circle{width:48px;height:48px;border-radius:50%;flex-shrink:0;background:var(--phone-bg);box-shadow:var(--icon-raise),inset 0 1.5px 2px rgba(255,255,255,0.65);display:flex;align-items:center;justify-content:center;transition:box-shadow var(--dur) var(--ease),transform var(--dur) var(--spring)}
+.icon-circle{width:40px;height:40px;border-radius:50%;flex-shrink:0;background:var(--phone-bg);box-shadow:var(--icon-raise),inset 0 1.5px 2px rgba(255,255,255,0.65);display:flex;align-items:center;justify-content:center;transition:box-shadow var(--dur) var(--ease),transform var(--dur) var(--spring)}
 .service-card:active .icon-circle{box-shadow:var(--neu-in);transform:scale(0.94)}
 .icon-circle svg{width:22px;height:22px;stroke:var(--brand);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .service-name{font-size:12px;color:var(--text-1);font-weight:600;white-space:nowrap}
@@ -465,9 +461,9 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
 .chip-active{background:var(--brand-subtle);color:var(--brand);box-shadow:var(--neu-in),0 0 0 0.5px var(--brand-subtle)}
 
 /* ===== AI Assistant Card ===== */
-.ai-card{margin:14px 24px 0;padding:16px;display:flex;align-items:center;gap:14px;border-radius:24px;background:radial-gradient(ellipse 240px 200px at 75% 40%,rgba(212,148,76,.32) 0%,transparent 70%),radial-gradient(ellipse 200px 160px at 20% 80%,rgba(13,148,136,.24) 0%,transparent 70%),linear-gradient(135deg,rgba(13,148,136,.28) 0%,rgba(212,148,76,.20) 50%,rgba(20,184,166,.12) 100%);box-shadow:var(--neu-out-md),0 8px 28px rgba(13,148,136,0.12);cursor:pointer;transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease)}
+.ai-card{margin:14px 24px 0;padding:16px;display:flex;align-items:center;gap:14px;border-radius:24px;background:radial-gradient(ellipse 240px 200px at 75% 40%,rgba(212,148,76,.16) 0%,transparent 70%),radial-gradient(ellipse 200px 160px at 20% 80%,rgba(13,148,136,.12) 0%,transparent 70%),linear-gradient(135deg,rgba(13,148,136,.12) 0%,rgba(212,148,76,.14) 50%,rgba(20,184,166,.12) 100%);box-shadow:var(--neu-out-md),0 8px 28px rgba(13,148,136,.07);cursor:pointer;transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease)}
 .ai-card:active{transform:scale(0.97);box-shadow:var(--neu-in)}
-.ai-icon{width:50px;height:50px;flex-shrink:0;border-radius:14px;background:linear-gradient(135deg,var(--brand) 0%,var(--brand-mid) 50%,var(--accent) 100%);box-shadow:var(--neu-out-sm);display:flex;align-items:center;justify-content:center;color:var(--text-inverse)}
+.ai-icon{width:42px;height:42px;flex-shrink:0;border-radius:14px;background:linear-gradient(135deg,var(--brand) 0%,var(--brand-mid) 50%,var(--accent) 100%);box-shadow:var(--neu-out-sm);display:flex;align-items:center;justify-content:center;color:var(--text-inverse)}
 .ai-icon svg{width:24px;height:24px}
 .ai-text{flex:1;min-width:0}
 .ai-title{font-size:16px;font-weight:700;color:var(--text-1);margin-bottom:3px;letter-spacing:-0.01em}
@@ -477,7 +473,7 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
 /* ===== Recommend Masters (horizontal cards like reference) ===== */
 .recommend-card{display:flex;align-items:center;gap:14px;margin:0 24px 11px;background:var(--surface-1);backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);border:var(--border-glass-soft);border-radius:20px;box-shadow:var(--neu-out-sm);padding:14px;cursor:pointer;transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease)}
 .recommend-card:active{transform:scale(0.97);box-shadow:var(--neu-in)}
-.avatar{width:52px;height:52px;border-radius:50%;flex-shrink:0;position:relative;overflow:hidden;background:linear-gradient(145deg,rgba(255,255,255,0.68) 0%,rgba(255,255,255,0.28) 40%,var(--brand-subtle) 78%,rgba(255,255,255,0.18) 100%);backdrop-filter:blur(10px) saturate(160%);-webkit-backdrop-filter:blur(10px) saturate(160%);border:0.5px solid rgba(255,255,255,0.75);box-shadow:inset 0 2px 3px rgba(255,255,255,0.88),inset 0 -1px 2px rgba(0,0,0,0.04),var(--icon-raise);display:flex;align-items:center;justify-content:center}
+.avatar{width:44px;height:44px;border-radius:50%;flex-shrink:0;position:relative;overflow:hidden;background:linear-gradient(145deg,rgba(255,255,255,0.68) 0%,rgba(255,255,255,0.28) 40%,var(--brand-subtle) 78%,rgba(255,255,255,0.18) 100%);backdrop-filter:blur(10px) saturate(160%);-webkit-backdrop-filter:blur(10px) saturate(160%);border:0.5px solid rgba(255,255,255,0.75);box-shadow:inset 0 2px 3px rgba(255,255,255,0.88),inset 0 -1px 2px rgba(0,0,0,0.04),var(--icon-raise);display:flex;align-items:center;justify-content:center}
 .avatar::before{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(160deg,rgba(255,255,255,0.48) 0%,rgba(255,255,255,0.12) 35%,transparent 60%);pointer-events:none}
 .avatar svg{width:26px;height:26px;stroke:var(--green);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .recommend-info{flex:1;min-width:0}
@@ -553,7 +549,7 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
 
   <!-- Custom Title Bar (search only) -->
   <div class="title-bar" id="titleBar">
-    <div class="title-bar__search" id="titleSearch">
+    <div class="title-bar__search" id="titleSearch" data-dom-id="home-title-search" data-target-page="page-client-search">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.3-4.3"></path></svg>
       <span>搜索维修服务、师傅</span>
     </div>
@@ -571,7 +567,7 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
     </div>
 
     <!-- Glass Search Bar -->
-    <div class="search-bar">
+    <div class="search-bar" data-dom-id="home-search" data-target-page="page-client-search">
       <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
       <span>搜索维修服务、师傅</span>
     </div>
@@ -580,55 +576,55 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
   <!-- ===== SERVICE GRID ===== -->
   <div class="section-title">热门服务</div>
   <div class="service-grid">
-    <a class="service-card" data-dom-id="svc-waterproof">
+    <a class="service-card" data-dom-id="svc-waterproof" data-target-page="page-client-service-detail">
       <div class="icon-circle">
         <svg viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path></svg>
       </div>
       <span class="service-name">防水维修</span>
     </a>
-    <a class="service-card" data-dom-id="svc-appliance">
+    <a class="service-card" data-dom-id="svc-appliance" data-target-page="page-client-service-detail">
       <div class="icon-circle">
         <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
       </div>
       <span class="service-name">家电维修</span>
     </a>
-    <a class="service-card" data-dom-id="svc-pipe">
+    <a class="service-card" data-dom-id="svc-pipe" data-target-page="page-client-service-detail">
       <div class="icon-circle">
         <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
       </div>
       <span class="service-name">管道疏通</span>
     </a>
-    <a class="service-card" data-dom-id="svc-lock">
+    <a class="service-card" data-dom-id="svc-lock" data-target-page="page-client-service-detail">
       <div class="icon-circle">
         <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
       </div>
       <span class="service-name">开锁换锁</span>
     </a>
-    <a class="service-card" data-dom-id="svc-cleaning">
+    <a class="service-card" data-dom-id="svc-cleaning" data-target-page="page-client-service-detail">
       <div class="icon-circle">
         <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
       </div>
       <span class="service-name">家政清洁</span>
     </a>
-    <a class="service-card" data-dom-id="svc-wall">
+    <a class="service-card" data-dom-id="svc-wall" data-target-page="page-client-service-detail">
       <div class="icon-circle">
         <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
       </div>
       <span class="service-name">墙面翻新</span>
     </a>
-    <a class="service-card" data-dom-id="svc-furniture">
+    <a class="service-card" data-dom-id="svc-furniture" data-target-page="page-client-service-detail">
       <div class="icon-circle">
         <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
       </div>
       <span class="service-name">家具维修</span>
     </a>
-    <a class="service-card" data-dom-id="svc-install">
+    <a class="service-card" data-dom-id="svc-install" data-target-page="page-client-service-detail">
       <div class="icon-circle">
         <svg viewBox="0 0 24 24"><path d="M12 22V8"></path><path d="M5 12H2a10 10 0 0 0 20 0h-3"></path><path d="M8 8a4 4 0 0 1 8 0"></path><path d="M6 12v0"></path><path d="M18 12v0"></path></svg>
       </div>
       <span class="service-name">电器安装</span>
     </a>
-    <a class="service-card" data-dom-id="svc-more">
+    <a class="service-card" data-dom-id="svc-more" data-target-page="page-client-service">
       <div class="icon-circle">
         <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
       </div>
@@ -637,7 +633,7 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
   </div>
 
   <!-- ===== AI ASSISTANT CARD ===== -->
-  <div class="ai-card">
+  <div class="ai-card" data-dom-id="home-ai-card" data-target-page="page-client-chat">
     <div class="ai-icon">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
         <rect x="4" y="8" width="16" height="12" rx="4"></rect>
@@ -652,7 +648,7 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
       <div class="ai-title">AI 智能助手</div>
       <div class="ai-desc">描述问题，智能匹配最优方案</div>
     </div>
-    <button class="btn-neu-primary">去问问</button>
+    <button class="btn-neu-primary" data-dom-id="home-ai-open" data-target-page="page-client-chat">去问问</button>
   </div>
 
   <!-- ===== RECOMMENDED MASTERS ===== -->
@@ -660,15 +656,15 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
 
   <!-- ===== CATEGORY CHIPS ===== -->
   <div class="chips-row" style="height: 44px;">
-    <span class="chip chip-active" style="padding-top: 1px; padding-bottom: 1px;">全部</span>
-    <span class="chip" style="padding-top: 1px; padding-bottom: 1px;">防水维修</span>
-    <span class="chip" style="padding-top: 1px; padding-bottom: 1px;">漏水检测</span>
-    <span class="chip" style="padding-top: 1px; padding-bottom: 1px;">水电改造</span>
-    <span class="chip" style="padding-top: 1px; padding-bottom: 1px;">清洁服务</span>
-    <span class="chip" style="padding-top: 1px; padding-bottom: 1px;">厨房改造</span>
+    <span class="chip chip-active" style="padding-top: 1px; padding-bottom: 1px;" data-dom-id="home-worker-filter-all" data-action="filter-workers-all">全部</span>
+    <span class="chip" style="padding-top: 1px; padding-bottom: 1px;" data-dom-id="home-worker-filter-waterproof" data-action="filter-workers-waterproof">防水维修</span>
+    <span class="chip" style="padding-top: 1px; padding-bottom: 1px;" data-dom-id="home-worker-filter-leak" data-action="filter-workers-leak">漏水检测</span>
+    <span class="chip" style="padding-top: 1px; padding-bottom: 1px;" data-dom-id="home-worker-filter-electric" data-action="filter-workers-electric">水电改造</span>
+    <span class="chip" style="padding-top: 1px; padding-bottom: 1px;" data-dom-id="home-worker-filter-cleaning" data-action="filter-workers-cleaning">清洁服务</span>
+    <span class="chip" style="padding-top: 1px; padding-bottom: 1px;" data-dom-id="home-worker-filter-kitchen" data-action="filter-workers-kitchen">厨房改造</span>
   </div>
 
-  <div class="recommend-card">
+  <div class="recommend-card" data-dom-id="home-worker-zhang" data-target-page="page-client-worker-detail">
     <div class="avatar">
       <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
     </div>
@@ -678,7 +674,7 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
     </div>
     <div class="recommend-price">&yen;80起</div>
   </div>
-  <div class="recommend-card">
+  <div class="recommend-card" data-dom-id="home-worker-li" data-target-page="page-client-worker-detail">
     <div class="avatar">
       <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
     </div>
@@ -692,7 +688,7 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
   <!-- ===== RECOMMENDED SERVICES ===== -->
   <div class="section-title">推荐服务</div>
   <div class="rec-scroll">
-    <div class="rec-card">
+    <div class="rec-card" data-dom-id="home-service-waterproof" data-target-page="page-client-service-detail">
       <div class="rec-img" style="background:var(--brand);"><span class="rec-img-label">防水维修</span></div>
       <div class="rec-title">防水维修</div>
       <div class="rec-meta">
@@ -701,10 +697,10 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
       </div>
       <div class="rec-bottom">
         <div class="rec-price"><span class="currency">&yen;</span><span class="amount">128</span></div>
-        <button class="btn-neu-primary">预约</button>
+        <button class="btn-neu-primary" data-dom-id="home-book-waterproof" data-target-page="page-client-publish">预约</button>
       </div>
     </div>
-    <div class="rec-card">
+    <div class="rec-card" data-dom-id="home-service-electric" data-target-page="page-client-service-detail">
       <div class="rec-img" style="background:var(--accent);"><span class="rec-img-label">水电维修</span></div>
       <div class="rec-title">水电维修</div>
       <div class="rec-meta">
@@ -713,10 +709,10 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
       </div>
       <div class="rec-bottom">
         <div class="rec-price"><span class="currency">&yen;</span><span class="amount">88</span></div>
-        <button class="btn-neu-primary">预约</button>
+        <button class="btn-neu-primary" data-dom-id="home-book-electric" data-target-page="page-client-publish">预约</button>
       </div>
     </div>
-    <div class="rec-card">
+    <div class="rec-card" data-dom-id="home-service-pipe" data-target-page="page-client-service-detail">
       <div class="rec-img" style="background:var(--green);"><span class="rec-img-label">管道疏通</span></div>
       <div class="rec-title">管道疏通</div>
       <div class="rec-meta">
@@ -725,26 +721,26 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
       </div>
       <div class="rec-bottom">
         <div class="rec-price"><span class="currency">&yen;</span><span class="amount">68</span></div>
-        <button class="btn-neu-primary">预约</button>
+        <button class="btn-neu-primary" data-dom-id="home-book-pipe" data-target-page="page-client-publish">预约</button>
       </div>
     </div>
   </div>
 
   <!-- ===== FLOATING TAB BAR ===== -->
   <nav class="tab-bar" data-mobile-nav="global">
-  <a class="tab-item" data-active="true" data-dom-id="nav-home" data-nav-key="home" aria-label="首页">
+  <a class="tab-item" data-active="true" data-dom-id="nav-home" data-nav-key="home" data-target-page="page-client-home-glass-neu-contrast-1" aria-label="首页">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
     <span class="tab-label whitespace-nowrap">首页</span>
   </a>
-  <a class="tab-item" data-dom-id="nav-publish" data-nav-key="publish" aria-label="发布">
+  <a class="tab-item" data-dom-id="nav-publish" data-nav-key="publish" data-target-page="page-client-publish" aria-label="发布">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
     <span class="tab-label whitespace-nowrap">发布</span>
   </a>
-  <a class="tab-item" data-dom-id="nav-orders" data-nav-key="orders" aria-label="订单">
+  <a class="tab-item" data-dom-id="nav-orders" data-nav-key="orders" data-target-page="page-client-orders" aria-label="订单">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
     <span class="tab-label whitespace-nowrap">订单</span>
   </a>
-  <a class="tab-item" data-dom-id="nav-mine" data-nav-key="mine" aria-label="我的">
+  <a class="tab-item" data-dom-id="nav-mine" data-nav-key="mine" data-target-page="page-client-mine" aria-label="我的">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
     <span class="tab-label whitespace-nowrap">我的</span>
   </a>

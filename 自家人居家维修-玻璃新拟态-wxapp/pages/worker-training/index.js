@@ -9,11 +9,10 @@ const TABS = [
   { key: 'skill', name: '技能提升' }
 ]
 
-const MOCK_BENEFITS = [
-  { prefix: '学分达60分，解锁高客单价订单', highlight: '', suffix: '' },
-  { prefix: '学分达100分，', highlight: '平台抽成降低1%', suffix: '' },
-  { prefix: '学分达150分，享优先派单权益', highlight: '', suffix: '' },
-  { prefix: '完成全部课程，获"金牌师傅"认证标识', highlight: '', suffix: '' }
+const LEARNING_NOTES = [
+  { prefix: '课程进度与学分由平台学习记录实时统计', highlight: '', suffix: '' },
+  { prefix: '完成课程后可参加对应考试', highlight: '', suffix: '' },
+  { prefix: '实际接单资格与结算规则以服务端结果为准', highlight: '', suffix: '' }
 ]
 
 Page({
@@ -25,13 +24,11 @@ Page({
       credit: 0,
       completedCount: 0,
       totalCourses: 0,
-      creditTarget: app.globalData.useMock ? 100 : '—',
-      creditPercent: 0,
-      creditRemain: app.globalData.useMock ? 100 : '—'
+      creditPercent: 0
     },
     courses: [],
     records: [],
-    benefits: app.globalData.useMock ? MOCK_BENEFITS : [],
+    benefits: LEARNING_NOTES,
     icons: {}
   },
 
@@ -71,23 +68,26 @@ Page({
         const r = recordMap[c.id]
         const status = r ? r.status : 'not_started'
         const progress = (status === 'completed' || status === 'passed' || status === 'failed') ? 100 : 0
-        return Object.assign({}, c, { progress: c.progress != null ? c.progress : progress, learnStatus: status })
+        return Object.assign({}, c, {
+          progress: c.progress != null ? c.progress : progress,
+          learnStatus: status,
+          durationText: c.duration_minutes != null ? (c.duration_minutes + '分钟') : '时长未配置',
+          creditText: c.credits != null ? (c.credits + '学分') : '学分未配置'
+        })
       })
-      const completedCount = coursesList.filter(c => c && c.progress >= 100).length
+      const completedCount = stats && stats.completed_courses != null
+        ? Number(stats.completed_courses)
+        : coursesList.filter(c => c && c.progress >= 100).length
       const totalCourses = coursesList.length
-      const credit = (stats && (stats.total_credits != null ? stats.total_credits : (stats.credit || stats.completedCount))) || 0
-      const creditTarget = app.globalData.useMock ? 100 : '—'
-      const creditPercent = app.globalData.useMock ? Math.min(100, Math.round((credit / 100) * 100)) : 0
-      const creditRemain = app.globalData.useMock ? Math.max(0, 100 - credit) : '—'
+      const credit = Number((stats && stats.total_credits) || 0)
+      const creditPercent = totalCourses ? Math.min(100, Math.round(completedCount / totalCourses * 100)) : 0
       this.setData({
         courses: coursesList,
         stats: {
           credit,
           completedCount,
           totalCourses,
-          creditTarget,
-          creditPercent,
-          creditRemain
+          creditPercent
         },
         records: records || []
       })
@@ -97,7 +97,22 @@ Page({
   },
 
   onViewRecords() {
-    wx.showToast({ title: '查看学习记录', icon: 'none' })
+    const statusMap = {
+      studying: '学习中',
+      completed: '已完成',
+      passed: '考试通过',
+      failed: '考试未通过'
+    }
+    const lines = this.data.records.slice(0, 10).map(record => {
+      const course = record.course || {}
+      return (course.title || ('课程 #' + record.course_id)) + '：' + (statusMap[record.status] || record.status || '状态未知')
+    })
+    wx.showModal({
+      title: '学习记录',
+      content: lines.length ? lines.join('\n') : '暂无学习记录',
+      showCancel: false,
+      confirmColor: '#2D6CDF'
+    })
   },
 
   onBack() {

@@ -2,7 +2,7 @@
 
 安全说明：
 - 所有 admin 路由均通过 get_current_admin 依赖进行 JWT 鉴权
-- 高危操作（create_admin）额外要求 super_admin 角色
+- 账号、认证、订单状态与资金相关写操作要求 super_admin 角色
 - 不再接受 X-Admin-Id Header 这种弱鉴权方式
 - 登录接口强制限流防爆破
 """
@@ -12,12 +12,18 @@ from sqlalchemy.orm import Session
 from typing import Optional
 
 from app.database import get_db
-from app.dependencies import get_current_admin, require_super_admin
+from app.dependencies import (
+    get_current_admin,
+    get_current_admin_for_password_change,
+    require_super_admin,
+)
 from app.models.admin import Admin
 from app.schemas.admin import (
     AdminCreateRequest,
+    AdminChangePasswordRequest,
     AdminLoginRequest,
     AdminLoginResponse,
+    AdminResetPasswordRequest,
     DashboardResponse,
     ToggleActiveRequest,
     UpdateOrderStatusRequest,
@@ -42,6 +48,7 @@ async def admin_login(request: Request, req: AdminLoginRequest, db: Session = De
         token=result["token"],
         admin_id=result["admin_id"],
         role=result["role"],
+        must_change_password=result["must_change_password"],
     ).model_dump()
     return success(data=resp, message="登录成功")
 
@@ -73,6 +80,17 @@ async def admin_logout(
     return success(message="登出成功")
 
 
+@router.put("/password")
+async def change_password(
+    req: AdminChangePasswordRequest,
+    admin: Admin = Depends(get_current_admin_for_password_change),
+    db: Session = Depends(get_db),
+):
+    """验证旧密码后改密，并立即让全部旧管理员 token 失效。"""
+    admin_service.change_admin_password(db, admin, req.current_password, req.new_password)
+    return success(message="密码已修改，请重新登录")
+
+
 @router.post("/create")
 async def create_admin(
     req: AdminCreateRequest,
@@ -89,6 +107,53 @@ async def create_admin(
         "is_active": new_admin.is_active,
     }
     return success(data=data, message="创建成功")
+
+
+@router.get("/accounts")
+async def list_admin_accounts(
+    page: int = Query(1, ge=1),
+    size: int = Query(50, ge=1, le=200),
+    admin: Admin = Depends(require_super_admin),
+    db: Session = Depends(get_db),
+):
+    return success(data=admin_service.list_admin_accounts(db, page, size))
+
+
+@router.get("/audit-logs")
+async def list_admin_audit_logs(
+    page: int = Query(1, ge=1),
+    size: int = Query(50, ge=1, le=200),
+    action: Optional[str] = Query(None, max_length=64),
+    admin: Admin = Depends(get_current_admin),
+    db: Session = Depends(get_db),
+):
+    """后台持久化审计日志；auditor 可读但不可执行任何写操作。"""
+    return success(data=admin_service.list_admin_audits(db, page, size, action))
+
+
+@router.put("/accounts/{admin_id}/active")
+async def set_admin_active(
+    admin_id: int,
+    req: ToggleActiveRequest,
+    admin: Admin = Depends(require_super_admin),
+    db: Session = Depends(get_db),
+):
+    target = admin_service.set_admin_active(db, admin_id, req.is_active, admin)
+    return success(data={"id": target.id, "is_active": target.is_active}, message="状态已更新")
+
+
+@router.put("/accounts/{admin_id}/password")
+async def reset_admin_password(
+    admin_id: int,
+    req: AdminResetPasswordRequest,
+    admin: Admin = Depends(require_super_admin),
+    db: Session = Depends(get_db),
+):
+    target = admin_service.reset_admin_password(db, admin_id, req.new_password, admin)
+    return success(
+        data={"id": target.id, "must_change_password": True},
+        message="密码已重置，该管理员下次登录必须改密",
+    )
 
 
 # ===== Dashboard =====
@@ -114,7 +179,14 @@ async def list_users(
     db: Session = Depends(get_db),
 ):
     """用户列表（分页、搜索、状态筛选）"""
-    result = admin_service.list_users(db, page=page, size=size, keyword=keyword, status=status)
+    result = admin_service.list_users(
+        db,
+        page=page,
+        size=size,
+        keyword=keyword,
+        status=status,
+        reveal_sensitive=admin.role == "super_admin",
+    )
     return success(data=result)
 
 
@@ -122,11 +194,11 @@ async def list_users(
 async def toggle_user_active(
     user_id: int,
     req: ToggleActiveRequest,
-    admin: Admin = Depends(get_current_admin),
+    admin: Admin = Depends(require_super_admin),
     db: Session = Depends(get_db),
 ):
     """启用/禁用用户"""
-    result = admin_service.toggle_user_active(db, user_id, req.is_active)
+    result = admin_service.toggle_user_active(db, user_id, req.is_active, admin.id)
     return success(data=result, message="状态已更新")
 
 
@@ -143,7 +215,13 @@ async def list_workers(
 ):
     """师傅列表"""
     result = admin_service.list_workers(
-        db, page=page, size=size, certified=certified, is_online=is_online, keyword=keyword
+        db,
+        page=page,
+        size=size,
+        certified=certified,
+        is_online=is_online,
+        keyword=keyword,
+        reveal_sensitive=admin.role == "super_admin",
     )
     return success(data=result)
 
@@ -152,12 +230,23 @@ async def list_workers(
 async def update_worker_certified(
     worker_id: int,
     req: WorkerCertifyRequest,
-    admin: Admin = Depends(get_current_admin),
+    admin: Admin = Depends(require_super_admin),
     db: Session = Depends(get_db),
 ):
     """更新师傅认证状态 0/1/2/3"""
-    result = admin_service.update_worker_certified(db, worker_id, req.certified)
+    result = admin_service.update_worker_certified(db, worker_id, req.certified, admin.id)
     return success(data=result, message="认证状态已更新")
+
+
+@router.get("/workers/{worker_id}/certification")
+def get_worker_certification(
+    worker_id: int,
+    admin: Admin = Depends(require_super_admin),
+    db: Session = Depends(get_db),
+):
+    """读取认证申请；证件只返回十分钟有效的私有对象签名 URL。"""
+    result = admin_service.get_worker_certification(db, worker_id)
+    return success(data=result)
 
 
 # ===== 订单管理 =====
@@ -179,12 +268,16 @@ async def list_orders(
 async def update_order_status(
     order_id: int,
     req: UpdateOrderStatusRequest,
-    admin: Admin = Depends(get_current_admin),
+    admin: Admin = Depends(require_super_admin),
     db: Session = Depends(get_db),
 ):
     """管理员修改订单状态"""
     result = admin_service.update_order_status_admin(
-        db, order_id, req.status, req.remark, operator_id=admin.id
+        db,
+        order_id,
+        req.status,
+        operator_id=admin.id,
+        remark=req.remark,
     )
     return success(data=result, message="订单状态已更新")
 
@@ -194,7 +287,7 @@ async def update_order_status(
 async def list_pending_withdraws(
     page: int = Query(1, ge=1),
     size: int = Query(20, ge=1, le=200),
-    admin: Admin = Depends(get_current_admin),
+    admin: Admin = Depends(require_super_admin),
     db: Session = Depends(get_db),
 ):
     """待审核提现列表"""

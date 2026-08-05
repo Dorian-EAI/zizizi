@@ -1,0 +1,14 @@
+<view class="phone-page design-detail-page" data-page-id="page-client-ticket-submit">
+  <view class="status-bar"><text>9:41</text><text class="status-icons">● WiFi 100%</text></view>
+  <view class="topbar"><view class="icon-button design-button" data-route="/pages/client-customer-service/index" bindtap="onNavigate">←</view><view class="tag-h1">提交工单</view><text></text></view>
+  <view class="page-body">
+    <view class="section-title"><text class="tag-strong">工单状态</text><text class="badge warning">未提交</text></view>
+    <view class="notice info">订单异常可先关联真实订单，客服会据此核对服务上下文。联系方式由当前登录账号安全提供。</view>
+    <view class="section"><view class="section-title"><text class="tag-strong">问题类型</text><text>单选</text></view><view class="chips"><view wx:for="{{types}}" wx:key="key" class="chip {{selectedType === item.key ? 'active' : ''}} design-button" data-key="{{item.key}}" bindtap="onType">{{item.name}}</view></view></view>
+    <view class="section"><view class="field"><text class="tag-label">工单标题 · {{title.length}}/200</text><input class="input" placeholder="用一句话概括问题" maxlength="200" value="{{title}}" bindinput="onTitleInput" /></view></view>
+    <view class="section"><view class="field"><text class="tag-label">问题描述 · {{descriptionLength}}/5000</text><textarea class="textarea" placeholder="说明发生时间、当前状态和期望处理结果" maxlength="5000" value="{{description}}" bindinput="onDescriptionInput" /></view></view>
+    <view class="section"><view class="section-title"><text class="tag-strong">上传图片</text><text>最多 6 张</text></view><view class="upload-grid"><view class="upload-tile" wx:for="{{images}}" wx:key="*this"><image src="{{item}}" mode="aspectFill" data-index="{{index}}" bindtap="onPreview" /><text data-index="{{index}}" catchtap="onRemoveImage">×</text></view><view class="upload-tile design-button" wx:if="{{images.length < 6}}" bindtap="onChooseImages">＋</view></view></view>
+    <view class="section"><view class="card list-card"><view class="list-row design-button" bindtap="onChooseOrder"><text class="row-icon">单</text><view class="row-main"><view class="row-title">关联订单</view><view class="row-copy">{{relatedOrderText}}</view></view><text class="badge {{relatedOrderId ? 'success' : 'info'}}">{{relatedOrderId ? '已关联' : '可选'}}</text><text class="chevron">›</text></view><view class="divider"></view><view class="field"><text class="tag-label">也可输入订单 ID</text><input class="input" type="number" placeholder="选填" value="{{relatedOrderId}}" bindinput="onOrderInput" /></view></view></view>
+  </view>
+  <view class="fixed-actions"><view class="btn primary design-button" bindtap="onSubmit">{{submitting ? (uploading ? '上传中…' : '提交中…') : '提交工单'}}</view></view>
+</view>

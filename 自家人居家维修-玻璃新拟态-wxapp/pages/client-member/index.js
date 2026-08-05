@@ -2,11 +2,6 @@
 const app = getApp()
 const { buildIcon, COLORS } = require('../../utils/icons')
 
-const REAL_GROWTH_TASKS = [
-  { key: 'first', name: '完成首单', desc: '下单并完成首笔服务', reward: 100, icon: 'shield', color: 'teal' },
-  { key: 'review', name: '评价订单', desc: '完成订单并发表评价', reward: 20, icon: 'star', color: 'amber' }
-]
-
 Page({
   data: {
     statusBarHeight: 20,
@@ -25,16 +20,12 @@ Page({
   },
 
   onLoad() {
-    const tasks = REAL_GROWTH_TASKS.map(task => Object.assign({}, task, {
-      iconUrl: buildIcon(task.icon, this._benefitColor(task.color))
-    }))
     this.setData({
       statusBarHeight: app.globalData.statusBarHeight || 20,
       icons: {
         back: buildIcon('chevronLeft', COLORS.text1),
         user: buildIcon('user', COLORS.brand)
-      },
-      tasks
+      }
     })
   },
 
@@ -142,6 +133,7 @@ Page({
       }).filter(Boolean)
       const icon = levelNumber >= 3 ? 'star' : 'award'
       const color = levelNumber >= 3 ? 'blue' : (levelNumber >= 2 ? 'accent' : '#9CA3AF')
+      const tierTone = levelNumber >= 3 ? 'diamond' : (levelNumber >= 2 ? 'gold' : 'silver')
       return {
         key: String(level.level),
         name: level.level_name || ('等级 ' + level.level),
@@ -149,6 +141,7 @@ Page({
         current: Number(currentLevel) === levelNumber,
         icon,
         color,
+        tierTone,
         iconUrl: buildIcon(icon, this._tierColor(color))
       }
     })
@@ -165,7 +158,7 @@ Page({
   },
 
   _benefitColor(color) {
-    const map = { teal: COLORS.brand, amber: COLORS.accent, green: COLORS.success, blue: '#5A8FAD', purple: '#5856D6', red: COLORS.danger }
+    const map = { teal: COLORS.brand, amber: COLORS.accent, green: COLORS.green, blue: '#5A8FAD', purple: COLORS.accentDark, red: COLORS.danger }
     return map[color] || COLORS.brand
   },
 

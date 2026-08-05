@@ -1,6 +1,6 @@
 <!-- pages/worker-training/index.wxml — 师傅培训中心 玻璃新拟态（像素级复刻 worker-training.html） -->
 <view class="page">
-  <!-- 背景装饰光斑：blue-sage 径向渐变 -->
+  <!-- 背景装饰光斑：blue-gold 径向渐变 -->
   <view class="blob" style="top: -40px; right: -60px; width: 280px; height: 280px; background: radial-gradient(circle, var(--brand) 0%, transparent 70%);"></view>
   <view class="blob" style="top: 420px; left: -80px; width: 240px; height: 240px; background: radial-gradient(circle, var(--sage) 0%, transparent 70%);"></view>
 
@@ -51,11 +51,11 @@
           <view class="th-progress-fill" style="width:{{stats.creditPercent}}%"></view>
         </view>
         <!-- HTML: th-progress-text 12px/700 brand -->
-        <text class="th-progress-text numeric">{{stats.credit}}/{{stats.creditTarget}}</text>
+        <text class="th-progress-text numeric">{{stats.completedCount}}/{{stats.totalCourses}}</text>
       </view>
 
       <!-- HTML: th-hint 12px/500 -->
-      <text class="th-hint">再修{{stats.creditRemain}}分享受抽成降1%</text>
+      <text class="th-hint">课程完成进度，以服务端学习记录为准</text>
     </view>
 
     <!-- ===== 培训课程 ===== -->
@@ -88,7 +88,7 @@
               <!-- HTML: course-name 15px/600 -->
               <text class="course-name">{{item.title}}</text>
               <!-- HTML: course-meta 12px/500 -->
-              <text class="course-meta">{{item.duration}}分钟 · {{item.credit || 10}}学分</text>
+              <text class="course-meta">{{item.durationText}} · {{item.creditText}}</text>
               <!-- HTML: course-progress margin-top:6px; track 5px -->
               <view class="course-progress" wx:if="{{item.progress > 0 && item.progress < 100}}">
                 <view class="course-progress-track">
@@ -106,19 +106,22 @@
               <view class="course-status learning" wx:elif="{{item.progress > 0}}">
                 <text>学习中 {{item.progress}}%</text>
               </view>
+              <view class="course-status learning" wx:elif="{{item.learnStatus === 'studying'}}">
+                <text>学习中</text>
+              </view>
               <view class="course-status todo" wx:else>
                 <text>未开始</text>
               </view>
 
               <view
                 class="btn-neu-primary course-btn"
-                wx:if="{{!item.progress || item.progress === 0}}"
+                wx:if="{{item.learnStatus === 'not_started'}}"
                 data-id="{{item.id}}"
                 catchtap="onStartCourse"
               >开始学习</view>
               <view
                 class="btn-neu-primary course-btn"
-                wx:elif="{{item.progress < 100}}"
+                wx:elif="{{item.learnStatus === 'studying'}}"
                 data-id="{{item.id}}"
                 catchtap="onContinueCourse"
               >继续学习</view>
@@ -134,16 +137,16 @@
       </view>
     </view>
 
-    <!-- ===== 学分权益 ===== -->
+    <!-- ===== 学习说明 ===== -->
     <view class="section">
-      <view class="section-title-row"><text>学分权益</text></view>
+      <view class="section-title-row"><text>学习说明</text></view>
       <!-- HTML: benefit-card padding:18px -->
       <view class="card benefit-card">
         <!-- HTML: benefit-desc 14px/600 border-bottom -->
-        <text class="benefit-desc">累计学分达100分，平台抽成降低1%，多学多得</text>
+        <text class="benefit-desc">学分只反映已记录的课程学习结果</text>
         <!-- HTML: check-list gap:11px -->
         <view class="check-list">
-          <view class="check-item" wx:for="{{benefits}}" wx:key="text">
+          <view class="check-item" wx:for="{{benefits}}" wx:key="prefix">
             <view class="check-mark">
               <image src="{{icons.checkGreen}}" mode="aspectFit" class="check-mark-icon" lazy-load="{{false}}" />
             </view>

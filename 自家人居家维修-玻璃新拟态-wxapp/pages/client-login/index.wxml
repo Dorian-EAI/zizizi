@@ -1,0 +1,46 @@
+<view class="page login-page">
+  <view class="login-hero">
+    <view class="logo-circle">
+      <image class="logo-icon" src="{{icons.home}}" mode="aspectFit" />
+    </view>
+    <text class="app-name">自家人</text>
+    <text class="app-slogan">专业维修 · 安心到家</text>
+  </view>
+
+  <view class="login-content">
+    <text class="welcome-title">欢迎使用自家人</text>
+    <text class="welcome-desc">登录后享受完整服务体验\n发布维修需求，专业师傅极速上门</text>
+
+    <button class="login-option" bindtap="onWechatLogin" loading="{{loggingIn}}" disabled="{{loggingIn}}">
+      <view class="login-option-icon wechat"><text class="wechat-mark">微</text></view>
+      <view class="login-option-text">
+        <text class="login-option-title">微信一键登录</text>
+        <text class="login-option-desc">安全快捷，推荐使用</text>
+      </view>
+      <image class="login-option-arrow" src="{{icons.arrow}}" mode="aspectFit" />
+    </button>
+
+    <button class="login-option" bindtap="onPhoneLogin">
+      <view class="login-option-icon mobile"><image src="{{icons.phone}}" mode="aspectFit" /></view>
+      <view class="login-option-text">
+        <text class="login-option-title">手机号登录</text>
+        <text class="login-option-desc">功能尚未开放，不会跳过微信授权</text>
+      </view>
+      <image class="login-option-arrow" src="{{icons.arrow}}" mode="aspectFit" />
+    </button>
+  </view>
+
+  <view class="agreement-section">
+    <view class="agreement-checkbox {{agreed ? 'checked' : ''}}" bindtap="onToggleAgreement">
+      <image wx:if="{{agreed}}" src="{{icons.check}}" mode="aspectFit" />
+    </view>
+    <view class="agreement-text">
+      <text>已阅读并同意</text>
+      <text class="agreement-link" data-key="agreement" bindtap="onAgreementTap">《用户服务协议》</text>
+      <text>和</text>
+      <text class="agreement-link" data-key="privacy" bindtap="onAgreementTap">《隐私政策》</text>
+    </view>
+  </view>
+
+  <text class="login-footer">自家人 © 2026 版权所有</text>
+</view>

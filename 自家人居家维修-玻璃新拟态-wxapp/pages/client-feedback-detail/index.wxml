@@ -1,0 +1,14 @@
+<view class="phone-page design-detail-page" data-page-id="page-client-feedback-detail">
+  <view class="status-bar"><text>9:41</text><text class="status-icons">● WiFi 100%</text></view>
+  <view class="topbar"><view class="icon-button design-button" data-route="/pages/client-feedback/index" bindtap="onNavigate">←</view><view class="tag-h1">反馈详情</view><text></text></view>
+  <view class="page-body">
+    <view class="notice info" wx:if="{{loading}}">正在同步反馈记录…</view>
+    <view class="empty-state" wx:elif="{{loadError}}"><view class="tag-h3">暂无反馈详情</view><view class="tag-p">{{loadError}}</view><view class="btn secondary design-button" bindtap="loadFeedback">重新加载</view></view>
+    <block wx:elif="{{item}}">
+      <view class="hero"><view class="hero-kicker tag-p">{{item.numberText}}</view><view class="tag-h2">{{item.typeText}}</view><view class="tag-p">提交于 {{item.createdText}}</view><view class="spacer"></view><text class="badge {{item.replied ? 'success' : 'warning'}}">{{item.statusText}}</text></view>
+      <view class="section"><view class="section-title"><text class="tag-strong">我的反馈</text><text class="badge info">{{item.typeText}}</text></view><view class="card"><view class="card-copy tag-p">{{item.content}}</view><view class="upload-grid" wx:if="{{images.length}}"><image class="upload-tile" wx:for="{{images}}" wx:key="*this" data-index="{{index}}" src="{{item}}" mode="aspectFill" bindtap="onPreview" /></view></view></view>
+      <view class="section"><view class="section-title"><text class="tag-strong">官方回复</text></view><view class="card" wx:if="{{item.reply}}"><view class="list-row"><text class="avatar">家</text><view class="row-main"><view class="row-title">自家人客服团队</view><view class="row-copy">{{item.reply}}</view></view></view></view><view class="notice info" wx:else>平台尚未回复，处理结果以服务端状态为准。</view></view>
+    </block>
+  </view>
+  <view class="fixed-actions"><view class="btn primary design-button" data-route="/pages/client-customer-service/index" bindtap="onNavigate">继续咨询客服</view></view>
+</view>

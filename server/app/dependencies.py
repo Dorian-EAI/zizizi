@@ -174,7 +174,7 @@ def get_current_account(
     return account, account_type
 
 
-def get_current_admin(
+def _load_current_admin(
     authorization: Optional[str] = Header(None),
     db: Session = Depends(get_db),
 ) -> Admin:
@@ -215,6 +215,24 @@ def get_current_admin(
     return admin
 
 
+def get_current_admin(
+    authorization: Optional[str] = Header(None),
+    db: Session = Depends(get_db),
+) -> Admin:
+    admin = _load_current_admin(authorization=authorization, db=db)
+    if admin.must_change_password:
+        raise HTTPException(status_code=428, detail="必须先修改管理员初始密码")
+    return admin
+
+
+def get_current_admin_for_password_change(
+    authorization: Optional[str] = Header(None),
+    db: Session = Depends(get_db),
+) -> Admin:
+    """仅修改密码端点使用，允许尚未完成首次改密的有效会话。"""
+    return _load_current_admin(authorization=authorization, db=db)
+
+
 def require_super_admin(
     admin: Admin = Depends(get_current_admin),
 ) -> Admin:
@@ -224,4 +242,13 @@ def require_super_admin(
     """
     if admin.role != "super_admin":
         raise HTTPException(status_code=403, detail="需要超级管理员权限")
+    return admin
+
+
+def require_admin_operator(
+    admin: Admin = Depends(get_current_admin),
+) -> Admin:
+    """允许运营写入角色；auditor 永远只读。"""
+    if admin.role not in {"operator", "super_admin"}:
+        raise HTTPException(status_code=403, detail="审计员账号仅允许只读访问")
     return admin

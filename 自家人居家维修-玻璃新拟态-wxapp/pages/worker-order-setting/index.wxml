@@ -1,0 +1,41 @@
+<!-- AUTO-GENERATED DESIGN VIEW sourceHash=fnv1a-ad473d64; edit source HTML or generator bindings, then rerun. -->
+<view class="phone-page design-detail-page worker-theme" data-dom-id="page-worker-order-setting">
+    <view class="status-bar"><text class="tag-span">9:41</text><text class="status-icons tag-span">●●●</text></view>
+    <view class="topbar">
+      <view class="icon-button design-button" data-dom-id="order-setting-back" data-route="/pages/worker-settings/index" bindtap="onNavigate"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m15%2018-6-6%206-6M9%2012h10%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view>
+      <view class="tag-h1">接单设置</view>
+      <view class="top-action design-button" data-dom-id="order-setting-save-top" data-action="save-order-setting" bindtap="onAction">保存</view>
+    </view>
+    <view class="page-body">
+      <view class="hero">
+        <view class="hero-kicker tag-p">当前状态</view><view class="tag-h2">接单中</view><view class="tag-p">开启后展示符合资质、区域和金额条件的可报价订单，不会自动替你接单。</view>
+        <view class="btn secondary design-button" data-dom-id="order-setting-status" data-action="toggle-order-status" bindtap="onAction">切换为休息中</view>
+      </view>
+
+      <view class="section card">
+        <view class="field"><text class="tag-label">接单偏好</text><view class="select-like design-button" data-dom-id="order-setting-preference" data-action="open-order-preference" bindtap="onAction"><text class="tag-span">高价优先</text><text class="tag-span">⌄</text></view></view>
+        <view class="field"><text for="order-setting-min-price" class="tag-label">最低接单金额 · ¥50</text><input class="input" id="order-setting-min-price" data-dom-id="order-setting-min-amount" data-action="change-min-amount" min="0" max="500" value="50" bindchange="onAction" /></view>
+        <view class="field"><text for="order-setting-distance" class="tag-label">最大服务距离 · 15 km</text><input class="input" id="order-setting-distance" data-dom-id="order-setting-max-distance" data-action="change-max-distance" min="3" max="50" value="15" bindchange="onAction" /></view>
+      </view>
+
+      <view class="section">
+        <view class="section-title"><text class="tag-strong">接单时间段</text><text class="tag-span">按星期配置</text></view>
+        <view class="card list-card">
+          <view class="list-row design-button" data-dom-id="order-setting-weekday" data-route="/pages/worker-time-setting/index?mode=weekday" bindtap="onNavigate"><view class="row-icon tag-span"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%232D6CDF%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20aria-hidden%3D%22true%22%3E%3Crect%20x%3D%223%22%20y%3D%227%22%20width%3D%2218%22%20height%3D%2213%22%20rx%3D%222%22%2F%3E%3Cpath%20d%3D%22M8%207V4h8v3M3%2012h18M10%2012v2h4v-2%22%2F%3E%3C%2Fsvg%3E" style="width:36rpx;height:26rpx" mode="aspectFill" /></view><text class="row-main tag-span"><text class="row-title tag-span">工作日</text><text class="row-copy tag-span">周一至周五</text></text><text class="row-value tag-span">09:00—18:00</text><text class="chevron tag-span">›</text></view>
+          <view class="list-row design-button" data-dom-id="order-setting-weekend" data-route="/pages/worker-time-setting/index?mode=weekend" bindtap="onNavigate"><view class="row-icon tag-span"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%232D6CDF%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20aria-hidden%3D%22true%22%3E%3Crect%20x%3D%223%22%20y%3D%225%22%20width%3D%2218%22%20height%3D%2216%22%20rx%3D%222%22%2F%3E%3Cpath%20d%3D%22M16%203v4M8%203v4M3%2010h18%22%2F%3E%3C%2Fsvg%3E" style="width:36rpx;height:32rpx" mode="aspectFill" /></view><text class="row-main tag-span"><text class="row-title tag-span">周末</text><text class="row-copy tag-span">周六、周日</text></text><text class="row-value tag-span">10:00—17:00</text><text class="chevron tag-span">›</text></view>
+        </view>
+      </view>
+
+      <view class="section card">
+        <view class="section-title"><text class="tag-strong">服务类型筛选</text><text class="tag-span">与资质联动</text></view>
+        <view class="chips">
+          <view class="chip active design-button" data-dom-id="order-setting-type-plumbing" data-action="toggle-order-type" bindtap="onAction">水电维修</view>
+          <view class="chip active design-button" data-dom-id="order-setting-type-drain" data-action="toggle-order-type" bindtap="onAction">管道疏通</view>
+          <view class="chip active design-button" data-dom-id="order-setting-type-waterproof" data-action="toggle-order-type" bindtap="onAction">防水补漏</view>
+          <view class="chip design-button" data-dom-id="order-setting-type-appliance" data-action="toggle-order-type" bindtap="onAction">家电维修</view>
+          <view class="chip design-button" data-dom-id="order-setting-type-cleaning" data-action="toggle-order-type" bindtap="onAction">清洁养护</view>
+        </view>
+      </view>
+    </view>
+    <view class="fixed-actions"><view class="btn primary design-button" data-dom-id="order-setting-save" data-action="save-order-setting" bindtap="onAction">保存接单设置</view></view>
+  </view>

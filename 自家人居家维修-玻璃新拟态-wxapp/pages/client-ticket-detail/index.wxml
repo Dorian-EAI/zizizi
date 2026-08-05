@@ -1,0 +1,16 @@
+<view class="phone-page design-detail-page" data-page-id="page-client-ticket-detail">
+  <view class="status-bar"><text>9:41</text><text class="status-icons">● WiFi 100%</text></view>
+  <view class="topbar"><view class="icon-button design-button" data-route="/pages/client-customer-service/index" bindtap="onNavigate">←</view><view class="tag-h1">工单详情</view><text></text></view>
+  <view class="page-body">
+    <view class="notice info" wx:if="{{loading}}">正在同步工单详情…</view>
+    <view class="empty-state" wx:elif="{{loadError}}"><view class="tag-h3">暂无工单详情</view><view class="tag-p">{{loadError}}</view><view class="btn secondary design-button" bindtap="loadTicket">重新加载</view></view>
+    <block wx:elif="{{ticket}}">
+      <view class="hero"><view class="hero-kicker tag-p">{{ticket.ticket_no}}</view><view class="tag-h2">{{ticket.title}}</view><view class="tag-p">提交于 {{ticket.createdText}} · 最近更新 {{ticket.updatedText}}</view><view class="spacer"></view><text class="badge {{ticket.status === 'closed' || ticket.status === 'resolved' ? 'success' : 'warning'}}">{{ticket.statusText}}</text></view>
+      <view class="section"><view class="section-title"><text class="tag-strong">工单内容</text><text class="badge info">{{ticket.typeText}}</text></view><view class="card"><view class="card-copy tag-p">{{ticket.description}}</view><view class="divider"></view><view class="list-row"><view class="row-main"><view class="row-title">关联订单</view></view><text class="row-value">{{ticket.relatedOrderText}}</text></view><view class="upload-grid" wx:if="{{evidenceUrls.length}}"><image class="upload-tile" wx:for="{{evidenceUrls}}" wx:key="*this" src="{{item}}" mode="aspectFill" data-index="{{index}}" bindtap="onPreview" /></view></view></view>
+      <view class="section" wx:if="{{ticket.resolution}}"><view class="section-title"><text class="tag-strong">处理结果</text><text>{{ticket.resolvedText}}</text></view><view class="notice info">{{ticket.resolution}}</view></view>
+      <view class="section"><view class="section-title"><text class="tag-strong">对话记录</text><text class="badge info">异步回复</text></view><view class="card list-card" wx:if="{{replies.length}}"><view class="list-row" wx:for="{{replies}}" wx:key="id"><text class="avatar">{{item.avatarText}}</text><view class="row-main"><view class="row-title">{{item.displayName}}</view><view class="row-copy">{{item.content}}</view></view><text class="row-value">{{item.createdText}}</text></view></view><view class="empty-state" wx:else><view class="tag-h3">暂无回复</view><view class="tag-p">工单已记录，客服回复后将在这里同步。</view></view></view>
+      <view class="notice info">工单为异步服务，页面不会虚假标注“客服在线”或承诺固定回复时间。</view>
+    </block>
+  </view>
+  <view class="fixed-actions" wx:if="{{ticket && canReply}}"><input class="input" placeholder="输入补充信息" value="{{replyText}}" maxlength="2000" bindinput="onReplyInput" /><view class="btn primary design-button" style="flex:0 0 172rpx" bindtap="onSend">{{sending ? '发送中' : '发送'}}</view></view>
+</view>

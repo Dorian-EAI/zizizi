@@ -3,6 +3,14 @@
 // 后端响应: { code, msg, data }
 const http = require('../utils/request')
 
+function financialRequestOptions(idempotencyKey) {
+  const key = String(idempotencyKey || '').trim()
+  if (!/^[A-Za-z0-9][A-Za-z0-9._:-]{7,127}$/.test(key)) {
+    throw new Error('资金操作缺少有效的幂等键')
+  }
+  return { header: { 'Idempotency-Key': key } }
+}
+
 module.exports = {
   // ==================== 认证 / 用户 ====================
   auth: {
@@ -42,7 +50,7 @@ module.exports = {
     search:   (keyword) => http.get('/api/services/search', { keyword }),
     hotTags:  () => http.get('/api/services/hot-tags'),
     platformStats: () => http.get('/api/services/platform-stats'),
-    workers:  () => http.get('/api/services/workers/recommend'),
+    workers:  (params) => http.get('/api/services/workers/recommend', params),
     workerDetail: (id) => http.get('/api/services/workers/' + id)
   },
 
@@ -53,6 +61,9 @@ module.exports = {
     available:     (params) => http.get('/api/orders/available', params),
     workerList:    (status) => http.get('/api/orders/worker', { status }),
     detail:        (id) => http.get('/api/orders/' + id),
+    paymentQuote:  (id, couponId) => http.get('/api/orders/' + id + '/payment-quote', {
+      coupon_id: couponId || undefined
+    }),
     workerDetail:  (id) => http.get('/api/orders/worker/' + id),
     // 竞价
     bidding:       (orderId, data) => http.post('/api/orders/' + orderId + '/bidding', data),
@@ -68,7 +79,7 @@ module.exports = {
   // ==================== 评价 ====================
   reviews: {
     list:        (params) => http.get('/api/reviews', params),
-    stats:       () => http.get('/api/reviews/stats'),
+    stats:       (params) => http.get('/api/reviews/stats', params),
     // 后端 WorkerReplyRequest 期望 { reply }，URL 不变
     reply:       (reviewId, content) => http.post('/api/reviews/' + reviewId + '/reply', { reply: content }),
     like:        (reviewId) => http.post('/api/reviews/' + reviewId + '/like'),
@@ -88,20 +99,42 @@ module.exports = {
   wallet: {
     detail:       () => http.get('/api/wallet'),
     transactions: (params) => http.get('/api/wallet/transactions', params),
-    recharge:     (amount) => http.post('/api/wallet/recharge', { amount }),
-    withdraw:     (amount) => http.post('/api/wallet/withdraw', { amount }),
-    pay:          (data) => http.post('/api/wallet/pay', data),
-    refund:       (data) => http.post('/api/wallet/refund', data),
+    recharge:     (amount, idempotencyKey) => http.post(
+      '/api/wallet/recharge',
+      { amount },
+      financialRequestOptions(idempotencyKey)
+    ),
+    withdraw:     (amount, idempotencyKey) => http.post(
+      '/api/wallet/withdraw',
+      { amount },
+      financialRequestOptions(idempotencyKey)
+    ),
+    pay:          (data, idempotencyKey) => http.post(
+      '/api/wallet/pay',
+      data,
+      financialRequestOptions(idempotencyKey)
+    ),
+    refund:       (data, idempotencyKey) => http.post(
+      '/api/wallet/refund',
+      data,
+      financialRequestOptions(idempotencyKey)
+    ),
     offlineConfirm: (orderNo) => http.post('/api/wallet/offline/confirm', { order_no: orderNo })
   },
 
   // ==================== 微信支付 ====================
   wxpay: {
-    rechargeJsapi: (amount) => http.post('/api/wxpay/recharge/jsapi', { amount }),
-    orderJsapi:    (orderNo, couponId) => http.post('/api/wxpay/order/jsapi', {
+    rechargeJsapi: (amount, idempotencyKey) => http.post(
+      '/api/wxpay/recharge/jsapi',
+      { amount },
+      financialRequestOptions(idempotencyKey)
+    ),
+    paymentStatus: (paymentNo) => http.get('/api/wxpay/payments/' + encodeURIComponent(paymentNo)),
+    orderJsapi:    (orderNo, couponId, idempotencyKey, orderVersion) => http.post('/api/wxpay/order/jsapi', {
       order_no: orderNo,
-      coupon_id: couponId
-    })
+      coupon_id: couponId,
+      order_version: orderVersion
+    }, financialRequestOptions(idempotencyKey))
   },
 
   // ==================== 优惠券 ====================
@@ -127,7 +160,7 @@ module.exports = {
 
   // ==================== 消息中心 ====================
   messages: {
-    list:        () => http.get('/api/messages'),
+    list:        (params) => http.get('/api/messages', params),
     unreadCount: () => http.get('/api/messages/unread-count'),
     markRead:    (msgId) => http.put('/api/messages/' + msgId + '/read'),
     markAllRead: () => http.put('/api/messages/read-all'),
@@ -262,16 +295,16 @@ module.exports = {
 
   // ==================== 地图服务 ====================
   map: {
-    distance:       (params) => http.get('/api/map/distance', params),
-    reverseGeocode: (lat, lng) => http.get('/api/map/reverse-geocode', { lat, lng }),
-    geocode:        (address) => http.get('/api/map/geocode', { address }),
+    distance:       (params) => http.post('/api/map/distance', params),
+    reverseGeocode: (lat, lng) => http.post('/api/map/reverse-geocode', { lat, lng }),
+    geocode:        (address, city = '') => http.post('/api/map/geocode', { address, city }),
     config:         () => http.get('/api/map/config')
   },
 
   // ==================== 短信 ====================
   sms: {
-    sendCode:   (phone) => http.post('/api/sms/send-code', { phone }),
-    verifyCode: (phone, code) => http.post('/api/sms/verify-code', { phone, code })
+    sendCode:   (phone, purpose = 'bind_phone') => http.post('/api/sms/send-code', { phone, purpose }),
+    verifyCode: (phone, code, purpose = 'bind_phone') => http.post('/api/sms/verify-code', { phone, code, purpose })
   }
 }
 

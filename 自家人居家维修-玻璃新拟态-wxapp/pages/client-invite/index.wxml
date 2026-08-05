@@ -1,0 +1,69 @@
+<view class="page invite-page">
+  <view class="nav-bar">
+    <view class="nav-icon-btn" bindtap="onBack"><image class="nav-icon" src="{{icons.back}}" mode="aspectFit" /></view>
+    <text class="nav-title">邀请奖励</text>
+    <view class="nav-icon-btn" bindtap="onRecords"><image class="nav-icon" src="{{icons.records}}" mode="aspectFit" /></view>
+  </view>
+
+  <view class="invite-hero">
+    <text class="invite-title">邀请好友 共享好礼</text>
+    <text class="invite-subtitle">活动尚未接入邀请关系与奖励结算，当前仅展示规则边界</text>
+    <view class="reward-cards">
+      <view class="reward-card"><view class="reward-icon"><image src="{{icons.gift}}" /></view><text class="reward-amount mono">—</text><text class="reward-label">邀请人奖励待配置</text></view>
+      <view class="reward-card"><view class="reward-icon accent"><image src="{{icons.user}}" /></view><text class="reward-amount accent-text mono">—</text><text class="reward-label">好友权益待配置</text></view>
+    </view>
+    <view class="invite-code-box" bindtap="onUnavailable">
+      <text class="invite-code-label">我的邀请码</text>
+      <text class="invite-code-value mono">尚未生成</text>
+      <button class="copy-btn" disabled>复制</button>
+    </view>
+  </view>
+
+  <view class="feature-notice"><text class="notice-title">功能暂未开放</text><text class="notice-desc">没有后端邀请关系、首单校验、奖励状态与反作弊闭环，因此不会生成邀请码、分享归因或本地奖励。</text></view>
+
+  <view class="section">
+    <view class="section-head"><text class="section-title">分享给好友</text></view>
+    <view class="glass-card">
+      <view class="share-methods">
+        <view class="share-item" bindtap="onUnavailable"><view class="share-icon wechat"><image src="{{icons.wechat}}" /></view><text class="share-name">微信好友</text></view>
+        <view class="share-item" bindtap="onUnavailable"><view class="share-icon moments"><image src="{{icons.moments}}" /></view><text class="share-name">朋友圈</text></view>
+        <view class="share-item" bindtap="onUnavailable"><view class="share-icon qq"><image src="{{icons.qq}}" /></view><text class="share-name">QQ</text></view>
+        <view class="share-item" bindtap="onUnavailable"><view class="share-icon link"><image src="{{icons.link}}" /></view><text class="share-name">复制链接</text></view>
+      </view>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="glass-card">
+      <view class="stats-row">
+        <view class="stat-item"><text class="stat-value mono">—</text><text class="stat-label">已邀请人数</text></view>
+        <view class="stat-item"><text class="stat-value reward mono">—</text><text class="stat-label">累计奖励</text></view>
+      </view>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="section-head"><text class="section-title">邀请记录</text><text class="section-more" bindtap="onRecords">查看全部</text></view>
+    <view class="glass-card invite-list-card">
+      <view class="invite-item">
+        <view class="invite-avatar">未</view>
+        <view class="invite-info">
+          <text class="invite-name">暂无真实邀请记录</text>
+          <text class="invite-time">邀请关系与奖励结算接口开放后展示</text>
+        </view>
+        <text class="invite-reward pending mono">待开放</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="section rules-section">
+    <view class="section-head"><text class="section-title">活动规则边界</text></view>
+    <view class="glass-card">
+      <view class="rule-item"><view class="rule-num">1</view><text class="rule-text">好友必须通过服务端生成的专属关系完成注册与首单校验，分享动作本身不代表奖励到账。</text></view>
+      <view class="rule-item"><view class="rule-num">2</view><text class="rule-text">奖励金额、门槛、有效期和发放状态必须由活动配置返回，客户端不写死。</text></view>
+      <view class="rule-item"><view class="rule-num">3</view><text class="rule-text">同手机号、设备或其他风控命中时，由服务端执行反作弊并返回未通过原因。</text></view>
+      <view class="rule-item"><view class="rule-num">4</view><text class="rule-text">正式开放前不会创建邀请关系、发券、加积分或展示虚构记录。</text></view>
+      <view class="rule-item"><view class="rule-num">5</view><text class="rule-text">如有疑问请联系平台客服，最终解释以服务端活动配置和风控结果为准。</text></view>
+    </view>
+  </view>
+</view>

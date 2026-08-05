@@ -1,0 +1,13 @@
+.amount-success { color: var(--success); }
+.amount-danger { color: var(--danger); }
+.amount-warning { color: var(--warning); }
+.amount-info { color: var(--muted); }
+.is-selected { outline: 4rpx solid var(--brand); outline-offset: -4rpx; }
+.is-disabled { opacity: .56; }
+.status-copy { text-align: center; color: var(--muted); }
+.truthful-empty { min-height: 240rpx; }
+.state-success { background: var(--success); }
+.state-warning { background: var(--warning); }
+.state-error { background: var(--danger); }
+.state-danger { background: var(--danger); }
+.state-info { background: var(--muted); }

@@ -217,12 +217,14 @@
   width: 32rpx;
   height: 32rpx;
 }
-.tl-dot.done {
+.tl-dot.done,
+.tl-dot-done {
   background: var(--brand);
   color: var(--text-inverse);
   box-shadow: 0 6rpx 20rpx var(--brand-glow), inset 0 2rpx 2rpx rgba(255, 255, 255, 0.3);
 }
-.tl-dot.active {
+.tl-dot.active,
+.tl-dot-active {
   background: var(--accent);
   color: var(--text-inverse);
   box-shadow: 0 6rpx 24rpx var(--accent-glow), inset 0 2rpx 2rpx rgba(255, 255, 255, 0.3);
@@ -246,7 +248,8 @@
   70% { transform: scale(1.5); opacity: 0; }
   100% { transform: scale(1.5); opacity: 0; }
 }
-.tl-dot.pending {
+.tl-dot.pending,
+.tl-dot-pending {
   background: var(--bg-elevated);
   box-shadow: var(--neu-inset), inset 0 2rpx 2rpx rgba(255, 255, 255, 0.3);
   border: 3rpx solid var(--neu-dark);

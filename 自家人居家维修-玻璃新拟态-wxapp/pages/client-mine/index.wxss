@@ -324,6 +324,63 @@
   height: 36rpx;
 }
 
+.menu-icon-blue {
+  color: #5A8FAD;
+  background: rgba(90, 143, 173, 0.08);
+  border: 1rpx solid rgba(90, 143, 173, 0.12);
+  box-shadow: 0 4rpx 12rpx rgba(90, 143, 173, 0.06);
+}
+
+.menu-icon-purple {
+  color: #5856D6;
+  background: rgba(88, 86, 214, 0.08);
+  border: 1rpx solid rgba(88, 86, 214, 0.12);
+  box-shadow: 0 4rpx 12rpx rgba(88, 86, 214, 0.06);
+}
+
+.menu-icon-green {
+  color: var(--green);
+  background: rgba(91, 140, 90, 0.08);
+  border: 1rpx solid rgba(91, 140, 90, 0.12);
+  box-shadow: 0 4rpx 12rpx rgba(91, 140, 90, 0.06);
+}
+
+.menu-icon-gray,
+.menu-icon-slate {
+  color: var(--text-2);
+  background: rgba(120, 120, 128, 0.08);
+  border: 1rpx solid rgba(120, 120, 128, 0.12);
+  box-shadow: 0 4rpx 12rpx rgba(120, 120, 128, 0.06);
+}
+
+.menu-icon-amber {
+  color: var(--orange);
+  background: rgba(212, 148, 76, 0.05);
+  border: 1rpx solid rgba(212, 148, 76, 0.07);
+  box-shadow: 0 4rpx 12rpx rgba(212, 148, 76, 0.04);
+}
+
+.menu-icon-teal {
+  color: var(--brand);
+  background: rgba(13, 148, 136, 0.08);
+  border: 1rpx solid rgba(13, 148, 136, 0.07);
+  box-shadow: 0 4rpx 12rpx rgba(13, 148, 136, 0.04);
+}
+
+.menu-icon-red {
+  color: var(--red);
+  background: rgba(196, 83, 58, 0.08);
+  border: 1rpx solid rgba(196, 83, 58, 0.12);
+  box-shadow: 0 4rpx 12rpx rgba(196, 83, 58, 0.06);
+}
+
+.menu-icon-cyan {
+  color: #5A8FAD;
+  background: rgba(90, 143, 173, 0.08);
+  border: 1rpx solid rgba(90, 143, 173, 0.12);
+  box-shadow: 0 4rpx 12rpx rgba(90, 143, 173, 0.06);
+}
+
 /* HTML: menu-label flex:1 / 15px / text-1 / 500 / -0.01em */
 .menu-label {
   flex: 1;
@@ -335,10 +392,23 @@
 
 /* HTML: menu-badge 12px / text-3 / 500 / margin-right 2px */
 .menu-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8rpx;
   font-size: 24rpx;
   color: var(--text-3);
   font-weight: 500;
   margin-right: 4rpx;
+}
+
+.menu-badge .dot,
+.dot {
+  width: 12rpx;
+  height: 12rpx;
+  border-radius: 50%;
+  background: var(--red);
+  box-shadow: 0 0 0 4rpx rgba(196, 83, 58, 0.15);
+  flex-shrink: 0;
 }
 
 /* HTML: menu-chevron 14x14 / stroke text-3 / stroke-width 2.2 */

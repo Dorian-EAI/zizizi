@@ -67,6 +67,7 @@ def list_active_services(db: Session) -> List[ServiceType]:
         db.query(ServiceType)
         .filter(ServiceType.is_active == True)
         .order_by(ServiceType.sort_order.asc())
+        .limit(500)
         .all()
     )
 

@@ -39,7 +39,7 @@
             </view>
             <view class="timeline-nodes">
               <view class="tl-node" wx:for="{{timelineNodes}}" wx:key="key">
-                <view class="tl-dot {{item.state}}">
+                <view class="tl-dot {{item.state}} tl-dot-{{item.state}}">
                   <image src="{{icons.check}}" mode="aspectFit" class="tl-check" lazy-load="{{false}}" wx:if="{{item.state === 'done'}}" />
                   <view class="tl-dot-inner" wx:if="{{item.state === 'active'}}"></view>
                   <view class="tl-dot-pulse" wx:if="{{item.state === 'active'}}"></view>
@@ -60,7 +60,7 @@
           <view class="worker-avatar avatar-glass">
             <image src="{{workerAvatarUrl}}" mode="aspectFit" class="worker-avatar-img" lazy-load="{{false}}" />
           </view>
-          <view class="verify-badge">
+          <view class="verify-badge avatar-verify">
             <image src="{{icons.check}}" mode="aspectFit" class="verify-icon" lazy-load="{{false}}" />
             <text class="verify-text">已认证</text>
           </view>
@@ -70,9 +70,11 @@
             <text class="worker-name">{{order.workerName}}</text>
           </view>
           <view class="worker-meta">
-            <text class="worker-star">★ {{order.workerRating || '4.9'}}</text>
+            <text class="worker-star" wx:if="{{order.workerRating != null}}">★ {{order.workerRating}}</text>
+            <text class="worker-star" wx:else>暂无评分</text>
             <text class="meta-dot">·</text>
-            <text>{{order.workerServices || 328}}次服务</text>
+            <text wx:if="{{order.workerServices != null}}">{{order.workerServices}}次服务</text>
+            <text wx:else>服务次数未提供</text>
           </view>
         </view>
         <view class="worker-actions">
@@ -190,8 +192,9 @@
             <image src="{{icons.shield}}" mode="aspectFit" class="insure-icon-img" lazy-load="{{false}}" />
           </view>
           <view class="insure-info">
-            <text class="insure-name">{{order.insurance.name || '安心保 · 标准版'}}</text>
-            <text class="insure-fee mono">保费 ¥{{order.insurance.fee || 5}} · 最高赔付 ¥{{order.insurance.coverage || '2,000'}}</text>
+            <text class="insure-name">{{order.insurance.name || '保障方案'}}</text>
+            <text class="insure-fee mono" wx:if="{{order.insurance.fee != null && order.insurance.coverage != null}}">保费 ¥{{order.insurance.fee}} · 最高赔付 ¥{{order.insurance.coverage}}</text>
+            <text class="insure-fee" wx:else>保障范围以当前保单信息为准</text>
           </view>
           <text class="insure-status">生效中</text>
         </view>
@@ -233,9 +236,11 @@
           >{{item.text}}</text>
         </view>
         <view class="review-summary">
-          <text>综合评分 <text class="review-strong">★{{order.workerRating || '4.9'}}</text></text>
+          <text wx:if="{{order.workerRating != null}}">综合评分 <text class="review-strong">★{{order.workerRating}}</text></text>
+          <text wx:else>综合评分未提供</text>
           <text class="review-dot">·</text>
-          <text>{{order.workerServices || 320}}次服务</text>
+          <text wx:if="{{order.workerServices != null}}">{{order.workerServices}}次服务</text>
+          <text wx:else>服务次数未提供</text>
         </view>
       </view>
     </view>

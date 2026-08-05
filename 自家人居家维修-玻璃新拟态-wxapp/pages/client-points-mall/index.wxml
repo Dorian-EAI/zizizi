@@ -1,0 +1,40 @@
+<!-- REVIEWED BUSINESS VIEW: catalog is fail-closed until products, stock and costs are server-configured. -->
+<view class="phone-page design-detail-page" data-page-id="page-client-points-mall">
+  <view class="status-bar"><text class="tag-span">9:41</text><text class="status-icons tag-span">● ◒ ▰</text></view>
+  <view class="topbar"><view class="icon-button design-button" bindtap="onBack"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m15%2018-6-6%206-6M9%2012h10%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view><view class="tag-h1">积分商城</view><view class="top-action design-button" bindtap="onPoints">{{balanceLabel}}</view></view>
+  <view class="page-body">
+    <view class="hero"><view class="hero-kicker tag-p">积分好礼</view><view class="tag-h2">兑换目录尚未开放</view><view class="tag-p">平台正在接入可运营的商品、库存、兑换成本和履约状态。</view></view>
+    <view class="segmented">
+      <view class="segment active design-button">全部</view>
+      <view class="segment design-button">优惠券</view>
+      <view class="segment design-button">实物礼品</view>
+    </view>
+    <view class="section">
+      <view class="section-title"><text class="tag-strong">开放前检查</text><text class="badge warning tag-span">不会扣分</text></view>
+      <view class="grid-2">
+        <view class="card">
+          <view class="media-placeholder media-visual"><view class="media-icon"><image class="design-svg-icon" src="{{icons.coupon}}" mode="aspectFit" /></view><text class="media-label">券</text></view>
+          <view class="card-title">商品目录</view><view class="card-copy">等待服务端发布真实商品</view>
+        </view>
+        <view class="card">
+          <view class="media-placeholder media-visual"><view class="media-icon"><image class="design-svg-icon" src="{{icons.gift}}" mode="aspectFit" /></view><text class="media-label">礼</text></view>
+          <view class="card-title">库存与规格</view><view class="card-copy">不展示画布示例库存</view>
+        </view>
+        <view class="card">
+          <view class="media-placeholder media-visual"><view class="media-icon"><image class="design-svg-icon" src="{{icons.orders}}" mode="aspectFit" /></view><text class="media-label">单</text></view>
+          <view class="card-title">履约订单</view><view class="card-copy">兑换后需生成真实记录</view>
+        </view>
+        <view class="card">
+          <view class="media-placeholder media-visual"><view class="media-icon"><image class="design-svg-icon" src="{{icons.wallet}}" mode="aspectFit" /></view><text class="media-label">分</text></view>
+          <view class="card-title">积分扣减</view><view class="card-copy">只由后端账本确认</view>
+        </view>
+      </view>
+    </view>
+    <view class="section card">
+      <view class="section-title"><text class="tag-strong">真实服务受限</text><text class="badge warning tag-span">不会扣分</text></view>
+      <view class="tag-p">后端当前明确拒绝积分兑换请求，以避免只扣积分却没有生成优惠券或实物订单。画布里的商品、库存、价格和销量均为布局示例，生产页已隐藏。</view>
+      <view class="btn primary block design-button" bindtap="onPoints">查看真实积分明细</view>
+    </view>
+    <view class="notice tag-p">积分兑换后不可退回；功能开放前不会提交兑换，也不会扣除账户积分。</view>
+  </view>
+</view>

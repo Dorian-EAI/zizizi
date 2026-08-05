@@ -1,0 +1,23 @@
+<view class="page price-page">
+  <view class="nav-bar">
+    <view class="nav-icon-btn" bindtap="onBack"><image class="nav-icon" src="{{icons.back}}" /></view><text class="nav-title">差价确认</text><view class="nav-icon-btn" bindtap="onHelp"><image class="nav-icon" src="{{icons.help}}" /></view>
+  </view>
+  <scroll-view scroll-y class="price-scroll" show-scrollbar="{{false}}">
+    <view class="state-panel" wx:if="{{loading}}"><text>正在加载补差价申请…</text></view>
+    <view class="state-panel" wx:elif="{{loadError}}"><text class="state-title">申请加载失败</text><text class="state-desc">{{unavailableReason}}</text></view>
+    <block wx:else>
+      <view class="status-banner" wx:if="{{fee}}"><view class="status-icon"><image src="{{icons.info}}" /></view><view class="status-text"><text class="status-title">{{statusText}} · 补差价 ¥{{amountText}}</text><text class="status-desc">24小时内请处理；超时仅提醒与升级协商，不会自动同意、拒绝或扣款</text></view></view>
+      <view class="permission-warning" wx:if="{{unavailableReason}}"><text class="warning-title">处理操作不可用</text><text class="warning-desc">{{unavailableReason}}。页面不会绕过服务端 allowed_actions。</text></view>
+      <block wx:if="{{fee}}">
+        <view class="section"><view class="glass-card"><view class="amount-section"><text class="amount-label">申请补差价金额</text><view class="amount-value mono"><text class="currency">¥</text><text>{{amountText}}</text></view><text class="amount-reason">订单当前金额 ¥{{originalText}} → 同意后 ¥{{adjustedText}}</text></view></view></view>
+        <view class="section"><text class="section-title">申请人</text><view class="glass-card"><view class="worker-row"><view class="worker-avatar">修</view><view class="worker-info"><text class="worker-name">接单师傅</text><text class="worker-service">{{order.service_name}} · {{order.order_no}}</text></view><image class="row-arrow" src="{{icons.arrow}}" /></view></view></view>
+        <view class="section"><view class="section-title icon-title"><image src="{{icons.message}}" /><text>差价原因</text></view><view class="glass-card"><text class="reason-box">{{fee.reason}}</text></view></view>
+        <view class="section" wx:if="{{fee.photo_urls && fee.photo_urls.length}}"><view class="section-title icon-title"><image src="{{icons.image}}" /><text>凭证照片</text></view><view class="glass-card"><view class="photo-grid"><view class="photo-item" wx:for="{{fee.photo_urls}}" wx:key="*this" data-index="{{index}}" bindtap="onPreview"><image src="{{item}}" mode="aspectFill" /></view></view></view></view>
+        <view class="section"><text class="section-title">费用明细</text><view class="glass-card"><view class="fee-row" wx:for="{{items}}" wx:key="name"><text class="fee-label">{{item.name}}（{{item.unit}}）</text><text class="fee-value accent mono">+ ¥{{item.priceText}}</text></view><view class="fee-row fee-total"><text class="fee-label">申请追加合计</text><text class="fee-value mono">¥{{amountText}}</text></view></view></view>
+        <view class="scroll-spacer"></view>
+      </block>
+      <view class="state-panel compact" wx:else><text class="state-title">没有补差价申请</text><text class="state-desc">请从包含待处理补差价的订单进入。</text></view>
+    </block>
+  </scroll-view>
+  <view class="action-buttons safe-bottom" wx:if="{{fee}}"><button class="action-btn reject" bindtap="onReject" disabled="{{!canHandle || handling}}">拒绝补差价</button><button class="action-btn confirm" bindtap="onApprove" loading="{{handling}}" disabled="{{!canHandle || handling}}">同意追加 ¥{{amountText}}</button></view>
+</view>

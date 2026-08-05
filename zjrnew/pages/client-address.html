@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>自家人居家维修 · 玻璃新拟态 · 我的地址</title>
-    <link rel="stylesheet" href="../assets/fonts.css">
-
     <style id="theme-vars">
 /* 自家人居家维修 - 玻璃新拟态 */
 :root {
@@ -82,11 +80,11 @@
   --radius-lg: 1.6rem;
   --radius-full: 9999px;
 
-    /* Font — 统一衬线系统 */
+  /* Font — unified serif system */
   --font-display: 'Cormorant Garamond', 'Noto Serif SC', 'STSong', Georgia, serif;
-  --font-body: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-  --font-nums: 'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
-  --font: var(--font-body);
+  --font-body:    'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --font-nums:    'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
+  --font:         var(--font-body);
 
   /* Motion */
   --spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -127,9 +125,8 @@
   --radius-sm: var(--radius-sm);
   --radius-md: var(--radius-md);
   --radius-lg: var(--radius-lg);
-  --font-sans: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-  --font-serif: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-  --radius-full: var(--radius-full);}
+  --radius-full: var(--radius-full);
+}
 
 /* Semantic token fallback */
 #semantic-token-fallback {
@@ -152,10 +149,117 @@
 }
 
 /* ===== Global Neumorphic Components ===== */
+/* Tab Bar — Premium Liquid Glass, absolute-positioned within .phone frame */
+.tab-bar{
+  position:absolute;
+  bottom:10px;
+  left:50%;
+  transform:translateX(-50%);
+  width:calc(100% - 32px);
+  max-width:360px;
+  height:56px;
+  z-index:100;
+  background:rgba(255,255,255,0.18);
+  backdrop-filter:blur(48px) saturate(210%);
+  -webkit-backdrop-filter:blur(48px) saturate(210%);
+  border:0.5px solid rgba(255,255,255,0.45);
+  border-radius:24px;
+  box-shadow:
+    inset 0 1.5px 3px rgba(255,255,255,0.60),
+    inset 0 -0.5px 1px rgba(255,255,255,0.20),
+    0 0 0 0.5px rgba(0,0,0,0.04),
+    0 2px 10px rgba(0,0,0,0.06),
+    0 12px 36px rgba(0,0,0,0.08);
+  display:flex;
+  align-items:center;
+  justify-content:space-around;
+  padding:0 6px;
+}
+.tab-bar::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  background:linear-gradient(160deg,
+    rgba(255,255,255,0.42) 0%,
+    rgba(255,255,255,0.16) 20%,
+    rgba(255,255,255,0.03) 40%,
+    transparent 60%);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
+  padding:0.5px;
+  pointer-events:none;
+  z-index:1;
+}
+.tab-bar::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  background:linear-gradient(320deg,
+    transparent 60%,
+    rgba(13,148,136,0.06) 80%,
+    rgba(255,255,255,0.04) 100%);
+  pointer-events:none;
+  z-index:1;
+}
+.tab-item{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+  width:68px;
+  height:44px;
+  border-radius:14px;
+  color:var(--text-3);
+  font-size:11px;
+  font-weight:500;
+  text-decoration:none;
+  position:relative;
+  transition:all .2s;
+}
+.tab-item svg{
+  width:20px;
+  height:20px;
+  stroke:currentColor;
+  fill:none;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.tab-item[data-active="true"]{
+  color:var(--brand);
+  font-weight:600;
+}
+.tab-item[data-active="true"]::before{
+  content:"";
+  position:absolute;
+  width:54px;
+  height:42px;
+  border-radius:16px;
+  background:rgba(13,148,136,0.16);
+  backdrop-filter:blur(24px);
+  -webkit-backdrop-filter:blur(24px);
+  border:0.5px solid rgba(13,148,136,0.30);
+  box-shadow:
+    inset 0 1px 3px rgba(255,255,255,0.55),
+    inset 0 -0.5px 1px rgba(255,255,255,0.15),
+    0 2px 10px rgba(13,148,136,0.20),
+    0 0 0 0.5px rgba(13,148,136,0.08);
+  z-index:0;
+}
+.tab-item[data-active="true"] svg{
+  transform:scale(1.08);
+  position:relative;
+  z-index:1;
+}
+
 /* Buttons */
 .btn-neu-primary{
   display:inline-flex;align-items:center;justify-content:center;
-  background:var(--brand-gradient);color:var(--text-inverse);
+  background:var(--brand);color:var(--text-inverse);
   border:none;border-radius:9999px;
   padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
   cursor:pointer;
@@ -174,6 +278,16 @@
   transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
 }
 .btn-neu-secondary:active{box-shadow:var(--neu-in);transform:scale(0.94)}
+
+.btn-neu-ghost{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:transparent;color:var(--text-2);
+  border:0.5px solid var(--border);border-radius:9999px;
+  padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
+  cursor:pointer;
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease),color var(--dur) var(--ease);
+}
+.btn-neu-ghost:active{transform:scale(0.94);color:var(--brand)}
 
     </style>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
@@ -198,8 +312,6 @@
     --radius-md: var(--radius-md);
     --radius-lg: var(--radius-lg);
     --radius-full: var(--radius-full);
-    --font-sans: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-    --font-serif: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
   }
   @layer base {
     body { background: var(--background); color: var(--foreground); }
@@ -287,13 +399,13 @@
 
   <!-- ===== TOP NAV BAR (sticky) ===== -->
   <nav class="nav-bar" data-dom-id="address-nav">
-    <button class="nav-back" data-dom-id="back-btn" aria-label="返回">
+    <button class="nav-back" data-dom-id="back-btn" data-target-page="page-client-mine" aria-label="返回">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
         <path d="m15 18-6-6 6-6"></path>
       </svg>
     </button>
     <h1 class="nav-title">我的地址</h1>
-    <button class="nav-edit" data-dom-id="nav-edit" aria-label="编辑">
+    <button class="nav-edit" data-dom-id="nav-edit" data-action="toggle-address-edit" aria-label="编辑">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <line x1="4" y1="6" x2="20" y2="6"/>
         <line x1="7" y1="12" x2="17" y2="12"/>
@@ -315,7 +427,7 @@
         <div class="loc-label">当前定位</div>
         <div class="loc-addr">北京市朝阳区建国路88号</div>
       </div>
-      <button class="loc-relocate" data-dom-id="relocate" aria-label="重新定位">
+    <button class="loc-relocate" data-dom-id="relocate" data-action="request-current-location" aria-label="重新定位">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
           <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
           <path d="M3 3v5h5"></path>
@@ -340,7 +452,7 @@
     <div class="addr-list">
 
       <!-- Address Card 1 - Default -->
-      <div class="addr-card glass-neu-card addr-default" data-dom-id="addr-0">
+  <div class="addr-card glass-neu-card addr-default" data-dom-id="addr-0" data-action="select-address">
         <div class="addr-accent"></div>
         <div class="addr-body">
           <div class="addr-row">
@@ -352,13 +464,13 @@
           <div class="addr-detail">北京市朝阳区建国路88号 3号楼2单元501室</div>
         </div>
         <div class="addr-actions">
-          <button class="addr-btn" data-dom-id="addr-edit-0" aria-label="编辑">
+        <button class="addr-btn" data-dom-id="addr-edit-0" data-target-page="page-client-address-edit" aria-label="编辑">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
               <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
               <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4Z"></path>
             </svg>
           </button>
-          <button class="addr-btn addr-btn-danger" data-dom-id="addr-del-0" aria-label="删除">
+        <button class="addr-btn addr-btn-danger" data-dom-id="addr-del-0" data-action="confirm-delete-address" aria-label="删除">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
               <path d="M3 6h18"></path>
               <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path>
@@ -371,7 +483,7 @@
       </div>
 
       <!-- Address Card 2 -->
-      <div class="addr-card glass-neu-card" data-dom-id="addr-1">
+  <div class="addr-card glass-neu-card" data-dom-id="addr-1" data-action="select-address">
         <div class="addr-body">
           <div class="addr-row">
             <span class="addr-tag tag-company">公司</span>
@@ -381,13 +493,13 @@
           <div class="addr-detail">北京市海淀区中关村大街1号 海龙大厦18层1802室</div>
         </div>
         <div class="addr-actions">
-          <button class="addr-btn" data-dom-id="addr-edit-1" aria-label="编辑">
+        <button class="addr-btn" data-dom-id="addr-edit-1" data-target-page="page-client-address-edit" aria-label="编辑">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
               <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
               <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4Z"></path>
             </svg>
           </button>
-          <button class="addr-btn addr-btn-danger" data-dom-id="addr-del-1" aria-label="删除">
+        <button class="addr-btn addr-btn-danger" data-dom-id="addr-del-1" data-action="confirm-delete-address" aria-label="删除">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
               <path d="M3 6h18"></path>
               <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path>
@@ -400,7 +512,7 @@
       </div>
 
       <!-- Address Card 3 -->
-      <div class="addr-card glass-neu-card" data-dom-id="addr-2">
+  <div class="addr-card glass-neu-card" data-dom-id="addr-2" data-action="select-address">
         <div class="addr-body">
           <div class="addr-row">
             <span class="addr-tag tag-school">学校</span>
@@ -410,13 +522,13 @@
           <div class="addr-detail">北京市昌平区回龙观北农路2号 华北电力大学学生公寓7号楼315室</div>
         </div>
         <div class="addr-actions">
-          <button class="addr-btn" data-dom-id="addr-edit-2" aria-label="编辑">
+        <button class="addr-btn" data-dom-id="addr-edit-2" data-target-page="page-client-address-edit" aria-label="编辑">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
               <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
               <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4Z"></path>
             </svg>
           </button>
-          <button class="addr-btn addr-btn-danger" data-dom-id="addr-del-2" aria-label="删除">
+        <button class="addr-btn addr-btn-danger" data-dom-id="addr-del-2" data-action="confirm-delete-address" aria-label="删除">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
               <path d="M3 6h18"></path>
               <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path>
@@ -433,7 +545,7 @@
 
   <!-- ===== BOTTOM FIXED CTA ===== -->
   <div class="addr-cta">
-    <button class="cta-add" data-dom-id="add-address">
+  <button class="cta-add" data-dom-id="add-address" data-target-page="page-client-address-edit">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
         <line x1="12" y1="5" x2="12" y2="19"></line>
         <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -448,10 +560,10 @@
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{
   --brand:#0D9488;--brand-dark:#0A7A70;--brand-mid:#14B8A6;--brand-light:#CCFBF1;
-  --brand-glow:rgba(13,148,136,0.28);--brand-subtle:rgba(13,148,136,0.10);
-  --brand-gradient:linear-gradient(135deg,#0D9488 0%,#14B8A6 50%,#D4944C 100%);
-  --accent:#D4944C;--accent-dark:#A0723C;--accent-light:#F5E6D0;--accent-glow:rgba(212,148,76,0.25);
-  --accent-subtle:rgba(212,148,76,0.12);
+  --brand-glow:rgba(13,148,136,0.18);--brand-subtle:rgba(13,148,136,.06);
+  --brand-gradient:linear-gradient(135deg,#0D9488 0%,#14B8A6 48%,#D4944C 100%);
+  --accent:#D4944C;--accent-dark:#A0723C;--accent-light:#F5E6D0;--accent-glow:rgba(212,148,76,0.16);
+  --accent-subtle:rgba(212,148,76,.07);
   --blue:#5A8FAD;--blue-subtle:rgba(90,143,173,0.12);
   --bg:#F2EDE8;--bg-elevated:#F7F3EF;
   --neu-light:#FFF8F2;--neu-dark:#DDD6CE;
@@ -478,7 +590,7 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
 .phone>*{position:relative;z-index:1}
 
 /* ===== TOP NAV BAR (sticky) ===== */
-.nav-bar{background:radial-gradient(ellipse 220px 160px at 78% 45%,rgba(212,148,76,.14) 0%,transparent 70%),radial-gradient(ellipse 180px 140px at 18% 75%,rgba(13,148,136,.16) 0%,transparent 70%),linear-gradient(135deg,rgba(13,148,136,.14) 0%,rgba(212,148,76,.08) 50%,rgba(13,148,136,.06) 100%);position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:max(18px, env(safe-area-inset-top)) 16px 12px; border-radius:0 0 28px 28px; overflow:hidden;}
+.nav-bar{background:radial-gradient(ellipse 220px 160px at 78% 45%,rgba(212,148,76,.10) 0%,transparent 70%),radial-gradient(ellipse 180px 140px at 18% 75%,rgba(13,148,136,.10) 0%,transparent 70%),linear-gradient(135deg,rgba(13,148,136,.08) 0%,rgba(212,148,76,.06) 50%,rgba(13,148,136,.05) 100%);position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:max(18px, env(safe-area-inset-top)) 16px 12px; border-radius:0 0 28px 28px; overflow:hidden;}
 .nav-back{width:44px;height:44px;border-radius:50%;background:var(--bg);border:none;box-shadow:var(--neu-out-sm),inset 0 1px 1px rgba(255,255,255,0.5);display:flex;align-items:center;justify-content:center;color:var(--text-1);cursor:pointer;flex-shrink:0;transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease)}
 .nav-back:active{box-shadow:var(--neu-in);transform:scale(0.94)}
 .nav-back svg{width:22px;height:22px}
@@ -493,7 +605,7 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
 .section-title .count{font-size:12px;font-weight:500;color:var(--text-2)}
 
 /* ===== Glass + Neumorphic Card ===== */
-.glass-neu-card{background:rgba(255,255,255,0.52);backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);border:1px solid rgba(255,255,255,0.70);border-radius:var(--r-lg);box-shadow:var(--neu-out-md),0 6px 28px rgba(0,0,0,0.06),0 2px 8px rgba(13,148,136,0.04),0 0 0 1px rgba(44,40,36,0.05);position:relative;overflow:hidden}
+.glass-neu-card{background:rgba(255,255,255,0.52);backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);border:1px solid rgba(255,255,255,0.70);border-radius:var(--r-lg);box-shadow:var(--neu-out-md),0 6px 28px rgba(0,0,0,0.06),0 2px 8px rgba(13,148,136,.04),0 0 0 1px rgba(44,40,36,0.05);position:relative;overflow:hidden}
 .glass-neu-card::before{content:'';position:absolute;inset:0;border-radius:inherit;background:linear-gradient(165deg,rgba(255,255,255,0.22) 0%,rgba(255,255,255,0.05) 30%,transparent 55%);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;padding:0.5px;pointer-events:none}
 
 /* ===== Current Location Card ===== */
@@ -519,7 +631,7 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
 .addr-card>*{position:relative;z-index:2}
 
 /* Default accent left border */
-.addr-default{box-shadow:var(--neu-out-md),0 6px 28px rgba(0,0,0,0.06),0 2px 8px rgba(13,148,136,0.10),0 0 0 1px rgba(44,40,36,0.05)}
+.addr-default{box-shadow:var(--neu-out-md),0 6px 28px rgba(0,0,0,0.06),0 2px 8px rgba(13,148,136,.06),0 0 0 1px rgba(44,40,36,0.05)}
 .addr-accent{position:absolute;left:0;top:14px;bottom:14px;width:3px;border-radius:0 3px 3px 0;background:var(--brand-gradient);box-shadow:0 0 12px var(--brand-glow);z-index:3}
 
 .addr-body{flex:1;min-width:0;display:flex;flex-direction:column;gap:7px;padding-left:2px}

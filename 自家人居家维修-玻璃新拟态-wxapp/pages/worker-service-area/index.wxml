@@ -1,0 +1,44 @@
+<!-- AUTO-GENERATED DESIGN VIEW sourceHash=fnv1a-033ac4ec; edit source HTML or generator bindings, then rerun. -->
+<view class="phone-page design-detail-page worker-theme" data-dom-id="page-worker-service-area">
+    <view class="status-bar"><text class="tag-span">9:41</text><text class="status-icons tag-span">●●●</text></view>
+    <view class="topbar">
+      <view class="icon-button design-button" data-dom-id="area-back" data-route="/pages/worker-profile/index" bindtap="onNavigate"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m15%2018-6-6%206-6M9%2012h10%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view>
+      <view><view class="eyebrow tag-p">接单配置</view><view class="tag-h1">服务区域</view></view>
+      <view class="top-action design-button" data-dom-id="area-save-top" data-action="save-service-area" bindtap="onAction">保存</view>
+    </view>
+
+    <view class="page-body">
+
+    <view class="card media-placeholder media-visual" data-dom-id="area-map" data-action="adjust-service-center" bindtap="onAction">
+      <view class="map-grid"></view><view class="service-radius"><text class="tag-span">5 km</text></view><view class="map-pin"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232D6CDF%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M20%2010c0%205-8%2011-8%2011S4%2015%204%2010a8%208%200%201%201%2016%200z%22%2F%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2210%22%20r%3D%222.5%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view>
+      <view class="map-caption"><text class="tag-strong">当前服务中心</text><text class="tag-span">北京市朝阳区双井街道</text></view>
+    </view>
+
+    <view class="section card">
+      <view class="section-title"><text class="tag-strong">调整服务半径</text><text class="tag-span">5 km</text></view>
+      <input class="range" data-dom-id="area-radius" data-action="change-service-radius" min="3" max="20" value="5" bindchange="onAction" />
+      <view class="range-labels"><text class="tag-span">3 km</text><text class="tag-span">20 km</text></view>
+      <view class="notice tag-p">半径增大可能带来更多订单，也会增加通勤时间。最终匹配仍以服务资质和订单要求为准。</view>
+    </view>
+
+    <view class="section card">
+      <view class="section-title"><text class="tag-strong">行政区偏好</text><text class="tag-span">可多选</text></view>
+      <view class="chips">
+        <view class="chip active design-button" data-dom-id="area-chaoyang" data-action="toggle-area" bindtap="onAction">朝阳区</view>
+        <view class="chip active design-button" data-dom-id="area-dongcheng" data-action="toggle-area" bindtap="onAction">东城区</view>
+        <view class="chip design-button" data-dom-id="area-haidian" data-action="toggle-area" bindtap="onAction">海淀区</view>
+        <view class="chip design-button" data-dom-id="area-xicheng" data-action="toggle-area" bindtap="onAction">西城区</view>
+        <view class="chip design-button" data-dom-id="area-fengtai" data-action="toggle-area" bindtap="onAction">丰台区</view>
+      </view>
+    </view>
+
+    <view class="section card list-card">
+      <view class="list-row design-button" data-dom-id="area-edit-address" data-route="/pages/client-address-edit/index?mode=worker-service-center" bindtap="onNavigate">
+        <view class="row-icon tag-span"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232D6CDF%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M20%2010c0%205-8%2011-8%2011S4%2015%204%2010a8%208%200%201%201%2016%200z%22%2F%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2210%22%20r%3D%222.5%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view><text class="row-main tag-span"><text class="row-title tag-span">服务中心地址</text><text class="row-copy tag-span">北京市朝阳区广渠路 88 号</text></text><text class="chevron tag-span">›</text>
+      </view>
+      <view class="inline-status"><text class="status success tag-span">定位正常</text><text class="tag-small">最后校验：今天 09:16</text></view>
+    </view>
+
+    </view>
+    <view class="fixed-actions"><view class="btn primary design-button" data-dom-id="area-save" data-action="save-service-area" bindtap="onAction">保存服务区域</view></view>
+  </view>

@@ -52,11 +52,11 @@
           data-key="{{item.key}}"
           bindtap="onMenuTap"
         >
-          <view class="menu-icon-wrap" style="background: {{item.color}};">
-            <image src="{{icons[item.icon] || icons.chevron}}" mode="aspectFit" class="menu-icon" lazy-load="{{false}}" />
+          <view class="menu-icon-wrap menu-icon-{{item.tone}}">
+            <image src="{{item.iconUrl || icons[item.icon] || icons.chevron}}" mode="aspectFit" class="menu-icon" lazy-load="{{false}}" />
           </view>
           <text class="menu-label">{{item.label}}</text>
-          <text class="menu-badge" wx:if="{{item.badge}}">{{item.badge}}</text>
+          <text class="menu-badge" wx:if="{{item.badge}}"><text class="dot"></text>{{item.badge}}</text>
           <image src="{{icons.chevron}}" mode="aspectFit" class="menu-chevron" lazy-load="{{false}}" />
         </view>
       </view>

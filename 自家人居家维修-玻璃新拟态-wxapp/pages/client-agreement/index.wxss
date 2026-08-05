@@ -1,0 +1,3 @@
+/* AUTO-GENERATED DESIGN STYLE ENTRY; page-specific overrides may follow this import. */
+@import "../../styles/generated-detail-page.wxss";
+.agreement-scroll{height:calc(100vh - 98rpx);padding-bottom:150rpx}.document-card{min-height:760rpx}.document-content{display:block;white-space:pre-wrap;font-size:25rpx;line-height:1.85;color:var(--ink)}.document-card.large .document-content{font-size:29rpx}.document-card.small .document-content{font-size:22rpx}.state-copy{padding:120rpx 20rpx;text-align:center;color:var(--muted)}

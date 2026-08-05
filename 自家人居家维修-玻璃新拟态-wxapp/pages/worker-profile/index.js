@@ -14,9 +14,10 @@ Page({
       completedOrders: 0,
       praiseRate: '—',
       serviceScope: '待完善',
-      yearsExp: 0,
+      yearsExp: '—',
       area: '待完善',
       verifyStatus: '未认证',
+      certified: false,
       avatarUrl: ''
     },
     basicInfo: [],
@@ -59,7 +60,7 @@ Page({
     const w = this.data.workerInfo
     const rows = [
       { key: 'scope', icon: 'carpentry', tone: 'teal', color: COLORS.brandWorker, label: '服务范围', value: w.serviceScope, valueTone: false },
-      { key: 'experience', icon: 'clock', tone: 'amber', color: COLORS.accent, label: '从业年限', value: w.yearsExp + '年', valueTone: false },
+      { key: 'experience', icon: 'clock', tone: 'amber', color: COLORS.accent, label: '从业年限', value: w.yearsExp === '—' ? '—' : (w.yearsExp + '年'), valueTone: false },
       { key: 'area', icon: 'location', tone: 'blue', color: BLUE, label: '所在区域', value: w.area, valueTone: false },
       { key: 'verify', icon: 'shield', tone: 'green', color: COLORS.green, label: '认证状态', value: w.verifyStatus, valueTone: true }
     ].map(r => Object.assign({}, r, { iconUrl: buildIcon(r.icon, r.color) }))
@@ -97,7 +98,8 @@ Page({
         serviceScope: scope,
         area: info.service_area || info.area || '待完善',
         verifyStatus: certifiedMap[info.certified] || '未认证',
-        avatarUrl: buildIcon('user', COLORS.brandWorker)
+        certified: Number(info.certified) === 2,
+        avatarUrl: info.avatar || buildIcon('user', COLORS.brandWorker)
       }
       this.setData({
         workerInfo: Object.assign({}, this.data.workerInfo, mapped)

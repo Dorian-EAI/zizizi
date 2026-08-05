@@ -1,0 +1,12 @@
+<view class="phone-page design-detail-page" data-page-id="page-client-invoice-detail">
+  <view class="status-bar"><text class="tag-span">9:41</text><text class="status-icons tag-span">● WiFi 100%</text></view>
+  <view class="topbar"><view class="icon-button design-button" data-route="/pages/client-invoice/index" bindtap="onNavigate"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m15%2018-6-6%206-6M9%2012h10%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view><view class="tag-h1">发票详情</view><text class="tag-span"></text></view>
+  <view class="page-body">
+    <view class="hero"><view class="hero-kicker tag-p">INVOICE STATUS <text class="badge warning tag-span">无法查询</text></view><view class="hero-number">¥—</view><view class="tag-p">未提供可验证的发票记录</view></view>
+    <view class="section"><view class="section-title"><text class="tag-strong">发票信息</text></view><view class="card list-card"><view class="list-row"><view class="row-main"><view class="row-title">发票类型</view></view><text class="row-value tag-span">待确认</text></view><view class="list-row design-button" bindtap="onUnavailable"><view class="row-main"><view class="row-title">发票号码</view><view class="row-copy">无可复制数据</view></view><text class="row-value tag-span">—</text></view><view class="list-row"><view class="row-main"><view class="row-title">开票金额</view></view><text class="row-value tag-span">—</text></view></view></view>
+    <view class="section"><view class="section-title"><text class="tag-strong">购买方信息</text></view><view class="empty-state"><view class="tag-p">未从服务端读取到购买方发票信息</view></view></view>
+    <view class="section"><view class="section-title"><text class="tag-strong">销售方信息</text></view><view class="empty-state"><view class="tag-p">未从服务端读取到销售方开票信息</view></view></view>
+    <view class="grid-2"><view class="btn secondary design-button is-disabled" bindtap="onUnavailable">下载 PDF</view><view class="btn primary design-button is-disabled" bindtap="onUnavailable">发送到邮箱</view></view>
+    <view class="notice">没有电子文件接口时不会生成占位 PDF，也不会提示邮件发送成功。</view>
+  </view>
+</view>

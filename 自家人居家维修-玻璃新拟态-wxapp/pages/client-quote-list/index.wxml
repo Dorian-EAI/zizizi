@@ -26,7 +26,7 @@
         </view>
         <text class="status-chip">竞价中</text>
       </view>
-      <text class="summary-desc">{{serviceDesc || '卫生间墙面渗水'}}</text>
+      <text class="summary-desc">{{serviceDesc || '暂无问题描述'}}</text>
       <view class="summary-count">
         <image src="{{icons.count}}" mode="aspectFit" lazy-load="{{false}}" class="count-icon" />
         <text>已有 {{biddings.length}} 位师傅报价</text>
@@ -82,7 +82,7 @@
           <text class="currency">¥</text>
           <text class="amount numeric">{{item.priceText}}</text>
         </view>
-        <text class="quote-note">{{item.message || '含材料费，保修1年'}}</text>
+        <text class="quote-note">{{item.message || '报价说明以师傅实际提交为准'}}</text>
       </view>
 
       <!-- Quote Meta Row -->

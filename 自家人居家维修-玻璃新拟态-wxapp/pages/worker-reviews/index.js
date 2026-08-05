@@ -57,12 +57,8 @@ Page({
     this.loadReviews()
   },
 
-  // 解析当前师傅 ID：优先 userInfo.id，降级 userInfo.worker_id，再降级实时拉 workerMe
+  // 师傅 ID 必须由师傅令牌实时确认，避免角色切换后误用客户端缓存中的 userInfo.id。
   async resolveWorkerId() {
-    const info = (app.globalData && app.globalData.userInfo) || null
-    if (info && (info.id || info.worker_id)) {
-      return info.id || info.worker_id
-    }
     try {
       const me = await api.auth.workerMe()
       return (me && (me.id || me.worker_id)) || null

@@ -1,0 +1,36 @@
+<!-- AUTO-GENERATED DESIGN VIEW sourceHash=fnv1a-394064fc; edit source HTML or generator bindings, then rerun. -->
+<view class="phone-page design-detail-page worker-theme" data-dom-id="page-worker-withdraw-result">
+    <view class="status-bar"><text class="tag-span">9:41</text><text class="status-icons tag-span">●●●</text></view>
+    <view class="topbar">
+      <view class="icon-button design-button" data-dom-id="withdraw-result-close" data-route="/pages/worker-wallet/index" bindtap="onNavigate"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M6%206l12%2012M18%206%206%2018%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view>
+      <view class="tag-h1">提现结果</view><text class="tag-span"></text>
+    </view>
+    <view class="page-body">
+      <view class="hero result-state pending">
+        <view class="result-icon"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%23D4944C%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2212%22%20r%3D%229%22%2F%3E%3Cpath%20d%3D%22M12%207v5l3%202%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view>
+        <view class="hero-kicker tag-p">申请已提交</view><view class="tag-h2">提现处理中</view><view class="hero-number">¥ 500.00</view><view class="tag-p">当前由银行处理 · 预计 1—3 个工作日到账</view>
+      </view>
+
+      <view class="section">
+        <view class="section-title"><text class="tag-strong">处理进度</text><text class="tag-span">刚刚更新</text></view>
+        <view class="card timeline">
+          <view class="timeline-item"><text class="tag-strong">提交提现申请</text><text class="tag-span">08-03 16:42 · 已通过账户校验</text></view>
+          <view class="timeline-item"><text class="tag-strong">银行处理中</text><text class="tag-span">当前责任方：工商银行</text></view>
+          <view class="timeline-item pending"><text class="tag-strong">预计到账</text><text class="tag-span">08-06 23:59 前</text></view>
+        </view>
+      </view>
+
+      <view class="section card list-card">
+        <view class="list-row"><text class="row-main tag-span"><text class="row-title tag-span">到账方式</text></text><text class="row-value tag-span">工商银行 · 尾号 8888</text></view>
+        <view class="list-row"><text class="row-main tag-span"><text class="row-title tag-span">提现金额</text></text><text class="row-value tag-span">¥500.00</text></view>
+        <view class="list-row"><text class="row-main tag-span"><text class="row-title tag-span">手续费</text></text><text class="row-value tag-span">¥0.50</text></view>
+        <view class="list-row"><text class="row-main tag-span"><text class="row-title tag-span">申请单号</text></text><text class="row-value tag-span">WD20260803008</text></view>
+      </view>
+
+      <view class="notice info">处理中无需重复申请。失败时资金会退回“可提现”，并展示原因与下一步。</view>
+    </view>
+    <view class="fixed-actions">
+      <view class="btn secondary design-button" data-dom-id="withdraw-result-record" data-route="/pages/client-withdraw-record/index?role=worker&request_id=WD20260803008" bindtap="onNavigate">查看提现记录</view>
+      <view class="btn primary design-button" data-dom-id="withdraw-result-wallet" data-route="/pages/worker-wallet/index" bindtap="onNavigate">返回钱包</view>
+    </view>
+  </view>

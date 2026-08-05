@@ -1,0 +1,106 @@
+﻿<view class="phone-page design-detail-page" data-page-id="page-client-order-chat">
+  <view class="status-bar"><text class="tag-span">9:41</text><text class="status-icons tag-span">● WiFi 100%</text></view>
+  <view class="topbar">
+    <view class="icon-button design-button" bindtap="onBack"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m15%2018-6-6%206-6M9%2012h10%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view>
+    <view class="tag-h1">{{workerName || '师傅'}}</view>
+    <view class="icon-button design-button" bindtap="onCallWorker"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M22%2016.92v3a2%202%200%200%201-2.18%202%2019.8%2019.8%200%200%201-8.63-3.07%2019.5%2019.5%200%200%201-6-6A19.8%2019.8%200%200%201%202.12%204.18%202%202%200%200%201%204.11%202h3a2%202%200%200%201%202%201.72c.12.9.33%201.78.62%202.63a2%202%200%200%201-.45%202.11L8%209.73a16%2016%200%200%200%206%206l1.27-1.27a2%202%200%200%201%202.11-.45c.85.29%201.73.5%202.63.62A2%202%200%200%201%2022%2016.92z%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view>
+  </view>
+  <view class="page-body">
+    <view class="section-title">
+      <text class="tag-strong">订单沟通</text>
+      <text wx:if="{{workerOnline}}" class="badge success tag-span">在线</text>
+      <text wx:else class="badge info tag-span">离线</text>
+    </view>
+
+    <!-- 订单卡片 -->
+    <view class="section">
+      <view class="card list-card" bindtap="onGoOrderDetail">
+        <view class="list-row">
+          <view class="row-icon tag-span"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%235B8C5A%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%225%22%20y%3D%223%22%20width%3D%2214%22%20height%3D%2218%22%20rx%3D%222%22%2F%3E%3Cpath%20d%3D%22M9%207h6M9%2011h6M9%2015h4%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view>
+          <view class="row-main">
+            <view class="row-title">{{orderServiceName || '维修服务'}}</view>
+            <view class="row-copy" wx:if="{{orderNo}}">#{{orderNo}} · {{orderStatusText}}</view>
+            <view class="row-copy" wx:else>{{orderStatusText}}</view>
+          </view>
+          <text class="badge warning tag-span">{{orderStatusText}}</text>
+          <text class="chevron tag-span">›</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 加载态 -->
+    <view wx:if="{{loading}}" class="section">
+      <view class="card">
+        <view class="empty-state">
+          <view class="empty-icon">!</view>
+          <view class="tag-h3">加载中</view>
+          <view class="tag-p">正在获取订单沟通信息…</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 错误态 -->
+    <view wx:elif="{{loadError}}" class="section">
+      <view class="card">
+        <view class="empty-state" bindtap="onRetry">
+          <view class="empty-icon"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M22%2016.92v3a2%202%200%200%201-2.18%202%2019.8%2019.8%200%200%201-8.63-3.07%2019.5%2019.5%200%200%201-6-6A19.8%2019.8%200%200%201%202.12%204.18%202%202%200%200%201%204.11%202h3a2%202%200%200%201%202%201.72c.12.9.33%201.78.62%202.63a2%202%200%200%201-.45%202.11L8%209.73a16%2016%200%200%200%206%206l1.27-1.27a2%202%200%200%201%202.11-.45c.85.29%201.73.5%202.63.62A2%202%200%200%201%2022%2016.92z%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view>
+          <view class="tag-h3">加载失败</view>
+          <view class="tag-p">{{emptyText}} · 点击重试</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 聊天消息 / 空态 -->
+    <view wx:else class="section">
+      <view class="section-title"><text class="tag-strong">今天</text><text class="tag-span">消息仅用于本订单</text></view>
+
+      <!-- 消息列表 -->
+      <block wx:if="{{messages.length > 0}}">
+        <view class="card">
+          <view wx:for="{{messages}}" wx:key="id" wx:for-item="msg">
+            <view wx:if="{{index > 0}}" class="divider"></view>
+            <view class="list-row" wx:if="{{!msg.isSelf}}">
+              <text class="avatar tag-span">{{workerAvatarText}}</text>
+              <view class="row-main">
+                <view class="row-title">{{workerName}}</view>
+                <view class="row-copy">{{msg.content}}</view>
+              </view>
+              <text class="row-value tag-span">{{msg.time}}</text>
+            </view>
+            <view class="list-row" wx:else>
+              <view class="row-main">
+                <view class="row-title" style="text-align:right">我</view>
+                <view class="row-copy" style="text-align:right">{{msg.content}}</view>
+              </view>
+              <text class="row-value tag-span">{{msg.time}} ✓</text>
+            </view>
+          </view>
+        </view>
+      </block>
+
+      <!-- 空态 -->
+      <view wx:else class="card">
+        <view class="empty-state">
+          <view class="empty-icon"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%235B8C5A%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%225%22%20y%3D%223%22%20width%3D%2214%22%20height%3D%2218%22%20rx%3D%222%22%2F%3E%3Cpath%20d%3D%22M9%207h6M9%2011h6M9%2015h4%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view>
+          <view class="tag-h3">{{emptyText}}</view>
+          <view class="tag-p">您可以通过下方快捷消息联系师傅沟通到达时间等信息</view>
+        </view>
+      </view>
+      <!-- 快捷消息 -->
+      <view class="section">
+        <view class="chips">
+          <view wx:for="{{quickActions}}" wx:key="key" wx:for-item="action" class="chip design-button" data-text="{{action.text}}" bindtap="onQuickTap">{{action.text}}</view>
+        </view>
+      </view>
+      <view class="notice info">请勿在聊天中发送身份证号、银行卡号等敏感信息。争议处理可联系人工客服。</view>
+    </view>
+  </view>
+
+  <!-- 底部发送栏 -->
+  <view class="fixed-actions">
+    <view class="btn secondary design-button" bindtap="onOpenImagePicker">＋</view>
+    <input class="input" placeholder="输入订单消息…" value="{{inputValue}}" bindinput="onInput" confirm-type="send" bindconfirm="onSend" />
+    <view class="btn primary design-button" style="flex:0 0 152rpx" bindtap="onSend">发送</view>
+  </view>
+</view>
+

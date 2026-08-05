@@ -1,0 +1,59 @@
+<view class="page payment-page">
+  <view class="nav-bar">
+    <view class="nav-icon-btn" bindtap="onBack"><image class="nav-icon" src="{{icons.back}}" /></view>
+    <text class="nav-title">确认支付</text>
+    <view class="nav-icon-btn" bindtap="onHelp"><image class="nav-icon" src="{{icons.help}}" /></view>
+  </view>
+
+  <scroll-view scroll-y class="payment-scroll" show-scrollbar="{{false}}">
+    <view class="state-panel" wx:if="{{loading}}"><text>正在核对订单与支付权限…</text></view>
+    <view class="state-panel" wx:elif="{{loadError}}"><text class="state-title">订单加载失败</text><text class="state-desc">{{unavailableReason}}</text></view>
+    <block wx:else>
+      <view class="amount-section">
+        <view class="glass-neu-card amount-card">
+          <text class="amount-label">支付金额</text>
+          <view class="amount-value mono"><text class="currency">¥</text><text>{{payAmountText}}</text></view>
+          <text class="order-no">订单号：{{order.order_no}}</text>
+        </view>
+      </view>
+
+      <view class="contract-warning" wx:if="{{unavailableReason}}"><text class="warning-title">当前无法支付</text><text class="warning-desc">{{unavailableReason}}。页面已安全禁用资金操作，请刷新订单或联系客服。</text></view>
+      <view class="contract-warning checking" wx:if="{{resultChecking}}" bindtap="onRefreshPaymentResult"><text class="warning-title">支付结果确认中</text><text class="warning-desc">最终结果以服务端查单为准，请勿重复支付。点此可立即刷新。</text></view>
+
+      <view class="section">
+        <view class="section-title">支付方式</view>
+        <view class="pay-method-list" wx:if="{{paymentMethods.length}}">
+          <view class="pay-method-item {{selectedMethod === item.key ? 'selected' : ''}} {{!item.enabled ? 'disabled' : ''}}" wx:for="{{paymentMethods}}" wx:key="key" data-key="{{item.key}}" bindtap="onSelectMethod">
+            <view class="pay-method-icon {{item.iconClass}}"><image src="{{item.key === 'wechat' ? icons.wechat : (item.key === 'wallet' ? icons.wallet : (item.key === 'combined' ? icons.combined : icons.offline))}}" /></view>
+            <view class="pay-method-info"><text class="pay-method-name">{{item.name}}</text><text class="pay-method-desc">{{item.disabledReason || item.desc}}</text></view>
+            <view class="pay-method-radio"></view>
+          </view>
+        </view>
+        <view class="method-empty" wx:else><text>服务端未返回支付渠道</text></view>
+      </view>
+
+      <view class="section">
+        <view class="coupon-selector" bindtap="onCoupon">
+          <view class="coupon-left"><view class="coupon-icon"><image src="{{icons.coupon}}" /></view><text class="coupon-text">优惠券</text></view>
+          <view class="coupon-right"><text class="coupon-discount">{{selectedCoupon ? ('- ¥' + selectedCoupon.discount_amount) : (coupons.length ? (coupons.length + '张可用') : '暂无可用')}}</text><image class="coupon-arrow" src="{{icons.arrow}}" /></view>
+        </view>
+      </view>
+
+      <view class="section">
+        <view class="section-title">费用明细</view>
+        <view class="glass-neu-card detail-card">
+          <view class="detail-row"><text class="detail-label">订单当前应付</text><text class="detail-value mono">¥{{amountText}}</text></view>
+          <view class="detail-row" wx:if="{{selectedCoupon}}"><text class="detail-label">优惠券抵扣</text><text class="detail-value highlight mono">- ¥{{discountAmountText}}</text></view>
+          <view class="detail-row total"><text class="detail-label strong">实付金额</text><text class="detail-total mono">¥{{payAmountText}}</text></view>
+        </view>
+      </view>
+      <view class="security-tip"><image src="{{icons.shield}}" /><text>资金结果以支付回调与服务端查单为准</text></view>
+      <view class="scroll-spacer"></view>
+    </block>
+  </scroll-view>
+
+  <view class="pay-bottom-bar safe-bottom" wx:if="{{order}}">
+    <view><text class="pay-total-label">合计</text><view class="pay-total-amount mono"><text class="currency">¥</text><text>{{payAmountText}}</text></view></view>
+    <button class="pay-now-btn" bindtap="onPay" loading="{{paying}}" disabled="{{!canPay || paying || resultChecking}}">{{resultChecking ? '结果确认中' : ('确认支付 ¥' + payAmountText)}}</button>
+  </view>
+</view>

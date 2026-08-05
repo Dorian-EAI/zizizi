@@ -1,0 +1,12 @@
+<view class="phone-page design-detail-page" data-page-id="page-client-invoice-orders">
+  <view class="status-bar"><text class="tag-span">9:41</text><text class="status-icons tag-span">● WiFi 100%</text></view>
+  <view class="topbar"><view class="icon-button design-button" data-route="/pages/client-invoice/index" bindtap="onNavigate"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m15%2018-6-6%206-6M9%2012h10%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view><view class="tag-h1">可开票订单</view><view class="top-action design-button is-disabled" bindtap="onUnavailable">全选</view></view>
+  <view class="page-body">
+    <view class="hero"><view class="hero-kicker tag-p">AVAILABLE TO INVOICE</view><view class="tag-h2">开票资格待接入</view><view class="hero-number">¥ —</view><view class="tag-p">不能把普通已完成订单推断成可开票订单。</view></view>
+    <view class="section-title"><text class="tag-strong">选择状态</text><text class="badge warning tag-span">未选择</text></view>
+    <view class="section"><view class="empty-state truthful-empty"><view class="tag-h3">暂无可验证的可开票订单</view><view class="tag-p">待后端提供开票资格、重复开票与退款冲突校验后开放。</view></view></view>
+    <view class="btn secondary block design-button is-disabled" bindtap="onUnavailable">查看所选订单详情</view>
+    <view class="notice info">本页没有使用画布示例订单号或金额，也不会提交任何开票申请。</view>
+  </view>
+  <view class="fixed-actions"><view class="btn primary design-button is-disabled" bindtap="onUnavailable">下一步 · 服务未开放</view></view>
+</view>

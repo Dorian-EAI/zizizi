@@ -1,6 +1,6 @@
 <!-- pages/worker-withdraw/index.wxml — 师傅提现页 玻璃新拟态（像素级复刻 worker-withdraw.html） -->
 <view class="page">
-  <!-- 背景装饰光斑：径向渐变（blue-sage 配色） -->
+  <!-- 背景装饰光斑：径向渐变（blue-gold 配色） -->
   <view class="blob" style="top: -80rpx; right: -120rpx; width: 480rpx; height: 480rpx; background: radial-gradient(circle, var(--brand-worker) 0%, transparent 70%);"></view>
   <view class="blob" style="top: 760rpx; left: -160rpx; width: 420rpx; height: 420rpx; background: radial-gradient(circle, var(--sage) 0%, transparent 70%);"></view>
 

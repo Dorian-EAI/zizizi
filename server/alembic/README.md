@@ -1,6 +1,6 @@
 # 数据库迁移规范
 
-Alembic 是已部署数据库结构的唯一迁移权威。当前首个受管版本为 `59fdc7715893`，覆盖当前 40 张 ORM 表；实际 revision 链始终以 `server/alembic/versions/` 中受版本控制的文件为准。
+Alembic 是已部署数据库结构的唯一迁移权威。首个受管基线 `59fdc7715893` 建立当时的 40 张表，后续显式迁移加入管理员审计和资金请求幂等表，当前 ORM 共 42 张表。实际 revision 链和 head 始终以 `server/alembic/versions/` 中受版本控制的文件及 `alembic heads` 的动态结果为准，不在文档中维护固定 head。
 
 ## 权威文档
 

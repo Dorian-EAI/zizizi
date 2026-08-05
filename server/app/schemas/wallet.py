@@ -28,6 +28,7 @@ class PayRequest(BaseModel):
     coupon_id: Optional[int] = Field(None, gt=0)
     wallet_amount: Optional[float] = Field(None, ge=0, le=1000000)
     wechat_amount: Optional[float] = Field(None, ge=0, le=1000000)
+    order_version: Optional[int] = Field(None, ge=0)
 
 
 class RefundRequest(BaseModel):

@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>自家人居家维修 · 玻璃新拟态 · 师傅设置</title>
-    <link rel="stylesheet" href="../assets/fonts.css">
-
     <style id="theme-vars">
 /* 自家人居家维修 - 玻璃新拟态 */
 :root {
@@ -14,7 +12,7 @@
   --brand-dark: #2456B8;
   --brand-mid: #5A8EE8;
   --brand-light: #DCE8FB;
-  --brand-glow: rgba(45, 108, 223, 0.28);
+  --brand-glow: rgba(45, 108, 223, 0.18);
   --brand-subtle: rgba(45, 108, 223, 0.08);
 
   /* Accent (Amber) */
@@ -82,11 +80,11 @@
   --radius-lg: 1.6rem;
   --radius-full: 9999px;
 
-    /* Font — 统一衬线系统 */
+  /* Font — unified serif system */
   --font-display: 'Cormorant Garamond', 'Noto Serif SC', 'STSong', Georgia, serif;
-  --font-body: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-  --font-nums: 'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
-  --font: var(--font-body);
+  --font-body:    'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --font-nums:    'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
+  --font:         var(--font-body);
 
   /* Motion */
   --spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -127,9 +125,8 @@
   --radius-sm: var(--radius-sm);
   --radius-md: var(--radius-md);
   --radius-lg: var(--radius-lg);
-  --font-sans: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-  --font-serif: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-  --radius-full: var(--radius-full);}
+  --radius-full: var(--radius-full);
+}
 
 /* Semantic token fallback */
 #semantic-token-fallback {
@@ -152,6 +149,113 @@
 }
 
 /* ===== Global Neumorphic Components ===== */
+/* Tab Bar — Premium Liquid Glass, absolute-positioned within .phone frame */
+.tab-bar{
+  position:absolute;
+  bottom:10px;
+  left:50%;
+  transform:translateX(-50%);
+  width:calc(100% - 32px);
+  max-width:360px;
+  height:56px;
+  z-index:100;
+  background:rgba(255,255,255,0.18);
+  backdrop-filter:blur(48px) saturate(210%);
+  -webkit-backdrop-filter:blur(48px) saturate(210%);
+  border:0.5px solid rgba(255,255,255,0.45);
+  border-radius:24px;
+  box-shadow:
+    inset 0 1.5px 3px rgba(255,255,255,0.60),
+    inset 0 -0.5px 1px rgba(255,255,255,0.20),
+    0 0 0 0.5px rgba(0,0,0,0.04),
+    0 2px 10px rgba(0,0,0,0.06),
+    0 12px 36px rgba(0,0,0,0.08);
+  display:flex;
+  align-items:center;
+  justify-content:space-around;
+  padding:0 6px;
+}
+.tab-bar::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  background:linear-gradient(160deg,
+    rgba(255,255,255,0.42) 0%,
+    rgba(255,255,255,0.16) 20%,
+    rgba(255,255,255,0.03) 40%,
+    transparent 60%);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
+  padding:0.5px;
+  pointer-events:none;
+  z-index:1;
+}
+.tab-bar::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  background:linear-gradient(320deg,
+    transparent 60%,
+    rgba(13,148,136,0.06) 80%,
+    rgba(255,255,255,0.04) 100%);
+  pointer-events:none;
+  z-index:1;
+}
+.tab-item{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+  width:68px;
+  height:44px;
+  border-radius:14px;
+  color:var(--text-3);
+  font-size:11px;
+  font-weight:500;
+  text-decoration:none;
+  position:relative;
+  transition:all .2s;
+}
+.tab-item svg{
+  width:20px;
+  height:20px;
+  stroke:currentColor;
+  fill:none;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.tab-item[data-active="true"]{
+  color:var(--brand);
+  font-weight:600;
+}
+.tab-item[data-active="true"]::before{
+  content:"";
+  position:absolute;
+  width:54px;
+  height:42px;
+  border-radius:16px;
+  background:rgba(13,148,136,0.16);
+  backdrop-filter:blur(24px);
+  -webkit-backdrop-filter:blur(24px);
+  border:0.5px solid rgba(13,148,136,0.30);
+  box-shadow:
+    inset 0 1px 3px rgba(255,255,255,0.55),
+    inset 0 -0.5px 1px rgba(255,255,255,0.15),
+    0 2px 10px rgba(13,148,136,0.20),
+    0 0 0 0.5px rgba(13,148,136,0.08);
+  z-index:0;
+}
+.tab-item[data-active="true"] svg{
+  transform:scale(1.08);
+  position:relative;
+  z-index:1;
+}
+
 /* Buttons */
 .btn-neu-primary{
   display:inline-flex;align-items:center;justify-content:center;
@@ -208,8 +312,6 @@
     --radius-md: var(--radius-md);
     --radius-lg: var(--radius-lg);
     --radius-full: var(--radius-full);
-    --font-sans: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-    --font-serif: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
   }
   @layer base {
     body { background: var(--background); color: var(--foreground); }
@@ -297,7 +399,7 @@
 
   <!-- ===== TOP NAV BAR (sticky) ===== -->
   <header class="nav-bar">
-    <button class="nav-icon-btn" data-dom-id="back-btn" aria-label="返回">
+    <button class="nav-icon-btn" data-dom-id="settings-back" data-target-page="page-worker-profile" aria-label="返回">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
         <path d="m15 18-6-6 6-6"/>
       </svg>
@@ -343,7 +445,7 @@
   <section class="section">
     <div class="group-title">接单设置</div>
     <div class="glass-neu-card setting-group">
-      <div class="setting-row" data-dom-id="row-receive-range">
+      <div class="setting-row" data-dom-id="row-receive-range" data-target-page="page-worker-order-setting">
         <div class="row-icon row-icon-brand">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
             <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
@@ -356,7 +458,7 @@
           <svg class="row-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
         </span>
       </div>
-      <div class="setting-row" data-dom-id="row-service-category">
+      <div class="setting-row" data-dom-id="row-service-category" data-target-page="page-worker-service-scope">
         <div class="row-icon row-icon-blue">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
             <rect width="7" height="7" x="3" y="3" rx="1"/>
@@ -371,7 +473,7 @@
           <svg class="row-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
         </span>
       </div>
-      <div class="setting-row" data-dom-id="row-receive-toggle">
+      <div class="setting-row" data-dom-id="row-receive-toggle" data-action="toggle-receiving">
         <div class="row-icon row-icon-green">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
             <path d="M12 2v10"/>
@@ -380,18 +482,7 @@
         </div>
         <span class="row-title">接单开关</span>
         <span class="row-tail">
-          <button class="toggle toggle-on" aria-pressed="true" aria-label="接单开关"><span class="toggle-thumb"></span></button>
-        </span>
-      </div>
-      <div class="setting-row" data-dom-id="row-auto-receive">
-        <div class="row-icon row-icon-orange">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/>
-          </svg>
-        </div>
-        <span class="row-title">自动接单</span>
-        <span class="row-tail">
-          <button class="toggle toggle-off" aria-pressed="false" aria-label="自动接单开关"><span class="toggle-thumb"></span></button>
+          <button class="toggle toggle-on" data-dom-id="settings-order-status-toggle" data-action="toggle-receiving" aria-pressed="true" aria-label="接单开关"><span class="toggle-thumb"></span></button>
         </span>
       </div>
     </div>
@@ -401,7 +492,7 @@
   <section class="section">
     <div class="group-title">账号与安全</div>
     <div class="glass-neu-card setting-group">
-      <div class="setting-row" data-dom-id="row-change-pwd">
+      <div class="setting-row" data-dom-id="row-change-pwd" data-target-page="page-client-password">
         <div class="row-icon row-icon-brand">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
             <rect width="18" height="11" x="3" y="11" rx="2"/>
@@ -413,7 +504,7 @@
           <svg class="row-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
         </span>
       </div>
-      <div class="setting-row" data-dom-id="row-bind-phone">
+      <div class="setting-row" data-dom-id="row-bind-phone" data-target-page="page-client-bind-phone">
         <div class="row-icon row-icon-blue">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
             <rect width="14" height="20" x="5" y="2" rx="2" ry="2"/>
@@ -426,7 +517,7 @@
           <svg class="row-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
         </span>
       </div>
-      <div class="setting-row" data-dom-id="row-realname">
+      <div class="setting-row" data-dom-id="row-realname" data-target-page="page-worker-certification">
         <div class="row-icon row-icon-green">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
             <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>
@@ -439,7 +530,7 @@
           <svg class="row-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
         </span>
       </div>
-      <div class="setting-row" data-dom-id="row-certificates">
+      <div class="setting-row" data-dom-id="row-certificates" data-target-page="page-worker-cert-manage">
         <div class="row-icon row-icon-orange">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="8" r="6"/>
@@ -459,7 +550,7 @@
   <section class="section">
     <div class="group-title">消息通知</div>
     <div class="glass-neu-card setting-group">
-      <div class="setting-row" data-dom-id="row-new-order-notify">
+      <div class="setting-row" data-dom-id="row-new-order-notify" data-action="toggle-new-order-notify">
         <div class="row-icon row-icon-orange">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
             <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/>
@@ -468,10 +559,10 @@
         </div>
         <span class="row-title">新订单提醒</span>
         <span class="row-tail">
-          <button class="toggle toggle-on" aria-pressed="true" aria-label="新订单提醒开关"><span class="toggle-thumb"></span></button>
+          <button class="toggle toggle-on" data-dom-id="settings-new-order-notice-toggle" data-action="toggle-new-order-notify" aria-pressed="true" aria-label="新订单提醒开关"><span class="toggle-thumb"></span></button>
         </span>
       </div>
-      <div class="setting-row" data-dom-id="row-system-notify">
+      <div class="setting-row" data-dom-id="row-system-notify" data-action="toggle-system-notify">
         <div class="row-icon row-icon-blue">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
             <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
@@ -479,10 +570,10 @@
         </div>
         <span class="row-title">系统消息</span>
         <span class="row-tail">
-          <button class="toggle toggle-on" aria-pressed="true" aria-label="系统消息开关"><span class="toggle-thumb"></span></button>
+          <button class="toggle toggle-on" data-dom-id="settings-system-message-toggle" data-action="toggle-system-notify" aria-pressed="true" aria-label="系统消息开关"><span class="toggle-thumb"></span></button>
         </span>
       </div>
-      <div class="setting-row" data-dom-id="row-income-notify">
+      <div class="setting-row" data-dom-id="row-income-notify" data-action="toggle-income-notify">
         <div class="row-icon row-icon-brand">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
             <path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 1 0-4h2"/>
@@ -492,7 +583,7 @@
         </div>
         <span class="row-title">收益到账提醒</span>
         <span class="row-tail">
-          <button class="toggle toggle-on" aria-pressed="true" aria-label="收益到账提醒开关"><span class="toggle-thumb"></span></button>
+          <button class="toggle toggle-on" data-dom-id="settings-income-notice-toggle" data-action="toggle-income-notify" aria-pressed="true" aria-label="收益到账提醒开关"><span class="toggle-thumb"></span></button>
         </span>
       </div>
     </div>
@@ -502,7 +593,7 @@
   <section class="section">
     <div class="group-title">其他</div>
     <div class="glass-neu-card setting-group">
-      <div class="setting-row" data-dom-id="row-clear-cache">
+      <div class="setting-row" data-dom-id="row-clear-cache" data-action="clear-cache">
         <div class="row-icon row-icon-orange">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
             <path d="M3 6h18"/>
@@ -517,7 +608,7 @@
           <svg class="row-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
         </span>
       </div>
-      <div class="setting-row" data-dom-id="row-about">
+      <div class="setting-row" data-dom-id="row-about" data-target-page="page-client-about">
         <div class="row-icon row-icon-brand">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="10"/>
@@ -530,7 +621,7 @@
           <svg class="row-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
         </span>
       </div>
-      <div class="setting-row" data-dom-id="row-user-agreement">
+      <div class="setting-row" data-dom-id="row-user-agreement" data-target-page="page-client-agreement">
         <div class="row-icon row-icon-blue">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
             <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/>
@@ -545,7 +636,7 @@
           <svg class="row-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
         </span>
       </div>
-      <div class="setting-row" data-dom-id="row-privacy-policy">
+      <div class="setting-row" data-dom-id="row-privacy-policy" data-target-page="page-client-agreement">
         <div class="row-icon row-icon-green">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/>
@@ -564,7 +655,7 @@
 
   <!-- ===== LOGOUT BUTTON ===== -->
   <section class="section logout-section">
-    <button class="logout-btn" data-dom-id="logout">退出登录</button>
+    <button class="logout-btn" data-dom-id="logout" data-target-page="page-client-login">退出登录</button>
   </section>
 
 </div>
@@ -573,9 +664,9 @@
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{
   --brand:#2D6CDF;--brand-dark:#2456B8;--brand-mid:#5A8EE8;--brand-light:#DCE8FB;
-  --brand-glow:rgba(45,108,223,0.28);--brand-subtle:rgba(45,108,223,0.08);
-  --brand-gradient:linear-gradient(135deg,#2D6CDF 0%,#5A8EE8 50%,#D4944C 100%);
-  --accent:#D4944C;--accent-dark:#A0723C;--accent-light:#F5E6D0;--accent-glow:rgba(212,148,76,0.25);
+  --brand-glow:rgba(45,108,223,0.18);--brand-subtle:rgba(45,108,223,0.08);
+  --brand-gradient:linear-gradient(135deg,#2D6CDF 0%,#5A8EE8 48%,#D4944C 100%);
+  --accent:#D4944C;--accent-dark:#A0723C;--accent-light:#F5E6D0;--accent-glow:rgba(212,148,76,0.16);
   --bg:#F2EDE8;--bg-elevated:#F7F3EF;
   --neu-light:#FFF8F2;--neu-dark:#DDD6CE;
   --text-1:#2C2824;--text-2:#8B8178;--text-3:#B5ADA5;--text-inverse:#FFFFFF;
@@ -603,7 +694,7 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
 .mono{font-variant-numeric:tabular-nums;letter-spacing:-0.01em}
 
 /* ===== Top Nav Bar (sticky) ===== */
-.nav-bar{background:radial-gradient(ellipse 220px 160px at 78% 45%,rgba(143,169,152,.14) 0%,transparent 70%),radial-gradient(ellipse 180px 140px at 18% 75%,rgba(45,108,223,.16) 0%,transparent 70%),linear-gradient(135deg,rgba(45,108,223,.14) 0%,rgba(143,169,152,.08) 50%,rgba(45,108,223,.06) 100%);position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:18px 20px;padding-top:max(18px,env(safe-area-inset-top)); border-radius:0 0 28px 28px; overflow:hidden;}
+.nav-bar{background:radial-gradient(ellipse 220px 160px at 78% 45%,rgba(212,148,76,.10) 0%,transparent 70%),radial-gradient(ellipse 180px 140px at 18% 75%,rgba(45,108,223,.10) 0%,transparent 70%),linear-gradient(135deg,rgba(45,108,223,.08) 0%,rgba(212,148,76,.04) 50%,rgba(45,108,223,.05) 100%);position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:18px 20px;padding-top:max(18px,env(safe-area-inset-top)); border-radius:0 0 28px 28px; overflow:hidden;}
 .nav-icon-btn{
   width:44px;height:44px;border-radius:50%;border:none;
   background:var(--bg-elevated);
@@ -627,7 +718,7 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
   backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);
   border:1px solid rgba(255,255,255,0.70);
   border-radius:var(--r-lg);
-  box-shadow:var(--neu-out-md),0 6px 28px rgba(0,0,0,0.06),0 2px 8px rgba(45,108,223,0.04),0 0 0 1px rgba(44,40,36,0.05);
+  box-shadow:var(--neu-out-md),0 6px 28px rgba(0,0,0,0.06),0 2px 8px rgba(45,108,223,.04),0 0 0 1px rgba(44,40,36,0.05);
   position:relative;overflow:hidden;
 }
 .glass-neu-card::before{
@@ -669,7 +760,7 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
   background:var(--brand-subtle);color:var(--brand);
   font-size:10.5px;font-weight:600;
   padding:2px 8px;border-radius:var(--r-pill);
-  border:0.5px solid rgba(45,108,223,0.18);
+  border:0.5px solid rgba(45,108,223,.09);
 }
 .worker-gold-tag svg{width:11px;height:11px;color:var(--accent-dark)}
 .online-pill{

@@ -9,6 +9,8 @@ from app.models.coupon import Coupon
 from app.utils.logger import get_logger
 
 logger = get_logger("tasks.jobs")
+_MUTATION_BATCH_SIZE = 500
+_PAYMENT_BATCH_SIZE = 200
 
 
 def _get_db() -> Session:
@@ -25,6 +27,8 @@ def auto_cancel_expired_orders():
         expired = (
             db.query(Order)
             .filter(Order.status == "pending", Order.created_at < deadline)
+            .order_by(Order.created_at.asc())
+            .limit(_MUTATION_BATCH_SIZE)
             .all()
         )
         count = 0
@@ -50,6 +54,8 @@ def auto_complete_orders():
         orders = (
             db.query(Order)
             .filter(Order.status == "accepted", Order.completed_at < deadline)
+            .order_by(Order.completed_at.asc())
+            .limit(_MUTATION_BATCH_SIZE)
             .all()
         )
         count = 0
@@ -76,6 +82,8 @@ def expire_coupons():
         expired = (
             db.query(Coupon)
             .filter(Coupon.status == "active", Coupon.expire_at < now)
+            .order_by(Coupon.expire_at.asc())
+            .limit(_MUTATION_BATCH_SIZE)
             .all()
         )
         count = 0
@@ -211,7 +219,7 @@ def audit_deposit_refunds():
         worker_ids = [row[0] for row in db.query(WorkerDeposit.worker_id).filter(
             WorkerDeposit.status == "refunding",
             WorkerDeposit.refund_requested_at <= deadline,
-        ).all()]
+        ).order_by(WorkerDeposit.refund_requested_at.asc()).limit(_PAYMENT_BATCH_SIZE).all()]
         db.close()
         db = None
         for worker_id in worker_ids:
@@ -272,11 +280,22 @@ def send_quality_inspection_reminders():
     db = _get_db()
     try:
         from app.services.quality_service import get_inspections_to_send
+        from app.services.message_service import send_inbox_message
         inspections = get_inspections_to_send(db)
         count = 0
         for insp in inspections:
-            # 标记已发送（实际应调用消息推送服务）
             from datetime import datetime
+            send_inbox_message(
+                db,
+                owner_type="user",
+                owner_id=insp.user_id,
+                msg_type="order",
+                title="服务回访邀请",
+                content="请为最近完成的服务提交回访评价，您的反馈会用于服务质检。",
+                payload={"inspection_id": insp.id, "order_id": insp.order_id},
+                commit=False,
+            )
+            # 站内消息与 send_at 在同一事务提交，失败时可由下轮安全重试。
             insp.send_at = datetime.utcnow()
             count += 1
         db.commit()
@@ -301,7 +320,7 @@ def auto_close_resolved_tickets():
         tickets = db.query(SupportTicket).filter(
             SupportTicket.status == "resolved",
             SupportTicket.resolved_at < deadline,
-        ).all()
+        ).order_by(SupportTicket.resolved_at.asc()).limit(_MUTATION_BATCH_SIZE).all()
         count = 0
         for t in tickets:
             t.status = "closed"

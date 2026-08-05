@@ -100,7 +100,7 @@ def list_active_templates(db: Session) -> List[dict]:
     """列出所有激活中的模板 + 剩余数量"""
     now = datetime.utcnow()
     q = db.query(CouponTemplate).filter(CouponTemplate.is_active == True)
-    templates = q.order_by(CouponTemplate.created_at.desc()).all()
+    templates = q.order_by(CouponTemplate.created_at.desc()).limit(200).all()
 
     result: List[dict] = []
     for t in templates:
@@ -177,7 +177,7 @@ def list_my_coupons(db: Session, user: User, status: Optional[str] = None) -> Li
     q = db.query(Coupon).filter(Coupon.user_id == user.id)
     if status:
         q = q.filter(Coupon.status == status)
-    coupons = q.order_by(Coupon.received_at.desc()).all()
+    coupons = q.order_by(Coupon.received_at.desc()).limit(500).all()
 
     tpl_cache: Dict[int, CouponTemplate] = {}
     result: List[dict] = []
@@ -203,6 +203,8 @@ def list_available_for_order(
         .filter(Coupon.user_id == user.id)
         .filter(Coupon.status == "available")
         .filter((Coupon.expire_at == None) | (Coupon.expire_at >= now))
+        .order_by(Coupon.received_at.desc())
+        .limit(500)
         .all()
     )
 

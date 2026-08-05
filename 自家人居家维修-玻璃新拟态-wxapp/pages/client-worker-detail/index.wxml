@@ -1,0 +1,40 @@
+<!-- REVIEWED BUSINESS VIEW: public worker data and reviews come from server APIs. -->
+<view class="phone-page design-detail-page" data-page-id="page-client-worker-detail">
+  <view class="status-bar"><text class="tag-span">9:41</text><text class="status-icons tag-span">● WiFi 100%</text></view>
+  <view class="topbar"><view class="icon-button design-button" bindtap="onBack"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m15%2018-6-6%206-6M9%2012h10%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view><view class="tag-h1">师傅详情</view><view class="top-action design-button" bindtap="onFavorite">{{favorite ? '已收藏' : '收藏'}}</view></view>
+  <view class="page-body">
+    <view class="section card" wx:if="{{loading}}"><view class="tag-p">正在加载已认证师傅资料…</view></view>
+    <view class="section card" wx:elif="{{loadError}}"><view class="tag-h2">资料暂不可用</view><view class="tag-p">{{loadError}}</view><view class="btn secondary design-button" bindtap="onRetry">重新加载</view></view>
+    <block wx:elif="{{worker}}">
+      <view class="hero">
+        <view class="hero-kicker tag-p">VERIFIED PROFESSIONAL</view>
+        <view class="row-icon tag-span">{{worker.initial}}</view>
+        <view class="tag-h2">{{worker.name}}</view>
+        <view class="tag-p">{{services.length ? services[0].name : '服务类型待平台配置'}} · {{worker.areaText}}</view>
+        <view class="chips"><view class="chip active">★ {{worker.ratingText}}</view><view class="chip">{{worker.certifiedText}}</view><view class="chip">已完成 {{worker.completedText}} 单</view></view>
+        <view class="btn secondary design-button" bindtap="onContact">订单内联系</view>
+      </view>
+
+      <view class="section">
+        <view class="section-title"><text class="tag-strong">服务项目</text><text class="tag-span">以发布页实时校验为准</text></view>
+        <view class="card list-card" wx:if="{{services.length}}">
+          <view class="list-row design-button" wx:for="{{services}}" wx:key="id" data-service="{{item.name}}" bindtap="onPublish">
+            <view class="row-icon tag-span"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%230D9488%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M20.8%204.6a5.5%205.5%200%200%200-7.8%200L12%205.7l-1.1-1.1a5.5%205.5%200%200%200-7.8%207.8l1.1%201.1L12%2021l7.8-7.5%201.1-1.1a5.5%205.5%200%200%200-.1-7.8Z%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view><view class="row-main"><view class="row-title">{{item.name}}</view><view class="row-copy">按此服务发布需求</view></view><text class="chevron tag-span">›</text>
+          </view>
+        </view>
+        <view class="card" wx:else><view class="tag-p">平台尚未配置该师傅的公开服务项目</view></view>
+      </view>
+
+      <view class="section">
+        <view class="section-title"><text class="tag-strong">用户评价（{{reviewCount}}）</text><text class="tag-span design-button" bindtap="onReviews">查看全部 ›</text></view>
+        <view class="card" wx:for="{{reviews}}" wx:key="id">
+          <view class="row-title">{{item.ratingText}}</view>
+          <view class="tag-p">{{item.content}}</view>
+          <view class="chips"><view class="chip" wx:for="{{item.tags}}" wx:for-item="tag" wx:key="*this">{{tag}}</view></view>
+        </view>
+        <view class="card" wx:if="{{!reviews.length}}"><view class="tag-p">暂无已审核公开评价</view></view>
+      </view>
+    </block>
+  </view>
+  <view class="fixed-actions" wx:if="{{worker && !loading}}"><view class="btn primary design-button" bindtap="onPublish">按此师傅发布需求</view></view>
+</view>

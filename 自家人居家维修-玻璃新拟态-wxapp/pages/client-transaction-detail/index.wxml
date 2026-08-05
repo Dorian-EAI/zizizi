@@ -1,0 +1,18 @@
+<view class="phone-page design-detail-page" data-page-id="page-client-transaction-detail">
+  <view class="status-bar"><text class="tag-span">9:41</text><text class="status-icons tag-span">● WiFi 100%</text></view>
+  <view class="topbar"><view class="icon-button design-button" bindtap="onBack"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m15%2018-6-6%206-6M9%2012h10%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view><view class="tag-h1">交易详情</view><text class="tag-span"></text></view>
+  <view class="page-body">
+    <view wx:if="{{found}}">
+      <view class="hero"><view class="hero-kicker tag-p">{{transaction.title}} · {{transaction.statusText}}</view><view class="hero-number amount-{{transaction.amountTone}}">{{transaction.amountText}}</view><view class="tag-p">{{transaction.timeText}}</view></view>
+      <view class="section"><view class="section-title"><text class="tag-strong">交易信息</text></view><view class="card list-card">
+        <view class="list-row design-button" bindtap="onCopy"><view class="row-main"><view class="row-title">交易编号</view><view class="row-copy">点击复制</view></view><text class="row-value tag-span">{{transaction.id}}</text></view>
+        <view class="list-row"><view class="row-main"><view class="row-title">交易方式</view></view><text class="row-value tag-span">{{transaction.methodText}}</text></view>
+        <view class="list-row"><view class="row-main"><view class="row-title">交易状态</view></view><text class="badge {{transaction.statusTone}} tag-span">{{transaction.statusText}}</text></view>
+        <view class="list-row"><view class="row-main"><view class="row-title">交易后余额</view></view><text class="row-value tag-span">{{transaction.balanceText}}</text></view>
+      </view></view>
+      <view class="section" wx:if="{{transaction.order_id}}"><view class="section-title"><text class="tag-strong">关联订单</text></view><view class="card list-card"><view class="list-row"><view class="row-icon tag-span"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%235B8C5A%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20aria-hidden%3D%22true%22%3E%3Cpath%20d%3D%22M14.7%206.3a4%204%200%200%200-5-5L12%203.6%209.6%206%207.3%203.7a4%204%200%200%200%205%205L4%2017a2.1%202.1%200%200%200%203%203l8.3-8.3a4%204%200%200%200%205-5L18%209l-2.4-2.4L18%204.3a4%204%200%200%200-3.3%202Z%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view><view class="row-main"><view class="row-title">订单 {{transaction.order_id}}</view><view class="row-copy">来自服务端交易关联信息</view></view></view><view class="btn secondary block design-button" bindtap="onViewOrder">查看订单</view></view></view>
+      <view class="notice info">交易详情来自当前登录账户的服务端流水；如有疑问，请通过订单详情联系平台。</view>
+    </view>
+    <view class="empty-state truthful-empty" wx:else><view class="tag-h3">{{loading ? '正在查询交易' : '无法显示交易详情'}}</view><view class="tag-p">{{loading ? '请稍候…' : loadError}}</view><view class="btn secondary block design-button" wx:if="{{!loading && txId}}" bindtap="loadTransaction">重新查询</view></view>
+  </view>
+</view>

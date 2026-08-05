@@ -200,7 +200,12 @@ def get_review_stats(db: Session, worker_id: Optional[int] = None, service_type:
 
     # 标签聚合
     all_tags = []
-    reviews_with_tags = q.filter(Review.review_tags.isnot(None)).all()
+    reviews_with_tags = (
+        q.filter(Review.review_tags.isnot(None))
+        .order_by(Review.created_at.desc())
+        .limit(5000)
+        .all()
+    )
     for rv in reviews_with_tags:
         try:
             tags = json.loads(rv.review_tags)
@@ -296,7 +301,7 @@ def auto_approve_pending_reviews(db: Session, hours: int = 24) -> int:
     pending = db.query(Review).filter(
         Review.status == "pending",
         Review.created_at < deadline,
-    ).all()
+    ).order_by(Review.created_at.asc()).limit(500).all()
     count = 0
     for review in pending:
         review.status = "approved"

@@ -1,8 +1,10 @@
+@import "./styles/business-state.wxss";
+
 /* app.wxss — 全局样式与设计令牌
  * 风格：玻璃新拟态（Glass Neumorphism）
  * 设计原则：
  *   - 暖米色画布 #F2EDE8，柔和不刺眼
- *   - 客户端青色 #0D9488，师傅端蓝紫 #5B6ABF，点缀琥珀 #D4944C
+ *   - 客户端青色 #0D9488，师傅端蓝色 #2D6CDF，点缀琥珀 #D4944C
  *   - 玻璃质感：半透明白 + backdrop-filter 模糊 + 高光描边
  *   - 新拟态：双向阴影（暗+亮）创造凸起/凹陷立体感
  *   - 浮动胶囊 TabBar，底部悬浮玻璃质感
@@ -27,8 +29,8 @@ page {
   --brand-worker-light: #DCE8FB;
   --brand-worker-glow: rgba(45, 108, 223, 0.28);
   --brand-worker-subtle: rgba(45, 108, 223, 0.08);
-  /* 三色渐变：蓝 → 中蓝 → 鼠尾草绿（设计画布要求） */
-  --brand-worker-gradient: linear-gradient(135deg, #2D6CDF 0%, #5A8EE8 50%, #8FA998 100%);
+  /* 三色渐变：蓝 → 中蓝 → 琥珀（设计画布要求） */
+  --brand-worker-gradient: linear-gradient(135deg, #2D6CDF 0%, #5A8EE8 50%, #D4944C 100%);
 
   /* ===== 强调色（琥珀）===== */
   --accent: #D4944C;
@@ -39,8 +41,8 @@ page {
   --accent-subtle: rgba(212, 148, 76, 0.12);
 
   /* ===== 鼠尾草绿 — 师傅端辅助色（设计画布要求）===== */
-  --sage: #8FA998;
-  --sage-light: #E0EDE6;
+  --sage: #D4944C;
+  --sage-light: #F5E6D0;
 
   /* ===== 画布与背景 — 暖灰米色，新拟态最佳底色 ===== */
   --canvas: #F2EDE8;
@@ -580,9 +582,9 @@ image {
 /* 师傅端 Hero — 蓝色 + 鼠尾草暖光（对齐主样式规范：0.14 轻量版） */
 .hero-worker {
   background:
-    radial-gradient(ellipse 440rpx 360rpx at 78% 45%, rgba(143, 169, 152, 0.14) 0%, transparent 70%),
+    radial-gradient(ellipse 440rpx 360rpx at 78% 45%, rgba(212,148,76,.10) 0%, transparent 70%),
     radial-gradient(ellipse 360rpx 280rpx at 18% 75%, rgba(45, 108, 223, 0.16) 0%, transparent 70%),
-    linear-gradient(135deg, rgba(45, 108, 223, 0.14) 0%, rgba(143, 169, 152, 0.08) 50%, rgba(45, 108, 223, 0.06) 100%);
+    linear-gradient(135deg, rgba(45, 108, 223, 0.14) 0%, rgba(212,148,76,.04) 50%, rgba(45, 108, 223, 0.06) 100%);
 }
 
 /* Hero 光斑：忠于 zjrnew.DESIGN 的 ::before / ::after 叠光 */
@@ -1168,9 +1170,9 @@ image {
 .nav-bar.worker,
 .back-bar.worker {
   background:
-    radial-gradient(ellipse 440rpx 320rpx at 78% 45%, rgba(143, 169, 152, 0.14) 0%, transparent 70%),
+    radial-gradient(ellipse 440rpx 320rpx at 78% 45%, rgba(212,148,76,.10) 0%, transparent 70%),
     radial-gradient(ellipse 360rpx 280rpx at 18% 75%, rgba(45, 108, 223, 0.16) 0%, transparent 70%),
-    linear-gradient(135deg, rgba(45, 108, 223, 0.14) 0%, rgba(143, 169, 152, 0.08) 50%, rgba(45, 108, 223, 0.06) 100%);
+    linear-gradient(135deg, rgba(45, 108, 223, 0.14) 0%, rgba(212,148,76,.04) 50%, rgba(45, 108, 223, 0.06) 100%);
 }
 
 .nav-icon-btn {

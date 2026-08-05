@@ -78,9 +78,9 @@ page {
   overflow: hidden;
   z-index: 5;
   background:
-    radial-gradient(ellipse 440rpx 360rpx at 20% 30%, rgba(143, 169, 152, 0.30) 0%, transparent 70%),
+    radial-gradient(ellipse 440rpx 360rpx at 20% 30%, rgba(212,148,76,.12) 0%, transparent 70%),
     radial-gradient(ellipse 400rpx 320rpx at 85% 80%, rgba(45, 108, 223, 0.30) 0%, transparent 70%),
-    linear-gradient(135deg, rgba(45, 108, 223, 0.30) 0%, rgba(143, 169, 152, 0.22) 50%, rgba(45, 108, 223, 0.16) 100%);
+    linear-gradient(135deg, rgba(45, 108, 223, 0.30) 0%, rgba(212,148,76,.10) 50%, rgba(45, 108, 223, 0.16) 100%);
   backdrop-filter: blur(40rpx) saturate(160%);
   -webkit-backdrop-filter: blur(40rpx) saturate(160%);
   border: 2rpx solid rgba(255, 255, 255, 0.65);

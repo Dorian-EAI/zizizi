@@ -2,6 +2,7 @@
 
 import re
 from fastapi import APIRouter, Request
+from typing import Literal
 from pydantic import BaseModel, Field, field_validator
 
 from app.services import sms_service
@@ -17,6 +18,7 @@ _PHONE_RE = re.compile(r"^1[3-9]\d{9}$")
 
 class SendCodeRequest(BaseModel):
     phone: str = Field(..., max_length=11, description="手机号")
+    purpose: Literal["bind_phone", "worker_certification"] = "bind_phone"
 
     @field_validator("phone")
     @classmethod
@@ -29,6 +31,7 @@ class SendCodeRequest(BaseModel):
 class VerifyCodeRequest(BaseModel):
     phone: str = Field(..., max_length=11, description="手机号")
     code: str = Field(..., min_length=4, max_length=8, description="验证码")
+    purpose: Literal["bind_phone", "worker_certification"] = "bind_phone"
 
     @field_validator("phone")
     @classmethod
@@ -41,7 +44,7 @@ class VerifyCodeRequest(BaseModel):
 @router.post("/send-code")
 @limiter.limit(LIMIT_SMS_SEND)
 @limiter.limit(LIMIT_SMS_SEND_DAILY)
-async def send_code(request: Request, req: SendCodeRequest):
+def send_code(request: Request, req: SendCodeRequest):
     """发送短信验证码
 
     - 同一手机号 60 秒内不可重复发送（Redis 限流）
@@ -56,7 +59,7 @@ async def send_code(request: Request, req: SendCodeRequest):
         )
 
     try:
-        code = sms_service.send_verification_code(req.phone)
+        code = sms_service.send_verification_code(req.phone, purpose=req.purpose)
     except sms_service.SMSRateLimitError as exc:
         return error_response(message=str(exc), status_code=429)
     except sms_service.SMSServiceError:
@@ -71,9 +74,12 @@ async def send_code(request: Request, req: SendCodeRequest):
 
 @router.post("/verify-code")
 @limiter.limit(LIMIT_SMS_VERIFY)
-async def verify_code(request: Request, req: VerifyCodeRequest):
+def verify_code(request: Request, req: VerifyCodeRequest):
     """校验短信验证码"""
-    ok = sms_service.verify_code(req.phone, req.code)
+    try:
+        ok = sms_service.verify_code(req.phone, req.code, purpose=req.purpose)
+    except sms_service.SMSServiceError:
+        return error_response(message="短信服务暂不可用，请稍后重试", status_code=503)
     if not ok:
         return error_response(message="验证码错误或已过期", status_code=400)
 

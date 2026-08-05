@@ -1,0 +1,79 @@
+<!-- BUSINESS VIEW: 订单搜索，数据来自 /api/orders 与 /api/services/search。 -->
+<view class="phone-page design-detail-page" data-dom-id="page-client-order-search">
+    <view class="status-bar"><text class="tag-span">9:41</text><text class="status-icons tag-span">● ◒ ▰</text></view>
+    <view class="topbar">
+      <view class="icon-button design-button" bindtap="onBack"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m15%2018-6-6%206-6M9%2012h10%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view>
+      <view class="tag-h1">搜索订单</view>
+      <view class="top-action design-button" bindtap="onCancel">取消</view>
+    </view>
+    <view class="page-body">
+      <view class="field">
+        <text for="order-keyword" class="tag-label">服务名、订单号或师傅姓名</text>
+        <view style="position: relative;">
+          <input class="input" id="order-keyword" value="{{keyword}}" placeholder="搜索订单" confirm-type="search" maxlength="40" bindinput="onInput" bindconfirm="search" />
+          <view wx:if="{{keyword}}" class="design-button" style="position: absolute; right: 20rpx; top: 50%; transform: translateY(-50%); width: 44rpx; height: 44rpx; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.6); border-radius: 50%;" bindtap="onClearInput">✕</view>
+        </view>
+        <view class="btn primary design-button" bindtap="search" loading="{{loading}}">搜索</view>
+      </view>
+
+      <view class="section" wx:if="{{!searched && history.length}}">
+        <view class="section-title"><text class="tag-strong">搜索历史</text><view class="top-action design-button" bindtap="onClearHistoryTap">清空</view></view>
+        <view class="chips">
+          <view class="chip design-button" wx:for="{{history}}" wx:key="*this" data-keyword="{{item}}" bindtap="onUseKeyword">{{item}}</view>
+        </view>
+      </view>
+
+      <view class="section" wx:if="{{!searched && hotServices.length}}">
+        <view class="section-title"><text class="tag-strong">热门搜索</text><text class="tag-span">本周</text></view>
+        <view class="card list-card">
+          <view class="list-row design-button" wx:for="{{hotServices}}" wx:key="name" data-keyword="{{item.name}}" bindtap="onUseKeyword">
+            <text class="row-icon tag-span">{{item.rank}}</text>
+            <text class="row-main tag-span"><text class="row-title tag-b">{{item.name}}</text><text class="row-copy tag-small">{{item.desc}}</text></text>
+            <text class="chevron tag-span">›</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="section" wx:if="{{searched && loading}}">
+        <view class="card"><view class="tag-p">正在搜索订单…</view></view>
+      </view>
+
+      <view class="section" wx:if="{{searched && loadError}}">
+        <view class="card">
+          <view class="tag-h2">搜索失败</view>
+          <view class="tag-p">{{loadError}}</view>
+          <view class="btn primary design-button" bindtap="onRetry" style="margin-top: 24rpx;">重试</view>
+        </view>
+      </view>
+
+      <block wx:if="{{searched && !loading && !loadError}}">
+        <view class="section" wx:if="{{orders.length}}">
+          <view class="section-title"><text class="tag-strong">搜索结果</text><text class="tag-span">{{orderCount}} 条</text></view>
+          <view class="card list-row design-button" wx:for="{{orders}}" wx:key="id" data-id="{{item.id}}" bindtap="onOrderTap">
+            <view class="row-icon tag-span"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%230D9488%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20aria-hidden%3D%22true%22%3E%3Cpath%20d%3D%22M14.7%206.3a4%204%200%200%200-5-5L12%203.6%209.6%206%207.3%203.7a4%204%200%200%200%205%205L4%2017a2.1%202.1%200%200%200%203%203l8.3-8.3a4%204%200%200%200%205-5L18%209l-2.4-2.4L18%204.3a4%204%200%200%200-3.3%202Z%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view>
+            <text class="row-main tag-span">
+              <text class="row-title tag-b">{{item._serviceName}}</text>
+              <text class="row-copy tag-small">{{item._displaySub}}</text>
+            </text>
+            <text class="row-value tag-span">
+              <text class="badge info tag-span">{{item._statusText}}</text>
+              <text class="design-br"></text>
+              {{item._amountText}}
+            </text>
+            <text class="chevron tag-span">›</text>
+          </view>
+        </view>
+
+        <view class="section" wx:if="{{orders.length === 0}}">
+          <view class="card" style="padding: 48rpx 32rpx; text-align: center;">
+            <view style="font-size: 72rpx; margin-bottom: 16rpx;">🔍</view>
+            <view class="tag-h2" style="text-align: center;">没有匹配的订单</view>
+            <view class="tag-p" style="text-align: center;">换个关键词试试，或查看热门搜索</view>
+            <view class="chips" style="justify-content: center; margin-top: 24rpx;" wx:if="{{hotTags.length}}">
+              <view class="chip design-button" wx:for="{{hotTags}}" wx:for-item="tag" wx:key="*this" data-keyword="{{tag}}" bindtap="onUseKeyword">{{tag}}</view>
+            </view>
+          </view>
+        </view>
+      </block>
+    </view>
+  </view>

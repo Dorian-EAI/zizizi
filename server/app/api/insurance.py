@@ -5,7 +5,7 @@ from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session
 
 from app.database import get_db
-from app.dependencies import get_current_user, get_current_account, get_current_admin
+from app.dependencies import get_current_user, get_current_account, get_current_admin, require_super_admin
 from app.models.user import User
 from app.schemas.insurance import (
     BuyInsuranceRequest,
@@ -14,7 +14,7 @@ from app.schemas.insurance import (
     InsuranceClaimResponse,
     AuditClaimRequest,
 )
-from app.services import insurance_service
+from app.services import insurance_service, admin_service
 from app.utils.response import success
 
 router = APIRouter(prefix="/api/insurance", tags=["安心保"])
@@ -93,9 +93,18 @@ async def admin_claims(
 async def audit_claim(
     claim_id: int,
     req: AuditClaimRequest,
-    admin=Depends(get_current_admin),
+    admin=Depends(require_super_admin),
     db: Session = Depends(get_db),
 ):
     """审核理赔"""
     claim = insurance_service.audit_claim(db, admin.id, claim_id, req.status, req.settled_amount, req.remark)
+    admin_service.add_admin_audit(
+        db,
+        admin.id,
+        "insurance_claim.audit",
+        "insurance_claim",
+        claim.id,
+        {"status": claim.status},
+        commit=True,
+    )
     return success(data=InsuranceClaimResponse.model_validate(claim).model_dump(mode="json"))

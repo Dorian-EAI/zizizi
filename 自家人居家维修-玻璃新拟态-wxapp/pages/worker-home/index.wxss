@@ -378,6 +378,6 @@
 .page::after {
   background:
     radial-gradient(ellipse 400rpx 280rpx at 20% 90%, rgba(45, 108, 223, 0.07) 0%, transparent 70%),
-    radial-gradient(ellipse 360rpx 240rpx at 80% 85%, rgba(143, 169, 152, 0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 360rpx 240rpx at 80% 85%, rgba(212,148,76,.06) 0%, transparent 70%),
     radial-gradient(ellipse 320rpx 200rpx at 50% 95%, rgba(90, 142, 232, 0.04) 0%, transparent 70%);
 }

@@ -1,0 +1,67 @@
+<view class="page service-page">
+  <view class="nav-bar compact-nav">
+    <view class="nav-icon-btn" bindtap="onBack"><image class="nav-icon" src="{{icons.back}}" mode="aspectFit" /></view>
+    <view class="nav-title-area">
+      <text class="nav-title">客服工单</text>
+      <view class="nav-status"><text>{{statusText}}</text></view>
+    </view>
+    <view class="nav-icon-btn" bindtap="onMore"><image class="nav-icon" src="{{icons.more}}" mode="aspectFit" /></view>
+  </view>
+
+  <scroll-view scroll-y class="chat-area" scroll-into-view="{{scrollIntoView}}" show-scrollbar="{{false}}">
+    <view class="state-block" wx:if="{{loading}}"><text>正在加载工单…</text></view>
+    <view class="state-block" wx:elif="{{loadError}}">
+      <text>工单加载失败，已保留当前输入</text>
+      <button class="retry-btn" bindtap="onRetry">重新加载</button>
+    </view>
+    <block wx:else>
+      <view class="chat-date">人工客服工单 · 消息会留存并由平台处理</view>
+      <view class="msg-row service" wx:if="{{!ticket}}">
+        <view class="msg-avatar service">客</view>
+        <view class="msg-content">
+          <view class="msg-bubble">请描述需要平台协助的问题。提交后将创建真实客服工单，受理状态以服务端为准。</view>
+          <view class="quick-replies">
+            <view class="quick-reply" data-text="我需要咨询订单进度" bindtap="onQuickReply">订单咨询</view>
+            <view class="quick-reply" data-text="我需要申请退款或售后" bindtap="onQuickReply">退款售后</view>
+            <view class="quick-reply" data-text="我要提交投诉或建议" bindtap="onQuickReply">投诉建议</view>
+            <view class="quick-reply" data-text="我有其他问题需要平台协助" bindtap="onQuickReply">其他问题</view>
+          </view>
+        </view>
+      </view>
+
+      <view class="order-card" wx:if="{{order}}" bindtap="onOrderTap">
+        <view class="order-main">
+          <text class="order-card-title">{{order.order_no}} · {{order.service_name}}</text>
+          <text class="order-card-desc">关联订单 · {{order.status}}</text>
+        </view>
+        <image class="order-arrow" src="{{icons.arrow}}" mode="aspectFit" />
+      </view>
+
+      <view id="message-{{index}}" class="msg-row {{item.role}}" wx:for="{{messages}}" wx:key="id">
+        <view class="msg-avatar {{item.role}}">{{item.name}}</view>
+        <view class="msg-content">
+          <text class="msg-bubble">{{item.content}}</text>
+          <text class="msg-time">{{item.time}}</text>
+        </view>
+      </view>
+
+      <view class="state-block compact" wx:if="{{ticket && (ticket.status === 'resolved' || ticket.status === 'closed')}}">
+        <text>该工单已结束。如需继续咨询，请返回客服中心新建工单。</text>
+      </view>
+      <view class="chat-spacer"></view>
+    </block>
+  </scroll-view>
+
+  <view class="input-bar safe-bottom">
+    <view class="input-row">
+      <view class="input-action-btn" bindtap="onUnsupported"><text>声</text></view>
+      <view class="input-wrapper">
+        <input class="chat-input" value="{{inputValue}}" maxlength="2000" bindinput="onInput" confirm-type="send" bindconfirm="onSend" placeholder="请描述需要平台协助的问题" />
+        <button class="send-btn" bindtap="onSend" loading="{{sending}}" disabled="{{!inputValue || sending}}">
+          <image src="{{icons.send}}" mode="aspectFit" />
+        </button>
+      </view>
+      <view class="input-action-btn" bindtap="onUnsupported"><image src="{{icons.plus}}" mode="aspectFit" /></view>
+    </view>
+  </view>
+</view>

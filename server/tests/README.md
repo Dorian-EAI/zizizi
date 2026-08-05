@@ -16,7 +16,15 @@
 在 `server` 目录安装开发依赖后运行：
 
 ```powershell
-python -m unittest discover -s tests -v
+py -3.12 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements-dev.txt
+.\.venv\Scripts\python.exe -m pytest -q
+```
+
+`requirements.txt` 只保留运行时依赖；测试工具固定在 `requirements-dev.txt`，避免生产镜像不必要地携带测试器。所有测试同时兼容标准库运行方式：
+
+```powershell
+.\.venv\Scripts\python.exe -m unittest discover -s tests -v
 ```
 
 当前测试通过 `tests/_support.py` 在导入应用模块前强制设置 `APP_ENV=testing`、内存 SQLite，并为各用例创建临时/隔离数据库；不应连接或写入开发数据库。
@@ -28,7 +36,8 @@ python -m unittest discover -s tests -v
 | `test_health_endpoints.py` | `/health` 基本存活响应；非生产环境在数据库可用、Redis 不可用时的 `/ready` 降级行为 | 未覆盖生产依赖组合、真实 MySQL/Redis 故障和启动/关闭生命周期 |
 | `test_migrations.py` | 空 SQLite 数据库真实 `upgrade head`；结果与全部 ORM 表一致；`alembic check` 无漂移；未版本化旧库保护；MySQL 离线 SQL 可生成 | 尚未替代一次性 MySQL 8 的真实升级/回填演练 |
 | `test_order_state_machine.py` | 合法订单 CAS 递增版本；非法迁移拒绝；陈旧版本返回冲突 | 只覆盖当前单一 `Order.status` 的内部 CAS，未覆盖四轴和 API 下发版本 |
-| `test_payment_idempotency.py` | 同一微信支付回调只充值一次；回调金额不符时无副作用 | 只覆盖支付回调，不代表支付/充值/退款/提现发起请求已统一幂等 |
+| `test_payment_idempotency.py` | 同一微信支付回调只充值一次；回调金额不符时无副作用 | 回调幂等不替代客户端写请求幂等 |
+| `test_financial_request_idempotency.py`、`test_wxpay_recharge_access.py` | 钱包/JSAPI 充值、钱包/JSAPI 订单支付和管理员退款按 `Idempotency-Key` 持久化去重；同键同请求重放原结果、同键变更参数或操作冲突；已知失败可重放；师傅钱包充值拒绝；部署环境缺键返回 428 | 进程中断留下 `processing` 时故意失败关闭，需按业务单号人工/对账核对；提现仍未开放，不虚构闭环 |
 | `test_permissions.py` | 用户令牌不能冒充管理员；停用管理员不可用；普通运营员不能执行超级管理员动作 | 未覆盖同账号双角色、订单对象权限和动作级资格 |
 | `test_sms_verification.py` | 开发验证码一次性消费；生产环境拒绝 mock 短信 | 未覆盖全部日志脱敏和真实供应商沙箱 |
 | `test_unavailable_money_flows.py` | 年卡购买、积分兑券、理赔赔付和生产提现在资金实现未闭环时失败关闭，且不修改余额/资产 | 证明“未实现时无副作用”，不代表这些资金流程已经可用 |

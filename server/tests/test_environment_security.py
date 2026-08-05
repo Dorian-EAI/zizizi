@@ -17,10 +17,28 @@ class EnvironmentSecurityTests(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, "APP_ENV"):
             config.validate_security()
 
+    def test_development_requires_explicit_insecure_acknowledgement(self) -> None:
+        config = Settings(
+            APP_ENV="development",
+            ALLOW_INSECURE_DEVELOPMENT=False,
+            _env_file=None,
+        )
+        with self.assertRaisesRegex(RuntimeError, "ALLOW_INSECURE_DEVELOPMENT"):
+            config.validate_security()
+        config = config.model_copy(update={"ALLOW_INSECURE_DEVELOPMENT": True})
+        config.validate_security()
+
     def test_staging_runs_deployment_security_validation(self) -> None:
         config = Settings(APP_ENV="staging", WX_PAY_MOCK_ENABLED=True, _env_file=None)
         with self.assertRaisesRegex(RuntimeError, "WX_PAY_MOCK_ENABLED"):
             config.validate_security()
+
+    def test_deployment_does_not_require_unused_seed_admin_password(self) -> None:
+        """部署首管理员由 bootstrap 脚本创建，本地种子密码不应成为生产密钥。"""
+        config = Settings(APP_ENV="production", _env_file=None)
+        with self.assertRaises(RuntimeError) as caught:
+            config.validate_security()
+        self.assertNotIn("ADMIN_DEFAULT_PASSWORD", str(caught.exception))
 
     def test_environment_whitespace_cannot_bypass_deployment_validation(self) -> None:
         for app_env in ("production ", " staging"):
@@ -36,6 +54,7 @@ class EnvironmentSecurityTests(unittest.TestCase):
             ({"ALLOWED_HOSTS": "*"}, "ALLOWED_HOSTS"),
             ({"FIELD_ENC_KEY": "a"}, "FIELD_ENC_KEY"),
             ({"RATE_LIMIT_STORAGE": "memory://"}, "RATE_LIMIT_STORAGE"),
+            ({"OBJECT_STORAGE_LIFECYCLE_CONFIRMED": False}, "OBJECT_STORAGE_LIFECYCLE_CONFIRMED"),
         )
         for overrides, expected in cases:
             with self.subTest(overrides=overrides):
@@ -56,6 +75,25 @@ class EnvironmentSecurityTests(unittest.TestCase):
         config = Settings(APP_ENV="development", DB_DRIVER="postgres", _env_file=None)
         with self.assertRaisesRegex(RuntimeError, "DB_DRIVER"):
             config.validate_security()
+
+    def test_web_concurrency_has_safe_bounds_and_debug_constraint(self) -> None:
+        for value in (0, 33):
+            with self.subTest(value=value):
+                config = Settings(
+                    APP_ENV="testing",
+                    WEB_CONCURRENCY=value,
+                    _env_file=None,
+                )
+                with self.assertRaisesRegex(RuntimeError, "WEB_CONCURRENCY"):
+                    config.validate_security()
+        debug_config = Settings(
+            APP_ENV="testing",
+            APP_DEBUG=True,
+            WEB_CONCURRENCY=2,
+            _env_file=None,
+        )
+        with self.assertRaisesRegex(RuntimeError, "WEB_CONCURRENCY"):
+            debug_config.validate_security()
 
     def test_mysql_credentials_are_url_encoded(self) -> None:
         config = Settings(

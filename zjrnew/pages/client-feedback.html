@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>自家人居家维修 · 玻璃新拟态 · 意见反馈</title>
-    <link rel="stylesheet" href="../assets/fonts.css">
-
     <style id="theme-vars">
 /* 自家人居家维修 - 玻璃新拟态 */
 :root {
@@ -16,7 +14,6 @@
   --brand-light: #CCFBF1;
   --brand-glow: rgba(13, 148, 136, 0.24);
   --brand-subtle: rgba(13, 148, 136, 0.10);
-  --brand-gradient:linear-gradient(135deg,#0D9488 0%,#14B8A6 50%,#D4944C 100%);
 
   /* Accent (Amber) */
   --accent: #D4944C;
@@ -83,11 +80,11 @@
   --radius-lg: 1.6rem;
   --radius-full: 9999px;
 
-    /* Font — 统一衬线系统 */
+  /* Font — unified serif system */
   --font-display: 'Cormorant Garamond', 'Noto Serif SC', 'STSong', Georgia, serif;
-  --font-body: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-  --font-nums: 'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
-  --font: var(--font-body);
+  --font-body:    'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --font-nums:    'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
+  --font:         var(--font-body);
 
   /* Motion */
   --spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -128,9 +125,8 @@
   --radius-sm: var(--radius-sm);
   --radius-md: var(--radius-md);
   --radius-lg: var(--radius-lg);
-  --font-sans: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-  --font-serif: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-  --radius-full: var(--radius-full);}
+  --radius-full: var(--radius-full);
+}
 
 /* Semantic token fallback */
 #semantic-token-fallback {
@@ -153,21 +149,21 @@
 }
 
 /* ===== Global Neumorphic Components ===== */
-/* Tab Bar */
+/* Tab Bar — Premium Liquid Glass, absolute-positioned within .phone frame */
 .tab-bar{
   position:absolute;
-  bottom:max(14px, env(safe-area-inset-bottom));
+  bottom:10px;
   left:50%;
   transform:translateX(-50%);
   width:calc(100% - 32px);
   max-width:360px;
-  height:64px;
+  height:56px;
   z-index:100;
-  background:rgba(255,255,255,0.22);
+  background:rgba(255,255,255,0.18);
   backdrop-filter:blur(48px) saturate(210%);
   -webkit-backdrop-filter:blur(48px) saturate(210%);
-  border:0.5px solid rgba(255,255,255,0.50);
-  border-radius:28px;
+  border:0.5px solid rgba(255,255,255,0.45);
+  border-radius:24px;
   box-shadow:
     inset 0 1.5px 3px rgba(255,255,255,0.60),
     inset 0 -0.5px 1px rgba(255,255,255,0.20),
@@ -177,7 +173,7 @@
   display:flex;
   align-items:center;
   justify-content:space-around;
-  padding:0 10px;
+  padding:0 6px;
 }
 .tab-bar::before{
   content:"";
@@ -260,6 +256,16 @@
   z-index:1;
 }
 
+/* Buttons */
+.btn-neu-primary{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:var(--brand);color:var(--text-inverse);
+  border:none;border-radius:9999px;
+  padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
+  cursor:pointer;
+  box-shadow:var(--neu-out-sm),0 2px 8px var(--brand-glow);
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
 .btn-neu-primary:active{box-shadow:var(--neu-in);transform:scale(0.94)}
 
 .btn-neu-secondary{
@@ -306,8 +312,6 @@
     --radius-md: var(--radius-md);
     --radius-lg: var(--radius-lg);
     --radius-full: var(--radius-full);
-    --font-sans: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-    --font-serif: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
   }
   @layer base {
     body { background: var(--background); color: var(--foreground); }
@@ -396,7 +400,7 @@
 
   <!-- ===== Top Back Bar ===== -->
   <header class="nav-bar">
-    <button class="back-btn" data-dom-id="back-btn" aria-label="返回">
+    <button class="back-btn" data-dom-id="back-btn" data-target-page="page-client-mine" aria-label="返回">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
     </button>
     <span class="nav-title">意见反馈</span>
@@ -407,10 +411,10 @@
   <div class="section">
     <div class="section-title">反馈类型</div>
     <div class="chips-row" data-dom-id="feedback-type">
-      <span class="chip chip-active" data-dom-id="type-suggest" data-type="功能建议">功能建议</span>
-      <span class="chip" data-dom-id="type-complaint" data-type="服务投诉">服务投诉</span>
-      <span class="chip" data-dom-id="type-fault" data-type="故障反馈">故障反馈</span>
-      <span class="chip" data-dom-id="type-other" data-type="其他">其他</span>
+      <span class="chip chip-active" data-dom-id="type-suggest" data-action="select-feedback-type" data-type="功能建议">功能建议</span>
+      <span class="chip" data-dom-id="type-complaint" data-action="select-feedback-type" data-type="服务投诉">服务投诉</span>
+      <span class="chip" data-dom-id="type-fault" data-action="select-feedback-type" data-type="故障反馈">故障反馈</span>
+      <span class="chip" data-dom-id="type-other" data-action="select-feedback-type" data-type="其他">其他</span>
     </div>
   </div>
 
@@ -418,7 +422,7 @@
   <div class="section">
     <div class="section-title">问题描述</div>
     <div class="glass-card">
-      <textarea class="textarea" data-dom-id="feedback-desc" rows="5" placeholder="请详细描述你的问题或建议，至少10字..." maxlength="500"></textarea>
+      <textarea class="textarea" data-dom-id="feedback-desc" data-action="update-feedback-description" rows="5" placeholder="请详细描述你的问题或建议，至少10字..." maxlength="500"></textarea>
       <div class="textarea-foot">
         <span class="textarea-tip">真实客观的描述有助于我们更快处理</span>
         <span class="textarea-count"><span data-dom-id="desc-count">0</span>/500</span>
@@ -430,17 +434,17 @@
   <div class="section">
     <div class="section-title">上传图片（选填）</div>
     <div class="upload-row" data-dom-id="upload-row">
-      <div class="upload-thumb" data-dom-id="upload-1">
+      <div class="upload-thumb" data-dom-id="upload-1" data-action="preview-uploaded-image">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-label="示例图片"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
-        <button class="upload-del" data-dom-id="del-1" aria-label="删除图片">
+        <button class="upload-del" data-dom-id="del-1" data-action="delete-uploaded-image" aria-label="删除图片">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </button>
       </div>
-      <div class="upload-add" data-dom-id="upload-2">
+      <div class="upload-add" data-dom-id="upload-2" data-action="choose-feedback-image">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
         <span>添加图片</span>
       </div>
-      <div class="upload-add" data-dom-id="upload-3">
+      <div class="upload-add" data-dom-id="upload-3" data-action="choose-feedback-image">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
         <span>添加图片</span>
       </div>
@@ -453,7 +457,7 @@
     <div class="section-title">联系方式（选填）</div>
     <div class="glass-card input-card">
       <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-      <input class="text-input" data-dom-id="contact-phone" type="tel" inputmode="numeric" maxlength="11" placeholder="便于我们回复你">
+      <input class="text-input" data-dom-id="contact-phone" data-action="validate-contact-phone" type="tel" inputmode="numeric" maxlength="11" placeholder="便于我们回复你">
     </div>
   </div>
 
@@ -461,7 +465,7 @@
   <div class="section">
     <div class="section-title">历史反馈</div>
 
-    <div class="history-card" data-dom-id="history-1">
+    <div class="history-card" data-dom-id="history-1" data-target-page="page-client-feedback-detail">
       <div class="history-top">
         <span class="type-badge type-badge-teal">功能建议</span>
         <span class="status-badge status-replied">已回复</span>
@@ -475,7 +479,7 @@
       </div>
     </div>
 
-    <div class="history-card" data-dom-id="history-2">
+    <div class="history-card" data-dom-id="history-2" data-target-page="page-client-feedback-detail">
       <div class="history-top">
         <span class="type-badge type-badge-amber">故障反馈</span>
         <span class="status-badge status-pending">处理中</span>
@@ -492,7 +496,7 @@
 
   <!-- ===== 底部固定提交按钮 ===== -->
   <div class="submit-bar">
-    <button class="btn-submit" data-dom-id="btn-submit">提交反馈</button>
+  <button class="btn-submit" data-dom-id="btn-submit" data-action="submit-feedback">提交反馈</button>
   </div>
 
 </div>
@@ -520,11 +524,11 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
 .phone{position:relative;width:414px;min-height:896px;background:var(--phone-bg);border-radius:48px;overflow:hidden;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.12),0 4px 16px rgba(0,0,0,.06);padding-bottom:82px}
 .phone::-webkit-scrollbar{display:none}
 .phone{scrollbar-width:none}
-.phone::after{content:'';position:absolute;bottom:0;left:0;right:0;height:260px;background:radial-gradient(ellipse 180px 120px at 20% 90%,rgba(13,148,136,.06) 0%,transparent 70%),radial-gradient(ellipse 160px 100px at 80% 85%,rgba(212,148,76,.06) 0%,transparent 70%);pointer-events:none;z-index:0}
+.phone::after{content:'';position:absolute;bottom:0;left:0;right:0;height:260px;background:radial-gradient(ellipse 180px 120px at 20% 90%,rgba(13,148,136,.05) 0%,transparent 70%),radial-gradient(ellipse 160px 100px at 80% 85%,rgba(212,148,76,.05) 0%,transparent 70%);pointer-events:none;z-index:0}
 .phone>*:not(.tab-bar){position:relative;z-index:1}
 
 /* ===== Top Nav Bar (子页返回栏) ===== */
-.nav-bar{display:flex;align-items:center;justify-content:space-between; padding:max(18px, env(safe-area-inset-top)) 20px 14px;position:relative;z-index:5; background:radial-gradient(ellipse 220px 160px at 78% 45%,rgba(212,148,76,.14) 0%,transparent 70%),radial-gradient(ellipse 180px 140px at 18% 75%,rgba(13,148,136,.16) 0%,transparent 70%),linear-gradient(135deg,rgba(13,148,136,.14) 0%,rgba(212,148,76,.08) 50%,rgba(13,148,136,.06) 100%); border-radius:0 0 28px 28px; overflow:hidden;}
+.nav-bar{display:flex;align-items:center;justify-content:space-between; padding:max(18px, env(safe-area-inset-top)) 20px 14px;position:relative;z-index:5; background:radial-gradient(ellipse 220px 160px at 78% 45%,rgba(212,148,76,.10) 0%,transparent 70%),radial-gradient(ellipse 180px 140px at 18% 75%,rgba(13,148,136,.10) 0%,transparent 70%),linear-gradient(135deg,rgba(13,148,136,.08) 0%,rgba(212,148,76,.06) 50%,rgba(13,148,136,.05) 100%); border-radius:0 0 28px 28px; overflow:hidden;}
 .back-btn{
   width:40px;height:40px;border-radius:50%;flex-shrink:0;
   display:flex;align-items:center;justify-content:center;
@@ -646,15 +650,15 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
   display:inline-flex;align-items:center;font-size:11px;font-weight:600;
   padding:3px 10px;border-radius:9999px;letter-spacing:.02em;
 }
-.type-badge-teal{color:var(--brand);background:var(--brand-subtle);border:0.5px solid rgba(13,148,136,0.20)}
-.type-badge-amber{color:var(--accent-dark);background:var(--accent-light);border:0.5px solid rgba(212,148,76,0.25)}
+.type-badge-teal{color:var(--brand);background:var(--brand-subtle);border:0.5px solid rgba(13,148,136,.11)}
+.type-badge-amber{color:var(--accent-dark);background:var(--accent-light);border:0.5px solid rgba(212,148,76,0.16)}
 .status-badge{
   display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;
   padding:3px 10px;border-radius:9999px;
 }
 .status-badge::before{content:"";width:5px;height:5px;border-radius:50%;background:currentColor}
 .status-replied{color:var(--green);background:rgba(91,140,90,0.10);border:0.5px solid rgba(91,140,90,0.20)}
-.status-pending{color:var(--orange);background:rgba(212,148,76,0.12);border:0.5px solid rgba(212,148,76,0.25)}
+.status-pending{color:var(--orange);background:rgba(212,148,76,.07);border:0.5px solid rgba(212,148,76,0.16)}
 .history-summary{
   font-size:14px;line-height:1.6;color:var(--text-1);letter-spacing:-0.01em;
   margin-bottom:12px;

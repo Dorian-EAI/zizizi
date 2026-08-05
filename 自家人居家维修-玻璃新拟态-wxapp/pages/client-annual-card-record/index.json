@@ -1,0 +1,7 @@
+{
+  "navigationStyle": "custom",
+  "disableScroll": false,
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark",
+  "navigationBarTitleText": "使用记录"
+}

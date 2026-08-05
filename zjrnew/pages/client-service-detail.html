@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>自家人居家维修 · 玻璃新拟态 · 服务详情</title>
-    <link rel="stylesheet" href="../assets/fonts.css">
-
     <style id="theme-vars">
 /* 自家人居家维修 - 玻璃新拟态 */
 :root {
@@ -82,11 +80,11 @@
   --radius-lg: 1.6rem;
   --radius-full: 9999px;
 
-    /* Font — 统一衬线系统 */
+  /* Font — unified serif system */
   --font-display: 'Cormorant Garamond', 'Noto Serif SC', 'STSong', Georgia, serif;
-  --font-body: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-  --font-nums: 'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
-  --font: var(--font-body);
+  --font-body:    'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --font-nums:    'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
+  --font:         var(--font-body);
 
   /* Motion */
   --spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -127,9 +125,8 @@
   --radius-sm: var(--radius-sm);
   --radius-md: var(--radius-md);
   --radius-lg: var(--radius-lg);
-  --font-sans: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-  --font-serif: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-  --radius-full: var(--radius-full);}
+  --radius-full: var(--radius-full);
+}
 
 /* Semantic token fallback */
 #semantic-token-fallback {
@@ -152,21 +149,21 @@
 }
 
 /* ===== Global Neumorphic Components ===== */
-/* Tab Bar */
+/* Tab Bar — Premium Liquid Glass, absolute-positioned within .phone frame */
 .tab-bar{
   position:absolute;
-  bottom:max(14px, env(safe-area-inset-bottom));
+  bottom:10px;
   left:50%;
   transform:translateX(-50%);
   width:calc(100% - 32px);
   max-width:360px;
-  height:64px;
+  height:56px;
   z-index:100;
-  background:rgba(255,255,255,0.22);
+  background:rgba(255,255,255,0.18);
   backdrop-filter:blur(48px) saturate(210%);
   -webkit-backdrop-filter:blur(48px) saturate(210%);
-  border:0.5px solid rgba(255,255,255,0.50);
-  border-radius:28px;
+  border:0.5px solid rgba(255,255,255,0.45);
+  border-radius:24px;
   box-shadow:
     inset 0 1.5px 3px rgba(255,255,255,0.60),
     inset 0 -0.5px 1px rgba(255,255,255,0.20),
@@ -176,7 +173,7 @@
   display:flex;
   align-items:center;
   justify-content:space-around;
-  padding:0 10px;
+  padding:0 6px;
 }
 .tab-bar::before{
   content:"";
@@ -259,6 +256,16 @@
   z-index:1;
 }
 
+/* Buttons */
+.btn-neu-primary{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:var(--brand);color:var(--text-inverse);
+  border:none;border-radius:9999px;
+  padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
+  cursor:pointer;
+  box-shadow:var(--neu-out-sm),0 2px 8px var(--brand-glow);
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
 .btn-neu-primary:active{box-shadow:var(--neu-in);transform:scale(0.94)}
 
 .btn-neu-secondary{
@@ -305,8 +312,6 @@
     --radius-md: var(--radius-md);
     --radius-lg: var(--radius-lg);
     --radius-full: var(--radius-full);
-    --font-sans: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-    --font-serif: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
   }
   @layer base {
     body { background: var(--background); color: var(--foreground); }
@@ -394,14 +399,14 @@
 
   <!-- ===== TOP NAV BAR (sticky) ===== -->
   <header class="nav-bar">
-    <button class="nav-btn" data-dom-id="back-btn" aria-label="返回">
+    <button class="nav-btn" data-dom-id="back-btn" data-target-page="page-client-home" aria-label="返回">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
         <line x1="19" y1="12" x2="5" y2="12"/>
         <polyline points="12 19 5 12 12 5"/>
       </svg>
     </button>
     <h1 class="nav-title">服务详情</h1>
-    <button class="nav-btn" data-dom-id="fav-btn" aria-label="收藏">
+    <button class="nav-btn" data-dom-id="fav-btn" data-action="toggle-favorite-service" aria-label="收藏">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
         <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
       </svg>
@@ -437,7 +442,7 @@
         <span>服务报价</span>
       </div>
       <div class="price-list">
-        <div class="price-row" data-selected="false">
+        <div class="price-row" data-selected="false" data-dom-id="service-price-basic" data-action="select-service-price">
           <div class="price-left">
             <div class="price-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -457,7 +462,7 @@
           </div>
         </div>
 
-        <div class="price-row" data-selected="true">
+        <div class="price-row" data-selected="true" data-dom-id="service-price-standard" data-action="select-service-price">
           <div class="price-left">
             <div class="price-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -477,7 +482,7 @@
           </div>
         </div>
 
-        <div class="price-row" data-selected="false">
+        <div class="price-row" data-selected="false" data-dom-id="service-price-full" data-action="select-service-price">
           <div class="price-left">
             <div class="price-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -509,28 +514,28 @@
         <span>服务内容</span>
       </div>
       <div class="content-list">
-        <div class="content-item">
+        <div class="content-item" data-dom-id="service-step-survey" data-action="expand-service-step">
           <div class="check-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
           </div>
           <span class="step-text">现场勘查</span>
           <svg class="step-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
         </div>
-        <div class="content-item">
+        <div class="content-item" data-dom-id="service-step-plan" data-action="expand-service-step">
           <div class="check-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
           </div>
           <span class="step-text">方案制定</span>
           <svg class="step-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
         </div>
-        <div class="content-item">
+        <div class="content-item" data-dom-id="service-step-repair" data-action="expand-service-step">
           <div class="check-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
           </div>
           <span class="step-text">施工维修</span>
           <svg class="step-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
         </div>
-        <div class="content-item">
+        <div class="content-item" data-dom-id="service-step-acceptance" data-action="expand-service-step">
           <div class="check-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
           </div>
@@ -545,20 +550,20 @@
   <div class="section">
     <div class="section-title">
       <span>推荐师傅</span>
-      <span class="more">查看全部 &#8250;</span>
+      <span class="more" data-dom-id="recommended-workers-more" data-action="show-all-recommended-workers">查看全部 &#8250;</span>
     </div>
     <div class="master-scroll no-scrollbar">
-      <div class="master-card">
+      <div class="master-card" data-dom-id="recommended-worker-1" data-target-page="page-client-worker-detail">
         <div class="master-avatar"><div class="avatar-inner">王</div></div>
         <div class="master-name">王师傅</div>
         <div class="master-stats"><span class="star">&#9733; 4.9</span> &middot; 326次服务</div>
-        <button class="btn-neu-primary master-book">预约</button>
+        <button class="btn-neu-primary master-book" data-dom-id="book-worker-1" data-target-page="page-client-publish">预约</button>
       </div>
-      <div class="master-card">
+      <div class="master-card" data-dom-id="recommended-worker-2" data-target-page="page-client-worker-detail">
         <div class="master-avatar"><div class="avatar-inner avatar-amber">陈</div></div>
         <div class="master-name">陈师傅</div>
         <div class="master-stats"><span class="star">&#9733; 4.8</span> &middot; 215次服务</div>
-        <button class="btn-neu-primary master-book">预约</button>
+        <button class="btn-neu-primary master-book" data-dom-id="book-worker-2" data-target-page="page-client-publish">预约</button>
       </div>
     </div>
   </div>
@@ -567,7 +572,7 @@
   <div class="section">
     <div class="section-title">
       <span>用户评价</span>
-      <span class="more">查看全部 &#8250;</span>
+      <span class="more" data-dom-id="service-reviews-more" data-target-page="page-client-review-list">查看全部 &#8250;</span>
     </div>
     <div class="review-list">
       <div class="glass-neu-card review-card">
@@ -600,19 +605,19 @@
 
   <!-- ===== BOTTOM FIXED CTA BAR ===== -->
   <div class="cta-bar">
-    <button class="cta-icon-btn" data-dom-id="cs-btn" aria-label="客服">
+    <button class="cta-icon-btn" data-dom-id="cs-btn" data-target-page="page-client-customer-service" aria-label="客服">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
         <path d="M3 18v-6a9 9 0 0 1 18 0v6"/>
         <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3z"/>
         <path d="M3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/>
       </svg>
     </button>
-    <button class="cta-icon-btn" data-dom-id="fav-cta-btn" aria-label="收藏">
+    <button class="cta-icon-btn" data-dom-id="fav-cta-btn" data-action="toggle-favorite-service" aria-label="收藏">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
         <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
       </svg>
     </button>
-    <button class="cta-primary" data-dom-id="book-now">立即预约</button>
+    <button class="cta-primary" data-dom-id="book-now" data-target-page="page-client-publish">立即预约</button>
   </div>
 
 </div>
@@ -624,7 +629,7 @@
 :root{
   --bg: var(--background);
   --bg-elevated: #F7F3EF;
-  --brand-gradient: linear-gradient(135deg,#0D9488 0%,#14B8A6 50%,#D4944C 100%);
+  --brand-gradient: linear-gradient(135deg,#0D9488 0%,#14B8A6 48%,#D4944C 100%);
   --r: var(--radius-md);
   --r-lg: var(--radius-lg);
   --r-sm: var(--radius-sm);
@@ -639,7 +644,7 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
 .phone>*:not(.tab-bar){position:relative;z-index:1}
 
 /* ===== Top Nav Bar (sticky) ===== */
-.nav-bar{background:radial-gradient(ellipse 220px 160px at 78% 45%,rgba(212,148,76,.14) 0%,transparent 70%),radial-gradient(ellipse 180px 140px at 18% 75%,rgba(13,148,136,.16) 0%,transparent 70%),linear-gradient(135deg,rgba(13,148,136,.14) 0%,rgba(212,148,76,.08) 50%,rgba(13,148,136,.06) 100%);position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:max(18px, env(safe-area-inset-top)) 16px 12px; border-radius:0 0 28px 28px; overflow:hidden;}
+.nav-bar{background:radial-gradient(ellipse 220px 160px at 78% 45%,rgba(212,148,76,.10) 0%,transparent 70%),radial-gradient(ellipse 180px 140px at 18% 75%,rgba(13,148,136,.10) 0%,transparent 70%),linear-gradient(135deg,rgba(13,148,136,.08) 0%,rgba(212,148,76,.06) 50%,rgba(13,148,136,.05) 100%);position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:max(18px, env(safe-area-inset-top)) 16px 12px; border-radius:0 0 28px 28px; overflow:hidden;}
 .nav-btn{
   width:44px;height:44px;border-radius:50%;
   background:var(--bg-elevated);border:none;
@@ -655,7 +660,7 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
 /* ===== Service Hero ===== */
 .service-hero{position:relative;height:180px;margin:16px;border-radius:var(--r-lg);overflow:hidden;
   background:linear-gradient(135deg,#0A7A70 0%,#0D9488 50%,#14B8A6 100%);
-  box-shadow:var(--neu-out-md),0 8px 28px rgba(13,148,136,0.25);}
+  box-shadow:var(--neu-out-md),0 8px 28px rgba(13,148,136,.12);}
 .hero-deco{position:absolute;border-radius:50%;pointer-events:none}
 .hero-deco-1{top:-44px;right:-30px;width:160px;height:160px;background:rgba(255,255,255,0.14)}
 .hero-deco-2{bottom:-52px;left:-22px;width:144px;height:144px;background:rgba(255,255,255,0.10)}
@@ -689,7 +694,7 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
   -webkit-backdrop-filter:blur(20px) saturate(150%);
   border:1px solid rgba(255,255,255,0.70);
   border-radius:var(--r-lg);
-  box-shadow:var(--neu-out-md),0 6px 28px rgba(0,0,0,0.06),0 2px 8px rgba(13,148,136,0.04),0 0 0 1px rgba(44,40,36,0.05);
+  box-shadow:var(--neu-out-md),0 6px 28px rgba(0,0,0,0.06),0 2px 8px rgba(13,148,136,.04),0 0 0 1px rgba(44,40,36,0.05);
   position:relative;overflow:hidden;
 }
 .glass-neu-card::before{
@@ -716,7 +721,7 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
   transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease),background var(--dur) var(--ease);
 }
 .price-row:active{box-shadow:var(--neu-in);transform:scale(0.97)}
-.price-row[data-selected="true"]{background:var(--brand-subtle);box-shadow:var(--neu-in),0 0 0 1px rgba(13,148,136,0.20)}
+.price-row[data-selected="true"]{background:var(--brand-subtle);box-shadow:var(--neu-in),0 0 0 1px rgba(13,148,136,.11)}
 .price-left{display:flex;align-items:center;gap:12px;min-width:0}
 .price-icon{
   width:40px;height:40px;border-radius:var(--r-sm);background:var(--bg);
@@ -731,7 +736,7 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
 .price-right{display:flex;align-items:center;gap:10px;flex-shrink:0}
 .price-value{display:flex;align-items:baseline;gap:1px;font-variant-numeric:tabular-nums}
 .price-value .cur{font-size:12px;color:var(--red);font-weight:600}
-.price-value .amt{font-size:20px;color:var(--red);font-weight:700;letter-spacing:-0.02em}
+.price-value .amt{font-size:16px;color:var(--red);font-weight:700;letter-spacing:-0.02em}
 .price-radio{
   width:22px;height:22px;border-radius:50%;border:2px solid var(--text-3);background:transparent;
   display:flex;align-items:center;justify-content:center;flex-shrink:0;
@@ -771,11 +776,11 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
 }
 .master-card:active{transform:scale(0.96);box-shadow:var(--neu-in)}
 .master-avatar{
-  width:64px;height:64px;border-radius:50%;background:var(--bg-elevated);
+  width:48px;height:48px;border-radius:50%;background:var(--bg-elevated);
   box-shadow:var(--neu-in);display:flex;align-items:center;justify-content:center;
 }
 .master-avatar .avatar-inner{
-  width:50px;height:50px;border-radius:50%;background:var(--brand-gradient);
+  width:38px;height:38px;border-radius:50%;background:var(--brand-gradient);
   display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:20px;
 }
 .avatar-inner.avatar-amber{background:linear-gradient(135deg,#A0723C 0%,#D4944C 50%,#E8C088 100%)}

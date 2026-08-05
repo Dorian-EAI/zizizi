@@ -1,0 +1,84 @@
+<view class="phone-page design-detail-page" data-page-id="page-client-exchange-result">
+  <view class="status-bar"><text class="tag-span">9:41</text><text class="status-icons tag-span">● WiFi 100%</text></view>
+  <view class="topbar"><view class="icon-button design-button" data-dom-id="exchange-result-back" bindtap="onBack"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m15%2018-6-6%206-6M9%2012h10%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view><view class="tag-h1">兑换结果</view><text class="tag-span"></text></view>
+  <view class="page-body">
+
+    <!-- 加载状态 -->
+    <view wx:if="{{loading}}" class="hero" style="text-align:center">
+      <view class="avatar" style="margin:0 auto 24rpx;background:var(--info)">…</view>
+      <view class="tag-h2">加载中</view>
+      <view class="tag-p">正在查询兑换记录…</view>
+    </view>
+
+    <!-- 错误状态 -->
+    <view wx:elif="{{loadError}}" class="hero" style="text-align:center">
+      <view class="avatar" style="margin:0 auto 24rpx;background:var(--warning)">!</view>
+      <view class="tag-h2">加载失败</view>
+      <view class="tag-p">网络异常或服务暂时不可用，请重试。</view>
+      <view class="btn primary design-button" style="margin-top:24rpx" bindtap="onRetry">重新加载</view>
+    </view>
+
+    <!-- 正常状态 -->
+    <block wx:else>
+
+      <!-- Hero 成功/失败态 -->
+      <view class="hero" style="text-align:center">
+        <view class="hero-kicker tag-p">{{exchange.success ? 'EXCHANGE SUCCEEDED' : 'EXCHANGE FAILED'}}</view>
+        <view class="avatar {{exchange.iconClass}}" style="margin:0 auto 24rpx;background:{{exchange.success ? 'var(--success)' : 'var(--danger)'}}">{{exchange.iconText}}</view>
+        <view class="tag-h2">{{exchange.success ? '兑换成功' : '兑换失败'}}</view>
+        <view class="tag-p">{{exchange.success ? '商品兑换记录已生成，可在积分商城查看后续状态。' : '兑换过程中发生异常，积分未扣减。'}}</view>
+      </view>
+
+      <!-- 状态标签 -->
+      <view class="section-title">
+        <text class="tag-strong">兑换状态</text>
+        <text class="badge {{exchange.success ? 'success' : 'danger'}} tag-span">{{exchange.success ? '积分已扣减' : '兑换失败'}}</text>
+      </view>
+
+      <!-- 兑换详情卡片 -->
+      <view class="section">
+        <view class="card list-card">
+          <view class="list-row" bindtap="onTapProduct">
+            <view class="row-icon tag-span"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%235B8C5A%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M4%2010h16v10H4V10ZM3%207h18v3H3V7Z%22%2F%3E%3Cpath%20d%3D%22M12%207v13M12%207H8.5A2.5%202.5%200%201%201%2011%204.5L12%207Zm0%200h3.5A2.5%202.5%200%201%200%2013%204.5L12%207Z%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view>
+            <view class="row-main">
+              <view class="row-title">{{exchange.productName || '商品兑换'}}</view>
+              <view wx:if="{{exchange.spec}}" class="row-copy">规格：{{exchange.spec}}</view>
+            </view>
+            <text class="chevron tag-span">›</text>
+          </view>
+          <view class="list-row">
+            <view class="row-icon tag-span"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%230D9488%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2212%22%20r%3D%229%22%2F%3E%3Cpath%20d%3D%22m12%207%201.5%203%203.5.5-2.5%202.4.6%203.4-3.1-1.6-3.1%201.6.6-3.4L7%2010.5l3.5-.5L12%207Z%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view>
+            <view class="row-main">
+              <view class="row-title">消耗积分</view>
+            </view>
+            <text class="amount tag-span">{{exchange.pointsCost || '—'}}</text>
+          </view>
+          <view class="list-row">
+            <view class="row-icon tag-span"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%230D9488%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2212%22%20r%3D%229%22%2F%3E%3Cpath%20d%3D%22M8%2012h8M12%208v8%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view>
+            <view class="row-main">
+              <view class="row-title">剩余积分</view>
+            </view>
+            <text class="row-value tag-span">{{exchange.remainingPoints || '—'}}</text>
+          </view>
+          <view class="list-row">
+            <view class="row-icon tag-span"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%230D9488%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%225%22%20y%3D%223%22%20width%3D%2214%22%20height%3D%2218%22%20rx%3D%222%22%2F%3E%3Cpath%20d%3D%22M9%208h6M9%2012h6M9%2016h4%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view>
+            <view class="row-main">
+              <view class="row-title">兑换单号</view>
+            </view>
+            <text class="row-value tag-span">{{exchange.orderNo || '—'}}</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 提示信息 -->
+      <view class="notice info" wx:if="{{exchange.success}}">实物商品将在 3 个工作日内发出；权益类商品会自动放入对应账户。</view>
+      <view class="notice warning" wx:else>如有疑问请联系客服，或前往积分商城查看兑换记录。</view>
+
+    </block>
+
+  </view>
+  <view class="fixed-actions">
+    <view class="btn secondary design-button" bindtap="onGoHome">返回首页</view>
+    <view class="btn primary design-button" bindtap="onGoMall">继续逛商城</view>
+  </view>
+</view>

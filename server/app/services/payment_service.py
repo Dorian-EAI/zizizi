@@ -4,8 +4,7 @@
 Transaction 的 amount 始终为正数，通过 type 区分收入/支出。
 """
 
-import random
-from datetime import datetime
+from datetime import datetime, timedelta
 from decimal import Decimal, InvalidOperation, ROUND_HALF_UP
 from typing import Optional
 
@@ -17,18 +16,17 @@ from app.models.order import Order
 from app.models.user import User, Worker
 from app.models.wallet import PaymentOrder, RefundOrder, Transaction
 from app.services.order_service import _cas_update_status
+from app.utils.snowflake import generate_business_no
 
 
 # ===== 辅助函数 =====
 
 def _gen_payment_no() -> str:
-    """生成支付单号：PAY + 时间戳 + 随机数"""
-    return "PAY" + datetime.utcnow().strftime("%Y%m%d%H%M%S") + str(random.randint(1000, 9999))
+    return generate_business_no("PAY")
 
 
 def _gen_refund_no() -> str:
-    """生成退款单号：REF + 时间戳 + 随机数。"""
-    return "REF" + datetime.utcnow().strftime("%Y%m%d%H%M%S") + str(random.randint(1000, 9999))
+    return generate_business_no("REF")
 
 
 def _to_cents(value) -> int:
@@ -89,6 +87,113 @@ def _tx_to_dict(tx: Transaction) -> dict:
         "description": tx.description,
         "status": tx.status,
         "created_at": tx.created_at.strftime("%Y-%m-%d %H:%M:%S") if tx.created_at else None,
+    }
+
+
+def get_order_payment_quote(
+    db: Session,
+    user: User,
+    order_id: int,
+    coupon_id: Optional[int] = None,
+) -> dict:
+    """Return a short-lived, server-authoritative payment projection.
+
+    This endpoint is read-only.  Payment creation still locks and revalidates
+    the order/coupon, so a quote can safely become stale without authorizing a
+    wrong debit.
+    """
+    order = db.query(Order).filter(Order.id == order_id).first()
+    if not order:
+        raise HTTPException(status_code=404, detail="订单不存在")
+    if order.user_id != user.id:
+        raise HTTPException(status_code=403, detail="无权查看该订单支付报价")
+    if order.status != "completed":
+        raise HTTPException(status_code=409, detail="当前订单状态不可支付")
+
+    final_price_cents = _to_cents(order.final_price or 0)
+    if final_price_cents < 0:
+        raise HTTPException(status_code=409, detail="订单金额异常")
+
+    active_payment = (
+        db.query(PaymentOrder)
+        .filter(
+            PaymentOrder.order_no == order.order_no,
+            PaymentOrder.payer_type == "user",
+            PaymentOrder.payer_id == user.id,
+            PaymentOrder.status.in_(("pending", "reserved")),
+        )
+        .order_by(PaymentOrder.id.desc())
+        .first()
+    )
+
+    selected_coupon_id = coupon_id
+    discount_cents = 0
+    payable_cents = final_price_cents
+    if active_payment:
+        if coupon_id is not None and active_payment.coupon_id != coupon_id:
+            raise HTTPException(status_code=409, detail="待支付单与所选优惠券不一致")
+        selected_coupon_id = active_payment.coupon_id
+        discount_cents = _to_cents(active_payment.discount_amount or 0)
+        payable_cents = _to_cents(active_payment.amount or 0)
+    elif coupon_id is not None:
+        from app.services.coupon_service import list_available_for_order
+
+        candidates = list_available_for_order(
+            db,
+            user,
+            _from_cents(final_price_cents),
+            order.service_type,
+        )
+        selected = next((item for item in candidates if item.get("id") == coupon_id), None)
+        if not selected:
+            raise HTTPException(status_code=409, detail="优惠券已失效或不适用于当前订单")
+        discount_cents = min(_to_cents(selected.get("discount_amount") or 0), final_price_cents)
+        payable_cents = max(final_price_cents - discount_cents, 0)
+
+    wallet_enabled = _to_cents(user.balance or 0) >= payable_cents
+    methods = [
+        {
+            "key": "wechat",
+            "enabled": bool(user.openid) and payable_cents > 0,
+            "disabled_reason": (
+                "零元订单无需调起微信支付"
+                if payable_cents == 0
+                else "当前账号未绑定微信"
+                if not user.openid
+                else ""
+            ),
+        },
+        {
+            "key": "wallet",
+            "enabled": wallet_enabled,
+            "disabled_reason": "钱包余额不足" if not wallet_enabled else "",
+        },
+    ]
+    now = datetime.utcnow()
+    quote_expires_at = now + timedelta(minutes=2)
+    active_data = None
+    if active_payment:
+        active_data = {
+            "payment_no": active_payment.payment_no,
+            "status": active_payment.status,
+            "method": active_payment.method,
+            "coupon_id": active_payment.coupon_id,
+            "amount": _from_cents(_to_cents(active_payment.amount)),
+            "created_at": active_payment.created_at.isoformat() + "Z" if active_payment.created_at else None,
+        }
+
+    return {
+        "order_id": order.id,
+        "order_no": order.order_no,
+        "order_version": int(order.version or 0),
+        "original_amount": _from_cents(final_price_cents),
+        "discount_amount": _from_cents(discount_cents),
+        "payable_amount": _from_cents(payable_cents),
+        "coupon_id": selected_coupon_id,
+        "payment_methods": methods,
+        "active_payment": active_data,
+        "quoted_at": now.isoformat() + "Z",
+        "expires_at": quote_expires_at.isoformat() + "Z",
     }
 
 
@@ -207,6 +312,9 @@ def recharge(db: Session, account, account_type: str, amount: float, method: str
     外部渠道充值不得在客户端请求阶段增加余额；只有验签且金额一致的微信
     支付回调会真正入账。
     """
+    if account_type != "user" or not isinstance(account, User):
+        raise HTTPException(status_code=403, detail="师傅收入钱包不开放充值")
+
     amount_cents = _to_cents(amount)
     if amount_cents <= 0:
         raise HTTPException(status_code=400, detail="充值金额必须大于 0")
@@ -266,13 +374,13 @@ def withdraw(
     """
     from app.config import settings
 
+    if account_type != "worker":
+        raise HTTPException(status_code=403, detail="仅师傅账号可以提现")
     if settings.APP_ENV.lower() != "development" or not settings.WX_PAY_MOCK_ENABLED:
         raise HTTPException(
             status_code=503,
             detail="提现到账回调尚未接入，生产环境暂不受理提现",
         )
-    if account_type != "worker":
-        raise HTTPException(status_code=403, detail="仅师傅账号可以提现")
     if method != "wechat":
         raise HTTPException(status_code=501, detail="当前仅支持微信提现")
 
@@ -327,6 +435,7 @@ async def pay_order(
     coupon_id: Optional[int] = None,
     wallet_amount: Optional[float] = None,
     wechat_amount: Optional[float] = None,
+    order_version: Optional[int] = None,
 ) -> dict:
     """订单支付
 
@@ -369,6 +478,11 @@ async def pay_order(
 
     if order.status != "completed":
         raise HTTPException(status_code=400, detail="订单未完成，无法支付")
+    from app.config import settings
+    if settings.is_deployed and order_version is None:
+        raise HTTPException(status_code=428, detail="支付请求缺少权威报价的订单版本")
+    if order_version is not None and int(order.version or 0) != order_version:
+        raise HTTPException(status_code=409, detail="订单金额或状态已更新，请刷新支付报价")
 
     # 计算支付金额
     final_price_cents = _to_cents(order.final_price or 0)
@@ -565,6 +679,7 @@ async def pay_order(
         db.commit()
         return {
             "success": True,
+            "status": "paid",
             "payment_no": payment_wallet.payment_no,
             "wallet_paid": wallet_pay,
             "wechat_amount": 0,
@@ -684,6 +799,7 @@ async def pay_order(
 
     return {
         "success": True,
+        "status": "paid",
         "payment_no": payment.payment_no,
         "discount_amount": discount_amount,
         "pay_amount": pay_amount,

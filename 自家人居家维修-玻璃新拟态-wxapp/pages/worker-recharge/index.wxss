@@ -1,6 +1,6 @@
 /* pages/worker-recharge/index.wxss — 师傅充值页 像素级复刻 worker-recharge.html
  * 换算基准：1px = 2rpx（750rpx 设计稿）
- * 师傅端品牌色：--brand-worker #2D6CDF（蓝色），光斑 blue-sage 渐变
+ * 师傅端品牌色：--brand-worker #2D6CDF（蓝色），光斑 blue-gold 渐变
  * 严格忠于 HTML 参考的尺寸、间距、圆角、阴影、渐变透明度
  */
 
@@ -48,9 +48,9 @@
 /* ===== 师傅端导航栏滚动态（磨砂增强）===== */
 .back-bar.worker.scrolled {
   background:
-    radial-gradient(ellipse 440rpx 320rpx at 78% 45%, rgba(143, 169, 152, 0.18) 0%, transparent 70%),
+    radial-gradient(ellipse 440rpx 320rpx at 78% 45%, rgba(212,148,76,.10) 0%, transparent 70%),
     radial-gradient(ellipse 360rpx 280rpx at 18% 75%, rgba(45, 108, 223, 0.20) 0%, transparent 70%),
-    linear-gradient(135deg, rgba(45, 108, 223, 0.18) 0%, rgba(143, 169, 152, 0.12) 50%, rgba(45, 108, 223, 0.10) 100%),
+    linear-gradient(135deg, rgba(45, 108, 223, 0.18) 0%, rgba(212,148,76,.04) 50%, rgba(45, 108, 223, 0.10) 100%),
     rgba(247, 243, 239, 0.72);
   backdrop-filter: blur(40rpx) saturate(160%);
   -webkit-backdrop-filter: blur(40rpx) saturate(160%);
@@ -72,9 +72,9 @@
   border-radius: var(--r-lg);
   overflow: hidden;
   background:
-    radial-gradient(ellipse 480rpx 400rpx at 25% 40%, rgba(143, 169, 152, 0.30) 0%, transparent 70%),
+    radial-gradient(ellipse 480rpx 400rpx at 25% 40%, rgba(212,148,76,.12) 0%, transparent 70%),
     radial-gradient(ellipse 400rpx 320rpx at 80% 80%, rgba(45, 108, 223, 0.24) 0%, transparent 70%),
-    linear-gradient(135deg, rgba(45, 108, 223, 0.30) 0%, rgba(143, 169, 152, 0.18) 50%, rgba(45, 108, 223, 0.14) 100%);
+    linear-gradient(135deg, rgba(45, 108, 223, 0.30) 0%, rgba(212,148,76,.10) 50%, rgba(45, 108, 223, 0.14) 100%);
   border: 1rpx solid rgba(255, 255, 255, 0.70);
   box-shadow: var(--neu-raised), 0 20rpx 72rpx rgba(45, 108, 223, 0.10), 0 0 0 2rpx rgba(44, 40, 36, 0.05);
   z-index: 5;

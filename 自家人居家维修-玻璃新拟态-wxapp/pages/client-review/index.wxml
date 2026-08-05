@@ -1,0 +1,26 @@
+<view class="page review-page">
+  <view class="nav-bar">
+    <view class="nav-icon-btn" bindtap="onBack"><image class="nav-icon" src="{{icons.back}}" /></view>
+    <text class="nav-title">服务评价</text><view class="nav-spacer"></view>
+  </view>
+  <scroll-view scroll-y class="review-scroll" show-scrollbar="{{false}}">
+    <view class="state-panel" wx:if="{{loading}}"><text>正在核对评价资格…</text></view>
+    <view class="state-panel" wx:elif="{{loadError}}"><text class="state-title">订单加载失败</text><text class="state-desc">{{unavailableReason}}</text></view>
+    <block wx:else>
+      <view class="permission-warning" wx:if="{{unavailableReason}}"><text class="warning-title">当前无法评价</text><text class="warning-desc">{{unavailableReason}}。评价入口仅服从服务端 allowed_actions。</text></view>
+      <view class="section">
+        <view class="glass-neu-card worker-card">
+          <view class="worker-avatar">修</view>
+          <view class="worker-info"><text class="worker-name">{{order.worker_name || '本次服务'}}</text><text class="worker-service">{{order.service_name}} · {{order.order_no}}</text><text class="worker-rating">服务信息以订单为准</text></view>
+        </view>
+      </view>
+      <view class="section"><view class="glass-neu-card"><view class="star-section"><text class="star-label">您对本次服务满意吗？</text><view class="stars"><view class="star" wx:for="{{[1,2,3,4,5]}}" wx:key="*this" data-value="{{item}}" bindtap="onRate"><image src="{{rating >= item ? icons.starActive : icons.star}}" /></view></view><text class="star-text {{rating ? 'active' : ''}}">{{starText}}</text></view></view></view>
+      <view class="section"><text class="section-title">服务评价标签</text><view class="tag-list"><view class="tag-item {{item.selected ? 'selected' : ''}}" wx:for="{{tags}}" wx:key="name" data-name="{{item.name}}" bindtap="onTag">{{item.name}}</view></view></view>
+      <view class="section"><text class="section-title">评价内容</text><textarea class="review-textarea" value="{{content}}" maxlength="500" bindinput="onContent" placeholder="分享您的服务体验，帮助更多用户选择合适的师傅..." /><text class="textarea-counter">{{contentLength}}/500字</text></view>
+      <view class="section"><text class="section-title">上传图片（选填）</text><view class="upload-grid"><view class="upload-item" wx:for="{{images}}" wx:key="url" data-index="{{index}}" bindtap="onPreview"><image src="{{item.localPath || item.url}}" mode="aspectFill" /><view class="upload-delete" catchtap="onDeleteImage" data-index="{{index}}">×</view></view><view class="upload-add" wx:if="{{images.length < 9}}" bindtap="onChooseImages"><image src="{{icons.image}}" /><text class="upload-add-text">{{uploading ? '上传中' : '添加图片'}}</text></view></view></view>
+      <view class="section"><view class="anon-row" bindtap="onToggleAnonymous"><view class="anon-left"><view class="anon-icon"><image src="{{icons.user}}" /></view><view><text class="anon-text">匿名评价</text><text class="anon-desc">开启后您的头像和昵称将被隐藏</text></view></view><view class="toggle {{anonymous ? 'active' : ''}}"><view class="toggle-dot"></view></view></view></view>
+      <view class="scroll-spacer"></view>
+    </block>
+  </scroll-view>
+  <view class="submit-bar safe-bottom" wx:if="{{order}}"><button class="submit-btn" bindtap="onSubmit" loading="{{submitting}}" disabled="{{!canReview || uploading || submitting}}">提交评价</button></view>
+</view>

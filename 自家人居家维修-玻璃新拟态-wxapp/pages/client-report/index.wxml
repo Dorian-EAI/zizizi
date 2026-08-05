@@ -1,0 +1,30 @@
+<!-- REVIEWED BUSINESS VIEW: complaints create real support tickets. -->
+<view class="phone-page design-detail-page" data-page-id="page-client-report">
+  <view class="status-bar"><text class="tag-span">9:41</text><text class="status-icons tag-span">● ◒ ▰</text></view>
+  <view class="topbar"><view class="icon-button design-button" bindtap="onBack"><image class="design-svg-icon" src="{{icons.back}}" mode="aspectFit" /></view><view class="tag-h1">投诉举报</view><view class="top-action design-button" bindtap="onSupport">客服</view></view>
+  <view class="page-body">
+    <view class="section card" wx:if="{{worker}}">
+      <view class="list-row"><view class="avatar">师</view><view class="row-main"><view class="row-title">{{worker.name}}</view><view class="row-copy">已认证师傅 · 评分 {{worker.rating}} · 师傅ID {{worker.id}}</view></view><text class="badge info tag-span">投诉对象</text></view>
+    </view>
+    <view class="section card" wx:else>
+      <view class="list-row"><view class="avatar"><image class="design-svg-icon" src="{{icons.user}}" mode="aspectFit" /></view><view class="row-main"><view class="row-title">平台投诉工单</view><view class="row-copy">未指定公开师傅资料；如与订单有关，请从订单入口携带关联订单提交。</view></view><text class="badge warning tag-span">待关联</text></view>
+    </view>
+
+    <view class="section card">
+      <view class="section-title"><text class="tag-strong">投诉类型</text><text class="tag-span">单选</text></view>
+      <view class="chips"><view class="chip {{selectedType === item ? 'active' : ''}} design-button" wx:for="{{types}}" wx:key="*this" data-type="{{item}}" bindtap="onType">{{item}}</view></view>
+      <view class="field"><text class="tag-label">投诉内容 · {{content.length}}/500</text><textarea class="textarea" maxlength="500" value="{{content}}" bindinput="onInput" placeholder="请客观说明时间、经过和诉求" /></view>
+    </view>
+
+    <view class="section card">
+      <view class="section-title"><text class="tag-strong">上传证据</text><text class="tag-span">最多 {{maxImages}} 张</text></view>
+      <view class="upload-grid">
+        <view class="upload-tile upload-item" wx:for="{{images}}" wx:key="*this"><image src="{{item}}" mode="aspectFill" /><view class="design-button" data-index="{{index}}" bindtap="removeImage">×</view></view>
+        <view class="upload-tile upload-add media-placeholder media-visual design-button" wx:if="{{images.length < maxImages}}" bindtap="chooseImage"><view class="media-icon"><image class="design-svg-icon" src="{{icons.camera}}" mode="aspectFit" /></view></view>
+      </view>
+      <view class="tag-p">图片在确认提交后上传；本地移除不会调用无权限的文件删除接口。</view>
+    </view>
+    <view class="notice info"><text class="tag-p">平台将按真实工单状态处理。紧急人身或财产安全问题请立即联系当地警方。</text></view>
+  </view>
+  <view class="fixed-actions"><view class="btn primary design-button" bindtap="onSubmit">{{submitting ? '提交中…' : '提交投诉'}}</view></view>
+</view>

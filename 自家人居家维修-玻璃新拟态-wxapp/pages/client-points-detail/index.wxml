@@ -1,0 +1,36 @@
+<!-- REVIEWED BUSINESS VIEW: balance and logs come from points APIs. -->
+<view class="phone-page design-detail-page" data-page-id="page-client-points-detail">
+  <view class="status-bar"><text class="tag-span">9:41</text><text class="status-icons tag-span">● ◒ ▰</text></view>
+  <view class="topbar"><view class="icon-button design-button" bindtap="onBack"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m15%2018-6-6%206-6M9%2012h10%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view><view class="tag-h1">积分明细</view><text class="tag-span"></text></view>
+  <view class="page-body">
+    <view class="hero">
+      <view class="hero-kicker tag-p">当前可用积分</view>
+      <view class="tag-h2">{{balanceText}}</view>
+      <view class="tag-p">余额与每笔变动均以服务端积分账本为准</view>
+      <view class="chips">
+        <view class="chip active design-button" bindtap="onSignin">{{todaySignin ? '今日已签到' : (signing ? '签到中…' : '今日签到')}}</view>
+        <view class="chip design-button" bindtap="onTasks">去赚积分</view>
+        <view class="chip design-button" bindtap="onMall">积分商城</view>
+      </view>
+    </view>
+    <view class="segmented">
+      <view class="segment {{activeTab === 'all' ? 'active' : ''}} design-button" data-tab="all" bindtap="onTab">全部</view>
+      <view class="segment {{activeTab === 'income' ? 'active' : ''}} design-button" data-tab="income" bindtap="onTab">收入</view>
+      <view class="segment {{activeTab === 'expense' ? 'active' : ''}} design-button" data-tab="expense" bindtap="onTab">支出</view>
+    </view>
+    <view class="section card" wx:if="{{loading}}"><view class="tag-p">正在加载积分账本…</view></view>
+    <view class="section card" wx:elif="{{loadError}}"><view class="tag-h2">加载失败</view><view class="tag-p">{{loadError}}</view><view class="btn secondary design-button" bindtap="onRetry">重新加载</view></view>
+    <view class="section" wx:else>
+      <view class="section-title"><text class="tag-strong">最近记录</text><text class="tag-span">{{visibleLogs.length}} 笔</text></view>
+      <view class="card list-card" wx:if="{{visibleLogs.length}}">
+        <view class="list-row" wx:for="{{visibleLogs}}" wx:key="id">
+          <text class="row-icon tag-span">{{item.type === 'income' ? '＋' : '−'}}</text>
+          <view class="row-main"><view class="row-title">{{item.title}}</view><view class="row-copy">{{item.subtitle}}</view></view>
+          <view><view class="row-value">{{item.amountText}}</view><view class="row-copy" wx:if="{{item.balanceText}}">余额 {{item.balanceText}}</view></view>
+        </view>
+      </view>
+      <view class="card" wx:else><view class="tag-p">当前筛选条件下没有积分记录</view></view>
+      <view class="note"><text class="tag-p">服务端当前最多返回最近 100 笔记录；完整保留期限以平台规则为准。</text></view>
+    </view>
+  </view>
+</view>

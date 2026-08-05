@@ -1,0 +1,75 @@
+<view class="page points-page">
+  <view class="nav-bar">
+    <view class="nav-icon-btn" bindtap="onBack"><image class="nav-icon" src="{{icons.back}}" mode="aspectFit" /></view>
+    <text class="nav-title">积分中心</text>
+    <view class="nav-icon-btn" bindtap="onRules"><image class="nav-icon" src="{{icons.info}}" mode="aspectFit" /></view>
+  </view>
+
+  <view class="state-panel" wx:if="{{loading}}"><text>正在加载积分账户…</text></view>
+  <view class="state-panel" wx:elif="{{loadError}}">
+    <text class="state-title">积分账户加载失败</text>
+    <text class="state-desc">下拉刷新可重新获取，当前不会展示缓存金额。</text>
+  </view>
+  <block wx:else>
+    <view class="points-hero">
+      <text class="points-label">我的积分</text>
+      <text class="points-value mono">{{balanceText}}</text>
+      <text class="points-unit">积分</text>
+      <view class="points-actions">
+        <button class="points-action-btn primary" bindtap="onSignin" loading="{{signing}}" disabled="{{todaySignin || signing}}">{{todaySignin ? '今日已签到' : '立即签到'}}</button>
+        <button class="points-action-btn secondary" bindtap="onUnavailable">兑换暂未开放</button>
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="section-head"><text class="section-title">赚积分</text><text class="section-more">奖励以规则为准</text></view>
+      <view class="glass-card">
+        <view class="earn-grid">
+          <view class="earn-item" bindtap="onSignin"><view class="earn-icon"><image src="{{icons.check}}" /></view><text class="earn-name">每日签到</text><text class="earn-points">按规则发放</text></view>
+          <view class="earn-item"><view class="earn-icon"><image src="{{icons.yuan}}" /></view><text class="earn-name">下单消费</text><text class="earn-points">以流水为准</text></view>
+          <view class="earn-item"><view class="earn-icon"><image src="{{icons.message}}" /></view><text class="earn-name">评价订单</text><text class="earn-points">按规则发放</text></view>
+          <view class="earn-item" bindtap="onInvite"><view class="earn-icon"><image src="{{icons.share}}" /></view><text class="earn-name">邀请好友</text><text class="earn-points">功能待开放</text></view>
+        </view>
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="section-head"><text class="section-title">积分商城（预览）</text><text class="section-more" bindtap="onUnavailable">查看全部 ></text></view>
+      <view class="mall-grid">
+        <view class="mall-item" bindtap="onUnavailable">
+          <view class="mall-img"><text class="mall-emoji">🎫</text></view>
+          <view class="mall-info"><text class="mall-name">10元优惠券</text><text class="mall-points mono">500 <text>积分</text></text></view>
+        </view>
+        <view class="mall-item" bindtap="onUnavailable">
+          <view class="mall-img"><text class="mall-emoji">🎁</text></view>
+          <view class="mall-info"><text class="mall-name">20元优惠券</text><text class="mall-points mono">1000 <text>积分</text></text></view>
+        </view>
+        <view class="mall-item" bindtap="onUnavailable">
+          <view class="mall-img"><text class="mall-emoji">💰</text></view>
+          <view class="mall-info"><text class="mall-name">50元优惠券</text><text class="mall-points mono">2500 <text>积分</text></text></view>
+        </view>
+        <view class="mall-item" bindtap="onUnavailable">
+          <view class="mall-img"><text class="mall-emoji">👑</text></view>
+          <view class="mall-info"><text class="mall-name">月卡会员</text><text class="mall-points mono">3000 <text>积分</text></text></view>
+        </view>
+      </view>
+    </view>
+
+    <view class="section records-section">
+      <view class="section-head"><text class="section-title">积分明细</text></view>
+      <view class="glass-card">
+        <view class="segmented-tabs">
+          <view class="seg-tab {{activeTab === 'all' ? 'active' : ''}}" data-key="all" bindtap="onTab">全部</view>
+          <view class="seg-tab {{activeTab === 'earn' ? 'active' : ''}}" data-key="earn" bindtap="onTab">获取</view>
+          <view class="seg-tab {{activeTab === 'spend' ? 'active' : ''}}" data-key="spend" bindtap="onTab">使用</view>
+        </view>
+        <view class="record-item" wx:for="{{visibleLogs}}" wx:key="id">
+          <view class="record-icon {{item.type}}"><image src="{{item.type === 'plus' ? icons.plus : icons.minus}}" /></view>
+          <view class="record-info"><text class="record-title">{{item.title}}</text><text class="record-time">{{item.time}}</text></view>
+          <text class="record-points {{item.type}} mono">{{item.amountText}}</text>
+        </view>
+        <view class="record-empty" wx:if="{{visibleLogs.length === 0}}"><text>当前筛选下没有积分流水</text></view>
+      </view>
+    </view>
+  </block>
+</view>

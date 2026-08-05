@@ -18,7 +18,8 @@ from app.utils.redis_client import redis_client
 logger = get_logger(__name__)
 
 # Redis Key 前缀
-_VERIFY_CODE_KEY = "sms:verify_code:{phone}"
+_VERIFY_CODE_KEY = "sms:verify_code:{purpose}:{phone}"
+_VERIFY_FAILURE_KEY = "sms:verify_failure:{purpose}:{phone}"
 _RATE_LIMIT_KEY = "sms:rate_limit:{phone}"
 
 # 验证码缓存与频率限制时长（秒）
@@ -29,6 +30,7 @@ _RATE_LIMIT_TTL = 60    # 60 秒
 # 生产环境必须依赖共享存储，避免多进程验证码不一致和限流绕过。
 _DEV_CODE_CACHE: Dict[str, Tuple[str, float]] = {}
 _DEV_RATE_CACHE: Dict[str, float] = {}
+_DEV_FAILURE_CACHE: Dict[str, int] = {}
 _DEV_CACHE_LOCK = threading.Lock()
 
 
@@ -245,7 +247,12 @@ def is_rate_limited(phone: str) -> bool:
         return True
 
 
-def send_verification_code(phone: str, code: Optional[str] = None) -> Optional[str]:
+def send_verification_code(
+    phone: str,
+    code: Optional[str] = None,
+    *,
+    purpose: str = "bind_phone",
+) -> Optional[str]:
     """发送验证码
 
     - 生成 6 位数字验证码，缓存到 Redis 5 分钟
@@ -257,32 +264,37 @@ def send_verification_code(phone: str, code: Optional[str] = None) -> Optional[s
     if not phone:
         raise SMSServiceError("手机号不能为空")
 
-    rate_key = _RATE_LIMIT_KEY.format(phone=phone)
-    if is_rate_limited(phone):
-        logger.info("verify code rate limited", extra={"phone_tail": phone[-4:]})
-        raise SMSRateLimitError("发送过于频繁，请 60 秒后重试")
-
     if not code:
         code = f"{secrets.randbelow(1_000_000):06d}"
 
-    code_key = _VERIFY_CODE_KEY.format(phone=phone)
-    saved = redis_client.set(code_key, code, ex=_VERIFY_CODE_TTL)
-    if not saved:
-        if settings.is_deployed:
-            raise SMSServiceError("验证码存储不可用，请稍后重试")
+    if purpose not in {"bind_phone", "worker_certification"}:
+        raise SMSServiceError("验证码用途无效")
+    cache_key = f"{purpose}:{phone}"
+    code_key = _VERIFY_CODE_KEY.format(purpose=purpose, phone=phone)
+    failure_key = _VERIFY_FAILURE_KEY.format(purpose=purpose, phone=phone)
+    rate_key = _RATE_LIMIT_KEY.format(phone=phone)
+    reserved = redis_client.reserve_verification_send(
+        rate_key,
+        code_key,
+        failure_key,
+        code,
+        rate_ttl=_RATE_LIMIT_TTL,
+        code_ttl=_VERIFY_CODE_TTL,
+    )
+    if reserved is False:
+        logger.info("verify code rate limited", extra={"phone_tail": phone[-4:]})
+        raise SMSRateLimitError("发送过于频繁，请 60 秒后重试")
+    if reserved is None and settings.is_deployed:
+        raise SMSServiceError("验证码存储不可用，请稍后重试")
+    if reserved is None:
         now = time.monotonic()
         with _DEV_CACHE_LOCK:
-            _DEV_CODE_CACHE[phone] = (code, now + _VERIFY_CODE_TTL)
-            _DEV_RATE_CACHE[phone] = now + _RATE_LIMIT_TTL
-        logger.warning("redis unavailable, using development-only memory cache")
-
-    rate_saved = redis_client.set(rate_key, "1", ex=_RATE_LIMIT_TTL)
-    if not rate_saved and settings.is_deployed:
-        redis_client.delete(code_key)
-        raise SMSServiceError("短信限流存储不可用，请稍后重试")
-    if not rate_saved:
-        with _DEV_CACHE_LOCK:
+            if _DEV_RATE_CACHE.get(phone, 0) > now:
+                raise SMSRateLimitError("发送过于频繁，请 60 秒后重试")
+            _DEV_CODE_CACHE[cache_key] = (code, now + _VERIFY_CODE_TTL)
+            _DEV_FAILURE_CACHE.pop(cache_key, None)
             _DEV_RATE_CACHE[phone] = time.monotonic() + _RATE_LIMIT_TTL
+        logger.warning("redis unavailable, using development-only memory cache")
 
     result = send_sms(
         phone,
@@ -293,7 +305,8 @@ def send_verification_code(phone: str, code: Optional[str] = None) -> Optional[s
         redis_client.delete(code_key)
         redis_client.delete(rate_key)
         with _DEV_CACHE_LOCK:
-            _DEV_CODE_CACHE.pop(phone, None)
+            _DEV_CODE_CACHE.pop(cache_key, None)
+            _DEV_FAILURE_CACHE.pop(cache_key, None)
             _DEV_RATE_CACHE.pop(phone, None)
         logger.error(
             "verification SMS delivery failed",
@@ -309,7 +322,7 @@ def send_verification_code(phone: str, code: Optional[str] = None) -> Optional[s
     return None
 
 
-def verify_code(phone: str, code: str) -> bool:
+def verify_code(phone: str, code: str, *, purpose: str = "bind_phone") -> bool:
     """校验验证码
 
     匹配后立即删除，防止重复使用。
@@ -317,27 +330,36 @@ def verify_code(phone: str, code: str) -> bool:
     if not phone or not code:
         return False
 
-    code_key = _VERIFY_CODE_KEY.format(phone=phone)
-    cached = redis_client.get_str(code_key)
-    from_dev_cache = False
-    if not cached and not settings.is_deployed:
-        now = time.monotonic()
-        with _DEV_CACHE_LOCK:
-            cached_entry = _DEV_CODE_CACHE.get(phone)
-            if cached_entry and cached_entry[1] > now:
-                cached = cached_entry[0]
-                from_dev_cache = True
-            else:
-                _DEV_CODE_CACHE.pop(phone, None)
-    if not cached:
+    if purpose not in {"bind_phone", "worker_certification"}:
         return False
+    code_key = _VERIFY_CODE_KEY.format(purpose=purpose, phone=phone)
+    failure_key = _VERIFY_FAILURE_KEY.format(purpose=purpose, phone=phone)
+    consumed = redis_client.consume_verification_code(
+        code_key,
+        failure_key,
+        code,
+        max_attempts=5,
+        ttl_seconds=_VERIFY_CODE_TTL,
+    )
+    if consumed is not None:
+        return consumed
+    if settings.is_deployed:
+        raise SMSServiceError("验证码存储不可用，请稍后重试")
 
-    if not hmac.compare_digest(cached, code):
+    cache_key = f"{purpose}:{phone}"
+    now = time.monotonic()
+    with _DEV_CACHE_LOCK:
+        cached_entry = _DEV_CODE_CACHE.get(cache_key)
+        if not cached_entry or cached_entry[1] <= now:
+            _DEV_CODE_CACHE.pop(cache_key, None)
+            _DEV_FAILURE_CACHE.pop(cache_key, None)
+            return False
+        if hmac.compare_digest(cached_entry[0], code):
+            _DEV_CODE_CACHE.pop(cache_key, None)
+            _DEV_FAILURE_CACHE.pop(cache_key, None)
+            return True
+        attempts = _DEV_FAILURE_CACHE.get(cache_key, 0) + 1
+        _DEV_FAILURE_CACHE[cache_key] = attempts
+        if attempts >= 5:
+            _DEV_CODE_CACHE.pop(cache_key, None)
         return False
-
-    if from_dev_cache:
-        with _DEV_CACHE_LOCK:
-            _DEV_CODE_CACHE.pop(phone, None)
-    else:
-        redis_client.delete(code_key)
-    return True

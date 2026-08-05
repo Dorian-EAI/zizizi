@@ -1,6 +1,6 @@
 <!-- pages/worker-settings/index.wxml — 师傅设置页 玻璃新拟态（像素级复刻 worker-settings.html） -->
 <view class="page">
-  <!-- 背景装饰光斑：blue-sage 径向渐变 -->
+  <!-- 背景装饰光斑：blue-gold 径向渐变 -->
   <view class="blob" style="top: -40px; right: -60px; width: 280px; height: 280px; background: radial-gradient(circle, var(--brand) 0%, transparent 70%);"></view>
   <view class="blob" style="top: 360px; left: -80px; width: 240px; height: 240px; background: radial-gradient(circle, var(--sage) 0%, transparent 70%);"></view>
 
@@ -21,16 +21,16 @@
         <view class="worker-profile-main">
           <view class="avatar-col">
             <view class="worker-profile-avatar avatar-glass">
-              <image src="{{icons.user}}" mode="aspectFit" class="worker-profile-avatar-icon" lazy-load="{{false}}" />
+              <image src="{{workerProfile.avatar || icons.user}}" mode="{{workerProfile.avatar ? 'aspectFill' : 'aspectFit'}}" class="worker-profile-avatar-icon" lazy-load="{{false}}" />
             </view>
             <view class="worker-gold-tag">
               <image src="{{icons.star}}" mode="aspectFit" class="worker-gold-tag-icon" lazy-load="{{false}}" />
-              <text class="worker-gold-tag-text">金牌师傅</text>
+              <text class="worker-gold-tag-text">{{workerProfile.levelText}}</text>
             </view>
           </view>
           <view class="worker-profile-info">
             <view class="worker-profile-name-row">
-              <text class="worker-profile-name">张师傅</text>
+              <text class="worker-profile-name">{{workerProfile.name}}</text>
             </view>
           </view>
           <view class="online-pill {{isOnline ? '' : 'offline'}}" bindtap="onToggleOnline">
@@ -39,9 +39,9 @@
           </view>
         </view>
         <view class="worker-profile-stats">
-          <text class="stats-main">已完成 328 单</text>
+          <text class="stats-main">已完成 {{workerProfile.completedOrdersText}} 单</text>
           <text class="stats-dot">·</text>
-          <text class="stats-sub">好评率 98%</text>
+          <text class="stats-sub">好评率 {{workerProfile.praiseRateText}}</text>
         </view>
       </view>
     </view>
@@ -56,7 +56,7 @@
           </view>
           <text class="row-title">接单范围</text>
           <view class="row-tail">
-            <text class="row-value">5 公里</text>
+            <text class="row-value">{{workerProfile.serviceAreaText}}</text>
             <image src="{{icons.chevronRight}}" mode="aspectFit" class="row-arrow" lazy-load="{{false}}" />
           </view>
         </view>
@@ -66,7 +66,7 @@
           </view>
           <text class="row-title">服务分类</text>
           <view class="row-tail">
-            <text class="row-value">防水/家电/管道</text>
+            <text class="row-value">{{workerProfile.serviceTypesText}}</text>
             <image src="{{icons.chevronRight}}" mode="aspectFit" class="row-arrow" lazy-load="{{false}}" />
           </view>
         </view>
@@ -87,9 +87,7 @@
           </view>
           <text class="row-title">自动接单</text>
           <view class="row-tail">
-            <view class="toggle toggle-off">
-              <view class="toggle-thumb"></view>
-            </view>
+            <text class="row-value">未开放</text>
           </view>
         </view>
       </view>
@@ -105,7 +103,7 @@
           </view>
           <text class="row-title">修改密码</text>
           <view class="row-tail">
-            <image src="{{icons.chevronRight}}" mode="aspectFit" class="row-arrow" lazy-load="{{false}}" />
+            <text class="row-value">未开放</text>
           </view>
         </view>
         <view class="setting-row">
@@ -114,17 +112,16 @@
           </view>
           <text class="row-title">绑定手机</text>
           <view class="row-tail">
-            <text class="row-value">已绑定</text>
-            <image src="{{icons.chevronRight}}" mode="aspectFit" class="row-arrow" lazy-load="{{false}}" />
+            <text class="row-value">{{workerProfile.phoneStatusText}}</text>
           </view>
         </view>
-        <view class="setting-row">
+        <view class="setting-row" bindtap="onCertificationTap">
           <view class="row-icon row-icon-green">
             <image src="{{icons.shield}}" mode="aspectFit" class="row-icon-img" lazy-load="{{false}}" />
           </view>
           <text class="row-title">实名认证</text>
           <view class="row-tail">
-            <text class="row-badge-green">已认证</text>
+            <text class="{{workerProfile.certificationTone === 'green' ? 'row-badge-green' : 'row-value'}}">{{workerProfile.certificationText}}</text>
             <image src="{{icons.chevronRight}}" mode="aspectFit" class="row-arrow" lazy-load="{{false}}" />
           </view>
         </view>
@@ -134,8 +131,7 @@
           </view>
           <text class="row-title">资质证书</text>
           <view class="row-tail">
-            <text class="row-value">3 张</text>
-            <image src="{{icons.chevronRight}}" mode="aspectFit" class="row-arrow" lazy-load="{{false}}" />
+            <text class="row-value">{{workerProfile.certificatesText}}</text>
           </view>
         </view>
       </view>
@@ -167,10 +163,9 @@
           <view class="row-icon row-icon-orange">
             <image src="{{icons.trash}}" mode="aspectFit" class="row-icon-img" lazy-load="{{false}}" />
           </view>
-          <text class="row-title">清除缓存</text>
+          <text class="row-title">缓存占用</text>
           <view class="row-tail">
-            <text class="row-value mono">2.4MB</text>
-            <image src="{{icons.chevronRight}}" mode="aspectFit" class="row-arrow" lazy-load="{{false}}" />
+            <text class="row-value mono">{{cacheText}}</text>
           </view>
         </view>
         <view class="setting-row" data-key="about" bindtap="onAboutItem">

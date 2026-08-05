@@ -1,0 +1,19 @@
+<view class="phone-page design-detail-page" data-page-id="page-client-bank-card-add">
+  <view class="status-bar"><text class="tag-span">9:41</text><text class="status-icons tag-span">● WiFi 100%</text></view>
+  <view class="topbar"><view class="icon-button design-button" data-route="/pages/client-bank-cards/index" bindtap="onNavigate"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m15%2018-6-6%206-6M9%2012h10%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view><view class="tag-h1">添加银行卡</view><text class="tag-span"></text></view>
+  <view class="page-body">
+    <view class="notice info">银行卡实名校验与令牌化存储尚未接入，以下字段保持禁用，当前不会收集敏感信息。</view>
+    <view class="section"><view class="section-title"><text class="tag-strong">实名信息</text><text class="badge warning tag-span">未开放</text></view><view class="card">
+      <view class="field"><text class="tag-label">持卡人姓名</text><input class="input" value="" disabled="{{true}}" placeholder="当前不收集" /></view>
+      <view class="field"><text class="tag-label">身份证号</text><input class="input" value="" disabled="{{true}}" placeholder="当前不收集" /></view>
+    </view></view>
+    <view class="section"><view class="section-title"><text class="tag-strong">银行卡信息</text></view><view class="card">
+      <view class="field"><text class="tag-label">银行卡号</text><input class="input" value="" disabled="{{true}}" placeholder="当前不收集" /></view>
+      <view class="field"><text class="tag-label">开户银行</text><view class="select-like is-disabled" bindtap="onUnavailable"><text class="tag-span">服务未接入</text><text class="chevron tag-span">›</text></view></view>
+      <view class="field"><text class="tag-label">银行预留手机</text><input class="input" value="" disabled="{{true}}" placeholder="当前不收集" /></view>
+      <view class="field"><text class="tag-label">短信验证码</text><view class="grid-2"><input class="input" value="" disabled="{{true}}" placeholder="不可用" /><view class="btn secondary design-button is-disabled" bindtap="onUnavailable">获取验证码</view></view></view>
+    </view></view>
+    <view class="notice">绑定需由合规支付机构完成实名核验与卡信息令牌化；在契约上线前不会模拟绑定成功。</view>
+    <view class="btn primary block design-button is-disabled" bindtap="onUnavailable">确认绑定</view>
+  </view>
+</view>

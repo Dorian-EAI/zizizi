@@ -1,0 +1,26 @@
+<!-- REVIEWED BUSINESS VIEW: only server-verifiable point tasks are shown as completed. -->
+<view class="phone-page design-detail-page" data-page-id="page-client-points-tasks">
+  <view class="status-bar"><text class="tag-span">9:41</text><text class="status-icons tag-span">● ◒ ▰</text></view>
+  <view class="topbar"><view class="icon-button design-button" bindtap="onBack"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m15%2018-6-6%206-6M9%2012h10%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view><view class="tag-h1">赚积分</view><view class="top-action design-button" bindtap="onRules">规则</view></view>
+  <view class="page-body">
+    <view class="hero"><view class="hero-kicker tag-p">当前积分</view><view class="tag-h2">{{balanceText}}</view><view class="tag-p">任务奖励只在服务端积分流水入账后显示</view></view>
+    <view class="section card" wx:if="{{loading}}"><view class="tag-p">正在加载积分状态…</view></view>
+    <view class="section card" wx:elif="{{loadError}}"><view class="tag-p">{{loadError}}</view><view class="btn secondary design-button" bindtap="onRetry">重试</view></view>
+    <view class="section" wx:else>
+      <view class="section-title"><text class="tag-strong">每日任务</text><text class="tag-span">服务端可验证</text></view>
+      <view class="card list-card">
+        <view class="list-row design-button" bindtap="onSignin">
+          <text class="row-icon tag-span">{{todaySignin ? '✓' : '签'}}</text><view class="row-main"><view class="row-title">每日签到</view><view class="row-copy">{{todaySignin ? '今日积分已到账' : '签到结果与奖励由服务端返回'}}</view></view><text class="badge success tag-span">{{todaySignin ? '已完成' : (signing ? '提交中' : '去签到')}}</text>
+        </view>
+      </view>
+    </view>
+    <view class="section">
+      <view class="section-title"><text class="tag-strong">可前往的真实业务</text><text class="tag-span">不预告积分数值</text></view>
+      <view class="card list-card">
+        <view class="list-row design-button" data-route="/pages/client-orders/index" bindtap="onRoute"><view class="row-icon tag-span"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%230D9488%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20aria-hidden%3D%22true%22%3E%3Crect%20x%3D%223%22%20y%3D%225%22%20width%3D%2218%22%20height%3D%2216%22%20rx%3D%222%22%2F%3E%3Cpath%20d%3D%22M16%203v4M8%203v4M3%2010h18%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view><view class="row-main"><view class="row-title">查看订单</view><view class="row-copy">完成与评价奖励以入账流水为准</view></view><text class="chevron tag-span">›</text></view>
+        <view class="list-row design-button" data-route="/pages/client-invite/index" bindtap="onRoute"><view class="row-icon tag-span"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%235B8C5A%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20aria-hidden%3D%22true%22%3E%3Ccircle%20cx%3D%2218%22%20cy%3D%225%22%20r%3D%222.5%22%2F%3E%3Ccircle%20cx%3D%226%22%20cy%3D%2212%22%20r%3D%222.5%22%2F%3E%3Ccircle%20cx%3D%2218%22%20cy%3D%2219%22%20r%3D%222.5%22%2F%3E%3Cpath%20d%3D%22m8.2%2010.8%207.6-4.5M8.2%2013.2l7.6%204.5%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view><view class="row-main"><view class="row-title">邀请好友</view><view class="row-copy">活动资格与奖励以服务端为准</view></view><text class="chevron tag-span">›</text></view>
+        <view class="list-row design-button" data-route="/pages/client-video/index" bindtap="onRoute"><view class="row-icon tag-span"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%230D9488%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20aria-hidden%3D%22true%22%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2212%22%20r%3D%229%22%2F%3E%3Cpath%20d%3D%22m10%208%206%204-6%204Z%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view><view class="row-main"><view class="row-title">居家安全内容</view><view class="row-copy">当前不宣称浏览即可获得积分</view></view><text class="chevron tag-span">›</text></view>
+      </view>
+    </view>
+  </view>
+</view>

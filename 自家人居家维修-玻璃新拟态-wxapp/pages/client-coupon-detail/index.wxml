@@ -1,0 +1,14 @@
+<view class="phone-page design-detail-page" data-page-id="page-client-coupon-detail">
+  <view class="status-bar"><text class="tag-span">9:41</text><text class="status-icons tag-span">● WiFi 100%</text></view>
+  <view class="topbar"><view class="icon-button design-button" bindtap="onUse"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m15%2018-6-6%206-6M9%2012h10%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view><view class="tag-h1">优惠券详情</view><text class="tag-span"></text></view>
+  <view class="page-body">
+    <view wx:if="{{found}}">
+      <view class="hero"><view class="hero-kicker tag-p">{{coupon.name}} · 满 ¥{{coupon.minSpendText}} 可用</view><view class="hero-number">{{coupon.value}}</view><view class="tag-p">{{coupon.serviceText}}</view><view class="spacer"></view><text class="badge {{coupon.status === 'available' ? 'success' : 'warning'}} tag-span">{{coupon.status}}</text></view>
+      <view class="section"><view class="section-title"><text class="tag-strong">使用规则</text></view><view class="card"><view class="tag-p">01　订单实付金额满 ¥{{coupon.minSpendText}} 可用</view><view class="divider"></view><view class="tag-p">02　适用范围：{{coupon.serviceText}}</view><view class="divider"></view><view class="tag-p">03　最终是否可用及抵扣金额以支付报价为准</view></view></view>
+      <view class="section"><view class="section-title"><text class="tag-strong">有效期</text></view><view class="card"><view class="tag-p">{{coupon.expireText}}</view></view></view>
+      <view class="notice">优惠券不会在详情页核销；支付创建时服务端会再次锁定并校验状态、范围与有效期。</view>
+    </view>
+    <view class="empty-state truthful-empty" wx:else><view class="tag-h3">{{loading ? '正在加载优惠券' : '无法显示优惠券详情'}}</view><view class="tag-p">{{loading ? '请稍候…' : loadError}}</view></view>
+  </view>
+  <view class="fixed-actions"><view class="btn primary design-button" bindtap="onUse">返回优惠券列表</view></view>
+</view>

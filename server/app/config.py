@@ -3,8 +3,8 @@
 安全说明：
 - APP_DEBUG 默认 False，开发时显式设为 true
 - staging/production 启动时强制执行同一套安全配置校验
-- ADMIN_DEFAULT_PASSWORD 仅用于首次启动 init_db.seed_admin 写入默认账号，
-  之后必须通过管理后台修改密码；本字段不再用于运行时登录后门
+- ADMIN_DEFAULT_PASSWORD 仅用于 development/testing 的 init_db.seed_admin；
+  staging/production 通过 scripts/bootstrap_super_admin.py 从隐藏输入创建首个管理员
 - CORS_ORIGINS 必须是逗号分隔的显式白名单；"*" 仅在 APP_DEBUG=true 时允许
 """
 
@@ -25,11 +25,71 @@ ADMIN_PASSWORD_PLACEHOLDER = "admin123"
 SERVER_ROOT = Path(__file__).resolve().parents[1]
 
 
+def _is_valid_https_url(
+    value: str,
+    *,
+    allow_path: bool = True,
+    expected_path: Optional[str] = None,
+) -> bool:
+    """严格校验部署配置中的 HTTPS URL，拒绝歧义与本机地址。"""
+    try:
+        parsed = urlsplit((value or "").strip())
+        host = parsed.hostname
+        if (
+            parsed.scheme.lower() != "https"
+            or not host
+            or parsed.username is not None
+            or parsed.password is not None
+            or parsed.query
+            or parsed.fragment
+            or parsed.port not in (None, 443)
+        ):
+            return False
+        if not allow_path and parsed.path not in ("", "/"):
+            return False
+        if expected_path is not None and parsed.path.rstrip("/") != expected_path.rstrip("/"):
+            return False
+        lowered_host = host.rstrip(".").lower()
+        reserved_suffixes = (".example.com", ".example.net", ".example.org", ".invalid", ".test")
+        if (
+            lowered_host in {
+                "localhost",
+                "localhost.localdomain",
+                "example.com",
+                "example.net",
+                "example.org",
+            }
+            or lowered_host.endswith((".local", *reserved_suffixes))
+        ):
+            return False
+        try:
+            address = ipaddress.ip_address(lowered_host)
+        except ValueError:
+            address = None
+        if address and not address.is_global:
+            return False
+        return True
+    except (TypeError, ValueError):
+        return False
+
+
+def _looks_like_placeholder(value: str) -> bool:
+    lowered = (value or "").strip().lower()
+    return (
+        not lowered
+        or lowered.startswith(("your_", "change_me", "changeme", "replace_me"))
+        or "placeholder" in lowered
+        or lowered in {"password", "your-password", "secret", "example"}
+    )
+
+
 class Settings(BaseSettings):
     # 应用
     APP_NAME: str = "自家人居家维修后端"
     APP_ENV: str = "development"  # development | staging | production
     APP_DEBUG: bool = False  # 默认关闭，开发时显式开启
+    # 防止部署漏注 APP_ENV 时静默落入开发降级；本地必须显式确认。
+    ALLOW_INSECURE_DEVELOPMENT: bool = False
     # 内置后台依赖第三方 CDN 且使用浏览器存储 token，仅限本地开发。
     ENABLE_BUILTIN_ADMIN: bool = True
 
@@ -97,6 +157,10 @@ class Settings(BaseSettings):
     OSS_ENDPOINT: str = "https://oss-cn-shenzhen.aliyuncs.com"
     OSS_REGION: str = ""
     OSS_CDN_DOMAIN: str = ""
+    # 认证证件必须存入私有对象；开启前需在云端确认 bucket/对象 ACL 策略。
+    CERTIFICATE_PRIVATE_STORAGE: bool = False
+    # 上线确认项：bucket 已配置版本/未完成分片/归档或清理规则，并完成演练。
+    OBJECT_STORAGE_LIFECYCLE_CONFIRMED: bool = False
 
     # 腾讯云 COS
     COS_SECRET_ID: str = ""
@@ -115,6 +179,8 @@ class Settings(BaseSettings):
     # 仅当应用只允许受信反向代理访问时开启，避免客户端伪造 X-Forwarded-For。
     TRUST_PROXY_HEADERS: bool = False
     TRUSTED_PROXY_CIDRS: str = ""
+    # run.py 的单实例进程数；容器编排按每 Pod 进程数设置，默认保持兼容。
+    WEB_CONCURRENCY: int = 1
     SCHEDULER_ENABLED: bool = True
 
     # 短信服务（mock = 控制台打印，aliyun = 阿里云 dysmsapi，tencent = 腾讯云 SMS）
@@ -130,7 +196,7 @@ class Settings(BaseSettings):
     SMS_TEMPLATE_WITHDRAW: str = ""
     SMS_TEMPLATE_VERIFY_CODE: str = ""
 
-    # 运营后台默认账号（仅首次 init_db 写入；运行时不再用作登录后门）
+    # 开发/测试环境的本地种子管理员；部署环境不使用这两项。
     ADMIN_DEFAULT_USER: str = "admin"
     ADMIN_DEFAULT_PASSWORD: str = ADMIN_PASSWORD_PLACEHOLDER
 
@@ -220,7 +286,6 @@ class Settings(BaseSettings):
 
         体验/生产环境（APP_ENV=staging/production）下：
         - JWT_SECRET_KEY 不得为默认占位符
-        - ADMIN_DEFAULT_PASSWORD 不得为默认 admin123
         - APP_DEBUG 必须为 False
         - 必须配置 CORS_ORIGINS 显式白名单（不得为 "*" 或空）
         - 必须配置 ALLOWED_HOSTS
@@ -235,14 +300,23 @@ class Settings(BaseSettings):
             )
         if self.DB_DRIVER.strip().lower() not in {"mysql", "sqlite"}:
             raise RuntimeError("DB_DRIVER 仅允许 mysql/sqlite")
+        if not 1 <= self.WEB_CONCURRENCY <= 32:
+            raise RuntimeError("WEB_CONCURRENCY 必须在 1 到 32 之间")
+        if self.APP_DEBUG and self.WEB_CONCURRENCY != 1:
+            raise RuntimeError("APP_DEBUG=true 时 WEB_CONCURRENCY 必须为 1")
+        if app_env == "development" and not self.ALLOW_INSECURE_DEVELOPMENT:
+            raise RuntimeError(
+                "development 必须显式设置 ALLOW_INSECURE_DEVELOPMENT=true；"
+                "防止部署缺失 APP_ENV 时静默启用开发降级"
+            )
         if not self.is_deployed:
             return
 
         errors = []
         if self.DB_DRIVER.strip().lower() != "mysql":
             errors.append("DB_DRIVER 在生产环境必须为 mysql")
-        if not self.DB_PASSWORD:
-            errors.append("DB_PASSWORD 在生产环境不得为空")
+        if _looks_like_placeholder(self.DB_PASSWORD):
+            errors.append("DB_PASSWORD 在生产环境不得为空或使用示例占位值")
         if self.JWT_SECRET_KEY == JWT_SECRET_PLACEHOLDER:
             errors.append("JWT_SECRET_KEY 仍为默认占位符，请生成随机密钥")
         if len(self.JWT_SECRET_KEY) < 32:
@@ -253,10 +327,6 @@ class Settings(BaseSettings):
             errors.append("JWT_EXPIRE_HOURS 在生产环境必须为 1 到 24 小时")
         if not 5 <= self.ADMIN_JWT_EXPIRE_MINUTES <= 1440:
             errors.append("ADMIN_JWT_EXPIRE_MINUTES 必须为 5 到 1440 分钟")
-        if self.ADMIN_DEFAULT_PASSWORD == ADMIN_PASSWORD_PLACEHOLDER:
-            errors.append("ADMIN_DEFAULT_PASSWORD 仍为默认 admin123")
-        if len(self.ADMIN_DEFAULT_PASSWORD) < 12:
-            errors.append("ADMIN_DEFAULT_PASSWORD 生产环境至少 12 个字符")
         if self.APP_DEBUG:
             errors.append("APP_DEBUG 在生产环境必须为 false")
         if self.ENABLE_BUILTIN_ADMIN:
@@ -290,6 +360,8 @@ class Settings(BaseSettings):
         for host in self.allowed_hosts_list:
             if "*" in host or "://" in host or "/" in host or ":" in host or not host_pattern.fullmatch(host):
                 errors.append(f"ALLOWED_HOSTS 含无效主机名: {host}")
+            elif not _is_valid_https_url(f"https://{host}", allow_path=False):
+                errors.append(f"ALLOWED_HOSTS 含本地或保留示例主机名: {host}")
         if not self.FIELD_ENC_KEY:
             errors.append("FIELD_ENC_KEY 在生产环境必须配置（用于 PII 字段加密）")
         else:
@@ -330,16 +402,31 @@ class Settings(BaseSettings):
             "WX_REFUND_NOTIFY_URL": self.WX_REFUND_NOTIFY_URL,
         }
         for field_name, value in payment_fields.items():
-            if not value:
-                errors.append(f"{field_name} 在生产环境必须配置")
+            if _looks_like_placeholder(value):
+                errors.append(f"{field_name} 在生产环境必须配置真实值")
+        if self.WX_APPID and not re.fullmatch(r"wx[A-Za-z0-9]{16}", self.WX_APPID):
+            errors.append("WX_APPID 格式无效")
+        if self.WX_SECRET and not re.fullmatch(r"[A-Fa-f0-9]{32}", self.WX_SECRET):
+            errors.append("WX_SECRET 格式无效")
         if self.WX_API_V3_KEY and len(self.WX_API_V3_KEY) != 32:
             errors.append("WX_API_V3_KEY 必须为 32 字符")
+        if not self.WX_PLATFORM_CERT_DIR:
+            errors.append("WX_PLATFORM_CERT_DIR 在生产环境必须配置绝对目录")
+        elif not Path(self.WX_PLATFORM_CERT_DIR).expanduser().is_absolute():
+            errors.append("WX_PLATFORM_CERT_DIR 在生产环境必须为绝对路径")
         for field_name, value in (
             ("WX_PAY_NOTIFY_URL", self.WX_PAY_NOTIFY_URL),
             ("WX_REFUND_NOTIFY_URL", self.WX_REFUND_NOTIFY_URL),
         ):
-            if value and not value.lower().startswith("https://"):
-                errors.append(f"{field_name} 在生产环境必须使用 HTTPS")
+            expected_path = (
+                "/api/wxpay/notify/payment"
+                if field_name == "WX_PAY_NOTIFY_URL"
+                else "/api/wxpay/notify/refund"
+            )
+            if value and not _is_valid_https_url(value, expected_path=expected_path):
+                errors.append(f"{field_name} 必须是公网 HTTPS URL，且路径为 {expected_path}")
+            elif value and urlsplit(value).hostname not in self.allowed_hosts_list:
+                errors.append(f"{field_name} 的域名必须同时出现在 ALLOWED_HOSTS")
         if self.WX_PAY_TIMEOUT_SECONDS <= 0:
             errors.append("WX_PAY_TIMEOUT_SECONDS 必须大于 0")
         if self.WX_PAYMENT_PENDING_TIMEOUT_MINUTES <= 0:
@@ -362,18 +449,18 @@ class Settings(BaseSettings):
                 "SMS_TEMPLATE_VERIFY_CODE": self.SMS_TEMPLATE_VERIFY_CODE,
             }
             for field_name, value in sms_fields.items():
-                if not value:
-                    errors.append(f"{field_name} 在生产环境使用真实短信服务时必须配置")
-            if sms_provider == "tencent" and not self.SMS_TENCENT_APP_ID:
+                if _looks_like_placeholder(value):
+                    errors.append(f"{field_name} 在生产环境使用真实短信服务时必须配置真实值")
+            if sms_provider == "tencent" and _looks_like_placeholder(self.SMS_TENCENT_APP_ID):
                 errors.append("SMS_TENCENT_APP_ID 在生产环境使用腾讯云短信时必须配置")
 
         ai_provider = self.AI_PROVIDER.strip().lower()
         if ai_provider not in {"doubao", "qwen"}:
             errors.append("AI_PROVIDER 在生产环境必须为 doubao 或 qwen，禁止 mock")
-        if not self.AI_API_KEY:
-            errors.append("AI_API_KEY 在生产环境必须配置")
-        if not self.AI_API_BASE.lower().startswith("https://"):
-            errors.append("AI_API_BASE 在生产环境必须使用 HTTPS")
+        if _looks_like_placeholder(self.AI_API_KEY):
+            errors.append("AI_API_KEY 在生产环境必须配置真实值")
+        if not _is_valid_https_url(self.AI_API_BASE):
+            errors.append("AI_API_BASE 在生产环境必须是有效的公网 HTTPS URL")
 
         oss_provider = self.OSS_PROVIDER.strip().lower()
         if oss_provider not in {"aliyun", "tencent"}:
@@ -385,12 +472,12 @@ class Settings(BaseSettings):
                 "OSS_BUCKET": self.OSS_BUCKET,
                 "OSS_ENDPOINT": self.OSS_ENDPOINT,
             }.items():
-                if not value:
-                    errors.append(f"{field_name} 在生产环境使用阿里云 OSS 时必须配置")
-            if self.OSS_ENDPOINT and not self.OSS_ENDPOINT.lower().startswith("https://"):
-                errors.append("OSS_ENDPOINT 在生产环境必须使用 HTTPS")
-            if self.OSS_CDN_DOMAIN and not self.OSS_CDN_DOMAIN.lower().startswith("https://"):
-                errors.append("OSS_CDN_DOMAIN 在生产环境必须使用 HTTPS")
+                if _looks_like_placeholder(value):
+                    errors.append(f"{field_name} 在生产环境使用阿里云 OSS 时必须配置真实值")
+            if self.OSS_ENDPOINT and not _is_valid_https_url(self.OSS_ENDPOINT, allow_path=False):
+                errors.append("OSS_ENDPOINT 在生产环境必须是有效的公网 HTTPS origin")
+            if self.OSS_CDN_DOMAIN and not _is_valid_https_url(self.OSS_CDN_DOMAIN, allow_path=False):
+                errors.append("OSS_CDN_DOMAIN 在生产环境必须是有效的公网 HTTPS origin")
         else:
             for field_name, value in {
                 "COS_SECRET_ID": self.COS_SECRET_ID,
@@ -398,10 +485,17 @@ class Settings(BaseSettings):
                 "COS_BUCKET": self.COS_BUCKET,
                 "COS_REGION": self.COS_REGION,
             }.items():
-                if not value:
-                    errors.append(f"{field_name} 在生产环境使用腾讯云 COS 时必须配置")
-            if self.COS_CDN_DOMAIN and not self.COS_CDN_DOMAIN.lower().startswith("https://"):
-                errors.append("COS_CDN_DOMAIN 在生产环境必须使用 HTTPS")
+                if _looks_like_placeholder(value):
+                    errors.append(f"{field_name} 在生产环境使用腾讯云 COS 时必须配置真实值")
+            if self.COS_CDN_DOMAIN and not _is_valid_https_url(self.COS_CDN_DOMAIN, allow_path=False):
+                errors.append("COS_CDN_DOMAIN 在生产环境必须是有效的公网 HTTPS origin")
+        if not self.CERTIFICATE_PRIVATE_STORAGE:
+            errors.append("CERTIFICATE_PRIVATE_STORAGE 必须为 true，并先确认认证材料使用私有对象 ACL")
+        if not self.OBJECT_STORAGE_LIFECYCLE_CONFIRMED:
+            errors.append(
+                "OBJECT_STORAGE_LIFECYCLE_CONFIRMED 必须为 true，"
+                "并先完成对象版本、未完成分片与保留/清理规则演练"
+            )
 
         map_provider = self.MAP_PROVIDER.strip().lower()
         if map_provider not in {"amap", "tencent"}:

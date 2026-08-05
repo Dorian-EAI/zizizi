@@ -1,0 +1,49 @@
+<!-- AUTO-GENERATED DESIGN VIEW sourceHash=fnv1a-ddd14ad3; edit source HTML or generator bindings, then rerun. -->
+<view class="phone-page design-detail-page worker-theme" data-dom-id="page-worker-cert-manage">
+    <view class="status-bar"><text class="tag-span">9:41</text><text class="status-icons tag-span">●●●</text></view>
+    <view class="topbar">
+      <view class="icon-button design-button" data-dom-id="cert-manage-back" data-route="/pages/worker-experience/index" bindtap="onNavigate"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m15%2018-6-6%206-6M9%2012h10%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view>
+      <view><view class="eyebrow tag-p">个人能力</view><view class="tag-h1">证书管理</view></view>
+      <view class="top-action design-button" data-dom-id="cert-manage-add-top" data-route="/pages/worker-certificate-edit/index?mode=add" bindtap="onNavigate">＋ 添加</view>
+    </view>
+
+    <view class="page-body">
+
+    <view class="hero">
+      <view><text class="badge success tag-span">2 项有效</text><view class="tag-h2">资质越完整，匹配越精准</view><view class="tag-p">证书状态会影响可报价的服务类别。</view></view>
+      <view class="progress-ring"><text class="tag-strong">75%</text><text class="tag-small">完整度</text></view>
+    </view>
+
+    <view class="section">
+      <view class="section-title"><text class="tag-strong">有效证书</text><text class="tag-span">2</text></view>
+      <view class="card list-row">
+        <view class="row-icon certificate-icon design-button" data-dom-id="cert-manage-detail-electric" data-action="open-certificate-detail" bindtap="onAction"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232D6CDF%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M6%203h12v13H6z%22%2F%3E%3Cpath%20d%3D%22M9%207h6M9%2011h4%22%2F%3E%3Cpath%20d%3D%22m10%2016-1%205%203-2%203%202-1-5%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view>
+        <view class="row-main"><view class="row-title">低压电工作业证</view><view class="row-copy">高级 · 有效至 2027-06</view><text class="badge success tag-span">已认证</text></view>
+        <view class="btn secondary design-button" data-dom-id="cert-manage-update-electric" data-route="/pages/worker-certificate-edit/index?mode=update&id=cert-001" bindtap="onNavigate">更新</view>
+      </view>
+      <view class="card list-row">
+        <view class="row-icon certificate-icon design-button" data-dom-id="cert-manage-detail-welding" data-action="open-certificate-detail" bindtap="onAction"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232D6CDF%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M6%203h12v13H6z%22%2F%3E%3Cpath%20d%3D%22M9%207h6M9%2011h4%22%2F%3E%3Cpath%20d%3D%22m10%2016-1%205%203-2%203%202-1-5%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view>
+        <view class="row-main"><view class="row-title">焊工作业证</view><view class="row-copy">中级 · 长期有效</view><text class="badge success tag-span">已认证</text></view>
+        <view class="icon-button design-button" data-dom-id="cert-manage-open-welding" data-action="open-certificate-detail" bindtap="onAction"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%235B8C5A%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m9%2018%206-6-6-6%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view>
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="section-title"><text class="tag-strong">审核中</text><text class="tag-span">1</text></view>
+      <view class="card list-row">
+        <view class="row-icon certificate-icon"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232D6CDF%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2212%22%20r%3D%229%22%2F%3E%3Cpath%20d%3D%22M12%207v5l3%202%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view><view class="row-main"><view class="row-title">高处作业证</view><view class="row-copy">平台审核 · 预计 1—3 个工作日</view><text class="badge warning tag-span">审核中</text></view>
+        <view class="icon-button design-button" data-dom-id="cert-manage-pending-detail" data-action="open-certificate-detail" bindtap="onAction"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%23D4944C%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m9%2018%206-6-6-6%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view>
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="section-title"><text class="tag-strong">未通过</text><text class="tag-span">1</text></view>
+      <view class="card list-row">
+        <view class="row-icon certificate-icon"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232D6CDF%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M12%203%202.8%2020h18.4z%22%2F%3E%3Cpath%20d%3D%22M12%209v5M12%2017h.01%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view><view class="row-main"><view class="row-title">空调维修资格证</view><view class="row-copy">照片模糊，证书编号无法识别</view><text class="badge danger tag-span">已驳回</text></view>
+        <view class="btn secondary design-button" data-dom-id="cert-manage-resubmit-ac" data-route="/pages/worker-certificate-edit/index?mode=resubmit&id=cert-004" bindtap="onNavigate">重交</view>
+      </view>
+    </view>
+
+    </view>
+    <view class="fixed-actions"><view class="btn primary design-button" data-dom-id="cert-manage-add" data-route="/pages/worker-certificate-edit/index?mode=add" bindtap="onNavigate">添加新证书</view></view>
+  </view>

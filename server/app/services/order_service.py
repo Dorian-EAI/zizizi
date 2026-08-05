@@ -2,8 +2,6 @@
 
 import json
 import re
-import time
-import random
 from datetime import datetime
 from decimal import Decimal
 from typing import List, Optional, Any, Set
@@ -14,6 +12,7 @@ from sqlalchemy.orm import Session
 
 from app.models.user import User, Worker
 from app.models.order import Order, Bidding
+from app.models.extra_fee import OrderExtraFee
 from app.models.service import ServiceType
 from app.schemas.order import (
     CreateOrderRequest,
@@ -24,11 +23,11 @@ from app.schemas.order import (
 )
 from app.services import review_service
 from app.services import message_service
+from app.utils.snowflake import generate_business_no
 
 
 def _gen_order_no() -> str:
-    """生成订单号: ORD + 时间戳 + 随机数"""
-    return f"ORD{int(time.time())}{random.randint(1000, 9999)}"
+    return generate_business_no("ORD")
 
 
 _REQUIRED_WORKER_PROFILE_FIELDS = ("real_name", "phone", "id_card", "service_types")
@@ -53,6 +52,112 @@ def redact_public_description(value: Optional[str]) -> Optional[str]:
         lambda match: match.group(1)[:4] + "*" * 10 + match.group(1)[-4:],
         result,
     )
+
+
+def build_order_projection(
+    db: Session,
+    order: Order,
+    active_role: str,
+    account: Optional[Any] = None,
+) -> dict:
+    """Build the transitional multi-axis state and executable-action contract.
+
+    The database still stores the legacy single ``Order.status`` value.  This
+    projection keeps old clients compatible while making the server, rather
+    than each page, the authority for visible actions.  Mutation endpoints
+    continue to re-check ownership and state; these actions are not an auth
+    token.
+    """
+    legacy_status = str(order.status or "pending")
+    payment_state = (
+        "paid" if legacy_status in {"paid", "reviewed"}
+        else "not_applicable" if legacy_status == "cancelled"
+        else "unpaid"
+    )
+    service_state = (
+        "completed" if legacy_status == "paid" else legacy_status
+    )
+
+    extra_statuses = [
+        row[0]
+        for row in db.query(OrderExtraFee.status)
+        .filter(OrderExtraFee.order_id == order.id)
+        .order_by(OrderExtraFee.id.asc())
+        .limit(10)
+        .all()
+    ]
+    if "pending" in extra_statuses:
+        price_adjust_state = "pending"
+    elif extra_statuses:
+        price_adjust_state = str(extra_statuses[-1])
+    else:
+        price_adjust_state = "none"
+
+    actions: List[str] = []
+    blocked_actions: List[dict] = []
+    payment_methods: List[dict] = []
+
+    if active_role == "client":
+        if legacy_status == "pending":
+            bid_exists = db.query(Bidding.id).filter(Bidding.order_id == order.id).first() is not None
+            if bid_exists:
+                actions.extend(["view_bids", "select_worker"])
+            actions.extend(["cancel_order", "contact_support"])
+        elif legacy_status == "accepted":
+            actions.append("contact_worker")
+        elif legacy_status == "departing":
+            actions.extend(["track_worker", "contact_worker"])
+        elif legacy_status in {"arrived", "serving"}:
+            if price_adjust_state == "pending":
+                actions.append("handle_extra_fee")
+            actions.append("contact_worker")
+        elif legacy_status == "completed":
+            actions.extend(["confirm_and_pay", "contact_support"])
+            has_openid = bool(getattr(account, "openid", None))
+            payment_methods = [
+                {
+                    "key": "wechat",
+                    "enabled": has_openid,
+                    "disabled_reason": "当前账号未绑定微信" if not has_openid else "",
+                },
+                {"key": "wallet", "enabled": True, "disabled_reason": ""},
+            ]
+        elif legacy_status == "paid":
+            actions.append("review_order")
+        elif legacy_status in {"reviewed", "cancelled"}:
+            actions.append("reorder")
+    elif active_role == "worker":
+        if legacy_status == "accepted":
+            actions.extend(["depart_order", "contact_user"])
+        elif legacy_status == "departing":
+            actions.extend(["report_location", "arrive_order", "contact_user"])
+        elif legacy_status == "arrived":
+            actions.extend(["start_service", "contact_user"])
+        elif legacy_status == "serving":
+            actions.extend(["apply_extra_fee", "contact_user"])
+            if price_adjust_state == "pending":
+                blocked_actions.append({
+                    "action": "complete_service",
+                    "reason_code": "EXTRA_FEE_PENDING",
+                    "message": "待用户处理补差价后才能完工",
+                })
+            else:
+                actions.insert(0, "complete_service")
+        elif legacy_status in {"completed", "paid", "reviewed"}:
+            actions.append("view_settlement")
+
+    return {
+        "active_role": active_role,
+        "service_state": service_state,
+        "payment_state": payment_state,
+        "aftersale_state": "none",
+        "price_adjust_state": price_adjust_state,
+        "primary_action": actions[0] if actions else None,
+        # Transitional string keys are consumed by the current mini-program.
+        "allowed_actions": actions,
+        "blocked_actions": blocked_actions,
+        "payment_methods": payment_methods,
+    }
 
 
 def _parse_worker_service_types(raw_value: Any) -> Set[str]:
@@ -233,7 +338,8 @@ def get_client_orders(db: Session, user_id: int, status: Optional[str] = None) -
     q = db.query(Order).filter(Order.user_id == user_id)
     if status:
         q = q.filter(Order.status == status)
-    return q.order_by(Order.created_at.desc()).all()
+    # 兼容现有数组响应，同时给旧客户端列表设置硬上限，避免单账号历史数据无界装载。
+    return q.order_by(Order.created_at.desc()).limit(200).all()
 
 
 def get_worker_orders(db: Session, worker_id: int, status: Optional[str] = None) -> List[Order]:
@@ -241,7 +347,7 @@ def get_worker_orders(db: Session, worker_id: int, status: Optional[str] = None)
     q = db.query(Order).filter(Order.worker_id == worker_id)
     if status:
         q = q.filter(Order.status == status)
-    return q.order_by(Order.created_at.desc()).all()
+    return q.order_by(Order.created_at.desc()).limit(200).all()
 
 
 def get_order_detail(db: Session, order_id: int) -> Order:
@@ -265,7 +371,8 @@ def get_available_orders(db: Session, worker_or_id: Any) -> List[Order]:
         query = query.filter(
             func.lower(func.trim(Order.service_type)).in_(sorted(service_types))
         )
-    return query.order_by(Order.created_at.desc()).all()
+    # 可抢单还会逐条做脱敏/距离计算，限制候选集可保护数据库和 API 延迟。
+    return query.order_by(Order.created_at.desc()).limit(100).all()
 
 
 async def create_bidding(db: Session, worker: Worker, order_id: int, data: BiddingRequest) -> Bidding:
@@ -318,6 +425,7 @@ def get_biddings(db: Session, order_id: int) -> List[dict]:
         db.query(Bidding)
         .filter(Bidding.order_id == order_id)
         .order_by(Bidding.created_at.asc())
+        .limit(100)
         .all()
     )
     result: List[dict] = []
@@ -410,12 +518,25 @@ async def update_order_status(
             raise HTTPException(status_code=400, detail="非法的状态变更")
         if price is None:
             raise HTTPException(status_code=400, detail="完成订单需提供最终价格")
+        pending_extra_fee = db.query(OrderExtraFee.id).filter(
+            OrderExtraFee.order_id == order.id,
+            OrderExtraFee.status == "pending",
+        ).first()
+        if pending_extra_fee:
+            raise HTTPException(status_code=409, detail="待用户处理补差价后才能完工")
+        authoritative_price = Decimal(str(order.final_price or 0)).quantize(Decimal("0.01"))
+        submitted_price = Decimal(str(price)).quantize(Decimal("0.01"))
+        if submitted_price != authoritative_price:
+            raise HTTPException(
+                status_code=409,
+                detail="最终价格已变更，请刷新订单后重试",
+            )
         _cas_update_status(
             db,
             order,
             "completed",
             allowed_from=["serving"],
-            final_price=price,
+            final_price=authoritative_price,
             completed_at=now,
         )
         # 通知用户服务完成待支付

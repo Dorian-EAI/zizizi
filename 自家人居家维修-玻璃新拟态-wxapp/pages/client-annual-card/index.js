@@ -162,26 +162,8 @@ Page({
       wx.showToast({ title: '暂无可退年卡', icon: 'none' })
       return
     }
-    wx.showModal({
-      title: '退卡确认',
-      content: '退卡后将扣除已使用次数费用，剩余金额原路退回。确定要退卡吗？',
-      confirmText: '确定退卡',
-      confirmColor: '#C4533A',
-      success: async (res) => {
-        if (!res.confirm) return
-        const api = app.getApi()
-        wx.showLoading({ title: '处理中', mask: true })
-        try {
-          await api.annualCard.refund(cardId)
-          wx.hideLoading()
-          wx.showToast({ title: '退卡成功', icon: 'success' })
-          this.setData({ myCard: null, myCardTotal: 0, myCardProgress: 0 })
-        } catch (e) {
-          wx.hideLoading()
-          console.error('退卡失败', e)
-          wx.showToast({ title: (e && e.message) || '退卡失败', icon: 'none' })
-        }
-      }
+    wx.navigateTo({
+      url: '/pages/client-refund-card/index?cardId=' + encodeURIComponent(String(cardId))
     })
   },
 

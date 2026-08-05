@@ -79,3 +79,11 @@ def generate_id() -> int:
 def generate_short_id() -> str:
     """生成短 ID（uuid4 hex 前 16 位）"""
     return uuid.uuid4().hex[:16]
+
+
+def generate_business_no(prefix: str, max_length: int = 32) -> str:
+    """生成高熵业务编号；默认满足微信支付 out_trade_no 最长 32 字符。"""
+    normalized = "".join(char for char in prefix.upper() if char.isalnum())
+    if not normalized or len(normalized) >= max_length:
+        raise ValueError("business number prefix is invalid")
+    return normalized + uuid.uuid4().hex[: max_length - len(normalized)]

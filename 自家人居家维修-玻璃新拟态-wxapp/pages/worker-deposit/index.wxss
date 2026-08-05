@@ -18,9 +18,9 @@
   position: relative;
   z-index: 20;
   background:
-    radial-gradient(ellipse 440rpx 320rpx at 78% 45%, rgba(143, 169, 152, 0.14) 0%, transparent 70%),
+    radial-gradient(ellipse 440rpx 320rpx at 78% 45%, rgba(212,148,76,.10) 0%, transparent 70%),
     radial-gradient(ellipse 360rpx 280rpx at 18% 75%, rgba(45, 108, 223, 0.16) 0%, transparent 70%),
-    linear-gradient(135deg, rgba(45, 108, 223, 0.14) 0%, rgba(143, 169, 152, 0.08) 50%, rgba(45, 108, 223, 0.06) 100%);
+    linear-gradient(135deg, rgba(45, 108, 223, 0.14) 0%, rgba(212,148,76,.04) 50%, rgba(45, 108, 223, 0.06) 100%);
   border-radius: 0 0 56rpx 56rpx;
   overflow: hidden;
   transition: background var(--dur-base) var(--ease), box-shadow var(--dur-base) var(--ease);
@@ -28,9 +28,9 @@
 .nav-bar.worker.scrolled,
 .topbar.scrolled {
   background:
-    radial-gradient(ellipse 440rpx 320rpx at 78% 45%, rgba(143, 169, 152, 0.18) 0%, transparent 70%),
+    radial-gradient(ellipse 440rpx 320rpx at 78% 45%, rgba(212,148,76,.10) 0%, transparent 70%),
     radial-gradient(ellipse 360rpx 280rpx at 18% 75%, rgba(45, 108, 223, 0.20) 0%, transparent 70%),
-    linear-gradient(135deg, rgba(45, 108, 223, 0.18) 0%, rgba(143, 169, 152, 0.12) 50%, rgba(45, 108, 223, 0.10) 100%),
+    linear-gradient(135deg, rgba(45, 108, 223, 0.18) 0%, rgba(212,148,76,.04) 50%, rgba(45, 108, 223, 0.10) 100%),
     rgba(247, 243, 239, 0.72);
   backdrop-filter: blur(40rpx) saturate(160%);
   -webkit-backdrop-filter: blur(40rpx) saturate(160%);
@@ -74,17 +74,17 @@
 }
 
 /* ===== Deposit Balance Hero ===== */
-/* HTML: .dep-hero{padding:8px 24px 40px;background:radial-gradient(ellipse 240px 200px at 25% 40%, rgba(143,169,152,0.32) 0%, transparent 70%),
+/* HTML: .dep-hero{padding:8px 24px 40px;background:radial-gradient(ellipse 240px 200px at 25% 40%, rgba(212,148,76,.12) 0%, transparent 70%),
              radial-gradient(ellipse 200px 160px at 80% 80%, rgba(45,108,223,0.24) 0%, transparent 70%),
-             linear-gradient(135deg, rgba(45,108,223,0.28) 0%, rgba(143,169,152,0.20) 50%, rgba(45,108,223,0.12) 100%);border-radius:0 0 32px 32px;overflow:hidden} */
+             linear-gradient(135deg, rgba(45,108,223,0.28) 0%, rgba(212,148,76,.10) 50%, rgba(45,108,223,0.12) 100%);border-radius:0 0 32px 32px;overflow:hidden} */
 .dep-hero {
   padding: 16rpx 48rpx 80rpx;
   position: relative;
   z-index: 1;
   background:
-    radial-gradient(ellipse 480rpx 400rpx at 25% 40%, rgba(143, 169, 152, 0.32) 0%, transparent 70%),
+    radial-gradient(ellipse 480rpx 400rpx at 25% 40%, rgba(212,148,76,.12) 0%, transparent 70%),
     radial-gradient(ellipse 400rpx 320rpx at 80% 80%, rgba(45, 108, 223, 0.24) 0%, transparent 70%),
-    linear-gradient(135deg, rgba(45, 108, 223, 0.28) 0%, rgba(143, 169, 152, 0.20) 50%, rgba(45, 108, 223, 0.12) 100%);
+    linear-gradient(135deg, rgba(45, 108, 223, 0.28) 0%, rgba(212,148,76,.10) 50%, rgba(45, 108, 223, 0.12) 100%);
   border-radius: 0 0 64rpx 64rpx;
   overflow: hidden;
 }

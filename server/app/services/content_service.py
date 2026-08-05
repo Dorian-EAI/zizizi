@@ -261,6 +261,7 @@ def list_faqs(db: Session) -> List[dict]:
     categories = (
         db.query(FAQCategory)
         .order_by(FAQCategory.sort_order.asc(), FAQCategory.id.asc())
+        .limit(100)
         .all()
     )
     # GET 请求不得在部署环境偷偷写入演示内容；正式内容应由运营后台显式发布。
@@ -273,6 +274,7 @@ def list_faqs(db: Session) -> List[dict]:
         categories = (
             db.query(FAQCategory)
             .order_by(FAQCategory.sort_order.asc(), FAQCategory.id.asc())
+            .limit(100)
             .all()
         )
 
@@ -282,6 +284,7 @@ def list_faqs(db: Session) -> List[dict]:
             db.query(FAQ)
             .filter(FAQ.category_id == cat.id, FAQ.is_active == True)
             .order_by(FAQ.sort_order.asc(), FAQ.id.asc())
+            .limit(200)
             .all()
         )
         result.append({

@@ -77,8 +77,10 @@ def approve_extra_fee(db: Session, user_id: int, order_id: int, extra_fee_id: in
     ).with_for_update().first()
     if not extra:
         raise HTTPException(status_code=404, detail="补差价记录不存在")
+    if extra.status == "approved":
+        return extra
     if extra.status != "pending":
-        raise HTTPException(status_code=400, detail="该记录已处理")
+        raise HTTPException(status_code=409, detail="该记录已按其他结果处理")
 
     extra.status = "approved"
     extra.resolved_at = datetime.utcnow()
@@ -87,6 +89,7 @@ def approve_extra_fee(db: Session, user_id: int, order_id: int, extra_fee_id: in
     order = db.query(Order).filter(Order.id == extra.order_id).with_for_update().first()
     if order:
         order.final_price = Decimal(str(order.final_price or 0)) + (Decimal(extra.total_amount) / Decimal(100))
+        order.version = int(order.version or 0) + 1
 
     db.commit()
     db.refresh(extra)
@@ -102,8 +105,10 @@ def reject_extra_fee(db: Session, user_id: int, order_id: int, extra_fee_id: int
     ).with_for_update().first()
     if not extra:
         raise HTTPException(status_code=404, detail="补差价记录不存在")
+    if extra.status == "rejected" and extra.user_remark == remark:
+        return extra
     if extra.status != "pending":
-        raise HTTPException(status_code=400, detail="该记录已处理")
+        raise HTTPException(status_code=409, detail="该记录已按其他结果处理")
 
     extra.status = "rejected"
     extra.user_remark = remark
@@ -117,7 +122,7 @@ def get_extra_fee_list(db: Session, order_id: int) -> List[OrderExtraFee]:
     """查询订单的补差价记录"""
     return db.query(OrderExtraFee).filter(
         OrderExtraFee.order_id == order_id,
-    ).order_by(OrderExtraFee.created_at.asc()).all()
+    ).order_by(OrderExtraFee.created_at.asc()).limit(10).all()
 
 
 def get_overdue_pending_ids(db: Session, hours: int = 24) -> List[int]:
@@ -128,5 +133,5 @@ def get_overdue_pending_ids(db: Session, hours: int = 24) -> List[int]:
         for row in db.query(OrderExtraFee.id).filter(
             OrderExtraFee.status == "pending",
             OrderExtraFee.created_at < deadline,
-        ).all()
+        ).order_by(OrderExtraFee.created_at.asc()).limit(500).all()
     ]

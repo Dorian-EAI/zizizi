@@ -1,0 +1,39 @@
+<!-- AUTO-GENERATED DESIGN VIEW sourceHash=fnv1a-5b40c552; edit source HTML or generator bindings, then rerun. -->
+<view class="phone-page design-detail-page worker-theme" data-dom-id="page-worker-experience-item-edit">
+    <view class="status-bar"><text class="tag-span">9:41</text><text class="status-icons tag-span">●●●</text></view>
+    <view class="topbar">
+      <view class="icon-button design-button" data-dom-id="experience-item-back" data-route="/pages/worker-experience/index" bindtap="onNavigate"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m15%2018-6-6%206-6M9%2012h10%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view>
+      <view class="tag-h1">工作经历</view>
+      <view class="top-action design-button" data-dom-id="experience-item-save-top" data-action="save-experience-item" bindtap="onAction">保存</view>
+    </view>
+    <view class="page-body">
+      <view class="notice info">共用模板：通过 <text class="tag-strong">mode=add</text> 或 <text class="tag-strong">mode=edit&id=…</text> 切换新增与编辑文案；编辑模式回填原数据。</view>
+
+      <view class="hero">
+        <view class="hero-kicker tag-p">职业履历</view><view class="tag-h2">新增 / 编辑工作经历</view><view class="tag-p">请填写可核验的任职信息，虚假资料可能影响接单资格。</view>
+      </view>
+
+      <view class="section card">
+        <view class="field"><text for="experience-company" class="tag-label">单位或团队名称</text><input class="input" id="experience-company" data-dom-id="experience-item-company" data-action="input-company" value="北京安居维修服务有限公司" bindchange="onAction" /></view>
+        <view class="field"><text for="experience-role" class="tag-label">职位或角色</text><input class="input" id="experience-role" data-dom-id="experience-item-role" data-action="input-role" value="高级水电工程师" bindchange="onAction" /></view>
+        <view class="field"><text class="tag-label">服务类别</text><view class="select-like design-button" data-dom-id="experience-item-category" data-action="open-service-category-picker" bindtap="onAction"><text class="tag-span">水电维修、管道疏通</text><text class="tag-span">⌄</text></view></view>
+      </view>
+
+      <view class="section card">
+        <view class="grid-2">
+          <view class="field"><text class="tag-label">开始时间</text><view class="select-like design-button" data-dom-id="experience-item-start-date" data-action="open-month-picker" bindtap="onAction"><text class="tag-span">2018-03</text><text class="tag-span">⌄</text></view></view>
+          <view class="field"><text class="tag-label">结束时间</text><view class="select-like design-button" data-dom-id="experience-item-end-date" data-action="open-month-picker" bindtap="onAction"><text class="tag-span">2022-12</text><text class="tag-span">⌄</text></view></view>
+        </view>
+        <view class="select-like design-button" data-dom-id="experience-item-current" data-action="toggle-current-job" bindtap="onAction"><text class="tag-span">当前仍在此工作</text><text class="badge tag-span">未选择</text></view>
+      </view>
+
+      <view class="section card field">
+        <text for="experience-description" class="tag-label">工作内容与成果</text>
+        <textarea class="textarea" id="experience-description" data-dom-id="experience-item-description" data-action="input-experience-description" maxlength="500" bindchange="onAction">负责住宅水电故障排查、线路改造和完工验收，累计完成 600 余次上门服务。</textarea>
+        <view class="row-copy tag-p">建议说明擅长问题、服务规模和可核验成果。</view>
+      </view>
+
+      <view class="btn danger block design-button" data-dom-id="experience-item-delete" data-action="delete-experience-item" bindtap="onAction">删除此经历（仅编辑模式显示）</view>
+    </view>
+    <view class="fixed-actions"><view class="btn primary design-button" data-dom-id="experience-item-save" data-action="save-experience-item" bindtap="onAction">保存工作经历</view></view>
+  </view>

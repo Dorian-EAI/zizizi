@@ -1,0 +1,23 @@
+<!-- REVIEWED BUSINESS VIEW: no product is rendered without an authoritative catalog record. -->
+<view class="phone-page design-detail-page" data-page-id="page-client-points-product">
+  <view class="status-bar"><text class="tag-span">9:41</text><text class="status-icons tag-span">● ◒ ▰</text></view>
+  <view class="topbar"><view class="icon-button design-button" bindtap="onBack"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m15%2018-6-6%206-6M9%2012h10%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view><view class="tag-h1">商品详情</view><text class="tag-span"></text></view>
+  <view class="page-body">
+    <view class="media-placeholder media-visual product-visual"><view class="media-icon"><image class="design-svg-icon" src="{{icons.gift}}" mode="aspectFit" /></view></view>
+    <view class="hero"><view class="hero-kicker tag-p">积分兑换</view><view class="tag-h2">商品记录不可用</view><view class="tag-p">当前没有服务端商品目录、库存、规格、积分成本或履约订单契约。</view></view>
+    <view class="section card">
+      <view class="section-title"><text class="tag-strong">本次不会执行兑换</text><view class="top-action icon-action design-button"><image class="design-svg-icon" src="{{icons.heart}}" mode="aspectFit" /></view></view>
+      <view class="amount">—<text class="tag-small"> 积分</text></view><view class="card-copy">页面不会展示或提交画布示例商品，也不会调用扣减积分接口。待后端提供完整商品与履约契约后再开放。</view>
+    </view>
+    <view class="section">
+      <view class="section-title"><text class="tag-strong">开放条件</text><text class="tag-span">服务端契约</text></view>
+      <view class="card list-card">
+        <view class="list-row"><view class="row-icon"><image class="design-svg-icon" src="{{icons.shield}}" mode="aspectFit" /></view><view class="row-main"><view class="row-title">商品目录</view><view class="row-copy">商品名称、图片、规格与库存必须来自后端</view></view><text class="row-value tag-span">待配置</text></view>
+        <view class="list-row"><view class="row-icon"><image class="design-svg-icon" src="{{icons.shield}}" mode="aspectFit" /></view><view class="row-main"><view class="row-title">积分成本</view><view class="row-copy">扣减金额和余额必须由积分账本确认</view></view><text class="row-value tag-span">待确认</text></view>
+      </view>
+    </view>
+    <view class="chips"><view class="chip active design-button">安全关闭</view><view class="chip design-button">不扣积分</view><view class="chip design-button">不生成订单</view></view>
+    <view class="notice tag-p">积分兑换后不可退回；功能开放前只允许查看真实积分明细。</view>
+  </view>
+  <view class="fixed-actions"><view class="btn secondary design-button" bindtap="onPoints">查看积分明细</view><view class="btn primary design-button" bindtap="onMall">返回积分商城</view></view>
+</view>

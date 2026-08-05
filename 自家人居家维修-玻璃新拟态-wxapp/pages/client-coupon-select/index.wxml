@@ -1,0 +1,16 @@
+<view class="phone-page design-detail-page" data-page-id="page-client-coupon-select">
+  <view class="status-bar"><text class="tag-span">9:41</text><text class="status-icons tag-span">● WiFi 100%</text></view>
+  <view class="topbar"><view class="icon-button design-button" bindtap="onConfirm"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m15%2018-6-6%206-6M9%2012h10%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view><view class="tag-h1">选择优惠券</view><view class="top-action design-button" bindtap="onClear">不使用</view></view>
+  <view class="page-body">
+    <view class="hero"><view class="hero-kicker tag-p">ORDER DISCOUNT</view><view class="tag-h2">本单可用 {{coupons.length}} 张券</view><view class="tag-p">订单金额 ¥{{amountText}}，最终优惠由服务端支付报价确认。</view><view class="spacer"></view><text class="badge {{selectedCoupon ? 'success' : 'warning'}} tag-span">{{selectedCoupon ? '预计优惠 ¥' + selectedCoupon.discountText : '未选择优惠券'}}</text></view>
+    <view class="notice error" wx:if="{{loadError}}">{{loadError}}</view>
+    <view class="section" wx:if="{{coupons.length}}">
+      <view class="card {{selectedId === item.idText ? 'is-selected' : ''}}" wx:for="{{coupons}}" wx:key="id" data-id="{{item.id}}" bindtap="onSelect">
+        <view class="list-row"><text class="amount tag-span"><text class="tag-small">¥</text>{{item.discountText}}</text><view class="row-main"><view class="row-title">{{item.nameText}}</view><view class="row-copy">满 ¥{{item.minSpendText}} 可用 · {{item.expireText}}</view></view><text class="badge {{selectedId === item.idText ? 'success' : 'info'}} tag-span">{{selectedId === item.idText ? '已选' : '可用'}}</text></view>
+        <view class="divider"></view><view class="tag-p">{{item.serviceText}}</view><view class="top-action design-button" data-id="{{item.id}}" catchtap="onDetail">查看规则</view>
+      </view>
+    </view>
+    <view class="empty-state truthful-empty" wx:elif="{{!loading}}"><view class="tag-h3">暂无可用优惠券</view><view class="tag-p">列表来自当前订单金额与服务类型的服务端实时校验</view></view>
+  </view>
+  <view class="fixed-actions"><view class="btn primary design-button" bindtap="onConfirm">{{selectedCoupon ? '确认使用 · 预计减 ¥' + selectedCoupon.discountText : '确认不使用优惠券'}}</view></view>
+</view>

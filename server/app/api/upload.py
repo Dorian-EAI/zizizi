@@ -1,14 +1,18 @@
 """文件上传相关路由"""
 
+import json
 from typing import Optional, List
 
 from fastapi import APIRouter, Depends, UploadFile, File, Query, Request, HTTPException
 from pydantic import BaseModel, Field
+from sqlalchemy.orm import Session
+from starlette.concurrency import run_in_threadpool
 
-from app.dependencies import get_current_account, get_current_admin
+from app.database import get_db
+from app.dependencies import get_current_account, require_super_admin
 from app.models.admin import Admin
 from app.schemas.upload import UploadFileResponse, UploadPolicyResponse
-from app.services import upload_service
+from app.services import admin_service, upload_service
 from app.utils.response import success
 from app.utils.rate_limit import limiter, LIMIT_UPLOAD_SINGLE, LIMIT_UPLOAD_BATCH
 from app.config import settings
@@ -51,7 +55,13 @@ async def upload_image(
         raise HTTPException(status_code=403, detail="仅师傅账号可上传认证材料")
     max_mb = 20 if category == "certificate" else 10
     file_bytes = await _read_upload_limited(file, max_mb)
-    result = upload_service.upload_image(category, file_bytes, file.filename or "")
+    result = await run_in_threadpool(
+        upload_service.upload_image,
+        category,
+        file_bytes,
+        file.filename or "",
+        owner_id=account[0].id,
+    )
     data = UploadFileResponse(**result).model_dump()
     return success(data=data, message="上传成功")
 
@@ -80,7 +90,13 @@ async def upload_images(
     results: list = []
     for f in files:
         file_bytes = await _read_upload_limited(f, max_mb)
-        res = upload_service.upload_image(category, file_bytes, f.filename or "")
+        res = await run_in_threadpool(
+            upload_service.upload_image,
+            category,
+            file_bytes,
+            f.filename or "",
+            owner_id=account[0].id,
+        )
         results.append(UploadFileResponse(**res).model_dump())
     return success(data=results, message="上传成功")
 
@@ -88,10 +104,36 @@ async def upload_images(
 @router.delete("/file")
 async def delete_file(
     req: DeleteFileRequest,
-    admin: Admin = Depends(get_current_admin),
+    admin: Admin = Depends(require_super_admin),
+    db: Session = Depends(get_db),
 ):
-    """管理员删除本地上传文件。普通账号不能按可猜测 URL 删除他人文件。"""
-    ok = upload_service.delete_file_by_url(req.url)
+    """超级管理员删除受管上传对象；尝试与结果都会写入持久化审计。"""
+    provider, object_key = upload_service.get_managed_object_identity(req.url)
+    audit = admin_service.add_admin_audit(
+        db,
+        admin.id,
+        "delete_upload_file",
+        "storage_object",
+        object_key,
+        {"provider": provider, "status": "attempted"},
+        commit=True,
+    )
+    try:
+        ok = await run_in_threadpool(upload_service.delete_file_by_url, req.url)
+    except Exception:
+        audit.detail = json.dumps(
+            {"provider": provider, "status": "failed"},
+            ensure_ascii=False,
+            sort_keys=True,
+        )
+        db.commit()
+        raise
+    audit.detail = json.dumps(
+        {"provider": provider, "status": "deleted" if ok else "not_found"},
+        ensure_ascii=False,
+        sort_keys=True,
+    )
+    db.commit()
     return success(data={"deleted": ok}, message="删除成功" if ok else "文件不存在")
 
 

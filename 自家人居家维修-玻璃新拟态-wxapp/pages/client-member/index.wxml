@@ -16,7 +16,7 @@
     </view>
 
     <!-- ===== HERO: Member Card ===== -->
-    <view class="member-hero">
+    <view class="member-hero hero">
       <view class="member-top">
         <view class="member-avatar neu-icon-inset">
           <image src="{{icons.user}}" mode="aspectFit" class="member-avatar-icon" lazy-load="{{false}}" />
@@ -40,7 +40,7 @@
     <view class="section-title">会员权益</view>
     <view class="benefits-grid">
       <view class="benefit-card press-card" wx:for="{{benefits}}" wx:key="key" data-key="{{item.key}}">
-        <view class="benefit-icon">
+        <view class="benefit-icon benefit-icon-{{item.color}}">
           <image src="{{item.iconUrl}}" mode="aspectFit" class="benefit-icon-img" lazy-load="{{false}}" />
         </view>
         <text class="benefit-title">{{item.name}}</text>
@@ -53,7 +53,7 @@
     <view class="level-tiers">
       <view class="level-tier {{item.current ? 'level-tier-current' : ''}} press-card" wx:for="{{levelTiers}}" wx:key="key">
         <view class="level-tier-head">
-          <view class="level-tier-icon">
+          <view class="level-tier-icon level-tier-icon-{{item.tierTone}}">
             <image src="{{item.iconUrl}}" mode="aspectFit" style="width:40rpx;height:40rpx;" lazy-load="{{false}}" />
           </view>
           <text class="level-tier-name">{{item.name}}</text>
@@ -77,7 +77,7 @@
           <text class="task-sub">{{item.desc}}</text>
         </view>
         <text class="task-reward">+{{item.reward}}</text>
-        <view class="task-btn press-scale">
+        <view class="task-btn btn-neu-secondary press-scale">
           <text class="task-btn-text">去完成</text>
         </view>
       </view>

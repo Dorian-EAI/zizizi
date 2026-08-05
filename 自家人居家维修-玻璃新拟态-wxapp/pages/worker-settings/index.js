@@ -7,11 +7,25 @@ Page({
   data: {
     statusBarHeight: 20,
     notifications: [
-      { key: 'new_order', label: '新订单提醒', value: true, iconClass: 'row-icon-orange', iconKey: 'bell' },
-      { key: 'system', label: '系统消息', value: true, iconClass: 'row-icon-blue', iconKey: 'message' },
-      { key: 'income_change', label: '收益到账提醒', value: true, iconClass: 'row-icon-brand', iconKey: 'wallet' }
+      { key: 'new_order', label: '新订单提醒', value: null, iconClass: 'row-icon-orange', iconKey: 'bell' },
+      { key: 'system', label: '系统消息', value: null, iconClass: 'row-icon-blue', iconKey: 'message' },
+      { key: 'income_change', label: '收益到账提醒', value: null, iconClass: 'row-icon-brand', iconKey: 'wallet' }
     ],
     isOnline: false,
+    workerProfile: {
+      name: '—',
+      avatar: '',
+      levelText: '—',
+      completedOrdersText: '—',
+      praiseRateText: '—',
+      serviceAreaText: '—',
+      serviceTypesText: '—',
+      phoneStatusText: '未绑定',
+      certificationText: '未认证',
+      certificationTone: '',
+      certificatesText: '—'
+    },
+    cacheText: '—',
     aboutItems: [
       { key: 'agreement', label: '用户协议' },
       { key: 'privacy', label: '隐私政策' },
@@ -55,6 +69,7 @@ Page({
     })
     this.loadSettings()
     this.loadProfile()
+    this.loadStorageSize()
   },
 
   async loadSettings() {
@@ -79,15 +94,61 @@ Page({
   async loadProfile() {
     try {
       const me = await api.auth.workerMe()
-      this.setData({ isOnline: !!me.is_online })
+      const certifiedMap = {
+        0: { text: '未认证', tone: '' },
+        1: { text: '审核中', tone: '' },
+        2: { text: '已认证', tone: 'green' },
+        3: { text: '未通过', tone: '' }
+      }
+      const certification = certifiedMap[Number(me.certified)] || certifiedMap[0]
+      const certificates = Array.isArray(me.certificates)
+        ? me.certificates
+        : (me.certification_data && Array.isArray(me.certification_data.certificate_images)
+            ? me.certification_data.certificate_images
+            : null)
+      const serviceTypes = Array.isArray(me.service_types) ? me.service_types.filter(Boolean) : []
+      this.setData({
+        isOnline: !!me.is_online,
+        workerProfile: {
+          name: me.real_name || me.nickname || '—',
+          avatar: me.avatar || '',
+          levelText: me.level != null ? ('L' + me.level) : '—',
+          completedOrdersText: me.completed_orders != null ? String(me.completed_orders) : '—',
+          praiseRateText: me.praise_rate != null ? (String(me.praise_rate) + '%') : '—',
+          serviceAreaText: me.service_area || '—',
+          serviceTypesText: serviceTypes.length ? serviceTypes.join('/') : '—',
+          phoneStatusText: me.phone ? '已绑定' : '未绑定',
+          certificationText: certification.text,
+          certificationTone: certification.tone,
+          certificatesText: certificates ? (certificates.length + ' 张') : '—'
+        }
+      })
     } catch (e) {
       console.error('加载师傅信息失败', e)
     }
   },
 
+  loadStorageSize() {
+    try {
+      const info = wx.getStorageInfoSync()
+      const currentKb = Number(info && info.currentSize)
+      this.setData({ cacheText: Number.isFinite(currentKb) ? (currentKb / 1024).toFixed(2) + 'MB' : '—' })
+    } catch (e) {
+      this.setData({ cacheText: '—' })
+    }
+  },
+
+  onCertificationTap() {
+    wx.navigateTo({ url: '/pages/worker-certification/index' })
+  },
+
   async onToggleNotification(e) {
     const idx = e.currentTarget.dataset.idx
     const item = this.data.notifications[idx]
+    if (!item || typeof item.value !== 'boolean') {
+      wx.showToast({ title: '通知设置尚未加载', icon: 'none' })
+      return
+    }
     const newValue = !item.value
     const notifications = this.data.notifications.map((n, i) => i === idx ? { ...n, value: newValue } : n)
     this.setData({ notifications })

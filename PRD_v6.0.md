@@ -683,6 +683,54 @@ v6.2 微信小程序支持：
 - 生产环境不得将 mock 支付、mock 短信或未发送的订阅消息标记为真实成功。
 - 地图服务失败可降级为直线距离，但需标注“估算”；支付失败不得降级为线下成功。
 
+### 12.5 生产环境配置细则
+
+生产配置是 v6.2 上线验收的一部分。代码、部署脚本和小程序配置必须遵守失败关闭原则：缺少真实凭据、使用占位值、使用 mock/local provider、域名不匹配或安全白名单为空时，不得上传体验版或正式版，不得对外标记“可上线”。
+
+#### 12.5.1 后端基础与安全配置
+
+| 类别 | 必填项 | 验收规则 |
+|---|---|---|
+| 运行环境 | `APP_ENV`、`APP_DEBUG`、`ENABLE_BUILTIN_ADMIN` | 生产必须为 `APP_ENV=production`、`APP_DEBUG=false`、`ENABLE_BUILTIN_ADMIN=false`；不得靠开发默认值启动 |
+| 数据库 | `DB_DRIVER`、`DB_HOST`、`DB_PORT`、`DB_USER`、`DB_PASSWORD`、`DB_NAME` | 生产必须使用 MySQL；库名、账号、密码均为真实生产值，禁止空密码、示例值和 SQLite |
+| JWT | `JWT_SECRET_KEY`、`JWT_ALGORITHM`、`JWT_EXPIRE_HOURS`、`ADMIN_JWT_EXPIRE_MINUTES` | `JWT_SECRET_KEY` 必须是非默认随机密钥且长度不少于 32 字符；算法只允许 `HS256/HS384/HS512`；用户 token 1-24 小时，后台 token 5-1440 分钟 |
+| 域名与跨域 | `CORS_ORIGINS`、`ALLOWED_HOSTS` | 均必须显式填写真实 HTTPS 白名单；禁止空值、`*`、localhost、保留示例域名、带路径的 Host 或通配 Host |
+| PII 加密 | `FIELD_ENC_KEY` | 必须为 32 字节随机值的标准 Base64 编码；为空或格式错误时生产拒绝启动 |
+| Redis 与限流 | `REDIS_HOST`、`REDIS_PORT`、`REDIS_DB`、`REDIS_PASSWORD`、`RATE_LIMIT_STORAGE`、`RATE_LIMIT_REDIS_DB` | 生产 Redis 必须可连通；限流存储使用 `redis://` 或 `rediss://`；`REDIS_DB` 与 `RATE_LIMIT_REDIS_DB` 分离且编号在 0-15 |
+| 反向代理 | `TRUST_PROXY_HEADERS`、`TRUSTED_PROXY_CIDRS` | 只有应用入口仅允许受信代理访问时才能启用代理头；启用时必须列出可信 CIDR，禁止接受任意客户端伪造的 `X-Forwarded-For` |
+| 并发与调度 | `WEB_CONCURRENCY`、`SCHEDULER_ENABLED` | 单实例进程数 1-32；计划任务部署方式需明确，避免多实例重复记账、重复发奖或重复通知 |
+
+#### 12.5.2 微信小程序、登录与支付配置
+
+| 类别 | 必填项 | 验收规则 |
+|---|---|---|
+| 小程序身份 | 后端 `WX_APPID`、`WX_SECRET`；小程序 `project.config.json.appid` | AppID 必须为真实 `wx` 开头值，且小程序项目 AppID 与后端 `WX_APPID` 完全一致；`WX_SECRET` 必须为真实 32 位十六进制密钥 |
+| 小程序域名 | `config/env.js` 的 `trial.baseURL`、`release.baseURL` | 体验版和正式版必须配置真实公网 HTTPS API 地址；不得留空，不得包含账号密码、query 或 fragment；域名必须同时出现在后端 `ALLOWED_HOSTS` |
+| 小程序客服 | `trial.servicePhone`、`release.servicePhone` | 体验版和正式版必须填写真实客服电话或已备案服务号码；长度校验通过后仍需运营确认可接通 |
+| 小程序安全开关 | `project.config.json.setting.urlCheck`、`project.private.config.json.setting.urlCheck`、`allowMock`、`useMock` | 合法域名校验必须开启；体验版和正式版 `allowMock=false` 且 `useMock=false`；微信未返回合法 `envVersion` 时必须失败关闭 |
+| 微信支付 | `WX_MCH_ID`、`WX_API_V3_KEY`、`WX_MERCHANT_PRIVATE_KEY`、`WX_MERCHANT_SERIAL_NO`、`WX_PLATFORM_CERT_DIR` | 使用微信支付 API v3 真实商户配置；API v3 Key 为 32 字符；商户私钥可为 PEM 正文或绝对路径；平台证书目录必须为绝对路径 |
+| 支付回调 | `WX_PAY_NOTIFY_URL`、`WX_REFUND_NOTIFY_URL` | 必须是公网 HTTPS URL，路径分别固定为 `/api/wxpay/notify/payment` 和 `/api/wxpay/notify/refund`，域名必须在 `ALLOWED_HOSTS` 中 |
+| 支付运行参数 | `WX_PAY_MOCK_ENABLED`、`WX_PAY_TIMEOUT_SECONDS`、`WX_PAYMENT_PENDING_TIMEOUT_MINUTES`、`WX_RECONCILE_BATCH_SIZE`、`WX_REFUND_RETRY_INTERVAL_MINUTES`、`WX_REFUND_MAX_RETRIES` | 生产必须 `WX_PAY_MOCK_ENABLED=false`；超时、待确认窗口、退款重试均为正数；对账批量 1-1000 |
+
+#### 12.5.3 外部能力 Provider 配置
+
+| 能力 | 必填项 | 验收规则 |
+|---|---|---|
+| 短信 | `SMS_PROVIDER`、`SMS_ACCESS_KEY`、`SMS_SECRET_KEY`、`SMS_SIGN_NAME`、`SMS_TEMPLATE_VERIFY_CODE` | 生产 `SMS_PROVIDER` 只能为 `aliyun` 或 `tencent`；验证码模板必须配置真实值；腾讯云短信还必须配置 `SMS_TENCENT_APP_ID`；订单、支付、提现等短信模板按已开通通知范围配置 |
+| AI | `AI_PROVIDER`、`AI_API_KEY`、`AI_API_BASE` | 生产 `AI_PROVIDER` 只能为 `doubao` 或 `qwen`；API Key 必须为真实值；API Base 必须是公网 HTTPS 地址；未配置时 AI 能力失败关闭，不得返回伪造诊断或估价 |
+| 对象存储 | `OSS_PROVIDER` 及对应云厂商密钥 | 生产 `OSS_PROVIDER` 只能为 `aliyun` 或 `tencent`，禁止 `local`；阿里云需 `OSS_ACCESS_KEY/OSS_SECRET_KEY/OSS_BUCKET/OSS_ENDPOINT`；腾讯云需 `COS_SECRET_ID/COS_SECRET_KEY/COS_BUCKET/COS_REGION`；CDN 域名若配置必须是公网 HTTPS origin |
+| 证件与素材安全 | `CERTIFICATE_PRIVATE_STORAGE`、`OBJECT_STORAGE_LIFECYCLE_CONFIRMED` | 生产必须确认认证材料使用私有对象 ACL；对象存储需完成版本、未完成分片、归档、保留和清理规则演练 |
+| 地图 | `MAP_PROVIDER`、`AMAP_API_KEY` 或 `TENCENT_MAP_KEY` | 生产 `MAP_PROVIDER` 只能为 `amap` 或 `tencent`，禁止 `local`；高德使用 `AMAP_API_KEY`，腾讯位置服务使用 `TENCENT_MAP_KEY` |
+
+#### 12.5.4 上线前配置门禁
+
+- 上传体验版或正式版前，部署方必须提供真实 `.env` 或等价 Secret Manager 注入，并执行 `server/scripts/check_production_readiness.py --env-file <生产环境文件>`；返回码非 0 时禁止发布。
+- 正式上线前必须追加执行 `server/scripts/check_production_readiness.py --env-file <生产环境文件> --online --run-tests`。在线检查至少覆盖生产数据库只读连通、Alembic head、Redis/限流 Redis、运营内容 `agreement/privacy/about/help`、FAQ、启用服务类目、已完成首次改密的启用超级管理员。
+- 小程序侧必须执行 `node tools/release-gate.mjs`，确认运行完整性、支付幂等行为和 `zjrnew.design` 同步状态全部通过。
+- Provider SDK 和本地密钥格式必须由 `app.utils.deployment_probe.assert_deployment_dependencies()` 校验通过；缺 SDK、证书目录不可用或 key 格式无效时按发布阻断处理。
+- 微信支付/退款回调、订阅消息、短信验证码、对象存储上传/删除、地图路线、备份恢复和资金对账必须完成沙箱或预发演练；单纯填入配置值不等于生产可用。
+- PRD、后端配置类、发布门禁脚本和小程序 `config/env.js` 的规则冲突时，按更严格的失败关闭规则执行，并补齐文档或代码后再验收。
+
 ---
 
 ## 13. 自动任务
@@ -767,6 +815,7 @@ v6.2 微信小程序支持：
 
 - 核心性能、幂等、定位时效、鉴权、脱敏、备份和日志指标通过发布测试。
 - 生产配置检查阻止默认密钥、mock 支付、空 TrustedHost/CORS 白名单等不安全配置上线。
+- 环境配置验收必须逐项满足 12.5 的后端、小程序、Provider 和上线门禁要求；任何缺失项均按发布阻断处理。
 
 ---
 

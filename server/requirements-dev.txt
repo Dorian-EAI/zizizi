@@ -1,0 +1,4 @@
+-r requirements.txt
+
+# 本地验收与 CI
+pytest==8.3.5

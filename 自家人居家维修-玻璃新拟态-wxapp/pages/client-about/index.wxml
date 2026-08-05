@@ -1,0 +1,34 @@
+<!-- REVIEWED BUSINESS VIEW: content comes from /api/pages/about. -->
+<view class="phone-page design-detail-page" data-page-id="page-client-about">
+  <view class="status-bar"><text class="tag-span">9:41</text><text class="status-icons tag-span">● WiFi 100%</text></view>
+  <view class="topbar">
+    <view class="icon-button design-button" bindtap="onBack"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m15%2018-6-6%206-6M9%2012h10%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view>
+    <view class="tag-h1">{{title}}</view>
+    <text class="tag-span"></text>
+  </view>
+  <view class="page-body">
+    <view class="hero">
+      <view class="hero-kicker tag-p">ZÌ JIĀ RÉN</view>
+      <view class="tag-h2">自家人到家</view>
+      <view class="tag-p">Version {{versionText}}</view>
+    </view>
+    <view class="section card" wx:if="{{loading}}"><view class="tag-p">正在加载平台介绍…</view></view>
+    <view class="section card" wx:elif="{{loadError}}">
+      <view class="tag-h2">内容暂不可用</view>
+      <view class="tag-p">{{loadError}}</view>
+      <view class="btn secondary design-button" bindtap="onRetry">重新加载</view>
+    </view>
+    <view class="section card" wx:else>
+      <view class="section-title"><text class="tag-strong">公司介绍</text><text class="tag-span">平台实时内容</text></view>
+      <text class="tag-p" user-select>{{content}}</text>
+    </view>
+    <view class="section">
+      <view class="section-title"><text class="tag-strong">协议与支持</text></view>
+      <view class="card list-card">
+        <view class="list-row design-button" data-document="agreement" bindtap="onAgreement"><view class="row-icon tag-span"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%230D9488%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20aria-hidden%3D%22true%22%3E%3Cpath%20d%3D%22M14%202H6a2%202%200%200%200-2%202v16a2%202%200%200%200%202%202h12a2%202%200%200%200%202-2V8Z%22%2F%3E%3Cpath%20d%3D%22M14%202v6h6M8%2013h8M8%2017h6%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view><view class="row-main"><view class="row-title">用户协议</view><view class="row-copy">查看平台当前完整协议</view></view><text class="chevron tag-span">›</text></view>
+        <view class="list-row design-button" data-document="privacy" bindtap="onAgreement"><view class="row-icon tag-span"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%230D9488%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20aria-hidden%3D%22true%22%3E%3Cpath%20d%3D%22M12%2022s8-4%208-10V5l-8-3-8%203v7c0%206%208%2010%208%2010Z%22%2F%3E%3Cpath%20d%3D%22m9%2012%202%202%204-4%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view><view class="row-main"><view class="row-title">隐私政策</view><view class="row-copy">查看平台当前完整政策</view></view><text class="chevron tag-span">›</text></view>
+        <view class="list-row design-button" bindtap="onFeedback"><view class="row-icon tag-span"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%230D9488%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20aria-hidden%3D%22true%22%3E%3Crect%20x%3D%225%22%20y%3D%224%22%20width%3D%2214%22%20height%3D%2218%22%20rx%3D%222%22%2F%3E%3Cpath%20d%3D%22M9%204V2h6v2M9%2010h6M9%2014h6M9%2018h4%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view><view class="row-main"><view class="row-title">意见反馈</view><view class="row-copy">提交建议或问题</view></view><text class="chevron tag-span">›</text></view>
+      </view>
+    </view>
+  </view>
+</view>

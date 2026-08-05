@@ -1,0 +1,35 @@
+<!-- AUTO-GENERATED DESIGN VIEW sourceHash=fnv1a-beb9eaff; edit source HTML or generator bindings, then rerun. -->
+<view class="phone-page design-detail-page worker-theme" data-dom-id="page-worker-help-category">
+    <view class="status-bar"><text class="tag-span">9:41</text><text class="status-icons tag-span">●●●</text></view>
+    <view class="topbar">
+      <view class="icon-button design-button" data-dom-id="help-category-back" data-route="/pages/worker-help/index" bindtap="onNavigate"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m15%2018-6-6%206-6M9%2012h10%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view>
+      <view class="tag-h1">接单与报价</view>
+      <view class="icon-button design-button" data-dom-id="help-category-contact-top" data-route="/pages/client-customer-service/index?role=worker" bindtap="onNavigate"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M21%2015a4%204%200%200%201-4%204H8l-5%203V7a4%204%200%200%201%204-4h10a4%204%200%200%201%204%204z%22%2F%3E%3Cpath%20d%3D%22M8%209h8M8%2013h5%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view>
+    </view>
+    <view class="page-body">
+      <view class="hero">
+        <view class="hero-kicker tag-p">分类由 category 参数切换</view><view class="tag-h2">接单与报价</view><view class="tag-p">包含订单推荐、报价资格、报价修改与中标结果等问题。</view>
+      </view>
+
+      <view class="section card field">
+        <text for="help-category-search" class="tag-label">在当前分类中搜索</text>
+        <input class="input" id="help-category-search" data-dom-id="help-category-search" data-action="search-category-help" placeholder="输入问题关键词" bindchange="onAction" />
+      </view>
+
+      <view class="section">
+        <view class="section-title"><text class="tag-strong">常见问题</text><text class="tag-span">8 条</text></view>
+        <view class="card list-card">
+          <view class="list-row design-button" data-dom-id="help-category-faq-qualification" data-action="toggle-faq" bindtap="onAction"><text class="row-main tag-span"><text class="row-title tag-span">为什么我暂时不能报价？</text><text class="row-copy tag-span">查看账号、资质、培训、区域与保证金额度要求</text></text><text class="expand-toggle tag-span"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M12%205v14M5%2012h14%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></text></view>
+          <view class="list-row design-button" data-dom-id="help-category-faq-update" data-action="toggle-faq" bindtap="onAction"><text class="row-main tag-span"><text class="row-title tag-span">提交报价后还能修改吗？</text><text class="row-copy tag-span">是否可修改由订单截止时间和服务端规则决定</text></text><text class="expand-toggle tag-span"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M12%205v14M5%2012h14%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></text></view>
+          <view class="list-row design-button" data-dom-id="help-category-faq-address" data-action="toggle-faq" bindtap="onAction"><text class="row-main tag-span"><text class="row-title tag-span">报价前为什么看不到完整地址？</text><text class="row-copy tag-span">为保护客户隐私，中标后才开放精确地址和电话</text></text><text class="expand-toggle tag-span"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M12%205v14M5%2012h14%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></text></view>
+          <view class="list-row design-button" data-dom-id="help-category-faq-result" data-action="toggle-faq" bindtap="onAction"><text class="row-main tag-span"><text class="row-title tag-span">如何查看是否中标？</text><text class="row-copy tag-span">在接单大厅和订单消息中查看报价状态</text></text><text class="expand-toggle tag-span"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M12%205v14M5%2012h14%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></text></view>
+        </view>
+      </view>
+
+      <view class="section card">
+        <view class="card-title tag-h2">仍然没有解决？</view><view class="card-copy tag-p">联系客服时会自动带入当前分类和师傅身份。</view>
+        <view class="spacer"></view>
+        <view class="btn secondary block design-button" data-dom-id="help-category-contact" data-route="/pages/client-customer-service/index?role=worker&topic=orders" bindtap="onNavigate">联系人工客服</view>
+      </view>
+    </view>
+  </view>

@@ -4,14 +4,566 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>自家人居家维修 · 玻璃新拟态 · 积分中心</title>
-    <link rel="stylesheet" href="../assets/fonts.css">
+    <style id="theme-vars">
+/* 自家人居家维修 - 玻璃新拟态 */
+:root {
+  /* Brand - Client (Teal) */
+  --brand: #0D9488;
+  --brand-dark: #0A7A70;
+  --brand-mid: #14B8A6;
+  --brand-light: #CCFBF1;
+  --brand-glow: rgba(13, 148, 136, 0.24);
+  --brand-subtle: rgba(13, 148, 136, 0.10);
+
+  /* Accent (Amber) */
+  --accent: #D4944C;
+  --accent-dark: #A0723C;
+  --accent-mid: #E8C088;
+  --accent-light: #F5E6D0;
+  --accent-glow: rgba(212, 148, 76, 0.20);
+
+  /* Background */
+  --background: #F2EDE8;
+  --foreground: #2C2824;
+  --body-bg: #E8E4DF;
+  --bg-elevated: #F7F3EF;
+
+  /* Neumorphic */
+  --neu-light: #FFF8F2;
+  --neu-dark: #DDD6CE;
+  --neu-highlight: rgba(255, 255, 255, 0.55);
+
+  /* Surface & Card */
+  --card: rgba(255, 255, 255, 0.52);
+  --card-foreground: #2C2824;
+  --popover: #fff;
+  --popover-foreground: #2C2824;
+
+  /* Muted */
+  --muted: #F7F3EF;
+  --muted-foreground: #8B8178;
+
+  /* Border & Input */
+  --border: rgba(44, 40, 36, 0.06);
+  --input: rgba(44, 40, 36, 0.06);
+  --ring: #0D9488;
+
+  /* Primary */
+  --primary: #0D9488;
+  --primary-foreground: #ffffff;
+
+  /* Semantic aliases */
+  --state-success: #5B8C5A;
+  --state-warning: #D4944C;
+  --state-error: #C4533A;
+  --state-info: #5A8FAD;
+
+  /* Text */
+  --text-1: #2C2824;
+  --text-2: #8B8178;
+  --text-3: #B5ADA5;
+  --text-inverse: #ffffff;
+
+  /* Sep & Fill */
+  --sep: rgba(44, 40, 36, 0.06);
+  --fill: rgba(44, 40, 36, 0.04);
+
+  /* Green/Red/Orange/Blue semantic */
+  --green: #5B8C5A;
+  --red: #C4533A;
+  --orange: #D4944C;
+  --blue: #5A8FAD;
+
+  /* Radius */
+  --radius-sm: 0.75rem;
+  --radius-md: 1.2rem;
+  --radius-lg: 1.6rem;
+  --radius-full: 9999px;
+
+  /* Font — unified serif system */
+  --font-display: 'Cormorant Garamond', 'Noto Serif SC', 'STSong', Georgia, serif;
+  --font-body:    'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --font-nums:    'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
+  --font:         var(--font-body);
+
+  /* Motion */
+  --spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --dur: 0.2s;
+
+  /* Glass */
+  --glass-bg: rgba(255, 255, 255, 0.18);
+  --glass-blur: blur(12px) saturate(140%);
+  --glass-border: rgba(255, 255, 255, 0.60);
+
+  /* Surface presets for glass-neumorphic components */
+  --surface-1: rgba(255, 255, 255, 0.50);
+  --surface-2: rgba(255, 255, 255, 0.45);
+
+  /* Neumorphic shadow presets */
+  --neu-out-sm: 6px 6px 14px var(--neu-dark), -6px -6px 14px var(--neu-light), 0 4px 16px rgba(0, 0, 0, 0.04);
+  --neu-out-md: 8px 8px 18px var(--neu-dark), -8px -8px 18px var(--neu-light), 0 6px 24px rgba(0, 0, 0, 0.05);
+  --neu-out-lg: 10px 10px 24px var(--neu-dark), -10px -10px 24px var(--neu-light), 0 8px 32px rgba(0, 0, 0, 0.06);
+  --neu-in: inset 4px 4px 8px var(--neu-dark), inset -4px -4px 8px var(--neu-light);
+  --neu-in-deep: inset 5px 5px 10px var(--neu-dark), inset -5px -5px 10px var(--neu-light);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-full: var(--radius-full);
+}
+
+/* Semantic token fallback */
+#semantic-token-fallback {
+  --brand-background: var(--background);
+  --brand-foreground: var(--foreground);
+  --brand-card: var(--card);
+  --brand-card-foreground: var(--card-foreground);
+  --brand-popover: var(--popover);
+  --brand-popover-foreground: var(--popover-foreground);
+  --brand-primary: var(--primary);
+  --brand-primary-foreground: var(--primary-foreground);
+  --brand-muted: var(--muted);
+  --brand-muted-foreground: var(--muted-foreground);
+  --brand-border: var(--border);
+  --brand-input: var(--input);
+  --brand-ring: var(--ring);
+  --brand-radius-sm: var(--radius-sm);
+  --brand-radius-md: var(--radius-md);
+  --brand-radius-lg: var(--radius-lg);
+}
+
+/* ===== Global Neumorphic Components ===== */
+/* Tab Bar — Premium Liquid Glass, absolute-positioned within .phone frame */
+.tab-bar{
+  position:absolute;
+  bottom:10px;
+  left:50%;
+  transform:translateX(-50%);
+  width:calc(100% - 32px);
+  max-width:360px;
+  height:56px;
+  z-index:100;
+  background:rgba(255,255,255,0.18);
+  backdrop-filter:blur(48px) saturate(210%);
+  -webkit-backdrop-filter:blur(48px) saturate(210%);
+  border:0.5px solid rgba(255,255,255,0.45);
+  border-radius:24px;
+  box-shadow:
+    inset 0 1.5px 3px rgba(255,255,255,0.60),
+    inset 0 -0.5px 1px rgba(255,255,255,0.20),
+    0 0 0 0.5px rgba(0,0,0,0.04),
+    0 2px 10px rgba(0,0,0,0.06),
+    0 12px 36px rgba(0,0,0,0.08);
+  display:flex;
+  align-items:center;
+  justify-content:space-around;
+  padding:0 6px;
+}
+.tab-bar::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  background:linear-gradient(160deg,
+    rgba(255,255,255,0.42) 0%,
+    rgba(255,255,255,0.16) 20%,
+    rgba(255,255,255,0.03) 40%,
+    transparent 60%);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
+  padding:0.5px;
+  pointer-events:none;
+  z-index:1;
+}
+.tab-bar::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  background:linear-gradient(320deg,
+    transparent 60%,
+    rgba(13,148,136,0.06) 80%,
+    rgba(255,255,255,0.04) 100%);
+  pointer-events:none;
+  z-index:1;
+}
+.tab-item{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+  width:68px;
+  height:44px;
+  border-radius:14px;
+  color:var(--text-3);
+  font-size:11px;
+  font-weight:500;
+  text-decoration:none;
+  position:relative;
+  transition:all .2s;
+}
+.tab-item svg{
+  width:20px;
+  height:20px;
+  stroke:currentColor;
+  fill:none;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.tab-item[data-active="true"]{
+  color:var(--brand);
+  font-weight:600;
+}
+.tab-item[data-active="true"]::before{
+  content:"";
+  position:absolute;
+  width:54px;
+  height:42px;
+  border-radius:16px;
+  background:rgba(13,148,136,0.16);
+  backdrop-filter:blur(24px);
+  -webkit-backdrop-filter:blur(24px);
+  border:0.5px solid rgba(13,148,136,0.30);
+  box-shadow:
+    inset 0 1px 3px rgba(255,255,255,0.55),
+    inset 0 -0.5px 1px rgba(255,255,255,0.15),
+    0 2px 10px rgba(13,148,136,0.20),
+    0 0 0 0.5px rgba(13,148,136,0.08);
+  z-index:0;
+}
+.tab-item[data-active="true"] svg{
+  transform:scale(1.08);
+  position:relative;
+  z-index:1;
+}
+
+/* Buttons */
+.btn-neu-primary{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:var(--brand);color:var(--text-inverse);
+  border:none;border-radius:9999px;
+  padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
+  cursor:pointer;
+  box-shadow:var(--neu-out-sm),0 2px 8px var(--brand-glow);
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
+.btn-neu-primary:active{box-shadow:var(--neu-in);transform:scale(0.94)}
+
+.btn-neu-secondary{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,0.50);color:var(--brand);
+  border:0.5px solid rgba(255,255,255,0.60);border-radius:9999px;
+  padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
+  cursor:pointer;
+  box-shadow:var(--neu-out-sm);
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
+.btn-neu-secondary:active{box-shadow:var(--neu-in);transform:scale(0.94)}
+
+.btn-neu-ghost{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:transparent;color:var(--text-2);
+  border:0.5px solid var(--border);border-radius:9999px;
+  padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
+  cursor:pointer;
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease),color var(--dur) var(--ease);
+}
+.btn-neu-ghost:active{transform:scale(0.94);color:var(--brand)}
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-accent: var(--accent);
+    --radius-sm: var(--radius-sm);
+    --radius-md: var(--radius-md);
+    --radius-lg: var(--radius-lg);
+    --radius-full: var(--radius-full);
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+    <style id="semantic-token-fallback">
+      .bg-background { background-color: var(--background); }
+      .text-background { color: var(--background); }
+      .border-background { border-color: var(--background); }
+      .ring-background { --tw-ring-color: var(--background); }
+      .bg-foreground { background-color: var(--foreground); }
+      .text-foreground { color: var(--foreground); }
+      .border-foreground { border-color: var(--foreground); }
+      .ring-foreground { --tw-ring-color: var(--foreground); }
+      .bg-card { background-color: var(--card); }
+      .text-card { color: var(--card); }
+      .border-card { border-color: var(--card); }
+      .ring-card { --tw-ring-color: var(--card); }
+      .bg-card-foreground { background-color: var(--card-foreground); }
+      .text-card-foreground { color: var(--card-foreground); }
+      .border-card-foreground { border-color: var(--card-foreground); }
+      .ring-card-foreground { --tw-ring-color: var(--card-foreground); }
+      .bg-popover { background-color: var(--popover); }
+      .text-popover { color: var(--popover); }
+      .border-popover { border-color: var(--popover); }
+      .ring-popover { --tw-ring-color: var(--popover); }
+      .bg-popover-foreground { background-color: var(--popover-foreground); }
+      .text-popover-foreground { color: var(--popover-foreground); }
+      .border-popover-foreground { border-color: var(--popover-foreground); }
+      .ring-popover-foreground { --tw-ring-color: var(--popover-foreground); }
+      .bg-primary { background-color: var(--primary); }
+      .text-primary { color: var(--primary); }
+      .border-primary { border-color: var(--primary); }
+      .ring-primary { --tw-ring-color: var(--primary); }
+      .bg-primary-foreground { background-color: var(--primary-foreground); }
+      .text-primary-foreground { color: var(--primary-foreground); }
+      .border-primary-foreground { border-color: var(--primary-foreground); }
+      .ring-primary-foreground { --tw-ring-color: var(--primary-foreground); }
+      .bg-muted { background-color: var(--muted); }
+      .text-muted { color: var(--muted); }
+      .border-muted { border-color: var(--muted); }
+      .ring-muted { --tw-ring-color: var(--muted); }
+      .bg-muted-foreground { background-color: var(--muted-foreground); }
+      .text-muted-foreground { color: var(--muted-foreground); }
+      .border-muted-foreground { border-color: var(--muted-foreground); }
+      .ring-muted-foreground { --tw-ring-color: var(--muted-foreground); }
+      .bg-border { background-color: var(--border); }
+      .text-border { color: var(--border); }
+      .border-border { border-color: var(--border); }
+      .ring-border { --tw-ring-color: var(--border); }
+      .bg-input { background-color: var(--input); }
+      .text-input { color: var(--input); }
+      .border-input { border-color: var(--input); }
+      .ring-input { --tw-ring-color: var(--input); }
+      .bg-ring { background-color: var(--ring); }
+      .text-ring { color: var(--ring); }
+      .border-ring { border-color: var(--ring); }
+      .ring-ring { --tw-ring-color: var(--ring); }
+      .bg-accent { background-color: var(--accent); }
+      .text-accent { color: var(--accent); }
+      .border-accent { border-color: var(--accent); }
+      .ring-accent { --tw-ring-color: var(--accent); }
+    </style>
+    <style>
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      [data-icon] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        background-color: currentColor;
+      }
+    </style>
+</head>
+<body>
+<div class="phone" data-dom-id="page-client-points">
+
+  <!-- ===== TOP NAV ===== -->
+  <header class="nav-bar">
+    <button class="nav-icon-btn" data-dom-id="back-btn" data-target-page="page-client-mine" aria-label="返回">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="m15 18-6-6 6-6"/></svg>
+    </button>
+    <h1 class="nav-title">积分中心</h1>
+    <button class="nav-icon-btn" data-dom-id="rules-btn" data-action="show-points-rules" aria-label="规则">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+    </button>
+  </header>
+
+  <!-- ===== POINTS HERO ===== -->
+  <div class="points-hero">
+    <div class="points-label">我的积分</div>
+    <div class="points-value mono">2,680</div>
+    <div class="points-unit">积分</div>
+    <div class="points-actions">
+      <button class="points-action-btn primary" data-dom-id="sign-in-btn" data-action="daily-checkin">
+        立即签到 +10
+      </button>
+      <button class="points-action-btn secondary" data-dom-id="exchange-btn" data-action="show-exchange-unavailable" disabled aria-disabled="true">
+        兑换暂未开放
+      </button>
+    </div>
+  </div>
+
+  <!-- ===== WAYS TO EARN ===== -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-title">赚积分</div>
+      <div class="section-more" data-dom-id="points-more-tasks" data-target-page="page-client-points-tasks">更多任务 ></div>
+    </div>
+    <div class="glass-card">
+      <div class="earn-grid">
+        <div class="earn-item" data-dom-id="earn-signin" data-action="daily-checkin">
+          <div class="earn-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M20 6 9 17l-5-5"/></svg>
+          </div>
+          <div class="earn-name">每日签到</div>
+          <div class="earn-points">+10积分</div>
+        </div>
+        <div class="earn-item" data-dom-id="earn-order" data-target-page="page-client-publish">
+          <div class="earn-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </div>
+          <div class="earn-name">下单消费</div>
+          <div class="earn-points">1元=1积分</div>
+        </div>
+        <div class="earn-item" data-dom-id="earn-review" data-target-page="page-client-orders">
+          <div class="earn-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <div class="earn-name">评价订单</div>
+          <div class="earn-points">+20积分</div>
+        </div>
+        <div class="earn-item" data-dom-id="earn-share" data-target-page="page-client-invite">
+          <div class="earn-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          </div>
+          <div class="earn-name">邀请好友</div>
+          <div class="earn-points">+100积分</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== POINTS MALL ===== -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-title">积分商城（预览）</div>
+      <div class="section-more" data-dom-id="points-view-mall" data-target-page="page-client-points-mall">查看全部 ></div>
+    </div>
+    <div class="mall-grid">
+      <div class="mall-item" data-dom-id="mall-coupon-10" data-target-page="page-client-points-product">
+        <div class="mall-img">🎫</div>
+        <div class="mall-info">
+          <div class="mall-name">10元优惠券</div>
+          <div class="mall-points mono">500 <small>积分</small></div>
+        </div>
+      </div>
+      <div class="mall-item" data-dom-id="mall-coupon-20" data-target-page="page-client-points-product">
+        <div class="mall-img">🎁</div>
+        <div class="mall-info">
+          <div class="mall-name">20元优惠券</div>
+          <div class="mall-points mono">1000 <small>积分</small></div>
+        </div>
+      </div>
+      <div class="mall-item" data-dom-id="mall-coupon-50" data-target-page="page-client-points-product">
+        <div class="mall-img">💰</div>
+        <div class="mall-info">
+          <div class="mall-name">50元优惠券</div>
+          <div class="mall-points mono">2500 <small>积分</small></div>
+        </div>
+      </div>
+      <div class="mall-item" data-dom-id="mall-vip" data-target-page="page-client-points-product">
+        <div class="mall-img">👑</div>
+        <div class="mall-info">
+          <div class="mall-name">月卡会员</div>
+          <div class="mall-points mono">3000 <small>积分</small></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== RECORDS ===== -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-title">积分明细</div>
+    </div>
+    <div class="glass-card">
+      <div class="segmented-tabs">
+        <div class="seg-tab active">全部</div>
+        <div class="seg-tab">获取</div>
+        <div class="seg-tab">使用</div>
+      </div>
+      <div class="record-item" data-dom-id="points-record-order" data-action="show-points-record-detail">
+        <div class="record-icon plus">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M20 6 9 17l-5-5"/></svg>
+        </div>
+        <div class="record-info">
+          <div class="record-title">订单消费奖励</div>
+          <div class="record-time">2026-08-02 14:30</div>
+        </div>
+        <div class="record-points plus mono">+168</div>
+      </div>
+      <div class="record-item" data-dom-id="points-record-coupon" data-action="show-points-record-detail">
+        <div class="record-icon minus">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M3 7v10a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1Z"/></svg>
+        </div>
+        <div class="record-info">
+          <div class="record-title">兑换10元优惠券</div>
+          <div class="record-time">2026-08-01 09:15</div>
+        </div>
+        <div class="record-points minus mono">-500</div>
+      </div>
+      <div class="record-item" data-dom-id="points-record-review" data-action="show-points-record-detail">
+        <div class="record-icon plus">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <div class="record-info">
+          <div class="record-title">评价订单奖励</div>
+          <div class="record-time">2026-07-30 16:20</div>
+        </div>
+        <div class="record-points plus mono">+20</div>
+      </div>
+      <div class="record-item" data-dom-id="points-record-checkin" data-action="show-points-record-detail">
+        <div class="record-icon plus">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M20 6 9 17l-5-5"/></svg>
+        </div>
+        <div class="record-info">
+          <div class="record-title">每日签到</div>
+          <div class="record-time">2026-07-30 08:00</div>
+        </div>
+        <div class="record-points plus mono">+10</div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
     <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{
   --brand:#0D9488;--brand-dark:#0A7A70;--brand-mid:#14B8A6;--brand-light:#CCFBF1;
-  --brand-glow:rgba(13,148,136,0.28);--brand-subtle:rgba(13,148,136,0.08);
+  --brand-glow:rgba(13,148,136,0.24);--brand-subtle:rgba(13,148,136,0.10);
   --brand-gradient:linear-gradient(135deg,#0D9488 0%,#14B8A6 50%,#D4944C 100%);
-  --accent:#D4944C;--accent-dark:#A0723C;--accent-light:#F5E6D0;--accent-glow:rgba(212,148,76,0.25);
+  --accent:#D4944C;--accent-dark:#A0723C;--accent-light:#F5E6D0;--accent-soft:rgba(212,148,76,0.12);--accent-glow:rgba(212,148,76,0.18);
   --bg:#F2EDE8;--bg-elevated:#F7F3EF;
   --neu-light:#FFF8F2;--neu-dark:#DDD6CE;
   --text-1:#2C2824;--text-2:#8B8178;--text-3:#B5ADA5;--text-inverse:#FFFFFF;
@@ -30,7 +582,7 @@
 html,body{font-family:var(--font);color:var(--text-1);-webkit-font-smoothing:antialiased}
 body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh;background:#E8E4DF;letter-spacing:-0.01em}
 
-.phone{position:relative;width:414px;min-height:896px;background:var(--bg);border-radius:48px;overflow:hidden;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.12),0 4px 16px rgba(0,0,0,.06);padding-bottom:40px}
+.phone{position:relative;width:min(375px,100vw);height:900px;min-height:900px;background:var(--bg);border-radius:48px;overflow:hidden;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.12),0 4px 16px rgba(0,0,0,.06);padding-bottom:40px}
 .mono{font-variant-numeric:tabular-nums;letter-spacing:-0.01em}
 
 /* ===== Top Nav ===== */
@@ -41,15 +593,16 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
 
 /* ===== Points Hero ===== */
 .points-hero{padding:24px 20px 32px;background:
-  radial-gradient(ellipse 280px 180px at 85% 30%,rgba(212,148,76,.22) 0%,transparent 60%),
-  radial-gradient(ellipse 220px 160px at 10% 70%,rgba(13,148,136,.18) 0%,transparent 60%),
-  linear-gradient(150deg,rgba(13,148,136,.12) 0%,rgba(212,148,76,.10) 100%);
+  radial-gradient(ellipse 280px 180px at 85% 30%,rgba(212,148,76,.16) 0%,transparent 66%),
+  radial-gradient(ellipse 220px 160px at 10% 70%,rgba(13,148,136,.13) 0%,transparent 66%),
+  linear-gradient(150deg,rgba(13,148,136,.10) 0%,rgba(212,148,76,.10) 100%);
   border-radius:0 0 32px 32px;
   text-align:center;
   position:relative;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,0.35);
 }
 .points-label{font-size:13px;color:var(--text-2);margin-bottom:8px}
-.points-value{font-size:56px;font-weight:700;font-family:var(--font-display);letter-spacing:-0.04em;line-height:1;background:linear-gradient(135deg,var(--brand) 0%,var(--accent) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.points-value{font-size:56px;font-weight:700;font-family:var(--font-display);letter-spacing:-0.04em;line-height:1;background:linear-gradient(135deg,var(--brand-dark) 0%,var(--accent-dark) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .points-unit{font-size:16px;color:var(--text-2);margin-top:4px}
 .points-actions{display:flex;justify-content:center;gap:16px;margin-top:24px}
 .points-action-btn{padding:10px 24px;border-radius:9999px;font-size:13px;font-weight:600;border:none;cursor:pointer;transition:all var(--dur) var(--spring)}
@@ -70,7 +623,7 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
 /* ===== Ways to earn ===== */
 .earn-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
 .earn-item{text-align:center;cursor:pointer}
-.earn-icon{width:52px;height:52px;border-radius:16px;margin:0 auto 8px;background:rgba(255,255,255,0.52);box-shadow:var(--neu-out-sm);display:flex;align-items:center;justify-content:center;color:var(--brand)}
+.earn-icon{width:40px;height:40px;border-radius:16px;margin:0 auto 8px;background:rgba(255,255,255,0.52);box-shadow:var(--neu-out-sm);display:flex;align-items:center;justify-content:center;color:var(--brand)}
 .earn-item:active .earn-icon{box-shadow:var(--neu-in);transform:scale(0.94)}
 .earn-name{font-size:12px;color:var(--text-1);margin-bottom:2px}
 .earn-points{font-size:11px;color:var(--accent);font-weight:600}
@@ -79,7 +632,7 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
 .mall-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
 .mall-item{background:rgba(255,255,255,0.52);border-radius:var(--r-md);border:0.5px solid rgba(255,255,255,0.60);box-shadow:var(--neu-out-sm);overflow:hidden;cursor:pointer;transition:all var(--dur) var(--ease)}
 .mall-item:active{transform:scale(0.97);box-shadow:var(--neu-in)}
-.mall-img{height:100px;background:linear-gradient(135deg,var(--brand-light),var(--accent-light));display:flex;align-items:center;justify-content:center;font-size:40px}
+.mall-img{height:100px;background:radial-gradient(circle at 78% 22%,rgba(212,148,76,.20) 0%,transparent 56%),radial-gradient(circle at 18% 84%,rgba(13,148,136,.14) 0%,transparent 58%),rgba(255,255,255,.34);display:flex;align-items:center;justify-content:center;font-size:32px;line-height:1;color:var(--brand);box-shadow:inset 3px 3px 8px var(--neu-dark),inset -3px -3px 8px var(--neu-light);filter:saturate(.92)}
 .mall-info{padding:12px}
 .mall-name{font-size:13px;font-weight:600;margin-bottom:4px}
 .mall-points{font-size:14px;font-weight:700;color:var(--accent);font-family:var(--font-display)}
@@ -90,181 +643,18 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
 .record-item:last-child{border-bottom:none}
 .record-icon{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-right:12px;flex-shrink:0}
 .record-icon.plus{background:rgba(91,140,90,0.12);color:var(--green)}
-.record-icon.minus{background:rgba(212,148,76,0.12);color:var(--accent)}
+.record-icon.minus{background:var(--accent-soft);color:var(--accent-dark)}
 .record-info{flex:1}
 .record-title{font-size:14px;font-weight:500;margin-bottom:2px}
 .record-time{font-size:12px;color:var(--text-2)}
 .record-points{font-size:16px;font-weight:700;font-family:var(--font-display)}
 .record-points.plus{color:var(--green)}
-.record-points.minus{color:var(--accent)}
+.record-points.minus{color:var(--accent-dark)}
 
 /* ===== Segmented Tabs ===== */
 .segmented-tabs{display:flex;background:var(--bg-elevated);border-radius:9999px;padding:4px;box-shadow:var(--neu-in);margin-bottom:16px}
 .seg-tab{flex:1;padding:8px 0;font-size:13px;font-weight:500;text-align:center;border-radius:9999px;color:var(--text-2);cursor:pointer;transition:all var(--dur) var(--ease)}
 .seg-tab.active{background:rgba(255,255,255,0.80);color:var(--brand);box-shadow:var(--neu-out-sm);font-weight:600}
     </style>
-</head>
-<body>
-<div class="phone" data-dom-id="page-client-points">
-
-  <!-- ===== TOP NAV ===== -->
-  <header class="nav-bar">
-    <button class="nav-icon-btn" data-dom-id="back-btn" aria-label="返回">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="m15 18-6-6 6-6"/></svg>
-    </button>
-    <h1 class="nav-title">积分中心</h1>
-    <button class="nav-icon-btn" data-dom-id="rules-btn" aria-label="规则">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
-    </button>
-  </header>
-
-  <!-- ===== POINTS HERO ===== -->
-  <div class="points-hero">
-    <div class="points-label">我的积分</div>
-    <div class="points-value mono">2,680</div>
-    <div class="points-unit">积分</div>
-    <div class="points-actions">
-      <button class="points-action-btn primary" data-dom-id="sign-in-btn">
-        立即签到 +10
-      </button>
-      <button class="points-action-btn secondary" data-dom-id="exchange-btn">
-        积分兑换
-      </button>
-    </div>
-  </div>
-
-  <!-- ===== WAYS TO EARN ===== -->
-  <section class="section">
-    <div class="section-header">
-      <div class="section-title">赚积分</div>
-      <div class="section-more">更多任务 ></div>
-    </div>
-    <div class="glass-card">
-      <div class="earn-grid">
-        <div class="earn-item" data-dom-id="earn-signin">
-          <div class="earn-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M20 6 9 17l-5-5"/></svg>
-          </div>
-          <div class="earn-name">每日签到</div>
-          <div class="earn-points">+10积分</div>
-        </div>
-        <div class="earn-item" data-dom-id="earn-order">
-          <div class="earn-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-          </div>
-          <div class="earn-name">下单消费</div>
-          <div class="earn-points">1元=1积分</div>
-        </div>
-        <div class="earn-item" data-dom-id="earn-review">
-          <div class="earn-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-          </div>
-          <div class="earn-name">评价订单</div>
-          <div class="earn-points">+20积分</div>
-        </div>
-        <div class="earn-item" data-dom-id="earn-share">
-          <div class="earn-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-          </div>
-          <div class="earn-name">邀请好友</div>
-          <div class="earn-points">+100积分</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== POINTS MALL ===== -->
-  <section class="section">
-    <div class="section-header">
-      <div class="section-title">积分商城</div>
-      <div class="section-more">查看全部 ></div>
-    </div>
-    <div class="mall-grid">
-      <div class="mall-item" data-dom-id="mall-coupon-10">
-        <div class="mall-img">🎫</div>
-        <div class="mall-info">
-          <div class="mall-name">10元优惠券</div>
-          <div class="mall-points mono">500 <small>积分</small></div>
-        </div>
-      </div>
-      <div class="mall-item" data-dom-id="mall-coupon-20">
-        <div class="mall-img" style="background:linear-gradient(135deg,#fde68a,#fcd34d)">🎁</div>
-        <div class="mall-info">
-          <div class="mall-name">20元优惠券</div>
-          <div class="mall-points mono">1000 <small>积分</small></div>
-        </div>
-      </div>
-      <div class="mall-item" data-dom-id="mall-coupon-50">
-        <div class="mall-img" style="background:linear-gradient(135deg,#fecaca,#fca5a5)">💰</div>
-        <div class="mall-info">
-          <div class="mall-name">50元优惠券</div>
-          <div class="mall-points mono">2500 <small>积分</small></div>
-        </div>
-      </div>
-      <div class="mall-item" data-dom-id="mall-vip">
-        <div class="mall-img" style="background:linear-gradient(135deg,#ddd6fe,#c4b5fd)">👑</div>
-        <div class="mall-info">
-          <div class="mall-name">月卡会员</div>
-          <div class="mall-points mono">3000 <small>积分</small></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== RECORDS ===== -->
-  <section class="section">
-    <div class="section-header">
-      <div class="section-title">积分明细</div>
-    </div>
-    <div class="glass-card">
-      <div class="segmented-tabs">
-        <div class="seg-tab active">全部</div>
-        <div class="seg-tab">获取</div>
-        <div class="seg-tab">使用</div>
-      </div>
-      <div class="record-item">
-        <div class="record-icon plus">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M20 6 9 17l-5-5"/></svg>
-        </div>
-        <div class="record-info">
-          <div class="record-title">订单消费奖励</div>
-          <div class="record-time">2026-08-02 14:30</div>
-        </div>
-        <div class="record-points plus mono">+168</div>
-      </div>
-      <div class="record-item">
-        <div class="record-icon minus">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M3 7v10a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1Z"/></svg>
-        </div>
-        <div class="record-info">
-          <div class="record-title">兑换10元优惠券</div>
-          <div class="record-time">2026-08-01 09:15</div>
-        </div>
-        <div class="record-points minus mono">-500</div>
-      </div>
-      <div class="record-item">
-        <div class="record-icon plus">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-        </div>
-        <div class="record-info">
-          <div class="record-title">评价订单奖励</div>
-          <div class="record-time">2026-07-30 16:20</div>
-        </div>
-        <div class="record-points plus mono">+20</div>
-      </div>
-      <div class="record-item">
-        <div class="record-icon plus">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M20 6 9 17l-5-5"/></svg>
-        </div>
-        <div class="record-info">
-          <div class="record-title">每日签到</div>
-          <div class="record-time">2026-07-30 08:00</div>
-        </div>
-        <div class="record-points plus mono">+10</div>
-      </div>
-    </div>
-  </section>
-
-</div>
 </body>
 </html>

@@ -68,7 +68,7 @@
               <text class="info-main">已有 {{item.quotes || 0}} 位师傅报价</text>
               <text class="info-price">{{item.priceRange}}</text>
             </block>
-            <text class="info-main" wx:elif="{{item.status === 'serving'}}">{{item.workerName || '张师傅'}}正在服务</text>
+            <text class="info-main" wx:elif="{{item.status === 'serving'}}">{{item.workerName || '师傅'}}正在服务</text>
             <text class="info-main" wx:elif="{{item.status === 'completed'}}">服务已完成</text>
             <text class="info-main" wx:else>¥{{item.price}}</text>
           </view>

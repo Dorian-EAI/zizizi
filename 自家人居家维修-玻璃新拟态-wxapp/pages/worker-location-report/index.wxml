@@ -2,7 +2,7 @@
   完整复用 app.wxss 全局组件类：.nav-bar.worker / .location-report-bar / .location-info-card / .location-actions / .btn-arrive
 -->
 <view class="page">
-  <!-- 背景装饰光斑：blue-sage 径向渐变 -->
+  <!-- 背景装饰光斑：blue-gold 径向渐变 -->
   <view class="blob" style="top: -40px; right: -60px; width: 280px; height: 280px; background: radial-gradient(circle, var(--brand-worker) 0%, transparent 70%);"></view>
   <view class="blob" style="top: 360px; left: -80px; width: 240px; height: 240px; background: radial-gradient(circle, var(--sage) 0%, transparent 70%);"></view>
 
@@ -19,28 +19,30 @@
 
     <!-- ===== LOCATION REPORTING STATUS BAR (app.wxss .location-report-bar + .pulse) ===== -->
     <view class="location-report-bar" bindtap="onRetryReport">
-      <view class="pulse {{reporting ? '' : 'paused'}}"></view>
+      <view class="pulse report-dot {{reporting ? '' : 'paused'}}">
+        <view class="report-pulse" wx:if="{{reporting}}"></view>
+      </view>
       <text>{{reporting ? '位置上报中 · 每15秒更新' : (failCount > 0 ? '上报异常 · 点击重试' : '上报暂停')}}</text>
     </view>
 
     <!-- ===== CURRENT LOCATION INFO CARD (app.wxss .location-info-card) ===== -->
-    <view class="location-info-card">
-      <view class="loc-head">
-        <text class="loc-title">当前位置</text>
-        <text class="loc-coord">{{currentLat ? currentLat + ', ' + currentLng : '定位中...'}}</text>
+    <view class="location-info-card glass-neu-card">
+      <view class="loc-head location-info-head">
+        <text class="loc-title location-info-title">当前位置</text>
+        <text class="loc-coord location-coords">{{currentLat ? currentLat + ', ' + currentLng : '定位中...'}}</text>
       </view>
-      <view class="loc-address-row">
+      <view class="loc-address-row location-address-row">
         <image src="{{icons.location}}" mode="aspectFit" class="loc-address-icon" lazy-load="{{false}}" />
-        <text class="loc-address">{{order.address || '地址解析中...'}}</text>
+        <text class="loc-address location-address">{{order.address || '地址解析中...'}}</text>
       </view>
-      <view class="loc-update">
+      <view class="loc-update location-update">
         <image src="{{icons.clock}}" mode="aspectFit" class="loc-update-icon" lazy-load="{{false}}" />
         <text>最近上报：{{lastReportTime || '尚未上报'}}</text>
       </view>
     </view>
 
     <!-- ===== ORDER INFO CARD (page-specific) ===== -->
-    <view class="order-info-card">
+    <view class="order-info-card glass-neu-card">
       <text class="card-title">订单信息</text>
       <view class="order-info-list">
         <view class="order-info-row">
@@ -76,15 +78,17 @@
 
     <!-- ===== LOCATION ACTIONS (app.wxss .location-actions grid + .btn-arrive span 2) ===== -->
     <view class="location-actions">
-      <view class="btn-loc-secondary press-neu" bindtap="onCallCustomer">
-        <image src="{{icons.phone}}" mode="aspectFit" class="btn-loc-secondary-icon" lazy-load="{{false}}" />
-        <text>联系客户</text>
+      <view class="action-row">
+        <view class="btn-loc-secondary action-btn-secondary press-neu" bindtap="onCallCustomer">
+          <image src="{{icons.phone}}" mode="aspectFit" class="btn-loc-secondary-icon" lazy-load="{{false}}" />
+          <text>联系客户</text>
+        </view>
+        <view class="btn-loc-secondary action-btn-secondary press-neu" bindtap="onNavigate">
+          <image src="{{icons.navigate}}" mode="aspectFit" class="btn-loc-secondary-icon" lazy-load="{{false}}" />
+          <text>导航前往</text>
+        </view>
       </view>
-      <view class="btn-loc-secondary press-neu" bindtap="onNavigate">
-        <image src="{{icons.navigate}}" mode="aspectFit" class="btn-loc-secondary-icon" lazy-load="{{false}}" />
-        <text>导航前往</text>
-      </view>
-      <view class="btn-arrive press-neu" bindtap="onArrive">
+      <view class="btn-arrive action-btn-primary press-neu" bindtap="onArrive">
         <image src="{{icons.check}}" mode="aspectFit" class="btn-arrive-icon" lazy-load="{{false}}" />
         <text>我已到达</text>
       </view>

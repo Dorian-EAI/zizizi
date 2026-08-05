@@ -1,0 +1,71 @@
+<view class="phone-page design-detail-page" data-dom-id="page-client-annual-card-record">
+    <view class="status-bar"><text class="tag-span">9:41</text><text class="status-icons tag-span">● ◒ ▰</text></view>
+    <view class="topbar">
+      <view class="icon-button design-button" data-dom-id="annual-record-back" bindtap="onBack"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m15%2018-6-6%206-6M9%2012h10%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view>
+      <view class="tag-h1">使用记录</view><text class="tag-span"></text>
+    </view>
+    <view class="page-body">
+      <!-- Loading state -->
+      <view class="loading-state" wx:if="{{loading}}">
+        <view class="notice info tag-p">加载中...</view>
+      </view>
+
+      <!-- No card state -->
+      <block wx:elif="{{!hasCard}}">
+        <view class="hero">
+          <view class="hero-kicker tag-p">家庭年卡</view>
+          <view class="tag-h2">暂无年卡</view>
+          <view class="tag-p">您还没有购买家庭年卡</view>
+        </view>
+        <view class="notice info tag-p">购买年卡后即可享受服务抵扣权益</view>
+      </block>
+
+      <!-- Has card -->
+      <block wx:else>
+        <view class="hero">
+          <view class="hero-kicker tag-p">家庭年卡 · {{cardStatus}}</view>
+          <view class="tag-h2">{{cardName}}</view>
+          <view class="tag-p">已使用 {{usedCount}} / {{totalCount}} 次 · 剩余 {{remainingCount}} 次</view>
+          <view class="progress-bar">
+            <view class="progress-fill" style="width: {{progress}}%;"></view>
+            <text class="progress-text tag-small">{{progress}}%</text>
+          </view>
+          <view class="tag-p">有效期至 {{expireDate}}</view>
+        </view>
+
+        <!-- No records state -->
+        <block wx:if="{{!hasRecords}}">
+          <view class="notice info tag-p">暂无使用记录</view>
+          <view class="notice info tag-p">使用年卡服务后，记录会显示在这里</view>
+        </block>
+
+        <!-- Records grouped by month -->
+        <block wx:for="{{usageGroups}}" wx:for-item="group" wx:key="key">
+          <view class="section">
+            <view class="section-title"><text class="tag-strong">{{group.label}}</text><text class="tag-span">共抵扣 ¥{{group.totalDeduction}}</text></view>
+            <view class="card list-card">
+              <view class="list-row design-button"
+                    wx:for="{{group.records}}"
+                    wx:for-item="record"
+                    wx:key="id"
+                    data-orderid="{{record.orderId}}"
+                    bindtap="onRecordTap">
+                <text class="row-icon tag-span">{{record.icon}}</text>
+                <text class="row-main tag-span">
+                  <text class="row-title tag-b">{{record.title}}</text>
+                  <text class="row-copy tag-small">#{{record.orderNo}} · {{record.timeText}}</text>
+                </text>
+                <text class="row-value tag-span">
+                  <text class="badge {{record.statusTone}} tag-span">{{record.statusText}}</text>
+                  <text class="design-br"></text>
+                  <text class="tag-small">{{record.amountText}}</text>
+                </text>
+              </view>
+            </view>
+          </view>
+        </block>
+
+        <view class="notice info tag-p">点击记录可查看对应订单详情</view>
+      </block>
+    </view>
+  </view>

@@ -1,9 +1,22 @@
 // utils/format.js — 格式化工具
 
+function parseServerTime(value) {
+  if (value instanceof Date) return value
+  if (typeof value === 'string') {
+    const text = value.trim()
+    // 后端 DateTime 按 UTC 存储；旧响应为无时区 ISO，显式补 Z 避免少 8 小时。
+    if (/^\d{4}-\d{2}-\d{2}[T ]\d{2}:\d{2}/.test(text) && !/(?:Z|[+-]\d{2}:?\d{2})$/i.test(text)) {
+      return new Date(text.replace(' ', 'T') + 'Z')
+    }
+  }
+  return new Date(value)
+}
+
 // 时间格式化
 function formatTime(date, fmt) {
   if (!date) date = new Date()
-  if (typeof date === 'number' || typeof date === 'string') date = new Date(date)
+  if (typeof date === 'number' || typeof date === 'string') date = parseServerTime(date)
+  if (!(date instanceof Date) || Number.isNaN(date.getTime())) return ''
   const o = {
     'M+': date.getMonth() + 1,
     'D+': date.getDate(),
@@ -25,7 +38,9 @@ function formatTime(date, fmt) {
 // 相对时间
 function timeAgo(timestamp) {
   const now = Date.now()
-  const diff = now - new Date(timestamp).getTime()
+  const parsed = parseServerTime(timestamp)
+  if (Number.isNaN(parsed.getTime())) return ''
+  const diff = now - parsed.getTime()
   const minute = 60 * 1000
   const hour = 60 * minute
   const day = 24 * hour
@@ -78,5 +93,6 @@ module.exports = {
   formatMoney,
   formatDistance,
   maskPhone,
-  greeting
+  greeting,
+  parseServerTime
 }

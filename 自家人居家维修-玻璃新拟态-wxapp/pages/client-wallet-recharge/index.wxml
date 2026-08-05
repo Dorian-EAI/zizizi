@@ -1,0 +1,20 @@
+<view class="phone-page design-detail-page" data-page-id="page-client-wallet-recharge">
+  <view class="status-bar"><text class="tag-span">9:41</text><text class="status-icons tag-span">● WiFi 100%</text></view>
+  <view class="topbar"><view class="icon-button design-button" data-route="/pages/client-wallet/index" bindtap="onNavigate"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m15%2018-6-6%206-6M9%2012h10%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view><view class="tag-h1">钱包充值</view><text class="tag-span"></text></view>
+  <view class="page-body">
+    <view class="hero"><view class="hero-kicker tag-p">当前余额</view><view class="hero-number">¥ {{balanceText}}</view><view class="tag-p">充值资金仅用于平台订单支付，可在收支明细中查看结果。</view></view>
+    <view class="section-title"><text class="tag-strong">充值状态</text><text class="badge {{statusTone}} tag-span">{{statusText}}</text></view>
+    <view class="section">
+      <view class="section-title"><text class="tag-strong">选择充值金额</text><text class="tag-span">人民币</text></view>
+      <view class="grid-3">
+        <view class="card metric design-button {{selectedAmount === 100 && !customAmount ? 'is-selected' : ''}}" data-amount="100" bindtap="onSelectAmount"><text class="tag-strong">¥100</text><text class="tag-span">到账 100</text></view>
+        <view class="card metric design-button {{selectedAmount === 300 && !customAmount ? 'is-selected' : ''}}" data-amount="300" bindtap="onSelectAmount"><text class="tag-strong">¥300</text><text class="tag-span">到账 300</text></view>
+        <view class="card metric design-button {{selectedAmount === 500 && !customAmount ? 'is-selected' : ''}}" data-amount="500" bindtap="onSelectAmount"><text class="tag-strong">¥500</text><text class="tag-span">到账 500</text></view>
+      </view>
+    </view>
+    <view class="section"><view class="field"><text class="tag-label">自定义金额</text><input class="input" type="digit" value="{{customAmount}}" disabled="{{!!paymentNo}}" maxlength="8" placeholder="请输入 1–5,000 元" bindinput="onCustomAmount" /></view></view>
+    <view class="section"><view class="section-title"><text class="tag-strong">支付方式</text><text class="badge success tag-span">可用</text></view><view class="card list-card"><view class="list-row"><view class="row-icon tag-span"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%235B8C5A%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20aria-hidden%3D%22true%22%3E%3Cpath%20d%3D%22M9.5%205C5.9%205%203%207.4%203%2010.3c0%201.6.9%203%202.3%204L4.7%2017l3-1.5c.6.1%201.2.2%201.8.2%203.6%200%206.5-2.4%206.5-5.4S13.1%205%209.5%205Z%22%2F%3E%3Cpath%20d%3D%22M14.5%209c3.6%200%206.5%202.3%206.5%205.2%200%201.5-.8%202.9-2.1%203.9l.5%202.4-2.7-1.3c-.7.2-1.4.3-2.2.3-2.7%200-5-1.3-6-3.3M7.5%209h.01M11.5%209h.01M14%2013h.01M18%2013h.01%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view><view class="row-main"><view class="row-title">微信支付</view><view class="row-copy">支付结果以服务端验签回调为准</view></view><text class="badge success tag-span">已选</text></view></view></view>
+    <view class="notice">支付中请勿重复提交。返回前台后系统会查询原交易并更新余额。</view>
+  </view>
+  <view class="fixed-actions"><view class="btn primary design-button {{submitting || checking ? 'is-disabled' : ''}}" bindtap="onSubmit">{{checking ? '查询支付结果…' : (paymentNo ? '刷新上笔充值结果' : '确认充值 ¥' + selectedAmount)}}</view></view>
+</view>

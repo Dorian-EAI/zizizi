@@ -4,13 +4,554 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>自家人居家维修 · 玻璃新拟态 · 在线客服</title>
-    <link rel="stylesheet" href="../assets/fonts.css">
+    <style id="theme-vars">
+/* 自家人居家维修 - 玻璃新拟态 */
+:root {
+  /* Brand - Client (Teal) */
+  --brand: #0D9488;
+  --brand-dark: #0A7A70;
+  --brand-mid: #14B8A6;
+  --brand-light: #CCFBF1;
+  --brand-glow: rgba(13, 148, 136, 0.24);
+  --brand-subtle: rgba(13, 148, 136, 0.10);
+
+  /* Accent (Amber) */
+  --accent: #D4944C;
+  --accent-dark: #A0723C;
+  --accent-mid: #E8C088;
+  --accent-light: #F5E6D0;
+  --accent-glow: rgba(212, 148, 76, 0.20);
+
+  /* Background */
+  --background: #F2EDE8;
+  --foreground: #2C2824;
+  --body-bg: #E8E4DF;
+  --bg-elevated: #F7F3EF;
+
+  /* Neumorphic */
+  --neu-light: #FFF8F2;
+  --neu-dark: #DDD6CE;
+  --neu-highlight: rgba(255, 255, 255, 0.55);
+
+  /* Surface & Card */
+  --card: rgba(255, 255, 255, 0.52);
+  --card-foreground: #2C2824;
+  --popover: #fff;
+  --popover-foreground: #2C2824;
+
+  /* Muted */
+  --muted: #F7F3EF;
+  --muted-foreground: #8B8178;
+
+  /* Border & Input */
+  --border: rgba(44, 40, 36, 0.06);
+  --input: rgba(44, 40, 36, 0.06);
+  --ring: #0D9488;
+
+  /* Primary */
+  --primary: #0D9488;
+  --primary-foreground: #ffffff;
+
+  /* Semantic aliases */
+  --state-success: #5B8C5A;
+  --state-warning: #D4944C;
+  --state-error: #C4533A;
+  --state-info: #5A8FAD;
+
+  /* Text */
+  --text-1: #2C2824;
+  --text-2: #8B8178;
+  --text-3: #B5ADA5;
+  --text-inverse: #ffffff;
+
+  /* Sep & Fill */
+  --sep: rgba(44, 40, 36, 0.06);
+  --fill: rgba(44, 40, 36, 0.04);
+
+  /* Green/Red/Orange/Blue semantic */
+  --green: #5B8C5A;
+  --red: #C4533A;
+  --orange: #D4944C;
+  --blue: #5A8FAD;
+
+  /* Radius */
+  --radius-sm: 0.75rem;
+  --radius-md: 1.2rem;
+  --radius-lg: 1.6rem;
+  --radius-full: 9999px;
+
+  /* Font — unified serif system */
+  --font-display: 'Cormorant Garamond', 'Noto Serif SC', 'STSong', Georgia, serif;
+  --font-body:    'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --font-nums:    'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
+  --font:         var(--font-body);
+
+  /* Motion */
+  --spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --dur: 0.2s;
+
+  /* Glass */
+  --glass-bg: rgba(255, 255, 255, 0.18);
+  --glass-blur: blur(12px) saturate(140%);
+  --glass-border: rgba(255, 255, 255, 0.60);
+
+  /* Surface presets for glass-neumorphic components */
+  --surface-1: rgba(255, 255, 255, 0.50);
+  --surface-2: rgba(255, 255, 255, 0.45);
+
+  /* Neumorphic shadow presets */
+  --neu-out-sm: 6px 6px 14px var(--neu-dark), -6px -6px 14px var(--neu-light), 0 4px 16px rgba(0, 0, 0, 0.04);
+  --neu-out-md: 8px 8px 18px var(--neu-dark), -8px -8px 18px var(--neu-light), 0 6px 24px rgba(0, 0, 0, 0.05);
+  --neu-out-lg: 10px 10px 24px var(--neu-dark), -10px -10px 24px var(--neu-light), 0 8px 32px rgba(0, 0, 0, 0.06);
+  --neu-in: inset 4px 4px 8px var(--neu-dark), inset -4px -4px 8px var(--neu-light);
+  --neu-in-deep: inset 5px 5px 10px var(--neu-dark), inset -5px -5px 10px var(--neu-light);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-full: var(--radius-full);
+}
+
+/* Semantic token fallback */
+#semantic-token-fallback {
+  --brand-background: var(--background);
+  --brand-foreground: var(--foreground);
+  --brand-card: var(--card);
+  --brand-card-foreground: var(--card-foreground);
+  --brand-popover: var(--popover);
+  --brand-popover-foreground: var(--popover-foreground);
+  --brand-primary: var(--primary);
+  --brand-primary-foreground: var(--primary-foreground);
+  --brand-muted: var(--muted);
+  --brand-muted-foreground: var(--muted-foreground);
+  --brand-border: var(--border);
+  --brand-input: var(--input);
+  --brand-ring: var(--ring);
+  --brand-radius-sm: var(--radius-sm);
+  --brand-radius-md: var(--radius-md);
+  --brand-radius-lg: var(--radius-lg);
+}
+
+/* ===== Global Neumorphic Components ===== */
+/* Tab Bar — Premium Liquid Glass, absolute-positioned within .phone frame */
+.tab-bar{
+  position:absolute;
+  bottom:10px;
+  left:50%;
+  transform:translateX(-50%);
+  width:calc(100% - 32px);
+  max-width:360px;
+  height:56px;
+  z-index:100;
+  background:rgba(255,255,255,0.18);
+  backdrop-filter:blur(48px) saturate(210%);
+  -webkit-backdrop-filter:blur(48px) saturate(210%);
+  border:0.5px solid rgba(255,255,255,0.45);
+  border-radius:24px;
+  box-shadow:
+    inset 0 1.5px 3px rgba(255,255,255,0.60),
+    inset 0 -0.5px 1px rgba(255,255,255,0.20),
+    0 0 0 0.5px rgba(0,0,0,0.04),
+    0 2px 10px rgba(0,0,0,0.06),
+    0 12px 36px rgba(0,0,0,0.08);
+  display:flex;
+  align-items:center;
+  justify-content:space-around;
+  padding:0 6px;
+}
+.tab-bar::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  background:linear-gradient(160deg,
+    rgba(255,255,255,0.42) 0%,
+    rgba(255,255,255,0.16) 20%,
+    rgba(255,255,255,0.03) 40%,
+    transparent 60%);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
+  padding:0.5px;
+  pointer-events:none;
+  z-index:1;
+}
+.tab-bar::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  background:linear-gradient(320deg,
+    transparent 60%,
+    rgba(13,148,136,0.06) 80%,
+    rgba(255,255,255,0.04) 100%);
+  pointer-events:none;
+  z-index:1;
+}
+.tab-item{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+  width:68px;
+  height:44px;
+  border-radius:14px;
+  color:var(--text-3);
+  font-size:11px;
+  font-weight:500;
+  text-decoration:none;
+  position:relative;
+  transition:all .2s;
+}
+.tab-item svg{
+  width:20px;
+  height:20px;
+  stroke:currentColor;
+  fill:none;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.tab-item[data-active="true"]{
+  color:var(--brand);
+  font-weight:600;
+}
+.tab-item[data-active="true"]::before{
+  content:"";
+  position:absolute;
+  width:54px;
+  height:42px;
+  border-radius:16px;
+  background:rgba(13,148,136,0.16);
+  backdrop-filter:blur(24px);
+  -webkit-backdrop-filter:blur(24px);
+  border:0.5px solid rgba(13,148,136,0.30);
+  box-shadow:
+    inset 0 1px 3px rgba(255,255,255,0.55),
+    inset 0 -0.5px 1px rgba(255,255,255,0.15),
+    0 2px 10px rgba(13,148,136,0.20),
+    0 0 0 0.5px rgba(13,148,136,0.08);
+  z-index:0;
+}
+.tab-item[data-active="true"] svg{
+  transform:scale(1.08);
+  position:relative;
+  z-index:1;
+}
+
+/* Buttons */
+.btn-neu-primary{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:var(--brand);color:var(--text-inverse);
+  border:none;border-radius:9999px;
+  padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
+  cursor:pointer;
+  box-shadow:var(--neu-out-sm),0 2px 8px var(--brand-glow);
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
+.btn-neu-primary:active{box-shadow:var(--neu-in);transform:scale(0.94)}
+
+.btn-neu-secondary{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,0.50);color:var(--brand);
+  border:0.5px solid rgba(255,255,255,0.60);border-radius:9999px;
+  padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
+  cursor:pointer;
+  box-shadow:var(--neu-out-sm);
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
+.btn-neu-secondary:active{box-shadow:var(--neu-in);transform:scale(0.94)}
+
+.btn-neu-ghost{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:transparent;color:var(--text-2);
+  border:0.5px solid var(--border);border-radius:9999px;
+  padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
+  cursor:pointer;
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease),color var(--dur) var(--ease);
+}
+.btn-neu-ghost:active{transform:scale(0.94);color:var(--brand)}
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-accent: var(--accent);
+    --radius-sm: var(--radius-sm);
+    --radius-md: var(--radius-md);
+    --radius-lg: var(--radius-lg);
+    --radius-full: var(--radius-full);
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+    <style id="semantic-token-fallback">
+      .bg-background { background-color: var(--background); }
+      .text-background { color: var(--background); }
+      .border-background { border-color: var(--background); }
+      .ring-background { --tw-ring-color: var(--background); }
+      .bg-foreground { background-color: var(--foreground); }
+      .text-foreground { color: var(--foreground); }
+      .border-foreground { border-color: var(--foreground); }
+      .ring-foreground { --tw-ring-color: var(--foreground); }
+      .bg-card { background-color: var(--card); }
+      .text-card { color: var(--card); }
+      .border-card { border-color: var(--card); }
+      .ring-card { --tw-ring-color: var(--card); }
+      .bg-card-foreground { background-color: var(--card-foreground); }
+      .text-card-foreground { color: var(--card-foreground); }
+      .border-card-foreground { border-color: var(--card-foreground); }
+      .ring-card-foreground { --tw-ring-color: var(--card-foreground); }
+      .bg-popover { background-color: var(--popover); }
+      .text-popover { color: var(--popover); }
+      .border-popover { border-color: var(--popover); }
+      .ring-popover { --tw-ring-color: var(--popover); }
+      .bg-popover-foreground { background-color: var(--popover-foreground); }
+      .text-popover-foreground { color: var(--popover-foreground); }
+      .border-popover-foreground { border-color: var(--popover-foreground); }
+      .ring-popover-foreground { --tw-ring-color: var(--popover-foreground); }
+      .bg-primary { background-color: var(--primary); }
+      .text-primary { color: var(--primary); }
+      .border-primary { border-color: var(--primary); }
+      .ring-primary { --tw-ring-color: var(--primary); }
+      .bg-primary-foreground { background-color: var(--primary-foreground); }
+      .text-primary-foreground { color: var(--primary-foreground); }
+      .border-primary-foreground { border-color: var(--primary-foreground); }
+      .ring-primary-foreground { --tw-ring-color: var(--primary-foreground); }
+      .bg-muted { background-color: var(--muted); }
+      .text-muted { color: var(--muted); }
+      .border-muted { border-color: var(--muted); }
+      .ring-muted { --tw-ring-color: var(--muted); }
+      .bg-muted-foreground { background-color: var(--muted-foreground); }
+      .text-muted-foreground { color: var(--muted-foreground); }
+      .border-muted-foreground { border-color: var(--muted-foreground); }
+      .ring-muted-foreground { --tw-ring-color: var(--muted-foreground); }
+      .bg-border { background-color: var(--border); }
+      .text-border { color: var(--border); }
+      .border-border { border-color: var(--border); }
+      .ring-border { --tw-ring-color: var(--border); }
+      .bg-input { background-color: var(--input); }
+      .text-input { color: var(--input); }
+      .border-input { border-color: var(--input); }
+      .ring-input { --tw-ring-color: var(--input); }
+      .bg-ring { background-color: var(--ring); }
+      .text-ring { color: var(--ring); }
+      .border-ring { border-color: var(--ring); }
+      .ring-ring { --tw-ring-color: var(--ring); }
+      .bg-accent { background-color: var(--accent); }
+      .text-accent { color: var(--accent); }
+      .border-accent { border-color: var(--accent); }
+      .ring-accent { --tw-ring-color: var(--accent); }
+    </style>
+    <style>
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      [data-icon] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        background-color: currentColor;
+      }
+    </style>
+</head>
+<body>
+<div class="phone" data-dom-id="page-client-customer-service">
+
+  <!-- ===== TOP NAV ===== -->
+  <header class="nav-bar">
+    <button class="nav-icon-btn" data-dom-id="back-btn" data-target-page="page-client-service" aria-label="返回">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="m15 18-6-6 6-6"/></svg>
+    </button>
+    <div class="nav-title-area">
+      <div class="nav-title">在线客服</div>
+      <div class="nav-status">
+        <span class="status-dot"></span>
+        人工客服 · 小佳 · 在线
+      </div>
+    </div>
+    <button class="nav-icon-btn" data-dom-id="more-btn" data-action="open-customer-service-menu" aria-label="更多">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+    </button>
+  </header>
+
+  <!-- ===== CHAT AREA ===== -->
+  <div class="chat-area">
+
+    <div class="chat-date">今天 10:30</div>
+
+    <!-- Service greeting -->
+    <div class="msg-row service" data-dom-id="msg-greeting">
+      <div class="msg-avatar service">佳</div>
+      <div class="msg-content">
+        <div class="msg-bubble">
+          您好！我是客服小佳，很高兴为您服务 👋<br><br>
+          请问有什么可以帮您的？
+        </div>
+        <div class="msg-time">10:30</div>
+        <div class="quick-replies">
+          <div class="quick-reply" data-dom-id="quick-reply-order" data-action="send-quick-reply">订单咨询</div>
+          <div class="quick-reply" data-dom-id="quick-reply-refund" data-action="send-quick-reply">退款申请</div>
+          <div class="quick-reply" data-dom-id="quick-reply-complaint" data-action="send-quick-reply">投诉建议</div>
+          <div class="quick-reply" data-dom-id="quick-reply-other" data-action="send-quick-reply">其他问题</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- User message -->
+    <div class="msg-row user" data-dom-id="msg-user-1">
+      <div class="msg-avatar user">我</div>
+      <div class="msg-content">
+        <div class="msg-bubble">我想咨询一下我昨天的订单进度</div>
+        <div class="msg-time">10:31</div>
+      </div>
+    </div>
+
+    <!-- Service reply with order card -->
+    <div class="msg-row service" data-dom-id="msg-order-info">
+      <div class="msg-avatar service">佳</div>
+      <div class="msg-content">
+        <div class="msg-bubble">
+          好的，这是您最近的订单：
+        </div>
+        <div class="order-card" data-dom-id="order-card-in-chat" data-target-page="page-client-order-detail">
+          <div class="order-card-title">ZJR202608020001 · 水管维修</div>
+          <div class="order-card-desc">张师傅 · 已接单，待出发</div>
+          <div class="order-card-price mono">&yen;158.00</div>
+        </div>
+        <div class="msg-time">10:31</div>
+      </div>
+    </div>
+
+    <!-- Service follow up -->
+    <div class="msg-row service" data-dom-id="msg-followup">
+      <div class="msg-avatar service">佳</div>
+      <div class="msg-content">
+        <div class="msg-bubble">
+          您的订单目前状态是「已接单」，师傅预计今天下午14:00上门。<br><br>
+          需要帮您催促师傅提前出发，或者有其他问题吗？
+        </div>
+        <div class="msg-time">10:32</div>
+        <div class="quick-replies">
+          <div class="quick-reply" data-dom-id="quick-reply-urge" data-action="send-quick-reply">催促一下</div>
+          <div class="quick-reply" data-dom-id="quick-reply-reschedule" data-action="send-quick-reply">改时间</div>
+          <div class="quick-reply" data-dom-id="quick-reply-cancel" data-action="send-quick-reply">取消订单</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- User message -->
+    <div class="msg-row user" data-dom-id="msg-user-2">
+      <div class="msg-avatar user">我</div>
+      <div class="msg-content">
+        <div class="msg-bubble">好的，那就帮我催促一下吧，谢谢</div>
+        <div class="msg-time">10:33</div>
+      </div>
+    </div>
+
+    <!-- Service reply -->
+    <div class="msg-row service" data-dom-id="msg-confirm">
+      <div class="msg-avatar service">佳</div>
+      <div class="msg-content">
+        <div class="msg-bubble">
+          好的，已经帮您通知师傅尽快出发啦 ✅<br><br>
+          师傅出发后您会收到消息通知，也可以在订单详情页实时查看师傅位置哦～
+        </div>
+        <div class="msg-time">10:33</div>
+      </div>
+    </div>
+
+    <!-- Service satisfaction -->
+    <div class="msg-row service" data-dom-id="msg-satisfaction">
+      <div class="msg-avatar service">佳</div>
+      <div class="msg-content">
+        <div class="msg-bubble">
+          请问对本次服务满意吗？请为我的服务打分吧 ⭐
+        </div>
+        <div class="quick-replies">
+          <div class="quick-reply" data-dom-id="service-rating-great" data-action="rate-customer-service">😀 非常满意</div>
+          <div class="quick-reply" data-dom-id="service-rating-good" data-action="rate-customer-service">🙂 满意</div>
+          <div class="quick-reply" data-dom-id="service-rating-average" data-action="rate-customer-service">😐 一般</div>
+          <div class="quick-reply" data-dom-id="service-rating-poor" data-action="rate-customer-service">😞 不满意</div>
+        </div>
+        <div class="msg-time">10:33</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ===== INPUT BAR ===== -->
+  <div class="input-bar">
+    <div class="input-row">
+      <div class="input-actions">
+        <div class="input-action-btn" data-dom-id="btn-voice" data-action="start-customer-service-voice-input">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
+        </div>
+      </div>
+      <div class="input-wrapper">
+        <input type="text" class="chat-input" placeholder="请描述需要平台协助的问题" data-dom-id="chat-input" data-action="input-customer-service-message">
+        <button class="send-btn" data-dom-id="send-btn" data-action="send-customer-service-message">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+        </button>
+      </div>
+      <div class="input-actions">
+        <div class="input-action-btn" data-dom-id="btn-emoji" data-action="open-emoji-picker">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+        </div>
+        <div class="input-action-btn" data-dom-id="btn-plus" data-action="open-message-attachment-menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
     <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{
   --brand:#0D9488;--brand-dark:#0A7A70;--brand-mid:#14B8A6;--brand-light:#CCFBF1;
-  --brand-glow:rgba(13,148,136,0.28);--brand-subtle:rgba(13,148,136,0.08);
-  --brand-gradient:linear-gradient(135deg,#0D9488 0%,#14B8A6 50%,#D4944C 100%);
+  --brand-glow:rgba(13,148,136,0.18);--brand-subtle:rgba(13,148,136,0.08);
+  --brand-gradient:linear-gradient(135deg,#0D9488 0%,#14B8A6 48%,#D4944C 100%);
   --accent:#D4944C;--accent-dark:#A0723C;--accent-light:#F5E6D0;
   --bg:#F2EDE8;--bg-elevated:#F7F3EF;
   --neu-light:#FFF8F2;--neu-dark:#DDD6CE;
@@ -30,10 +571,10 @@
 html,body{font-family:var(--font);color:var(--text-1);-webkit-font-smoothing:antialiased}
 body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh;background:#E8E4DF;letter-spacing:-0.01em}
 
-.phone{position:relative;width:414px;min-height:896px;background:var(--bg);border-radius:48px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.12),0 4px 16px rgba(0,0,0,.06)}
+.phone{position:relative;width:min(375px,100vw);height:900px;min-height:900px;background:var(--bg);border-radius:48px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.12),0 4px 16px rgba(0,0,0,.06)}
 
 /* ===== Top Nav ===== */
-.nav-bar{background:radial-gradient(ellipse 220px 160px at 78% 45%,rgba(212,148,76,.14) 0%,transparent 70%),radial-gradient(ellipse 180px 140px at 18% 75%,rgba(13,148,136,.16) 0%,transparent 70%),linear-gradient(135deg,rgba(13,148,136,.14) 0%,rgba(212,148,76,.08) 50%,rgba(13,148,136,.06) 100%);position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:14px 20px;padding-top:max(14px,env(safe-area-inset-top));border-radius:0 0 24px 24px;overflow:hidden;flex-shrink:0}
+.nav-bar{background:radial-gradient(ellipse 220px 160px at 78% 45%,rgba(212,148,76,.10) 0%,transparent 70%),radial-gradient(ellipse 180px 140px at 18% 75%,rgba(13,148,136,.10) 0%,transparent 70%),linear-gradient(135deg,rgba(13,148,136,.08) 0%,rgba(212,148,76,.06) 50%,rgba(13,148,136,.05) 100%);position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:14px 20px;padding-top:max(14px,env(safe-area-inset-top));border-radius:0 0 24px 24px;overflow:hidden;flex-shrink:0}
 .nav-icon-btn{width:40px;height:40px;border-radius:50%;border:none;background:var(--bg-elevated);box-shadow:var(--neu-out-sm),inset 0 1px 1px rgba(255,255,255,0.45);display:flex;align-items:center;justify-content:center;color:var(--text-1);cursor:pointer;flex-shrink:0;transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease)}
 .nav-icon-btn:active{box-shadow:var(--neu-in);transform:scale(0.94)}
 .nav-title-area{text-align:center}
@@ -92,157 +633,5 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
 .service-menu-item:active .service-menu-icon{box-shadow:var(--neu-in);transform:scale(0.92)}
 .service-menu-name{font-size:11px;color:var(--text-2)}
     </style>
-</head>
-<body>
-<div class="phone" data-dom-id="page-customer-service">
-
-  <!-- ===== TOP NAV ===== -->
-  <header class="nav-bar">
-    <button class="nav-icon-btn" data-dom-id="back-btn" aria-label="返回">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="m15 18-6-6 6-6"/></svg>
-    </button>
-    <div class="nav-title-area">
-      <div class="nav-title">在线客服</div>
-      <div class="nav-status">
-        <span class="status-dot"></span>
-        客服小佳 · 在线
-      </div>
-    </div>
-    <button class="nav-icon-btn" data-dom-id="more-btn" aria-label="更多">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
-    </button>
-  </header>
-
-  <!-- ===== CHAT AREA ===== -->
-  <div class="chat-area">
-
-    <div class="chat-date">今天 10:30</div>
-
-    <!-- Service greeting -->
-    <div class="msg-row service" data-dom-id="msg-greeting">
-      <div class="msg-avatar service">佳</div>
-      <div class="msg-content">
-        <div class="msg-bubble">
-          您好！我是客服小佳，很高兴为您服务 👋<br><br>
-          请问有什么可以帮您的？
-        </div>
-        <div class="msg-time">10:30</div>
-        <div class="quick-replies">
-          <div class="quick-reply">订单咨询</div>
-          <div class="quick-reply">退款申请</div>
-          <div class="quick-reply">投诉建议</div>
-          <div class="quick-reply">其他问题</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- User message -->
-    <div class="msg-row user" data-dom-id="msg-user-1">
-      <div class="msg-avatar user">我</div>
-      <div class="msg-content">
-        <div class="msg-bubble">我想咨询一下我昨天的订单进度</div>
-        <div class="msg-time">10:31</div>
-      </div>
-    </div>
-
-    <!-- Service reply with order card -->
-    <div class="msg-row service" data-dom-id="msg-order-info">
-      <div class="msg-avatar service">佳</div>
-      <div class="msg-content">
-        <div class="msg-bubble">
-          好的，这是您最近的订单：
-        </div>
-        <div class="order-card" data-dom-id="order-card-in-chat">
-          <div class="order-card-title">ZJR202608020001 · 水管维修</div>
-          <div class="order-card-desc">张师傅 · 已接单，待出发</div>
-          <div class="order-card-price mono">&yen;158.00</div>
-        </div>
-        <div class="msg-time">10:31</div>
-      </div>
-    </div>
-
-    <!-- Service follow up -->
-    <div class="msg-row service" data-dom-id="msg-followup">
-      <div class="msg-avatar service">佳</div>
-      <div class="msg-content">
-        <div class="msg-bubble">
-          您的订单目前状态是「已接单」，师傅预计今天下午14:00上门。<br><br>
-          需要帮您催促师傅提前出发，或者有其他问题吗？
-        </div>
-        <div class="msg-time">10:32</div>
-        <div class="quick-replies">
-          <div class="quick-reply">催促一下</div>
-          <div class="quick-reply">改时间</div>
-          <div class="quick-reply">取消订单</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- User message -->
-    <div class="msg-row user" data-dom-id="msg-user-2">
-      <div class="msg-avatar user">我</div>
-      <div class="msg-content">
-        <div class="msg-bubble">好的，那就帮我催促一下吧，谢谢</div>
-        <div class="msg-time">10:33</div>
-      </div>
-    </div>
-
-    <!-- Service reply -->
-    <div class="msg-row service" data-dom-id="msg-confirm">
-      <div class="msg-avatar service">佳</div>
-      <div class="msg-content">
-        <div class="msg-bubble">
-          好的，已经帮您通知师傅尽快出发啦 ✅<br><br>
-          师傅出发后您会收到消息通知，也可以在订单详情页实时查看师傅位置哦～
-        </div>
-        <div class="msg-time">10:33</div>
-      </div>
-    </div>
-
-    <!-- Service satisfaction -->
-    <div class="msg-row service" data-dom-id="msg-satisfaction">
-      <div class="msg-avatar service">佳</div>
-      <div class="msg-content">
-        <div class="msg-bubble">
-          请问对本次服务满意吗？请为我的服务打分吧 ⭐
-        </div>
-        <div class="quick-replies">
-          <div class="quick-reply">😀 非常满意</div>
-          <div class="quick-reply">🙂 满意</div>
-          <div class="quick-reply">😐 一般</div>
-          <div class="quick-reply">😞 不满意</div>
-        </div>
-        <div class="msg-time">10:33</div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- ===== INPUT BAR ===== -->
-  <div class="input-bar">
-    <div class="input-row">
-      <div class="input-actions">
-        <div class="input-action-btn" data-dom-id="btn-voice">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
-        </div>
-      </div>
-      <div class="input-wrapper">
-        <input type="text" class="chat-input" placeholder="请输入您的问题..." data-dom-id="chat-input">
-        <button class="send-btn" data-dom-id="send-btn">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
-        </button>
-      </div>
-      <div class="input-actions">
-        <div class="input-action-btn" data-dom-id="btn-emoji">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
-        </div>
-        <div class="input-action-btn" data-dom-id="btn-plus">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        </div>
-      </div>
-    </div>
-  </div>
-
-</div>
 </body>
 </html>

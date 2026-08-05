@@ -2,6 +2,47 @@
 const app = getApp()
 const { buildIcon, COLORS } = require('../../utils/icons')
 
+const MENU_TONES_BY_KEY = {
+  member: 'blue',
+  address: 'purple',
+  coupon: 'amber',
+  wallet: 'teal',
+  favorites: 'red',
+  invoice: 'green',
+  notifications: 'red',
+  security: 'green',
+  privacy: 'gray',
+  service: 'cyan',
+  feedback: 'slate',
+  settings: 'blue',
+  about: 'blue'
+}
+
+const MENU_TONE_COLORS = {
+  amber: COLORS.orange,
+  blue: COLORS.blue,
+  cyan: COLORS.blue,
+  gray: COLORS.text2,
+  green: COLORS.green,
+  purple: '#5856D6',
+  red: COLORS.red,
+  slate: COLORS.text2,
+  teal: COLORS.brand
+}
+
+function decorateMenuSections(sections) {
+  return sections.map(section => ({
+    id: section.id,
+    items: section.items.map(item => {
+      const tone = item.tone || MENU_TONES_BY_KEY[item.key] || 'teal'
+      return Object.assign({}, item, {
+        tone,
+        iconUrl: buildIcon(item.icon, MENU_TONE_COLORS[tone] || COLORS.brand)
+      })
+    })
+  }))
+}
+
 Page({
   data: {
     statusBarHeight: 20,
@@ -19,7 +60,7 @@ Page({
         items: [
           { key: 'member',    label: '会员中心',   icon: 'award',    color: '#0D9488', route: '/pages/client-member/index' },
           { key: 'address',   label: '我的地址',   icon: 'location', color: '#5A8FAD', route: '/pages/address/index' },
-          { key: 'coupon',    label: '优惠券',     icon: 'coupon',   color: '#8B5CF6', route: '/pages/client-coupon/index', badge: '' },
+          { key: 'coupon',    label: '优惠券',     icon: 'coupon',   color: '#D4944C', route: '/pages/client-coupon/index', badge: '' },
           { key: 'wallet',    label: '我的钱包',   icon: 'wallet',   color: '#D4944C', route: '', badge: '' },
           { key: 'favorites', label: '收藏的师傅', icon: 'heart',    color: '#C4533A', route: '/pages/client-favorite-workers/index' },
           { key: 'invoice',   label: '发票与报销', icon: 'orders',   color: '#0D9488', route: '' }
@@ -42,26 +83,28 @@ Page({
   },
 
   onLoad() {
+    const icons = {
+      edit: buildIcon('edit', '#FFFFFF'),
+      refresh: buildIcon('refresh', COLORS.brand),
+      chevron: buildIcon('arrowRight', COLORS.text2),
+      award: buildIcon('award', COLORS.white),
+      location: buildIcon('location', COLORS.white),
+      coupon: buildIcon('coupon', COLORS.white),
+      wallet: buildIcon('wallet', COLORS.white),
+      heart: buildIcon('heart', COLORS.white),
+      orders: buildIcon('orders', COLORS.white),
+      bell: buildIcon('bell', COLORS.white),
+      shield: buildIcon('shield', COLORS.white),
+      eye: buildIcon('eye', COLORS.white),
+      phone: buildIcon('phone', COLORS.white),
+      message: buildIcon('message', COLORS.white),
+      settings: buildIcon('settings', COLORS.white),
+      star: buildIcon('star', COLORS.white)
+    }
     this.setData({
       statusBarHeight: app.globalData.statusBarHeight || 20,
-      icons: {
-        edit: buildIcon('edit', '#FFFFFF'),
-        refresh: buildIcon('refresh', COLORS.brand),
-        chevron: buildIcon('arrowRight', COLORS.text2),
-        award: buildIcon('award', COLORS.white),
-        location: buildIcon('location', COLORS.white),
-        coupon: buildIcon('coupon', COLORS.white),
-        wallet: buildIcon('wallet', COLORS.white),
-        heart: buildIcon('heart', COLORS.white),
-        orders: buildIcon('orders', COLORS.white),
-        bell: buildIcon('bell', COLORS.white),
-        shield: buildIcon('shield', COLORS.white),
-        eye: buildIcon('eye', COLORS.white),
-        phone: buildIcon('phone', COLORS.white),
-        message: buildIcon('message', COLORS.white),
-        settings: buildIcon('settings', COLORS.white),
-        star: buildIcon('star', COLORS.white)
-      }
+      icons,
+      menuSections: decorateMenuSections(this.data.menuSections)
     })
     this.loadUserInfo()
   },

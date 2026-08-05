@@ -84,17 +84,13 @@ Page({
   onCouponTap(e) {
     const item = e.currentTarget.dataset.item
     if (!item) return
-    if (item.status === 'available' || this.data.activeTab === 'available') {
-      wx.showToast({ title: '去使用：下单时可选择该券', icon: 'none' })
-    } else if (item.status === 'used' || this.data.activeTab === 'used') {
-      if (item.orderId) {
-        wx.navigateTo({ url: '/pages/order-detail-client/index?id=' + item.orderId })
-      } else {
-        wx.showToast({ title: '暂无关联订单', icon: 'none' })
-      }
-    } else {
-      wx.showToast({ title: '该券已过期', icon: 'none' })
+    if (!item.id) {
+      wx.showToast({ title: '优惠券编号无效', icon: 'none' })
+      return
     }
+    wx.navigateTo({
+      url: '/pages/client-coupon-detail/index?couponId=' + encodeURIComponent(String(item.id))
+    })
   },
 
   onRedeemCode() {

@@ -170,6 +170,7 @@ class OrderResponse(BaseModel):
     urgent: bool
     urgent_amount: float
     status: str = Field(..., max_length=32)
+    version: int = Field(..., ge=0)
     created_at: datetime
     accepted_at: Optional[datetime]
     departed_at: Optional[datetime]

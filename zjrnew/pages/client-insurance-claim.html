@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>自家人居家维修 · 玻璃新拟态 · 理赔申请</title>
-    <link rel="stylesheet" href="../assets/fonts.css">
-
     <style id="theme-vars">
 /* 自家人居家维修 - 玻璃新拟态 */
 :root {
@@ -82,11 +80,11 @@
   --radius-lg: 1.6rem;
   --radius-full: 9999px;
 
-    /* Font — 统一衬线系统 */
+  /* Font — unified serif system */
   --font-display: 'Cormorant Garamond', 'Noto Serif SC', 'STSong', Georgia, serif;
-  --font-body: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-  --font-nums: 'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
-  --font: var(--font-body);
+  --font-body:    'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --font-nums:    'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
+  --font:         var(--font-body);
 
   /* Motion */
   --spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -127,9 +125,8 @@
   --radius-sm: var(--radius-sm);
   --radius-md: var(--radius-md);
   --radius-lg: var(--radius-lg);
-  --font-sans: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-  --font-serif: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-  --radius-full: var(--radius-full);}
+  --radius-full: var(--radius-full);
+}
 
 /* Semantic token fallback */
 #semantic-token-fallback {
@@ -152,21 +149,21 @@
 }
 
 /* ===== Global Neumorphic Components ===== */
-/* Tab Bar */
+/* Tab Bar — Premium Liquid Glass, absolute-positioned within .phone frame */
 .tab-bar{
   position:absolute;
-  bottom:max(14px, env(safe-area-inset-bottom));
+  bottom:10px;
   left:50%;
   transform:translateX(-50%);
   width:calc(100% - 32px);
   max-width:360px;
-  height:64px;
+  height:56px;
   z-index:100;
-  background:rgba(255,255,255,0.22);
+  background:rgba(255,255,255,0.18);
   backdrop-filter:blur(48px) saturate(210%);
   -webkit-backdrop-filter:blur(48px) saturate(210%);
-  border:0.5px solid rgba(255,255,255,0.50);
-  border-radius:28px;
+  border:0.5px solid rgba(255,255,255,0.45);
+  border-radius:24px;
   box-shadow:
     inset 0 1.5px 3px rgba(255,255,255,0.60),
     inset 0 -0.5px 1px rgba(255,255,255,0.20),
@@ -176,7 +173,7 @@
   display:flex;
   align-items:center;
   justify-content:space-around;
-  padding:0 10px;
+  padding:0 6px;
 }
 .tab-bar::before{
   content:"";
@@ -259,19 +256,28 @@
   z-index:1;
 }
 
+/* Buttons */
+.btn-neu-primary{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:var(--brand);color:var(--text-inverse);
+  border:none;border-radius:9999px;
+  padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
+  cursor:pointer;
+  box-shadow:var(--neu-out-sm),0 2px 8px var(--brand-glow);
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
 .btn-neu-primary:active{box-shadow:var(--neu-in);transform:scale(0.94)}
 
 .btn-neu-secondary{
-  display:inline-flex;align-items:center;justify-content:center;gap:6px;
-  background:rgba(255,255,255,0.92);
-  color:var(--brand);
-  border:0.5px solid rgba(255,255,255,0.95);border-radius:9999px;
+  display:inline-flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,0.50);color:var(--brand);
+  border:0.5px solid rgba(255,255,255,0.60);border-radius:9999px;
   padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
   cursor:pointer;
-  box-shadow:var(--neu-out-md),inset 0 1.5px 2px rgba(255,255,255,0.65),inset 0 -1px 1px rgba(0,0,0,0.03);
-  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease),background var(--dur) var(--ease);
+  box-shadow:var(--neu-out-sm);
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
 }
-.btn-neu-secondary:active{box-shadow:var(--neu-in-deep);transform:scale(0.94);background:rgba(255,255,255,0.78)}
+.btn-neu-secondary:active{box-shadow:var(--neu-in);transform:scale(0.94)}
 
 .btn-neu-ghost{
   display:inline-flex;align-items:center;justify-content:center;
@@ -306,8 +312,6 @@
     --radius-md: var(--radius-md);
     --radius-lg: var(--radius-lg);
     --radius-full: var(--radius-full);
-    --font-sans: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-    --font-serif: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
   }
   @layer base {
     body { background: var(--background); color: var(--foreground); }
@@ -395,7 +399,7 @@
 
   <!-- ===== TOP NAV BAR (sticky) ===== -->
   <header class="nav-bar">
-    <button class="nav-icon-btn" data-dom-id="back-btn" aria-label="返回">
+    <button class="nav-icon-btn" data-dom-id="back-btn" data-target-page="page-client-order-detail" aria-label="返回">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
         <path d="m15 18-6-6 6-6"></path>
       </svg>
@@ -406,7 +410,7 @@
 
   <!-- ===== POLICY CARD ===== -->
   <section class="section">
-    <div class="glass-neu-card policy-card" data-dom-id="policy-card">
+  <div class="glass-neu-card policy-card" data-dom-id="policy-card" data-target-page="page-client-policy-detail">
       <div class="policy-top">
         <div class="policy-shield">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -441,7 +445,7 @@
       <!-- 损失描述 -->
       <div class="field" data-dom-id="field-loss-desc">
         <label class="field-label">损失描述</label>
-        <textarea class="neu-textarea" rows="4" placeholder="请描述因师傅服务造成的财产损失情况..." data-dom-id="input-loss-desc"></textarea>
+    <textarea class="neu-textarea" rows="4" placeholder="请描述因师傅服务造成的财产损失情况..." data-dom-id="input-loss-desc" data-action="update-loss-description"></textarea>
       </div>
 
       <!-- 损失照片 -->
@@ -451,19 +455,19 @@
           <span class="field-hint">最多5张</span>
         </div>
         <div class="photo-grid">
-          <div class="photo-slot" data-dom-id="photo-slot-1">
+      <div class="photo-slot" data-dom-id="photo-slot-1" data-action="choose-claim-image">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
           </div>
-          <div class="photo-slot" data-dom-id="photo-slot-2">
+      <div class="photo-slot" data-dom-id="photo-slot-2" data-action="choose-claim-image">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
           </div>
-          <div class="photo-slot" data-dom-id="photo-slot-3">
+      <div class="photo-slot" data-dom-id="photo-slot-3" data-action="choose-claim-image">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
           </div>
-          <div class="photo-slot" data-dom-id="photo-slot-4">
+      <div class="photo-slot" data-dom-id="photo-slot-4" data-action="choose-claim-image">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
           </div>
-          <div class="photo-slot" data-dom-id="photo-slot-5">
+      <div class="photo-slot" data-dom-id="photo-slot-5" data-action="choose-claim-image">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
           </div>
         </div>
@@ -474,14 +478,14 @@
         <label class="field-label">损失金额预估</label>
         <div class="neu-input-wrap">
           <span class="input-prefix">&yen;</span>
-          <input type="text" class="neu-input mono" inputmode="decimal" placeholder="¥0" data-dom-id="input-loss-amount">
+      <input type="text" class="neu-input mono" inputmode="decimal" placeholder="¥0" data-dom-id="input-loss-amount" data-action="validate-loss-amount">
         </div>
       </div>
 
       <!-- 师傅责任说明 -->
       <div class="field field-last" data-dom-id="field-liability">
         <label class="field-label">师傅责任说明</label>
-        <textarea class="neu-textarea" rows="3" placeholder="说明师傅操作与损失的关联..." data-dom-id="input-liability"></textarea>
+    <textarea class="neu-textarea" rows="3" placeholder="说明师傅操作与损失的关联..." data-dom-id="input-liability" data-action="update-liability-description"></textarea>
       </div>
     </div>
   </section>
@@ -494,7 +498,7 @@
 
         <div class="vt-step">
           <div class="vt-rail">
-            <div class="vt-dot vt-dot-brand" data-dom-id="process-step-1">
+      <div class="vt-dot vt-dot-brand" data-dom-id="process-step-1" data-action="show-claim-step">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                 <polyline points="14 2 14 8 20 8"></polyline>
@@ -512,7 +516,7 @@
 
         <div class="vt-step">
           <div class="vt-rail">
-            <div class="vt-dot vt-dot-brand" data-dom-id="process-step-2">
+      <div class="vt-dot vt-dot-brand" data-dom-id="process-step-2" data-action="show-claim-step">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
                 <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3z"></path>
@@ -529,7 +533,7 @@
 
         <div class="vt-step">
           <div class="vt-rail">
-            <div class="vt-dot vt-dot-brand" data-dom-id="process-step-3">
+      <div class="vt-dot vt-dot-brand" data-dom-id="process-step-3" data-action="show-claim-step">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M19 7V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"></path>
                 <path d="M21 7h-7a3 3 0 0 0 0 6h7a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1z"></path>
@@ -546,7 +550,7 @@
 
         <div class="vt-step vt-step-last">
           <div class="vt-rail">
-            <div class="vt-dot vt-dot-accent" data-dom-id="process-step-4">
+      <div class="vt-dot vt-dot-accent" data-dom-id="process-step-4" data-action="show-claim-step">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
                 <line x1="8" y1="12" x2="16" y2="12"></line>
@@ -565,7 +569,7 @@
 
   <!-- ===== BOTTOM FIXED ACTION BAR ===== -->
   <footer class="action-bar" style="padding-left: 20px; padding-right: 20px; transform: none; top: auto; width: 375px; align-items: center; justify-content: normal; left: 0px; height: 78.5px;">
-    <button class="action-btn-primary" data-dom-id="btn-submit-claim">
+  <button class="action-btn-primary" data-dom-id="btn-submit-claim" data-target-page="page-client-claim-result" data-action="submit-claim">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
         <path d="M22 2 11 13"></path>
         <path d="M22 2 15 22l-4-9-9-4 20-7z"></path>
@@ -591,7 +595,7 @@
   --neu-in-deep:inset 5px 5px 10px var(--neu-dark),inset -5px -5px 10px var(--neu-light);
   --icon-raise:5px 5px 10px var(--neu-dark),-5px -5px 10px var(--neu-light);
   --icon-inset:inset 3px 3px 6px var(--neu-dark),inset -3px -3px 6px var(--neu-light);
-  --brand-gradient:linear-gradient(135deg,#0D9488 0%,#14B8A6 50%,#D4944C 100%);
+  --brand-gradient:linear-gradient(135deg,#0D9488 0%,#14B8A6 48%,#D4944C 100%);
 }
 html,body{font-family:var(--font);color:var(--text-1);-webkit-font-smoothing:antialiased}
 body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh;background:var(--body-bg);letter-spacing:-0.01em}
@@ -600,14 +604,14 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
 .phone{position:relative;width:414px;min-height:896px;background:var(--phone-bg);border-radius:48px;overflow:hidden;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.12),0 4px 16px rgba(0,0,0,.06);padding-bottom:82px}
 .phone::-webkit-scrollbar{display:none}
 .phone{scrollbar-width:none}
-.phone::after{content:'';position:absolute;bottom:0;left:0;right:0;height:260px;background:radial-gradient(ellipse 180px 120px at 20% 90%,rgba(13,148,136,.06) 0%,transparent 70%),radial-gradient(ellipse 160px 100px at 80% 85%,rgba(212,148,76,.06) 0%,transparent 70%);pointer-events:none;z-index:0}
+.phone::after{content:'';position:absolute;bottom:0;left:0;right:0;height:260px;background:radial-gradient(ellipse 180px 120px at 20% 90%,rgba(13,148,136,.05) 0%,transparent 70%),radial-gradient(ellipse 160px 100px at 80% 85%,rgba(212,148,76,.05) 0%,transparent 70%);pointer-events:none;z-index:0}
 .phone>*:not(.action-bar){position:relative;z-index:1}
 
 /* Mono / Tabular nums */
 .mono{font-variant-numeric:tabular-nums;letter-spacing:-0.01em}
 
 /* ===== Top Nav Bar (sticky) ===== */
-.nav-bar{background:radial-gradient(ellipse 220px 160px at 78% 45%,rgba(212,148,76,.14) 0%,transparent 70%),radial-gradient(ellipse 180px 140px at 18% 75%,rgba(13,148,136,.16) 0%,transparent 70%),linear-gradient(135deg,rgba(13,148,136,.14) 0%,rgba(212,148,76,.08) 50%,rgba(13,148,136,.06) 100%);position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:18px 20px;padding-top:max(18px,env(safe-area-inset-top)); border-radius:0 0 28px 28px; overflow:hidden;}
+.nav-bar{background:radial-gradient(ellipse 220px 160px at 78% 45%,rgba(212,148,76,.10) 0%,transparent 70%),radial-gradient(ellipse 180px 140px at 18% 75%,rgba(13,148,136,.10) 0%,transparent 70%),linear-gradient(135deg,rgba(13,148,136,.08) 0%,rgba(212,148,76,.06) 50%,rgba(13,148,136,.05) 100%);position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:18px 20px;padding-top:max(18px,env(safe-area-inset-top)); border-radius:0 0 28px 28px; overflow:hidden;}
 .nav-icon-btn{
   width:44px;height:44px;border-radius:50%;border:none;
   background:var(--bg-elevated);
@@ -634,7 +638,7 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
   backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);
   border:1px solid rgba(255,255,255,0.70);
   border-radius:var(--radius-lg);
-  box-shadow:var(--neu-out-md),0 6px 28px rgba(0,0,0,0.06),0 2px 8px rgba(13,148,136,0.04),0 0 0 1px rgba(44,40,36,0.05);
+  box-shadow:var(--neu-out-md),0 6px 28px rgba(0,0,0,0.06),0 2px 8px rgba(13,148,136,.04),0 0 0 1px rgba(44,40,36,0.05);
   position:relative;overflow:hidden;
 }
 .glass-neu-card::before{
@@ -652,7 +656,7 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
 .policy-card{padding:18px}
 .policy-top{display:flex;align-items:center;gap:14px;position:relative;z-index:1}
 .policy-shield{
-  width:52px;height:52px;border-radius:50%;flex-shrink:0;
+  width:44px;height:44px;border-radius:50%;flex-shrink:0;
   background:var(--bg-elevated);
   box-shadow:var(--neu-in-deep);
   display:flex;align-items:center;justify-content:center;
@@ -696,7 +700,7 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
   transition:box-shadow var(--dur) var(--ease),border-color var(--dur) var(--ease);
 }
 .neu-textarea::placeholder{color:var(--text-3)}
-.neu-textarea:focus{outline:none;border-color:rgba(13,148,136,0.30);box-shadow:var(--neu-in),0 0 0 3px var(--brand-subtle)}
+.neu-textarea:focus{outline:none;border-color:rgba(13,148,136,.12);box-shadow:var(--neu-in),0 0 0 3px var(--brand-subtle)}
 
 /* Photo grid */
 .photo-grid{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
@@ -710,7 +714,7 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
   box-shadow:var(--neu-in);
   transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease),color var(--dur) var(--ease),border-color var(--dur) var(--ease);
 }
-.photo-slot:active{transform:scale(0.94);box-shadow:var(--neu-out-sm);color:var(--brand);border-color:rgba(13,148,136,0.30)}
+.photo-slot:active{transform:scale(0.94);box-shadow:var(--neu-out-sm);color:var(--brand);border-color:rgba(13,148,136,.12)}
 .photo-slot svg{width:22px;height:22px}
 
 /* Neu input */
@@ -722,7 +726,7 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
   box-shadow:var(--neu-in);
   transition:box-shadow var(--dur) var(--ease),border-color var(--dur) var(--ease);
 }
-.neu-input-wrap:focus-within{border-color:rgba(13,148,136,0.30);box-shadow:var(--neu-in),0 0 0 3px var(--brand-subtle)}
+.neu-input-wrap:focus-within{border-color:rgba(13,148,136,.12);box-shadow:var(--neu-in),0 0 0 3px var(--brand-subtle)}
 .input-prefix{font-size:15px;font-weight:700;color:var(--brand);flex-shrink:0}
 .neu-input{
   flex:1;min-width:0;height:44px;border:none;background:transparent;

@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>自家人居家维修 · 玻璃新拟态 · 收藏的师傅</title>
-    <link rel="stylesheet" href="../assets/fonts.css">
-
     <style id="theme-vars">
 /* 自家人居家维修 - 玻璃新拟态 */
 :root {
@@ -82,11 +80,11 @@
   --radius-lg: 1.6rem;
   --radius-full: 9999px;
 
-    /* Font — 统一衬线系统 */
+  /* Font — unified serif system */
   --font-display: 'Cormorant Garamond', 'Noto Serif SC', 'STSong', Georgia, serif;
-  --font-body: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-  --font-nums: 'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
-  --font: var(--font-body);
+  --font-body:    'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --font-nums:    'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
+  --font:         var(--font-body);
 
   /* Motion */
   --spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -127,9 +125,8 @@
   --radius-sm: var(--radius-sm);
   --radius-md: var(--radius-md);
   --radius-lg: var(--radius-lg);
-  --font-sans: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-  --font-serif: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-  --radius-full: var(--radius-full);}
+  --radius-full: var(--radius-full);
+}
 
 /* Semantic token fallback */
 #semantic-token-fallback {
@@ -152,21 +149,21 @@
 }
 
 /* ===== Global Neumorphic Components ===== */
-/* Tab Bar */
+/* Tab Bar — Premium Liquid Glass, absolute-positioned within .phone frame */
 .tab-bar{
   position:absolute;
-  bottom:max(14px, env(safe-area-inset-bottom));
+  bottom:10px;
   left:50%;
   transform:translateX(-50%);
   width:calc(100% - 32px);
   max-width:360px;
-  height:64px;
+  height:56px;
   z-index:100;
-  background:rgba(255,255,255,0.22);
+  background:rgba(255,255,255,0.18);
   backdrop-filter:blur(48px) saturate(210%);
   -webkit-backdrop-filter:blur(48px) saturate(210%);
-  border:0.5px solid rgba(255,255,255,0.50);
-  border-radius:28px;
+  border:0.5px solid rgba(255,255,255,0.45);
+  border-radius:24px;
   box-shadow:
     inset 0 1.5px 3px rgba(255,255,255,0.60),
     inset 0 -0.5px 1px rgba(255,255,255,0.20),
@@ -176,7 +173,7 @@
   display:flex;
   align-items:center;
   justify-content:space-around;
-  padding:0 10px;
+  padding:0 6px;
 }
 .tab-bar::before{
   content:"";
@@ -259,6 +256,16 @@
   z-index:1;
 }
 
+/* Buttons */
+.btn-neu-primary{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:var(--brand);color:var(--text-inverse);
+  border:none;border-radius:9999px;
+  padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
+  cursor:pointer;
+  box-shadow:var(--neu-out-sm),0 2px 8px var(--brand-glow);
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
 .btn-neu-primary:active{box-shadow:var(--neu-in);transform:scale(0.94)}
 
 .btn-neu-secondary{
@@ -305,8 +312,6 @@
     --radius-md: var(--radius-md);
     --radius-lg: var(--radius-lg);
     --radius-full: var(--radius-full);
-    --font-sans: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-    --font-serif: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
   }
   @layer base {
     body { background: var(--background); color: var(--foreground); }
@@ -397,11 +402,11 @@
   <header class="top-header">
     <section class="hero">
       <div class="nav-content">
-        <button class="nav-back" data-dom-id="back-btn" aria-label="返回">
+      <button class="nav-back" data-dom-id="back-btn" data-target-page="page-client-mine" aria-label="返回">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg>
         </button>
         <h1 class="nav-title">收藏的师傅</h1>
-        <button class="nav-edit" data-dom-id="btn-edit" aria-label="编辑">
+      <button class="nav-edit" data-dom-id="btn-edit" data-action="toggle-edit-mode" aria-label="编辑">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="4" y1="6" x2="20" y2="6"/>
             <line x1="7" y1="12" x2="17" y2="12"/>
@@ -412,10 +417,10 @@
     </section>
 
     <div class="filter-tabs">
-      <button class="filter-pill active" data-dom-id="filter-all">全部</button>
-      <button class="filter-pill" data-dom-id="filter-water">水电</button>
-      <button class="filter-pill" data-dom-id="filter-appliance">家电</button>
-      <button class="filter-pill" data-dom-id="filter-pipe">管道</button>
+    <button class="filter-pill active" data-dom-id="filter-all" data-action="filter-all-workers">全部</button>
+    <button class="filter-pill" data-dom-id="filter-water" data-action="filter-water-workers">水电</button>
+    <button class="filter-pill" data-dom-id="filter-appliance" data-action="filter-appliance-workers">家电</button>
+    <button class="filter-pill" data-dom-id="filter-pipe" data-action="filter-pipe-workers">管道</button>
     </div>
   </header>
 
@@ -423,7 +428,7 @@
   <div class="worker-list">
 
     <!-- 师傅 1 -->
-    <div class="worker-card" data-dom-id="worker-card-1">
+  <div class="worker-card" data-dom-id="worker-card-1" data-target-page="page-client-worker-detail">
       <div class="worker-head">
         <div class="avatar-wrap">
           <div class="avatar">李</div>
@@ -452,14 +457,14 @@
           <span class="auth-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"></path><circle cx="12" cy="12" r="10"></circle></svg>认证等级</span>
         </div>
         <div class="actions">
-          <button class="btn-neu-ghost" data-dom-id="unfav-1">取消收藏</button>
-          <button class="btn-neu-primary" data-dom-id="book-1">预约</button>
+      <button class="btn-neu-ghost" data-dom-id="unfav-1" data-action="remove-favorite-worker">取消收藏</button>
+      <button class="btn-neu-primary" data-dom-id="book-1" data-target-page="page-client-publish">预约</button>
         </div>
       </div>
     </div>
 
     <!-- 师傅 2 -->
-    <div class="worker-card" data-dom-id="worker-card-2">
+  <div class="worker-card" data-dom-id="worker-card-2" data-target-page="page-client-worker-detail">
       <div class="worker-head">
         <div class="avatar-wrap">
           <div class="avatar">王</div>
@@ -486,14 +491,14 @@
           <span class="auth-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4"></path></svg>保证金已缴</span>
         </div>
         <div class="actions">
-          <button class="btn-neu-ghost" data-dom-id="unfav-2">取消收藏</button>
-          <button class="btn-neu-primary" data-dom-id="book-2">预约</button>
+      <button class="btn-neu-ghost" data-dom-id="unfav-2" data-action="remove-favorite-worker">取消收藏</button>
+      <button class="btn-neu-primary" data-dom-id="book-2" data-target-page="page-client-publish">预约</button>
         </div>
       </div>
     </div>
 
     <!-- 师傅 3 -->
-    <div class="worker-card" data-dom-id="worker-card-3">
+  <div class="worker-card" data-dom-id="worker-card-3" data-target-page="page-client-worker-detail">
       <div class="worker-head">
         <div class="avatar-wrap">
           <div class="avatar">张</div>
@@ -521,14 +526,14 @@
           <span class="auth-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"></path><circle cx="12" cy="12" r="10"></circle></svg>认证等级</span>
         </div>
         <div class="actions">
-          <button class="btn-neu-ghost" data-dom-id="unfav-3">取消收藏</button>
-          <button class="btn-neu-primary" data-dom-id="book-3">预约</button>
+      <button class="btn-neu-ghost" data-dom-id="unfav-3" data-action="remove-favorite-worker">取消收藏</button>
+      <button class="btn-neu-primary" data-dom-id="book-3" data-target-page="page-client-publish">预约</button>
         </div>
       </div>
     </div>
 
     <!-- 师傅 4 -->
-    <div class="worker-card" data-dom-id="worker-card-4">
+  <div class="worker-card" data-dom-id="worker-card-4" data-target-page="page-client-worker-detail">
       <div class="worker-head">
         <div class="avatar-wrap">
           <div class="avatar">赵</div>
@@ -554,8 +559,8 @@
           <span class="auth-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4"></path></svg>保证金已缴</span>
         </div>
         <div class="actions">
-          <button class="btn-neu-ghost" data-dom-id="unfav-4">取消收藏</button>
-          <button class="btn-neu-primary" data-dom-id="book-4">预约</button>
+      <button class="btn-neu-ghost" data-dom-id="unfav-4" data-action="remove-favorite-worker">取消收藏</button>
+      <button class="btn-neu-primary" data-dom-id="book-4" data-target-page="page-client-publish">预约</button>
         </div>
       </div>
     </div>
@@ -580,21 +585,21 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
 .phone{position:relative;width:414px;min-height:896px;background:var(--phone-bg);border-radius:48px;overflow:hidden;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.12),0 4px 16px rgba(0,0,0,.06);padding-bottom:82px}
 .phone::-webkit-scrollbar{display:none}
 .phone{scrollbar-width:none}
-.phone::after{content:'';position:absolute;bottom:0;left:0;right:0;height:260px;background:radial-gradient(ellipse 180px 120px at 20% 90%,rgba(13,148,136,.06) 0%,transparent 70%),radial-gradient(ellipse 160px 100px at 80% 85%,rgba(212,148,76,.06) 0%,transparent 70%);pointer-events:none;z-index:0}
+.phone::after{content:'';position:absolute;bottom:0;left:0;right:0;height:260px;background:radial-gradient(ellipse 180px 120px at 20% 90%,rgba(13,148,136,.05) 0%,transparent 70%),radial-gradient(ellipse 160px 100px at 80% 85%,rgba(212,148,76,.05) 0%,transparent 70%);pointer-events:none;z-index:0}
 .phone>*:not(.tab-bar):not(.top-header){position:relative;z-index:1}
 
 /* Top Header */
 .top-header{position:sticky;top:0;z-index:50}
 
 /* Hero */
-.hero{padding: max(38px, env(safe-area-inset-top)) 24px 24px;position:relative;z-index:1;background:radial-gradient(ellipse 240px 200px at 75% 40%,rgba(212,148,76,.32) 0%,transparent 70%),radial-gradient(ellipse 200px 160px at 20% 80%,rgba(13,148,136,.24) 0%,transparent 70%),linear-gradient(135deg,rgba(13,148,136,.28) 0%,rgba(212,148,76,.20) 50%,rgba(20,184,166,.12) 100%);border-radius:0 0 32px 32px}
+.hero{padding: max(38px, env(safe-area-inset-top)) 24px 24px;position:relative;z-index:1;background:radial-gradient(ellipse 240px 200px at 75% 40%,rgba(212,148,76,.16) 0%,transparent 70%),radial-gradient(ellipse 200px 160px at 20% 80%,rgba(13,148,136,.12) 0%,transparent 70%),linear-gradient(135deg,rgba(13,148,136,.12) 0%,rgba(212,148,76,.14) 50%,rgba(20,184,166,.12) 100%);border-radius:0 0 32px 32px}
 .hero::before{content:"";position:absolute;top:-40%;right:-20%;width:300px;height:300px;background:radial-gradient(circle,rgba(255,255,255,0.15) 0%,transparent 70%);border-radius:50%;pointer-events:none}
 .hero::after{content:"";position:absolute;bottom:-30%;left:-10%;width:220px;height:220px;background:radial-gradient(circle,rgba(200,255,250,0.10) 0%,transparent 70%);border-radius:50%;pointer-events:none}
 .nav-content{display:grid;grid-template-columns:40px 1fr auto;align-items:center;gap:8px;position:relative;z-index:2}
 .nav-back{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.18);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:0.5px solid rgba(255,255,255,0.30);display:flex;align-items:center;justify-content:center;color:var(--text-1);cursor:pointer;box-shadow:inset 0 1px 2px rgba(255,255,255,0.3);flex-shrink:0;transition:transform var(--dur) var(--spring),background 0.2s var(--ease)}
 .nav-back:active{transform:scale(0.85);background:rgba(255,255,255,0.32)}
 .nav-back svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.nav-title{font-size:22px;font-weight:700;color:var(--text-1);letter-spacing:-0.02em;text-align:center;justify-self:center}
+.nav-title{font-size:16px;font-weight:700;color:var(--text-1);letter-spacing:-0.02em;text-align:center;justify-self:center}
 .nav-edit{width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,0.18);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:0.5px solid rgba(255,255,255,0.30);box-shadow:inset 0 1px 2px rgba(255,255,255,0.3);display:flex;align-items:center;justify-content:center;color:var(--text-1);cursor:pointer;flex-shrink:0;transition:transform var(--dur) var(--spring),background 0.2s var(--ease)}
 .nav-edit:active{transform:scale(0.85);background:rgba(255,255,255,0.32)}
 .nav-edit svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
@@ -606,7 +611,7 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
 .filter-pill{flex:1;text-align:center;padding:10px 0;border-radius:var(--radius-sm);font-size:13.5px;font-weight:600;color:var(--text-2);cursor:pointer;white-space:nowrap;transition:transform var(--dur) var(--spring),all 0.2s var(--ease);border:none;background:transparent;font-family:var(--font)}
 .filter-pill:active{transform:scale(0.94)}
 .filter-pill:not(.active){background:var(--bg-elevated);box-shadow:var(--neu-out-sm),inset 0 1px 1px rgba(255,255,255,0.45)}
-.filter-pill.active{background:rgba(13,148,136,0.15);box-shadow:inset 2px 2px 5px var(--neu-dark),inset -2px -2px 5px var(--neu-light);color:var(--brand)}
+.filter-pill.active{background:rgba(13,148,136,.08);box-shadow:inset 2px 2px 5px var(--neu-dark),inset -2px -2px 5px var(--neu-light);color:var(--brand)}
 
 /* ===== Section Title ===== */
 .section-title{font-size:16px;font-weight:700;color:var(--text-1);padding:14px 20px 10px;letter-spacing:-0.2px}
@@ -622,12 +627,12 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
 .worker-head{display:flex;align-items:flex-start;gap:14px}
 
 /* Avatar + Level Badge */
-.avatar-wrap{display:flex;flex-direction:column;align-items:center;gap:5px;flex-shrink:0;width:64px}
-.avatar{width:56px;height:56px;border-radius:50%;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;color:var(--brand-dark);letter-spacing:0;background:linear-gradient(145deg,rgba(255,255,255,0.68) 0%,rgba(255,255,255,0.28) 40%,var(--brand-subtle) 78%,rgba(255,255,255,0.18) 100%);backdrop-filter:blur(10px) saturate(160%);-webkit-backdrop-filter:blur(10px) saturate(160%);border:0.5px solid rgba(255,255,255,0.75);box-shadow:inset 0 2px 3px rgba(255,255,255,0.88),inset 0 -1px 2px rgba(0,0,0,0.04),var(--icon-raise)}
+.avatar-wrap{display:flex;flex-direction:column;align-items:center;gap:5px;flex-shrink:0;width:52px}
+.avatar{width:44px;height:44px;border-radius:50%;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;color:var(--brand-dark);letter-spacing:0;background:linear-gradient(145deg,rgba(255,255,255,0.68) 0%,rgba(255,255,255,0.28) 40%,var(--brand-subtle) 78%,rgba(255,255,255,0.18) 100%);backdrop-filter:blur(10px) saturate(160%);-webkit-backdrop-filter:blur(10px) saturate(160%);border:0.5px solid rgba(255,255,255,0.75);box-shadow:inset 0 2px 3px rgba(255,255,255,0.88),inset 0 -1px 2px rgba(0,0,0,0.04),var(--icon-raise)}
 .avatar::before{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(160deg,rgba(255,255,255,0.48) 0%,rgba(255,255,255,0.12) 35%,transparent 60%);pointer-events:none}
 .level-badge{font-size:9px;font-weight:700;color:#fff;padding:2px 8px;border-radius:9999px;white-space:nowrap;border:0.5px solid rgba(255,255,255,0.55);box-shadow:0 2px 6px rgba(0,0,0,0.12);letter-spacing:0.2px}
-.level-badge.gold{background:linear-gradient(135deg,var(--accent) 0%,var(--accent-dark) 100%);box-shadow:0 2px 6px rgba(212,148,76,0.32)}
-.level-badge.normal{background:linear-gradient(135deg,var(--brand) 0%,var(--brand-dark) 100%);box-shadow:0 2px 6px rgba(13,148,136,0.30)}
+.level-badge.gold{background:linear-gradient(135deg,var(--accent) 0%,var(--accent-dark) 100%);box-shadow:0 2px 6px rgba(212,148,76,.16)}
+.level-badge.normal{background:linear-gradient(135deg,var(--brand) 0%,var(--brand-dark) 100%);box-shadow:0 2px 6px rgba(13,148,136,.12)}
 
 /* Worker Info */
 .worker-info{flex:1;min-width:0;padding-top:2px}
@@ -642,7 +647,7 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
 
 /* Tag Chips */
 .tag-chips{display:flex;gap:6px;flex-wrap:wrap}
-.tag-chip{font-size:11px;font-weight:600;color:var(--brand);background:var(--brand-subtle);padding:3px 9px;border-radius:9999px;border:0.5px solid rgba(13,148,136,0.18)}
+.tag-chip{font-size:11px;font-weight:600;color:var(--brand);background:var(--brand-subtle);padding:3px 9px;border-radius:9999px;border:0.5px solid rgba(13,148,136,.10)}
 
 /* Worker Foot */
 .worker-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:14px;padding-top:14px;border-top:0.5px solid var(--sep)}
@@ -654,12 +659,12 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
 /* ===== btn-neu-primary base (head 仅有 :active) ===== */
 .btn-neu-primary{
   display:inline-flex;align-items:center;justify-content:center;
-  background:linear-gradient(135deg,var(--brand) 0%,var(--brand-mid) 100%);
+  background:var(--brand-gradient);
   color:var(--text-inverse);
-  border:0.5px solid rgba(13,148,136,0.40);border-radius:9999px;
+  border:0.5px solid rgba(13,148,136,.12);border-radius:9999px;
   padding:8px 18px;font-size:13px;font-weight:600;font-family:var(--font);
   cursor:pointer;
-  box-shadow:var(--neu-out-sm),0 4px 12px rgba(13,148,136,0.25);
+  box-shadow:var(--neu-out-sm),0 4px 12px rgba(13,148,136,.12);
   transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
 }
 

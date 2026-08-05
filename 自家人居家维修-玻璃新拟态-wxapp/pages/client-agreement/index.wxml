@@ -1,0 +1,21 @@
+﻿<view class="phone-page design-detail-page">
+  <view class="status-bar"><text>9:41</text><text class="status-icons">● WiFi 100%</text></view>
+  <view class="topbar"><view class="icon-button design-button" bindtap="onBack"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m15%2018-6-6%206-6M9%2012h10%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view><view class="tag-h1">{{title}}</view><view class="top-action design-button" bindtap="onFontSize">字体</view></view>
+  <scroll-view scroll-y class="agreement-scroll">
+    <view class="page-body">
+      <view class="section-title"><text class="tag-strong">协议状态</text><text class="badge success">{{updatedText}}</text></view>
+      <view class="segmented">
+        <view class="segment {{document === 'user-agreement' || document === 'agreement' ? 'active' : ''}}" data-document="user-agreement" bindtap="onTab">用户协议</view>
+        <view class="segment {{document === 'privacy-policy' || document === 'privacy' ? 'active' : ''}}" data-document="privacy-policy" bindtap="onTab">隐私政策</view>
+        <view class="segment {{document === 'platform-rules' ? 'active' : ''}}" data-document="platform-rules" bindtap="onTab">平台规则</view>
+      </view>
+      <view class="card document-card {{fontMode}}">
+        <view class="state-copy" wx:if="{{loading}}">正在加载运营发布的完整文档…</view>
+        <view class="empty-state" wx:elif="{{loadError}}"><view class="empty-icon">!</view><view class="tag-h3">文档暂不可用</view><view class="tag-p">{{updatedText}}</view><view class="btn secondary block" bindtap="onRetry">重新加载</view></view>
+        <text class="document-content" user-select wx:else>{{content}}</text>
+      </view>
+    </view>
+  </scroll-view>
+  <view class="fixed-actions"><view class="btn primary design-button" bindtap="onBack">阅读完毕，返回</view></view>
+</view>
+

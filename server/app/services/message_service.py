@@ -2,10 +2,12 @@
 
 import json
 from datetime import datetime, timedelta
+from decimal import Decimal
 from typing import Optional, Dict, Any
 
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
+from starlette.concurrency import run_in_threadpool
 
 from app.config import settings
 from app.models.message import Message
@@ -21,6 +23,109 @@ logger = get_logger(__name__)
 _WX_ACCESS_TOKEN_KEY = "wechat:access_token"
 
 
+def _json_default(value: Any) -> Any:
+    if isinstance(value, Decimal):
+        return float(value)
+    if isinstance(value, datetime):
+        return value.isoformat()
+    raise TypeError(f"{type(value).__name__} is not JSON serializable")
+
+
+def _as_event_version(value: Any) -> int:
+    try:
+        version = int(value)
+    except (TypeError, ValueError):
+        return 0
+    return max(version, 0)
+
+
+def _default_fallback_route(owner_type: str, object_type: Optional[str], msg_type: str) -> str:
+    if owner_type == "worker":
+        if object_type == "order":
+            return "worker_orders"
+        if object_type == "transaction":
+            return "worker_wallet"
+        return "worker_profile"
+    if object_type == "order":
+        return "client_orders"
+    if object_type == "coupon":
+        return "client_coupon"
+    if object_type == "transaction":
+        return "client_wallet"
+    if msg_type == "activity":
+        return "client_member"
+    return "client_notification"
+
+
+def normalize_message_payload(
+    owner_type: str,
+    msg_type: str,
+    payload: Optional[Dict[str, Any]],
+) -> Dict[str, Any]:
+    """Return the PRD v6.2 structured deep-link payload for a new inbox row.
+
+    Older callers may still pass lightweight payloads such as ``{"order_id": 1}``.
+    Keep those legacy keys for compatibility, but always add role, object,
+    event-version and fallback fields so clients do not infer navigation from
+    free-form JSON.
+    """
+    data: Dict[str, Any] = dict(payload or {})
+    role = str(data.get("role") or owner_type)
+    if role not in {"user", "worker", "admin"}:
+        role = owner_type
+
+    object_type = data.get("object_type")
+    object_id = data.get("object_id")
+    if not object_type:
+        if data.get("order_id") is not None or data.get("order_no") is not None:
+            object_type = "order"
+            object_id = data.get("order_id") if data.get("order_id") is not None else data.get("order_no")
+        elif data.get("tx_id") is not None:
+            object_type = "transaction"
+            object_id = data.get("tx_id")
+        elif data.get("coupon_id") is not None:
+            object_type = "coupon"
+            object_id = data.get("coupon_id")
+
+    event_version = data.get("event_version")
+    if event_version is None:
+        event_version = (
+            data.get("object_version")
+            if data.get("object_version") is not None
+            else data.get("order_version", data.get("version", 0))
+        )
+
+    data["role"] = role
+    if object_type:
+        data["object_type"] = str(object_type)
+    if object_id is not None:
+        data["object_id"] = str(object_id)
+    data["event_version"] = _as_event_version(event_version)
+    data["fallback_route"] = str(
+        data.get("fallback_route")
+        or _default_fallback_route(owner_type, object_type, msg_type)
+    )
+    return data
+
+
+def _order_message_payload(
+    order: Order,
+    role: str,
+    fallback_route: str,
+    **extra: Any,
+) -> Dict[str, Any]:
+    return {
+        "role": role,
+        "object_type": "order",
+        "object_id": str(order.id),
+        "order_id": order.id,
+        "order_no": order.order_no,
+        "event_version": order.version or 0,
+        "fallback_route": fallback_route,
+        **extra,
+    }
+
+
 def send_inbox_message(
     db: Session,
     owner_type: str,
@@ -29,19 +134,29 @@ def send_inbox_message(
     title: str,
     content: str,
     payload: Optional[Dict[str, Any]] = None,
+    *,
+    commit: bool = True,
 ) -> Message:
     """发送站内消息"""
+    structured_payload = normalize_message_payload(owner_type, msg_type, payload)
     message = Message(
         owner_type=owner_type,
         owner_id=owner_id,
         type=msg_type,
         title=title,
         content=content,
-        payload=json.dumps(payload, ensure_ascii=False) if payload else None,
+        payload=json.dumps(
+            structured_payload,
+            ensure_ascii=False,
+            default=_json_default,
+        ),
     )
     db.add(message)
-    db.commit()
-    db.refresh(message)
+    if commit:
+        db.commit()
+        db.refresh(message)
+    else:
+        db.flush()
     return message
 
 
@@ -239,7 +354,15 @@ async def notify_order_bidding_new(db: Session, order: Order, bidding: Bidding) 
     """用户收到「师傅竞价」站内 + 微信通知"""
     title = "有师傅新报价"
     content = f"您的订单「{order.service_name}」收到新的师傅报价，报价 ¥{bidding.price} 元"
-    payload = {"order_id": order.id, "order_no": order.order_no, "worker_id": bidding.worker_id, "price": bidding.price}
+    payload = _order_message_payload(
+        order,
+        "user",
+        "client_quote_list",
+        worker_id=bidding.worker_id,
+        bidding_id=bidding.id,
+        price=bidding.price,
+        pending_action="view_quotes",
+    )
 
     send_inbox_message(db, "user", order.user_id, "order", title, content, payload)
 
@@ -253,7 +376,7 @@ async def notify_order_bidding_new(db: Session, order: Order, bidding: Bidding) 
                 "amount2": {"value": f"¥{bidding.price}"},
                 "thing3": {"value": "请尽快查看并选择师傅"},
             },
-            page_path=f"pages/order/detail/detail?id={order.id}",
+            page_path=f"pages/client-quote-list/index?orderId={order.id}",
         )
 
 
@@ -268,7 +391,13 @@ async def notify_order_accepted(db: Session, order: Order) -> None:
     amount = float(order.final_price or 0)
     title = "您的订单被选中"
     content = f"恭喜您！订单「{order.service_name}」被用户选中，最终价 ¥{order.final_price} 元，请按时服务"
-    payload = {"order_id": order.id, "order_no": order.order_no, "final_price": amount}
+    payload = _order_message_payload(
+        order,
+        "worker",
+        "worker_orders",
+        final_price=amount,
+        pending_action="depart",
+    )
 
     send_inbox_message(db, "worker", worker.id, "order", title, content, payload)
 
@@ -281,7 +410,7 @@ async def notify_order_accepted(db: Session, order: Order) -> None:
                 "amount2": {"value": f"¥{order.final_price}"},
                 "thing3": {"value": "请准时上门"},
             },
-            page_path=f"pages/worker/order-detail/order-detail?id={order.id}",
+            page_path=f"pages/order-detail-worker/index?id={order.id}",
         )
 
 
@@ -290,7 +419,13 @@ async def notify_service_finished(db: Session, order: Order) -> None:
     amount = float(order.final_price or 0)
     title = "服务已完成，待支付"
     content = f"您的订单「{order.service_name}」服务已完成，需支付 ¥{order.final_price} 元"
-    payload = {"order_id": order.id, "order_no": order.order_no, "final_price": amount}
+    payload = _order_message_payload(
+        order,
+        "user",
+        "client_payment",
+        final_price=amount,
+        pending_action="pay_order",
+    )
 
     send_inbox_message(db, "user", order.user_id, "order", title, content, payload)
 
@@ -304,13 +439,14 @@ async def notify_service_finished(db: Session, order: Order) -> None:
                 "amount2": {"value": f"¥{order.final_price}"},
                 "thing3": {"value": "点击前往支付"},
             },
-            page_path=f"pages/order/detail/detail?id={order.id}",
+            page_path=f"pages/client-payment/index?orderId={order.id}",
         )
 
     # 短信通知：服务已完成，请支付
     if user and getattr(user, "phone", None):
         try:
-            sms_service.send_order_completed_notice(
+            await run_in_threadpool(
+                sms_service.send_order_completed_notice,
                 user.phone, order.order_no, order.service_name, order.final_price
             )
         except Exception:
@@ -322,7 +458,12 @@ async def notify_payment_success(db: Session, order: Order) -> None:
     amount = float(order.final_price or 0)
     title_user = "支付成功"
     content_user = f"订单「{order.service_name}」已支付 ¥{order.final_price} 元，感谢您的使用"
-    payload_user = {"order_id": order.id, "order_no": order.order_no, "amount": amount}
+    payload_user = _order_message_payload(
+        order,
+        "user",
+        "client_orders",
+        amount=amount,
+    )
     send_inbox_message(db, "user", order.user_id, "order", title_user, content_user, payload_user)
 
     user = db.query(User).filter(User.id == order.user_id).first()
@@ -335,13 +476,18 @@ async def notify_payment_success(db: Session, order: Order) -> None:
                 "amount2": {"value": f"¥{order.final_price}"},
                 "thing3": {"value": "可查看服务详情"},
             },
-            page_path=f"pages/order/detail/detail?id={order.id}",
+            page_path=f"pages/order-detail-client/index?id={order.id}",
         )
 
     if order.worker_id:
         title_worker = "订单已收款"
         content_worker = f"订单「{order.service_name}」已收款 ¥{order.final_price} 元"
-        payload_worker = {"order_id": order.id, "order_no": order.order_no, "amount": amount}
+        payload_worker = _order_message_payload(
+            order,
+            "worker",
+            "worker_orders",
+            amount=amount,
+        )
         send_inbox_message(db, "worker", order.worker_id, "order", title_worker, content_worker, payload_worker)
 
         worker = db.query(Worker).filter(Worker.id == order.worker_id).first()
@@ -354,13 +500,14 @@ async def notify_payment_success(db: Session, order: Order) -> None:
                     "amount2": {"value": f"¥{order.final_price}"},
                     "thing3": {"value": "已到账"},
                 },
-                page_path=f"pages/worker/order-detail/order-detail?id={order.id}",
+                page_path=f"pages/order-detail-worker/index?id={order.id}",
             )
 
         # 短信通知师傅：订单已收款
         if worker and getattr(worker, "phone", None):
             try:
-                sms_service.send_order_paid_notice(
+                await run_in_threadpool(
+                    sms_service.send_order_paid_notice,
                     worker.phone, order.order_no, order.final_price
                 )
             except Exception:
@@ -374,7 +521,15 @@ async def notify_withdraw_success(db: Session, withdraw_tx: Transaction) -> None
 
     title = "提现到账"
     content = f"您申请的 ¥{withdraw_tx.amount} 元提现已到账"
-    payload = {"tx_id": withdraw_tx.id, "amount": float(withdraw_tx.amount)}
+    payload = {
+        "role": "worker",
+        "object_type": "transaction",
+        "object_id": str(withdraw_tx.id),
+        "tx_id": withdraw_tx.id,
+        "amount": float(withdraw_tx.amount),
+        "event_version": 0,
+        "fallback_route": "worker_wallet",
+    }
 
     send_inbox_message(db, "worker", withdraw_tx.owner_id, "system", title, content, payload)
 
@@ -393,7 +548,8 @@ async def notify_withdraw_success(db: Session, withdraw_tx: Transaction) -> None
     # 短信通知师傅：提现已到账
     if worker and getattr(worker, "phone", None):
         try:
-            sms_service.send_worker_withdraw_result(
+            await run_in_threadpool(
+                sms_service.send_worker_withdraw_result,
                 worker.phone, withdraw_tx.amount, "approved"
             )
         except Exception:
@@ -405,7 +561,15 @@ async def notify_coupon_expire_soon(db: Session, user: User, coupon: Any, days_l
     title = "优惠券即将到期"
     coupon_name = getattr(coupon, "name", "优惠券")
     content = f"您的「{coupon_name}」还有 {days_left} 天到期，快去使用吧"
-    payload = {"coupon_id": getattr(coupon, "id", None), "days_left": days_left}
+    payload = {
+        "role": "user",
+        "object_type": "coupon",
+        "object_id": str(getattr(coupon, "id", "")),
+        "coupon_id": getattr(coupon, "id", None),
+        "days_left": days_left,
+        "event_version": 0,
+        "fallback_route": "client_coupon",
+    }
 
     send_inbox_message(db, "user", user.id, "activity", title, content, payload)
 

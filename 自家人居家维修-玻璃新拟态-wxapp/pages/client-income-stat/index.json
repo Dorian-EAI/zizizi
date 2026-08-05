@@ -1,0 +1,7 @@
+{
+  "navigationStyle": "custom",
+  "disableScroll": false,
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark",
+  "navigationBarTitleText": "收支统计"
+}

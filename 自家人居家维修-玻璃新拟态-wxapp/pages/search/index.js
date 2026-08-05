@@ -13,6 +13,7 @@ Page({
   data: {
     statusBarHeight: 44,
     servicePhoneDisplay: '暂未配置',
+    servicePhoneConfigured: false,
     icons: {},
     activeFilter: 'all',
     tickets: [],
@@ -25,6 +26,7 @@ Page({
     this.setData({
       statusBarHeight: sysInfo.statusBarHeight || 44,
       servicePhoneDisplay: app.globalData.servicePhone || '暂未配置',
+      servicePhoneConfigured: !!String(app.globalData.servicePhone || '').trim(),
       icons: {
         back: buildIcon('arrowLeft', COLORS.text1),
         chat: buildIcon('message', COLORS.brand),

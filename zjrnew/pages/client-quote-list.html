@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>自家人居家维修 · 玻璃新拟态 · 师傅报价列表</title>
-    <link rel="stylesheet" href="../assets/fonts.css">
-
     <style id="theme-vars">
 /* 自家人居家维修 - 玻璃新拟态 */
 :root {
@@ -82,11 +80,11 @@
   --radius-lg: 1.6rem;
   --radius-full: 9999px;
 
-    /* Font — 统一衬线系统 */
+  /* Font — unified serif system */
   --font-display: 'Cormorant Garamond', 'Noto Serif SC', 'STSong', Georgia, serif;
-  --font-body: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-  --font-nums: 'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
-  --font: var(--font-body);
+  --font-body:    'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --font-nums:    'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
+  --font:         var(--font-body);
 
   /* Motion */
   --spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -127,9 +125,8 @@
   --radius-sm: var(--radius-sm);
   --radius-md: var(--radius-md);
   --radius-lg: var(--radius-lg);
-  --font-sans: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-  --font-serif: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-  --radius-full: var(--radius-full);}
+  --radius-full: var(--radius-full);
+}
 
 /* Semantic token fallback */
 #semantic-token-fallback {
@@ -152,21 +149,21 @@
 }
 
 /* ===== Global Neumorphic Components ===== */
-/* Tab Bar */
+/* Tab Bar — Premium Liquid Glass, absolute-positioned within .phone frame */
 .tab-bar{
   position:absolute;
-  bottom:max(14px, env(safe-area-inset-bottom));
+  bottom:10px;
   left:50%;
   transform:translateX(-50%);
   width:calc(100% - 32px);
   max-width:360px;
-  height:64px;
+  height:56px;
   z-index:100;
-  background:rgba(255,255,255,0.22);
+  background:rgba(255,255,255,0.18);
   backdrop-filter:blur(48px) saturate(210%);
   -webkit-backdrop-filter:blur(48px) saturate(210%);
-  border:0.5px solid rgba(255,255,255,0.50);
-  border-radius:28px;
+  border:0.5px solid rgba(255,255,255,0.45);
+  border-radius:24px;
   box-shadow:
     inset 0 1.5px 3px rgba(255,255,255,0.60),
     inset 0 -0.5px 1px rgba(255,255,255,0.20),
@@ -176,7 +173,7 @@
   display:flex;
   align-items:center;
   justify-content:space-around;
-  padding:0 10px;
+  padding:0 6px;
 }
 .tab-bar::before{
   content:"";
@@ -259,29 +256,28 @@
   z-index:1;
 }
 
+/* Buttons */
 .btn-neu-primary{
-  display:inline-flex;align-items:center;justify-content:center;gap:6px;
-  background:var(--brand-gradient);
-  color:var(--text-inverse);
-  border:0.5px solid rgba(255,255,255,0.40);border-radius:9999px;
+  display:inline-flex;align-items:center;justify-content:center;
+  background:var(--brand);color:var(--text-inverse);
+  border:none;border-radius:9999px;
   padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
   cursor:pointer;
-  box-shadow:var(--neu-out-sm),0 4px 14px var(--brand-glow),inset 0 1px 1px rgba(255,255,255,0.30);
+  box-shadow:var(--neu-out-sm),0 2px 8px var(--brand-glow);
   transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
 }
 .btn-neu-primary:active{box-shadow:var(--neu-in);transform:scale(0.94)}
 
 .btn-neu-secondary{
-  display:inline-flex;align-items:center;justify-content:center;gap:6px;
-  background:rgba(255,255,255,0.92);
-  color:var(--brand);
-  border:0.5px solid rgba(255,255,255,0.95);border-radius:9999px;
+  display:inline-flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,0.50);color:var(--brand);
+  border:0.5px solid rgba(255,255,255,0.60);border-radius:9999px;
   padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
   cursor:pointer;
-  box-shadow:var(--neu-out-md),inset 0 1.5px 2px rgba(255,255,255,0.65),inset 0 -1px 1px rgba(0,0,0,0.03);
-  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease),background var(--dur) var(--ease);
+  box-shadow:var(--neu-out-sm);
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
 }
-.btn-neu-secondary:active{box-shadow:var(--neu-in-deep);transform:scale(0.94);background:rgba(255,255,255,0.78)}
+.btn-neu-secondary:active{box-shadow:var(--neu-in);transform:scale(0.94)}
 
 .btn-neu-ghost{
   display:inline-flex;align-items:center;justify-content:center;
@@ -316,8 +312,6 @@
     --radius-md: var(--radius-md);
     --radius-lg: var(--radius-lg);
     --radius-full: var(--radius-full);
-    --font-sans: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-    --font-serif: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
   }
   @layer base {
     body { background: var(--background); color: var(--foreground); }
@@ -405,7 +399,7 @@
 
   <!-- ===== TOP NAV BAR (sticky) ===== -->
   <header class="nav-bar">
-    <button class="nav-back" data-dom-id="back-btn" aria-label="返回">
+    <button class="nav-back" data-dom-id="back-btn" data-target-page="page-client-order-detail" aria-label="返回">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
         <path d="m15 18-6-6 6-6"/>
       </svg>
@@ -444,9 +438,9 @@
   <!-- ===== FILTER / SORT BAR ===== -->
   <section class="sort-wrap">
     <div class="sort-scroll no-scrollbar">
-      <button class="sort-chip sort-active" type="button">价格最低</button>
-      <button class="sort-chip" type="button">评分最高</button>
-      <button class="sort-chip" type="button">距离最近</button>
+      <button class="sort-chip sort-active" type="button" data-dom-id="sort-price" data-action="sort-quotes-by-price">价格最低</button>
+      <button class="sort-chip" type="button" data-dom-id="sort-rating" data-action="sort-quotes-by-rating">评分最高</button>
+      <button class="sort-chip" type="button" data-dom-id="sort-distance" data-action="sort-quotes-by-distance">距离最近</button>
     </div>
   </section>
 
@@ -502,8 +496,8 @@
       </div>
 
       <div class="quote-bottom">
-        <button class="btn-neu-secondary quote-secondary" type="button">查看主页</button>
-        <button class="btn-neu-primary quote-primary" data-dom-id="select-worker-1" type="button">
+        <button class="btn-neu-secondary quote-secondary" type="button" data-dom-id="view-worker-1" data-target-page="page-client-worker-detail">查看主页</button>
+        <button class="btn-neu-primary quote-primary" data-dom-id="select-worker-1" data-action="confirm-quote-worker" data-target-page="page-client-order-detail" type="button">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px">
             <path d="M20 6 9 17l-5-5"/>
           </svg>
@@ -560,8 +554,8 @@
       </div>
 
       <div class="quote-bottom">
-        <button class="btn-neu-secondary quote-secondary" type="button">查看主页</button>
-        <button class="btn-neu-primary quote-primary" data-dom-id="select-worker-2" type="button">
+        <button class="btn-neu-secondary quote-secondary" type="button" data-dom-id="view-worker-2" data-target-page="page-client-worker-detail">查看主页</button>
+        <button class="btn-neu-primary quote-primary" data-dom-id="select-worker-2" data-action="confirm-quote-worker" data-target-page="page-client-order-detail" type="button">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px">
             <path d="M20 6 9 17l-5-5"/>
           </svg>
@@ -618,8 +612,8 @@
       </div>
 
       <div class="quote-bottom">
-        <button class="btn-neu-secondary quote-secondary" type="button">查看主页</button>
-        <button class="btn-neu-primary quote-primary" data-dom-id="select-worker-3" type="button">
+        <button class="btn-neu-secondary quote-secondary" type="button" data-dom-id="view-worker-3" data-target-page="page-client-worker-detail">查看主页</button>
+        <button class="btn-neu-primary quote-primary" data-dom-id="select-worker-3" data-action="confirm-quote-worker" data-target-page="page-client-order-detail" type="button">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px">
             <path d="M20 6 9 17l-5-5"/>
           </svg>
@@ -676,8 +670,8 @@
       </div>
 
       <div class="quote-bottom">
-        <button class="btn-neu-secondary quote-secondary" type="button">查看主页</button>
-        <button class="btn-neu-primary quote-primary" data-dom-id="select-worker-4" type="button">
+        <button class="btn-neu-secondary quote-secondary" type="button" data-dom-id="view-worker-4" data-target-page="page-client-worker-detail">查看主页</button>
+        <button class="btn-neu-primary quote-primary" data-dom-id="select-worker-4" data-action="confirm-quote-worker" data-target-page="page-client-order-detail" type="button">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px">
             <path d="M20 6 9 17l-5-5"/>
           </svg>
@@ -715,9 +709,9 @@
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{
   --brand:#0D9488;--brand-dark:#0A7A70;--brand-light:#CCFBF1;
-  --brand-glow:rgba(13,148,136,0.28);--brand-subtle:rgba(13,148,136,0.08);
-  --brand-gradient:linear-gradient(135deg,#0D9488 0%,#14B8A6 50%,#D4944C 100%);
-  --accent:#D4944C;--accent-light:#F5E6D0;--accent-glow:rgba(212,148,76,0.25);
+  --brand-glow:rgba(13,148,136,0.18);--brand-subtle:rgba(13,148,136,0.08);
+  --brand-gradient:linear-gradient(135deg,#0D9488 0%,#14B8A6 48%,#D4944C 100%);
+  --accent:#D4944C;--accent-light:#F5E6D0;--accent-glow:rgba(212,148,76,0.16);
   --bg:#F2EDE8;--bg-elevated:#F7F3EF;
   --neu-light:#FFF8F2;--neu-dark:#DDD6CE;
   --text-1:#2C2824;--text-2:#8B8178;--text-3:#B5ADA5;--text-inverse:#FFFFFF;
@@ -741,11 +735,11 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
 
 /* ===== Phone Frame (子页面：无 border-radius / 无 overflow:hidden) ===== */
 .phone{position:relative;width:414px;min-height:896px;background:var(--bg);border-radius:48px;overflow:hidden;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.12),0 4px 16px rgba(0,0,0,.06);padding-bottom:82px}
-.phone::after{content:'';position:absolute;bottom:0;left:0;right:0;height:220px;background:radial-gradient(ellipse 200px 140px at 20% 90%,rgba(13,148,136,.07) 0%,transparent 70%),radial-gradient(ellipse 180px 120px at 80% 85%,rgba(212,148,76,.06) 0%,transparent 70%),radial-gradient(ellipse 160px 100px at 50% 95%,rgba(20,184,166,.04) 0%,transparent 70%);pointer-events:none;z-index:0}
+.phone::after{content:'';position:absolute;bottom:0;left:0;right:0;height:220px;background:radial-gradient(ellipse 200px 140px at 20% 90%,rgba(13,148,136,.06) 0%,transparent 70%),radial-gradient(ellipse 180px 120px at 80% 85%,rgba(212,148,76,.05) 0%,transparent 70%),radial-gradient(ellipse 160px 100px at 50% 95%,rgba(20,184,166,.04) 0%,transparent 70%);pointer-events:none;z-index:0}
 .phone>*:not(.tab-bar){position:relative;z-index:1}
 
 /* ===== Top Nav Bar (sticky) ===== */
-.nav-bar{background:radial-gradient(ellipse 220px 160px at 78% 45%,rgba(212,148,76,.14) 0%,transparent 70%),radial-gradient(ellipse 180px 140px at 18% 75%,rgba(13,148,136,.16) 0%,transparent 70%),linear-gradient(135deg,rgba(13,148,136,.14) 0%,rgba(212,148,76,.08) 50%,rgba(13,148,136,.06) 100%);position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:max(18px, env(safe-area-inset-top)) 20px 14px; border-radius:0 0 28px 28px; overflow:hidden;}
+.nav-bar{background:radial-gradient(ellipse 220px 160px at 78% 45%,rgba(212,148,76,.10) 0%,transparent 70%),radial-gradient(ellipse 180px 140px at 18% 75%,rgba(13,148,136,.10) 0%,transparent 70%),linear-gradient(135deg,rgba(13,148,136,.08) 0%,rgba(212,148,76,.06) 50%,rgba(13,148,136,.05) 100%);position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:max(18px, env(safe-area-inset-top)) 20px 14px; border-radius:0 0 28px 28px; overflow:hidden;}
 .nav-back{width:44px;height:44px;border-radius:50%;background:var(--bg-elevated);border:none;box-shadow:var(--neu-out-sm),inset 0 1.5px 2px rgba(255,255,255,0.6);display:flex;align-items:center;justify-content:center;color:var(--text-1);cursor:pointer;flex-shrink:0;transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease)}
 .nav-back:active{box-shadow:var(--neu-in);transform:scale(0.94)}
 .nav-back svg{width:22px;height:22px}
@@ -753,7 +747,7 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
 .nav-spacer{width:44px;height:44px;flex-shrink:0}
 
 /* ===== Glass + Neumorphic Card ===== */
-.glass-neu-card{background:rgba(255,255,255,0.52);backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);border:1px solid rgba(255,255,255,0.70);border-radius:var(--r-lg);box-shadow:var(--neu-out-md),0 6px 28px rgba(0,0,0,0.06),0 2px 8px rgba(13,148,136,0.04),0 0 0 1px rgba(44,40,36,0.05);position:relative;overflow:hidden}
+.glass-neu-card{background:rgba(255,255,255,0.52);backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);border:1px solid rgba(255,255,255,0.70);border-radius:var(--r-lg);box-shadow:var(--neu-out-md),0 6px 28px rgba(0,0,0,0.06),0 2px 8px rgba(13,148,136,.04),0 0 0 1px rgba(44,40,36,0.05);position:relative;overflow:hidden}
 .glass-neu-card::before{content:'';position:absolute;inset:0;border-radius:inherit;background:linear-gradient(165deg,rgba(255,255,255,0.22) 0%,rgba(255,255,255,0.05) 30%,transparent 55%);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;padding:0.5px;pointer-events:none}
 
 /* ===== Order Summary Card ===== */
@@ -764,7 +758,7 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
 .svc-icon{width:30px;height:30px;border-radius:var(--r-pill);background:var(--brand-subtle);display:flex;align-items:center;justify-content:center;color:var(--brand);box-shadow:var(--neu-in)}
 .svc-icon svg{width:16px;height:16px}
 .svc-name{font-size:15px;font-weight:700;color:var(--text-1);letter-spacing:-0.01em}
-.status-chip{display:inline-flex;align-items:center;font-size:11.5px;font-weight:700;color:var(--accent-dark);background:var(--accent-light);border-radius:var(--r-pill);padding:4px 12px;letter-spacing:0.01em;box-shadow:inset 0 0 0 0.5px rgba(212,148,76,0.25)}
+.status-chip{display:inline-flex;align-items:center;font-size:11.5px;font-weight:700;color:var(--accent-dark);background:var(--accent-light);border-radius:var(--r-pill);padding:4px 12px;letter-spacing:0.01em;box-shadow:inset 0 0 0 0.5px rgba(212,148,76,0.16)}
 .summary-desc{font-size:13.5px;color:var(--text-1);font-weight:500;line-height:1.5;margin-bottom:10px}
 .summary-count{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-2);font-weight:500;font-variant-numeric:tabular-nums}
 .summary-count svg{width:14px;height:14px;color:var(--brand)}
@@ -776,7 +770,7 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
 .sort-chip:active{transform:scale(0.94)}
 .sort-chip{background:var(--bg-elevated);color:var(--text-2);box-shadow:var(--neu-out-sm),inset 0 1px 1px rgba(255,255,255,0.45)}
 .sort-chip:active{box-shadow:var(--neu-in)}
-.sort-active{background:var(--brand-subtle);color:var(--brand);box-shadow:var(--neu-in),0 0 0 0.5px rgba(13,148,136,0.15)}
+.sort-active{background:var(--brand-subtle);color:var(--brand);box-shadow:var(--neu-in),0 0 0 0.5px rgba(13,148,136,.08)}
 
 /* ===== Quote Card List ===== */
 .quote-list{padding:8px 20px 0;display:flex;flex-direction:column;gap:16px}

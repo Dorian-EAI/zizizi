@@ -5,6 +5,7 @@ import json
 from fastapi import APIRouter, Depends, Header, HTTPException, Request
 from pydantic import ValidationError
 from sqlalchemy.orm import Session
+from starlette.concurrency import run_in_threadpool
 
 from app.database import get_db
 from app.dependencies import get_current_user, get_current_worker
@@ -142,7 +143,13 @@ async def submit_worker_certification(
             detail={"message": "认证申请信息格式有误", "fields": fields},
         ) from None
 
-    result = auth_service.submit_worker_certification(db, worker, certification)
+    # 证件对象存在性检查与真实短信验证可能调用同步云 SDK，移出事件循环。
+    result = await run_in_threadpool(
+        auth_service.submit_worker_certification,
+        db,
+        worker,
+        certification,
+    )
     result["application"] = _safe_certification_data(result.get("application"))
     return success(data=result, message="认证申请已提交，请等待审核")
 
@@ -160,7 +167,7 @@ async def update_profile(
 
 
 @router.post("/bind-phone")
-async def bind_phone(
+def bind_phone(
     req: BindPhoneRequest,
     user: User = Depends(get_current_user),
     db: Session = Depends(get_db),

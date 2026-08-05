@@ -1,0 +1,17 @@
+<!-- AUTO-GENERATED DESIGN VIEW sourceHash=fnv1a-db008c42; edit source HTML or generator bindings, then rerun. -->
+<view class="phone-page design-detail-page" data-page-id="page-client-password">
+  <view class="status-bar"><text class="tag-span">9:41</text><text class="status-icons tag-span">● WiFi 100%</text></view>
+  <view class="topbar"><view class="icon-button design-button" data-dom-id="password-back" data-route="/pages/client-account-security/index" bindtap="onNavigate"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m15%2018-6-6%206-6M9%2012h10%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view><view class="tag-h1">修改密码</view><text class="tag-span"></text></view>
+  <view class="page-body">
+    <view class="hero"><view class="hero-kicker tag-p">ACCOUNT SECURITY</view><view class="tag-h2">设置更安全的密码</view><view class="tag-p">修改后其他设备将需要重新登录，请记住新密码。</view></view>
+    <view class="section-title"><text class="tag-strong">校验状态</text><text class="badge warning tag-span">等待输入</text></view>
+    <view class="section"><view class="card">
+      <view class="field"><text for="password-current" class="tag-label">当前密码</text><view class="select-like"><input class="input" id="password-current" value="1234567890" /><view class="top-action design-button" data-dom-id="password-eye-current" data-action="toggle-current-password" bindtap="onAction">显示</view></view></view>
+      <view class="field"><text for="password-new" class="tag-label">新密码</text><view class="select-like"><input class="input" id="password-new" value="Safe2026Home" /><view class="top-action design-button" data-dom-id="password-eye-new" data-action="toggle-new-password" bindtap="onAction">显示</view></view></view>
+      <view class="section-title"><text class="tag-strong">密码强度</text><text class="badge success tag-span">强</text></view><view class="segmented"><text class="segment active tag-span"></text><text class="segment active tag-span"></text><text class="segment active tag-span"></text><text class="segment active tag-span"></text></view>
+      <view class="field"><text for="password-confirm" class="tag-label">确认新密码</text><view class="select-like"><input class="input" id="password-confirm" value="Safe2026Home" /><view class="top-action design-button" data-dom-id="password-eye-confirm" data-action="toggle-confirm-password" bindtap="onAction">显示</view></view></view>
+    </view></view>
+    <view class="notice info">密码须为 8–20 位，包含字母和数字，且不能与原密码相同。</view>
+  </view>
+  <view class="fixed-actions"><view class="btn primary design-button" data-dom-id="password-confirm-primary" data-action="change-password" data-route="/pages/client-account-security/index" bindtap="onNavigate">确认修改</view></view>
+</view>

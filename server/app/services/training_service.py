@@ -14,7 +14,7 @@ def list_courses(db: Session, category: str = None) -> List[TrainingCourse]:
     q = db.query(TrainingCourse).filter(TrainingCourse.is_active == True)
     if category:
         q = q.filter(TrainingCourse.category == category)
-    return q.order_by(TrainingCourse.sort_order.asc()).all()
+    return q.order_by(TrainingCourse.sort_order.asc()).limit(500).all()
 
 
 def start_course(db: Session, worker_id: int, course_id: int) -> WorkerTrainingRecord:
@@ -70,7 +70,7 @@ def get_exam_questions(db: Session, worker_id: int, course_id: int) -> List[Trai
         raise HTTPException(status_code=404, detail="学习记录不存在")
     if record.status == "studying":
         raise HTTPException(status_code=409, detail="请先完成课程学习再参加考试")
-    questions = db.query(TrainingExam).filter(TrainingExam.course_id == course_id).all()
+    questions = db.query(TrainingExam).filter(TrainingExam.course_id == course_id).limit(1000).all()
     if not questions:
         raise HTTPException(status_code=404, detail="该课程暂无考题")
     if len(questions) <= 10:
@@ -140,7 +140,9 @@ def submit_exam(db: Session, worker_id: int, course_id: int, answers: dict) -> d
 
 def get_training_stats(db: Session, worker_id: int) -> dict:
     """师傅培训统计"""
-    records = db.query(WorkerTrainingRecord).filter(WorkerTrainingRecord.worker_id == worker_id).all()
+    records = db.query(WorkerTrainingRecord).filter(
+        WorkerTrainingRecord.worker_id == worker_id
+    ).limit(500).all()
     total_credits = sum(r.total_credits for r in records)
     completed = sum(1 for r in records if r.status in ("completed", "passed", "failed"))
     passed = sum(1 for r in records if r.status == "passed")

@@ -1,0 +1,41 @@
+<!-- AUTO-GENERATED DESIGN VIEW sourceHash=fnv1a-aeaeb662; edit source HTML or generator bindings, then rerun. -->
+<view class="phone-page design-detail-page worker-theme" data-dom-id="page-worker-income-category-detail">
+    <view class="status-bar"><text class="tag-span">9:41</text><text class="status-icons tag-span">●●●</text></view>
+    <view class="topbar">
+      <view class="icon-button design-button" data-dom-id="income-category-back" data-route="/pages/worker-income-stat/index?period=2026-08" bindtap="onNavigate"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m15%2018-6-6%206-6M9%2012h10%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view>
+      <view class="tag-h1">类别收入</view>
+      <view class="top-action design-button" data-dom-id="income-category-filter" data-action="open-income-filter" bindtap="onAction">筛选</view>
+    </view>
+    <view class="page-body">
+      <view class="hero">
+        <view class="hero-kicker tag-p">水电维修 · 2026 年 8 月</view><view class="hero-number">¥ 3,200.00</view><view class="tag-p">12 笔订单 · 占本月收入 37.4% · 平均客单价 ¥267</view>
+      </view>
+
+      <view class="segmented">
+        <view class="segment design-button" data-dom-id="income-category-day" data-action="change-category-period" bindtap="onAction">日</view>
+        <view class="segment design-button" data-dom-id="income-category-week" data-action="change-category-period" bindtap="onAction">周</view>
+        <view class="segment active design-button" data-dom-id="income-category-month" data-action="change-category-period" bindtap="onAction">月</view>
+        <view class="segment design-button" data-dom-id="income-category-year" data-action="change-category-period" bindtap="onAction">年</view>
+      </view>
+
+      <view class="section">
+        <view class="section-title"><text class="tag-strong">类别表现</text><text class="tag-span">较上月 +18%</text></view>
+        <view class="grid-3">
+          <view class="card metric"><text class="tag-strong">12</text><text class="tag-span">完成订单</text></view>
+          <view class="card metric"><text class="tag-strong">4.9</text><text class="tag-span">平均评分</text></view>
+          <view class="card metric"><text class="tag-strong">96%</text><text class="tag-span">准时率</text></view>
+        </view>
+      </view>
+
+      <view class="section">
+        <view class="section-title"><text class="tag-strong">订单明细</text><text class="tag-span">12 笔</text></view>
+        <view class="card list-card">
+          <view class="list-row design-button" data-dom-id="income-category-order-1" data-route="/pages/order-detail-worker/index?order_id=WX20260803001" bindtap="onNavigate"><view class="row-icon tag-span"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%232D6CDF%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20aria-hidden%3D%22true%22%3E%3Cpath%20d%3D%22M12%202s7%207.2%207%2012a7%207%200%200%201-14%200c0-4.8%207-12%207-12Z%22%2F%3E%3Cpath%20d%3D%22M9%2016c.7%201%201.7%201.5%203%201.5%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view><text class="row-main tag-span"><text class="row-title tag-span">厨房水管漏水</text><text class="row-copy tag-span">#WX20260803001 · 08-03 已结算</text></text><text class="row-value tag-span">+¥268</text><text class="chevron tag-span">›</text></view>
+          <view class="list-row design-button" data-dom-id="income-category-order-2" data-route="/pages/order-detail-worker/index?order_id=WX20260802018" bindtap="onNavigate"><view class="row-icon tag-span"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%232D6CDF%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20aria-hidden%3D%22true%22%3E%3Cpath%20d%3D%22m13%202-9%2012h8l-1%208%209-12h-8Z%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view><text class="row-main tag-span"><text class="row-title tag-span">卧室插座故障</text><text class="row-copy tag-span">#WX20260802018 · 08-02 已结算</text></text><text class="row-value tag-span">+¥220</text><text class="chevron tag-span">›</text></view>
+          <view class="list-row design-button" data-dom-id="income-category-order-3" data-route="/pages/order-detail-worker/index?order_id=WX20260801009" bindtap="onNavigate"><view class="row-icon tag-span"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%232D6CDF%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20aria-hidden%3D%22true%22%3E%3Cpath%20d%3D%22M8%2013h8l2-9H6Z%22%2F%3E%3Cpath%20d%3D%22M12%2013v6M8%2021h8M9%204h6%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view><text class="row-main tag-span"><text class="row-title tag-span">客厅灯具安装</text><text class="row-copy tag-span">#WX20260801009 · 08-01 已结算</text></text><text class="row-value tag-span">+¥316</text><text class="chevron tag-span">›</text></view>
+        </view>
+      </view>
+
+      <view class="notice info">收入按结算时间统计；退款、扣款或冲正会在对应资金明细中单独展示。</view>
+    </view>
+  </view>

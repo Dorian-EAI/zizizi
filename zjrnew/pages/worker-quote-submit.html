@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>自家人居家维修 · 玻璃新拟态 · 提交报价</title>
-    <link rel="stylesheet" href="../assets/fonts.css">
-
     <style id="theme-vars">
 /* 自家人居家维修 - 玻璃新拟态 */
 :root {
@@ -14,7 +12,7 @@
   --brand-dark: #2456B8;
   --brand-mid: #5A8EE8;
   --brand-light: #DCE8FB;
-  --brand-glow: rgba(45, 108, 223, 0.28);
+  --brand-glow: rgba(45, 108, 223, 0.18);
   --brand-subtle: rgba(45, 108, 223, 0.08);
 
   /* Accent (Amber) */
@@ -82,11 +80,11 @@
   --radius-lg: 1.6rem;
   --radius-full: 9999px;
 
-    /* Font — 统一衬线系统 */
+  /* Font — unified serif system */
   --font-display: 'Cormorant Garamond', 'Noto Serif SC', 'STSong', Georgia, serif;
-  --font-body: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-  --font-nums: 'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
-  --font: var(--font-body);
+  --font-body:    'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --font-nums:    'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
+  --font:         var(--font-body);
 
   /* Motion */
   --spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -127,9 +125,8 @@
   --radius-sm: var(--radius-sm);
   --radius-md: var(--radius-md);
   --radius-lg: var(--radius-lg);
-  --font-sans: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-  --font-serif: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-  --radius-full: var(--radius-full);}
+  --radius-full: var(--radius-full);
+}
 
 /* Semantic token fallback */
 #semantic-token-fallback {
@@ -152,6 +149,113 @@
 }
 
 /* ===== Global Neumorphic Components ===== */
+/* Tab Bar — Premium Liquid Glass, absolute-positioned within .phone frame */
+.tab-bar{
+  position:absolute;
+  bottom:10px;
+  left:50%;
+  transform:translateX(-50%);
+  width:calc(100% - 32px);
+  max-width:360px;
+  height:56px;
+  z-index:100;
+  background:rgba(255,255,255,0.18);
+  backdrop-filter:blur(48px) saturate(210%);
+  -webkit-backdrop-filter:blur(48px) saturate(210%);
+  border:0.5px solid rgba(255,255,255,0.45);
+  border-radius:24px;
+  box-shadow:
+    inset 0 1.5px 3px rgba(255,255,255,0.60),
+    inset 0 -0.5px 1px rgba(255,255,255,0.20),
+    0 0 0 0.5px rgba(0,0,0,0.04),
+    0 2px 10px rgba(0,0,0,0.06),
+    0 12px 36px rgba(0,0,0,0.08);
+  display:flex;
+  align-items:center;
+  justify-content:space-around;
+  padding:0 6px;
+}
+.tab-bar::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  background:linear-gradient(160deg,
+    rgba(255,255,255,0.42) 0%,
+    rgba(255,255,255,0.16) 20%,
+    rgba(255,255,255,0.03) 40%,
+    transparent 60%);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
+  padding:0.5px;
+  pointer-events:none;
+  z-index:1;
+}
+.tab-bar::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  background:linear-gradient(320deg,
+    transparent 60%,
+    rgba(13,148,136,0.06) 80%,
+    rgba(255,255,255,0.04) 100%);
+  pointer-events:none;
+  z-index:1;
+}
+.tab-item{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+  width:68px;
+  height:44px;
+  border-radius:14px;
+  color:var(--text-3);
+  font-size:11px;
+  font-weight:500;
+  text-decoration:none;
+  position:relative;
+  transition:all .2s;
+}
+.tab-item svg{
+  width:20px;
+  height:20px;
+  stroke:currentColor;
+  fill:none;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.tab-item[data-active="true"]{
+  color:var(--brand);
+  font-weight:600;
+}
+.tab-item[data-active="true"]::before{
+  content:"";
+  position:absolute;
+  width:54px;
+  height:42px;
+  border-radius:16px;
+  background:rgba(13,148,136,0.16);
+  backdrop-filter:blur(24px);
+  -webkit-backdrop-filter:blur(24px);
+  border:0.5px solid rgba(13,148,136,0.30);
+  box-shadow:
+    inset 0 1px 3px rgba(255,255,255,0.55),
+    inset 0 -0.5px 1px rgba(255,255,255,0.15),
+    0 2px 10px rgba(13,148,136,0.20),
+    0 0 0 0.5px rgba(13,148,136,0.08);
+  z-index:0;
+}
+.tab-item[data-active="true"] svg{
+  transform:scale(1.08);
+  position:relative;
+  z-index:1;
+}
+
 /* Buttons */
 .btn-neu-primary{
   display:inline-flex;align-items:center;justify-content:center;
@@ -208,8 +312,6 @@
     --radius-md: var(--radius-md);
     --radius-lg: var(--radius-lg);
     --radius-full: var(--radius-full);
-    --font-sans: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
-    --font-serif: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
   }
   @layer base {
     body { background: var(--background); color: var(--foreground); }
@@ -297,7 +399,7 @@
 
   <!-- ===== TOP NAV BAR (sticky) ===== -->
   <header class="nav-bar">
-    <button class="nav-icon-btn" data-dom-id="back-btn" aria-label="返回">
+    <button class="nav-icon-btn" data-dom-id="quote-submit-back" data-target-page="page-worker-home" aria-label="返回">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
         <path d="m15 18-6-6 6-6"/>
       </svg>
@@ -350,10 +452,10 @@
       </div>
       <div class="amount-divider"></div>
       <div class="amount-quick">
-        <button class="quick-chip" data-amount="100" data-dom-id="quick-100">&yen;100</button>
-        <button class="quick-chip is-active" data-amount="150" data-dom-id="quick-150">&yen;150</button>
-        <button class="quick-chip" data-amount="200" data-dom-id="quick-200">&yen;200</button>
-        <button class="quick-chip" data-amount="custom" data-dom-id="quick-custom">自定义</button>
+        <button class="quick-chip" data-amount="100" data-dom-id="quote-submit-quick-100" data-action="set-quote-amount">&yen;100</button>
+        <button class="quick-chip is-active" data-amount="150" data-dom-id="quote-submit-quick-150" data-action="set-quote-amount">&yen;150</button>
+        <button class="quick-chip" data-amount="200" data-dom-id="quote-submit-quick-200" data-action="set-quote-amount">&yen;200</button>
+        <button class="quick-chip" data-amount="custom" data-dom-id="quote-submit-quick-custom" data-action="focus-custom-quote-amount">自定义</button>
       </div>
     </div>
   </section>
@@ -367,10 +469,10 @@
       <div class="form-row">
         <span class="form-label">预计用时</span>
         <div class="duration-group">
-          <button class="dur-chip" data-dur="1" data-dom-id="dur-1">1h</button>
-          <button class="dur-chip is-active" data-dur="1.5" data-dom-id="dur-1-5">1.5h</button>
-          <button class="dur-chip" data-dur="2" data-dom-id="dur-2">2h</button>
-          <button class="dur-chip" data-dur="3" data-dom-id="dur-3">3h+</button>
+          <button class="dur-chip" data-dur="1" data-dom-id="quote-submit-duration-1" data-action="set-service-duration">1h</button>
+          <button class="dur-chip is-active" data-dur="1.5" data-dom-id="quote-submit-duration-1-5" data-action="set-service-duration">1.5h</button>
+          <button class="dur-chip" data-dur="2" data-dom-id="quote-submit-duration-2" data-action="set-service-duration">2h</button>
+          <button class="dur-chip" data-dur="3" data-dom-id="quote-submit-duration-3" data-action="set-service-duration">3h+</button>
         </div>
       </div>
 
@@ -414,11 +516,11 @@
 
   <!-- ===== BOTTOM FIXED ACTION BAR ===== -->
   <footer class="action-bar">
-    <button class="action-btn-secondary" data-dom-id="save-draft">
+    <button class="action-btn-secondary" data-dom-id="quote-submit-save-draft" data-action="save-quote-draft">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></svg>
       <span>保存草稿</span>
     </button>
-    <button class="action-btn-primary" data-dom-id="submit-quote">
+    <button class="action-btn-primary" data-dom-id="quote-submit-confirm" data-action="submit-quote">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
       <span>提交报价</span>
     </button>
@@ -430,9 +532,9 @@
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{
   --brand:#2D6CDF;--brand-dark:#2456B8;--brand-mid:#5A8EE8;--brand-light:#DCE8FB;
-  --brand-glow:rgba(45,108,223,0.28);--brand-subtle:rgba(45,108,223,0.08);
-  --brand-gradient:linear-gradient(135deg,#2D6CDF 0%,#5A8EE8 50%,#D4944C 100%);
-  --accent:#D4944C;--accent-dark:#A0723C;--accent-light:#F5E6D0;--accent-glow:rgba(212,148,76,0.25);
+  --brand-glow:rgba(45,108,223,0.18);--brand-subtle:rgba(45,108,223,0.08);
+  --brand-gradient:linear-gradient(135deg,#2D6CDF 0%,#5A8EE8 48%,#D4944C 100%);
+  --accent:#D4944C;--accent-dark:#A0723C;--accent-light:#F5E6D0;--accent-glow:rgba(212,148,76,0.16);
   --bg:#F2EDE8;--bg-elevated:#F7F3EF;
   --neu-light:#FFF8F2;--neu-dark:#DDD6CE;
   --text-1:#2C2824;--text-2:#8B8178;--text-3:#B5ADA5;--text-inverse:#FFFFFF;
@@ -460,7 +562,7 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
 .mono{font-variant-numeric:tabular-nums;letter-spacing:-0.01em}
 
 /* ===== Top Nav Bar (sticky) ===== */
-.nav-bar{background:radial-gradient(ellipse 220px 160px at 78% 45%,rgba(143,169,152,.14) 0%,transparent 70%),radial-gradient(ellipse 180px 140px at 18% 75%,rgba(45,108,223,.16) 0%,transparent 70%),linear-gradient(135deg,rgba(45,108,223,.14) 0%,rgba(143,169,152,.08) 50%,rgba(45,108,223,.06) 100%);position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:18px 20px;padding-top:max(18px,env(safe-area-inset-top)); border-radius:0 0 28px 28px; overflow:hidden;}
+.nav-bar{background:radial-gradient(ellipse 220px 160px at 78% 45%,rgba(212,148,76,.10) 0%,transparent 70%),radial-gradient(ellipse 180px 140px at 18% 75%,rgba(45,108,223,.10) 0%,transparent 70%),linear-gradient(135deg,rgba(45,108,223,.08) 0%,rgba(212,148,76,.04) 50%,rgba(45,108,223,.05) 100%);position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:18px 20px;padding-top:max(18px,env(safe-area-inset-top)); border-radius:0 0 28px 28px; overflow:hidden;}
 .nav-icon-btn{
   width:44px;height:44px;border-radius:50%;border:none;
   background:var(--bg-elevated);
@@ -484,7 +586,7 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
   backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);
   border:1px solid rgba(255,255,255,0.70);
   border-radius:var(--r-lg);
-  box-shadow:var(--neu-out-md),0 6px 28px rgba(0,0,0,0.06),0 2px 8px rgba(45,108,223,0.04),0 0 0 1px rgba(44,40,36,0.05);
+  box-shadow:var(--neu-out-md),0 6px 28px rgba(0,0,0,0.06),0 2px 8px rgba(45,108,223,.04),0 0 0 1px rgba(44,40,36,0.05);
   position:relative;overflow:hidden;
 }
 .glass-neu-card::before{
@@ -606,7 +708,7 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
 .quick-chip:active{box-shadow:var(--neu-in);transform:scale(0.95)}
 .quick-chip.is-active{
   background:var(--brand);color:var(--text-inverse);
-  box-shadow:var(--neu-in),inset 0 0 0 1px rgba(45,108,223,0.30);
+  box-shadow:var(--neu-in),inset 0 0 0 1px rgba(45,108,223,.12);
 }
 
 /* ----- Form Card ----- */
@@ -667,14 +769,14 @@ body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh
 .dur-chip:active{box-shadow:var(--neu-in);transform:scale(0.96)}
 .dur-chip.is-active{
   background:var(--brand);color:var(--text-inverse);
-  box-shadow:var(--neu-in),inset 0 0 0 1px rgba(45,108,223,0.35);
+  box-shadow:var(--neu-in),inset 0 0 0 1px rgba(45,108,223,.12);
 }
 
 /* ----- Quote Hint Card (light tinted) ----- */
 .hint-card{
   padding:14px 16px;
-  background:rgba(45,108,223,0.07);
-  border-color:rgba(45,108,223,0.16);
+  background:rgba(45,108,223,.04);
+  border-color:rgba(45,108,223,.08);
   display:flex;align-items:flex-start;gap:10px;
 }
 .hint-ic{

@@ -1,0 +1,36 @@
+<!-- AUTO-GENERATED DESIGN VIEW sourceHash=fnv1a-2c0f95dc; edit source HTML or generator bindings, then rerun. -->
+<view class="phone-page design-detail-page worker-theme" data-dom-id="page-worker-deposit-refund">
+    <view class="status-bar"><text class="tag-span">9:41</text><text class="status-icons tag-span">●●●</text></view>
+    <view class="topbar">
+      <view class="icon-button design-button" data-dom-id="deposit-refund-back" data-route="/pages/worker-deposit/index" bindtap="onNavigate"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m15%2018-6-6%206-6M9%2012h10%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view>
+      <view class="tag-h1">申请退保</view>
+      <view class="icon-button design-button" data-dom-id="deposit-refund-help" data-route="/pages/client-customer-service/index?role=worker&topic=deposit-refund" bindtap="onNavigate"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2212%22%20r%3D%229%22%2F%3E%3Cpath%20d%3D%22M9.7%209a2.5%202.5%200%201%201%203.8%202.1c-.9.5-1.5%201.1-1.5%202.4M12%2017h.01%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view>
+    </view>
+    <view class="page-body">
+      <view class="hero">
+        <view class="hero-kicker tag-p">当前可申请退还</view><view class="hero-number">¥ 800.00</view><view class="tag-p">总保证金 ¥1,000.00 · 风险冻结 ¥200.00 暂不可退</view>
+      </view>
+
+      <view class="notice">退保申请通过后会影响新订单报价资格；已有订单仍须按约完成。冻结部分将在相关事项结束后重新评估。</view>
+
+      <view class="section card">
+        <view class="field"><text class="tag-label">退保原因</text><view class="select-like design-button" data-dom-id="deposit-refund-reason" data-action="open-refund-reason-picker" bindtap="onAction"><text class="tag-span">近期暂停接单</text><text class="tag-span">⌄</text></view></view>
+        <view class="field"><text for="deposit-refund-note" class="tag-label">补充说明</text><textarea class="textarea" id="deposit-refund-note" data-dom-id="deposit-refund-note" data-action="input-refund-note" maxlength="300" placeholder="请说明申请原因" bindchange="onAction">近期需要离开服务城市，计划暂停接单。</textarea></view>
+      </view>
+
+      <view class="section">
+        <view class="section-title"><text class="tag-strong">退回账户</text><text class="tag-span">原路或已验证账户</text></view>
+        <view class="card list-row design-button" data-dom-id="deposit-refund-account" data-action="select-refund-account" bindtap="onAction"><view class="row-icon tag-span"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%232D6CDF%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20aria-hidden%3D%22true%22%3E%3Cpath%20d%3D%22m3%2010%209-6%209%206M5%2010v8M9%2010v8M15%2010v8M19%2010v8M3%2021h18%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view><text class="row-main tag-span"><text class="row-title tag-span">工商银行储蓄卡</text><text class="row-copy tag-span">尾号 8888 · 张师傅</text></text><text class="badge success tag-span">已验证</text><text class="chevron tag-span">›</text></view>
+      </view>
+
+      <view class="section card">
+        <view class="card-title tag-h2">处理说明</view>
+        <view class="timeline">
+          <view class="timeline-item"><text class="tag-strong">提交申请</text><text class="tag-span">核验在途订单、售后和风险冻结</text></view>
+          <view class="timeline-item pending"><text class="tag-strong">平台审核</text><text class="tag-span">预计 1—3 个工作日</text></view>
+          <view class="timeline-item pending"><text class="tag-strong">退回账户</text><text class="tag-span">审核通过后按支付渠道处理</text></view>
+        </view>
+      </view>
+    </view>
+    <view class="fixed-actions"><view class="btn danger design-button" data-dom-id="deposit-refund-submit" data-route="/pages/worker-deposit/index" bindtap="onNavigate">确认申请退还 ¥800.00</view></view>
+  </view>

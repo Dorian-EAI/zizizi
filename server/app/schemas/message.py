@@ -1,8 +1,9 @@
 """消息相关 Pydantic 模型"""
 
+import json
 from datetime import datetime
 from typing import Literal, Optional, List, Dict, Any
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 
 class MessageResponse(BaseModel):
@@ -15,6 +16,21 @@ class MessageResponse(BaseModel):
     payload: Optional[Dict[str, Any]] = None
     is_read: bool
     created_at: datetime
+
+    @field_validator("payload", mode="before")
+    @classmethod
+    def parse_payload_json(cls, value):
+        if value is None or value == "":
+            return None
+        if isinstance(value, dict):
+            return value
+        if isinstance(value, str):
+            try:
+                parsed = json.loads(value)
+            except (TypeError, ValueError, json.JSONDecodeError):
+                return None
+            return parsed if isinstance(parsed, dict) else None
+        return value
 
     class Config:
         from_attributes = True

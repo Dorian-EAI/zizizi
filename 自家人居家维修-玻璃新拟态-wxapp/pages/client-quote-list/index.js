@@ -58,16 +58,18 @@ Page({
       const list = (res && res.biddings) || res || []
       // 兜底：补全头像与字段；后端返回 worker_avatar/worker_rating/worker_name(snake) 需映射
       const raw = list.map(b => {
-        const rating = b.rating != null ? b.rating : (b.worker_rating != null ? b.worker_rating : 5)
+        const ratingValue = b.rating != null ? b.rating : b.worker_rating
+        const rating = Number(ratingValue) > 0 ? Number(ratingValue) : null
         return Object.assign({}, b, {
           workerName: b.worker_name != null ? b.worker_name : b.workerName,
           workerAvatar: b.worker_avatar != null ? b.worker_avatar : b.workerAvatar,
           rating: rating,
           avatarUrl: b.workerAvatar || b.worker_avatar || buildIcon('user', COLORS.brand),
-          ratingText: rating.toFixed(1),
+          ratingText: rating != null ? rating.toFixed(1) : '—',
           distanceText: b.distance != null ? (b.distance + 'km') : '—',
           etaText: b.eta || '—',
-          priceText: b.price != null ? b.price : '—'
+          priceText: b.price != null ? b.price : '—',
+          message: String(b.message || '').trim() || '报价未附说明'
         })
       })
       this.setData({ rawBiddings: raw })
@@ -93,7 +95,7 @@ Page({
     } else if (key === 'rating_desc') {
       sorted = raw.sort((a, b) => (b.rating || 0) - (a.rating || 0))
     } else if (key === 'distance_asc') {
-      sorted = raw.sort((a, b) => (a.distance || 0) - (b.distance || 0))
+      sorted = raw.sort((a, b) => (a.distance == null ? Infinity : a.distance) - (b.distance == null ? Infinity : b.distance))
     }
     this.setData({ biddings: sorted })
   },
@@ -132,12 +134,7 @@ Page({
   },
 
   onViewWorker(e) {
-    const biddingId = e.currentTarget.dataset.id
-    if (!biddingId) return
-    wx.navigateTo({
-      url: '/pages/client-favorite-workers/index?id=' + biddingId,
-      fail: () => wx.showToast({ title: '暂未开放', icon: 'none' })
-    })
+    wx.showToast({ title: '师傅详情页暂未开放', icon: 'none' })
   },
 
   onBack() {
