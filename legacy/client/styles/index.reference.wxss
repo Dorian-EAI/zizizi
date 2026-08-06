@@ -1,0 +1,430 @@
+/* =========================================================
+ * 首页样式 · 参考 lilu-value-investing-30.html 风格
+ * - stone 米白底色 / 四色点缀（indigo/teal/amber/rose）
+ * - 白底卡片 + 细边框 + 极淡阴影
+ * - 左侧彩色边条（lecture-card 风格）
+ * ========================================================= */
+
+.page-container.data-v-67050ae7 {
+  min-height: 100vh;
+  background: var(--bg);
+  padding-bottom: calc(130rpx + env(safe-area-inset-bottom, 0px));
+}
+
+/* ---------- 顶部导航 ---------- */
+.custom-nav.data-v-67050ae7 {
+  position: sticky;
+  top: 0;
+  z-index: 101;
+  padding-top: max(env(safe-area-inset-top), 59px);
+  background: var(--surface);
+  border-bottom: 1rpx solid var(--divider);
+}
+.nav-title.data-v-67050ae7 {
+  height: 92rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  font-weight: 700;
+  color: var(--text-1);
+  letter-spacing: 0.08em;
+}
+
+/* ---------- 搜索卡片（hero 下方小卡） ---------- */
+.header-card.data-v-67050ae7 {
+  background: var(--surface);
+  padding: 18rpx 24rpx;
+  margin: 24rpx 30rpx 0;
+  border-radius: 999rpx;
+  border: 1rpx solid var(--border);
+  box-shadow: var(--shadow-card);
+}
+.search-bar.data-v-67050ae7 {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  padding: 12rpx 16rpx;
+  background: var(--bg-soft);
+  border-radius: 999rpx;
+}
+.search-icon.data-v-67050ae7 {
+  font-size: 28rpx;
+}
+.search-input.data-v-67050ae7 {
+  flex: 1;
+  font-size: 26rpx;
+  color: var(--text-2);
+  background: transparent;
+}
+
+/* ---------- 主体区 ---------- */
+.main-content.data-v-67050ae7 {
+  padding: 0 30rpx;
+}
+
+/* ---------- 快捷服务 section（hero 式） ---------- */
+.section-card.data-v-67050ae7 {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  border: 1rpx solid var(--border);
+  padding: 28rpx;
+  margin: 24rpx 0 0;
+  box-shadow: var(--shadow-card);
+}
+.section-header.data-v-67050ae7 {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 24rpx;
+}
+.section-title.data-v-67050ae7 {
+  font-size: 30rpx;
+  font-weight: 700;
+  color: var(--text-1);
+  letter-spacing: 0.02em;
+}
+
+/* 四宫格服务 */
+.services-grid.data-v-67050ae7 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20rpx;
+}
+.service-cell.data-v-67050ae7 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20rpx 8rpx;
+  border-radius: var(--radius-md);
+  transition: background 0.2s;
+}
+.service-icon-wrap.data-v-67050ae7 {
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: 24rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12rpx;
+  border: 1rpx solid rgba(24, 24, 27, 0.06);
+}
+.service-emoji.data-v-67050ae7 {
+  font-size: 44rpx;
+}
+.service-label.data-v-67050ae7 {
+  font-size: 22rpx;
+  color: var(--text-2);
+  text-align: center;
+  font-weight: 500;
+}
+
+/* ---------- hero banner（大号渐隐式） ---------- */
+.hero-banner.data-v-67050ae7 {
+  position: relative;
+  background: linear-gradient(135deg, #eef2ff 0%, #ffffff 60%, #fef3c7 100%);
+  border-radius: var(--radius-lg);
+  padding: 32rpx 30rpx;
+  margin: 24rpx 0 0;
+  border: 1rpx solid var(--border);
+  overflow: hidden;
+}
+.banner-content.data-v-67050ae7 {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 18rpx;
+}
+.banner-text.data-v-67050ae7 {
+  display: flex;
+  flex-direction: column;
+  gap: 6rpx;
+}
+.banner-title.data-v-67050ae7 {
+  font-size: 34rpx;
+  font-weight: 700;
+  color: var(--text-1);
+  letter-spacing: 0.02em;
+}
+.banner-subtitle.data-v-67050ae7 {
+  font-size: 24rpx;
+  color: var(--text-2);
+}
+.banner-cta.data-v-67050ae7 {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-start;
+  padding: 14rpx 28rpx;
+  background: var(--text-1);
+  color: #fff;
+  border-radius: 999rpx;
+  font-size: 24rpx;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+/* ---------- AI 智能助手卡片（左侧带装饰编号） ---------- */
+.ai-card.data-v-67050ae7 {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  padding: 24rpx 28rpx;
+  margin: 24rpx 0 0;
+  border: 1rpx solid var(--border);
+  border-left: 8rpx solid var(--indigo);
+  box-shadow: var(--shadow-card);
+}
+.ai-left.data-v-67050ae7 {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+}
+.ai-avatar.data-v-67050ae7 {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 20rpx;
+  background: var(--indigo-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ai-emoji.data-v-67050ae7 {
+  font-size: 36rpx;
+}
+.ai-info.data-v-67050ae7 {
+  display: flex;
+  flex-direction: column;
+  gap: 4rpx;
+}
+.ai-title.data-v-67050ae7 {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: var(--text-1);
+}
+.ai-desc.data-v-67050ae7 {
+  font-size: 22rpx;
+  color: var(--text-3);
+}
+.ai-arrow.data-v-67050ae7 {
+  color: var(--text-3);
+  font-size: 32rpx;
+  font-weight: 300;
+}
+
+/* ---------- 推荐区 ---------- */
+.promo-section.data-v-67050ae7 {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+  margin-top: 24rpx;
+}
+.promo-card.data-v-67050ae7 {
+  position: relative;
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  padding: 24rpx 28rpx;
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  border: 1rpx solid var(--border);
+  box-shadow: var(--shadow-card);
+}
+.promo-icon.data-v-67050ae7 {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36rpx;
+}
+.promo-card.invite .promo-icon.data-v-67050ae7 { background: var(--amber-soft); }
+.promo-card.member .promo-icon.data-v-67050ae7 { background: var(--rose-soft); }
+.promo-card.coupon .promo-icon.data-v-67050ae7 { background: var(--teal-soft); }
+.promo-info.data-v-67050ae7 {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4rpx;
+}
+.promo-title.data-v-67050ae7 {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: var(--text-1);
+}
+.promo-desc.data-v-67050ae7 {
+  font-size: 22rpx;
+  color: var(--text-3);
+}
+.promo-action.data-v-67050ae7 {
+  padding: 10rpx 20rpx;
+  background: var(--bg-soft);
+  color: var(--text-2);
+  border-radius: 999rpx;
+  font-size: 22rpx;
+  font-weight: 600;
+}
+
+/* ---------- 热门服务（带大编号装饰） ---------- */
+.hot-services.data-v-67050ae7 {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  border: 1rpx solid var(--border);
+  padding: 28rpx;
+  margin: 24rpx 0 0;
+  box-shadow: var(--shadow-card);
+}
+.hot-list.data-v-67050ae7 {
+  display: flex;
+  flex-direction: column;
+}
+.hot-item.data-v-67050ae7 {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 22rpx 0;
+}
+.hot-item.data-v-67050ae7 + .hot-item.data-v-67050ae7 {
+  border-top: 1rpx solid var(--divider);
+}
+.hot-rank.data-v-67050ae7 {
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: 16rpx;
+  background: var(--bg-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 28rpx;
+  font-weight: 700;
+  color: var(--indigo);
+  margin-right: 20rpx;
+  flex-shrink: 0;
+}
+.hot-item.rank-1 .hot-rank.data-v-67050ae7 { background: var(--amber-soft); color: var(--amber); }
+.hot-item.rank-2 .hot-rank.data-v-67050ae7 { background: var(--teal-soft); color: var(--teal-text); }
+.hot-item.rank-3 .hot-rank.data-v-67050ae7 { background: var(--rose-soft); color: var(--rose-text); }
+.hot-main.data-v-67050ae7 {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6rpx;
+}
+.hot-name.data-v-67050ae7 {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: var(--text-1);
+}
+.hot-meta.data-v-67050ae7 {
+  font-size: 22rpx;
+  color: var(--text-3);
+}
+.hot-right.data-v-67050ae7 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6rpx;
+  margin-left: 16rpx;
+}
+.hot-price.data-v-67050ae7 {
+  font-size: 26rpx;
+  font-weight: 700;
+  color: var(--text-1);
+}
+.hot-order.data-v-67050ae7 {
+  font-size: 20rpx;
+  color: var(--indigo);
+  padding: 6rpx 16rpx;
+  background: var(--indigo-soft);
+  border-radius: 999rpx;
+}
+
+/* ---------- 价格区间卡片（teal 色调） ---------- */
+.price-section.data-v-67050ae7 {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  padding: 28rpx;
+  margin: 24rpx 0 40rpx;
+  border: 1rpx solid var(--border);
+  border-left: 8rpx solid var(--teal);
+  box-shadow: var(--shadow-card);
+}
+.price-list.data-v-67050ae7 {
+  display: flex;
+  flex-direction: column;
+}
+.price-item.data-v-67050ae7 {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  padding: 20rpx 0;
+}
+.price-item.data-v-67050ae7 + .price-item.data-v-67050ae7 {
+  border-top: 1rpx solid var(--divider);
+}
+.price-emoji.data-v-67050ae7 {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 18rpx;
+  background: var(--teal-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  flex-shrink: 0;
+}
+.price-name.data-v-67050ae7 {
+  flex: 1;
+  font-size: 28rpx;
+  font-weight: 600;
+  color: var(--text-1);
+}
+.price-range.data-v-67050ae7 {
+  font-size: 24rpx;
+  color: var(--teal-text);
+  font-weight: 600;
+}
+
+/* ---------- 平台服务保障（4 列小格子） ---------- */
+.guarantee-section.data-v-67050ae7 {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  padding: 24rpx;
+  margin: 24rpx 0 0;
+  border: 1rpx solid var(--border);
+  box-shadow: var(--shadow-card);
+}
+.guarantee-grid.data-v-67050ae7 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+.guarantee-cell.data-v-67050ae7 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12rpx 4rpx;
+  gap: 8rpx;
+  text-align: center;
+}
+.guarantee-emoji.data-v-67050ae7 {
+  font-size: 32rpx;
+}
+.guarantee-text.data-v-67050ae7 {
+  font-size: 20rpx;
+  color: var(--text-2);
+  font-weight: 500;
+}
+
+/* ---------- section 副标题 ---------- */
+.section-sub.data-v-67050ae7 {
+  font-size: 22rpx;
+  color: var(--text-3);
+  margin-top: 4rpx;
+  display: block;
+}

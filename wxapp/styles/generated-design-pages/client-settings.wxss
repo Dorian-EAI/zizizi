@@ -1,0 +1,5 @@
+/* AUTO-GENERATED from zjrnew page-local CSS; do not hand edit. */
+@layer base{page {background:var(--background);color:var(--foreground);font-family:var(--font-body);}}
+
+.design-canvas-page { width: 750rpx; min-height: 100vh; border-radius: 0; box-shadow: none; }
+.design-svg-icon { display: block; width: 44rpx; height: 44rpx; }

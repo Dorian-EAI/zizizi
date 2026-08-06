@@ -20,7 +20,7 @@ from urllib.parse import urlsplit
 
 SERVER_ROOT = Path(__file__).resolve().parents[1]
 WORKSPACE_ROOT = SERVER_ROOT.parent
-WXAPP_ROOT = WORKSPACE_ROOT / "自家人居家维修-玻璃新拟态-wxapp"
+WXAPP_ROOT = WORKSPACE_ROOT / "wxapp"
 IGNORED_SOURCE_PARTS = {".backups", ".git", "node_modules", "miniprogram_npm"}
 
 

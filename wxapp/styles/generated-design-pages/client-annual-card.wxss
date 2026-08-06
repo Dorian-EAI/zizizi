@@ -1,0 +1,151 @@
+/* AUTO-GENERATED from zjrnew page-local CSS; do not hand edit. */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+
+page {font-family:var(--font);color:var(--text-1);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+page {display:flex;align-items:flex-start;justify-content:center;min-height:100vh;background:var(--body-bg);letter-spacing:-0.01em}
+
+/* ===== Phone Frame ===== */
+.design-canvas-page{position:relative;width:828rpx;min-height:1792rpx;background:var(--background);border-radius:96rpx;overflow:hidden;overflow-y:auto;box-shadow:0 40rpx 120rpx rgba(0,0,0,.12),0 8rpx 32rpx rgba(0,0,0,.06);padding-bottom:164rpx}
+.design-canvas-page::-webkit-scrollbar{display:none}
+.design-canvas-page{scrollbar-width:none}
+.design-canvas-page::after{content:'';position:absolute;bottom:0;left:0;right:0;height:520rpx;background:radial-gradient(ellipse 360rpx 240rpx at 20% 90%,rgba(13,148,136,.05) 0%,transparent 70%),radial-gradient(ellipse 320rpx 200rpx at 80% 85%,rgba(212,148,76,.05) 0%,transparent 70%);pointer-events:none;z-index:0}
+.design-canvas-page>*:not(.bottom-bar){position:relative;z-index:1}
+
+/* ===== Nav Bar (sticky top) ===== */
+.nav-bar{background:radial-gradient(ellipse 440rpx 320rpx at 78% 45%,rgba(212,148,76,.10) 0%,transparent 70%),radial-gradient(ellipse 360rpx 280rpx at 18% 75%,rgba(13,148,136,.10) 0%,transparent 70%),linear-gradient(135deg,rgba(13,148,136,.08) 0%,rgba(212,148,76,.06) 50%,rgba(13,148,136,.05) 100%);position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:24rpx;padding:max(36rpx, env(safe-area-inset-top)) 40rpx 24rpx; border-radius:0 0 56rpx 56rpx; overflow:hidden;}
+.nav-back{
+  width:72rpx;height:72rpx;border-radius:50%;
+  background:rgba(255,255,255,0.50);
+  border:1rpx solid rgba(255,255,255,0.60);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--text-1);cursor:pointer;flex-shrink:0;
+  box-shadow:var(--neu-out-sm);
+  transition:transform var(--dur) var(--ease),box-shadow var(--dur) var(--ease);
+}
+.nav-back:active{box-shadow:var(--neu-in);transform:scale(0.88)}
+.nav-back .design-svg-icon{width:36rpx;height:36rpx;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.nav-title{font-size:36rpx;font-weight:700;color:var(--text-1);letter-spacing:-0.4rpx}
+
+/* ===== btn-neu-primary base (head only defines :active) ===== */
+.btn-neu-primary{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:var(--brand-gradient);
+  color:var(--text-inverse);
+  border:1rpx solid rgba(255,255,255,0.30);border-radius:19998rpx;
+  padding:16rpx 32rpx;font-size:26rpx;font-weight:600;font-family:var(--font);
+  cursor:pointer;
+  box-shadow:var(--neu-out-sm),0 8rpx 24rpx var(--brand-glow);
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
+
+/* ===== My Annual Card (glass gradient) ===== */
+.my-card-wrap{padding:32rpx 40rpx 0;position:relative;z-index:2}
+.my-card{
+  position:relative;
+  padding:44rpx 44rpx 40rpx;
+  border-radius:52rpx;
+  overflow:hidden;
+  background:
+    radial-gradient(ellipse 400rpx 320rpx at 80% 15%,rgba(212,148,76,.16) 0%,transparent 70%),
+    radial-gradient(ellipse 360rpx 280rpx at 15% 88%,rgba(13,148,136,.12) 0%,transparent 70%),
+    linear-gradient(135deg,rgba(13,148,136,.12) 0%,rgba(20,184,166,.22) 45%,rgba(212,148,76,.14) 100%);
+  border:1rpx solid rgba(255,255,255,0.45);
+  box-shadow:var(--neu-out-md),inset 0 2rpx 0 rgba(255,255,255,0.35),0 16rpx 56rpx rgba(13,148,136,.06);
+}
+.my-card-shine{
+  content:"";position:absolute;inset:0;border-radius:inherit;
+  background:linear-gradient(165deg,rgba(255,255,255,0.28) 0%,rgba(255,255,255,0.06) 30%,transparent 55%);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;
+  padding:1rpx;pointer-events:none;
+}
+.my-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:20rpx;margin-bottom:32rpx;position:relative;z-index:1}
+.my-card-name{font-size:34rpx;font-weight:700;color:var(--text-inverse);letter-spacing:-0.01em;text-shadow:0 2rpx 6rpx rgba(0,0,0,0.14)}
+.my-card-expire{font-size:22rpx;font-weight:600;color:rgba(255,255,255,0.95);background:rgba(255,255,255,0.22);backdrop-filter:blur(16rpx);-webkit-backdrop-filter:blur(16rpx);border:1rpx solid rgba(255,255,255,0.38);border-radius:19998rpx;padding:8rpx 20rpx;white-space:nowrap;flex-shrink:0}
+.my-card-usage{position:relative;z-index:1;margin-bottom:28rpx}
+.usage-num{display:flex;align-items:baseline;gap:2rpx;color:var(--text-inverse);text-shadow:0 4rpx 16rpx rgba(0,0,0,0.16)}
+.usage-used{font-size:88rpx;font-weight:800;letter-spacing:-3rpx;line-height:1}
+.usage-sep{font-size:52rpx;font-weight:600;opacity:0.7;margin:0 6rpx}
+.usage-total{font-size:52rpx;font-weight:600;opacity:0.7}
+.usage-unit{font-size:30rpx;font-weight:600;margin-left:12rpx;opacity:0.88;align-self:flex-end;padding-bottom:6rpx}
+.usage-label{font-size:24rpx;color:rgba(255,255,255,0.88);margin-top:10rpx;font-weight:500;letter-spacing:0.02em}
+.progress-track{height:16rpx;border-radius:19998rpx;background:rgba(255,255,255,0.28);box-shadow:inset 3rpx 3rpx 6rpx rgba(0,0,0,0.10),inset -2rpx -2rpx 4rpx rgba(255,255,255,0.18);overflow:hidden;margin-bottom:36rpx;position:relative;z-index:1}
+.progress-fill{height:100%;width:66.7%;border-radius:19998rpx;background:linear-gradient(90deg,#FFFFFF 0%,#FFF8F2 60%,#F5E6D0 100%);box-shadow:0 2rpx 8rpx rgba(0,0,0,0.14)}
+.my-card-bottom{display:flex;align-items:center;gap:20rpx;position:relative;z-index:1}
+.btn-use{flex:1;height:84rpx;font-size:28rpx}
+.btn-refund{font-size:26rpx;padding:16rpx 32rpx}
+
+/* ===== Section Title ===== */
+.section-title{font-size:36rpx;font-weight:700;color:var(--text-1);padding:44rpx 48rpx 28rpx;letter-spacing:-0.4rpx;position:relative;z-index:2}
+
+/* ===== Plan Cards ===== */
+.plan-card{
+  margin:0 40rpx 24rpx;
+  padding:36rpx 36rpx 32rpx;
+  border-radius:44rpx;
+  background:rgba(255,255,255,0.52);
+  backdrop-filter:blur(40rpx) saturate(150%);
+  -webkit-backdrop-filter:blur(40rpx) saturate(150%);
+  border:2rpx solid rgba(255,255,255,0.70);
+  box-shadow:var(--neu-out-sm);
+  position:relative;z-index:2;
+  transition:transform var(--dur) var(--ease),box-shadow var(--dur) var(--ease);
+}
+.plan-card:active{transform:scale(0.98)}
+.plan-card::before{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(165deg,rgba(255,255,255,0.22) 0%,rgba(255,255,255,0.05) 30%,transparent 55%);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;padding:1rpx;pointer-events:none}
+.plan-card--featured{
+  border:3rpx solid var(--brand);
+  box-shadow:var(--neu-out-sm),0 0 0 6rpx var(--brand-subtle),0 12rpx 40rpx var(--brand-glow);
+}
+.plan-badge{
+  position:absolute;top:-18rpx;right:32rpx;z-index:3;
+  background:linear-gradient(135deg,var(--brand) 0%,var(--brand-mid) 100%);
+  color:#fff;font-size:22rpx;font-weight:700;
+  padding:8rpx 24rpx;border-radius:19998rpx;
+  box-shadow:0 6rpx 20rpx var(--brand-glow),inset 0 2rpx 2rpx rgba(255,255,255,0.30);
+  letter-spacing:1rpx;
+}
+.plan-card-head{display:flex;align-items:baseline;justify-content:space-between;gap:20rpx;margin-bottom:24rpx;position:relative;z-index:1}
+.plan-name{font-size:32rpx;font-weight:700;color:var(--text-1);letter-spacing:-0.01em}
+.plan-price{display:flex;align-items:baseline;gap:2rpx}
+.plan-price .cur{font-size:28rpx;color:var(--accent);font-weight:600}
+.plan-price .amt{font-size:52rpx;color:var(--accent);font-weight:800;letter-spacing:-1rpx;line-height:1}
+.plan-card--featured .plan-price .cur,
+.plan-card--featured .plan-price .amt{color:var(--brand)}
+.plan-benefits{list-style:none;margin:0 0 28rpx;padding:0;display:flex;flex-direction:column;gap:16rpx;position:relative;z-index:1}
+.plan-benefits li{display:flex;align-items:center;gap:16rpx;font-size:26rpx;color:var(--text-2);line-height:1.4}
+.plan-benefits li .design-svg-icon{width:32rpx;height:32rpx;flex-shrink:0;color:var(--brand);fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.plan-choose{width:100%;height:84rpx;font-size:28rpx;position:relative;z-index:1}
+
+/* ===== Chips ===== */
+.chips-wrap{display:flex;flex-wrap:wrap;gap:20rpx;padding:0 48rpx 16rpx;position:relative;z-index:2}
+.chip{
+  padding:16rpx 32rpx;border-radius:19998rpx;font-size:26rpx;font-weight:600;
+  cursor:pointer;white-space:nowrap;border:none;font-family:var(--font);
+  background:var(--bg-elevated);color:var(--text-2);
+  box-shadow:var(--neu-out-sm);
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease),color var(--dur) var(--ease);
+}
+.chip:active{transform:scale(0.94);box-shadow:var(--neu-in);color:var(--brand)}
+
+/* ===== Bottom Fixed Buy Bar ===== */
+.bottom-bar{
+  position:absolute;bottom:0;left:0;right:0;z-index:60;
+  padding:28rpx 40rpx 44rpx;
+  background:linear-gradient(to top,rgba(242,237,232,0.98) 72%,rgba(242,237,232,0.80) 88%,rgba(242,237,232,0));
+  backdrop-filter:blur(24rpx) saturate(160%);
+  -webkit-backdrop-filter:blur(24rpx) saturate(160%);
+}
+.btn-buy{
+  width:100%;height:100rpx;border-radius:19998rpx;
+  background:var(--brand-gradient);
+  color:#fff;font-size:32rpx;font-weight:700;border:none;cursor:pointer;
+  font-family:var(--font);letter-spacing:1rpx;
+  box-shadow:0 16rpx 44rpx var(--brand-glow),var(--neu-out-sm),inset 0 2rpx 2rpx rgba(255,255,255,0.25);
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
+.btn-buy:active{transform:scale(0.97);box-shadow:var(--neu-in)}
+
+.design-canvas-page { width: 750rpx; min-height: 100vh; border-radius: 0; box-shadow: none; }
+.design-svg-icon { display: block; width: 44rpx; height: 44rpx; }

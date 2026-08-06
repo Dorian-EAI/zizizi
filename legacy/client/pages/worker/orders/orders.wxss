@@ -1,0 +1,239 @@
+page {
+  --brand: #2D6CDF;
+  --brand-dark: #2456B8;
+  --brand-mid: #5A8EE8;
+  --brand-light: #DCE8FB;
+  --brand-glow: rgba(45, 108, 223, 0.28);
+  --brand-subtle: rgba(45, 108, 223, 0.08);
+  --accent: #D4944C;
+  --accent-dark: #A0723C;
+  --accent-light: #F5E6D0;
+  --sage: #8FA998;
+  --bg: #F2EDE8;
+  --bg-elevated: #F7F3EF;
+  --neu-light: #FFF8F2;
+  --neu-dark: #DDD6CE;
+  --text-1: #2C2824;
+  --text-2: #8B8178;
+  --text-3: #B5ADA5;
+  --text-inverse: #FFFFFF;
+  --sep: rgba(44, 40, 36, 0.06);
+  --green: #5B8C5A;
+  --red: #C4533A;
+  --orange: #D4944C;
+  --blue: #5A8FAD;
+  --brand-gradient: linear-gradient(135deg, #2D6CDF 0%, #5A8EE8 50%, #D4944C 100%);
+  --neu-out-sm: 10rpx 10rpx 24rpx var(--neu-dark), -10rpx -10rpx 24rpx var(--neu-light);
+  --neu-out-md: 16rpx 16rpx 36rpx var(--neu-dark), -16rpx -16rpx 36rpx var(--neu-light);
+  --neu-in: inset 8rpx 8rpx 16rpx var(--neu-dark), inset -8rpx -8rpx 16rpx var(--neu-light);
+  --neu-in-deep: inset 10rpx 10rpx 20rpx var(--neu-dark), inset -10rpx -10rpx 20rpx var(--neu-light);
+  background: var(--bg);
+  min-height: 100vh;
+  padding-bottom: 180rpx;
+}
+
+.page { background: var(--bg); min-height: 100vh; padding-bottom: 180rpx; }
+
+/* ===== Top Header ===== */
+.top-header { position: sticky; top: 0; z-index: 50; }
+
+.hero {
+  padding: calc(max(76rpx, env(safe-area-inset-top)) + 0rpx) 48rpx 48rpx;
+  background:
+    radial-gradient(ellipse 480rpx 400rpx at 25% 40%, rgba(143, 169, 152, 0.32) 0%, transparent 70%),
+    radial-gradient(ellipse 400rpx 320rpx at 80% 80%, rgba(45, 108, 223, 0.24) 0%, transparent 70%),
+    linear-gradient(135deg, rgba(45, 108, 223, 0.28) 0%, rgba(143, 169, 152, 0.20) 50%, rgba(45, 108, 223, 0.12) 100%);
+  border-radius: 0 0 64rpx 64rpx;
+  overflow: hidden;
+}
+.greeting-row { display: flex; align-items: center; justify-content: space-between; }
+.hero-title {
+  font-size: 52rpx; font-weight: 800; color: var(--text-1);
+  letter-spacing: -0.02em; line-height: 1.2;
+}
+.hero-subtitle { font-size: 28rpx; color: var(--text-2); margin-top: 8rpx; font-weight: 500; }
+
+.filter-btn {
+  width: 84rpx; height: 84rpx; border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+  border: 1rpx solid rgba(255, 255, 255, 0.30);
+  box-shadow: inset 0 2rpx 4rpx rgba(255, 255, 255, 0.3);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-1); flex-shrink: 0;
+}
+.filter-icon { width: 44rpx; height: 44rpx; }
+
+/* ===== Filter Tabs ===== */
+.filter-tabs {
+  margin: -36rpx 40rpx 0;
+  background: rgba(255, 255, 255, 0.52);
+  border: 2rpx solid rgba(255, 255, 255, 0.70);
+  border-radius: 24rpx;
+  box-shadow: var(--neu-out-md), 0 12rpx 56rpx rgba(0, 0, 0, 0.06), 0 0 0 2rpx rgba(44, 40, 36, 0.05);
+  padding: 16rpx;
+  display: flex;
+  gap: 12rpx;
+  position: relative;
+  z-index: 10;
+}
+.filter-pill {
+  flex: 1; text-align: center; padding: 20rpx 0;
+  border-radius: 16rpx; font-size: 27rpx; font-weight: 600;
+  color: var(--text-2); transition: all 0.2s;
+  display: flex; align-items: center; justify-content: center;
+  white-space: nowrap;
+}
+.filter-pill:not(.active) {
+  background: var(--bg);
+  box-shadow: var(--neu-out-sm), inset 0 2rpx 2rpx rgba(255, 255, 255, 0.45);
+}
+.filter-pill.active {
+  background: rgba(45, 108, 223, 0.15);
+  box-shadow: inset 4rpx 4rpx 10rpx var(--neu-dark), inset -4rpx -4rpx 10rpx var(--neu-light);
+  color: var(--brand);
+}
+
+/* ===== Order List ===== */
+.order-list { padding: 40rpx 40rpx 0; display: flex; flex-direction: column; gap: 24rpx; }
+
+.order-card {
+  background: rgba(255, 255, 255, 0.52);
+  border: 2rpx solid rgba(255, 255, 255, 0.70);
+  border-radius: 24rpx;
+  padding: 32rpx;
+  box-shadow: var(--neu-out-md), 0 12rpx 56rpx rgba(0, 0, 0, 0.06), 0 0 0 2rpx rgba(44, 40, 36, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+.order-card.accent {
+  border-left: 6rpx solid var(--brand);
+  padding-left: 26rpx;
+}
+
+.order-head {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 20rpx; margin-bottom: 20rpx;
+}
+.order-service {
+  font-size: 32rpx; font-weight: 700; color: var(--text-1);
+  letter-spacing: -0.01em; flex: 1; min-width: 0;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+
+/* Status Badges */
+.status-badge {
+  display: inline-flex; align-items: center;
+  padding: 8rpx 22rpx;
+  border-radius: 9999rpx;
+  font-size: 23rpx; font-weight: 700;
+  line-height: 1.4; letter-spacing: 0.02em; flex-shrink: 0;
+}
+.status-pending { color: var(--orange); background: rgba(212, 148, 76, 0.12); }
+.status-accepted, .status-departing, .status-arrived, .status-serving {
+  color: var(--blue); background: rgba(90, 143, 173, 0.12);
+}
+.status-completed, .status-paid, .status-reviewed {
+  color: var(--green); background: rgba(91, 140, 90, 0.12);
+}
+.status-cancelled { color: var(--red); background: rgba(196, 83, 58, 0.12); }
+
+/* Customer */
+.order-customer {
+  display: flex; align-items: center; gap: 12rpx;
+  font-size: 27rpx; color: var(--text-1); font-weight: 600; margin-bottom: 16rpx;
+}
+.cust-icon { width: 28rpx; height: 28rpx; }
+.phone-icon { width: 26rpx; height: 26rpx; }
+.customer-sep { width: 6rpx; height: 6rpx; border-radius: 50%; background: var(--text-3); flex-shrink: 0; }
+
+/* Address */
+.order-address {
+  display: flex; align-items: center; gap: 12rpx;
+  font-size: 26rpx; color: var(--text-2); font-weight: 500;
+}
+.addr-icon { width: 26rpx; height: 26rpx; }
+
+/* Separator */
+.order-sep { height: 1rpx; background: var(--sep); margin: 28rpx 0; }
+
+/* Bottom */
+.order-bottom {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 24rpx;
+}
+.order-price {
+  font-size: 40rpx; font-weight: 700; color: var(--brand);
+  letter-spacing: -0.02em;
+}
+.order-price .yuan { font-size: 28rpx; font-weight: 600; margin-right: 2rpx; }
+.order-price .price-label { font-size: 24rpx; font-weight: 500; color: var(--text-2); margin-right: 8rpx; }
+.price-green { color: var(--green) !important; }
+
+/* Primary Button */
+.btn-neu-primary {
+  display: inline-flex; align-items: center; justify-content: center; gap: 12rpx;
+  background: var(--brand-gradient);
+  color: var(--text-inverse);
+  border: 1rpx solid rgba(255, 255, 255, 0.40);
+  border-radius: 9999rpx;
+  padding: 16rpx 32rpx;
+  font-size: 26rpx; font-weight: 600;
+  box-shadow: var(--neu-out-sm), 0 8rpx 28rpx var(--brand-glow);
+}
+.btn-icon { width: 28rpx; height: 28rpx; }
+
+/* ===== Empty / Loading ===== */
+.empty-wrap { display: flex; flex-direction: column; align-items: center; gap: 16rpx; padding: 160rpx 0; }
+.empty-icon { font-size: 80rpx; }
+.empty-text { font-size: 28rpx; color: var(--text-2); }
+.loading { text-align: center; padding: 80rpx; color: var(--text-2); font-size: 26rpx; }
+
+/* ===== Floating Tab Bar ===== */
+.tab-bar {
+  position: fixed;
+  bottom: max(28rpx, env(safe-area-inset-bottom));
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 64rpx);
+  max-width: 720rpx;
+  height: 112rpx;
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(96rpx) saturate(210%);
+  -webkit-backdrop-filter: blur(96rpx) saturate(210%);
+  border: 1rpx solid rgba(255, 255, 255, 0.45);
+  border-radius: 48rpx;
+  box-shadow:
+    inset 0 3rpx 6rpx rgba(255, 255, 255, 0.60),
+    inset 0 -1rpx 2rpx rgba(255, 255, 255, 0.20),
+    0 0 0 1rpx rgba(0, 0, 0, 0.04),
+    0 4rpx 20rpx rgba(0, 0, 0, 0.06),
+    0 24rpx 72rpx rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0 12rpx;
+  z-index: 100;
+}
+.tab-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6rpx;
+  width: 124rpx;
+  height: 76rpx;
+  border-radius: 28rpx;
+  color: var(--text-3);
+  font-size: 22rpx;
+  font-weight: 500;
+  position: relative;
+  transition: all 0.2s;
+}
+.tab-icon { width: 40rpx; height: 40rpx; }
+.tab-label { font-size: 22rpx; white-space: nowrap; }
+.tab-item.active {
+  color: var(--brand); font-weight: 600;
+  background: rgba(45, 108, 223, 0.16);
+  border: 1rpx solid rgba(45, 108, 223, 0.30);
+  box-shadow: inset 0 2rpx 6rpx rgba(255, 255, 255, 0.55), 0 4rpx 20rpx rgba(45, 108, 223, 0.20);
+}

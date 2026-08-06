@@ -1,0 +1,149 @@
+<view class="page">
+  <!-- HERO -->
+  <view class="hero">
+    <view class="hero-head">
+      <view class="hero-title">
+        <view class="hero-title-text">发布需求</view>
+        <view class="hero-subtitle">3步极速下单</view>
+      </view>
+      <view class="close-btn" bindtap="onClose">
+        <text class="close-icon">✕</text>
+      </view>
+    </view>
+
+    <!-- 3-step indicator -->
+    <view class="steps">
+      <view class="step-circle step-done">
+        <text class="step-check">✓</text>
+      </view>
+      <view class="step-line step-line-active"></view>
+      <view class="step-circle step-current">2</view>
+      <view class="step-line"></view>
+      <view class="step-circle step-pending">3</view>
+    </view>
+  </view>
+
+  <!-- SERVICE SELECTION -->
+  <view class="section">
+    <view class="section-label">选择服务类型</view>
+    <view class="card">
+      <view class="service-card">
+        <view class="service-grid">
+          <view class="service-item {{selectedService === 'waterproof' ? 'service-item-selected' : ''}}" bindtap="pickService" data-key="waterproof">
+            <view class="service-icon-chip">💧</view>
+            <text class="service-label">防水维修</text>
+          </view>
+          <view class="service-item {{selectedService === 'cleaning' ? 'service-item-selected' : ''}}" bindtap="pickService" data-key="cleaning">
+            <view class="service-icon-chip">🧹</view>
+            <text class="service-label">家政清洁</text>
+          </view>
+          <view class="service-item {{selectedService === 'appliance' ? 'service-item-selected' : ''}}" bindtap="pickService" data-key="appliance">
+            <view class="service-icon-chip">🔧</view>
+            <text class="service-label">家电维修</text>
+          </view>
+          <view class="service-item {{selectedService === 'wall' ? 'service-item-selected' : ''}}" bindtap="pickService" data-key="wall">
+            <view class="service-icon-chip">🧱</view>
+            <text class="service-label">墙面翻新</text>
+          </view>
+          <view class="service-item {{selectedService === 'pipe' ? 'service-item-selected' : ''}}" bindtap="pickService" data-key="pipe">
+            <view class="service-icon-chip">🔍</view>
+            <text class="service-label">管道疏通</text>
+          </view>
+          <view class="service-item {{selectedService === 'lock' ? 'service-item-selected' : ''}}" bindtap="pickService" data-key="lock">
+            <view class="service-icon-chip">🔑</view>
+            <text class="service-label">开锁换锁</text>
+          </view>
+          <view class="service-item {{selectedService === 'furniture' ? 'service-item-selected' : ''}}" bindtap="pickService" data-key="furniture">
+            <view class="service-icon-chip">🪑</view>
+            <text class="service-label">家具维修</text>
+          </view>
+          <view class="service-item {{selectedService === 'install' ? 'service-item-selected' : ''}}" bindtap="pickService" data-key="install">
+            <view class="service-icon-chip">💡</view>
+            <text class="service-label">电器安装</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- PROBLEM DESCRIPTION -->
+  <view class="section">
+    <view class="section-label">问题描述</view>
+    <view class="card">
+      <view class="desc-card">
+        <textarea class="desc-textarea" placeholder="请详细描述您遇到的问题..." maxlength="500" value="{{description}}" bindinput="onDescInput" auto-height></textarea>
+        <view class="char-count"><text>{{descLength}}</text>/500</view>
+
+        <view class="info-row" bindtap="onPickAddress">
+          <text class="info-icon">📍</text>
+          <text class="info-text">{{address || '请选择地址'}}</text>
+          <text class="info-chevron">›</text>
+        </view>
+
+        <view class="info-row" bindtap="onPickTime">
+          <text class="info-icon">📅</text>
+          <text class="info-text">{{timeSlot || '请选择预约时间'}}</text>
+          <text class="info-chevron">›</text>
+        </view>
+
+        <view class="tag-row">
+          <view class="tag-chip {{tag === 'leak' ? 'tag-chip-active' : ''}}" bindtap="pickTag" data-tag="leak">漏水</view>
+          <view class="tag-chip {{tag === 'kitchen' ? 'tag-chip-active' : ''}}" bindtap="pickTag" data-tag="kitchen">厨房</view>
+          <view class="tag-chip {{tag === 'urgent' ? 'tag-chip-active' : ''}}" bindtap="pickTag" data-tag="urgent">紧急</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- ORDER MODE SELECTION -->
+  <view class="section">
+    <view class="section-label">选择下单模式</view>
+    <view class="mode-grid">
+      <view class="card mode-card {{mode === 'bid' ? 'mode-card-selected' : ''}}" bindtap="pickMode" data-mode="bid">
+        <view class="mode-icon">⇄</view>
+        <view class="mode-title">竞价模式</view>
+        <view class="mode-desc"><text>师傅报价\n择优选择</text></view>
+      </view>
+      <view class="card mode-card {{mode === 'fixed' ? 'mode-card-selected' : ''}}" bindtap="pickMode" data-mode="fixed">
+        <view class="mode-icon">¥</view>
+        <view class="mode-title">一口价</view>
+        <view class="mode-desc"><text>明码标价\n快速成交</text></view>
+      </view>
+      <view class="card mode-card {{mode === 'bounty' ? 'mode-card-selected' : ''}}" bindtap="pickMode" data-mode="bounty">
+        <view class="mode-icon">🛡</view>
+        <view class="mode-title">悬赏模式</view>
+        <view class="mode-desc"><text>自主定价\n急速响应</text></view>
+      </view>
+    </view>
+  </view>
+
+  <!-- BOTTOM SUMMARY BAR -->
+  <view class="summary-bar">
+    <view class="summary-left">
+      <text class="summary-label">预估费用</text>
+      <view class="summary-price"><text class="currency">¥</text><text class="amount">128</text></view>
+    </view>
+    <view class="btn-neu-primary" bindtap="onSubmit">发布需求</view>
+  </view>
+
+  <!-- Tab Bar -->
+  <view class="tab-bar">
+    <view class="tab-item" bindtap="goHome">
+      <text class="tab-icon">🏠</text>
+      <text class="tab-label">首页</text>
+    </view>
+    <view class="tab-item tab-item-active">
+      <view class="tab-item-active-bg"></view>
+      <text class="tab-icon tab-icon-active">＋</text>
+      <text class="tab-label tab-label-active">发布</text>
+    </view>
+    <view class="tab-item" bindtap="goOrders">
+      <text class="tab-icon">📋</text>
+      <text class="tab-label">订单</text>
+    </view>
+    <view class="tab-item" bindtap="goMine">
+      <text class="tab-icon">👤</text>
+      <text class="tab-label">我的</text>
+    </view>
+  </view>
+</view>

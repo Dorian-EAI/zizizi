@@ -62,6 +62,10 @@ yarn-error.log*
 /hero-check.png
 /zjrnew/old/
 /自家人家居维修-玻璃新拟态/
+/WXapp/
+/wxapp/.trae/
+legacy/client/assets/svg/
+legacy/client/assets/tabbar/
 
 # Full source fonts are unused; the application loads the subset WOFF2 files
 /zjrnew/assets/NotoSerifSC-Bold.otf
