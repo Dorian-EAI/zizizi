@@ -168,8 +168,9 @@
         data-index="{{index}}"
         bindtap="onRecTap"
       >
-        <view class="rec-img" style="background: {{item.gradient}};">
-          <text class="rec-img-label">{{item.name}}</text>
+        <view class="rec-img" style="{{item.banner ? '' : 'background:' + item.gradient + ';'}}">
+          <image wx:if="{{item.banner}}" src="{{item.banner}}" mode="aspectFill" class="rec-img-photo" lazy-load="{{true}}" />
+          <text wx:else class="rec-img-label">{{item.name}}</text>
         </view>
         <view class="rec-title">{{item.name}}</view>
         <view class="rec-meta">

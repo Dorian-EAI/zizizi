@@ -1,5 +1,6 @@
 const app = getApp()
 const { buildIcon, COLORS } = require('../../utils/icons')
+const { actionKeys, hasAction } = require('../../utils/order-actions')
 const { requestPayment, isPaymentCancelled } = require('../../utils/wx-payment')
 const idempotency = require('../../utils/idempotency')
 
@@ -121,10 +122,9 @@ Page({
   },
 
   orderPermission(order) {
-    const actions = Array.isArray(order && order.allowed_actions) ? order.allowed_actions : []
     return {
-      actions,
-      reason: actions.indexOf('confirm_and_pay') < 0 ? '服务端未授权当前订单支付' : ''
+      actions: actionKeys(order),
+      reason: hasAction(order, 'confirm_and_pay') ? '' : '服务端未授权当前订单支付'
     }
   },
 

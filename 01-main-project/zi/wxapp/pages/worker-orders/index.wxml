@@ -49,6 +49,11 @@
           <view class="status-badge {{item.statusBadgeClass}}">{{item.statusText}}</view>
         </view>
 
+        <!-- 四轴提示 -->
+        <view class="axis-tags" wx:if="{{item.axisTags.length}}">
+          <text class="axis-tag" wx:for="{{item.axisTags}}" wx:for-item="tag" wx:key="*this">{{tag}}</text>
+        </view>
+
         <!-- 客户信息 -->
         <view class="order-customer" wx:if="{{item.userName}}">
           <image src="{{icons.user}}" mode="aspectFit" class="customer-icon" lazy-load="{{false}}" />
@@ -74,7 +79,7 @@
             <text class="yuan">¥</text>
             <text class="price-amount numeric">{{item.price}}</text>
           </view>
-          <view class="action-btn" catchtap="onActionTap" data-id="{{item.id}}" data-status="{{item.status}}">
+          <view class="action-btn" catchtap="onActionTap" data-id="{{item.id}}" data-status="{{item.status}}" data-action="{{item.actionKey}}">
             <image src="{{icons.arrowRight}}" mode="aspectFit" class="action-icon" lazy-load="{{false}}" />
             <text class="action-text">{{item.actionText}}</text>
           </view>

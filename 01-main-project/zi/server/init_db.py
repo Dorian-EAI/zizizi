@@ -13,6 +13,63 @@ from app.models.admin import Admin
 from app.utils.security import hash_password
 
 
+def _column_default_sql(column):
+    """把模型里的常量默认值转换为开发环境 ALTER TABLE 可用的 SQL 字面量。"""
+    default = column.default
+    if default is None or not getattr(default, "is_scalar", False):
+        return None
+    value = default.arg
+    if callable(value):
+        return None
+    if isinstance(value, bool):
+        return "1" if value else "0"
+    if isinstance(value, (int, float)):
+        return str(value)
+    if isinstance(value, str):
+        return "'" + value.replace("'", "''") + "'"
+    return None
+
+
+def sync_existing_schema():
+    """开发/测试环境补齐旧表缺失列。
+
+    `create_all` 只会新建不存在的表，不会给已存在的表加列。历史 SQLite 数据库
+    因此会缺少后加的字段（如 admins.token_version），启动时直接报错。这里按
+    ORM 元数据比对并用 ALTER TABLE 补列，仅用于开发/测试，部署环境仍由 Alembic 负责。
+    """
+    from sqlalchemy import inspect, text
+
+    inspector = inspect(engine)
+    dialect = engine.dialect
+    preparer = dialect.identifier_preparer
+    added = []
+
+    with engine.begin() as conn:
+        for table in Base.metadata.sorted_tables:
+            if not inspector.has_table(table.name):
+                continue
+            existing = {col["name"] for col in inspector.get_columns(table.name)}
+            for column in table.columns:
+                if column.name in existing:
+                    continue
+                type_sql = column.type.compile(dialect=dialect)
+                ddl = (
+                    f"ALTER TABLE {preparer.quote(table.name)} "
+                    f"ADD COLUMN {preparer.quote(column.name)} {type_sql}"
+                )
+                default_sql = _column_default_sql(column)
+                if default_sql is not None:
+                    ddl += f" DEFAULT {default_sql}"
+                    if not column.nullable:
+                        ddl += " NOT NULL"
+                conn.execute(text(ddl))
+                added.append(f"{table.name}.{column.name}")
+
+    if added:
+        print("🔧 已补齐旧表缺失字段: " + ", ".join(added))
+    return added
+
+
 def create_tables():
     """创建所有表（需要先 import 所有模型才能在 Base.metadata 里注册）"""
     if settings.is_deployed:
@@ -24,6 +81,7 @@ def create_tables():
     import app.models.user
     import app.models.order
     import app.models.wallet
+    import app.models.worker_fund
     import app.models.coupon
     import app.models.message
     import app.models.admin
@@ -47,6 +105,7 @@ def create_tables():
 
     print("正在创建数据库表...")
     Base.metadata.create_all(bind=engine)
+    sync_existing_schema()
     print("✅ 表创建完成")
 
 

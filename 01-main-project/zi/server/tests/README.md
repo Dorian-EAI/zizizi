@@ -1,12 +1,12 @@
 # 后端回归测试规范
 
-本目录的测试用于证明“当前实现没有回退”，不能仅凭测试通过就把 v6.2 目标能力标记为已完成。
+本目录的测试用于证明“当前实现没有回退”，不能仅凭测试通过就把 v6.3 目标能力标记为已完成。
 
 ## 权威文档
 
-- [产品事实源（v6.2 兼容路径）](../../PRD_v6.0.md)
+- [产品事实源（v6.3 兼容路径）](../../PRD_v6.0.md)
 - [功能与交互事实源](../../docs/design/功能与交互文档.md)
-- [后端 v6.2 目标契约](../../PRD_BACKEND_v2.0.md)
+- [后端 v6.3 目标契约](../../PRD_BACKEND_v2.0.md)
 - [数据库迁移安全规范](../alembic/README.md)
 
 发生冲突时，产品范围与状态以主 PRD / 交互文档为准，目标数据与并发规则以后端契约为准，当前接口以运行时 OpenAPI 和代码为准。
@@ -35,7 +35,8 @@ py -3.12 -m venv .venv
 |---|---|---|
 | `test_health_endpoints.py` | `/health` 基本存活响应；非生产环境在数据库可用、Redis 不可用时的 `/ready` 降级行为 | 未覆盖生产依赖组合、真实 MySQL/Redis 故障和启动/关闭生命周期 |
 | `test_migrations.py` | 空 SQLite 数据库真实 `upgrade head`；结果与全部 ORM 表一致；`alembic check` 无漂移；未版本化旧库保护；MySQL 离线 SQL 可生成 | 尚未替代一次性 MySQL 8 的真实升级/回填演练 |
-| `test_order_state_machine.py` | 合法订单 CAS 递增版本；非法迁移拒绝；陈旧版本返回冲突 | 只覆盖当前单一 `Order.status` 的内部 CAS，未覆盖四轴和 API 下发版本 |
+| `test_order_state_machine.py` | 合法订单 CAS 递增版本；非法迁移拒绝；陈旧版本返回冲突 | 只覆盖当前单一 `Order.status` 的内部 CAS，未覆盖五轴和 API 下发版本 |
+| `test_order_v63_actions.py` | 一口价/自己定价原子接单、报价订单拒绝抢单；验收通过后立即放款、验收争议需说明；空跑费确认/争议；加速接单服务端定价且只收一次；风险确认书版本校验 | 未覆盖并发抢单的数据库锁竞争、真实支付托管和自动验收定时任务 |
 | `test_payment_idempotency.py` | 同一微信支付回调只充值一次；回调金额不符时无副作用 | 回调幂等不替代客户端写请求幂等 |
 | `test_financial_request_idempotency.py`、`test_wxpay_recharge_access.py` | 钱包/JSAPI 充值、钱包/JSAPI 订单支付和管理员退款按 `Idempotency-Key` 持久化去重；同键同请求重放原结果、同键变更参数或操作冲突；已知失败可重放；师傅钱包充值拒绝；部署环境缺键返回 428 | 进程中断留下 `processing` 时故意失败关闭，需按业务单号人工/对账核对；提现仍未开放，不虚构闭环 |
 | `test_permissions.py` | 用户令牌不能冒充管理员；停用管理员不可用；普通运营员不能执行超级管理员动作 | 未覆盖同账号双角色、订单对象权限和动作级资格 |
@@ -52,7 +53,7 @@ py -3.12 -m venv .venv
 6. 迁移测试先在临时库运行；任何 `stamp`、downgrade 或数据修复测试不得指向共享环境。
 7. 资金测试必须使用精确金额类型并验证“失败无副作用”；不能只断言 HTTP 200 或状态文本。
 
-## v6.2 必要覆盖矩阵
+## v6.3 必要覆盖矩阵
 
 下列项目是目标上线门槛；未列入当前测试文件的均视为缺口。
 
@@ -65,19 +66,21 @@ py -3.12 -m venv .venv
 - 服务端正确返回角色可用/需开通/审核中/受限状态及可修复阻断原因。
 - 师傅资格过期默认阻止新报价，但已有订单、钱包查询、客服和申诉仍可访问。
 
-### 2. 四轴状态、版本与 `allowed_actions`
+### 2. 五轴状态、版本与 `allowed_actions`
 
-- `service_state`、`payment_state`、`aftersale_state`、`price_adjust_state` 独立变化且不互相覆盖。
+- `service_state`、`payment_state`、`aftersale_state`、`price_adjust_state`、`acceptance_state` 独立变化且不互相覆盖。
+- `pricing_mode`、`empty_run_fee_state` 和 `pending_dispatch` 在列表/详情/动作合同中稳定返回。
 - 售后、退款、待某方操作和普通履约的主状态优先级与交互文档一致。
 - 每个角色、每组状态返回正确且唯一的 `primary_action`、`allowed_actions` 和带原因的 `blocked_actions`。
 - 前端读到动作后对象被并发修改，提交必须以版本冲突失败并返回最新状态；旧事件不能让状态倒退。
-- 旧 `Order.status` 到四轴的迁移映射覆盖 `paid`、`reviewed`、`cancelled` 和支付/退款事实冲突。
+- 旧 `Order.status` 到五轴的迁移映射覆盖 `paid`、`reviewed`、`cancelled` 和支付/退款事实冲突。
 
 ### 3. 报价、资格与价格
 
 - 报价覆盖 `draft / submitted / selected / not_selected / expired / withdrawn` 的合法与非法迁移、版本和截止时间。
 - 同一订单同一师傅有效报价唯一；并发选报价只有一个 `selected`，选中、指派、`pending → accepted` 和价格快照原子一致。
-- 重复幂等键返回第一次报价/选定结果；同键不同请求被拒绝。
+- 一口价/自己定价并发接单只有一个成功；失败方收到“已被其他师傅接单”，订单状态和版本正确。
+- 重复幂等键返回第一次报价/选定/接单结果；同键不同请求被拒绝。
 - 报价时服务端校验账号、实名、类目、培训、区域、保证金/保障、额度和订单有效性，并返回具体缺项。
 - 定位权限不阻止浏览或报价，只在出发时成为前置。
 - 中标前订单摘要遮罩精确地址和电话。
@@ -127,7 +130,7 @@ py -3.12 -m venv .venv
 - 双角色回填不错误合并重复 OpenID/UnionID，冲突进入异常清单。
 - 单状态、`is_selected`、`approved` 差价、旧消息和单余额按后端契约映射并有逐项报告。
 - 升级中断后可恢复，回填可重复执行；不会重复创建账号、报价、事件或资金分录。
-- 新旧响应兼容期内旧 `status` 与四轴投影一致，客户端切换到 `allowed_actions` 后再移除旧依赖。
+- 新旧响应兼容期内旧 `status` 与五轴投影一致，客户端切换到 `allowed_actions` 后再移除旧依赖。
 - 一次性 MySQL 8 真实升级、关键索引/约束、锁表时间和迁移后资金对账通过。
 
 ## 推荐测试层级

@@ -21,6 +21,7 @@ from app.utils.security_middleware import (
 from app.utils.rate_limit import register_limiter, limiter, SLOWAPI_AVAILABLE
 from app.tasks.jobs import (
     auto_cancel_expired_orders,
+    auto_accept_overdue_acceptances,
     expire_coupons,
     daily_stats_snapshot,
     auto_approve_reviews,
@@ -32,6 +33,8 @@ from app.tasks.jobs import (
     audit_deposit_refunds,
     reconcile_wechat_payments,
     reconcile_wechat_refunds,
+    settle_worker_pending_income,
+    cleanup_expired_agent_sessions,
 )
 
 logger = get_logger("app.main")
@@ -60,6 +63,7 @@ def _migration_head_status() -> tuple[bool, set[str], set[str]]:
 import app.models.user
 import app.models.order
 import app.models.wallet
+import app.models.worker_fund
 import app.models.coupon
 import app.models.message
 import app.models.admin
@@ -82,11 +86,13 @@ import app.models.quality
 import app.models.training
 import app.models.support_ticket
 import app.models.pricing
+import app.models.agent
 
 # 导入路由
 from app.api.auth import router as auth_router
 from app.api.orders import router as orders_router
 from app.api.ai import router as ai_router
+from app.api.agent import router as agent_router
 from app.api.wallet import router as wallet_router
 from app.api.reviews import router as reviews_router
 from app.api.coupon import router as coupon_router
@@ -96,7 +102,8 @@ from app.api.admin import router as admin_router
 from app.api.messages import router as messages_router
 from app.api.member import router as member_router
 from app.api.favorite import router as favorite_router
-from app.api.services import router as services_router
+from app.api.services import router as services_router, catalog_router as catalog_router
+from app.api.worker_orders import router as worker_orders_router
 from app.api.points import router as points_router
 from app.api.feedback import router as feedback_router
 from app.api.pages import router as pages_router
@@ -182,6 +189,7 @@ async def lifespan(app: FastAPI):
         # 注册定时任务。多副本部署时应只在独立 scheduler 实例开启本开关。
         from app.utils.scheduler import add_cron_job, add_interval_job
         add_interval_job(auto_cancel_expired_orders, seconds=600)   # 每 10 分钟
+        add_interval_job(auto_accept_overdue_acceptances, seconds=3600)  # 每小时自动验收
         add_interval_job(expire_coupons, seconds=3600)              # 每小时
         add_interval_job(auto_approve_reviews, seconds=3600)        # 每小时自动审核评价
         add_cron_job(daily_stats_snapshot, "0 2 * * *")             # 每天凌晨 2 点
@@ -193,6 +201,8 @@ async def lifespan(app: FastAPI):
         add_cron_job(audit_deposit_refunds, "30 3 * * *")           # 每天凌晨 3:30 审核保证金退款
         add_interval_job(reconcile_wechat_payments, seconds=300)     # 每 5 分钟支付查单/安全释放预留
         add_interval_job(reconcile_wechat_refunds, seconds=300)      # 每 5 分钟退款对账/有界重试
+        add_interval_job(settle_worker_pending_income, seconds=300)  # 每 5 分钟结算到期师傅收入
+        add_cron_job(cleanup_expired_agent_sessions, "40 3 * * *")   # 每天凌晨 3:40 清理过期 AI 会话
     try:
         yield
     finally:
@@ -346,10 +356,11 @@ async def admin_panel():
     with open(admin_html, "r", encoding="utf-8") as f:
         return HTMLResponse(f.read())
 
-# 注册路由（25 组）
+# 注册路由（26 组）
 app.include_router(auth_router)
 app.include_router(orders_router)
 app.include_router(ai_router)
+app.include_router(agent_router)
 app.include_router(wallet_router)
 app.include_router(coupon_router)
 app.include_router(upload_router)
@@ -359,6 +370,8 @@ app.include_router(messages_router)
 app.include_router(member_router)
 app.include_router(favorite_router)
 app.include_router(services_router)
+app.include_router(catalog_router)
+app.include_router(worker_orders_router)
 app.include_router(points_router)
 app.include_router(feedback_router)
 app.include_router(pages_router)

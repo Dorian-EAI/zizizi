@@ -1,7 +1,7 @@
 // pages/worker-orders/index.js — 师傅端订单列表页
 const app = getApp()
 const { buildIcon, COLORS } = require('../../utils/icons')
-const { STATUS_TEXT } = require('../../utils/order-status')
+const { STATUS_TEXT, deriveOrderView } = require('../../utils/order-status')
 
 // 服务中步骤文案
 const STEP_TEXT = {
@@ -111,14 +111,17 @@ Page({
 
       const withMeta = filtered.map(o => {
         const meta = STATUS_META[o.status] || {}
+        const view = deriveOrderView(o, 'worker')
         return Object.assign({}, o, {
           iconUrl: buildIcon(o.icon || 'orders', COLORS.brandWorker),
-          statusText: o.statusText || STATUS_TEXT[o.status] || '',
+          statusText: view.statusText || o.statusText || STATUS_TEXT[o.status] || '',
           statusChipClass: meta.chipClass,
           statusBadgeClass: STATUS_BADGE_CLASS[o.status] || 'status-progress',
           priceLabel: PRICE_LABEL[o.status] || '预计收入',
           isGreen: DONE_STATUSES.indexOf(o.status) >= 0,
-          actionText: meta.actionText,
+          actionText: view.actionText || meta.actionText,
+          actionKey: view.actionKey,
+          axisTags: view.axisTags || [],
           stepText: STEP_TEXT[o.step] || ''
         })
       })
@@ -153,8 +156,9 @@ Page({
   onActionTap(e) {
     const id = e.currentTarget.dataset.id
     const status = e.currentTarget.dataset.status
-    // accepted / departing → 跳位置上报页
-    if (status === 'accepted' || status === 'departing') {
+    const action = e.currentTarget.dataset.action
+    // 出发/上报位置 → 位置上报页
+    if (status === 'accepted' || status === 'departing' || action === 'depart_order' || action === 'report_location') {
       wx.navigateTo({ url: '/package-worker/pages/worker-location-report/index?orderId=' + id })
       return
     }

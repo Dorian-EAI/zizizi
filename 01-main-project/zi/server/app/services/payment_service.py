@@ -15,6 +15,7 @@ from sqlalchemy.orm import Session
 from app.models.order import Order
 from app.models.user import User, Worker
 from app.models.wallet import PaymentOrder, RefundOrder, Transaction
+from app.services import worker_fund_service
 from app.services.order_service import _cas_update_status
 from app.utils.snowflake import generate_business_no
 
@@ -109,6 +110,11 @@ def get_order_payment_quote(
         raise HTTPException(status_code=403, detail="无权查看该订单支付报价")
     if order.status != "completed":
         raise HTTPException(status_code=409, detail="当前订单状态不可支付")
+    acceptance_state = str(getattr(order, "acceptance_state", "not_required") or "not_required")
+    if acceptance_state == "pending":
+        raise HTTPException(status_code=409, detail="请先完成验收再支付")
+    if acceptance_state == "disputed":
+        raise HTTPException(status_code=409, detail="验收争议处理中，暂不可支付")
 
     final_price_cents = _to_cents(order.final_price or 0)
     if final_price_cents < 0:
@@ -256,6 +262,29 @@ def get_wallet_info(db: Session, account, account_type: str) -> dict:
         "month_income": float(month_income),
         "month_expense": float(month_expense),
         "total_income": float(total_income),
+        **(_worker_wallet_extra(db, account) if account_type == "worker" else {}),
+    }
+
+
+def _worker_wallet_extra(db: Session, worker: Worker) -> dict:
+    """师傅钱包补充字段：六桶中的可提现/待结算/冻结与累计提现。"""
+    buckets = worker_fund_service.get_buckets(db, worker)
+    total_withdrawn = (
+        db.query(func.coalesce(func.sum(Transaction.amount), 0))
+        .filter(
+            Transaction.owner_type == "worker",
+            Transaction.owner_id == worker.id,
+            Transaction.type == "withdraw",
+            Transaction.status == "success",
+        )
+        .scalar()
+    ) or 0.0
+    return {
+        "available": buckets["available"],
+        "pending_settlement": buckets["pending_settlement"],
+        "frozen": buckets["frozen"],
+        "withdrawing": buckets["withdrawing"],
+        "total_withdrawn": round(float(total_withdrawn), 2),
     }
 
 
@@ -357,6 +386,108 @@ def recharge(db: Session, account, account_type: str, amount: float, method: str
 
 # ===== 提现 =====
 
+def _withdraw_rules() -> dict:
+    """提现规则统一从服务端配置读取。"""
+    from app.config import settings
+
+    return {
+        "min_cents": _to_cents(settings.WITHDRAW_MIN_AMOUNT),
+        "fee_rate": Decimal(str(settings.WITHDRAW_FEE_RATE or 0)),
+        "fee_fixed_cents": _to_cents(settings.WITHDRAW_FEE_FIXED),
+        "daily_limit": int(settings.WITHDRAW_DAILY_LIMIT or 0),
+        "arrival_text": settings.WITHDRAW_ARRIVAL_TEXT,
+    }
+
+
+def _withdraw_fee_cents(amount_cents: int, rules: dict) -> int:
+    # 以分为单位直接按费率取整，避免元/分混算。
+    rate_fee = int(
+        (Decimal(amount_cents) * rules["fee_rate"]).quantize(
+            Decimal("1"), rounding=ROUND_HALF_UP
+        )
+    )
+    fee = max(rate_fee, 0) + max(int(rules["fee_fixed_cents"]), 0)
+    return min(fee, amount_cents)
+
+
+def _today_withdraw_count(db: Session, worker_id: int) -> int:
+    # 账务按 UTC 存储，提现次数按北京时间自然日统计。
+    local_now = datetime.utcnow() + timedelta(hours=8)
+    local_start = local_now.replace(hour=0, minute=0, second=0, microsecond=0)
+    start_utc = local_start - timedelta(hours=8)
+    return (
+        db.query(Transaction)
+        .filter(
+            Transaction.owner_type == "worker",
+            Transaction.owner_id == worker_id,
+            Transaction.type == "withdraw",
+            Transaction.status.in_(("pending", "success")),
+            Transaction.created_at >= start_utc,
+        )
+        .count()
+    )
+
+
+def get_withdraw_config(db: Session, worker: Worker) -> dict:
+    """提现页配置：限额、手续费、到账说明与可用到账方式。"""
+    rules = _withdraw_rules()
+    used = _today_withdraw_count(db, worker.id)
+    limit = rules["daily_limit"]
+    return {
+        "available": round(float(worker.balance or 0), 2),
+        "min_amount": _from_cents(rules["min_cents"]),
+        "fee_rate": float(rules["fee_rate"]),
+        "fee_fixed": _from_cents(rules["fee_fixed_cents"]),
+        "daily_limit": limit,
+        "today_used": used,
+        "remaining_today": max(limit - used, 0) if limit > 0 else None,
+        "arrival_text": rules["arrival_text"],
+        "methods": [
+            {
+                "key": "wechat",
+                "label": "微信零钱",
+                "enabled": bool(worker.openid),
+                "disabled_reason": "" if worker.openid else "当前账号未绑定微信",
+            },
+            {
+                "key": "bank",
+                "label": "银行卡",
+                "enabled": False,
+                "disabled_reason": "银行卡提现尚未开放",
+            },
+        ],
+    }
+
+
+def get_withdraw_quote(db: Session, worker: Worker, amount: float) -> dict:
+    """按服务端规则计算手续费与预计到账金额。"""
+    rules = _withdraw_rules()
+    amount_cents = _to_cents(amount)
+    available_cents = _to_cents(worker.balance or 0)
+    used = _today_withdraw_count(db, worker.id)
+    limit = rules["daily_limit"]
+
+    reason = ""
+    if amount_cents < rules["min_cents"]:
+        reason = f"最低提现金额为 {_from_cents(rules['min_cents']):.2f} 元"
+    elif amount_cents > available_cents:
+        reason = "可提现余额不足"
+    elif limit > 0 and used >= limit:
+        reason = "今日提现次数已达上限"
+
+    fee_cents = _withdraw_fee_cents(amount_cents, rules) if amount_cents > 0 else 0
+    return {
+        "amount": _from_cents(amount_cents),
+        "fee": _from_cents(fee_cents),
+        "arrival_amount": _from_cents(max(amount_cents - fee_cents, 0)),
+        "valid": not reason,
+        "reason": reason,
+        "available": _from_cents(available_cents),
+        "remaining_today": max(limit - used, 0) if limit > 0 else None,
+        "arrival_text": rules["arrival_text"],
+    }
+
+
 def withdraw(
     db: Session,
     account,
@@ -384,9 +515,13 @@ def withdraw(
     if method != "wechat":
         raise HTTPException(status_code=501, detail="当前仅支持微信提现")
 
+    rules = _withdraw_rules()
     amount_cents = _to_cents(amount)
-    if amount_cents < 1000:
-        raise HTTPException(status_code=400, detail="最低提现金额为 10 元")
+    if amount_cents < rules["min_cents"]:
+        raise HTTPException(
+            status_code=400,
+            detail=f"最低提现金额为 {_from_cents(rules['min_cents']):.2f} 元",
+        )
 
     locked_account = db.query(Worker).filter(Worker.id == account.id).with_for_update().first()
     if not locked_account:
@@ -395,13 +530,28 @@ def withdraw(
         raise HTTPException(status_code=400, detail="当前账号未绑定微信 openid")
     if _to_cents(locked_account.balance or 0) < amount_cents:
         raise HTTPException(status_code=400, detail="余额不足")
+    if rules["daily_limit"] > 0:
+        used = _today_withdraw_count(db, locked_account.id)
+        if used >= rules["daily_limit"]:
+            raise HTTPException(status_code=400, detail="今日提现次数已达上限")
 
     owner_type = account_type
     owner_id = locked_account.id
 
+    # 期初分录必须在扣减余额前写入，保证账本反映变更前余额。
+    worker_fund_service.ensure_opening(db, locked_account)
+
     # 扣减余额
     locked_account.balance = _from_cents(_to_cents(locked_account.balance or 0) - amount_cents)
     db.flush()
+
+    fee_cents = _withdraw_fee_cents(amount_cents, rules)
+    description = "提现申请"
+    if fee_cents > 0:
+        description = (
+            f"提现申请（手续费 {_from_cents(fee_cents):.2f} 元，"
+            f"预计到账 {_from_cents(amount_cents - fee_cents):.2f} 元）"
+        )
 
     # 创建交易记录（提现为待审核状态）
     tx = _add_transaction(
@@ -412,15 +562,18 @@ def withdraw(
         amount=_from_cents(amount_cents),
         balance_after=float(locked_account.balance),
         method=method,
-        description="提现申请",
+        description=description,
         status="pending",
         bank_info=None,
     )
+    worker_fund_service.record_withdraw_request(db, locked_account, tx)
     db.commit()
     db.refresh(tx)
 
     return {
         "balance": float(locked_account.balance),
+        "fee": _from_cents(fee_cents),
+        "arrival_amount": _from_cents(amount_cents - fee_cents),
         "transaction": _tx_to_dict(tx),
     }
 
@@ -478,6 +631,11 @@ async def pay_order(
 
     if order.status != "completed":
         raise HTTPException(status_code=400, detail="订单未完成，无法支付")
+    acceptance_state = str(getattr(order, "acceptance_state", "not_required") or "not_required")
+    if acceptance_state == "pending":
+        raise HTTPException(status_code=409, detail="请先完成验收再支付")
+    if acceptance_state == "disputed":
+        raise HTTPException(status_code=409, detail="验收争议处理中，暂不可支付")
     from app.config import settings
     if settings.is_deployed and order_version is None:
         raise HTTPException(status_code=428, detail="支付请求缺少权威报价的订单版本")
@@ -661,19 +819,15 @@ async def pay_order(
         if order.worker_id:
             worker = db.query(Worker).filter(Worker.id == order.worker_id).first()
             if worker:
-                worker.balance = float(worker.balance or 0) + wallet_pay
-                db.flush()
-                _add_transaction(
+                # 收入先进入待结算桶，等待期结束后由结算任务转入可提现余额。
+                worker_fund_service.record_order_income(
                     db,
-                    owner_type="worker",
-                    owner_id=worker.id,
-                    type="income",
+                    worker,
+                    order_no=order.order_no,
+                    payment_no=payment_wallet.payment_no,
                     amount=wallet_pay,
-                    balance_after=float(worker.balance),
                     method="wallet",
-                    order_id=order.order_no,
-                    description=f"订单收入 {order.order_no}",
-                    status="success",
+                    fee_rate=order.platform_fee_rate,
                 )
 
         db.commit()
@@ -772,23 +926,18 @@ async def pay_order(
         paid_at=now,
     )
 
-    # 师傅收款：给师傅余额加款
+    # 师傅收款：先计入待结算，等待期结束后自动转入可提现
     if order.worker_id:
         worker = db.query(Worker).filter(Worker.id == order.worker_id).first()
         if worker:
-            worker.balance = float(worker.balance or 0) + pay_amount
-            db.flush()
-            _add_transaction(
+            worker_fund_service.record_order_income(
                 db,
-                owner_type="worker",
-                owner_id=worker.id,
-                type="income",
+                worker,
+                order_no=order.order_no,
+                payment_no=payment.payment_no,
                 amount=pay_amount,
-                balance_after=float(worker.balance),
                 method=method,
-                order_id=order.order_no,
-                description=f"订单收入 {order.order_no}",
-                status="success",
+                fee_rate=order.platform_fee_rate,
             )
 
     db.commit()
@@ -905,19 +1054,14 @@ def settle_wechat_order_payment(db: Session, payment: PaymentOrder) -> None:
     if order.worker_id:
         worker = db.query(Worker).filter(Worker.id == order.worker_id).with_for_update().first()
         if worker:
-            worker.balance = _from_cents(_to_cents(worker.balance or 0) + total_cents)
-            db.flush()
-            _add_transaction(
+            worker_fund_service.record_order_income(
                 db,
-                owner_type="worker",
-                owner_id=worker.id,
-                type="income",
+                worker,
+                order_no=order.order_no,
+                payment_no=payment.payment_no,
                 amount=_from_cents(total_cents),
-                balance_after=float(worker.balance),
                 method="combined" if wallet_cents else "wechat",
-                order_id=order.order_no,
-                description=f"订单收入 {order.order_no}",
-                status="success",
+                fee_rate=order.platform_fee_rate,
             )
 
 
@@ -996,20 +1140,14 @@ def confirm_offline_payment(db: Session, worker: Worker, order_no: str) -> dict:
         locked_worker = db.query(Worker).filter(Worker.id == worker.id).with_for_update().first()
         if not locked_worker:
             raise HTTPException(status_code=404, detail="师傅不存在")
-        locked_worker.balance = _from_cents(
-            _to_cents(locked_worker.balance or 0) + _to_cents(payment.amount)
-        )
-        db.flush()
-        _add_transaction(
+        worker_fund_service.record_order_income(
             db,
-            owner_type="worker",
-            owner_id=locked_worker.id,
-            type="income",
+            locked_worker,
+            order_no=order.order_no,
+            payment_no=payment.payment_no,
             amount=float(payment.amount),
-            balance_after=float(locked_worker.balance),
             method="offline",
-            order_id=order.order_no,
-            description=f"线下收款 {order.order_no}",
+            fee_rate=order.platform_fee_rate,
         )
         db.commit()
         return {"order_no": order_no, "payment_no": payment.payment_no, "confirmed": True}
@@ -1254,23 +1392,56 @@ def refund_order(
                 description=f"钱包原路退款 {refund.refund_no}: {reason}",
             )
             if worker:
-                # 余额不足时形成负余额待追偿，退款不能因此损害用户权益。
-                worker.balance = _from_cents(_to_cents(worker.balance or 0) - allocated_cents)
-                db.flush()
-                _add_transaction(
+                available_cut = worker_fund_service.record_refund_reversal(
                     db,
-                    owner_type="worker",
-                    owner_id=worker.id,
-                    type="expense",
+                    worker,
+                    refund_no=refund.refund_no,
+                    order_no=order.order_no,
                     amount=_from_cents(allocated_cents),
-                    balance_after=float(worker.balance),
-                    method="wallet_refund",
-                    order_id=order.order_no,
-                    description=f"订单退款扣减 {refund.refund_no}",
+                    payment_no=payment.payment_no,
                 )
+                available_cut_cents = _to_cents(available_cut)
+                if available_cut_cents:
+                    # 仅扣减已结算部分；待结算部分已由账本冲减，不进入余额。
+                    # 余额不足时形成负余额待追偿，退款不能因此损害用户权益。
+                    worker.balance = _from_cents(
+                        _to_cents(worker.balance or 0) - available_cut_cents
+                    )
+                    db.flush()
+                    _add_transaction(
+                        db,
+                        owner_type="worker",
+                        owner_id=worker.id,
+                        type="expense",
+                        amount=_from_cents(available_cut_cents),
+                        balance_after=float(worker.balance),
+                        method="wallet_refund",
+                        order_id=order.order_no,
+                        description=f"订单退款扣减 {refund.refund_no}",
+                    )
             refund_results.append(
                 {"refund_no": refund.refund_no, "status": "SUCCESS", "method": "wallet"}
             )
+
+        # 微信退款需等待可信回调，先冻结对应净收入，避免在途期间被提现。
+        if has_wechat_allocation and worker:
+            for (payment, allocated_cents), refund in zip(allocations, created_refunds):
+                if payment.method != "wechat":
+                    continue
+                clawback = worker_fund_service.estimate_refund_clawback(
+                    db,
+                    worker,
+                    payment_no=payment.payment_no,
+                    amount=_from_cents(allocated_cents),
+                )
+                worker_fund_service.record_refund_freeze(
+                    db,
+                    worker,
+                    refund_no=refund.refund_no,
+                    order_no=order.order_no,
+                    amount=clawback,
+                )
+            db.flush()
 
         # 外部调用前提交全部退款占位及钱包退款。即使网络结果未知，回调/对账
         # 仍能按同一 refund_no 找到并幂等续办。

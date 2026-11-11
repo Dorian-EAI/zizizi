@@ -27,6 +27,7 @@ from app.models.order import Order
 from app.models.user import User, Worker
 from app.models.wallet import PaymentOrder, RefundOrder, Transaction
 from app.schemas.wxpay import WechatPayNotifyResult, WechatRefundNotifyResult
+from app.services import worker_fund_service
 
 logger = logging.getLogger(__name__)
 
@@ -792,20 +793,31 @@ def handle_refund_success(
                 db.query(Worker).filter(Worker.id == order.worker_id).with_for_update().first()
             )
             if worker:
-                # 回调发生时外部退款已成功，不能因余额不足拒绝入账；负余额代表待追偿。
-                worker.balance = float(worker.balance or 0) - amount
-                db.flush()
-                _add_transaction(
+                available_cut = worker_fund_service.record_refund_reversal(
                     db,
-                    owner_type="worker",
-                    owner_id=worker.id,
-                    type="expense",
+                    worker,
+                    refund_no=refund.refund_no,
+                    order_no=order.order_no,
                     amount=amount,
-                    balance_after=float(worker.balance),
-                    method="wechat_refund",
-                    order_id=order.order_no,
-                    description=f"订单退款扣减 {refund.refund_no}",
+                    payment_no=refund.payment_no,
                 )
+                available_cut_value = float(available_cut)
+                if available_cut_value > 0:
+                    # 仅扣减已结算部分；回调发生时外部退款已成功，不能因余额不足
+                    # 拒绝入账，负余额代表待追偿。
+                    worker.balance = float(worker.balance or 0) - available_cut_value
+                    db.flush()
+                    _add_transaction(
+                        db,
+                        owner_type="worker",
+                        owner_id=worker.id,
+                        type="expense",
+                        amount=available_cut_value,
+                        balance_after=float(worker.balance),
+                        method="wechat_refund",
+                        order_id=order.order_no,
+                        description=f"订单退款扣减 {refund.refund_no}",
+                    )
 
         successful_for_payment = (
             db.query(RefundOrder)
@@ -955,6 +967,22 @@ def _update_pending_refund_state(
         if status is not None:
             refund.status = status
         refund.last_error = last_error
+        if status == "failed":
+            # 退款确认失败：解除在途冻结，收入回到可提现余额。
+            order = (
+                db.query(Order).filter(Order.order_no == refund.order_no).first()
+            )
+            if order and order.worker_id:
+                worker = (
+                    db.query(Worker)
+                    .filter(Worker.id == order.worker_id)
+                    .with_for_update()
+                    .first()
+                )
+                if worker:
+                    worker_fund_service.release_refund_freeze(
+                        db, worker, refund_no=refund.refund_no
+                    )
         db.commit()
         return True
     except Exception:
@@ -1093,6 +1121,10 @@ def create_transfer_to_worker(db: Session, withdraw_tx: Transaction, worker: Wor
 
     transfer_id = "mock_transfer_" + _gen_nonce_str(16)
     withdraw_tx.status = "success"
+    if worker is None and withdraw_tx.owner_type == "worker":
+        worker = db.query(Worker).filter(Worker.id == withdraw_tx.owner_id).first()
+    if worker is not None:
+        worker_fund_service.record_withdraw_success(db, worker, withdraw_tx)
     db.commit()
     db.refresh(withdraw_tx)
     return {"success": True, "transfer_id": transfer_id, "mock": True}

@@ -31,6 +31,9 @@
             <text class="status-eta" wx:if="{{order.etaText}}">{{order.etaText}}</text>
           </view>
           <text class="status-desc">{{statusTitle}}</text>
+          <view class="axis-tags" wx:if="{{order.axisTags.length}}">
+            <text class="axis-tag" wx:for="{{order.axisTags}}" wx:for-item="tag" wx:key="*this">{{tag}}</text>
+          </view>
 
           <!-- 进度时间轴（横向） -->
           <view class="timeline">

@@ -63,9 +63,16 @@ class SecurityHeadersMiddleware(BaseHTTPMiddleware):
 
         # 管理后台页面（/admin）附加 CSP
         if request.url.path.startswith("/admin"):
+            # 内置后台使用 Vue 全局构建（运行时编译模板），开发环境需放行 unsafe-eval；
+            # 体验/生产按约定关闭 ENABLE_BUILTIN_ADMIN，不依赖该豁免。
+            script_src = (
+                "'self' 'unsafe-inline' https://unpkg.com https://cdn.jsdelivr.net"
+            )
+            if not settings.is_deployed:
+                script_src += " 'unsafe-eval'"
             response.headers["Content-Security-Policy"] = (
                 "default-src 'self'; "
-                "script-src 'self' 'unsafe-inline' https://unpkg.com https://cdn.jsdelivr.net; "
+                f"script-src {script_src}; "
                 "style-src 'self' 'unsafe-inline' https://unpkg.com; "
                 "img-src 'self' data: https: http:; "
                 "font-src 'self' data:; "

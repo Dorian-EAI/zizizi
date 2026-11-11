@@ -52,6 +52,11 @@
         <!-- 标题 -->
         <text class="order-title">{{item.serviceName}}</text>
 
+        <!-- 四轴提示 -->
+        <view class="axis-tags" wx:if="{{item.axisTags.length}}">
+          <text class="axis-tag" wx:for="{{item.axisTags}}" wx:for-item="tag" wx:key="*this">{{tag}}</text>
+        </view>
+
         <!-- 地址 -->
         <view class="order-address">
           <image src="{{icons.location}}" mode="aspectFit" class="order-address-icon" lazy-load="{{false}}" />
@@ -72,7 +77,7 @@
             <text class="info-main" wx:elif="{{item.status === 'completed'}}">服务已完成</text>
             <text class="info-main" wx:else>¥{{item.price}}</text>
           </view>
-          <view class="btn-neu-secondary" catchtap="onActionTap" data-id="{{item.id}}" data-status="{{item.status}}">
+          <view class="btn-neu-secondary" catchtap="onActionTap" data-id="{{item.id}}" data-status="{{item.status}}" data-action="{{item.actionKey}}">
             <text class="btn-neu-secondary-text">{{item.actionText || '查看详情'}}</text>
           </view>
         </view>

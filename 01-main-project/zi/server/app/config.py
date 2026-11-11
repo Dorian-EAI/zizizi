@@ -183,6 +183,17 @@ class Settings(BaseSettings):
     WEB_CONCURRENCY: int = 1
     SCHEDULER_ENABLED: bool = True
 
+    # 师傅订单收入结算等待期：客户支付后先进入待结算桶，到期自动转入可提现。
+    WORKER_SETTLEMENT_HOLD_HOURS: int = 24
+    WORKER_SETTLEMENT_BATCH_SIZE: int = 200
+
+    # 师傅提现规则（接口返回给客户端展示，客户端不得硬编码）
+    WITHDRAW_MIN_AMOUNT: float = 10.0
+    WITHDRAW_FEE_RATE: float = 0.0
+    WITHDRAW_FEE_FIXED: float = 0.0
+    WITHDRAW_DAILY_LIMIT: int = 3
+    WITHDRAW_ARRIVAL_TEXT: str = "预计 2 小时内到账"
+
     # 短信服务（mock = 控制台打印，aliyun = 阿里云 dysmsapi，tencent = 腾讯云 SMS）
     SMS_PROVIDER: str = "mock"  # mock | aliyun | tencent
     SMS_ACCESS_KEY: str = ""

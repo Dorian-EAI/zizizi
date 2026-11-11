@@ -341,8 +341,17 @@ def _normalize_analyze_result(result: dict) -> dict:
     return result
 
 
-async def _call_llm(messages: list, model: str, temperature: float = 0.3) -> str:
-    """调用大模型 API（OpenAI 兼容格式），返回原始文本内容"""
+async def chat_completion(
+    messages: list,
+    model: str,
+    temperature: float = 0.3,
+    tools: Optional[list] = None,
+    timeout: float = 30.0,
+) -> dict:
+    """调用 OpenAI 兼容的 chat/completions，返回 message 对象
+
+    传入 tools 时启用 function calling；由调用方负责工具循环与结果校验。
+    """
     headers = {
         "Authorization": f"Bearer {settings.AI_API_KEY}",
         "Content-Type": "application/json",
@@ -352,12 +361,21 @@ async def _call_llm(messages: list, model: str, temperature: float = 0.3) -> str
         "messages": messages,
         "temperature": temperature,
     }
+    if tools:
+        payload["tools"] = tools
+        payload["tool_choice"] = "auto"
     url = settings.AI_API_BASE.rstrip("/") + "/chat/completions"
-    async with httpx.AsyncClient(timeout=30.0) as client:
+    async with httpx.AsyncClient(timeout=timeout) as client:
         resp = await client.post(url, headers=headers, json=payload)
         resp.raise_for_status()
         data = resp.json()
-    return data["choices"][0]["message"]["content"]
+    return data["choices"][0]["message"]
+
+
+async def _call_llm(messages: list, model: str, temperature: float = 0.3) -> str:
+    """调用大模型 API（OpenAI 兼容格式），返回原始文本内容"""
+    message = await chat_completion(messages, model=model, temperature=temperature)
+    return message.get("content") or ""
 
 
 async def _llm_analyze(description: str, service_type: Optional[str], image_base64: Optional[str],

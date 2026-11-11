@@ -30,6 +30,15 @@ class ServiceType(Base):
     service_standards = Column(Text, nullable=True, comment="服务标准/保障 JSON [{icon, title, desc}]")
     price_details = Column(Text, nullable=True, comment="价格明细 JSON [{item, price, unit, note}]")
 
+    # v6.3 品类化下单与风险确认
+    pricing_modes = Column(Text, nullable=True, comment="允许的定价模式 JSON 数组")
+    pricing_schema = Column(Text, nullable=True, comment="品类化下单字段/加价项 JSON")
+    service_boundary = Column(Text, nullable=True, comment="服务边界 JSON")
+    risk_confirmation = Column(Text, nullable=True, comment="风险确认书 JSON")
+    warranty_days = Column(
+        Integer, default=0, server_default="0", nullable=False, comment="默认质保天数"
+    )
+
     sort_order = Column(Integer, default=0, comment="排序权重")
     is_active = Column(Boolean, default=True, comment="是否启用")
     created_at = Column(DateTime, default=datetime.utcnow, comment="创建时间")

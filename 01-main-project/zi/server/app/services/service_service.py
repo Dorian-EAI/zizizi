@@ -97,6 +97,10 @@ def create_service(db: Session, data: dict) -> ServiceType:
     detail_sections = data.get("detail_sections")
     service_standards = data.get("service_standards")
     price_details = data.get("price_details")
+    pricing_modes = data.get("pricing_modes")
+    pricing_schema = data.get("pricing_schema")
+    service_boundary = data.get("service_boundary")
+    risk_confirmation = data.get("risk_confirmation")
 
     svc = ServiceType(
         key=data["key"],
@@ -116,6 +120,11 @@ def create_service(db: Session, data: dict) -> ServiceType:
         detail_sections=json.dumps(detail_sections, ensure_ascii=False) if detail_sections else None,
         service_standards=json.dumps(service_standards, ensure_ascii=False) if service_standards else None,
         price_details=json.dumps(price_details, ensure_ascii=False) if price_details else None,
+        pricing_modes=json.dumps(pricing_modes, ensure_ascii=False) if pricing_modes else None,
+        pricing_schema=json.dumps(pricing_schema, ensure_ascii=False) if pricing_schema else None,
+        service_boundary=json.dumps(service_boundary, ensure_ascii=False) if service_boundary else None,
+        risk_confirmation=json.dumps(risk_confirmation, ensure_ascii=False) if risk_confirmation else None,
+        warranty_days=data.get("warranty_days", 0),
         sort_order=data.get("sort_order", 0),
         is_active=True,
     )
@@ -132,7 +141,8 @@ def update_service(db: Session, svc_id: int, data: dict) -> ServiceType:
         raise HTTPException(status_code=404, detail="服务类型不存在")
 
     updatable = ["name", "icon", "banner", "category", "price_min", "price_max",
-                 "price_unit", "description", "sort_order", "is_active", "intro_video"]
+                 "price_unit", "description", "sort_order", "is_active", "intro_video",
+                 "warranty_days"]
     for k in updatable:
         if k in data:
             setattr(svc, k, data[k])
@@ -151,6 +161,14 @@ def update_service(db: Session, svc_id: int, data: dict) -> ServiceType:
         svc.service_standards = json.dumps(data["service_standards"], ensure_ascii=False) if data["service_standards"] else None
     if "price_details" in data:
         svc.price_details = json.dumps(data["price_details"], ensure_ascii=False) if data["price_details"] else None
+    if "pricing_modes" in data:
+        svc.pricing_modes = json.dumps(data["pricing_modes"], ensure_ascii=False) if data["pricing_modes"] else None
+    if "pricing_schema" in data:
+        svc.pricing_schema = json.dumps(data["pricing_schema"], ensure_ascii=False) if data["pricing_schema"] else None
+    if "service_boundary" in data:
+        svc.service_boundary = json.dumps(data["service_boundary"], ensure_ascii=False) if data["service_boundary"] else None
+    if "risk_confirmation" in data:
+        svc.risk_confirmation = json.dumps(data["risk_confirmation"], ensure_ascii=False) if data["risk_confirmation"] else None
 
     db.commit()
     db.refresh(svc)

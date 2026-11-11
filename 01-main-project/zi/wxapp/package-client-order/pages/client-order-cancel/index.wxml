@@ -57,6 +57,18 @@
           </view>
         </view>
 
+        <view class="notice" wx:if="{{requestState === 'pending'}}">
+          <text class="tag-b">取消申请已提交</text>
+          <text class="design-br"></text>
+          申请号 {{requestNo}}。平台确认前订单仍会继续履约，请保持电话畅通。
+        </view>
+        <view class="notice" wx:elif="{{requestState === 'rejected'}}">
+          <text class="tag-b">上次申请未通过</text>
+          <text class="design-br"></text>
+          如仍需取消，可重新提交申请或联系客服处理。
+        </view>
+
+        <block wx:if="{{requestState !== 'pending'}}">
         <view class="section">
           <view class="section-title"><text class="tag-strong">请选择取消原因</text><text class="tag-span">单选</text></view>
           <view class="chips">
@@ -83,14 +95,21 @@
         <view class="notice">
           <text class="tag-b">退款说明</text>
           <text class="design-br"></text>
-          未开始服务将全额退款；已产生服务费用时按实际情况结算。退款原路返回，预计 1–3 个工作日到账。
+          {{requestMode ? '提交后需等待平台确认；未产生服务费用时不计取消费。' : '未开始服务将全额退款；已产生服务费用时按实际情况结算。退款原路返回，预计 1–3 个工作日到账。'}}
         </view>
+        </block>
       </block>
     </view>
 
     <!-- 底部操作栏：加载/错误/空态时隐藏取消按钮 -->
     <view class="fixed-actions" wx:if="{{!loading && !loadError && !empty}}">
-      <view class="btn secondary design-button" bindtap="onKeepOrder">{{cancelling ? '取消中...' : '暂不取消'}}</view>
-      <view class="btn danger design-button" bindtap="onConfirmCancel">{{cancelling ? '提交中...' : '确认取消订单'}}</view>
+      <block wx:if="{{requestState === 'pending'}}">
+        <view class="btn secondary design-button" bindtap="onKeepOrder">继续等待</view>
+        <view class="btn danger design-button" bindtap="onWithdrawRequest">{{cancelling ? '处理中...' : '撤回申请'}}</view>
+      </block>
+      <block wx:else>
+        <view class="btn secondary design-button" bindtap="onKeepOrder">{{cancelling ? '取消中...' : '暂不取消'}}</view>
+        <view class="btn danger design-button" bindtap="onConfirmCancel">{{cancelling ? '提交中...' : (requestMode ? '提交取消申请' : '确认取消订单')}}</view>
+      </block>
     </view>
   </view>

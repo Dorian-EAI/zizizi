@@ -1,5 +1,6 @@
-# 本地归档，不上传 GitHub
+# 本地归档与工具链，不上传 GitHub
 /03-archive/
+/04-tools/
 /.screenshots/
 
 # 操作系统与编辑器元数据

@@ -1,7 +1,7 @@
 // pages/client-orders/index.js — 客户端订单列表页（玻璃新拟态像素级复刻）
 const app = getApp()
 const { buildIcon, COLORS } = require('../../utils/icons')
-const { STATUS_TEXT } = require('../../utils/order-status')
+const { STATUS_TEXT, deriveOrderView } = require('../../utils/order-status')
 
 // 订单状态元信息：order-status-tag 样式类 + 操作按钮文案
 // 对齐主样式规范的 .order-status-tag + .order-status-{status}
@@ -73,10 +73,13 @@ Page({
       const ordersWithMeta = rawOrders.map(o => {
         const normStatus = o.status === 'cancelled' ? 'canceled' : o.status
         const meta = STATUS_META[normStatus] || {}
+        const view = deriveOrderView(o, 'client')
         return Object.assign({}, o, {
-          statusText: o.statusText || STATUS_TEXT[normStatus] || '',
-          statusClass: meta.statusClass,
-          actionText: meta.actionText
+          statusText: view.statusText || o.statusText || STATUS_TEXT[normStatus] || '',
+          statusClass: view.statusClass || meta.statusClass,
+          actionText: view.actionText || meta.actionText,
+          actionKey: view.actionKey,
+          axisTags: view.axisTags || []
         })
       })
       this.setData({ orders: ordersWithMeta })
@@ -108,8 +111,13 @@ Page({
   onActionTap(e) {
     const id = e.currentTarget.dataset.id
     const status = e.currentTarget.dataset.status
-    // departing 状态 → 直接跳实时追踪页
-    if (status === 'departing') {
+    const action = e.currentTarget.dataset.action
+    if (action === 'request_cancel' || action === 'view_cancel_request') {
+      wx.navigateTo({ url: '/package-client-order/pages/client-order-cancel/index?orderId=' + id })
+      return
+    }
+    // departing 或服务端明确要求追踪 → 实时追踪页
+    if (status === 'departing' || action === 'track_worker') {
       wx.navigateTo({ url: '/package-client/pages/client-order-tracking/index?orderId=' + id })
       return
     }

@@ -92,6 +92,7 @@ class CreateOrderRequest(BaseModel):
     service_type: str = Field(..., min_length=1, max_length=32)
     # 仅为兼容旧客户端保留；创建时展示名始终取服务端 ServiceType.name。
     service_name: Optional[str] = Field(None, max_length=256)
+    pricing_mode: Literal["fixed_price", "bidding", "self_priced"] = "bidding"
     description: Optional[str] = Field(None, max_length=512)
     images: Optional[List[_ImageUrlStr]] = Field(default_factory=list, max_length=9)
     address: OrderAddressRequest
@@ -113,6 +114,14 @@ class CreateOrderRequest(BaseModel):
     @classmethod
     def validate_appointment(cls, value: Optional[datetime]) -> Optional[datetime]:
         return normalize_future_appointment(value)
+
+    @model_validator(mode="after")
+    def validate_pricing_mode(self):
+        if self.pricing_mode in {"fixed_price", "self_priced"} and (
+            self.budget is None or self.budget <= 0
+        ):
+            raise ValueError("一口价/自己定价模式必须填写大于 0 的成交价或预算")
+        return self
 
 
 class BiddingRequest(BaseModel):
@@ -153,6 +162,62 @@ class UpdateOrderStatusRequest(BaseModel):
     cancel_reason: Optional[str] = Field(None, max_length=256)
 
 
+class CancelRequestCreate(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    reason: str = Field(..., min_length=1, max_length=256)
+    note: Optional[str] = Field(None, max_length=1000)
+
+
+class CancelRequestReview(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    remark: Optional[str] = Field(None, max_length=500)
+
+
+class AcceptOrderRequest(BaseModel):
+    """一口价/自己定价师傅抢单。version 可选，用于客户端显式 CAS。"""
+
+    model_config = ConfigDict(extra="forbid")
+
+    version: Optional[int] = Field(None, ge=0)
+
+
+class AcceptanceRequest(BaseModel):
+    """用户验收：通过或报告问题。"""
+
+    model_config = ConfigDict(extra="forbid")
+
+    action: Literal["accept", "dispute"]
+    reason: Optional[str] = Field(None, max_length=1000)
+
+
+class EmptyRunFeeRequest(BaseModel):
+    """空跑费确认或争议。"""
+
+    model_config = ConfigDict(extra="forbid")
+
+    action: Literal["confirm", "dispute"]
+    reason: Optional[str] = Field(None, max_length=1000)
+
+
+class RiskConfirmationRequest(BaseModel):
+    """提交风险确认书版本与勾选结果。"""
+
+    model_config = ConfigDict(extra="forbid")
+
+    version: str = Field(..., min_length=1, max_length=64)
+    confirmed: bool
+
+
+class AccelerateDispatchRequest(BaseModel):
+    """购买加速接单服务；金额由服务端按 package_key 计算。"""
+
+    model_config = ConfigDict(extra="forbid")
+
+    package_key: str = Field(..., min_length=1, max_length=32)
+
+
 # ===== 响应 =====
 class OrderResponse(BaseModel):
     id: int
@@ -170,6 +235,13 @@ class OrderResponse(BaseModel):
     urgent: bool
     urgent_amount: float
     status: str = Field(..., max_length=32)
+    pricing_mode: str = Field("bidding", max_length=16)
+    acceptance_state: str = Field("not_required", max_length=16)
+    empty_run_fee_state: str = Field("none", max_length=16)
+    empty_run_fee_amount: float = 0
+    acceptance_deadline: Optional[datetime] = None
+    risk_confirmation_version: Optional[str] = Field(None, max_length=64)
+    dispatch_acceleration_fee: float = 0
     version: int = Field(..., ge=0)
     created_at: datetime
     accepted_at: Optional[datetime]
@@ -202,9 +274,11 @@ class AvailableOrderResponse(BaseModel):
     images: Optional[str] = Field(None, max_length=2048)
     appoint_time: Optional[datetime]
     budget: float
+    final_price: Optional[float] = None
     urgent: bool
     urgent_amount: float
     status: str = Field(..., max_length=32)
+    pricing_mode: str = Field("bidding", max_length=16)
     created_at: datetime
     distance_meters: Optional[int] = None
     distance_text: Optional[str] = Field(None, max_length=64)

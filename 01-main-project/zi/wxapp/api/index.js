@@ -54,6 +54,12 @@ module.exports = {
     workerDetail: (id) => http.get('/api/services/workers/' + id)
   },
 
+  // ==================== 服务目录（v6.3） ====================
+  catalog: {
+    services: (params) => http.get('/api/catalog/services', params),
+    schema:   (id) => http.get('/api/catalog/services/' + id + '/schema')
+  },
+
   // ==================== 订单 ====================
   orders: {
     create:        (data) => http.post('/api/orders', data),
@@ -72,6 +78,28 @@ module.exports = {
     // 状态
     updateStatus:  (id, status, extra) => http.put('/api/orders/' + id + '/status', Object.assign({ status }, extra || {})),
     cancel:        (id, reason) => http.put('/api/orders/' + id + '/status', { status: 'cancelled', cancel_reason: reason || '' }),
+    cancelRequest: (id, reason, note) => http.post('/api/orders/' + id + '/cancel-request', {
+      reason,
+      note: note || ''
+    }),
+    cancelRequestDetail: (id) => http.get('/api/orders/' + id + '/cancel-request'),
+    withdrawCancelRequest: (id) => http.post('/api/orders/' + id + '/cancel-request/withdraw'),
+    // v6.3 定价、验收与增值服务
+    acceptOrder:      (id, version) => http.post('/api/worker/orders/' + id + '/accept', version === undefined ? {} : { version }),
+    submitQuote:      (orderId, data) => http.post('/api/worker/orders/' + orderId + '/quotes', data),
+    selectQuote:      (orderId, biddingId) => http.post('/api/orders/' + orderId + '/select-quote', { bidding_id: biddingId }),
+    riskConfirmation: (id, version, confirmed) => http.post('/api/orders/' + id + '/risk-confirmation', { version, confirmed }),
+    accelerate:       (id, packageKey) => http.post('/api/orders/' + id + '/accelerate', { package_key: packageKey }),
+    emptyRunFee:      (id, action, reason) => http.post('/api/orders/' + id + '/empty-run-fee', {
+      action,
+      reason: reason || undefined
+    }),
+    acceptance:       (id) => http.get('/api/orders/' + id + '/acceptance'),
+    submitAcceptance: (id, action, reason) => http.post('/api/orders/' + id + '/acceptance', {
+      action,
+      reason: reason || undefined
+    }),
+    settlement:       (id) => http.get('/api/orders/' + id + '/settlement'),
     // 评价
     review:        (id, data) => http.post('/api/orders/' + id + '/review', data)
   },
@@ -98,7 +126,11 @@ module.exports = {
   // ==================== 钱包 / 交易 ====================
   wallet: {
     detail:       () => http.get('/api/wallet'),
+    funds:        () => http.get('/api/wallet/funds'),
+    settlements:  (params) => http.get('/api/wallet/settlements', params),
     transactions: (params) => http.get('/api/wallet/transactions', params),
+    withdrawConfig: () => http.get('/api/wallet/withdraw/config'),
+    withdrawQuote:  (amount) => http.get('/api/wallet/withdraw/quote', { amount }),
     recharge:     (amount, idempotencyKey) => http.post(
       '/api/wallet/recharge',
       { amount },
@@ -172,7 +204,10 @@ module.exports = {
     analyze:         (data) => http.post('/api/ai/analyze', data),
     chat:            (data) => http.post('/api/ai/chat', data),
     estimate:        (data) => http.post('/api/ai/estimate', data),
-    quickQuestions:   () => http.get('/api/ai/quick-questions')
+    quickQuestions:   () => http.get('/api/ai/quick-questions'),
+    // AI 下单助手：大模型多轮工具调用，单独放宽超时
+    agentTurn:       (data) => http.post('/api/ai/agent/turn', data, { timeout: 60000 }),
+    agentSession:    (sessionId) => http.get('/api/ai/agent/session/' + sessionId)
   },
 
   // ==================== 会员中心 ====================

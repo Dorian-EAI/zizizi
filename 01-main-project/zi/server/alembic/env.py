@@ -44,6 +44,7 @@ import app.models.review
 import app.models.support_ticket
 import app.models.training
 import app.models.idempotency
+import app.models.agent
 
 # Alembic Config 对象
 config = context.config

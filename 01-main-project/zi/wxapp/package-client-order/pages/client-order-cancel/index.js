@@ -82,7 +82,10 @@ Page({
     note: '',
 
     cancelling: false,
-    cancelled: false
+    cancelled: false,
+    requestMode: false,
+    requestState: 'none',
+    requestNo: ''
   },
 
   onLoad(query) {
@@ -124,7 +127,10 @@ Page({
         serviceName: pickServiceName(order),
         orderNo: pickOrderNo(order),
         orderStatusText: pickStatusText(order),
-        amountText: formatAmount(pickAmount(order))
+        amountText: formatAmount(pickAmount(order)),
+        requestMode: ['accepted', 'departing', 'arrived'].indexOf(order.status) >= 0,
+        requestState: order.cancel_request_state || 'none',
+        requestNo: order.cancel_request_no || ''
       })
     } catch (error) {
       console.error('加载订单详情失败', error)
@@ -177,11 +183,14 @@ Page({
     const reasonLabel = (REASON_OPTIONS.find(item => item.key === this.data.selectedReason) || {}).label || ''
     const extraNote = this.data.note ? `｜补充：${this.data.note}` : ''
     const cancelReason = `${reasonLabel}${extraNote}`
+    const isRequest = this.data.requestMode
 
     wx.showModal({
-      title: '确认取消订单？',
-      content: '取消后订单将不再继续服务，退款将按原路返回。',
-      confirmText: '确认取消',
+      title: isRequest ? '提交取消申请？' : '确认取消订单？',
+      content: isRequest
+        ? '提交后需等待平台确认，确认前订单仍会继续履约。'
+        : '取消后订单将不再继续服务，退款将按原路返回。',
+      confirmText: isRequest ? '提交申请' : '确认取消',
       confirmColor: '#d9534f',
       success: async (res) => {
         if (!res.confirm) return
@@ -189,6 +198,22 @@ Page({
         wx.showLoading({ title: '提交中', mask: true })
         try {
           const api = app.getApi()
+          if (isRequest) {
+            const request = await api.orders.cancelRequest(
+              this.data.orderId,
+              cancelReason,
+              this.data.note || ''
+            )
+            wx.hideLoading()
+            this.setData({
+              cancelling: false,
+              requestState: (request && request.status) || 'pending',
+              requestNo: (request && request.request_no) || ''
+            })
+            wx.showToast({ title: '取消申请已提交', icon: 'success' })
+            return
+          }
+
           await api.orders.cancel(this.data.orderId, cancelReason)
           wx.hideLoading()
           this.setData({ cancelling: false, cancelled: true })
@@ -200,10 +225,39 @@ Page({
           wx.hideLoading()
           this.setData({ cancelling: false })
           console.error('取消订单失败', error)
-          wx.showToast({ title: (error && error.message) || '取消失败，请重试', icon: 'none' })
+          wx.showToast({ title: (error && error.message) || '操作失败，请重试', icon: 'none' })
         }
       }
     })
+  },
+
+  async onWithdrawRequest() {
+    if (this.data.cancelling || !this.data.orderId) return
+    const res = await new Promise(resolve => {
+      wx.showModal({
+        title: '撤回取消申请？',
+        content: '撤回后订单将继续正常履约。',
+        confirmText: '撤回申请',
+        success: resolve,
+        fail: () => resolve({ confirm: false })
+      })
+    })
+    if (!res.confirm) return
+
+    this.setData({ cancelling: true })
+    wx.showLoading({ title: '处理中', mask: true })
+    try {
+      const api = app.getApi()
+      await api.orders.withdrawCancelRequest(this.data.orderId)
+      wx.hideLoading()
+      this.setData({ cancelling: false, requestState: 'withdrawn', requestNo: '' })
+      wx.showToast({ title: '取消申请已撤回', icon: 'success' })
+      this.loadOrder()
+    } catch (error) {
+      wx.hideLoading()
+      this.setData({ cancelling: false })
+      wx.showToast({ title: (error && error.message) || '撤回失败，请重试', icon: 'none' })
+    }
   },
 
   goOrdersList() {

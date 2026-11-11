@@ -7,17 +7,21 @@
 - 登录接口强制限流防爆破
 """
 
-from fastapi import APIRouter, Depends, Header, HTTPException, Query, Request
+from fastapi import APIRouter, Depends, File, Header, HTTPException, Query, Request, UploadFile
 from sqlalchemy.orm import Session
-from typing import Optional
+from starlette.concurrency import run_in_threadpool
+from typing import List, Optional
 
 from app.database import get_db
 from app.dependencies import (
     get_current_admin,
     get_current_admin_for_password_change,
+    require_admin_operator,
     require_super_admin,
 )
 from app.models.admin import Admin
+from app.models.order import Order, OrderCancellationRequest
+from app.models.service import ServiceType
 from app.schemas.admin import (
     AdminCreateRequest,
     AdminChangePasswordRequest,
@@ -29,13 +33,39 @@ from app.schemas.admin import (
     UpdateOrderStatusRequest,
     WorkerCertifyRequest,
 )
-from app.services import admin_service
+from app.schemas.order import CancelRequestReview
+from app.services import admin_service, cancellation_service, upload_service
 from app.utils.response import success
-from app.utils.rate_limit import limiter, LIMIT_ADMIN_LOGIN
+from app.utils.rate_limit import limiter, LIMIT_ADMIN_LOGIN, LIMIT_UPLOAD_BATCH, LIMIT_UPLOAD_SINGLE
 from app.utils.redis_client import redis_client
 from app.utils.security import decode_access_token
 
 router = APIRouter(prefix="/api/admin", tags=["运营后台"])
+
+# 管理员只允许为运营内容选择公开图片分类，认证材料等私有目录不允许从后台写入。
+_ADMIN_UPLOAD_CATEGORIES = {"service", "banner", "content", "images"}
+_ADMIN_UPLOAD_MAX_MB = 10
+
+
+def _admin_upload_category(category: str) -> str:
+    value = upload_service.normalize_category(category)
+    if value not in _ADMIN_UPLOAD_CATEGORIES:
+        raise HTTPException(status_code=400, detail="不支持的后台上传分类")
+    return value
+
+
+async def _read_admin_upload(file: UploadFile) -> bytes:
+    """分块读取并限制大小，避免后台误传超大文件占满内存。"""
+    max_bytes = _ADMIN_UPLOAD_MAX_MB * 1024 * 1024
+    data = bytearray()
+    while True:
+        chunk = await file.read(min(1024 * 1024, max_bytes + 1 - len(data)))
+        if not chunk:
+            break
+        data.extend(chunk)
+        if len(data) > max_bytes:
+            raise HTTPException(status_code=413, detail=f"文件大小超过上限 {_ADMIN_UPLOAD_MAX_MB}MB")
+    return bytes(data)
 
 
 # ===== 登录（强制限流防爆破） =====
@@ -168,6 +198,37 @@ async def dashboard(
     return success(data=resp)
 
 
+# ===== 服务内容管理 =====
+@router.get("/services")
+async def list_all_services(
+    page: int = Query(1, ge=1),
+    size: int = Query(200, ge=1, le=500),
+    admin: Admin = Depends(get_current_admin),
+    db: Session = Depends(get_db),
+):
+    """后台服务列表：包含已禁用服务，避免禁用后无法再次编辑启用。"""
+    q = db.query(ServiceType).order_by(ServiceType.sort_order.asc(), ServiceType.id.asc())
+    total = q.count()
+    rows = q.offset((page - 1) * size).limit(size).all()
+    items = [
+        {
+            "id": svc.id,
+            "key": svc.key,
+            "name": svc.name,
+            "icon": svc.icon,
+            "banner": svc.banner,
+            "category": svc.category,
+            "price_min": float(svc.price_min or 0),
+            "price_max": float(svc.price_max or 0),
+            "price_unit": svc.price_unit,
+            "sort_order": int(svc.sort_order or 0),
+            "is_active": bool(svc.is_active),
+        }
+        for svc in rows
+    ]
+    return success(data={"list": items, "total": total, "page": page, "size": size})
+
+
 # ===== 用户管理 =====
 @router.get("/users")
 async def list_users(
@@ -282,6 +343,94 @@ async def update_order_status(
     return success(data=result, message="订单状态已更新")
 
 
+# ===== 取消申请 =====
+@router.get("/cancel-requests")
+async def list_cancel_requests(
+    status: Optional[str] = Query(None, max_length=16),
+    page: int = Query(1, ge=1),
+    size: int = Query(20, ge=1, le=200),
+    admin: Admin = Depends(get_current_admin),
+    db: Session = Depends(get_db),
+):
+    """后台取消申请列表。"""
+    q = db.query(OrderCancellationRequest, Order).join(
+        Order, Order.id == OrderCancellationRequest.order_id
+    )
+    if status:
+        q = q.filter(OrderCancellationRequest.status == status)
+    total = q.count()
+    rows = (
+        q.order_by(OrderCancellationRequest.created_at.desc())
+        .offset((page - 1) * size)
+        .limit(size)
+        .all()
+    )
+    items = []
+    for request, order in rows:
+        item = cancellation_service.serialize_request(request) or {}
+        item.update(
+            {
+                "order_no": order.order_no,
+                "service_name": order.service_name,
+                "order_status": order.status,
+                "order_final_price": float(order.final_price or 0),
+            }
+        )
+        items.append(item)
+    return success(data={"list": items, "total": total, "page": page, "size": size})
+
+
+@router.put("/cancel-requests/{request_id}/approve")
+async def approve_cancel_request(
+    request_id: int,
+    req: CancelRequestReview,
+    admin: Admin = Depends(require_admin_operator),
+    db: Session = Depends(get_db),
+):
+    """通过取消申请并取消订单。"""
+    request = cancellation_service.approve_request(db, admin.id, request_id, req.remark)
+    admin_service.add_admin_audit(
+        db,
+        admin.id,
+        "cancel_request.approve",
+        "order_cancellation_request",
+        request.id,
+        {"order_id": request.order_id, "remark": req.remark},
+        commit=True,
+    )
+    return success(
+        data=cancellation_service.serialize_request(request),
+        message="取消申请已通过",
+    )
+
+
+@router.put("/cancel-requests/{request_id}/reject")
+async def reject_cancel_request(
+    request_id: int,
+    req: CancelRequestReview,
+    admin: Admin = Depends(require_admin_operator),
+    db: Session = Depends(get_db),
+):
+    """拒绝取消申请，必须填写原因。"""
+    remark = (req.remark or "").strip()
+    if not remark:
+        raise HTTPException(status_code=400, detail="请填写拒绝原因")
+    request = cancellation_service.reject_request(db, admin.id, request_id, remark)
+    admin_service.add_admin_audit(
+        db,
+        admin.id,
+        "cancel_request.reject",
+        "order_cancellation_request",
+        request.id,
+        {"order_id": request.order_id, "remark": remark},
+        commit=True,
+    )
+    return success(
+        data=cancellation_service.serialize_request(request),
+        message="取消申请已拒绝",
+    )
+
+
 # ===== 提现管理 =====
 @router.get("/withdraws/pending")
 async def list_pending_withdraws(
@@ -304,6 +453,18 @@ async def approve_withdraw(
     """审批通过提现（触发转账）"""
     result = await admin_service.approve_withdraw(db, tx_id, admin.id)
     return success(data=result, message="提现审批完成")
+
+
+@router.put("/withdraws/{tx_id}/reject")
+async def reject_withdraw(
+    tx_id: int,
+    reason: str = Query("", max_length=200, description="驳回原因"),
+    admin: Admin = Depends(require_super_admin),
+    db: Session = Depends(get_db),
+):
+    """驳回提现并退回可提现余额"""
+    result = await admin_service.reject_withdraw(db, tx_id, admin.id, reason)
+    return success(data=result, message="提现已驳回")
 
 
 # ===== 优惠券模板 =====
@@ -330,3 +491,75 @@ async def list_feedbacks(
     """反馈列表（无模型时返回空）"""
     result = admin_service.list_feedbacks(db, page=page, size=size)
     return success(data=result)
+
+
+# ===== 运营图片上传 =====
+@router.post("/upload/image")
+@limiter.limit(LIMIT_UPLOAD_SINGLE)
+async def admin_upload_image(
+    request: Request,
+    category: str = Query("service", max_length=32, description="service / banner / content / images"),
+    file: UploadFile = File(...),
+    admin: Admin = Depends(require_admin_operator),
+    db: Session = Depends(get_db),
+):
+    """管理员上传运营图片（服务图标、Banner、案例图等），写入审计日志。"""
+    category = _admin_upload_category(category)
+    file_bytes = await _read_admin_upload(file)
+    result = await run_in_threadpool(
+        upload_service.upload_image,
+        category,
+        file_bytes,
+        file.filename or "",
+        owner_id=admin.id,
+    )
+    admin_service.add_admin_audit(
+        db,
+        admin.id,
+        "upload.image",
+        "storage_object",
+        category,
+        {"url": result["url"], "category": category, "size": result["size"]},
+        commit=True,
+    )
+    return success(data=result, message="上传成功")
+
+
+@router.post("/upload/images")
+@limiter.limit(LIMIT_UPLOAD_BATCH)
+async def admin_upload_images(
+    request: Request,
+    category: str = Query("service", max_length=32, description="service / banner / content / images"),
+    files: List[UploadFile] = File(..., description="最多 9 张"),
+    admin: Admin = Depends(require_admin_operator),
+    db: Session = Depends(get_db),
+):
+    """管理员批量上传运营图片（最多 9 张）。"""
+    if len(files) > 9:
+        raise HTTPException(status_code=400, detail="最多支持同时上传 9 张图片")
+    category = _admin_upload_category(category)
+    results = []
+    for item in files:
+        file_bytes = await _read_admin_upload(item)
+        result = await run_in_threadpool(
+            upload_service.upload_image,
+            category,
+            file_bytes,
+            item.filename or "",
+            owner_id=admin.id,
+        )
+        results.append(result)
+    admin_service.add_admin_audit(
+        db,
+        admin.id,
+        "upload.images",
+        "storage_object",
+        category,
+        {
+            "urls": [item["url"] for item in results],
+            "count": len(results),
+            "size": sum(item["size"] for item in results),
+        },
+        commit=True,
+    )
+    return success(data=results, message="上传成功")

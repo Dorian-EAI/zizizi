@@ -1,5 +1,4 @@
-<!-- 像素级复刻 client-chat.html -->
-<!-- pages/client-chat/index.wxml — AI智能助手聊天页 玻璃新拟态 -->
+<!-- pages/client-chat/index.wxml — AI 下单助手 玻璃新拟态 -->
 <view class="page">
   <!-- 背景装饰光斑：teal-amber 径向渐变 -->
   <view class="blob" style="top: -40px; right: -60px; width: 280px; height: 280px; background: radial-gradient(circle, var(--brand) 0%, transparent 70%);"></view>
@@ -11,8 +10,8 @@
       <image class="nav-back-icon" src="{{icons.back}}" mode="aspectFit" lazy-load="{{false}}" />
     </view>
     <view class="nav-titles">
-      <text class="nav-title">AI智能助手</text>
-      <text class="nav-subtitle">智能问答 · 语音输入</text>
+      <text class="nav-title">AI下单助手</text>
+      <text class="nav-subtitle">说句话 · 拍张照 · 帮你叫师傅</text>
     </view>
     <view class="nav-slot press-scale" bindtap="onMore">
       <image class="nav-slot-icon" src="{{icons.more}}" mode="aspectFit" lazy-load="{{false}}" />
@@ -37,7 +36,7 @@
       wx:key="id"
       id="msg-{{item.id}}"
     >
-      <!-- AI/师傅 头像 -->
+      <!-- AI 头像 -->
       <view class="bubble-avatar" wx:if="{{item.role !== 'user'}}">
         <image src="{{icons.bot}}" mode="aspectFit" lazy-load="{{false}}" class="bubble-avatar-img" />
       </view>
@@ -46,24 +45,146 @@
         <view class="bubble bubble-assistant">
           <text>{{item.content}}</text>
         </view>
-        <!-- 嵌入式推荐卡（仅当消息带 rec 字段时显示） -->
-        <view class="rec-service-card" wx:if="{{item.rec}}">
-          <view class="rec-icon">
-            <image src="{{item.rec.icon}}" mode="aspectFit" lazy-load="{{false}}" class="rec-icon-img" />
+
+        <!-- 订单草稿卡 -->
+        <view class="agent-card" wx:if="{{item.draft}}">
+          <view class="card-head">
+            <text class="card-title">订单确认</text>
+            <text class="card-price" wx:if="{{item.draft.estimate}}">¥{{item.draft.estimate.min_price}}-{{item.draft.estimate.max_price}}</text>
           </view>
-          <view class="rec-info">
-            <text class="rec-name">{{item.rec.name}}</text>
-            <text class="rec-meta">{{item.rec.meta}}</text>
+          <view class="card-row">
+            <text class="card-key">服务</text>
+            <text class="card-val">{{item.draft.service_name || '上门维修'}}</text>
           </view>
-          <view class="btn-neu-primary rec-btn press-neu" catchtap="onBookRec" data-id="{{item.rec.id}}">
-            <text>立即预约</text>
+          <view class="card-row">
+            <text class="card-key">问题</text>
+            <text class="card-val">{{item.draft.description || '待补充'}}</text>
           </view>
+          <view class="card-row">
+            <text class="card-key">地址</text>
+            <text class="card-val">{{item.draft.address_text || '待选择'}}</text>
+          </view>
+          <view class="card-row">
+            <text class="card-key">上门</text>
+            <text class="card-val">{{item.draft.appoint_text || '待确认'}}</text>
+          </view>
+          <view class="card-hint">参考价最终以师傅上门检测为准</view>
+          <view class="card-actions">
+            <block wx:for="{{item.actions}}" wx:for-item="act" wx:for-index="actIndex" wx:key="text">
+              <view
+                wx:if="{{act.type === 'confirm_order'}}"
+                class="btn-neu-primary card-btn"
+                data-msgid="{{item.id}}"
+                data-index="{{actIndex}}"
+                catchtap="onActionTap"
+              >{{act.text}}</view>
+              <view
+                wx:if="{{act.type === 'cancel_order_draft'}}"
+                class="ghost-btn card-btn"
+                data-msgid="{{item.id}}"
+                data-index="{{actIndex}}"
+                catchtap="onActionTap"
+              >{{act.text}}</view>
+            </block>
+          </view>
+        </view>
+
+        <!-- 已创建订单卡 -->
+        <view class="agent-card order-card" wx:if="{{item.order}}">
+          <view class="card-head">
+            <text class="card-title">订单已提交</text>
+            <text class="order-status">待接单</text>
+          </view>
+          <view class="card-row">
+            <text class="card-key">订单号</text>
+            <text class="card-val">{{item.order.order_no}}</text>
+          </view>
+          <view class="card-row">
+            <text class="card-key">服务</text>
+            <text class="card-val">{{item.order.service_name}}</text>
+          </view>
+          <view class="card-row">
+            <text class="card-key">地址</text>
+            <text class="card-val">{{item.order.address}}</text>
+          </view>
+        </view>
+
+        <!-- 补全信息选项 -->
+        <view class="opt-group" wx:if="{{item.options.services.length}}">
+          <view
+            class="opt-chip"
+            wx:for="{{item.options.services}}"
+            wx:for-item="opt"
+            wx:for-index="optIndex"
+            wx:key="value"
+            data-msgid="{{item.id}}"
+            data-kind="service"
+            data-index="{{optIndex}}"
+            catchtap="onOptionTap"
+          >{{opt.text}}</view>
+        </view>
+        <view class="opt-group" wx:if="{{item.options.times.length}}">
+          <view
+            class="opt-chip"
+            wx:for="{{item.options.times}}"
+            wx:for-item="opt"
+            wx:for-index="optIndex"
+            wx:key="text"
+            data-msgid="{{item.id}}"
+            data-kind="time"
+            data-index="{{optIndex}}"
+            catchtap="onOptionTap"
+          >{{opt.text}}</view>
+        </view>
+        <view class="opt-group" wx:if="{{item.options.addresses.length}}">
+          <view
+            class="opt-chip opt-address"
+            wx:for="{{item.options.addresses}}"
+            wx:for-item="opt"
+            wx:for-index="optIndex"
+            wx:key="id"
+            data-msgid="{{item.id}}"
+            data-kind="address"
+            data-index="{{optIndex}}"
+            catchtap="onOptionTap"
+          >{{opt.label}} · {{opt.text}}</view>
+        </view>
+
+        <!-- 跳转类动作（绑定手机号 / 查看订单 / 添加地址） -->
+        <view class="act-row" wx:if="{{item.hasNavigate}}">
+          <block wx:for="{{item.actions}}" wx:for-item="act" wx:for-index="actIndex" wx:key="text">
+            <view
+              wx:if="{{act.type === 'navigate'}}"
+              class="mini-btn"
+              data-msgid="{{item.id}}"
+              data-index="{{actIndex}}"
+              catchtap="onActionTap"
+            >{{act.text}}</view>
+          </block>
         </view>
       </view>
 
       <!-- 用户气泡 -->
-      <view class="bubble bubble-user" wx:if="{{item.role === 'user'}}">
-        <text>{{item.content}}</text>
+      <view class="bubble-group user-group" wx:if="{{item.role === 'user'}}">
+        <view class="bubble bubble-user">
+          <text>{{item.content}}</text>
+        </view>
+        <view class="msg-images" wx:if="{{item.localImages && item.localImages.length}}">
+          <image
+            class="msg-image"
+            wx:for="{{item.localImages}}"
+            wx:for-item="img"
+            wx:for-index="imgIndex"
+            wx:key="*this"
+            src="{{img}}"
+            mode="aspectFill"
+            lazy-load="{{false}}"
+            bindtap="onPreviewImage"
+            data-src="{{img}}"
+            data-msgid="{{item.id}}"
+          />
+        </view>
+        <view class="photo-hint" wx:if="{{!item.localImages && item.imageCount}}">已上传 {{item.imageCount}} 张照片</view>
       </view>
     </view>
 
@@ -93,11 +214,19 @@
     </scroll-view>
 
     <!-- 底部留白，避免输入栏遮挡 -->
-    <view style="height: 60rpx;"></view>
+    <view style="height: 220rpx;"></view>
   </scroll-view>
 
   <!-- ===== 底部固定：输入栏 ===== -->
   <view class="input-bar">
+    <!-- 待发送照片 -->
+    <scroll-view scroll-x enable-flex class="pending-bar hide-scroll" enhanced show-scrollbar="{{false}}" wx:if="{{pendingImages.length}}">
+      <view class="pending-item" wx:for="{{pendingImages}}" wx:key="*this">
+        <image class="pending-thumb" src="{{item}}" mode="aspectFill" lazy-load="{{false}}" />
+        <view class="thumb-del" data-index="{{index}}" catchtap="onRemovePending">×</view>
+      </view>
+    </scroll-view>
+
     <!-- 快捷提问 -->
     <scroll-view scroll-x enable-flex class="quick-questions hide-scroll" enhanced show-scrollbar="{{false}}" wx:if="{{quickQuestions.length}}">
       <view
@@ -111,19 +240,22 @@
 
     <!-- 输入行 -->
     <view class="input-row">
+      <view class="mic-btn press-neu" bindtap="onChooseImage">
+        <image src="{{icons.camera}}" mode="aspectFit" lazy-load="{{false}}" class="mic-icon" />
+      </view>
       <view class="mic-btn press-neu" bindtap="onMicTap">
         <image src="{{icons.mic}}" mode="aspectFit" lazy-load="{{false}}" class="mic-icon" />
       </view>
       <input
         class="chat-input-v2"
-        placeholder="描述你的问题..."
+        placeholder="说下哪里坏了，或直接拍张照..."
         placeholder-class="input-ph"
         value="{{inputValue}}"
         bindinput="onInput"
         confirm-type="send"
         bindconfirm="onSend"
       />
-      <view class="send-btn {{inputValue && !sending ? 'active' : ''}}" bindtap="onSend">
+      <view class="send-btn {{(inputValue || pendingImages.length) && !sending ? 'active' : ''}}" bindtap="onSend">
         <image src="{{icons.send}}" mode="aspectFit" lazy-load="{{false}}" class="send-icon" />
       </view>
     </view>

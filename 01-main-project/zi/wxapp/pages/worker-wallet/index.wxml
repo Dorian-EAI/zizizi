@@ -41,18 +41,47 @@
         </view>
         <text class="qa-label">提现</text>
       </view>
-      <view class="qa-item" bindtap="onTransfer">
-        <view class="qa-icon">
-          <image src="{{icons.transfer}}" mode="aspectFit" class="qa-icon-img" lazy-load="{{false}}" />
-        </view>
-        <text class="qa-label">转账</text>
-      </view>
       <view class="qa-item" bindtap="onDetail">
         <view class="qa-icon">
           <image src="{{icons.detail}}" mode="aspectFit" class="qa-icon-img" lazy-load="{{false}}" />
         </view>
         <text class="qa-label">明细</text>
       </view>
+    </view>
+
+    <!-- ===== FUNDS BUCKETS ===== -->
+    <view class="section" wx:if="{{fundsLoaded}}">
+      <text class="section-title">资金明细</text>
+      <view class="funds-grid">
+        <view class="fund-cell">
+          <text class="fund-label">可提现</text>
+          <text class="fund-value numeric">¥{{funds.available}}</text>
+        </view>
+        <view class="fund-cell">
+          <text class="fund-label">待结算</text>
+          <text class="fund-value numeric">¥{{funds.pending_settlement}}</text>
+        </view>
+        <view class="fund-cell">
+          <text class="fund-label">提现中</text>
+          <text class="fund-value numeric">¥{{funds.withdrawing}}</text>
+        </view>
+        <view class="fund-cell">
+          <text class="fund-label">已提现</text>
+          <text class="fund-value numeric">¥{{funds.withdrawn}}</text>
+        </view>
+        <view class="fund-cell">
+          <text class="fund-label">冻结</text>
+          <text class="fund-value numeric">¥{{funds.frozen}}</text>
+        </view>
+        <view class="fund-cell">
+          <text class="fund-label">冲正</text>
+          <text class="fund-value numeric">¥{{funds.reversed}}</text>
+        </view>
+      </view>
+      <text class="fund-note" wx:if="{{fundsNote}}">{{fundsNote}}</text>
+      <text class="fund-note" wx:if="{{fundsNextSettleAt}}">下一笔待结算收入预计 {{fundsNextSettleAt}} 转入可提现</text>
+      <text class="fund-note" wx:if="{{pendingItemText}}">待结算明细：{{pendingItemText}}</text>
+      <text class="fund-note" wx:if="{{frozenItemText}}">冻结明细：{{frozenItemText}}</text>
     </view>
 
     <!-- ===== INCOME STATS CARD ===== -->

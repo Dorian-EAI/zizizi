@@ -1,7 +1,7 @@
 // pages/order-detail-client/index.js — 客户端订单详情
 const app = getApp()
 const { buildIcon, COLORS } = require('../../utils/icons')
-const { STATUS_TEXT } = require('../../utils/order-status')
+const { STATUS_TEXT, deriveOrderView } = require('../../utils/order-status')
 const { requestPayment, isPaymentCancelled } = require('../../utils/wx-payment')
 const idempotency = require('../../utils/idempotency')
 
@@ -138,6 +138,7 @@ Page({
     const api = app.getApi()
     try {
       const order = await api.getOrderDetail(id)
+      const view = deriveOrderView(order, 'client')
       // 后端 OrderResponse 为 snake_case(order_no/service_name/service_type)，前端读取 camelCase，需别名
       const withIcon = Object.assign({}, order, {
         orderNo: order.order_no != null ? order.order_no : order.orderNo,
@@ -145,7 +146,9 @@ Page({
         serviceKey: order.service_type != null ? order.service_type : order.serviceKey,
         workerPhone: order.worker_phone != null ? order.worker_phone : (order.workerPhone || ''),
         iconUrl: buildIcon(order.icon, COLORS.brand),
-        statusText: order.statusText || STATUS_TEXT[order.status] || '',
+        statusText: view.statusText || order.statusText || STATUS_TEXT[order.status] || '',
+        axisTags: view.axisTags || [],
+        actionKey: view.actionKey || '',
         etaText: order.etaText || (order.eta ? '预计 ' + order.eta + ' 完成' : ''),
         visitFeeFree: Boolean(order.visitFeeFree || order.visit_fee_free),
         insurance: order.insurance || null,
@@ -315,8 +318,23 @@ Page({
   },
 
   onCancel() {
-    if (this.data.order.status === 'pending_review') {
+    const status = this.data.order.status
+    if (status === 'pending_review') {
       wx.navigateBack({ delta: 1 })
+      return
+    }
+    if (['accepted', 'departing', 'arrived'].indexOf(status) >= 0) {
+      wx.navigateTo({
+        url: '/package-client-order/pages/client-order-cancel/index?orderId=' + this.data.orderId
+      })
+      return
+    }
+    if (status === 'serving') {
+      wx.showToast({ title: '服务中请报告问题或联系客服', icon: 'none' })
+      return
+    }
+    if (status !== 'pending') {
+      wx.showToast({ title: '当前状态不能取消', icon: 'none' })
       return
     }
     wx.showModal({
@@ -334,6 +352,7 @@ Page({
           setTimeout(() => wx.navigateBack({ delta: 1 }), 800)
         } catch (e) {
           wx.hideLoading()
+          wx.showToast({ title: (e && e.message) || '取消失败', icon: 'none' })
         }
       }
     })

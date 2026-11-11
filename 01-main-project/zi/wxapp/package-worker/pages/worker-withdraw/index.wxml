@@ -53,11 +53,13 @@
         </view>
         <view class="amount-divider"></view>
         <view class="amount-foot">
-          <text class="amount-tip">最低提现 ¥10.00</text>
+          <text class="amount-tip">最低提现 ¥{{minAmountText}}</text>
           <view class="amount-all-link press-scale" bindtap="onWithdrawAll">
             <text class="amount-all-link-text">全部提现</text>
           </view>
         </view>
+        <text class="amount-tip" wx:if="{{quoteReason}}" style="display:block;margin-top:10rpx;color:#c0564a;">{{quoteReason}}</text>
+        <text class="amount-tip" wx:elif="{{quoteArrivalText}}" style="display:block;margin-top:10rpx;">{{quoteFeeText}} · 预计到账 ¥{{quoteArrivalText}}</text>
       </view>
     </view>
 
@@ -100,19 +102,19 @@
         <view class="tips-list">
           <view class="tips-item">
             <view class="tips-dot"></view>
-            <text class="tips-text">最小提现金额 ¥10</text>
+            <text class="tips-text">最小提现金额 ¥{{minAmountText}}</text>
           </view>
           <view class="tips-item">
             <view class="tips-dot"></view>
-            <text class="tips-text">2 小时内到账</text>
+            <text class="tips-text">{{arrivalText}}</text>
           </view>
           <view class="tips-item">
             <view class="tips-dot"></view>
-            <text class="tips-text">单笔手续费 ¥0</text>
+            <text class="tips-text">{{feeText}}</text>
           </view>
           <view class="tips-item">
             <view class="tips-dot"></view>
-            <text class="tips-text">每日最多提现 3 次</text>
+            <text class="tips-text">{{dailyLimitText}}</text>
           </view>
         </view>
       </view>

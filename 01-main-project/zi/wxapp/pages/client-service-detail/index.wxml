@@ -19,6 +19,8 @@
 
     <!-- ===== SERVICE HERO（品牌渐变 + 装饰光斑 + 水印） ===== -->
     <view class="service-hero">
+      <image wx:if="{{banner}}" src="{{banner}}" mode="aspectFill" class="hero-banner" lazy-load="{{false}}" />
+      <view wx:if="{{banner}}" class="hero-banner-mask"></view>
       <view class="hero-deco hero-deco-1"></view>
       <view class="hero-deco hero-deco-2"></view>
       <view class="hero-deco hero-deco-3"></view>
@@ -101,6 +103,88 @@
           <view class="content-item" wx:if="{{!steps.length}}">
             <text class="step-text">暂无服务端流程说明</text>
           </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== SERVICE DESCRIPTION（服务介绍） ===== -->
+    <view class="section" wx:if="{{service.description}}">
+      <view class="glass-neu-card content-card">
+        <view class="card-title">
+          <view class="title-bar"></view>
+          <text>服务介绍</text>
+        </view>
+        <text class="service-desc">{{service.description}}</text>
+      </view>
+    </view>
+
+    <!-- ===== SERVICE GALLERY（服务实景） ===== -->
+    <view class="section" wx:if="{{gallery.length}}">
+      <view class="section-title">
+        <text>服务实景</text>
+        <text class="more">{{gallery.length}}张</text>
+      </view>
+      <view class="glass-neu-card gallery-card">
+        <view class="gallery-list">
+          <view
+            class="gallery-item press-scale"
+            wx:for="{{gallery}}"
+            wx:key="url"
+            data-url="{{item.url}}"
+            bindtap="onPreviewImage"
+          >
+            <image src="{{item.url}}" mode="aspectFill" class="gallery-photo" lazy-load="{{true}}" />
+            <text wx:if="{{item.caption}}" class="gallery-caption">{{item.caption}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== SERVICE CASES（案例展示） ===== -->
+    <view class="section" wx:if="{{cases.length}}">
+      <view class="section-title">
+        <text>案例展示</text>
+        <text class="more">{{cases.length}}个</text>
+      </view>
+      <view class="case-list">
+        <view class="glass-neu-card case-card" wx:for="{{cases}}" wx:key="index">
+          <text class="case-title">{{item.title}}</text>
+          <text class="case-desc" wx:if="{{item.desc}}">{{item.desc}}</text>
+          <scroll-view scroll-x class="case-image-scroll hide-scroll" wx:if="{{item.images.length}}" enable-flex>
+            <image
+              wx:for="{{item.images}}"
+              wx:for-item="pic"
+              wx:key="*this"
+              src="{{pic}}"
+              mode="aspectFill"
+              class="case-photo"
+              data-url="{{pic}}"
+              bindtap="onPreviewImage"
+              lazy-load="{{true}}"
+            />
+          </scroll-view>
+        </view>
+      </view>
+    </view>
+
+    <!-- ===== DETAIL SECTIONS（图文详情） ===== -->
+    <view class="section" wx:if="{{detailSections.length}}">
+      <view class="section-title">
+        <text>图文详情</text>
+      </view>
+      <view class="glass-neu-card detail-card">
+        <view class="detail-block" wx:for="{{detailSections}}" wx:key="index">
+          <text class="detail-title" wx:if="{{item.title}}">{{item.title}}</text>
+          <image
+            wx:if="{{item.image}}"
+            src="{{item.image}}"
+            mode="widthFix"
+            class="detail-photo"
+            data-url="{{item.image}}"
+            bindtap="onPreviewImage"
+            lazy-load="{{true}}"
+          />
+          <text class="detail-content" wx:if="{{item.content}}">{{item.content}}</text>
         </view>
       </view>
     </view>

@@ -13,7 +13,7 @@ from app.models.admin import Admin, AdminAuditLog
 from app.models.order import Order
 from app.models.user import User, Worker
 from app.models.wallet import Transaction
-from app.services import wechat_pay_service
+from app.services import wechat_pay_service, worker_fund_service
 from app.utils.security import create_access_token, hash_password, verify_password
 from app.utils.redis_client import redis_client, RedisUnavailableError
 
@@ -782,6 +782,54 @@ async def approve_withdraw(db: Session, tx_id: int, admin_id: int) -> dict:
         "status": tx.status,
         "transfer": transfer_result,
     }
+
+
+async def reject_withdraw(db: Session, tx_id: int, admin_id: int, reason: str = "") -> dict:
+    """驳回提现：退回可提现余额、释放提现中资金并通知师傅。"""
+    tx = (
+        db.query(Transaction)
+        .filter(Transaction.id == tx_id)
+        .with_for_update()
+        .first()
+    )
+    if not tx:
+        raise HTTPException(status_code=404, detail="提现记录不存在")
+    if tx.type != "withdraw":
+        raise HTTPException(status_code=400, detail="非提现交易")
+    if tx.status != "pending":
+        raise HTTPException(status_code=400, detail="该提现阶段不可驳回")
+
+    worker = None
+    if tx.owner_type == "worker":
+        worker = (
+            db.query(Worker)
+            .filter(Worker.id == tx.owner_id)
+            .with_for_update()
+            .first()
+        )
+    if worker:
+        worker_fund_service.record_withdraw_reject(db, worker, tx)
+
+    tx.status = "failed"
+    if reason:
+        suffix = f"（驳回：{reason[:60]}）"
+        base = tx.description or "提现申请"
+        tx.description = base[: 128 - len(suffix)] + suffix
+
+    from app.services import message_service
+
+    await message_service.notify_withdraw_failed(db, tx, reason)
+
+    add_admin_audit(
+        db,
+        admin_id,
+        "withdraw.reject",
+        "transaction",
+        tx.id,
+        {"status": tx.status, "reason": reason},
+        commit=True,
+    )
+    return {"tx_id": tx.id, "status": tx.status, "reason": reason}
 
 
 # ===== 优惠券模板 =====

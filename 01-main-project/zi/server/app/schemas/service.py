@@ -45,6 +45,12 @@ class ServiceTypeDetailResponse(BaseModel):
     detail_sections: Optional[List[Any]] = None
     service_standards: Optional[List[Any]] = None
     price_details: Optional[List[Any]] = None
+    # v6.3 品类化下单与风险确认
+    pricing_modes: Optional[List[str]] = None
+    pricing_schema: Optional[Any] = None
+    service_boundary: Optional[Any] = None
+    risk_confirmation: Optional[Any] = None
+    warranty_days: int = 0
 
     class Config:
         from_attributes = True
@@ -71,7 +77,23 @@ class ServiceTypeCreateRequest(BaseModel):
     detail_sections: Optional[List[Any]] = Field(None, max_length=100)
     service_standards: Optional[List[Any]] = Field(None, max_length=100)
     price_details: Optional[List[Any]] = Field(None, max_length=200)
+    # v6.3 品类化下单与风险确认
+    pricing_modes: Optional[List[str]] = Field(None, max_length=3)
+    pricing_schema: Optional[Any] = None
+    service_boundary: Optional[Any] = None
+    risk_confirmation: Optional[Any] = None
+    warranty_days: int = Field(0, ge=0, le=3650)
     sort_order: int = Field(0, ge=-10_000, le=10_000)
+
+    @model_validator(mode="after")
+    def validate_pricing_modes(self):
+        allowed = {"fixed_price", "bidding", "self_priced"}
+        if self.pricing_modes is None:
+            return self
+        unknown = [mode for mode in self.pricing_modes if mode not in allowed]
+        if unknown:
+            raise ValueError(f"不支持的定价模式: {','.join(unknown)}")
+        return self
 
     @model_validator(mode="after")
     def validate_price_range(self):

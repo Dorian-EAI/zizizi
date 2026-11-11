@@ -1,6 +1,7 @@
 """师傅保证金业务逻辑"""
 
 from datetime import datetime, timedelta
+from decimal import Decimal
 from typing import Optional
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
@@ -14,6 +15,18 @@ DEPOSIT_LEVELS = {
     "formal": {"amount": 50000, "daily_limit": 10, "cut_rate": 0.120},
     "gold": {"amount": 200000, "daily_limit": 999, "cut_rate": 0.100},
 }
+
+
+def get_platform_cut_rate(db: Session, worker_id: int) -> Decimal:
+    """读取师傅当前平台服务费率；无保证金账户时按见习档默认值。"""
+    deposit = (
+        db.query(WorkerDeposit.platform_cut_rate)
+        .filter(WorkerDeposit.worker_id == worker_id)
+        .first()
+    )
+    if deposit and deposit[0] is not None:
+        return Decimal(str(deposit[0]))
+    return Decimal(str(DEPOSIT_LEVELS["trainee"]["cut_rate"]))
 
 
 def get_or_create_deposit(db: Session, worker_id: int) -> WorkerDeposit:

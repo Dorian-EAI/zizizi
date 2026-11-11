@@ -36,6 +36,15 @@ Page({
     // 真实环境只有服务端返回已绑定账户后才能启用；当前接口尚未提供绑定状态。
     methods: initialMethods(),
     selectedBank: !!app.globalData.useMock,
+    // 提现规则全部来自服务端，客户端不硬编码
+    minAmount: 10,
+    minAmountText: '10.00',
+    arrivalText: '预计 2 小时内到账',
+    feeText: '单笔手续费 ¥0.00',
+    dailyLimitText: '每日最多提现 3 次',
+    quoteFeeText: '',
+    quoteArrivalText: '',
+    quoteReason: '',
     submitting: false,
     icons: {}
   },
@@ -75,6 +84,47 @@ Page({
     } catch (e) {
       console.error('加载钱包失败', e)
     }
+    if (!app.globalData.useMock) await this.loadWithdrawConfig()
+  },
+
+  async loadWithdrawConfig() {
+    try {
+      const config = await api.wallet.withdrawConfig()
+      const rate = Number(config.fee_rate) || 0
+      const fixed = Number(config.fee_fixed) || 0
+      const feeParts = []
+      if (rate > 0) feeParts.push(`${(rate * 100).toFixed(2).replace(/\.?0+$/, '')}%`)
+      if (fixed > 0) feeParts.push(`¥${formatMoney(fixed)}`)
+      const methods = (config.methods || []).map(item => ({
+        key: item.key,
+        label: item.label,
+        desc: item.enabled ? '已绑定' : (item.disabled_reason || '暂未绑定'),
+        iconTone: item.key === 'bank' ? 'bank' : 'wechat',
+        available: !!item.enabled,
+        selected: false,
+        iconUrl: buildIcon(
+          item.key === 'bank' ? 'bank' : 'wechat',
+          item.key === 'bank' ? COLORS.brandWorker : COLORS.green
+        )
+      }))
+      const selectedIndex = methods.findIndex(item => item.available)
+      if (selectedIndex >= 0) methods[selectedIndex].selected = true
+      const limit = Number(config.daily_limit) || 0
+      const remaining = config.remaining_today
+      this.setData({
+        methods,
+        selectedBank: selectedIndex >= 0 && methods[selectedIndex].key === 'bank',
+        minAmount: Number(config.min_amount) || 10,
+        minAmountText: formatMoney(config.min_amount),
+        arrivalText: config.arrival_text || '',
+        feeText: `单笔手续费 ${feeParts.length ? feeParts.join(' + ') : '¥0.00'}`,
+        dailyLimitText: limit > 0
+          ? `每日最多提现 ${limit} 次${remaining != null ? `（今日剩余 ${remaining} 次）` : ''}`
+          : '每日提现次数不限'
+      })
+    } catch (e) {
+      console.error('加载提现规则失败', e)
+    }
   },
 
   onAmountInput(e) {
@@ -83,6 +133,34 @@ Page({
     if (parts.length > 2) val = parts[0] + '.' + parts.slice(1).join('')
     if (parts[1] && parts[1].length > 2) val = parts[0] + '.' + parts[1].slice(0, 2)
     this.setData({ amount: val })
+    this.scheduleQuote(val)
+  },
+
+  scheduleQuote(val) {
+    if (this._quoteTimer) clearTimeout(this._quoteTimer)
+    this._quoteTimer = setTimeout(() => this.refreshQuote(val), 300)
+  },
+
+  async refreshQuote(val) {
+    const amt = Number(val)
+    if (!amt || amt <= 0) {
+      this.setData({ quoteFeeText: '', quoteArrivalText: '', quoteReason: '' })
+      return
+    }
+    try {
+      const quote = await api.wallet.withdrawQuote(amt)
+      this.setData({
+        quoteFeeText: `手续费 ¥${formatMoney(quote.fee)}`,
+        quoteArrivalText: formatMoney(quote.arrival_amount),
+        quoteReason: quote.valid ? '' : (quote.reason || '')
+      })
+    } catch (e) {
+      console.error('提现试算失败', e)
+    }
+  },
+
+  onUnload() {
+    if (this._quoteTimer) clearTimeout(this._quoteTimer)
   },
 
   onWithdrawAll() {
@@ -125,7 +203,7 @@ Page({
   },
 
   async onSubmit() {
-    const { amount, balance, submitting } = this.data
+    const { amount, balance, submitting, minAmount, quoteReason } = this.data
     if (submitting) return
     const payoutMethod = this.data.methods.find(method => method.selected && method.available)
     if (!payoutMethod) {
@@ -141,8 +219,12 @@ Page({
       wx.showToast({ title: '余额不足', icon: 'none' })
       return
     }
-    if (amt < 10) {
-      wx.showToast({ title: '最低提现 ¥10', icon: 'none' })
+    if (amt < minAmount) {
+      wx.showToast({ title: `最低提现 ¥${formatMoney(minAmount)}`, icon: 'none' })
+      return
+    }
+    if (quoteReason) {
+      wx.showToast({ title: quoteReason, icon: 'none' })
       return
     }
     this.setData({ submitting: true })

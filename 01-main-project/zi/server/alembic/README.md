@@ -4,9 +4,9 @@ Alembic 是已部署数据库结构的唯一迁移权威。首个受管基线 `5
 
 ## 权威文档
 
-- [产品事实源（v6.2 兼容路径）](../../PRD_v6.0.md)
+- [产品事实源（v6.3 兼容路径）](../../PRD_v6.0.md)
 - [功能与交互事实源](../../docs/design/功能与交互文档.md)
-- [后端 v6.2 目标契约](../../PRD_BACKEND_v2.0.md)
+- [后端 v6.3 目标契约](../../PRD_BACKEND_v2.0.md)
 - [后端回归测试与目标覆盖](../tests/README.md)
 
 文档定义目标，当前表结构以 Alembic revision 和 ORM 为准。目标契约中标记为“目标”的统一账号、多轴状态、资金桶等能力，只有在新 revision、回填校验和回归测试全部合入后才算实现。
@@ -60,14 +60,15 @@ alembic check
 
 revision 应保持单一、可解释的业务目的。结构变更和大规模数据回填必要时拆分，以缩短锁表时间并允许独立校验。任何数据修复都应幂等：重复执行或中断恢复不得重复入账、重复合并账号或重复生成业务事件。
 
-## v6.2 迁移顺序
+## v6.3 迁移顺序
 
 以下是目标范围，不代表当前 revision 已包含：
 
 | 阶段 | 迁移对象 | 必要保护 |
 |---|---|---|
 | 1. 统一身份 | 稳定账号主键、用户/师傅档案关联、角色可用状态、令牌版本 | 以受信身份建立候选匹配；重复/冲突 OpenID、UnionID 和孤儿档案进入人工清单，不自动猜测合并 |
-| 2. 多轴状态 | `service_state`、`payment_state`、`aftersale_state`、`price_adjust_state`、对象版本 | 先加可空结构，影子回填并与旧 `Order.status` 对账，再双写和加约束；保留兼容投影 |
+| 2. 多轴状态 | `pricing_mode`、`service_state`、`pending_dispatch`、`payment_state`、`aftersale_state`、`price_adjust_state`、`acceptance_state`、`empty_run_fee_state`、对象版本 | 先加可空结构，影子回填并与旧 `Order.status` 对账，再双写和加约束；保留兼容投影 |
+| 2.1 v6.3 定价与验收 | `orders.pricing_mode / acceptance_state / empty_run_fee_* / acceptance_deadline / risk_confirmation_version / dispatch_acceleration_fee`；`service_types.pricing_modes / pricing_schema / service_boundary / risk_confirmation / warranty_days` | 迁移 `e6f1a2b3c4d5`；旧订单默认 `bidding / not_required / none`，不得改变旧行为 |
 | 3. 报价与准入 | 报价状态/版本/截止时间、资格策略版本及必要快照 | 回填 `is_selected` 时保证每单至多一个 `selected`；不确定的历史终态留迁移报告 |
 | 4. 位置会话 | 订单追踪会话、序号、会话版本、停止原因 | 新行程启用会话；历史轨迹不伪造实时会话，保留只读来源关联 |
 | 5. 资金账本 | 结算分录、资金桶、支付/退款/提现关联、费率快照 | 切换前完成余额、交易、支付/退款、提现、保证金对账；差异不得通过修改总余额静默抹平 |

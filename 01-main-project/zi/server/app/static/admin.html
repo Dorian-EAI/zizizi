@@ -183,6 +183,69 @@
       width: 40px; height: 40px; border-radius: 6px; margin-top: 6px;
       border: 1px dashed #dcdfe6; object-fit: cover;
     }
+    .upload-inline { display: flex; align-items: center; gap: 10px; margin-top: 8px; }
+    .banner-preview {
+      width: 120px; height: 48px; border-radius: 6px;
+      border: 1px dashed #dcdfe6; object-fit: cover;
+    }
+
+    /* ===== 服务图片 / 案例 / 图文详情编辑 ===== */
+    .media-section {
+      border: 1px solid #ebeef5;
+      border-radius: 8px;
+      padding: 14px;
+      margin-bottom: 14px;
+      background: #fafcff;
+    }
+    .media-head {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 8px; margin-bottom: 10px;
+    }
+    .image-gallery { display: flex; flex-wrap: wrap; gap: 12px; }
+    .image-card {
+      width: 150px; background: #fff; border: 1px solid #ebeef5;
+      border-radius: 8px; padding: 8px; display: flex; flex-direction: column; gap: 6px;
+    }
+    .image-card-thumb {
+      width: 100%; height: 92px; object-fit: cover;
+      border-radius: 6px; background: #f5f7fa;
+    }
+    .image-card-foot { display: flex; align-items: center; justify-content: space-between; }
+    .upload-tile {
+      width: 150px; min-height: 156px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 8px; border: 1px dashed #c0c4cc; border-radius: 8px;
+      color: #606266; font-size: 13px; background: #fff; cursor: pointer;
+      transition: border-color .2s, color .2s;
+    }
+    .upload-tile:hover { border-color: #409eff; color: #409eff; }
+    .upload-tile.small { width: 72px; min-height: 72px; }
+    .upload-plus { font-size: 26px; line-height: 1; }
+    .case-editor { display: flex; flex-direction: column; gap: 12px; }
+    .case-card {
+      background: #fff; border: 1px solid #ebeef5; border-radius: 8px;
+      padding: 12px; display: flex; flex-direction: column; gap: 8px;
+    }
+    .case-card-head {
+      display: flex; align-items: center; justify-content: space-between;
+      color: #303133; font-size: 13px; font-weight: 600;
+    }
+    .case-images { display: flex; flex-wrap: wrap; gap: 8px; }
+    .case-image {
+      position: relative; width: 72px; height: 72px;
+      border-radius: 6px; overflow: hidden; border: 1px solid #ebeef5;
+    }
+    .case-image img { width: 100%; height: 100%; object-fit: cover; }
+    .image-remove {
+      position: absolute; top: 2px; right: 2px; width: 20px; height: 20px;
+      border: none; border-radius: 50%; background: rgba(0, 0, 0, 0.55);
+      color: #fff; cursor: pointer; line-height: 18px; padding: 0;
+    }
+    .detail-image-row { display: flex; align-items: center; gap: 10px; margin-top: 6px; }
+    .detail-image {
+      width: 96px; height: 64px; object-fit: cover;
+      border-radius: 6px; border: 1px solid #ebeef5;
+    }
 
     /* ===== Charts ===== */
     .chart-box {
@@ -249,7 +312,7 @@
     </div>
 
     <!-- ============ Main Layout ============ -->
-    <el-container v-else class="layout">
+    <el-container v-if="isLoggedIn" class="layout">
       <!-- mobile mask -->
       <div v-if="sidebarMobileOpen" class="mobile-mask" @click="sidebarMobileOpen = false"></div>
 
@@ -287,6 +350,10 @@
             <el-icon><money /></el-icon>
             <template #title>提现管理</template>
           </el-menu-item>
+          <el-menu-item index="aftersale">
+            <el-icon><chat-dot-round /></el-icon>
+            <template #title>售后与取消</template>
+          </el-menu-item>
           <el-menu-item index="statistics">
             <el-icon><trend-charts /></el-icon>
             <template #title>数据统计</template>
@@ -298,7 +365,7 @@
         <el-header class="topbar">
           <div class="left">
             <el-button text @click="toggleSidebar">
-              <el-icon size="20"><expand v-if="isCollapse" /><fold v-else /></el-icon>
+              <el-icon size="20"><expand v-if="isCollapse" /><fold v-if="!isCollapse" /></el-icon>
             </el-button>
             <span style="font-size:15px;color:#303133;font-weight:500;">{{ currentPageTitle }}</span>
           </div>
@@ -354,7 +421,7 @@
             <div class="page-card" style="margin-top:14px;">
               <div class="page-title">运营提示</div>
               <el-empty v-if="dashboard.pending_withdraw_count === 0" description="暂无待办事项" :image-size="80"></el-empty>
-              <div v-else>
+              <div v-if="dashboard.pending_withdraw_count !== 0">
                 <el-alert
                   :title="`当前有 ${dashboard.pending_withdraw_count} 笔提现待审核，请前往「提现管理」处理。`"
                   type="warning"
@@ -384,7 +451,7 @@
                 <el-table-column label="图标" width="80" align="center">
                   <template #default="{ row }">
                     <img v-if="row.icon" :src="row.icon" class="icon-cell" alt="icon" />
-                    <el-icon v-else><picture /></el-icon>
+                    <el-icon v-if="!row.icon"><picture /></el-icon>
                   </template>
                 </el-table-column>
                 <el-table-column prop="name" label="服务名称" min-width="120" />
@@ -392,7 +459,7 @@
                 <el-table-column prop="category" label="分类" width="120">
                   <template #default="{ row }">
                     <el-tag v-if="row.category" size="small">{{ row.category }}</el-tag>
-                    <span v-else>-</span>
+                    <span v-if="!row.category">-</span>
                   </template>
                 </el-table-column>
                 <el-table-column label="价格区间" width="160">
@@ -494,7 +561,7 @@
                 <el-table-column label="头像" width="70" align="center">
                   <template #default="{ row }">
                     <img v-if="row.avatar" :src="row.avatar" style="width:36px;height:36px;border-radius:50%;" alt="" />
-                    <el-icon v-else><avatar /></el-icon>
+                    <el-icon v-if="!row.avatar"><avatar /></el-icon>
                   </template>
                 </el-table-column>
                 <el-table-column prop="nickname" label="昵称" min-width="120" />
@@ -550,7 +617,7 @@
                 <el-table-column label="头像" width="70" align="center">
                   <template #default="{ row }">
                     <img v-if="row.avatar" :src="row.avatar" style="width:36px;height:36px;border-radius:50%;" alt="" />
-                    <el-icon v-else><avatar /></el-icon>
+                    <el-icon v-if="!row.avatar"><avatar /></el-icon>
                   </template>
                 </el-table-column>
                 <el-table-column prop="nickname" label="昵称" min-width="110" />
@@ -626,17 +693,18 @@
                 <el-table-column prop="bank_info" label="收款信息" min-width="180">
                   <template #default="{ row }">
                     <span v-if="row.bank_info">{{ typeof row.bank_info === 'string' ? row.bank_info : JSON.stringify(row.bank_info) }}</span>
-                    <span v-else>-</span>
+                    <span v-if="!row.bank_info">-</span>
                   </template>
                 </el-table-column>
                 <el-table-column prop="created_at" label="申请时间" min-width="150" />
-                <el-table-column label="操作" width="120" fixed="right">
+                <el-table-column label="操作" width="180" fixed="right">
                   <template #default="{ row }">
                     <el-popconfirm title="确认审批通过并触发转账？" @confirm="approveWithdraw(row)">
                       <template #reference>
                         <el-button v-if="adminRole === 'super_admin'" type="success" size="small">通过</el-button>
                       </template>
                     </el-popconfirm>
+                    <el-button v-if="adminRole === 'super_admin'" type="danger" size="small" plain @click="rejectWithdraw(row)">驳回</el-button>
                   </template>
                 </el-table-column>
               </el-table>
@@ -653,6 +721,130 @@
                   @current-change="(p) => { withdrawFilter.page = p; loadWithdraws(); }"
                 />
               </div>
+            </div>
+          </div>
+
+          <!-- ============ Aftersale & Cancellation ============ -->
+          <div v-show="activeMenu === 'aftersale'">
+            <div class="page-card">
+              <div class="page-title">售后与取消</div>
+              <el-tabs v-model="aftersaleTab" @tab-change="handleAftersaleTab">
+                <el-tab-pane label="取消申请" name="cancel">
+                  <div class="filter-bar">
+                    <el-select v-model="cancelFilter.status" placeholder="申请状态" clearable style="width:150px;" @change="loadCancelRequests(1)">
+                      <el-option label="待处理" value="pending" />
+                      <el-option label="已通过" value="approved" />
+                      <el-option label="已拒绝" value="rejected" />
+                      <el-option label="已撤回" value="withdrawn" />
+                    </el-select>
+                    <el-button type="primary" @click="loadCancelRequests(1)">刷新</el-button>
+                  </div>
+                  <el-table :data="cancelRequests" v-loading="cancelLoading" border stripe size="default">
+                    <el-table-column prop="request_no" label="申请号" width="180" />
+                    <el-table-column prop="order_no" label="订单号" width="180" />
+                    <el-table-column prop="service_name" label="服务" min-width="110" />
+                    <el-table-column prop="reason" label="取消原因" min-width="180" show-overflow-tooltip />
+                    <el-table-column label="订单状态" width="110" align="center">
+                      <template #default="{ row }">
+                        <span>{{ row.order_status || '-' }}</span>
+                      </template>
+                    </el-table-column>
+                    <el-table-column label="申请状态" width="110" align="center">
+                      <template #default="{ row }">
+                        <el-tag :type="cancelStatusTag(row.status)" size="small">{{ cancelStatusLabel(row.status) }}</el-tag>
+                      </template>
+                    </el-table-column>
+                    <el-table-column label="申请时间" width="170">
+                      <template #default="{ row }">{{ formatDateTime(row.created_at) }}</template>
+                    </el-table-column>
+                    <el-table-column label="操作" width="170" fixed="right">
+                      <template #default="{ row }">
+                        <template v-if="row.status === 'pending'">
+                          <el-button link type="success" size="small" @click="approveCancelRequest(row)">通过</el-button>
+                          <el-button link type="danger" size="small" @click="rejectCancelRequest(row)">拒绝</el-button>
+                        </template>
+                        <span v-else style="color:#909399;font-size:12px;">{{ row.review_remark || '已处理' }}</span>
+                      </template>
+                    </el-table-column>
+                  </el-table>
+                  <div class="pagination-wrap">
+                    <el-pagination
+                      background
+                      layout="total, prev, pager, next"
+                      :total="cancelTotal"
+                      :page-size="cancelFilter.size"
+                      :current-page="cancelFilter.page"
+                      @current-change="(p) => { cancelFilter.page = p; loadCancelRequests(); }"
+                    />
+                  </div>
+                </el-tab-pane>
+
+                <el-tab-pane label="客服工单" name="ticket">
+                  <div class="filter-bar">
+                    <el-select v-model="ticketFilter.status" placeholder="工单状态" clearable style="width:140px;" @change="loadTickets(1)">
+                      <el-option label="待处理" value="open" />
+                      <el-option label="处理中" value="processing" />
+                      <el-option label="已解决" value="resolved" />
+                      <el-option label="已关闭" value="closed" />
+                    </el-select>
+                    <el-select v-model="ticketFilter.type" placeholder="工单类型" clearable style="width:140px;" @change="loadTickets(1)">
+                      <el-option label="投诉" value="complaint" />
+                      <el-option label="退款" value="refund" />
+                      <el-option label="退款审核" value="refund_review" />
+                      <el-option label="理赔" value="claim" />
+                      <el-option label="申诉" value="appeal" />
+                    </el-select>
+                    <el-button type="primary" @click="loadTickets(1)">刷新</el-button>
+                  </div>
+                  <el-table :data="tickets" v-loading="ticketLoading" border stripe size="default">
+                    <el-table-column type="expand">
+                      <template #default="{ row }">
+                        <div style="padding:12px 24px;line-height:1.7;">
+                          <div><strong>问题描述：</strong>{{ row.description }}</div>
+                          <div style="margin-top:6px;"><strong>处理结果：</strong>{{ row.resolution || '—' }}</div>
+                          <div style="margin-top:10px;" v-if="row.replies && row.replies.length">
+                            <div v-for="reply in row.replies" :key="reply.id" style="padding:6px 0;border-top:1px dashed #ebeef5;">
+                              <span style="color:#409EFF;">{{ reply.replier_name }}（{{ reply.reply_type }}）</span>
+                              <span style="margin-left:8px;">{{ reply.content }}</span>
+                            </div>
+                          </div>
+                          <div v-else class="json-hint">暂无回复</div>
+                        </div>
+                      </template>
+                    </el-table-column>
+                    <el-table-column prop="ticket_no" label="工单号" width="180" />
+                    <el-table-column prop="ticket_type" label="类型" width="90" />
+                    <el-table-column prop="title" label="标题" min-width="180" show-overflow-tooltip />
+                    <el-table-column prop="related_order_id" label="订单ID" width="90" align="center" />
+                    <el-table-column label="状态" width="100" align="center">
+                      <template #default="{ row }">
+                        <el-tag :type="ticketStatusTag(row.status)" size="small">{{ ticketStatusLabel(row.status) }}</el-tag>
+                      </template>
+                    </el-table-column>
+                    <el-table-column prop="creator_name" label="提交人" width="110" />
+                    <el-table-column label="创建时间" width="170">
+                      <template #default="{ row }">{{ formatDateTime(row.created_at) }}</template>
+                    </el-table-column>
+                    <el-table-column label="操作" width="190" fixed="right">
+                      <template #default="{ row }">
+                        <el-button link type="primary" size="small" @click="replyTicket(row)">回复</el-button>
+                        <el-button v-if="row.status !== 'closed'" link type="success" size="small" @click="resolveTicket(row)">结单</el-button>
+                        <el-button v-if="row.status === 'resolved'" link type="danger" size="small" @click="closeTicket(row)">关闭</el-button>
+                      </template>
+                    </el-table-column>
+                  </el-table>
+                  <div class="pagination-wrap">
+                    <el-pagination
+                      background
+                      layout="total, prev, pager, next"
+                      :total="ticketTotal"
+                      :page-size="ticketFilter.size"
+                      :current-page="ticketFilter.page"
+                      @current-change="(p) => { ticketFilter.page = p; loadTickets(); }"
+                    />
+                  </div>
+                </el-tab-pane>
+              </el-tabs>
             </div>
           </div>
 
@@ -809,14 +1001,35 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="图标 URL">
-              <el-input v-model="serviceForm.icon" placeholder="https://..." />
-              <img v-if="serviceForm.icon" :src="serviceForm.icon" class="icon-preview" alt="" />
+            <el-form-item label="服务图标">
+              <el-input v-model="serviceForm.icon" placeholder="上传图片或粘贴图片 URL" clearable />
+              <div class="upload-inline">
+                <el-upload
+                  :show-file-list="false"
+                  :http-request="handleIconUpload"
+                  accept="image/*"
+                  :disabled="serviceDialog.saving"
+                >
+                  <el-button size="small" type="primary" plain>上传图标</el-button>
+                </el-upload>
+                <img v-if="serviceForm.icon" :src="serviceForm.icon" class="icon-preview" alt="" />
+              </div>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="Banner URL">
-              <el-input v-model="serviceForm.banner" placeholder="https://..." />
+            <el-form-item label="Banner 图">
+              <el-input v-model="serviceForm.banner" placeholder="上传图片或粘贴图片 URL" clearable />
+              <div class="upload-inline">
+                <el-upload
+                  :show-file-list="false"
+                  :http-request="handleBannerUpload"
+                  accept="image/*"
+                  :disabled="serviceDialog.saving"
+                >
+                  <el-button size="small" type="primary" plain>上传 Banner</el-button>
+                </el-upload>
+                <img v-if="serviceForm.banner" :src="serviceForm.banner" class="banner-preview" alt="" />
+              </div>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -836,7 +1049,100 @@
           </el-col>
         </el-row>
 
-        <el-divider content-position="left">JSON 富内容字段（请保持 JSON 格式合法）</el-divider>
+        <el-divider content-position="left">图片与案例（可直接上传）</el-divider>
+
+        <div class="json-field">
+          <div class="json-label">cases 案例展示（可视化编辑）</div>
+          <div class="case-editor" v-if="caseItems.length">
+            <div class="case-card" v-for="(item, idx) in caseItems" :key="'case-' + idx">
+              <div class="case-card-head">
+                <span>案例 {{ idx + 1 }}</span>
+                <el-button link type="danger" size="small" @click="removeCase(idx)">删除案例</el-button>
+              </div>
+              <el-input v-model="item.title" size="small" placeholder="案例标题" />
+              <el-input v-model="item.desc" size="small" type="textarea" :rows="2" placeholder="案例描述" />
+              <div class="case-images">
+                <div class="case-image" v-for="(url, imageIndex) in item.images" :key="'case-image-' + idx + '-' + imageIndex">
+                  <img :src="url" alt="" />
+                  <button type="button" class="image-remove" @click="removeCaseImage(idx, imageIndex)">×</button>
+                </div>
+                <el-upload
+                  :show-file-list="false"
+                  multiple
+                  :http-request="(opt) => handleCaseImageUpload(opt, idx)"
+                  accept="image/*"
+                  :disabled="serviceDialog.saving"
+                >
+                  <div class="upload-tile small">
+                    <span class="upload-plus">+</span>
+                  </div>
+                </el-upload>
+              </div>
+            </div>
+          </div>
+          <div class="json-hint" v-if="!caseItems.length">暂未添加案例，点击右上角“添加案例”。</div>
+          <div style="margin-top:8px;">
+            <el-button size="small" @click="addCase">添加案例</el-button>
+          </div>
+        </div>
+
+        <div class="json-field">
+          <div class="json-label">service_images 服务图片</div>
+          <div class="image-gallery">
+            <div class="image-card" v-for="(img, idx) in serviceImages" :key="'service-image-' + idx">
+              <img :src="img.url" class="image-card-thumb" alt="" />
+              <el-input v-model="img.caption" size="small" placeholder="图片说明（可选）" />
+              <div class="image-card-foot">
+                <el-input-number v-model="img.sort" size="small" :min="0" controls-position="right" style="width:100px;" />
+                <el-button link type="danger" size="small" @click="removeServiceImage(idx)">删除</el-button>
+              </div>
+            </div>
+            <el-upload
+              multiple
+              :show-file-list="false"
+              :http-request="handleServiceImageUpload"
+              accept="image/*"
+              :disabled="serviceDialog.saving"
+            >
+              <div class="upload-tile">
+                <span class="upload-plus">+</span>
+                <span>上传图片</span>
+              </div>
+            </el-upload>
+          </div>
+        </div>
+
+        <div class="json-field">
+          <div class="json-label">detail_sections 图文详情（可视化编辑）</div>
+          <div class="case-editor" v-if="detailSections.length">
+            <div class="case-card" v-for="(item, idx) in detailSections" :key="'detail-' + idx">
+              <div class="case-card-head">
+                <span>章节 {{ idx + 1 }}</span>
+                <el-button link type="danger" size="small" @click="removeDetailSection(idx)">删除章节</el-button>
+              </div>
+              <el-input v-model="item.title" size="small" placeholder="章节标题" />
+              <el-input v-model="item.content" size="small" type="textarea" :rows="3" placeholder="章节正文" />
+              <div class="detail-image-row">
+                <img v-if="item.image" :src="item.image" class="detail-image" alt="" />
+                <el-upload
+                  :show-file-list="false"
+                  :http-request="(opt) => handleDetailImageUpload(opt, idx)"
+                  accept="image/*"
+                  :disabled="serviceDialog.saving"
+                >
+                  <el-button size="small" plain>上传章节配图</el-button>
+                </el-upload>
+                <el-button v-if="item.image" link type="danger" size="small" @click="item.image = ''">移除配图</el-button>
+              </div>
+            </div>
+          </div>
+          <div class="json-hint" v-if="!detailSections.length">暂未添加图文章节。</div>
+          <div style="margin-top:8px;">
+            <el-button size="small" @click="addDetailSection">添加章节</el-button>
+          </div>
+        </div>
+
+        <el-divider content-position="left">服务流程与常见问题</el-divider>
 
         <div class="json-field">
           <div class="json-label">process_steps 服务流程</div>
@@ -862,41 +1168,7 @@
           <div class="json-error" v-if="jsonErrors.faq">{{ jsonErrors.faq }}</div>
         </div>
 
-        <div class="json-field">
-          <div class="json-label">cases 案例展示</div>
-          <el-input
-            v-model="serviceForm.cases"
-            type="textarea"
-            :rows="5"
-            placeholder='[{"title":"案例标题","desc":"描述","images":["url1"]}]'
-          />
-          <div class="json-hint">数组，元素结构：{"title":"标题","desc":"描述","images":["图片URL"]}</div>
-          <div class="json-error" v-if="jsonErrors.cases">{{ jsonErrors.cases }}</div>
-        </div>
-
-        <div class="json-field">
-          <div class="json-label">service_images 服务图片</div>
-          <el-input
-            v-model="serviceForm.service_images"
-            type="textarea"
-            :rows="5"
-            placeholder='[{"url":"https://...","caption":"说明","sort":1}]'
-          />
-          <div class="json-hint">数组，元素结构：{"url":"图片URL","caption":"说明","sort":1}</div>
-          <div class="json-error" v-if="jsonErrors.service_images">{{ jsonErrors.service_images }}</div>
-        </div>
-
-        <div class="json-field">
-          <div class="json-label">detail_sections 详情章节</div>
-          <el-input
-            v-model="serviceForm.detail_sections"
-            type="textarea"
-            :rows="5"
-            placeholder='[{"title":"章节标题","content":"正文","image":"可选图URL"}]'
-          />
-          <div class="json-hint">数组，元素结构：{"title":"标题","content":"正文","image":"可选配图URL"}</div>
-          <div class="json-error" v-if="jsonErrors.detail_sections">{{ jsonErrors.detail_sections }}</div>
-        </div>
+        <el-divider content-position="left">JSON 富内容字段（请保持 JSON 格式合法）</el-divider>
 
         <div class="json-field">
           <div class="json-label">service_standards 服务标准</div>
@@ -1116,7 +1388,8 @@
             ElementPlus.ElMessage.success("登录成功");
             loginForm.username = "";
             loginForm.password = "";
-            loadDashboard();
+            if (activeMenu.value === "dashboard") loadDashboard();
+            else handleMenuSelect(activeMenu.value);
           } catch (e) {
             ElementPlus.ElMessage.error(e.message || "登录失败");
           } finally {
@@ -1140,19 +1413,26 @@
             .then(async () => {
               try {
                 await request("/api/admin/logout", { method: "POST" });
-                clearAdminSession();
               } catch (e) {
-                ElementPlus.ElMessage.error(e.message || "退出失败，请重试");
+                // 即使服务端会话已失效，也必须清除本地登录态，避免卡在无效页面
+              } finally {
+                clearAdminSession();
               }
             })
             .catch(() => {});
         }
 
         // ===== Layout =====
-        const activeMenu = ref("dashboard");
+        const MENU_KEYS = ["dashboard", "services", "orders", "users", "workers", "withdraws", "aftersale", "statistics"];
+        const hashMenu = String(window.location.hash || "").replace(/^#/, "");
+        const activeMenu = ref(MENU_KEYS.includes(hashMenu) ? hashMenu : "dashboard");
         const isCollapse = ref(false);
         const sidebarMobileOpen = ref(false);
         function toggleSidebar() {
+          if (window.innerWidth <= 768) {
+            sidebarMobileOpen.value = !sidebarMobileOpen.value;
+            return;
+          }
           isCollapse.value = !isCollapse.value;
         }
         function handleMenuSelect(index) {
@@ -1161,6 +1441,9 @@
             disposeStatsCharts();
           }
           activeMenu.value = index;
+          if (window.location.hash !== "#" + index) {
+            window.location.hash = index;
+          }
           // close mobile sidebar after select
           sidebarMobileOpen.value = false;
           switch (index) {
@@ -1170,6 +1453,7 @@
             case "users": loadUsers(1); break;
             case "workers": loadWorkers(1); break;
             case "withdraws": loadWithdraws(1); break;
+            case "aftersale": loadAftersale(); break;
             case "statistics": loadFinanceSummary(); loadStatistics(); break;
           }
         }
@@ -1181,6 +1465,7 @@
             users: "用户管理",
             workers: "师傅管理",
             withdraws: "提现管理",
+            aftersale: "售后与取消",
             statistics: "数据统计",
           };
           return map[activeMenu.value] || "";
@@ -1211,8 +1496,9 @@
         async function loadServices() {
           servicesLoading.value = true;
           try {
-            const res = await request("/api/services");
-            services.value = res.data || [];
+            const res = await request("/api/admin/services?page=1&size=200");
+            const data = res.data || {};
+            services.value = Array.isArray(data) ? data : (data.list || []);
           } catch (e) {
             ElementPlus.ElMessage.error(e.message || "加载服务列表失败");
           } finally {
@@ -1240,19 +1526,19 @@
           description: "",
           process_steps: "",
           faq: "",
-          cases: "",
-          service_images: "",
-          detail_sections: "",
           service_standards: "",
           price_details: "",
           intro_video: "",
           sort_order: 0,
           is_active: true,
         });
+        // 可视化图片/案例/图文详情数据，保存时转换为后端 JSON 字段
+        const serviceImages = ref([]);
+        const caseItems = ref([]);
+        const detailSections = ref([]);
         const jsonErrors = reactive({});
         const JSON_FIELDS = [
-          "process_steps", "faq", "cases", "service_images",
-          "detail_sections", "service_standards", "price_details",
+          "process_steps", "faq", "service_standards", "price_details",
         ];
 
         function emptyServiceForm() {
@@ -1267,14 +1553,14 @@
           serviceForm.description = "";
           serviceForm.process_steps = "";
           serviceForm.faq = "";
-          serviceForm.cases = "";
-          serviceForm.service_images = "";
-          serviceForm.detail_sections = "";
           serviceForm.service_standards = "";
           serviceForm.price_details = "";
           serviceForm.intro_video = "";
           serviceForm.sort_order = 0;
           serviceForm.is_active = true;
+          serviceImages.value = [];
+          caseItems.value = [];
+          detailSections.value = [];
           Object.keys(jsonErrors).forEach((k) => delete jsonErrors[k]);
         }
 
@@ -1306,6 +1592,23 @@
             JSON_FIELDS.forEach((f) => {
               serviceForm[f] = d[f] ? JSON.stringify(d[f], null, 2) : "";
             });
+            serviceImages.value = (Array.isArray(d.service_images) ? d.service_images : [])
+              .filter((item) => item && item.url)
+              .map((item, index) => ({
+                url: item.url,
+                caption: item.caption || "",
+                sort: Number(item.sort) || index + 1,
+              }));
+            caseItems.value = (Array.isArray(d.cases) ? d.cases : []).map((item) => ({
+              title: item.title || "",
+              desc: item.desc || item.description || "",
+              images: Array.isArray(item.images) ? item.images.filter(Boolean) : [],
+            }));
+            detailSections.value = (Array.isArray(d.detail_sections) ? d.detail_sections : []).map((item) => ({
+              title: item.title || "",
+              content: item.content || "",
+              image: item.image || "",
+            }));
             serviceDialog.isEdit = true;
             serviceDialog.editingId = row.id;
             serviceDialog.editingRow = row;
@@ -1356,6 +1659,27 @@
             ElementPlus.ElMessage.error("JSON 字段存在格式错误，请检查后重试");
             return;
           }
+          const serializedImages = serviceImages.value
+            .filter((item) => item && item.url)
+            .map((item, index) => ({
+              url: item.url,
+              caption: item.caption || "",
+              sort: Number(item.sort) || index + 1,
+            }));
+          const serializedCases = caseItems.value
+            .map((item, index) => ({
+              title: item.title || ("案例 " + (index + 1)),
+              desc: item.desc || "",
+              images: (item.images || []).filter(Boolean),
+            }))
+            .filter((item) => item.title || item.desc || item.images.length);
+          const serializedSections = detailSections.value
+            .map((item) => ({
+              title: item.title || "",
+              content: item.content || "",
+              image: item.image || "",
+            }))
+            .filter((item) => item.title || item.content || item.image);
           const payload = {
             key: serviceForm.key,
             name: serviceForm.name,
@@ -1370,9 +1694,9 @@
             sort_order: Number(serviceForm.sort_order) || 0,
             process_steps: parsed.process_steps,
             faq: parsed.faq,
-            cases: parsed.cases,
-            service_images: parsed.service_images,
-            detail_sections: parsed.detail_sections,
+            cases: serializedCases.length ? serializedCases : null,
+            service_images: serializedImages.length ? serializedImages : null,
+            detail_sections: serializedSections.length ? serializedSections : null,
             service_standards: parsed.service_standards,
             price_details: parsed.price_details,
           };
@@ -1415,6 +1739,97 @@
           } finally {
             serviceDialog.saving = false;
           }
+        }
+
+        // ===== 运营图片上传（走后台上传接口，带管理员鉴权） =====
+        const IMAGE_MAX_MB = 10;
+
+        async function uploadAdminImage(file, category) {
+          if (!file) throw new Error("请选择图片文件");
+          if (file.size > IMAGE_MAX_MB * 1024 * 1024) {
+            throw new Error("图片不能超过 " + IMAGE_MAX_MB + "MB");
+          }
+          const formData = new FormData();
+          formData.append("file", file, file.name || "image");
+          const token = localStorage.getItem("admin_token");
+          const response = await fetch(
+            "/api/admin/upload/image?category=" + encodeURIComponent(category || "service"),
+            {
+              method: "POST",
+              headers: token ? { Authorization: "Bearer " + token } : {},
+              body: formData,
+            }
+          );
+          let json = null;
+          try {
+            json = await response.json();
+          } catch (e) {
+            json = null;
+          }
+          if (!response.ok || (json && json.code !== undefined && json.code !== 0)) {
+            throw new Error((json && (json.detail || json.message)) || "图片上传失败");
+          }
+          return (json && json.data) || json;
+        }
+
+        async function runImageUpload(options, category, apply) {
+          try {
+            const data = await uploadAdminImage(options.file, category);
+            apply(data);
+            if (options.onSuccess) options.onSuccess(data);
+            ElementPlus.ElMessage.success("图片上传成功");
+          } catch (e) {
+            if (options.onError) options.onError(e);
+            ElementPlus.ElMessage.error(e.message || "图片上传失败");
+          }
+        }
+
+        function handleIconUpload(options) {
+          return runImageUpload(options, "service", (data) => { serviceForm.icon = data.url; });
+        }
+        function handleBannerUpload(options) {
+          return runImageUpload(options, "banner", (data) => { serviceForm.banner = data.url; });
+        }
+        function handleServiceImageUpload(options) {
+          return runImageUpload(options, "service", (data) => {
+            serviceImages.value.push({
+              url: data.url,
+              caption: "",
+              sort: serviceImages.value.length + 1,
+            });
+          });
+        }
+        function handleCaseImageUpload(options, idx) {
+          return runImageUpload(options, "service", (data) => {
+            const target = caseItems.value[idx];
+            if (target) target.images.push(data.url);
+          });
+        }
+        function handleDetailImageUpload(options, idx) {
+          return runImageUpload(options, "service", (data) => {
+            const target = detailSections.value[idx];
+            if (target) target.image = data.url;
+          });
+        }
+
+        function removeServiceImage(idx) {
+          serviceImages.value.splice(idx, 1);
+        }
+        function addCase() {
+          caseItems.value.push({ title: "", desc: "", images: [] });
+        }
+        function removeCase(idx) {
+          caseItems.value.splice(idx, 1);
+        }
+        function removeCaseImage(idx, imageIndex) {
+          const target = caseItems.value[idx];
+          if (target) target.images.splice(imageIndex, 1);
+        }
+        function addDetailSection() {
+          detailSections.value.push({ title: "", content: "", image: "" });
+        }
+        function removeDetailSection(idx) {
+          detailSections.value.splice(idx, 1);
         }
 
         async function toggleServiceActive(row, val) {
@@ -1704,6 +2119,244 @@
           }
         }
 
+        async function rejectWithdraw(row) {
+          let reason;
+          try {
+            const result = await ElementPlus.ElMessageBox.prompt("请输入驳回原因，金额将退回师傅可提现余额", "驳回提现", {
+              inputPlaceholder: "如：收款账户信息有误",
+              inputValidator: (value) => (value && value.trim()) ? true : "请填写驳回原因"
+            });
+            reason = result.value.trim();
+          } catch (e) {
+            return;
+          }
+          try {
+            await request(
+              "/api/admin/withdraws/" + row.id + "/reject?reason=" + encodeURIComponent(reason),
+              { method: "PUT" }
+            );
+            ElementPlus.ElMessage.success("已驳回并退回余额");
+            loadWithdraws();
+            loadDashboard();
+          } catch (e) {
+            ElementPlus.ElMessage.error(e.message || "驳回失败");
+          }
+        }
+
+        // ===== Aftersale & Cancellation =====
+        const aftersaleTab = ref("cancel");
+        const cancelRequests = ref([]);
+        const cancelLoading = ref(false);
+        const cancelTotal = ref(0);
+        const cancelFilter = reactive({ status: "pending", page: 1, size: 20 });
+        const tickets = ref([]);
+        const ticketLoading = ref(false);
+        const ticketTotal = ref(0);
+        const ticketFilter = reactive({ status: "", type: "", page: 1, size: 20 });
+
+        function loadAftersale() {
+          if (aftersaleTab.value === "ticket") loadTickets(1);
+          else loadCancelRequests(1);
+        }
+        function handleAftersaleTab(name) {
+          if (name === "ticket") loadTickets(1);
+          else loadCancelRequests(1);
+        }
+
+        async function loadCancelRequests(page) {
+          if (page) cancelFilter.page = page;
+          cancelLoading.value = true;
+          try {
+            const params = new URLSearchParams();
+            params.set("page", cancelFilter.page);
+            params.set("size", cancelFilter.size);
+            if (cancelFilter.status) params.set("status", cancelFilter.status);
+            const res = await request("/api/admin/cancel-requests?" + params.toString());
+            const data = res.data || {};
+            cancelRequests.value = data.list || [];
+            cancelTotal.value = data.total || 0;
+          } catch (e) {
+            ElementPlus.ElMessage.error(e.message || "加载取消申请失败");
+          } finally {
+            cancelLoading.value = false;
+          }
+        }
+        function cancelStatusLabel(status) {
+          return {
+            pending: "待处理",
+            approved: "已通过",
+            rejected: "已拒绝",
+            withdrawn: "已撤回",
+          }[status] || status || "-";
+        }
+        function cancelStatusTag(status) {
+          return {
+            pending: "warning",
+            approved: "success",
+            rejected: "danger",
+            withdrawn: "info",
+          }[status] || "info";
+        }
+        async function approveCancelRequest(row) {
+          try {
+            await ElementPlus.ElMessageBox.confirm(
+              "确认通过该取消申请并取消订单？",
+              "通过取消申请",
+              { type: "warning" }
+            );
+          } catch (e) {
+            return;
+          }
+          try {
+            await request("/api/admin/cancel-requests/" + row.id + "/approve", {
+              method: "PUT",
+              body: { remark: "后台审核通过" },
+            });
+            ElementPlus.ElMessage.success("取消申请已通过");
+            loadCancelRequests();
+            loadDashboard();
+          } catch (e) {
+            ElementPlus.ElMessage.error(e.message || "操作失败");
+          }
+        }
+        async function rejectCancelRequest(row) {
+          let value = "";
+          try {
+            const result = await ElementPlus.ElMessageBox.prompt(
+              "请填写拒绝原因，用户会收到该说明。",
+              "拒绝取消申请",
+              { inputType: "textarea", inputPlaceholder: "例如：师傅已到达，建议协商继续服务" }
+            );
+            value = String(result.value || "").trim();
+          } catch (e) {
+            return;
+          }
+          if (!value) {
+            ElementPlus.ElMessage.warning("拒绝原因不能为空");
+            return;
+          }
+          try {
+            await request("/api/admin/cancel-requests/" + row.id + "/reject", {
+              method: "PUT",
+              body: { remark: value },
+            });
+            ElementPlus.ElMessage.success("取消申请已拒绝");
+            loadCancelRequests();
+          } catch (e) {
+            ElementPlus.ElMessage.error(e.message || "操作失败");
+          }
+        }
+
+        async function loadTickets(page) {
+          if (page) ticketFilter.page = page;
+          ticketLoading.value = true;
+          try {
+            const params = new URLSearchParams();
+            params.set("page", ticketFilter.page);
+            params.set("size", ticketFilter.size);
+            if (ticketFilter.status) params.set("status", ticketFilter.status);
+            if (ticketFilter.type) params.set("ticket_type", ticketFilter.type);
+            const res = await request("/api/support-tickets/admin/tickets?" + params.toString());
+            const data = res.data || {};
+            tickets.value = data.items || [];
+            ticketTotal.value = data.total || 0;
+          } catch (e) {
+            ElementPlus.ElMessage.error(e.message || "加载客服工单失败");
+          } finally {
+            ticketLoading.value = false;
+          }
+        }
+        function ticketStatusLabel(status) {
+          return {
+            open: "待处理",
+            processing: "处理中",
+            resolved: "已解决",
+            closed: "已关闭",
+          }[status] || status || "-";
+        }
+        function ticketStatusTag(status) {
+          return {
+            open: "warning",
+            processing: "primary",
+            resolved: "success",
+            closed: "info",
+          }[status] || "info";
+        }
+        function formatDateTime(value) {
+          if (!value) return "-";
+          const date = new Date(value);
+          if (Number.isNaN(date.getTime())) return String(value);
+          return date.toLocaleString("zh-CN", { hour12: false });
+        }
+        async function replyTicket(row) {
+          let content = "";
+          try {
+            const result = await ElementPlus.ElMessageBox.prompt(
+              "回复用户（用户端可见）",
+              "回复工单",
+              { inputType: "textarea", inputPlaceholder: "请输入回复内容" }
+            );
+            content = String(result.value || "").trim();
+          } catch (e) {
+            return;
+          }
+          if (!content) {
+            ElementPlus.ElMessage.warning("回复内容不能为空");
+            return;
+          }
+          try {
+            await request("/api/support-tickets/admin/tickets/" + row.id + "/reply", {
+              method: "POST",
+              body: { content, is_internal: false },
+            });
+            ElementPlus.ElMessage.success("回复成功");
+            loadTickets();
+          } catch (e) {
+            ElementPlus.ElMessage.error(e.message || "回复失败");
+          }
+        }
+        async function resolveTicket(row) {
+          let resolution = "";
+          try {
+            const result = await ElementPlus.ElMessageBox.prompt(
+              "填写处理结果（资金处置需走独立退款/保证金流程，本操作不改变资金）",
+              "工单结单",
+              { inputType: "textarea", inputPlaceholder: "请输入处理结果" }
+            );
+            resolution = String(result.value || "").trim();
+          } catch (e) {
+            return;
+          }
+          if (resolution.length < 2) {
+            ElementPlus.ElMessage.warning("处理结果至少 2 个字");
+            return;
+          }
+          try {
+            await request("/api/support-tickets/admin/tickets/" + row.id + "/resolve", {
+              method: "PUT",
+              body: { resolution, refund_amount: 0, deduct_deposit: 0 },
+            });
+            ElementPlus.ElMessage.success("工单已结单");
+            loadTickets();
+          } catch (e) {
+            ElementPlus.ElMessage.error(e.message || "结单失败");
+          }
+        }
+        async function closeTicket(row) {
+          try {
+            await ElementPlus.ElMessageBox.confirm("确认关闭该工单？", "关闭工单", { type: "warning" });
+          } catch (e) {
+            return;
+          }
+          try {
+            await request("/api/support-tickets/admin/tickets/" + row.id + "/close", { method: "PUT" });
+            ElementPlus.ElMessage.success("工单已关闭");
+            loadTickets();
+          } catch (e) {
+            ElementPlus.ElMessage.error(e.message || "关闭失败");
+          }
+        }
+
         // ===== Statistics =====
         function statsFmtDate(d) {
           const y = d.getFullYear();
@@ -1924,7 +2577,8 @@
         // ===== Init =====
         onMounted(() => {
           if (isLoggedIn.value) {
-            loadDashboard();
+            if (activeMenu.value === "dashboard") loadDashboard();
+            else handleMenuSelect(activeMenu.value);
           }
           window.addEventListener("resize", handleChartResize);
         });
@@ -1946,6 +2600,11 @@
           services, servicesLoading, seedLoading, loadServices,
           serviceDialog, serviceForm, jsonErrors, saveService,
           openCreateService, openEditService, toggleServiceActive, handleSeedDefault,
+          serviceImages, caseItems, detailSections,
+          handleIconUpload, handleBannerUpload, handleServiceImageUpload,
+          handleCaseImageUpload, handleDetailImageUpload,
+          removeServiceImage, addCase, removeCase, removeCaseImage,
+          addDetailSection, removeDetailSection,
           detailDialog, viewServiceDetail, formatJson,
           // orders
           orders, ordersLoading, orderTotal, orderFilter, loadOrders, resetOrderFilter,
@@ -1957,7 +2616,14 @@
           workers, workersLoading, workerTotal, workerFilter, loadWorkers, resetWorkerFilter,
           certifiedLabel, certifiedTag, updateWorkerCertified,
           // withdraws
-          withdraws, withdrawsLoading, withdrawTotal, withdrawFilter, loadWithdraws, approveWithdraw,
+          withdraws, withdrawsLoading, withdrawTotal, withdrawFilter, loadWithdraws, approveWithdraw, rejectWithdraw,
+          // aftersale
+          aftersaleTab, handleAftersaleTab, loadAftersale,
+          cancelRequests, cancelLoading, cancelTotal, cancelFilter, loadCancelRequests,
+          cancelStatusLabel, cancelStatusTag, approveCancelRequest, rejectCancelRequest,
+          tickets, ticketLoading, ticketTotal, ticketFilter, loadTickets,
+          ticketStatusLabel, ticketStatusTag, replyTicket, resolveTicket, closeTicket,
+          formatDateTime,
           // statistics
           statsDateRange, statsLoading, statsSummaryLoading, statsSummary, statsTotals,
           chartTrend, chartRevenue, chartStatusPie, chartServiceDonut,

@@ -109,13 +109,14 @@ Page({
       // 汇总数据：/api/wallet/transactions 仅返回 {list,total,page,has_more}，
       // 月收入需并行取 /api/wallet（get_wallet_info 返回 month_income）；其余字段后端未提供，兜底当前值
       let monthIncome = this.data.monthIncome
+      let totalWithdrawn = this.data.totalWithdrawn
       if (reset) {
         try {
           const wallet = await api.wallet.detail()
           if (wallet && wallet.month_income != null) monthIncome = wallet.month_income
+          if (wallet && wallet.total_withdrawn != null) totalWithdrawn = wallet.total_withdrawn
         } catch (e2) {}
       }
-      const totalWithdrawn = this.data.totalWithdrawn
       const monthOrders = this.data.monthOrders
       const goodRate = this.data.goodRate
 

@@ -223,7 +223,27 @@ const namespacedMock = {
     analyze: async (d) => ({ suggestion: 'mock 建议' }),
     chat: async (d) => ({ reply: '这是 AI 助手的模拟回复' }),
     estimate: async (d) => ({ priceRange: '¥100-300' }),
-    quickQuestions: async () => (['漏水怎么办？', '电路跳闸？', '空调不制冷？'])
+    quickQuestions: async () => (['漏水怎么办？', '电路跳闸？', '空调不制冷？']),
+    agentTurn: async () => ({
+      session_id: 'mock_session',
+      status: 'collecting',
+      reply: '当前是 Mock 模式，请切换到真实接口后再体验 AI 下单。',
+      actions: [],
+      missing: [],
+      options: {},
+      draft: null,
+      order: null
+    }),
+    agentSession: async () => ({
+      session_id: 'mock_session',
+      status: 'collecting',
+      reply: '',
+      actions: [],
+      missing: [],
+      options: {},
+      draft: null,
+      order: null
+    })
   },
 
   // 会员

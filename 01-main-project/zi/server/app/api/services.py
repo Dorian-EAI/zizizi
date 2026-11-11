@@ -19,9 +19,10 @@ from app.utils.response import success
 from app.models.user import Worker
 from app.models.service import ServiceType
 from app.models.order import Order
-from app.dependencies import get_current_admin, require_super_admin
+from app.dependencies import get_current_admin, require_admin_operator, require_super_admin
 
 router = APIRouter(prefix="/api/services", tags=["服务类型"])
+catalog_router = APIRouter(prefix="/api/catalog", tags=["服务目录"])
 
 
 def _parse_json_field(value):
@@ -56,6 +57,13 @@ def _service_to_detail_dict(svc):
         "detail_sections": _parse_json_field(svc.detail_sections),
         "service_standards": _parse_json_field(svc.service_standards),
         "price_details": _parse_json_field(svc.price_details),
+        "pricing_modes": _parse_json_field(svc.pricing_modes) or ["bidding"],
+        "pricing_schema": _parse_json_field(svc.pricing_schema),
+        "service_boundary": _parse_json_field(svc.service_boundary),
+        "risk_confirmation": _parse_json_field(svc.risk_confirmation),
+        "warranty_days": int(svc.warranty_days or 0),
+        "sort_order": int(svc.sort_order or 0),
+        "is_active": bool(svc.is_active),
     }
 
 
@@ -65,10 +73,14 @@ def _service_to_list_dict(svc):
         "key": svc.key,
         "name": svc.name,
         "icon": svc.icon,
+        "banner": svc.banner,
         "category": svc.category,
         "price_min": svc.price_min,
         "price_max": svc.price_max,
         "price_unit": svc.price_unit,
+        "pricing_modes": _parse_json_field(svc.pricing_modes) or ["bidding"],
+        "warranty_days": int(svc.warranty_days or 0),
+        "sort_order": int(svc.sort_order or 0),
         "is_active": svc.is_active,
     }
 
@@ -198,6 +210,47 @@ async def search_services(
     return success(data=data)
 
 
+# ============================= 服务目录（v6.3 /api/catalog） =============================
+
+
+@catalog_router.get("/services")
+async def list_catalog_services(
+    category: Optional[str] = Query(None, description="按分类筛选，如 家电维修"),
+    keyword: Optional[str] = Query(None, description="按名称/描述搜索"),
+    db: Session = Depends(get_db),
+):
+    """服务目录与 SKU 列表，返回允许的定价模式与质保期。"""
+    q = db.query(ServiceType).filter(ServiceType.is_active == True)  # noqa: E712
+    if category:
+        q = q.filter(ServiceType.category == category)
+    if keyword:
+        k = f"%{keyword}%"
+        q = q.filter(
+            or_(
+                ServiceType.name.like(k),
+                ServiceType.description.like(k),
+                ServiceType.category.like(k),
+            )
+        )
+    services = q.order_by(ServiceType.sort_order.asc(), ServiceType.id.asc()).limit(500).all()
+    return success(data=[_service_to_list_dict(s) for s in services])
+
+
+@catalog_router.get("/services/{service_id}/schema")
+async def get_catalog_schema(service_id: int, db: Session = Depends(get_db)):
+    """SKU 必选属性、加价项、服务边界、风险确认书与默认质保期。"""
+    svc = (
+        db.query(ServiceType)
+        .filter(ServiceType.id == service_id, ServiceType.is_active == True)  # noqa: E712
+        .first()
+    )
+    if not svc:
+        raise HTTPException(status_code=404, detail="服务类型不存在或已停用")
+    data = _service_to_detail_dict(svc)
+    data["pricing_modes"] = _parse_json_field(svc.pricing_modes) or ["bidding"]
+    return success(data=data)
+
+
 # ============================= 师傅相关（/api/services/workers/*） =============================
 
 
@@ -306,7 +359,7 @@ async def get_service(key_or_id: str, db: Session = Depends(get_db)):
 async def create_service(
     req: ServiceTypeCreateRequest,
     db: Session = Depends(get_db),
-    admin=Depends(require_super_admin),
+    admin=Depends(require_admin_operator),
 ):
     """创建服务类型（管理后台）"""
     svc = service_service.create_service(db, req.model_dump())
@@ -322,7 +375,7 @@ async def update_service(
     svc_id: int,
     req: ServiceTypeCreateRequest,
     db: Session = Depends(get_db),
-    admin=Depends(require_super_admin),
+    admin=Depends(require_admin_operator),
 ):
     """更新服务类型（管理后台）"""
     svc = service_service.update_service(db, svc_id, req.model_dump())
@@ -338,7 +391,7 @@ async def toggle_active(
     svc_id: int,
     body: ToggleServiceActiveRequest,
     db: Session = Depends(get_db),
-    admin=Depends(require_super_admin),
+    admin=Depends(require_admin_operator),
 ):
     """切换服务启用状态"""
     svc = service_service.toggle_active(db, svc_id, body.is_active)

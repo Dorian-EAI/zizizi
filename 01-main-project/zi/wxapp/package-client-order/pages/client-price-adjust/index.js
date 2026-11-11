@@ -1,5 +1,6 @@
 const app = getApp()
 const { buildIcon, COLORS } = require('../../utils/icons')
+const { hasAction } = require('../../utils/order-actions')
 
 const STATUS_TEXT = { pending: '待您处理', approved: '已同意', rejected: '已拒绝' }
 
@@ -43,8 +44,7 @@ Page({
   derivePermission(order, fee) {
     if (!fee) return '未找到补差价申请'
     if (fee.status !== 'pending') return '该申请已处理'
-    const actions = Array.isArray(order && order.allowed_actions) ? order.allowed_actions : []
-    if (actions.indexOf('handle_extra_fee') < 0) return '服务端未授权处理补差价'
+    if (!hasAction(order, 'handle_extra_fee')) return '服务端未授权处理补差价'
     return ''
   },
 

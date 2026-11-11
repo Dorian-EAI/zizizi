@@ -197,6 +197,9 @@ LIMIT_UPLOAD_BATCH = "10/minute"
 # 创建订单：防恶意下单
 LIMIT_CREATE_ORDER = "20/minute"
 
+# AI 下单助手：限制大模型调用成本
+LIMIT_AI_AGENT = "30/minute"
+
 # 评价：防刷评
 LIMIT_REVIEW = "10/minute"
 

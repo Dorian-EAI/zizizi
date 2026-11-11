@@ -389,8 +389,8 @@ async def notify_order_accepted(db: Session, order: Order) -> None:
         return
 
     amount = float(order.final_price or 0)
-    title = "您的订单被选中"
-    content = f"恭喜您！订单「{order.service_name}」被用户选中，最终价 ¥{order.final_price} 元，请按时服务"
+    title = "订单已确认由您服务"
+    content = f"订单「{order.service_name}」已确认由您服务，最终价 ¥{order.final_price} 元，请按时上门"
     payload = _order_message_payload(
         order,
         "worker",
@@ -556,6 +556,39 @@ async def notify_withdraw_success(db: Session, withdraw_tx: Transaction) -> None
             pass
 
 
+async def notify_withdraw_failed(db: Session, withdraw_tx: Transaction, reason: str = "") -> None:
+    """师傅「提现未通过」通知"""
+    if withdraw_tx.owner_type != "worker":
+        return
+
+    title = "提现未通过"
+    content = f"您申请的 ¥{withdraw_tx.amount} 元提现未通过"
+    if reason:
+        content += f"：{reason}"
+    content += "，金额已退回可提现余额"
+    payload = {
+        "role": "worker",
+        "object_type": "transaction",
+        "object_id": str(withdraw_tx.id),
+        "tx_id": withdraw_tx.id,
+        "amount": float(withdraw_tx.amount),
+        "event_version": 0,
+        "fallback_route": "worker_wallet",
+    }
+
+    send_inbox_message(db, "worker", withdraw_tx.owner_id, "system", title, content, payload)
+
+    worker = db.query(Worker).filter(Worker.id == withdraw_tx.owner_id).first()
+    if worker and getattr(worker, "phone", None):
+        try:
+            await run_in_threadpool(
+                sms_service.send_worker_withdraw_result,
+                worker.phone, withdraw_tx.amount, "rejected"
+            )
+        except Exception:
+            pass
+
+
 async def notify_coupon_expire_soon(db: Session, user: User, coupon: Any, days_left: int = 3) -> None:
     """「优惠券 X 天内到期」通知"""
     title = "优惠券即将到期"
@@ -582,4 +615,75 @@ async def notify_coupon_expire_soon(db: Session, user: User, coupon: Any, days_l
                 "time2": {"value": f"{days_left} 天"},
             },
             page_path="pages/coupons/coupons",
+        )
+
+
+def notify_cancel_requested(db: Session, order: Order, request: Any) -> None:
+    """用户提交取消申请后通知师傅；站内消息与业务事务同提交。"""
+    if not order.worker_id:
+        return
+    title = "用户申请取消订单"
+    content = (
+        f"订单「{order.service_name}」用户申请取消，原因：{request.reason}。"
+        "等待平台确认，请暂缓后续履约动作。"
+    )
+    payload = _order_message_payload(
+        order,
+        "worker",
+        "worker_orders",
+        cancel_request_id=request.id,
+        cancel_request_no=request.request_no,
+        cancel_reason=request.reason,
+        pending_action="view_cancel_request",
+    )
+    send_inbox_message(
+        db,
+        "worker",
+        order.worker_id,
+        "order",
+        title,
+        content,
+        payload,
+        commit=False,
+    )
+
+
+def notify_cancel_result(
+    db: Session,
+    order: Order,
+    request: Any,
+    approved: bool,
+) -> None:
+    """取消申请审批结果通知用户和师傅。"""
+    title = "取消申请已通过" if approved else "取消申请未通过"
+    if approved:
+        content = f"订单「{order.service_name}」的取消申请已通过，订单已取消。"
+    else:
+        reason = request.review_remark or "平台未通过该申请"
+        content = f"订单「{order.service_name}」的取消申请未通过：{reason}。订单将继续履约。"
+
+    for role, owner_id, fallback in (
+        ("user", order.user_id, "client_orders"),
+        ("worker", order.worker_id, "worker_orders"),
+    ):
+        if not owner_id:
+            continue
+        payload = _order_message_payload(
+            order,
+            role,
+            fallback,
+            cancel_request_id=request.id,
+            cancel_request_no=request.request_no,
+            cancel_status=request.status,
+            pending_action="view_cancel_request",
+        )
+        send_inbox_message(
+            db,
+            role,
+            owner_id,
+            "order",
+            title,
+            content,
+            payload,
+            commit=False,
         )

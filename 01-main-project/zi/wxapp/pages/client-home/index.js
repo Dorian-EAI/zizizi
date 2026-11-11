@@ -1,7 +1,7 @@
 // pages/client-home/index.js — 客户端首页 像素级复刻 zjrnew.DESIGN
 const app = getApp()
 const { buildIcon, COLORS } = require('../../utils/icons')
-const { greeting } = require('../../utils/format')
+const { greeting, resolveAssetUrl } = require('../../utils/format')
 
 Page({
   data: {
@@ -65,10 +65,15 @@ Page({
         api.getWorkers(),
         api.getPlatformStats()
       ])
-      const servicesWithIcons = services.map(s => ({
-        ...s,
-        iconUrl: buildIcon(s.icon, COLORS.brand)
-      }))
+      const servicesWithIcons = services.map(s => {
+        const rawIcon = String(s.icon || '').trim()
+        const isUploadedIcon = /^(https?:|\/|data:)/i.test(rawIcon)
+        return {
+          ...s,
+          iconUrl: isUploadedIcon ? resolveAssetUrl(rawIcon) : buildIcon(rawIcon, COLORS.brand),
+          bannerUrl: resolveAssetUrl(s.banner || '')
+        }
+      })
       const workersWithIcons = workers.map(w => ({
         ...w,
         avatarUrl: buildIcon('user', '#6B8F71')
@@ -81,6 +86,7 @@ Page({
       const recommendServices = servicesWithIcons.slice(0, 3).map((service, index) => ({
         key: service.key,
         name: service.name,
+        banner: service.bannerUrl || '',
         gradient: gradients[index],
         rating: platformStats.average_rating ? Number(platformStats.average_rating).toFixed(1) : '—',
         count: platformStats.certified_worker_count || 0,

@@ -11,9 +11,13 @@ from app.api.orders import available_orders, get_order, list_orders, worker_orde
 from app.api.reviews import worker_detail as public_review_worker_detail
 from app.api.services import _worker_to_dict
 from app.database import Base
+from app.models.admin import Admin
 from app.models.extra_fee import OrderExtraFee
-from app.models.order import Bidding, Order
+from app.models.insurance import InsuranceClaim, InsurancePolicy
+from app.models.order import Bidding, Order, OrderCancellationRequest
+from app.models.support_ticket import SupportTicket
 from app.models.user import User, Worker
+from app.models.wallet import PaymentOrder, RefundOrder
 from app.schemas.order import BiddingRequest
 from app.services import order_service
 
@@ -22,11 +26,18 @@ class OrderDispatchSecurityTests(unittest.IsolatedAsyncioTestCase):
     def setUp(self) -> None:
         self.engine = isolated_engine()
         self.tables = [
+            Admin.__table__,
             User.__table__,
             Worker.__table__,
             Order.__table__,
             Bidding.__table__,
             OrderExtraFee.__table__,
+            PaymentOrder.__table__,
+            RefundOrder.__table__,
+            InsurancePolicy.__table__,
+            InsuranceClaim.__table__,
+            SupportTicket.__table__,
+            OrderCancellationRequest.__table__,
         ]
         Base.metadata.create_all(self.engine, tables=self.tables)
         self.Session = session_factory(self.engine)

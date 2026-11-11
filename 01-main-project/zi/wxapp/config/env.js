@@ -5,7 +5,7 @@ const ENVIRONMENTS = {
     baseURL: 'http://localhost:8000',
     servicePhone: '',
     allowMock: true,
-    useMock: true,
+    useMock: false,
     // 自有对象存储 CDN 根地址（如 https://cdn.example.com/fonts，结尾不要带 /）。
     // 留空 → 使用主包内嵌 base64 衬线字体（约 600KB，最稳但占主包体积）。
     // 配置后 → font.js 改走网络加载，主包可删除 assets/fonts/fonts.js 瘦身到约 1.1MB。

@@ -219,6 +219,25 @@
   z-index: 1;
 }
 
+.axis-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8rpx;
+  margin: -6rpx 0 14rpx;
+  position: relative;
+  z-index: 1;
+}
+
+.axis-tag {
+  font-size: 21rpx;
+  line-height: 1.4;
+  color: #8A5A22;
+  background: rgba(212, 148, 76, 0.14);
+  border: 1rpx solid rgba(212, 148, 76, 0.28);
+  border-radius: 999rpx;
+  padding: 4rpx 14rpx;
+}
+
 /* HTML: display:flex; align-items:center; gap:5px; font-size:13px; color:var(--text-2); line-height:1.4 */
 .order-address {
   display: flex;

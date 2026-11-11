@@ -17,10 +17,15 @@ from app.schemas.order import (
     SelectWorkerRequest,
     ReviewRequest,
     UpdateOrderStatusRequest,
+    CancelRequestCreate,
+    AcceptanceRequest,
+    AccelerateDispatchRequest,
+    EmptyRunFeeRequest,
+    RiskConfirmationRequest,
     OrderResponse,
     AvailableOrderResponse,
 )
-from app.services import order_service, payment_service
+from app.services import cancellation_service, order_service, payment_service
 from app.services.map_service import (
     calculate_distance,
     get_order_coords,
@@ -50,6 +55,23 @@ def _get_order_or_404(db: Session, order_id: int) -> Order:
     return order
 
 
+def _order_payload(db: Session, order: Order, role: str, account) -> dict:
+    """订单响应 = 兼容字段 + 五轴状态（含验收）与 allowed_actions 合同。"""
+    data = OrderResponse.model_validate(order).model_dump(mode="json")
+    data.update(order_service.build_order_projection(db, order, role, account))
+    return data
+
+
+def _order_payloads(db: Session, orders: list, role: str, account) -> list:
+    projections = order_service.build_order_projections(db, orders, role, account)
+    result = []
+    for order, projection in zip(orders, projections):
+        data = OrderResponse.model_validate(order).model_dump(mode="json")
+        data.update(projection)
+        result.append(data)
+    return result
+
+
 @router.post("")
 async def create_order(
     req: CreateOrderRequest,
@@ -58,7 +80,7 @@ async def create_order(
 ):
     """创建订单（用户）"""
     order = order_service.create_order(db, user, req)
-    data = OrderResponse.model_validate(order).model_dump(mode="json")
+    data = _order_payload(db, order, "user", user)
     return success(data=data, message="订单创建成功")
 
 
@@ -70,7 +92,7 @@ async def list_orders(
 ):
     """获取用户订单列表（用户）"""
     orders = order_service.get_client_orders(db, user.id, status)
-    data = [OrderResponse.model_validate(o).model_dump(mode="json") for o in orders]
+    data = _order_payloads(db, orders, "user", user)
     return success(data=data)
 
 
@@ -147,7 +169,178 @@ async def worker_orders(
 ):
     """获取师傅订单列表（师傅）"""
     orders = order_service.get_worker_orders(db, worker.id, status)
-    data = [OrderResponse.model_validate(o).model_dump(mode="json") for o in orders]
+    data = _order_payloads(db, orders, "worker", worker)
+    return success(data=data)
+
+
+@router.post("/{order_id}/cancel-request")
+async def create_cancel_request(
+    order_id: int,
+    req: CancelRequestCreate,
+    user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    """已接单后提交取消申请（用户）。pending 订单请直接取消。"""
+    request = cancellation_service.create_request(
+        db, user, order_id, req.reason, req.note
+    )
+    return success(
+        data=cancellation_service.serialize_request(request),
+        message="取消申请已提交，等待平台确认",
+    )
+
+
+@router.get("/{order_id}/cancel-request")
+async def get_cancel_request(
+    order_id: int,
+    account: tuple = Depends(get_current_account),
+    db: Session = Depends(get_db),
+):
+    """查看订单最近一次取消申请（订单双方）。"""
+    order = _get_order_or_404(db, order_id)
+    account_obj, account_type = account
+    if account_type == "user" and order.user_id != account_obj.id:
+        raise HTTPException(status_code=403, detail="无权查看此订单")
+    if account_type == "worker" and order.worker_id != account_obj.id:
+        raise HTTPException(status_code=403, detail="无权查看此订单")
+    request = cancellation_service.get_latest_request(db, order_id)
+    return success(data=cancellation_service.serialize_request(request))
+
+
+@router.post("/{order_id}/cancel-request/withdraw")
+async def withdraw_cancel_request(
+    order_id: int,
+    user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    """撤回待处理的取消申请（用户）。"""
+    request = cancellation_service.withdraw_request(db, user, order_id)
+    return success(
+        data=cancellation_service.serialize_request(request),
+        message="取消申请已撤回",
+    )
+
+
+@router.post("/{order_id}/select-quote")
+async def select_quote(
+    order_id: int,
+    req: SelectWorkerRequest,
+    user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    """选择报价（v6.3 契约别名，等价于 /select）。"""
+    order = await order_service.select_worker(db, user, order_id, req.bidding_id)
+    data = _order_payload(db, order, "user", user)
+    return success(data=data, message="已选择师傅")
+
+
+@router.post("/{order_id}/risk-confirmation")
+async def submit_risk_confirmation(
+    order_id: int,
+    req: RiskConfirmationRequest,
+    user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    """提交风险确认书版本和勾选结果。"""
+    order = order_service.confirm_risk_confirmation(
+        db, user, order_id, req.version, req.confirmed
+    )
+    data = _order_payload(db, order, "user", user)
+    return success(data=data, message="风险确认书已提交")
+
+
+@router.post("/{order_id}/accelerate")
+async def accelerate_dispatch(
+    order_id: int,
+    req: AccelerateDispatchRequest,
+    user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    """购买加速接单增值服务。"""
+    order, package = order_service.accelerate_dispatch(
+        db, user, order_id, req.package_key
+    )
+    data = _order_payload(db, order, "user", user)
+    data["acceleration"] = package
+    return success(data=data, message="加速接单已开通")
+
+
+@router.post("/{order_id}/empty-run-fee")
+async def handle_empty_run_fee(
+    order_id: int,
+    req: EmptyRunFeeRequest,
+    user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    """空跑费确认或申诉。"""
+    order = order_service.handle_empty_run_fee(
+        db, user, order_id, req.action, req.reason
+    )
+    data = _order_payload(db, order, "user", user)
+    return success(data=data, message="空跑费状态已更新")
+
+
+@router.post("/{order_id}/acceptance")
+async def submit_acceptance(
+    order_id: int,
+    req: AcceptanceRequest,
+    user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    """验收通过或报告问题。"""
+    order = order_service.confirm_acceptance(
+        db, user, order_id, req.action, req.reason
+    )
+    data = _order_payload(db, order, "user", user)
+    return success(data=data, message="验收结果已提交")
+
+
+@router.get("/{order_id}/acceptance")
+async def get_acceptance(
+    order_id: int,
+    account: tuple = Depends(get_current_account),
+    db: Session = Depends(get_db),
+):
+    """查询验收状态和剩余观察期（订单双方）。"""
+    order = _get_order_or_404(db, order_id)
+    account_obj, account_type = account
+    if account_type == "user" and order.user_id != account_obj.id:
+        raise HTTPException(status_code=403, detail="无权查看此订单")
+    if account_type == "worker" and order.worker_id != account_obj.id:
+        raise HTTPException(status_code=403, detail="无权查看此订单")
+    return success(data=order_service.get_acceptance_summary(order))
+
+
+@router.get("/{order_id}/settlement")
+async def get_settlement(
+    order_id: int,
+    account: tuple = Depends(get_current_account),
+    db: Session = Depends(get_db),
+):
+    """查询订单结算/放款状态（订单双方）。"""
+    order = _get_order_or_404(db, order_id)
+    account_obj, account_type = account
+    if account_type == "user" and order.user_id != account_obj.id:
+        raise HTTPException(status_code=403, detail="无权查看此订单")
+    if account_type == "worker" and order.worker_id != account_obj.id:
+        raise HTTPException(status_code=403, detail="无权查看此订单")
+    from app.services import worker_fund_service
+
+    data = worker_fund_service.get_order_settlement(db, order.order_no)
+    data.update(
+        {
+            "order_id": order.id,
+            "order_no": order.order_no,
+            "pricing_mode": order.pricing_mode,
+            "acceptance_state": order.acceptance_state,
+            "acceptance_deadline": (
+                order.acceptance_deadline.isoformat() + "Z"
+                if order.acceptance_deadline is not None
+                else None
+            ),
+            "final_price": float(order.final_price or 0),
+        }
+    )
     return success(data=data)
 
 
@@ -244,7 +437,7 @@ async def select_worker(
 ):
     """选择师傅（用户）"""
     order = await order_service.select_worker(db, user, order_id, req.bidding_id)
-    data = OrderResponse.model_validate(order).model_dump(mode="json")
+    data = _order_payload(db, order, "user", user)
     return success(data=data, message="已选择师傅")
 
 
@@ -260,7 +453,7 @@ async def update_status(
     order = await order_service.update_order_status(
         db, account_obj, account_type, order_id, req.status, req.price
     )
-    data = OrderResponse.model_validate(order).model_dump(mode="json")
+    data = _order_payload(db, order, account_type, account_obj)
     return success(data=data, message="状态更新成功")
 
 
@@ -273,5 +466,5 @@ async def create_review(
 ):
     """评价订单（用户）"""
     order = order_service.create_review(db, user, order_id, req)
-    data = OrderResponse.model_validate(order).model_dump(mode="json")
+    data = _order_payload(db, order, "user", user)
     return success(data=data, message="评价成功")

@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
 
 from app.database import SessionLocal
+from app.models.agent import AgentSession
 from app.models.order import Order
 from app.models.coupon import Coupon
 from app.utils.logger import get_logger
@@ -42,6 +43,23 @@ def auto_cancel_expired_orders():
     except Exception as e:
         db.rollback()
         logger.error(f"[定时任务] 自动取消订单失败: {e}")
+    finally:
+        db.close()
+
+
+def auto_accept_overdue_acceptances():
+    """验收观察期到期自动验收。"""
+    db = _get_db()
+    try:
+        from app.services.order_service import auto_accept_overdue_orders
+
+        count = auto_accept_overdue_orders(db)
+        db.commit()
+        if count > 0:
+            logger.info(f"[定时任务] 自动验收 {count} 条超期订单")
+    except Exception as exc:
+        db.rollback()
+        logger.error(f"[定时任务] 自动验收失败: {exc}")
     finally:
         db.close()
 
@@ -273,6 +291,25 @@ def reconcile_wechat_refunds():
         db.close()
 
 
+# ========== 师傅收入结算 ==========
+
+def settle_worker_pending_income():
+    """将超过结算等待期的师傅待结算收入转入可提现余额。"""
+    db = _get_db()
+    try:
+        from app.services.worker_fund_service import settle_pending_income
+
+        stats = settle_pending_income(db)
+        db.commit()
+        if stats["settled_count"]:
+            logger.info(f"[定时任务] 师傅收入结算: {stats}")
+    except Exception as exc:
+        db.rollback()
+        logger.error(f"[定时任务] 师傅收入结算失败: {exc}")
+    finally:
+        db.close()
+
+
 # ========== 质检回访相关 ==========
 
 def send_quality_inspection_reminders():
@@ -332,5 +369,27 @@ def auto_close_resolved_tickets():
     except Exception as e:
         db.rollback()
         logger.error(f"[定时任务] 工单自动关闭失败: {e}")
+    finally:
+        db.close()
+
+
+# ========== AI 下单会话相关 ==========
+
+def cleanup_expired_agent_sessions():
+    """清理超过 30 天未再使用的 AI 下单会话，控制状态表体积。"""
+    db = _get_db()
+    try:
+        deadline = datetime.utcnow() - timedelta(days=30)
+        count = (
+            db.query(AgentSession)
+            .filter(AgentSession.updated_at < deadline)
+            .delete(synchronize_session=False)
+        )
+        db.commit()
+        if count > 0:
+            logger.info(f"[定时任务] 清理 {count} 条过期 AI 下单会话")
+    except Exception as e:
+        db.rollback()
+        logger.error(f"[定时任务] 清理 AI 下单会话失败: {e}")
     finally:
         db.close()

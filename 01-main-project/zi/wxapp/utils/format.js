@@ -86,6 +86,20 @@ function greeting() {
   return '晚上好'
 }
 
+// 后台/接口返回的图片可能是 /uploads/... 相对路径，小程序 image 组件需要完整 URL
+function resolveAssetUrl(url) {
+  const value = String(url || '').trim()
+  if (!value) return ''
+  if (/^(https?:)?\/\//i.test(value) || /^data:/i.test(value)) return value
+  let baseURL = ''
+  try {
+    const app = typeof getApp === 'function' ? getApp() : null
+    baseURL = (app && app.globalData && app.globalData.baseURL) || ''
+  } catch (e) {}
+  if (!baseURL) return value
+  return String(baseURL).replace(/\/+$/, '') + (value.charAt(0) === '/' ? value : '/' + value)
+}
+
 module.exports = {
   formatTime,
   timeAgo,
@@ -94,5 +108,6 @@ module.exports = {
   formatDistance,
   maskPhone,
   greeting,
+  resolveAssetUrl,
   parseServerTime
 }

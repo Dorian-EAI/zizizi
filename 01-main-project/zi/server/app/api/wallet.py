@@ -35,6 +35,30 @@ async def wallet_info(
     return success(info, "success")
 
 
+@router.get("/funds")
+async def worker_funds(
+    worker=Depends(get_current_worker),
+    db: Session = Depends(get_db),
+):
+    """师傅六桶资金汇总，优先读取不可变分录账本。"""
+    from app.services.worker_fund_service import get_buckets
+
+    return success(data=get_buckets(db, worker))
+
+
+@router.get("/settlements")
+async def worker_settlements(
+    page: int = Query(1, ge=1),
+    size: int = Query(20, ge=1, le=100),
+    worker=Depends(get_current_worker),
+    db: Session = Depends(get_db),
+):
+    """师傅按订单的结算明细：订单收入、平台服务费、退款冲正与净收入。"""
+    from app.services.worker_fund_service import get_settlements
+
+    return success(data=get_settlements(db, worker, page, size))
+
+
 @router.get("/transactions")
 async def transactions(
     type: str = Query("all", description="交易类型: income/expense/recharge/withdraw/all"),
@@ -83,6 +107,25 @@ async def recharge(
     except Exception as exc:
         fail_financial_request(db, claim, exc)
         raise
+
+
+@router.get("/withdraw/config")
+async def withdraw_config(
+    worker=Depends(get_current_worker),
+    db: Session = Depends(get_db),
+):
+    """提现页服务端规则：限额、手续费、到账说明与可用到账方式。"""
+    return success(data=payment_service.get_withdraw_config(db, worker))
+
+
+@router.get("/withdraw/quote")
+async def withdraw_quote(
+    amount: float = Query(0, ge=0, description="拟提现金额"),
+    worker=Depends(get_current_worker),
+    db: Session = Depends(get_db),
+):
+    """按服务端规则计算手续费与预计到账金额。"""
+    return success(data=payment_service.get_withdraw_quote(db, worker, amount))
 
 
 @router.post("/withdraw")

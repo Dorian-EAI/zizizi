@@ -1,5 +1,6 @@
 const app = getApp()
 const { buildIcon, buildFilledIcon, COLORS } = require('../../utils/icons')
+const { hasAction } = require('../../utils/order-actions')
 
 const STAR_TEXT = ['', '很不满意', '不满意', '一般', '满意', '非常满意']
 const TAGS = ['服务好', '准时到达', '技术专业', '干净整洁', '价格合理', '态度好', '响应快', '讲解细致']
@@ -39,8 +40,7 @@ Page({
   },
 
   derivePermission(order) {
-    const actions = Array.isArray(order && order.allowed_actions) ? order.allowed_actions : []
-    if (actions.indexOf('review_order') < 0) return '服务端未授权当前订单评价'
+    if (!hasAction(order, 'review_order')) return '服务端未授权当前订单评价'
     return ''
   },
 

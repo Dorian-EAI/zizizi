@@ -1,15 +1,21 @@
 // pages/client-service-detail/index.js — 服务详情页
 const app = getApp()
 const { buildIcon, COLORS } = require('../../utils/icons')
+const { resolveAssetUrl } = require('../../utils/format')
 
 Page({
   data: {
     statusBarHeight: 20,
     serviceKey: '',
     service: null,
+    banner: '',
     steps: [],
     priceItems: [],
     faqs: [],
+    gallery: [],
+    cases: [],
+    detailSections: [],
+    previewImages: [],
     workers: [],
     reviews: [],
     reviewSummary: null,
@@ -72,11 +78,81 @@ Page({
       }
       // FAQ：后端字段 faq（每项 {q,a}），前端旧字段 faqs
       const faqs = service.faq != null ? service.faq : (service.faqs || [])
-      this.setData({ service, steps, priceItems, faqs })
+
+      // 后台配置的图片：相对路径（/uploads/...）统一转换为完整 URL
+      const rawGallery = (Array.isArray(service.service_images) ? service.service_images : [])
+        .map((item, index) => {
+          const source = typeof item === 'string' ? { url: item } : (item || {})
+          return {
+            url: source.url || '',
+            caption: source.caption || '',
+            sort: Number(source.sort) || index + 1
+          }
+        })
+        .filter(item => item.url)
+        .sort((a, b) => a.sort - b.sort)
+      const gallery = rawGallery.map(item => ({
+        url: resolveAssetUrl(item.url),
+        caption: item.caption
+      }))
+
+      const cases = (Array.isArray(service.cases) ? service.cases : [])
+        .map(item => {
+          const source = item || {}
+          return {
+            title: source.title || '服务案例',
+            desc: source.desc || source.description || '',
+            images: (Array.isArray(source.images) ? source.images : [])
+              .filter(Boolean)
+              .map(resolveAssetUrl)
+          }
+        })
+        .filter(item => item.title || item.desc || item.images.length)
+
+      const detailSections = (Array.isArray(service.detail_sections) ? service.detail_sections : [])
+        .map(item => {
+          const source = item || {}
+          return {
+            title: source.title || '',
+            content: source.content || '',
+            image: source.image ? resolveAssetUrl(source.image) : ''
+          }
+        })
+        .filter(item => item.title || item.content || item.image)
+
+      const previewImages = []
+        .concat(gallery.map(item => item.url))
+        .concat(cases.reduce((all, item) => all.concat(item.images), []))
+        .concat(detailSections.map(item => item.image).filter(Boolean))
+
+      this.setData({
+        service,
+        banner: resolveAssetUrl(service.banner || ''),
+        steps,
+        priceItems,
+        faqs,
+        gallery,
+        cases,
+        detailSections,
+        previewImages
+      })
       await this.loadRelated(service.key || serviceKey)
     } catch (e) {
       console.error('加载服务详情失败', e)
-      this.setData({ service: null, steps: [], priceItems: [], faqs: [], workers: [], reviews: [], relatedLoading: false })
+      this.setData({
+        service: null,
+        banner: '',
+        steps: [],
+        priceItems: [],
+        faqs: [],
+        gallery: [],
+        cases: [],
+        detailSections: [],
+        previewImages: [],
+        workers: [],
+        reviews: [],
+        relatedLoading: false
+      })
       wx.showToast({ title: '加载失败', icon: 'none' })
     }
   },
@@ -148,6 +224,15 @@ Page({
       showCancel: false,
       confirmColor: '#0D9488'
     })
+  },
+
+  onPreviewImage(e) {
+    const url = e.currentTarget.dataset.url
+    if (!url) return
+    const urls = this.data.previewImages && this.data.previewImages.length
+      ? this.data.previewImages
+      : [url]
+    wx.previewImage({ current: url, urls })
   },
 
   onBack() {
