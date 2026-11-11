@@ -56,6 +56,8 @@ py -m venv .venv
 
 ## 03-archive
 
+> 仅保留在本地，已通过 `.gitignore` 排除，不会上传到 GitHub。
+
 | 目录 | 内容 | 用途 |
 |---|---|---|
 | `legacy-ziold/` | 旧版 `client` 小程序、旧 `server`、PRD v1.0–v6.0、多套视觉方案（活力渐变、温润信任、Liquid Glass 等） | 追溯历史决策、找回旧版本文案 |
