@@ -1,0 +1,781 @@
+{
+  "total": 129,
+  "ok": 129,
+  "errors": 0,
+  "results": [
+    {
+      "page": "客户端我的",
+      "file": "client-mine.svg",
+      "status": "ok",
+      "size": 1265261
+    },
+    {
+      "page": "客户端订单",
+      "file": "client-orders.svg",
+      "status": "ok",
+      "size": 985897
+    },
+    {
+      "page": "客户端发布",
+      "file": "client-publish.svg",
+      "status": "ok",
+      "size": 1399314
+    },
+    {
+      "page": "客户端首页 下拉后页面",
+      "file": "client-home-glass-neu.svg",
+      "status": "ok",
+      "size": 1519508
+    },
+    {
+      "page": "服务详情",
+      "file": "client-service-detail.svg",
+      "status": "ok",
+      "size": 1532731
+    },
+    {
+      "page": "订单详情",
+      "file": "client-order-detail.svg",
+      "status": "ok",
+      "size": 2325504
+    },
+    {
+      "page": "报价列表",
+      "file": "client-quote-list.svg",
+      "status": "ok",
+      "size": 1690171
+    },
+    {
+      "page": "地址管理",
+      "file": "client-address.svg",
+      "status": "ok",
+      "size": 772644
+    },
+    {
+      "page": "优惠券",
+      "file": "client-coupon.svg",
+      "status": "ok",
+      "size": 1323420
+    },
+    {
+      "page": "设置",
+      "file": "client-settings.svg",
+      "status": "ok",
+      "size": 1221173
+    },
+    {
+      "page": "师傅端接单大厅",
+      "file": "worker-home.svg",
+      "status": "ok",
+      "size": 1003032
+    },
+    {
+      "page": "师傅端订单管理",
+      "file": "worker-orders.svg",
+      "status": "ok",
+      "size": 1094935
+    },
+    {
+      "page": "师傅端个人中心",
+      "file": "worker-profile.svg",
+      "status": "ok",
+      "size": 1210892
+    },
+    {
+      "page": "师傅端钱包",
+      "file": "worker-wallet.svg",
+      "status": "ok",
+      "size": 1330091
+    },
+    {
+      "page": "提交报价",
+      "file": "worker-quote-submit.svg",
+      "status": "ok",
+      "size": 908313
+    },
+    {
+      "page": "师傅订单详情",
+      "file": "worker-order-detail.svg",
+      "status": "ok",
+      "size": 1852396
+    },
+    {
+      "page": "提现",
+      "file": "worker-withdraw.svg",
+      "status": "ok",
+      "size": 835076
+    },
+    {
+      "page": "收支明细",
+      "file": "worker-transactions.svg",
+      "status": "ok",
+      "size": 1076673
+    },
+    {
+      "page": "评价管理",
+      "file": "worker-reviews.svg",
+      "status": "ok",
+      "size": 1473142
+    },
+    {
+      "page": "师傅设置",
+      "file": "worker-settings.svg",
+      "status": "ok",
+      "size": 1474518
+    },
+    {
+      "page": "AI智能助手",
+      "file": "client-chat.svg",
+      "status": "ok",
+      "size": 655255
+    },
+    {
+      "page": "会员中心",
+      "file": "client-member.svg",
+      "status": "ok",
+      "size": 1584792
+    },
+    {
+      "page": "收藏的师傅",
+      "file": "client-favorite-workers.svg",
+      "status": "ok",
+      "size": 1434517
+    },
+    {
+      "page": "客服中心",
+      "file": "client-service.svg",
+      "status": "ok",
+      "size": 1080408
+    },
+    {
+      "page": "意见反馈",
+      "file": "client-feedback.svg",
+      "status": "ok",
+      "size": 785354
+    },
+    {
+      "page": "家庭年卡",
+      "file": "client-annual-card.svg",
+      "status": "ok",
+      "size": 920682
+    },
+    {
+      "page": "理赔申请",
+      "file": "client-insurance-claim.svg",
+      "status": "ok",
+      "size": 1043453
+    },
+    {
+      "page": "师傅充值",
+      "file": "worker-recharge.svg",
+      "status": "ok",
+      "size": 901933
+    },
+    {
+      "page": "资质认证",
+      "file": "worker-certification.svg",
+      "status": "ok",
+      "size": 1270301
+    },
+    {
+      "page": "保证金管理",
+      "file": "worker-deposit.svg",
+      "status": "ok",
+      "size": 1343669
+    },
+    {
+      "page": "培训中心",
+      "file": "worker-training.svg",
+      "status": "ok",
+      "size": 1091737
+    },
+    {
+      "page": "在线考试",
+      "file": "worker-training-exam.svg",
+      "status": "ok",
+      "size": 886260
+    },
+    {
+      "page": "申诉中心",
+      "file": "worker-appeal.svg",
+      "status": "ok",
+      "size": 898284
+    },
+    {
+      "page": "实时追踪",
+      "file": "client-order-tracking.svg",
+      "status": "ok",
+      "size": 1230149
+    },
+    {
+      "page": "位置上报",
+      "file": "worker-location-report.svg",
+      "status": "ok",
+      "size": 650435
+    },
+    {
+      "page": "实时追踪 下拉页面",
+      "file": "client-order-tracking-2.svg",
+      "status": "ok",
+      "size": 1069612
+    },
+    {
+      "page": "客户端首页",
+      "file": "client-home-glass-neu-contrast-1.svg",
+      "status": "ok",
+      "size": 1655196
+    },
+    {
+      "page": "登录授权",
+      "file": "client-login.svg",
+      "status": "ok",
+      "size": 329523
+    },
+    {
+      "page": "在线客服",
+      "file": "client-customer-service.svg",
+      "status": "ok",
+      "size": 889899
+    },
+    {
+      "page": "积分中心",
+      "file": "client-points.svg",
+      "status": "ok",
+      "size": 1128085
+    },
+    {
+      "page": "邀请奖励",
+      "file": "client-invite.svg",
+      "status": "ok",
+      "size": 1106348
+    },
+    {
+      "page": "确认支付",
+      "file": "client-payment.svg",
+      "status": "ok",
+      "size": 804138
+    },
+    {
+      "page": "服务评价",
+      "file": "client-review.svg",
+      "status": "ok",
+      "size": 783257
+    },
+    {
+      "page": "差价确认",
+      "file": "client-price-adjust.svg",
+      "status": "ok",
+      "size": 742909
+    },
+    {
+      "page": "关于我们",
+      "file": "client-about.svg",
+      "status": "ok",
+      "size": 1061711
+    },
+    {
+      "page": "注销账号",
+      "file": "client-account-cancel.svg",
+      "status": "ok",
+      "size": 644337
+    },
+    {
+      "page": "账号安全",
+      "file": "client-account-security.svg",
+      "status": "ok",
+      "size": 864113
+    },
+    {
+      "page": "新增地址",
+      "file": "client-address-edit.svg",
+      "status": "ok",
+      "size": 655765
+    },
+    {
+      "page": "用户协议",
+      "file": "client-agreement.svg",
+      "status": "ok",
+      "size": 427276
+    },
+    {
+      "page": "使用记录",
+      "file": "client-annual-card-record.svg",
+      "status": "ok",
+      "size": 665653
+    },
+    {
+      "page": "授权管理",
+      "file": "client-auth.svg",
+      "status": "ok",
+      "size": 699853
+    },
+    {
+      "page": "收支明细",
+      "file": "client-balance-transactions.svg",
+      "status": "ok",
+      "size": 751418
+    },
+    {
+      "page": "添加银行卡",
+      "file": "client-bank-card-add.svg",
+      "status": "ok",
+      "size": 546064
+    },
+    {
+      "page": "我的银行卡",
+      "file": "client-bank-cards.svg",
+      "status": "ok",
+      "size": 382462
+    },
+    {
+      "page": "绑定手机",
+      "file": "client-bind-phone.svg",
+      "status": "ok",
+      "size": 438927
+    },
+    {
+      "page": "理赔结果",
+      "file": "client-claim-result.svg",
+      "status": "ok",
+      "size": 775541
+    },
+    {
+      "page": "优惠券详情",
+      "file": "client-coupon-detail.svg",
+      "status": "ok",
+      "size": 484796
+    },
+    {
+      "page": "选择优惠券",
+      "file": "client-coupon-select.svg",
+      "status": "ok",
+      "size": 649945
+    },
+    {
+      "page": "登录设备管理",
+      "file": "client-device-management.svg",
+      "status": "ok",
+      "size": 696118
+    },
+    {
+      "page": "兑换结果",
+      "file": "client-exchange-result.svg",
+      "status": "ok",
+      "size": 616007
+    },
+    {
+      "page": "反馈详情",
+      "file": "client-feedback-detail.svg",
+      "status": "ok",
+      "size": 541829
+    },
+    {
+      "page": "邀请详情",
+      "file": "client-friend-detail.svg",
+      "status": "ok",
+      "size": 639962
+    },
+    {
+      "page": "帮助中心",
+      "file": "client-help.svg",
+      "status": "ok",
+      "size": 771741
+    },
+    {
+      "page": "浏览历史",
+      "file": "client-history.svg",
+      "status": "ok",
+      "size": 675283
+    },
+    {
+      "page": "收支统计",
+      "file": "client-income-stat.svg",
+      "status": "ok",
+      "size": 725760
+    },
+    {
+      "page": "邀请记录",
+      "file": "client-invite-record.svg",
+      "status": "ok",
+      "size": 665803
+    },
+    {
+      "page": "发票详情",
+      "file": "client-invoice-detail.svg",
+      "status": "ok",
+      "size": 722744
+    },
+    {
+      "page": "可开票订单",
+      "file": "client-invoice-orders.svg",
+      "status": "ok",
+      "size": 611581
+    },
+    {
+      "page": "编辑发票抬头",
+      "file": "client-invoice-title-edit.svg",
+      "status": "ok",
+      "size": 689175
+    },
+    {
+      "page": "发票与报销",
+      "file": "client-invoice.svg",
+      "status": "ok",
+      "size": 920425
+    },
+    {
+      "page": "地图选点",
+      "file": "client-map-picker.svg",
+      "status": "ok",
+      "size": 558440
+    },
+    {
+      "page": "消息详情",
+      "file": "client-message-detail.svg",
+      "status": "ok",
+      "size": 530625
+    },
+    {
+      "page": "消息通知",
+      "file": "client-notification.svg",
+      "status": "ok",
+      "size": 592872
+    },
+    {
+      "page": "取消订单",
+      "file": "client-order-cancel.svg",
+      "status": "ok",
+      "size": 462509
+    },
+    {
+      "page": "李师傅",
+      "file": "client-order-chat.svg",
+      "status": "ok",
+      "size": 707243
+    },
+    {
+      "page": "选择关联订单",
+      "file": "client-order-picker.svg",
+      "status": "ok",
+      "size": 569499
+    },
+    {
+      "page": "搜索订单",
+      "file": "client-order-search.svg",
+      "status": "ok",
+      "size": 754181
+    },
+    {
+      "page": "修改密码",
+      "file": "client-password.svg",
+      "status": "ok",
+      "size": 541026
+    },
+    {
+      "page": "支付结果",
+      "file": "client-payment-result.svg",
+      "status": "ok",
+      "size": 649883
+    },
+    {
+      "page": "积分明细",
+      "file": "client-points-detail.svg",
+      "status": "ok",
+      "size": 837141
+    },
+    {
+      "page": "积分商城",
+      "file": "client-points-mall.svg",
+      "status": "ok",
+      "size": 703982
+    },
+    {
+      "page": "商品详情",
+      "file": "client-points-product.svg",
+      "status": "ok",
+      "size": 588160
+    },
+    {
+      "page": "赚积分",
+      "file": "client-points-tasks.svg",
+      "status": "ok",
+      "size": 1057526
+    },
+    {
+      "page": "保单详情",
+      "file": "client-policy-detail.svg",
+      "status": "ok",
+      "size": 690370
+    },
+    {
+      "page": "隐私设置",
+      "file": "client-privacy.svg",
+      "status": "ok",
+      "size": 968393
+    },
+    {
+      "page": "编辑资料",
+      "file": "client-profile-edit.svg",
+      "status": "ok",
+      "size": 654842
+    },
+    {
+      "page": "个人资料",
+      "file": "client-profile.svg",
+      "status": "ok",
+      "size": 1023227
+    },
+    {
+      "page": "充值记录",
+      "file": "client-recharge-record.svg",
+      "status": "ok",
+      "size": 773308
+    },
+    {
+      "page": "退卡结果",
+      "file": "client-refund-card-result.svg",
+      "status": "ok",
+      "size": 765979
+    },
+    {
+      "page": "退卡申请",
+      "file": "client-refund-card.svg",
+      "status": "ok",
+      "size": 678993
+    },
+    {
+      "page": "申请退款",
+      "file": "client-refund.svg",
+      "status": "ok",
+      "size": 679630
+    },
+    {
+      "page": "投诉举报",
+      "file": "client-report.svg",
+      "status": "ok",
+      "size": 611413
+    },
+    {
+      "page": "评价详情",
+      "file": "client-review-detail.svg",
+      "status": "ok",
+      "size": 723675
+    },
+    {
+      "page": "我的评价",
+      "file": "client-review-list.svg",
+      "status": "ok",
+      "size": 632025
+    },
+    {
+      "page": "搜索",
+      "file": "client-search.svg",
+      "status": "ok",
+      "size": 990748
+    },
+    {
+      "page": "工单详情",
+      "file": "client-ticket-detail.svg",
+      "status": "ok",
+      "size": 712172
+    },
+    {
+      "page": "提交工单",
+      "file": "client-ticket-submit.svg",
+      "status": "ok",
+      "size": 683955
+    },
+    {
+      "page": "交易详情",
+      "file": "client-transaction-detail.svg",
+      "status": "ok",
+      "size": 586435
+    },
+    {
+      "page": "认证结果",
+      "file": "client-verification-result.svg",
+      "status": "ok",
+      "size": 690411
+    },
+    {
+      "page": "实名认证",
+      "file": "client-verification.svg",
+      "status": "ok",
+      "size": 576119
+    },
+    {
+      "page": "居家安全课堂",
+      "file": "client-video.svg",
+      "status": "ok",
+      "size": 667200
+    },
+    {
+      "page": "信息可见性",
+      "file": "client-visibility.svg",
+      "status": "ok",
+      "size": 736703
+    },
+    {
+      "page": "钱包充值",
+      "file": "client-wallet-recharge.svg",
+      "status": "ok",
+      "size": 600168
+    },
+    {
+      "page": "钱包提现",
+      "file": "client-wallet-withdraw.svg",
+      "status": "ok",
+      "size": 729565
+    },
+    {
+      "page": "我的钱包",
+      "file": "client-wallet.svg",
+      "status": "ok",
+      "size": 851582
+    },
+    {
+      "page": "提现记录",
+      "file": "client-withdraw-record.svg",
+      "status": "ok",
+      "size": 596959
+    },
+    {
+      "page": "师傅详情",
+      "file": "client-worker-detail.svg",
+      "status": "ok",
+      "size": 772880
+    },
+    {
+      "page": "申诉详情",
+      "file": "worker-appeal-detail.svg",
+      "status": "ok",
+      "size": 829106
+    },
+    {
+      "page": "证书管理",
+      "file": "worker-cert-manage.svg",
+      "status": "ok",
+      "size": 805985
+    },
+    {
+      "page": "证书资料",
+      "file": "worker-certificate-edit.svg",
+      "status": "ok",
+      "size": 849994
+    },
+    {
+      "page": "订单聊天 - 师傅端",
+      "file": "worker-chat.svg",
+      "status": "ok",
+      "size": 452390
+    },
+    {
+      "page": "客户资料",
+      "file": "worker-customer-profile.svg",
+      "status": "ok",
+      "size": 688982
+    },
+    {
+      "page": "缴纳保证金",
+      "file": "worker-deposit-pay.svg",
+      "status": "ok",
+      "size": 623778
+    },
+    {
+      "page": "申请退保",
+      "file": "worker-deposit-refund.svg",
+      "status": "ok",
+      "size": 690943
+    },
+    {
+      "page": "考试结果",
+      "file": "worker-exam-result.svg",
+      "status": "ok",
+      "size": 702780
+    },
+    {
+      "page": "工作经历",
+      "file": "worker-experience-item-edit.svg",
+      "status": "ok",
+      "size": 610200
+    },
+    {
+      "page": "从业经验",
+      "file": "worker-experience.svg",
+      "status": "ok",
+      "size": 815218
+    },
+    {
+      "page": "接单与报价",
+      "file": "worker-help-category.svg",
+      "status": "ok",
+      "size": 620706
+    },
+    {
+      "page": "帮助中心",
+      "file": "worker-help.svg",
+      "status": "ok",
+      "size": 816776
+    },
+    {
+      "page": "类别收入",
+      "file": "worker-income-category-detail.svg",
+      "status": "ok",
+      "size": 797201
+    },
+    {
+      "page": "收入统计",
+      "file": "worker-income-stat.svg",
+      "status": "ok",
+      "size": 1232400
+    },
+    {
+      "page": "课时学习",
+      "file": "worker-lesson.svg",
+      "status": "ok",
+      "size": 807941
+    },
+    {
+      "page": "接单设置",
+      "file": "worker-order-setting.svg",
+      "status": "ok",
+      "size": 746759
+    },
+    {
+      "page": "申请补差价",
+      "file": "worker-price-adjust-worker.svg",
+      "status": "ok",
+      "size": 611623
+    },
+    {
+      "page": "服务区域",
+      "file": "worker-service-area.svg",
+      "status": "ok",
+      "size": 650274
+    },
+    {
+      "page": "服务范围",
+      "file": "worker-service-scope.svg",
+      "status": "ok",
+      "size": 866544
+    },
+    {
+      "page": "接单时间",
+      "file": "worker-time-setting.svg",
+      "status": "ok",
+      "size": 656539
+    },
+    {
+      "page": "课程详情",
+      "file": "worker-training-detail.svg",
+      "status": "ok",
+      "size": 950700
+    },
+    {
+      "page": "提现结果",
+      "file": "worker-withdraw-result.svg",
+      "status": "ok",
+      "size": 685374
+    }
+  ]
+}

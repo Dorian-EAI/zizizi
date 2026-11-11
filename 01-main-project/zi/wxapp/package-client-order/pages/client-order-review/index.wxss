@@ -1,0 +1,337 @@
+/* pages/client-order-review/index.wxss — 订单评价列表 */
+.page {
+  position: relative;
+  min-height: 100vh;
+  background: var(--canvas);
+  --brand: #0D9488;
+  --brand-dark: #0A7A70;
+  --brand-mid: #14B8A6;
+  --brand-light: #CCFBF1;
+  --brand-glow: rgba(13, 148, 136, 0.28);
+  --brand-subtle: rgba(13, 148, 136, 0.08);
+  --brand-gradient: linear-gradient(135deg, #0D9488 0%, #14B8A6 50%, #D4944C 100%);
+}
+
+.page-scroll {
+  height: 100vh;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 1;
+}
+
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.12;
+}
+
+.hero {
+  padding: 0 48rpx 32rpx;
+}
+
+.nav-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16rpx;
+}
+
+.nav-icon-btn {
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: 50%;
+  background: var(--bg-elevated);
+  box-shadow: var(--neu-raised-sm), inset 0 2rpx 2rpx rgba(255, 255, 255, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.nav-icon-btn:active {
+  box-shadow: var(--neu-inset);
+  transform: scale(0.94);
+}
+
+.nav-icon { width: 40rpx; height: 40rpx; }
+
+.nav-title {
+  font-size: 34rpx;
+  font-weight: 700;
+  color: var(--text-1);
+  letter-spacing: -0.02em;
+}
+
+.nav-spacer { width: 88rpx; height: 88rpx; }
+
+.rating-summary {
+  margin-top: 32rpx;
+  background: var(--brand-gradient);
+  border-radius: var(--r-lg);
+  padding: 36rpx 32rpx;
+  display: flex;
+  align-items: center;
+  gap: 40rpx;
+  box-shadow: 0 16rpx 48rpx var(--brand-glow);
+}
+
+.rating-score-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #fff;
+  min-width: 160rpx;
+}
+
+.rating-num {
+  font-size: 72rpx;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.rating-label {
+  font-size: 24rpx;
+  margin-top: 8rpx;
+  opacity: 0.9;
+}
+
+.rating-breakdown {
+  flex: 1;
+  display: flex;
+  gap: 24rpx;
+}
+
+.breakdown-item {
+  flex: 1;
+  text-align: center;
+}
+
+.breakdown-label {
+  font-size: 22rpx;
+  color: rgba(255, 255, 255, 0.8);
+  display: block;
+}
+
+.breakdown-value {
+  font-size: 30rpx;
+  font-weight: 700;
+  color: #fff;
+  margin-top: 8rpx;
+  display: block;
+}
+
+.filter-bar {
+  display: flex;
+  gap: 16rpx;
+  padding: 0 40rpx;
+  margin-bottom: 24rpx;
+  overflow-x: auto;
+}
+
+.filter-item {
+  padding: 14rpx 28rpx;
+  border-radius: var(--r-pill);
+  background: var(--bg);
+  box-shadow: var(--neu-raised-sm);
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.filter-item.active {
+  background: var(--brand-gradient);
+  box-shadow: 0 8rpx 24rpx var(--brand-glow);
+}
+
+.filter-text {
+  font-size: 26rpx;
+  color: var(--text-2);
+}
+
+.filter-item.active .filter-text {
+  color: #fff;
+  font-weight: 600;
+}
+
+.section {
+  padding: 0 40rpx;
+}
+
+.review-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+}
+
+.glass-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.52);
+  backdrop-filter: blur(40rpx) saturate(150%);
+  -webkit-backdrop-filter: blur(40rpx) saturate(150%);
+  border: 1rpx solid rgba(255, 255, 255, 0.70);
+  border-radius: var(--r-lg);
+  box-shadow:
+    var(--neu-raised),
+    0 12rpx 56rpx rgba(0, 0, 0, 0.06),
+    0 0 0 2rpx rgba(44, 40, 36, 0.05),
+    0 4rpx 16rpx rgba(13, 148, 136, 0.04);
+  padding: 28rpx;
+}
+
+.glass-card::before {
+  content: "";
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  border-radius: inherit;
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.05) 30%, transparent 55%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.glass-card > view, .glass-card > text { position: relative; z-index: 1; }
+
+.review-header {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  margin-bottom: 16rpx;
+}
+
+.reviewer-avatar {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 50%;
+  background: var(--bg);
+  box-shadow: var(--neu-inset);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.avatar-img { width: 100%; height: 100%; }
+
+.reviewer-info { flex: 1; }
+
+.reviewer-name {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: var(--text-1);
+  display: block;
+}
+
+.review-time {
+  font-size: 24rpx;
+  color: var(--text-3);
+  margin-top: 4rpx;
+  display: block;
+}
+
+.review-score {
+  display: flex;
+  align-items: baseline;
+  gap: 4rpx;
+}
+
+.score-text {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.score-unit {
+  font-size: 22rpx;
+  color: var(--text-3);
+}
+
+.review-stars {
+  margin-bottom: 16rpx;
+}
+
+.review-star {
+  font-size: 28rpx;
+  color: var(--accent);
+  letter-spacing: 4rpx;
+}
+
+.review-content {
+  font-size: 28rpx;
+  color: var(--text-1);
+  line-height: 1.6;
+  margin-bottom: 16rpx;
+}
+
+.review-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+  margin-bottom: 16rpx;
+}
+
+.review-tag {
+  padding: 8rpx 20rpx;
+  background: var(--brand-light);
+  border-radius: var(--r-pill);
+}
+
+.tag-text {
+  font-size: 22rpx;
+  color: var(--brand-dark);
+}
+
+.review-images {
+  display: flex;
+  gap: 12rpx;
+  margin-bottom: 16rpx;
+}
+
+.review-img {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: var(--r-md);
+  background: var(--bg);
+  object-fit: cover;
+}
+
+.review-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 16rpx;
+  border-top: 1rpx solid var(--hairline);
+}
+
+.review-meta { flex: 1; }
+
+.meta-text {
+  font-size: 24rpx;
+  color: var(--text-3);
+}
+
+.review-actions { display: flex; gap: 24rpx; }
+
+.action-item {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+}
+
+.action-icon { font-size: 28rpx; }
+
+.action-count {
+  font-size: 24rpx;
+  color: var(--text-3);
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 80rpx 40rpx;
+}
+
+.empty-icon { font-size: 80rpx; margin-bottom: 24rpx; }
+
+.empty-text {
+  font-size: 28rpx;
+  color: var(--text-3);
+}

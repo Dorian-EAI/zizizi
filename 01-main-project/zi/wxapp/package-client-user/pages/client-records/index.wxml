@@ -1,0 +1,128 @@
+<view class="page">
+  <view class="blob" style="top: -80rpx; right: -120rpx; width: 560rpx; height: 560rpx; background: var(--brand);"></view>
+  <view class="blob" style="top: 480rpx; left: -160rpx; width: 480rpx; height: 480rpx; background: var(--accent);"></view>
+
+  <scroll-view scroll-y class="page-scroll hide-scroll" style="padding-bottom: 40rpx;">
+    <view class="hero" style="padding-top: calc({{statusBarHeight}}px + 76rpx);">
+      <view class="nav-row">
+        <view class="nav-icon-btn" bindtap="onBack">
+          <image src="{{icons.back}}" mode="aspectFit" class="nav-icon" lazy-load="{{false}}" />
+        </view>
+        <text class="nav-title">我的记录</text>
+        <view class="nav-spacer"></view>
+      </view>
+
+      <view class="summary-row">
+        <view class="summary-item">
+          <text class="summary-value">¥{{summary.totalAmount}}</text>
+          <text class="summary-label">累计消费</text>
+        </view>
+        <view class="summary-divider"></view>
+        <view class="summary-item">
+          <text class="summary-value">{{summary.orderCount}}</text>
+          <text class="summary-label">订单总数</text>
+        </view>
+        <view class="summary-divider"></view>
+        <view class="summary-item">
+          <text class="summary-value">¥{{summary.saveAmount}}</text>
+          <text class="summary-label">累计优惠</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="tabs">
+      <view class="tab-item {{tab === 'order' ? 'active' : ''}}" data-tab="order" bindtap="onTabChange">
+        <text class="tab-text">订单记录</text>
+      </view>
+      <view class="tab-item {{tab === 'coupon' ? 'active' : ''}}" data-tab="coupon" bindtap="onTabChange">
+        <text class="tab-text">优惠券</text>
+      </view>
+      <view class="tab-item {{tab === 'favorite' ? 'active' : ''}}" data-tab="favorite" bindtap="onTabChange">
+        <text class="tab-text">收藏</text>
+      </view>
+    </view>
+
+    <view wx:if="{{tab === 'order'}}" class="section">
+      <view class="filter-bar">
+        <view class="filter-item {{orderFilter === 'all' ? 'active' : ''}}" data-filter="all" bindtap="onOrderFilter">
+          <text class="filter-text">全部</text>
+        </view>
+        <view class="filter-item {{orderFilter === 'year' ? 'active' : ''}}" data-filter="year" bindtap="onOrderFilter">
+          <text class="filter-text">今年</text>
+        </view>
+        <view class="filter-item {{orderFilter === 'month' ? 'active' : ''}}" data-filter="month" bindtap="onOrderFilter">
+          <text class="filter-text">本月</text>
+        </view>
+      </view>
+
+      <view class="record-list">
+        <view class="glass-card record-item" wx:for="{{orders}}" wx:key="id" bindtap="onOrderTap" data-id="{{item.id}}">
+          <view class="record-header">
+            <text class="record-date">{{item.date}}</text>
+            <text class="record-status status-{{item.status}}">{{item.statusText}}</text>
+          </view>
+          <view class="record-content">
+            <view class="record-icon-wrap">
+              <text class="record-icon">{{item.icon}}</text>
+            </view>
+            <view class="record-info">
+              <text class="record-title">{{item.title}}</text>
+              <text class="record-desc">{{item.desc}}</text>
+            </view>
+            <view class="record-amount">
+              <text class="amount-text">¥{{item.amount}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view wx:if="{{orders.length === 0}}" class="empty-state">
+        <text class="empty-icon">📋</text>
+        <text class="empty-text">暂无订单记录</text>
+      </view>
+    </view>
+
+    <view wx:if="{{tab === 'coupon'}}" class="section">
+      <view class="coupon-list">
+        <view class="coupon-card {{item.used ? 'used' : ''}}" wx:for="{{coupons}}" wx:key="id">
+          <view class="coupon-amount">
+            <text class="coupon-symbol">¥</text>
+            <text class="coupon-value">{{item.value}}</text>
+          </view>
+          <view class="coupon-info">
+            <text class="coupon-title">{{item.title}}</text>
+            <text class="coupon-condition">{{item.condition}}</text>
+            <text class="coupon-expire">有效期至 {{item.expire}}</text>
+          </view>
+          <view class="coupon-action">
+            <text class="coupon-status">{{item.used ? '已使用' : '立即使用'}}</text>
+          </view>
+        </view>
+      </view>
+      <view wx:if="{{coupons.length === 0}}" class="empty-state">
+        <text class="empty-icon">🎁</text>
+        <text class="empty-text">暂无优惠券</text>
+      </view>
+    </view>
+
+    <view wx:if="{{tab === 'favorite'}}" class="section">
+      <view class="favorite-list">
+        <view class="glass-card fav-item" wx:for="{{favorites}}" wx:key="id">
+          <view class="fav-icon-wrap">
+            <text class="fav-icon">{{item.icon}}</text>
+          </view>
+          <view class="fav-info">
+            <text class="fav-title">{{item.title}}</text>
+            <text class="fav-desc">{{item.desc}}</text>
+          </view>
+          <view class="fav-remove" catchtap="onRemoveFav" data-id="{{item.id}}">
+            <text class="remove-icon">🗑️</text>
+          </view>
+        </view>
+      </view>
+      <view wx:if="{{favorites.length === 0}}" class="empty-state">
+        <text class="empty-icon">⭐</text>
+        <text class="empty-text">暂无收藏</text>
+      </view>
+    </view>
+  </scroll-view>
+</view>

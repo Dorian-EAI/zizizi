@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自家人居家维修 · 玻璃新拟态 · 师傅订单详情</title>
+    <style id="theme-vars">
+/* 自家人居家维修 - 玻璃新拟态 */
+:root {
+  /* Brand - Worker (Blue) */
+  --brand: #2D6CDF;
+  --brand-dark: #2456B8;
+  --brand-mid: #5A8EE8;
+  --brand-light: #DCE8FB;
+  --brand-glow: rgba(45, 108, 223, 0.18);
+  --brand-subtle: rgba(45, 108, 223, 0.08);
+
+  /* Accent (Amber) */
+  --accent: #D4944C;
+  --accent-dark: #A0723C;
+  --accent-mid: #E8C088;
+  --accent-light: #F5E6D0;
+  --accent-glow: rgba(212, 148, 76, 0.20);
+
+  /* Background */
+  --background: #F2EDE8;
+  --foreground: #2C2824;
+  --body-bg: #E8E4DF;
+  --bg-elevated: #F7F3EF;
+
+  /* Neumorphic */
+  --neu-light: #FFF8F2;
+  --neu-dark: #DDD6CE;
+  --neu-highlight: rgba(255, 255, 255, 0.55);
+
+  /* Surface & Card */
+  --card: rgba(255, 255, 255, 0.52);
+  --card-foreground: #2C2824;
+  --popover: #fff;
+  --popover-foreground: #2C2824;
+
+  /* Muted */
+  --muted: #F7F3EF;
+  --muted-foreground: #8B8178;
+
+  /* Border & Input */
+  --border: rgba(44, 40, 36, 0.06);
+  --input: rgba(44, 40, 36, 0.06);
+  --ring: #2D6CDF;
+
+  /* Primary */
+  --primary: #2D6CDF;
+  --primary-foreground: #ffffff;
+
+  /* Semantic aliases */
+  --state-success: #5B8C5A;
+  --state-warning: #D4944C;
+  --state-error: #C4533A;
+  --state-info: #5A8FAD;
+
+  /* Text */
+  --text-1: #2C2824;
+  --text-2: #8B8178;
+  --text-3: #B5ADA5;
+  --text-inverse: #ffffff;
+
+  /* Sep & Fill */
+  --sep: rgba(44, 40, 36, 0.06);
+  --fill: rgba(44, 40, 36, 0.04);
+
+  /* Green/Red/Orange/Blue semantic */
+  --green: #5B8C5A;
+  --red: #C4533A;
+  --orange: #D4944C;
+  --blue: #5A8FAD;
+
+  /* Radius */
+  --radius-sm: 0.75rem;
+  --radius-md: 1.2rem;
+  --radius-lg: 1.6rem;
+  --radius-full: 9999px;
+
+  /* Font — unified serif system */
+  --font-display: 'Cormorant Garamond', 'Noto Serif SC', 'STSong', Georgia, serif;
+  --font-body:    'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --font-nums:    'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
+  --font:         var(--font-body);
+
+  /* Motion */
+  --spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --dur: 0.2s;
+
+  /* Glass */
+  --glass-bg: rgba(255, 255, 255, 0.18);
+  --glass-blur: blur(12px) saturate(140%);
+  --glass-border: rgba(255, 255, 255, 0.60);
+
+  /* Surface presets for glass-neumorphic components */
+  --surface-1: rgba(255, 255, 255, 0.50);
+  --surface-2: rgba(255, 255, 255, 0.45);
+
+  /* Neumorphic shadow presets */
+  --neu-out-sm: 6px 6px 14px var(--neu-dark), -6px -6px 14px var(--neu-light), 0 4px 16px rgba(0, 0, 0, 0.04);
+  --neu-out-md: 8px 8px 18px var(--neu-dark), -8px -8px 18px var(--neu-light), 0 6px 24px rgba(0, 0, 0, 0.05);
+  --neu-out-lg: 10px 10px 24px var(--neu-dark), -10px -10px 24px var(--neu-light), 0 8px 32px rgba(0, 0, 0, 0.06);
+  --neu-in: inset 4px 4px 8px var(--neu-dark), inset -4px -4px 8px var(--neu-light);
+  --neu-in-deep: inset 5px 5px 10px var(--neu-dark), inset -5px -5px 10px var(--neu-light);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-full: var(--radius-full);
+}
+
+/* Semantic token fallback */
+#semantic-token-fallback {
+  --brand-background: var(--background);
+  --brand-foreground: var(--foreground);
+  --brand-card: var(--card);
+  --brand-card-foreground: var(--card-foreground);
+  --brand-popover: var(--popover);
+  --brand-popover-foreground: var(--popover-foreground);
+  --brand-primary: var(--primary);
+  --brand-primary-foreground: var(--primary-foreground);
+  --brand-muted: var(--muted);
+  --brand-muted-foreground: var(--muted-foreground);
+  --brand-border: var(--border);
+  --brand-input: var(--input);
+  --brand-ring: var(--ring);
+  --brand-radius-sm: var(--radius-sm);
+  --brand-radius-md: var(--radius-md);
+  --brand-radius-lg: var(--radius-lg);
+}
+
+/* ===== Global Neumorphic Components ===== */
+/* Tab Bar — Premium Liquid Glass, absolute-positioned within .phone frame */
+.tab-bar{
+  position:absolute;
+  bottom:10px;
+  left:50%;
+  transform:translateX(-50%);
+  width:calc(100% - 32px);
+  max-width:360px;
+  height:56px;
+  z-index:100;
+  background:rgba(255,255,255,0.18);
+  backdrop-filter:blur(48px) saturate(210%);
+  -webkit-backdrop-filter:blur(48px) saturate(210%);
+  border:0.5px solid rgba(255,255,255,0.45);
+  border-radius:24px;
+  box-shadow:
+    inset 0 1.5px 3px rgba(255,255,255,0.60),
+    inset 0 -0.5px 1px rgba(255,255,255,0.20),
+    0 0 0 0.5px rgba(0,0,0,0.04),
+    0 2px 10px rgba(0,0,0,0.06),
+    0 12px 36px rgba(0,0,0,0.08);
+  display:flex;
+  align-items:center;
+  justify-content:space-around;
+  padding:0 6px;
+}
+.tab-bar::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  background:linear-gradient(160deg,
+    rgba(255,255,255,0.42) 0%,
+    rgba(255,255,255,0.16) 20%,
+    rgba(255,255,255,0.03) 40%,
+    transparent 60%);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
+  padding:0.5px;
+  pointer-events:none;
+  z-index:1;
+}
+.tab-bar::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  background:linear-gradient(320deg,
+    transparent 60%,
+    rgba(13,148,136,0.06) 80%,
+    rgba(255,255,255,0.04) 100%);
+  pointer-events:none;
+  z-index:1;
+}
+.tab-item{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+  width:68px;
+  height:44px;
+  border-radius:14px;
+  color:var(--text-3);
+  font-size:11px;
+  font-weight:500;
+  text-decoration:none;
+  position:relative;
+  transition:all .2s;
+}
+.tab-item svg{
+  width:20px;
+  height:20px;
+  stroke:currentColor;
+  fill:none;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.tab-item[data-active="true"]{
+  color:var(--brand);
+  font-weight:600;
+}
+.tab-item[data-active="true"]::before{
+  content:"";
+  position:absolute;
+  width:54px;
+  height:42px;
+  border-radius:16px;
+  background:rgba(13,148,136,0.16);
+  backdrop-filter:blur(24px);
+  -webkit-backdrop-filter:blur(24px);
+  border:0.5px solid rgba(13,148,136,0.30);
+  box-shadow:
+    inset 0 1px 3px rgba(255,255,255,0.55),
+    inset 0 -0.5px 1px rgba(255,255,255,0.15),
+    0 2px 10px rgba(13,148,136,0.20),
+    0 0 0 0.5px rgba(13,148,136,0.08);
+  z-index:0;
+}
+.tab-item[data-active="true"] svg{
+  transform:scale(1.08);
+  position:relative;
+  z-index:1;
+}
+
+/* Buttons */
+.btn-neu-primary{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:var(--brand);color:var(--text-inverse);
+  border:none;border-radius:9999px;
+  padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
+  cursor:pointer;
+  box-shadow:var(--neu-out-sm),0 2px 8px var(--brand-glow);
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
+.btn-neu-primary:active{box-shadow:var(--neu-in);transform:scale(0.94)}
+
+.btn-neu-secondary{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,0.50);color:var(--brand);
+  border:0.5px solid rgba(255,255,255,0.60);border-radius:9999px;
+  padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
+  cursor:pointer;
+  box-shadow:var(--neu-out-sm);
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
+.btn-neu-secondary:active{box-shadow:var(--neu-in);transform:scale(0.94)}
+
+.btn-neu-ghost{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:transparent;color:var(--text-2);
+  border:0.5px solid var(--border);border-radius:9999px;
+  padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
+  cursor:pointer;
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease),color var(--dur) var(--ease);
+}
+.btn-neu-ghost:active{transform:scale(0.94);color:var(--brand)}
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-accent: var(--accent);
+    --radius-sm: var(--radius-sm);
+    --radius-md: var(--radius-md);
+    --radius-lg: var(--radius-lg);
+    --radius-full: var(--radius-full);
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+    <style id="semantic-token-fallback">
+      .bg-background { background-color: var(--background); }
+      .text-background { color: var(--background); }
+      .border-background { border-color: var(--background); }
+      .ring-background { --tw-ring-color: var(--background); }
+      .bg-foreground { background-color: var(--foreground); }
+      .text-foreground { color: var(--foreground); }
+      .border-foreground { border-color: var(--foreground); }
+      .ring-foreground { --tw-ring-color: var(--foreground); }
+      .bg-card { background-color: var(--card); }
+      .text-card { color: var(--card); }
+      .border-card { border-color: var(--card); }
+      .ring-card { --tw-ring-color: var(--card); }
+      .bg-card-foreground { background-color: var(--card-foreground); }
+      .text-card-foreground { color: var(--card-foreground); }
+      .border-card-foreground { border-color: var(--card-foreground); }
+      .ring-card-foreground { --tw-ring-color: var(--card-foreground); }
+      .bg-popover { background-color: var(--popover); }
+      .text-popover { color: var(--popover); }
+      .border-popover { border-color: var(--popover); }
+      .ring-popover { --tw-ring-color: var(--popover); }
+      .bg-popover-foreground { background-color: var(--popover-foreground); }
+      .text-popover-foreground { color: var(--popover-foreground); }
+      .border-popover-foreground { border-color: var(--popover-foreground); }
+      .ring-popover-foreground { --tw-ring-color: var(--popover-foreground); }
+      .bg-primary { background-color: var(--primary); }
+      .text-primary { color: var(--primary); }
+      .border-primary { border-color: var(--primary); }
+      .ring-primary { --tw-ring-color: var(--primary); }
+      .bg-primary-foreground { background-color: var(--primary-foreground); }
+      .text-primary-foreground { color: var(--primary-foreground); }
+      .border-primary-foreground { border-color: var(--primary-foreground); }
+      .ring-primary-foreground { --tw-ring-color: var(--primary-foreground); }
+      .bg-muted { background-color: var(--muted); }
+      .text-muted { color: var(--muted); }
+      .border-muted { border-color: var(--muted); }
+      .ring-muted { --tw-ring-color: var(--muted); }
+      .bg-muted-foreground { background-color: var(--muted-foreground); }
+      .text-muted-foreground { color: var(--muted-foreground); }
+      .border-muted-foreground { border-color: var(--muted-foreground); }
+      .ring-muted-foreground { --tw-ring-color: var(--muted-foreground); }
+      .bg-border { background-color: var(--border); }
+      .text-border { color: var(--border); }
+      .border-border { border-color: var(--border); }
+      .ring-border { --tw-ring-color: var(--border); }
+      .bg-input { background-color: var(--input); }
+      .text-input { color: var(--input); }
+      .border-input { border-color: var(--input); }
+      .ring-input { --tw-ring-color: var(--input); }
+      .bg-ring { background-color: var(--ring); }
+      .text-ring { color: var(--ring); }
+      .border-ring { border-color: var(--ring); }
+      .ring-ring { --tw-ring-color: var(--ring); }
+      .bg-accent { background-color: var(--accent); }
+      .text-accent { color: var(--accent); }
+      .border-accent { border-color: var(--accent); }
+      .ring-accent { --tw-ring-color: var(--accent); }
+    </style>
+    <style>
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      [data-icon] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        background-color: currentColor;
+      }
+    </style>
+</head>
+<body>
+<div class="phone" data-dom-id="page-worker-order-detail">
+
+  <!-- ===== TOP NAV BAR (sticky) ===== -->
+  <header class="nav-bar">
+    <button class="nav-icon-btn" data-dom-id="order-detail-back" data-target-page="page-worker-orders" aria-label="返回">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m15 18-6-6 6-6"/>
+      </svg>
+    </button>
+    <h1 class="nav-title">订单详情</h1>
+    <button class="nav-icon-btn" data-dom-id="order-detail-more" data-action="open-order-more-actions" aria-label="更多">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="5" r="1.4" fill="currentColor"/>
+        <circle cx="12" cy="12" r="1.4" fill="currentColor"/>
+        <circle cx="12" cy="19" r="1.4" fill="currentColor"/>
+      </svg>
+    </button>
+  </header>
+
+  <!-- ===== ORDER STATUS CARD ===== -->
+  <section class="section">
+    <div class="glass-neu-card status-card">
+      <div class="status-top-bar"></div>
+      <div class="status-card-body">
+        <div class="status-head">
+          <span class="status-chip">待服务</span>
+          <span class="status-eta">预约今天 15:00-18:00</span>
+        </div>
+        <h2 class="status-desc">客户已确认，等待您上门服务</h2>
+
+        <!-- Progress Timeline -->
+        <div class="timeline">
+          <div class="timeline-line">
+            <div class="timeline-line-fill"></div>
+          </div>
+          <div class="timeline-nodes">
+            <div class="tl-node">
+              <div class="tl-dot tl-dot-done">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+              </div>
+              <div class="tl-label tl-label-done">已接单</div>
+              <div class="tl-time">14:02</div>
+            </div>
+            <div class="tl-node">
+              <div class="tl-dot tl-dot-done">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+              </div>
+              <div class="tl-label tl-label-done">已联系</div>
+              <div class="tl-time">14:35</div>
+            </div>
+            <div class="tl-node">
+              <div class="tl-dot tl-dot-active">
+                <span class="tl-dot-inner"></span>
+                <span class="tl-dot-pulse"></span>
+              </div>
+              <div class="tl-label tl-label-active">待服务</div>
+              <div class="tl-time">15:00</div>
+            </div>
+            <div class="tl-node">
+              <div class="tl-dot tl-dot-pending"></div>
+              <div class="tl-label tl-label-pending">已完成</div>
+              <div class="tl-time">--:--</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CUSTOMER INFO CARD ===== -->
+  <section class="section">
+    <div class="glass-neu-card worker-card">
+      <div class="avatar-col">
+        <div class="worker-avatar avatar-glass">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+        </div>
+        <span class="verify-badge avatar-verify">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+          实名认证
+        </span>
+      </div>
+      <div class="worker-info">
+        <div class="worker-name-row">
+          <span class="worker-name">王女士</span>
+        </div>
+        <div class="worker-meta">
+          <span class="worker-star">&#9733; 4.8</span>
+          <span class="meta-dot">&middot;</span>
+          <span>12次下单</span>
+        </div>
+      </div>
+      <div class="worker-actions">
+        <button class="action-circle" data-dom-id="call-client" data-action="call-customer" aria-label="拨打电话">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+          </svg>
+        </button>
+        <button class="action-circle" data-dom-id="msg-client" data-target-page="page-worker-chat" aria-label="发送消息">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SERVICE INFO CARD ===== -->
+  <section class="section">
+    <div class="glass-neu-card info-card">
+      <div class="card-title">服务信息</div>
+      <div class="info-list">
+        <div class="info-row">
+          <span class="info-label">订单编号</span>
+          <span class="info-value mono">ORD20260729012</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">服务类型</span>
+          <span class="info-value">管道疏通</span>
+        </div>
+        <div class="info-row info-row-icon">
+          <span class="info-label">
+            <svg class="info-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+            服务地址
+          </span>
+          <span class="info-value">北京市朝阳区望京SOHO T1</span>
+        </div>
+        <div class="info-row info-row-icon">
+          <span class="info-label">
+            <svg class="info-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="M8 2v4"/><path d="M16 2v4"/></svg>
+            预约时间
+          </span>
+          <span class="info-value mono">今天 15:00-18:00</span>
+        </div>
+        <div class="info-desc-block">
+          <div class="info-desc-label">问题描述</div>
+          <div class="info-desc-text">厨房下水道堵塞，下水缓慢</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== QUOTE / FEE DETAIL CARD ===== -->
+  <section class="section">
+    <div class="glass-neu-card fee-card">
+      <div class="card-title">报价信息</div>
+      <div class="fee-list">
+        <div class="fee-row">
+          <span class="fee-label">我的报价</span>
+          <span class="fee-value mono">&yen;168</span>
+        </div>
+        <div class="fee-row">
+          <span class="fee-label">预计用时</span>
+          <span class="fee-value">1.5小时</span>
+        </div>
+        <div class="fee-row">
+          <span class="fee-label">材料费</span>
+          <span class="fee-value mono">&yen;30</span>
+        </div>
+        <div class="fee-divider"></div>
+        <div class="fee-row fee-row-coupon">
+          <span class="fee-label">平台抽成</span>
+          <span class="fee-value fee-value-coupon mono">-&yen;8</span>
+        </div>
+        <div class="fee-total-row">
+          <span class="fee-total-label">预计到手</span>
+          <span class="fee-total mono">&yen;190</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== LBS CHECK-IN CARD (PRD 5.2.2 / 9.3) ===== -->
+  <section class="section">
+    <div class="glass-neu-card checkin-card">
+      <div class="card-title">服务签到</div>
+      <div class="checkin-list">
+
+        <!-- Step 1: 前往服务 — 已完成 -->
+        <div class="checkin-step done">
+          <div class="checkin-node">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+          </div>
+          <div class="checkin-body">
+            <div class="checkin-title-row">
+              <span class="checkin-title">前往服务</span>
+              <span class="checkin-status checkin-status-done">已完成</span>
+            </div>
+            <div class="checkin-meta">14:20 已出发</div>
+          </div>
+        </div>
+
+        <!-- Step 2: 到达签到 — 已完成 -->
+        <div class="checkin-step done">
+          <div class="checkin-node">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+          </div>
+          <div class="checkin-body">
+            <div class="checkin-title-row">
+              <span class="checkin-title">到达签到</span>
+              <span class="checkin-status checkin-status-done">已完成</span>
+            </div>
+            <div class="checkin-meta">14:45 &middot; GPS定位误差&lt;500m</div>
+          </div>
+        </div>
+
+        <!-- Step 3: 开工签到 — 已完成 -->
+        <div class="checkin-step done">
+          <div class="checkin-node">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+          </div>
+          <div class="checkin-body">
+            <div class="checkin-title-row">
+              <span class="checkin-title">开工签到</span>
+              <span class="checkin-status checkin-status-done">已完成</span>
+            </div>
+            <div class="checkin-meta">14:52 &middot; 已传开工照片</div>
+          </div>
+        </div>
+
+        <!-- Step 4: 完工签到 — 当前 -->
+        <div class="checkin-step current">
+          <div class="checkin-node">
+            <span class="checkin-pulse"></span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3Z"/><circle cx="12" cy="13" r="3"/></svg>
+          </div>
+          <div class="checkin-body">
+            <div class="checkin-title-row">
+              <span class="checkin-title">完工签到</span>
+              <span class="checkin-status checkin-status-current">进行中</span>
+            </div>
+            <div class="checkin-meta">上传现场完工照片，完成服务签到</div>
+            <div class="checkin-action">
+              <button class="btn-neu-primary" data-dom-id="btn-complete-checkin" data-action="complete-checkin">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8l-5-5-5 5"/><path d="M12 3v12"/></svg>
+                上传完工照片并签到
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== EXTRA FEE APPLICATION CARD (PRD 9.4) ===== -->
+  <section class="section">
+    <div class="glass-neu-card extra-fee-card">
+      <div class="card-title">补差价申请</div>
+
+      <!-- Rule tip -->
+      <div class="extra-fee-tip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+        <span class="extra-fee-tip-text">单次补差价不超过原订单50%，单订单最多2次</span>
+      </div>
+
+      <!-- Existing record -->
+      <div class="extra-fee-record">
+        <div class="extra-fee-record-info">
+          <span class="extra-fee-record-title">
+            更换水管配件
+            <span class="extra-fee-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+              已确认
+            </span>
+          </span>
+          <span class="extra-fee-record-time">14:55 申请</span>
+        </div>
+        <span class="extra-fee-amount mono">&yen;50</span>
+      </div>
+
+      <!-- Apply button -->
+      <div class="extra-fee-action">
+        <button class="btn-neu-secondary" data-dom-id="btn-apply-extra-fee" data-target-page="page-worker-price-adjust-worker">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+          申请补差价
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== BOTTOM FIXED ACTION BAR ===== -->
+  <footer class="action-bar">
+    <button class="action-btn-secondary" data-dom-id="contact-client" data-target-page="page-worker-chat">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+      </svg>
+      <span>联系客户</span>
+    </button>
+    <button class="action-btn-primary" data-dom-id="btn-depart" data-target-page="page-worker-location-report">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        <path d="m9 12 2 2 4-4"/>
+      </svg>
+      <span>立即出发</span>
+    </button>
+  </footer>
+
+</div>
+
+    <style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --brand:#2D6CDF;--brand-dark:#2456B8;--brand-mid:#5A8EE8;--brand-light:#DCE8FB;
+  --brand-glow:rgba(45,108,223,0.18);--brand-subtle:rgba(45,108,223,0.08);
+  --brand-gradient:linear-gradient(135deg,#2D6CDF 0%,#5A8EE8 48%,#D4944C 100%);
+  --accent:#D4944C;--accent-dark:#A0723C;--accent-light:#F5E6D0;--accent-glow:rgba(212,148,76,0.16);
+  --bg:#F2EDE8;--bg-elevated:#F7F3EF;
+  --neu-light:#FFF8F2;--neu-dark:#DDD6CE;
+  --text-1:#2C2824;--text-2:#8B8178;--text-3:#B5ADA5;--text-inverse:#FFFFFF;
+  --sep:rgba(44,40,36,0.06);--fill:rgba(44,40,36,0.04);
+  --green:#5B8C5A;--red:#C4533A;--orange:#D4944C;--blue:#5A8FAD;
+  --r:1.2rem;--r-lg:1.6rem;--r-sm:0.75rem;--r-pill:9999px;--r-tab:24px;
+  /* Font */--font-display:'Cormorant Garamond', 'Noto Serif SC', 'STSong', Georgia, serif;
+  --font-body:'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --font-nums:'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
+  --font:var(--font-body);
+  --neu-out-sm:6px 6px 14px var(--neu-dark),-6px -6px 14px var(--neu-light),0 4px 16px rgba(0,0,0,0.04);
+  --neu-out-md:8px 8px 18px var(--neu-dark),-8px -8px 18px var(--neu-light),0 6px 24px rgba(0,0,0,0.05);
+  --neu-out-lg:10px 10px 24px var(--neu-dark),-10px -10px 24px var(--neu-light),0 8px 32px rgba(0,0,0,0.06);
+  --neu-in:inset 4px 4px 8px var(--neu-dark),inset -4px -4px 8px var(--neu-light);
+  --neu-in-deep:inset 5px 5px 10px var(--neu-dark),inset -5px -5px 10px var(--neu-light);
+  --spring:cubic-bezier(0.175,0.885,0.32,1.275);--ease:cubic-bezier(0.25,0.46,0.45,0.94);--dur:0.2s;
+}
+html,body{font-family:var(--font);color:var(--text-1);-webkit-font-smoothing:antialiased}
+body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh;background:#E8E4DF;letter-spacing:-0.01em}
+
+/* ===== Phone Frame (活力渐变布局: 无圆角/无overflow) ===== */
+.phone{position:relative;width:414px;min-height:896px;background:var(--bg);border-radius:48px;overflow:hidden;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.12),0 4px 16px rgba(0,0,0,.06);padding-bottom:82px}
+
+/* Mono / Tabular nums */
+.mono{font-variant-numeric:tabular-nums;letter-spacing:-0.01em}
+
+/* ===== Top Nav Bar (sticky) ===== */
+.nav-bar{background:radial-gradient(ellipse 220px 160px at 78% 45%,rgba(212,148,76,.10) 0%,transparent 70%),radial-gradient(ellipse 180px 140px at 18% 75%,rgba(45,108,223,.10) 0%,transparent 70%),linear-gradient(135deg,rgba(45,108,223,.08) 0%,rgba(212,148,76,.04) 50%,rgba(45,108,223,.05) 100%);position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:18px 20px;padding-top:max(18px,env(safe-area-inset-top)); border-radius:0 0 28px 28px; overflow:hidden;}
+.nav-icon-btn{
+  width:44px;height:44px;border-radius:50%;border:none;
+  background:var(--bg-elevated);
+  box-shadow:var(--neu-out-sm),inset 0 1px 1px rgba(255,255,255,0.45);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--text-1);cursor:pointer;flex-shrink:0;
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
+.nav-icon-btn:active{box-shadow:var(--neu-in);transform:scale(0.94)}
+.nav-icon-btn svg{width:22px;height:22px}
+.nav-title{font-size:17px;font-weight:700;color:var(--text-1);letter-spacing:-0.02em}
+
+/* ===== Sections ===== */
+.section{padding:0 20px;margin-top:16px;position:relative;z-index:2}
+.section:first-of-type{margin-top:18px}
+
+/* ===== Glass + Neumorphic Card ===== */
+.glass-neu-card{
+  background:rgba(255,255,255,0.52);
+  backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);
+  border:1px solid rgba(255,255,255,0.70);
+  border-radius:var(--r-lg);
+  box-shadow:var(--neu-out-md),0 6px 28px rgba(0,0,0,0.06),0 2px 8px rgba(45,108,223,.04),0 0 0 1px rgba(44,40,36,0.05);
+  position:relative;overflow:hidden;
+}
+.glass-neu-card::before{
+  content:'';position:absolute;inset:0;border-radius:inherit;
+  background:linear-gradient(165deg,rgba(255,255,255,0.22) 0%,rgba(255,255,255,0.05) 30%,transparent 55%);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;padding:0.5px;pointer-events:none;
+}
+
+/* ===== Card Title ===== */
+.card-title{font-size:16px;font-weight:700;color:var(--text-1);letter-spacing:-0.01em;margin-bottom:14px}
+
+/* ===== Status Card ===== */
+.status-card{padding:0}
+.status-top-bar{
+  height:5px;width:100%;
+  background:var(--brand-gradient);
+}
+.status-card-body{padding:18px 18px 20px}
+.status-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.status-chip{
+  display:inline-flex;align-items:center;
+  background:var(--accent-light);color:var(--accent-dark);
+  font-size:12px;font-weight:700;letter-spacing:0.02em;
+  padding:4px 12px;border-radius:var(--r-pill);
+  box-shadow:inset 0 1px 1px rgba(255,255,255,0.6),0 2px 6px var(--accent-glow);
+}
+.status-eta{font-size:12px;color:var(--text-2);font-weight:500}
+.status-desc{font-size:21px;font-weight:700;color:var(--text-1);letter-spacing:-0.02em;line-height:1.3;margin-bottom:20px}
+
+/* Timeline */
+.timeline{position:relative;padding-top:4px}
+.timeline-line{
+  position:absolute;top:16px;left:30px;right:30px;height:3px;
+  background:var(--neu-dark);border-radius:var(--r-pill);opacity:0.5;
+}
+.timeline-line-fill{
+  position:absolute;top:0;left:0;height:100%;width:62%;
+  background:linear-gradient(90deg,var(--brand) 0%,var(--brand-mid) 60%,var(--accent) 100%);
+  border-radius:var(--r-pill);
+}
+.timeline-nodes{display:flex;justify-content:space-between;position:relative}
+.tl-node{display:flex;flex-direction:column;align-items:center;gap:6px;flex:1;min-width:0}
+.tl-dot{
+  width:32px;height:32px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;z-index:2;
+}
+.tl-dot svg{width:16px;height:16px}
+.tl-dot-done{
+  background:var(--brand);color:var(--text-inverse);
+  box-shadow:0 3px 10px var(--brand-glow),inset 0 1px 1px rgba(255,255,255,0.3);
+}
+.tl-dot-active{
+  background:var(--accent);color:var(--text-inverse);
+  box-shadow:0 3px 12px var(--accent-glow),inset 0 1px 1px rgba(255,255,255,0.3);
+}
+.tl-dot-inner{
+  width:10px;height:10px;border-radius:50%;background:var(--text-inverse);
+  box-shadow:0 0 0 2px rgba(255,255,255,0.35);
+}
+.tl-dot-pulse{
+  position:absolute;inset:0;border-radius:50%;
+  border:2px solid var(--accent);
+  animation:tlPulse 1.8s var(--ease) infinite;
+}
+@keyframes tlPulse{
+  0%{transform:scale(1);opacity:0.6}
+  70%{transform:scale(1.5);opacity:0}
+  100%{transform:scale(1.5);opacity:0}
+}
+.tl-dot-pending{
+  background:var(--bg-elevated);
+  box-shadow:var(--neu-in),inset 0 1px 1px rgba(255,255,255,0.3);
+  border:1.5px solid var(--neu-dark);
+}
+.tl-label{font-size:12px;font-weight:600;line-height:1.2;text-align:center}
+.tl-label-done{color:var(--brand)}
+.tl-label-active{color:var(--accent-dark)}
+.tl-label-pending{color:var(--text-3)}
+.tl-time{font-size:11px;color:var(--text-2);font-weight:500;font-variant-numeric:tabular-nums}
+
+/* ===== Worker Card ===== */
+.worker-card{display:flex;align-items:center;gap:14px;padding:16px 18px}
+.avatar-col{display:flex;flex-direction:column;align-items:center;gap:5px;flex-shrink:0}
+.worker-avatar{
+  width:44px;height:44px;border-radius:50%;flex-shrink:0;
+  background:var(--bg-elevated);
+  box-shadow:var(--neu-in-deep);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--brand);
+}
+.worker-avatar.avatar-glass{
+  position:relative;overflow:hidden;
+  background:linear-gradient(145deg,rgba(255,255,255,0.68) 0%,rgba(255,255,255,0.28) 40%,var(--brand-subtle) 78%,rgba(255,255,255,0.18) 100%);
+  backdrop-filter:blur(10px) saturate(160%);-webkit-backdrop-filter:blur(10px) saturate(160%);
+  border:0.5px solid rgba(255,255,255,0.75);
+  box-shadow:inset 0 2px 3px rgba(255,255,255,0.88),inset 0 -1px 2px rgba(0,0,0,0.04),var(--neu-out-sm);
+}
+.worker-avatar.avatar-glass::before{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(160deg,rgba(255,255,255,0.48) 0%,rgba(255,255,255,0.12) 35%,transparent 60%);pointer-events:none}
+.worker-avatar svg{width:28px;height:28px}
+.worker-info{flex:1;min-width:0}
+.worker-name-row{display:flex;align-items:center;gap:8px;margin-bottom:5px}
+.worker-name{font-size:17px;font-weight:700;color:var(--text-1);letter-spacing:-0.01em}
+.verify-badge{
+  display:inline-flex;align-items:center;gap:3px;
+  background:var(--brand-subtle);color:var(--brand);
+  font-size:10.5px;font-weight:600;
+  padding:2px 8px;border-radius:var(--r-pill);
+  border:0.5px solid rgba(45,108,223,.09);
+}
+.verify-badge svg{width:11px;height:11px}
+.worker-meta{display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--text-2);font-weight:500}
+.worker-star{color:var(--orange);font-weight:600}
+.meta-dot{color:var(--text-3)}
+.worker-actions{display:flex;gap:10px;flex-shrink:0}
+.action-circle{
+  width:44px;height:44px;border-radius:50%;border:none;
+  background:var(--bg-elevated);
+  box-shadow:var(--neu-out-sm),inset 0 1px 1px rgba(255,255,255,0.45);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--brand);cursor:pointer;
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
+.action-circle:active{box-shadow:var(--neu-in);transform:scale(0.94)}
+.action-circle svg{width:20px;height:20px}
+.action-circle:last-child{color:var(--accent-dark)}
+
+/* ===== Info Card ===== */
+.info-card{padding:18px}
+.info-list{display:flex;flex-direction:column;gap:0}
+.info-row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:11px 0;
+  border-bottom:0.5px solid var(--sep);
+}
+.info-row:last-of-type{border-bottom:none}
+.info-label{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:13.5px;color:var(--text-2);font-weight:500;flex-shrink:0;
+}
+.info-ic{width:15px;height:15px;color:var(--text-3);flex-shrink:0}
+.info-value{font-size:13.5px;color:var(--text-1);font-weight:600;text-align:right;max-width:60%}
+.info-desc-block{
+  margin-top:12px;padding:12px 14px;
+  background:var(--fill);border-radius:var(--r-sm);
+  border:0.5px solid var(--sep);
+}
+.info-desc-label{font-size:11.5px;color:var(--text-2);font-weight:600;margin-bottom:5px}
+.info-desc-text{font-size:13px;color:var(--text-1);line-height:1.5;font-weight:500}
+
+/* ===== Fee Card ===== */
+.fee-card{padding:18px}
+.fee-list{display:flex;flex-direction:column}
+.fee-row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:9px 0;
+}
+.fee-label{font-size:13.5px;color:var(--text-2);font-weight:500;display:inline-flex;align-items:center;gap:6px}
+.fee-tag{
+  font-size:10px;font-weight:600;color:var(--green);
+  background:rgba(91,140,90,0.12);
+  padding:1px 6px;border-radius:var(--r-pill);
+}
+.fee-value{font-size:14px;color:var(--text-1);font-weight:600}
+.fee-value-free{color:var(--green)}
+.fee-value-coupon{color:var(--red)}
+.fee-divider{height:0.5px;background:var(--sep);margin:6px 0}
+.fee-row-coupon{padding:6px 0}
+.fee-total-row{
+  display:flex;align-items:baseline;justify-content:space-between;
+  margin-top:10px;padding-top:12px;
+  border-top:1.5px solid var(--sep);
+}
+.fee-total-label{font-size:14px;color:var(--text-1);font-weight:700}
+.fee-total{font-size:24px;font-weight:800;color:var(--brand);letter-spacing:-0.02em;font-variant-numeric:tabular-nums}
+
+/* ===== Bottom Fixed Action Bar ===== */
+.action-bar{
+  position:fixed;bottom:0;left:50%;transform:translateX(-50%);
+  width:100%;max-width:414px;
+  display:flex;align-items:center;gap:12px;
+  padding:14px 20px;padding-bottom:max(14px,env(safe-area-inset-bottom));
+  background:rgba(242,237,232,0.88);
+  backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);
+  border-top:0.5px solid rgba(255,255,255,0.55);
+  box-shadow:0 -4px 20px rgba(0,0,0,0.05);
+  z-index:60;
+}
+.action-btn-secondary{
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  height:48px;flex:0 0 38%;
+  background:var(--bg-elevated);color:var(--text-1);
+  border:0.5px solid rgba(255,255,255,0.60);border-radius:var(--r-pill);
+  font-size:14px;font-weight:600;font-family:var(--font);cursor:pointer;
+  box-shadow:var(--neu-out-sm),inset 0 1px 1px rgba(255,255,255,0.45);
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
+.action-btn-secondary:active{box-shadow:var(--neu-in);transform:scale(0.96)}
+.action-btn-secondary svg{width:18px;height:18px;color:var(--text-2)}
+.action-btn-primary{
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  height:48px;flex:1;
+  background:var(--brand-gradient);color:var(--text-inverse);
+  border:none;border-radius:var(--r-pill);
+  font-size:15px;font-weight:700;font-family:var(--font);cursor:pointer;
+  letter-spacing:0.02em;
+  box-shadow:var(--neu-out-sm),0 4px 14px var(--brand-glow);
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
+.action-btn-primary:active{box-shadow:var(--neu-in);transform:scale(0.96)}
+.action-btn-primary svg{width:19px;height:19px}
+
+/* ===== LBS Check-in Vertical Timeline (PRD 5.2.2 / 9.3) ===== */
+.checkin-card{padding:18px}
+.checkin-list{display:flex;flex-direction:column}
+.checkin-step{
+  display:flex;gap:14px;position:relative;
+  padding-bottom:18px;
+}
+.checkin-step:last-child{padding-bottom:0}
+.checkin-step:not(:last-child)::after{
+  content:'';position:absolute;
+  left:15px;top:34px;bottom:2px;width:2px;
+  background:var(--brand-light);
+  border-radius:var(--r-pill);
+}
+.checkin-step.done:not(:last-child)::after{
+  background:var(--brand);
+  opacity:0.45;
+}
+.checkin-node{
+  width:32px;height:32px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;z-index:2;
+}
+.checkin-step.done .checkin-node{
+  background:var(--brand);color:var(--text-inverse);
+  box-shadow:0 3px 10px var(--brand-glow),inset 0 1px 1px rgba(255,255,255,0.3);
+}
+.checkin-step.current .checkin-node{
+  background:var(--brand);color:var(--text-inverse);
+  box-shadow:0 3px 14px var(--brand-glow),inset 0 1px 1px rgba(255,255,255,0.3);
+}
+.checkin-node svg{width:16px;height:16px}
+.checkin-pulse{
+  position:absolute;inset:-3px;border-radius:50%;
+  border:2px solid var(--brand);
+  animation:checkinPulse 1.8s var(--ease) infinite;
+  pointer-events:none;
+}
+@keyframes checkinPulse{
+  0%{transform:scale(1);opacity:0.55}
+  70%{transform:scale(1.45);opacity:0}
+  100%{transform:scale(1.45);opacity:0}
+}
+.checkin-body{flex:1;min-width:0;padding-top:3px}
+.checkin-title-row{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:4px}
+.checkin-title{font-size:14px;font-weight:700;color:var(--text-1);letter-spacing:-0.01em}
+.checkin-status{
+  font-size:10.5px;font-weight:700;letter-spacing:0.02em;
+  padding:2px 8px;border-radius:var(--r-pill);white-space:nowrap;
+}
+.checkin-status-done{
+  color:var(--green);background:rgba(91,140,90,0.14);
+}
+.checkin-status-current{
+  color:var(--text-inverse);background:var(--brand);
+  box-shadow:0 2px 6px var(--brand-glow);
+}
+.checkin-meta{font-size:12px;color:var(--text-2);font-weight:500;line-height:1.45}
+.checkin-action{margin-top:10px}
+
+/* ===== Extra Fee Application (PRD 9.4) ===== */
+.extra-fee-card{padding:18px}
+.extra-fee-tip{
+  display:flex;align-items:flex-start;gap:8px;
+  background:var(--accent-light);
+  border-radius:var(--r-sm);
+  padding:10px 12px;margin-bottom:14px;
+  border:0.5px solid rgba(212,148,76,0.16);
+}
+.extra-fee-tip svg{width:15px;height:15px;color:var(--accent-dark);flex-shrink:0;margin-top:1px}
+.extra-fee-tip-text{font-size:12px;color:var(--accent-dark);font-weight:600;line-height:1.45}
+.extra-fee-record{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:12px 14px;
+  background:var(--fill);
+  border-radius:var(--r-sm);
+  border:0.5px solid var(--sep);
+  margin-bottom:14px;
+}
+.extra-fee-record-info{display:flex;flex-direction:column;gap:4px;min-width:0}
+.extra-fee-record-title{font-size:13.5px;color:var(--text-1);font-weight:600;display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap}
+.extra-fee-record-time{font-size:11.5px;color:var(--text-2);font-weight:500}
+.extra-fee-badge{
+  display:inline-flex;align-items:center;gap:3px;
+  background:rgba(91,140,90,0.14);color:var(--green);
+  font-size:11px;font-weight:600;
+  padding:2px 8px;border-radius:var(--r-pill);
+}
+.extra-fee-badge svg{width:11px;height:11px}
+.extra-fee-amount{font-size:15px;color:var(--text-1);font-weight:700;letter-spacing:-0.01em}
+.extra-fee-action{display:flex;justify-content:center}
+
+/* Button icon sizing (reuse .btn-neu-*) */
+.btn-neu-primary svg,.btn-neu-secondary svg{width:16px;height:16px;flex-shrink:0;margin-right:6px}
+
+/* ===== Reduced Motion ===== */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{
+    animation-duration:0.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:0.01ms !important;
+  }
+  .tl-dot-pulse{animation:none;opacity:0}
+  .checkin-pulse{animation:none;opacity:0}
+}
+
+    </style>
+    <style>@theme inline{--font-sans: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+--font-serif: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+--color-background:var(--background);--color-foreground:var(--foreground);--color-card:var(--card);--color-card-foreground:var(--card-foreground);--color-popover:var(--popover);--color-popover-foreground:var(--popover-foreground);--color-primary:var(--primary);--color-primary-foreground:var(--primary-foreground);--color-muted:var(--muted);--color-muted-foreground:var(--muted-foreground);--color-border:var(--border);--color-input:var(--input);--color-ring:var(--ring);--radius-md:var(--radius-md);}</style>
+    <style>@layer base{body{background:var(--background);color:var(--foreground);font-family:var(--font-body);}}</style>
+</body>
+</html>

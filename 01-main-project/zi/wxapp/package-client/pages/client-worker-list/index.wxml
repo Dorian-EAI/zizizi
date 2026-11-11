@@ -1,0 +1,39 @@
+<view class="phone-page design-detail-page">
+  <view class="topbar">
+    <view class="icon-button design-button" bindtap="onBack"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m15%2018-6-6%206-6M9%2012h10%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view>
+    <view class="tag-h1">{{category}} · 推荐师傅</view>
+    <view class="top-action design-button" bindtap="onFilter">筛选</view>
+  </view>
+
+  <view class="filter-tabs">
+    <view class="filter-pill {{activeFilter === item.key ? 'active' : ''}}" wx:for="{{filters}}" wx:key="key" data-key="{{item.key}}" bindtap="onFilterChange">{{item.name}}</view>
+  </view>
+
+  <view class="worker-list" wx:if="{{workers.length > 0}}">
+    <view class="worker-card" wx:for="{{workers}}" wx:key="id" data-id="{{item.id}}" bindtap="onWorkerTap">
+      <view class="worker-head">
+        <view class="worker-avatar">{{item.initial}}</view>
+        <view class="worker-info">
+          <view class="worker-name">{{item.name}}</view>
+          <view class="worker-meta">
+            <text class="worker-star">★ {{item.rating}}</text>
+            <text>·</text>
+            <text>{{item.completed}} 单完成</text>
+          </view>
+        </view>
+      </view>
+      <view class="worker-tags">
+        <view class="worker-tag" wx:for="{{item.skills}}" wx:for-item="skill" wx:key="*this">{{skill}}</view>
+      </view>
+      <view class="worker-bottom">
+        <view><text class="worker-price-label">起步价</text><text class="worker-price">¥{{item.price}}</text></view>
+        <view class="worker-action" catchtap="onPublish" data-id="{{item.id}}">立即预约</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty" wx:else>
+    <text class="empty-text">暂无可预约的师傅</text>
+    <text class="empty-sub">请选择其他服务类型</text>
+  </view>
+</view>

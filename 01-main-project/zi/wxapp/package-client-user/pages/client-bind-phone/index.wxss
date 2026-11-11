@@ -1,0 +1,82 @@
+/* AUTO-GENERATED DESIGN STYLE ENTRY; page-specific overrides may follow this import. */
+@import "../../../styles/generated-detail-page.wxss";
+
+.phone-page {
+  --neu-raised: var(--neu-out-md);
+  --glass-bg: rgba(255, 255, 255, 0.52);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.phone-page .hero {
+  text-align: center;
+  padding: 48rpx 40rpx;
+  background: linear-gradient(135deg, rgba(13, 148, 136, 0.08) 0%, rgba(212, 148, 76, 0.06) 100%), var(--summary-background);
+}
+
+.phone-page .hero .tag-h2 {
+  color: var(--brand-dark);
+  font-size: 48rpx;
+  letter-spacing: 0.02em;
+}
+
+.phone-page .section-title {
+  margin-top: 8rpx;
+}
+
+.phone-page .card {
+  padding: 32rpx;
+  margin-bottom: 28rpx;
+}
+
+.phone-page .field {
+  margin-bottom: 28rpx;
+}
+
+.phone-page .field .tag-label {
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.phone-page .input,
+.phone-page .select-like {
+  font-size: 28rpx;
+  background: var(--bg);
+}
+
+.phone-page .select-like {
+  gap: 16rpx;
+}
+
+.phone-page .select-like .input {
+  flex: 1;
+  min-width: 0;
+  box-shadow: none;
+  background: transparent;
+  padding: 0;
+}
+
+.phone-page .top-action {
+  color: var(--brand);
+  font-size: 26rpx;
+  font-weight: 600;
+  white-space: nowrap;
+  padding: 0 16rpx;
+}
+
+.phone-page .notice {
+  border-radius: var(--radius-md);
+}
+
+.phone-page .btn.secondary.block {
+  margin-bottom: 32rpx;
+}
+
+.phone-page .fixed-actions {
+  border: 1rpx solid rgba(13, 148, 136, 0.18);
+}
+
+.phone-page .btn.primary {
+  background: var(--brand-gradient);
+}

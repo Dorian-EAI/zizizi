@@ -1,0 +1,58 @@
+/* AUTO-GENERATED DESIGN STYLE ENTRY; page-specific overrides may follow this import. */
+@import "../../../styles/generated-detail-page.wxss";
+
+.phone-page {
+  --neu-raised: var(--neu-out-md);
+  --glass-bg: rgba(255, 255, 255, 0.52);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.phone-page .hero {
+  background: linear-gradient(135deg, rgba(13, 148, 136, 0.08) 0%, rgba(91, 140, 90, 0.08) 100%), var(--summary-background);
+}
+
+.phone-page .hero-number {
+  color: var(--brand-dark);
+  font-size: 72rpx;
+  text-shadow: 0 2rpx 8rpx var(--brand-glow);
+}
+
+.phone-page .notice {
+  border-radius: var(--radius-md);
+}
+
+.phone-page .list-row {
+  min-height: 112rpx;
+}
+
+.phone-page .row-icon {
+  background: var(--brand-soft);
+}
+
+.phone-page .row-icon .design-svg-icon {
+  color: var(--brand);
+}
+
+.phone-page .badge.success {
+  font-size: 22rpx;
+  padding: 8rpx 16rpx;
+}
+
+.phone-page .row-value {
+  color: var(--brand);
+  font-weight: 600;
+}
+
+.phone-page .card {
+  margin-bottom: 28rpx;
+}
+
+.phone-page .fixed-actions {
+  border: 1rpx solid rgba(13, 148, 136, 0.18);
+}
+
+.phone-page .btn.primary {
+  background: var(--brand-gradient);
+}

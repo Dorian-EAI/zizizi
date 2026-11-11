@@ -1,0 +1,75 @@
+@import "../../../styles/glass-detail-page.wxss";
+
+/* —— 退款卡结果页面特定样式 —— */
+
+/* Hero 渐变：琥珀退款主题 */
+.hero {
+  background:
+    radial-gradient(ellipse 360rpx 240rpx at 82% 16%, rgba(212, 148, 76, 0.16) 0%, transparent 72%),
+    radial-gradient(ellipse 300rpx 200rpx at 18% 84%, rgba(13, 148, 136, 0.08) 0%, transparent 72%),
+    rgba(255, 255, 255, 0.46);
+  text-align: center;
+}
+
+/* 状态头像 */
+.hero .avatar {
+  width: 120rpx;
+  height: 120rpx;
+  font-size: 44rpx;
+  margin: 0 auto 24rpx;
+  background: var(--bg-elevated);
+  box-shadow: var(--neu-raised), 0 8rpx 28rpx rgba(0, 0, 0, 0.06);
+}
+
+.hero .avatar.state-success {
+  color: #5B8C5A;
+  background: rgba(91, 140, 90, 0.12);
+  box-shadow: var(--neu-raised), 0 8rpx 28rpx rgba(91, 140, 90, 0.18);
+}
+
+.hero .avatar.state-warning {
+  color: var(--accent);
+  background: rgba(212, 148, 76, 0.12);
+  box-shadow: var(--neu-raised), 0 8rpx 28rpx rgba(212, 148, 76, 0.18);
+}
+
+/* 卡信息列表 */
+.card.list-card {
+  padding: 8rpx 28rpx;
+}
+
+.card.list-card .list-row {
+  min-height: 100rpx;
+}
+
+/* 卡片状态徽章 */
+.list-row .badge {
+  font-size: 22rpx;
+  padding: 6rpx 16rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.04);
+}
+
+/* 退款金额占位 */
+.list-row .row-value {
+  font-family: var(--font-number);
+  font-weight: 700;
+  font-size: 32rpx;
+  color: var(--text-2);
+}
+
+/* 底部操作 */
+.fixed-actions {
+  padding: 20rpx 28rpx;
+  gap: 20rpx;
+}
+
+.fixed-actions .btn {
+  min-height: 88rpx;
+  font-size: 28rpx;
+}
+
+/* Hero 标题 */
+.hero .tag-h2 {
+  font-size: 36rpx;
+  margin-bottom: 8rpx;
+}

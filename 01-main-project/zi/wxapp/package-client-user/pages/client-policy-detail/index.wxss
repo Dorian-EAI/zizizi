@@ -1,0 +1,78 @@
+@import "../../../styles/glass-detail-page.wxss";
+
+/* —— 政策详情页面特定样式 —— */
+
+/* Hero 渐变：深蓝保险主题 */
+.hero {
+  background:
+    radial-gradient(ellipse 360rpx 240rpx at 82% 16%, rgba(90, 143, 173, 0.16) 0%, transparent 72%),
+    radial-gradient(ellipse 300rpx 200rpx at 18% 84%, rgba(13, 148, 136, 0.10) 0%, transparent 72%),
+    rgba(255, 255, 255, 0.46);
+}
+
+/* Hero 保额展示 */
+.hero .tag-h2 {
+  font-size: 48rpx;
+  font-weight: 700;
+  color: var(--brand-dark);
+  font-family: var(--font-number);
+  margin-bottom: 8rpx;
+}
+
+/* 保单状态徽章 */
+.hero .badge.success {
+  margin-top: 16rpx;
+  box-shadow: 0 4rpx 16rpx rgba(91, 140, 90, 0.20);
+}
+
+/* 保障信息列表 */
+.card.list-card {
+  padding: 8rpx 24rpx;
+}
+
+.card.list-card .list-row {
+  min-height: 100rpx;
+}
+
+.card.list-card .list-row .row-icon {
+  color: var(--brand);
+  background: var(--brand-subtle);
+  flex: 0 0 64rpx;
+  width: 64rpx;
+  height: 64rpx;
+}
+
+/* 保障内容说明 */
+.section.card .tag-p {
+  font-size: 26rpx;
+  line-height: 1.7;
+}
+
+/* 加载/错误/空状态 */
+.section.card {
+  padding: 36rpx;
+  text-align: center;
+}
+
+.section.card .tag-h2 {
+  margin-bottom: 12rpx;
+}
+
+/* 底部双按钮 */
+.fixed-actions {
+  padding: 20rpx 28rpx;
+  gap: 20rpx;
+}
+
+.fixed-actions .btn {
+  min-height: 88rpx;
+  font-size: 28rpx;
+}
+
+/* Hero 保单号 */
+.hero .hero-kicker {
+  font-family: var(--font-number);
+  font-weight: 600;
+  color: var(--text-2);
+  letter-spacing: 0.04em;
+}

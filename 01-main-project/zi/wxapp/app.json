@@ -1,0 +1,222 @@
+{
+  "pages": [
+    "pages/entry/index",
+    "pages/client-home/index",
+    "pages/client-publish/index",
+    "pages/client-orders/index",
+    "pages/client-mine/index",
+    "pages/worker-home/index",
+    "pages/worker-orders/index",
+    "pages/worker-wallet/index",
+    "pages/worker-profile/index",
+    "pages/order-detail-client/index",
+    "pages/order-detail-worker/index",
+    "pages/address/index",
+    "pages/search/index",
+    "pages/client-service-detail/index",
+    "pages/client-chat/index",
+    "pages/client-settings/index",
+    "pages/client-login/index",
+    "pages/client-payment/index"
+  ],
+  "subpackages": [
+    {
+      "root": "package-client",
+      "pages": [
+        "pages/client-about/index",
+        "pages/client-customer-service/index",
+        "pages/client-device-management/index",
+        "pages/client-favorite-workers/index",
+        "pages/client-friend-detail/index",
+        "pages/client-help/index",
+        "pages/client-history/index",
+        "pages/client-message-detail/index",
+        "pages/client-notification/index",
+        "pages/client-profile/index",
+        "pages/client-profile-edit/index",
+        "pages/client-search/index",
+        "pages/client-service/index",
+        "pages/client-service-subcategory/index",
+        "pages/client-skill-detail/index",
+        "pages/client-skill-list/index",
+        "pages/client-worker-detail/index",
+        "pages/client-worker-list/index"
+      ]
+    },
+    {
+      "root": "package-client-order",
+      "pages": [
+        "pages/client-order-cancel/index",
+        "pages/client-order-chat/index",
+        "pages/client-order-comment/index",
+        "pages/client-order-detail/index",
+        "pages/client-order-picker/index",
+        "pages/client-order-review/index",
+        "pages/client-order-search/index",
+        "pages/client-order-tracking/index",
+        "pages/client-other-services/index",
+        "pages/client-package-detail/index",
+        "pages/client-price-adjust/index",
+        "pages/client-quote-list/index",
+        "pages/client-ticket-detail/index",
+        "pages/client-ticket-submit/index"
+      ]
+    },
+    {
+      "root": "package-client-user",
+      "pages": [
+        "pages/client-account-cancel/index",
+        "pages/client-account-security/index",
+        "pages/client-address-edit/index",
+        "pages/client-agreement/index",
+        "pages/client-annual-card/index",
+        "pages/client-annual-card-record/index",
+        "pages/client-auth/index",
+        "pages/client-balance-transactions/index",
+        "pages/client-bank-card-add/index",
+        "pages/client-bank-cards/index",
+        "pages/client-bind-phone/index",
+        "pages/client-claim-result/index",
+        "pages/client-coupon/index",
+        "pages/client-coupon-detail/index",
+        "pages/client-coupon-select/index",
+        "pages/client-exchange-result/index",
+        "pages/client-feedback/index",
+        "pages/client-feedback-detail/index",
+        "pages/client-income-stat/index",
+        "pages/client-insurance-claim/index",
+        "pages/client-invite/index",
+        "pages/client-invite-record/index",
+        "pages/client-invoice/index",
+        "pages/client-invoice-detail/index",
+        "pages/client-invoice-orders/index",
+        "pages/client-invoice-title-edit/index",
+        "pages/client-map-picker/index",
+        "pages/client-member/index",
+        "pages/client-password/index",
+        "pages/client-payment-result/index",
+        "pages/client-personal-info/index",
+        "pages/client-points/index",
+        "pages/client-points-detail/index",
+        "pages/client-points-mall/index",
+        "pages/client-points-product/index",
+        "pages/client-points-tasks/index",
+        "pages/client-policy-detail/index",
+        "pages/client-privacy/index",
+        "pages/client-real-name-auth/index",
+        "pages/client-recharge-record/index",
+        "pages/client-records/index",
+        "pages/client-redpacket/index",
+        "pages/client-refund/index",
+        "pages/client-refund-card/index",
+        "pages/client-refund-card-result/index",
+        "pages/client-refund-success/index",
+        "pages/client-report/index",
+        "pages/client-review/index",
+        "pages/client-review-detail/index",
+        "pages/client-review-list/index",
+        "pages/client-sharing/index",
+        "pages/client-submit-review/index",
+        "pages/client-template-detail/index",
+        "pages/client-transaction-detail/index",
+        "pages/client-verification/index",
+        "pages/client-verification-result/index",
+        "pages/client-video/index",
+        "pages/client-visibility/index",
+        "pages/client-wallet/index",
+        "pages/client-wallet-recharge/index",
+        "pages/client-wallet-withdraw/index",
+        "pages/client-withdraw-record/index"
+      ]
+    },
+    {
+      "root": "package-worker",
+      "pages": [
+        "pages/worker-appeal/index",
+        "pages/worker-appeal-detail/index",
+        "pages/worker-application/index",
+        "pages/worker-cert-manage/index",
+        "pages/worker-certificate-edit/index",
+        "pages/worker-certification/index",
+        "pages/worker-chat/index",
+        "pages/worker-customer-profile/index",
+        "pages/worker-deposit/index",
+        "pages/worker-deposit-pay/index",
+        "pages/worker-deposit-refund/index",
+        "pages/worker-detail/index",
+        "pages/worker-edit-profile/index",
+        "pages/worker-exam-result/index",
+        "pages/worker-experience/index",
+        "pages/worker-experience-item-edit/index",
+        "pages/worker-help/index",
+        "pages/worker-help-category/index",
+        "pages/worker-income-category-detail/index",
+        "pages/worker-income-stat/index",
+        "pages/worker-leave/index",
+        "pages/worker-lesson/index",
+        "pages/worker-location-report/index",
+        "pages/worker-order-setting/index",
+        "pages/worker-price-adjust-worker/index",
+        "pages/worker-quote-submit/index",
+        "pages/worker-recharge/index",
+        "pages/worker-reviews/index",
+        "pages/worker-service-area/index",
+        "pages/worker-service-scope/index",
+        "pages/worker-settings/index",
+        "pages/worker-time-setting/index",
+        "pages/worker-training/index",
+        "pages/worker-training-detail/index",
+        "pages/worker-training-exam/index",
+        "pages/worker-transactions/index",
+        "pages/worker-withdraw/index",
+        "pages/worker-withdraw-result/index"
+      ]
+    }
+  ],
+  "preloadRule": {
+    "pages/entry/index": {
+      "network": "all",
+      "packages": ["package-client"]
+    },
+    "pages/client-home/index": {
+      "network": "all",
+      "packages": ["package-client-order", "package-client-user"]
+    },
+    "pages/client-orders/index": {
+      "network": "all",
+      "packages": ["package-client-order", "package-client-user"]
+    },
+    "pages/client-mine/index": {
+      "network": "all",
+      "packages": ["package-client", "package-client-user"]
+    },
+    "pages/worker-home/index": {
+      "network": "all",
+      "packages": ["package-worker", "package-client-user"]
+    },
+    "pages/worker-orders/index": {
+      "network": "all",
+      "packages": ["package-worker"]
+    },
+    "pages/worker-wallet/index": {
+      "network": "all",
+      "packages": ["package-worker"]
+    },
+    "pages/worker-profile/index": {
+      "network": "all",
+      "packages": ["package-worker", "package-client-user"]
+    }
+  },
+  "window": {
+    "backgroundColor": "#F2EDE8",
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#F2EDE8",
+    "navigationBarTitleText": "自家人居家维修",
+    "navigationBarTextStyle": "black",
+    "navigationStyle": "custom"
+  },
+  "entryPagePath": "pages/entry/index",
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自家人居家维修 · 玻璃新拟态 · 发布需求</title>
+    <style id="theme-vars">
+/* 自家人居家维修 - 玻璃新拟态 */
+:root {
+  /* Brand - Client (Teal) */
+  --brand: #0D9488;
+  --brand-dark: #0A7A70;
+  --brand-mid: #14B8A6;
+  --brand-light: #CCFBF1;
+  --brand-glow: rgba(13, 148, 136, 0.24);
+  --brand-subtle: rgba(13, 148, 136, 0.10);
+
+  /* Accent (Amber) */
+  --accent: #D4944C;
+  --accent-dark: #A0723C;
+  --accent-mid: #E8C088;
+  --accent-light: #F5E6D0;
+  --accent-glow: rgba(212, 148, 76, 0.20);
+
+  /* Background */
+  --background: #F2EDE8;
+  --foreground: #2C2824;
+  --body-bg: #E8E4DF;
+  --bg-elevated: #F7F3EF;
+
+  /* Neumorphic */
+  --neu-light: #FFF8F2;
+  --neu-dark: #DDD6CE;
+  --neu-highlight: rgba(255, 255, 255, 0.55);
+
+  /* Surface & Card */
+  --card: rgba(255, 255, 255, 0.52);
+  --card-foreground: #2C2824;
+  --popover: #fff;
+  --popover-foreground: #2C2824;
+
+  /* Muted */
+  --muted: #F7F3EF;
+  --muted-foreground: #8B8178;
+
+  /* Border & Input */
+  --border: rgba(44, 40, 36, 0.06);
+  --input: rgba(44, 40, 36, 0.06);
+  --ring: #0D9488;
+
+  /* Primary */
+  --primary: #0D9488;
+  --primary-foreground: #ffffff;
+
+  /* Semantic aliases */
+  --state-success: #5B8C5A;
+  --state-warning: #D4944C;
+  --state-error: #C4533A;
+  --state-info: #5A8FAD;
+
+  /* Text */
+  --text-1: #2C2824;
+  --text-2: #8B8178;
+  --text-3: #B5ADA5;
+  --text-inverse: #ffffff;
+
+  /* Sep & Fill */
+  --sep: rgba(44, 40, 36, 0.06);
+  --fill: rgba(44, 40, 36, 0.04);
+
+  /* Green/Red/Orange/Blue semantic */
+  --green: #5B8C5A;
+  --red: #C4533A;
+  --orange: #D4944C;
+  --blue: #5A8FAD;
+
+  /* Radius */
+  --radius-sm: 0.75rem;
+  --radius-md: 1.2rem;
+  --radius-lg: 1.6rem;
+  --radius-full: 9999px;
+
+  /* Font — unified serif system */
+  --font-display: 'Cormorant Garamond', 'Noto Serif SC', 'STSong', Georgia, serif;
+  --font-body:    'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --font-nums:    'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
+  --font:         var(--font-body);
+
+  /* Motion */
+  --spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --dur: 0.2s;
+
+  /* Glass */
+  --glass-bg: rgba(255, 255, 255, 0.18);
+  --glass-blur: blur(12px) saturate(140%);
+  --glass-border: rgba(255, 255, 255, 0.60);
+
+  /* Surface presets for glass-neumorphic components */
+  --surface-1: rgba(255, 255, 255, 0.50);
+  --surface-2: rgba(255, 255, 255, 0.45);
+
+  /* Neumorphic shadow presets */
+  --neu-out-sm: 6px 6px 14px var(--neu-dark), -6px -6px 14px var(--neu-light), 0 4px 16px rgba(0, 0, 0, 0.04);
+  --neu-out-md: 8px 8px 18px var(--neu-dark), -8px -8px 18px var(--neu-light), 0 6px 24px rgba(0, 0, 0, 0.05);
+  --neu-out-lg: 10px 10px 24px var(--neu-dark), -10px -10px 24px var(--neu-light), 0 8px 32px rgba(0, 0, 0, 0.06);
+  --neu-in: inset 4px 4px 8px var(--neu-dark), inset -4px -4px 8px var(--neu-light);
+  --neu-in-deep: inset 5px 5px 10px var(--neu-dark), inset -5px -5px 10px var(--neu-light);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-full: var(--radius-full);
+}
+
+/* Semantic token fallback */
+#semantic-token-fallback {
+  --brand-background: var(--background);
+  --brand-foreground: var(--foreground);
+  --brand-card: var(--card);
+  --brand-card-foreground: var(--card-foreground);
+  --brand-popover: var(--popover);
+  --brand-popover-foreground: var(--popover-foreground);
+  --brand-primary: var(--primary);
+  --brand-primary-foreground: var(--primary-foreground);
+  --brand-muted: var(--muted);
+  --brand-muted-foreground: var(--muted-foreground);
+  --brand-border: var(--border);
+  --brand-input: var(--input);
+  --brand-ring: var(--ring);
+  --brand-radius-sm: var(--radius-sm);
+  --brand-radius-md: var(--radius-md);
+  --brand-radius-lg: var(--radius-lg);
+}
+
+/* ===== Global Neumorphic Components ===== */
+/* Tab Bar — Premium Liquid Glass, absolute-positioned within .phone frame */
+.tab-bar{
+  position:absolute;
+  bottom:10px;
+  left:50%;
+  transform:translateX(-50%);
+  width:calc(100% - 32px);
+  max-width:360px;
+  height:56px;
+  z-index:100;
+  background:rgba(255,255,255,0.18);
+  backdrop-filter:blur(48px) saturate(210%);
+  -webkit-backdrop-filter:blur(48px) saturate(210%);
+  border:0.5px solid rgba(255,255,255,0.45);
+  border-radius:24px;
+  box-shadow:
+    inset 0 1.5px 3px rgba(255,255,255,0.60),
+    inset 0 -0.5px 1px rgba(255,255,255,0.20),
+    0 0 0 0.5px rgba(0,0,0,0.04),
+    0 2px 10px rgba(0,0,0,0.06),
+    0 12px 36px rgba(0,0,0,0.08);
+  display:flex;
+  align-items:center;
+  justify-content:space-around;
+  padding:0 6px;
+}
+.tab-bar::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  background:linear-gradient(160deg,
+    rgba(255,255,255,0.42) 0%,
+    rgba(255,255,255,0.16) 20%,
+    rgba(255,255,255,0.03) 40%,
+    transparent 60%);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
+  padding:0.5px;
+  pointer-events:none;
+  z-index:1;
+}
+.tab-bar::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  background:linear-gradient(320deg,
+    transparent 60%,
+    rgba(13,148,136,0.06) 80%,
+    rgba(255,255,255,0.04) 100%);
+  pointer-events:none;
+  z-index:1;
+}
+.tab-item{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+  width:68px;
+  height:44px;
+  border-radius:14px;
+  color:var(--text-3);
+  font-size:11px;
+  font-weight:500;
+  text-decoration:none;
+  position:relative;
+  transition:all .2s;
+}
+.tab-item svg{
+  width:20px;
+  height:20px;
+  stroke:currentColor;
+  fill:none;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.tab-item[data-active="true"]{
+  color:var(--brand);
+  font-weight:600;
+}
+.tab-item[data-active="true"]::before{
+  content:"";
+  position:absolute;
+  width:54px;
+  height:42px;
+  border-radius:16px;
+  background:rgba(13,148,136,0.16);
+  backdrop-filter:blur(24px);
+  -webkit-backdrop-filter:blur(24px);
+  border:0.5px solid rgba(13,148,136,0.30);
+  box-shadow:
+    inset 0 1px 3px rgba(255,255,255,0.55),
+    inset 0 -0.5px 1px rgba(255,255,255,0.15),
+    0 2px 10px rgba(13,148,136,0.20),
+    0 0 0 0.5px rgba(13,148,136,0.08);
+  z-index:0;
+}
+.tab-item[data-active="true"] svg{
+  transform:scale(1.08);
+  position:relative;
+  z-index:1;
+}
+
+/* Buttons */
+.btn-neu-primary{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:var(--brand);color:var(--text-inverse);
+  border:none;border-radius:9999px;
+  padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
+  cursor:pointer;
+  box-shadow:var(--neu-out-sm),0 2px 8px var(--brand-glow);
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
+.btn-neu-primary:active{box-shadow:var(--neu-in);transform:scale(0.94)}
+
+.btn-neu-secondary{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,0.50);color:var(--brand);
+  border:0.5px solid rgba(255,255,255,0.60);border-radius:9999px;
+  padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
+  cursor:pointer;
+  box-shadow:var(--neu-out-sm);
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
+.btn-neu-secondary:active{box-shadow:var(--neu-in);transform:scale(0.94)}
+
+.btn-neu-ghost{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:transparent;color:var(--text-2);
+  border:0.5px solid var(--border);border-radius:9999px;
+  padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
+  cursor:pointer;
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease),color var(--dur) var(--ease);
+}
+.btn-neu-ghost:active{transform:scale(0.94);color:var(--brand)}
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-accent: var(--accent);
+    --radius-sm: var(--radius-sm);
+    --radius-md: var(--radius-md);
+    --radius-lg: var(--radius-lg);
+    --radius-full: var(--radius-full);
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+    <style id="semantic-token-fallback">
+      .bg-background { background-color: var(--background); }
+      .text-background { color: var(--background); }
+      .border-background { border-color: var(--background); }
+      .ring-background { --tw-ring-color: var(--background); }
+      .bg-foreground { background-color: var(--foreground); }
+      .text-foreground { color: var(--foreground); }
+      .border-foreground { border-color: var(--foreground); }
+      .ring-foreground { --tw-ring-color: var(--foreground); }
+      .bg-card { background-color: var(--card); }
+      .text-card { color: var(--card); }
+      .border-card { border-color: var(--card); }
+      .ring-card { --tw-ring-color: var(--card); }
+      .bg-card-foreground { background-color: var(--card-foreground); }
+      .text-card-foreground { color: var(--card-foreground); }
+      .border-card-foreground { border-color: var(--card-foreground); }
+      .ring-card-foreground { --tw-ring-color: var(--card-foreground); }
+      .bg-popover { background-color: var(--popover); }
+      .text-popover { color: var(--popover); }
+      .border-popover { border-color: var(--popover); }
+      .ring-popover { --tw-ring-color: var(--popover); }
+      .bg-popover-foreground { background-color: var(--popover-foreground); }
+      .text-popover-foreground { color: var(--popover-foreground); }
+      .border-popover-foreground { border-color: var(--popover-foreground); }
+      .ring-popover-foreground { --tw-ring-color: var(--popover-foreground); }
+      .bg-primary { background-color: var(--primary); }
+      .text-primary { color: var(--primary); }
+      .border-primary { border-color: var(--primary); }
+      .ring-primary { --tw-ring-color: var(--primary); }
+      .bg-primary-foreground { background-color: var(--primary-foreground); }
+      .text-primary-foreground { color: var(--primary-foreground); }
+      .border-primary-foreground { border-color: var(--primary-foreground); }
+      .ring-primary-foreground { --tw-ring-color: var(--primary-foreground); }
+      .bg-muted { background-color: var(--muted); }
+      .text-muted { color: var(--muted); }
+      .border-muted { border-color: var(--muted); }
+      .ring-muted { --tw-ring-color: var(--muted); }
+      .bg-muted-foreground { background-color: var(--muted-foreground); }
+      .text-muted-foreground { color: var(--muted-foreground); }
+      .border-muted-foreground { border-color: var(--muted-foreground); }
+      .ring-muted-foreground { --tw-ring-color: var(--muted-foreground); }
+      .bg-border { background-color: var(--border); }
+      .text-border { color: var(--border); }
+      .border-border { border-color: var(--border); }
+      .ring-border { --tw-ring-color: var(--border); }
+      .bg-input { background-color: var(--input); }
+      .text-input { color: var(--input); }
+      .border-input { border-color: var(--input); }
+      .ring-input { --tw-ring-color: var(--input); }
+      .bg-ring { background-color: var(--ring); }
+      .text-ring { color: var(--ring); }
+      .border-ring { border-color: var(--ring); }
+      .ring-ring { --tw-ring-color: var(--ring); }
+      .bg-accent { background-color: var(--accent); }
+      .text-accent { color: var(--accent); }
+      .border-accent { border-color: var(--accent); }
+      .ring-accent { --tw-ring-color: var(--accent); }
+    </style>
+    <style>
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      [data-icon] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        background-color: currentColor;
+      }
+    </style>
+</head>
+<body>
+<div class="phone" data-dom-id="page-client-publish" style="height: 1155px;">
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <div class="hero-head">
+      <div class="hero-title">
+        <h1>发布需求</h1>
+        <p>3步极速下单</p>
+      </div>
+      <button class="close-btn" data-dom-id="nav-close" data-target-page="page-client-home" aria-label="关闭">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 6 6 18"></path>
+          <path d="m6 6 12 12"></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- 3-step indicator -->
+    <div class="steps">
+      <div class="step-circle step-done">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 6 9 17l-5-5"></path>
+        </svg>
+      </div>
+      <div class="step-line active"></div>
+      <div class="step-circle step-current">2</div>
+      <div class="step-line"></div>
+      <div class="step-circle step-pending">3</div>
+    </div>
+  </section>
+
+  <!-- ===== SERVICE SELECTION (4-column grid, 8 items) ===== -->
+  <div class="section">
+    <div class="section-label">选择服务类型</div>
+    <div class="card">
+      <div class="service-card">
+        <div class="service-grid">
+          <a class="service-item selected" data-dom-id="svc-waterproof" data-action="select-service-type">
+            <div class="service-icon-chip">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
+              </svg>
+            </div>
+            <span class="service-label">防水维修</span>
+          </a>
+          <a class="service-item" data-dom-id="svc-cleaning" data-action="select-service-type">
+            <div class="service-icon-chip">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m3 21 1.6-4.7a9 9 0 1 1 3.4 2.9z"></path>
+                <path d="m9 10h.01"></path><path d="m15 10h.01"></path>
+              </svg>
+            </div>
+            <span class="service-label">家政清洁</span>
+          </a>
+          <a class="service-item" data-dom-id="svc-appliance" data-action="select-service-type">
+            <div class="service-icon-chip">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2v6"></path><path d="m6.5 5.5 3 5.2"></path><path d="M2 13h6"></path>
+                <path d="M4.2 17.8l4.6-3"></path><path d="M12 22v-6"></path><path d="m17.5 18.5-3-5.2"></path>
+                <path d="M22 13h-6"></path><path d="m19.8 8.2-4.6 3"></path><circle cx="12" cy="12" r="4"></circle>
+              </svg>
+            </div>
+            <span class="service-label">家电维修</span>
+          </a>
+          <a class="service-item" data-dom-id="svc-wall" data-action="select-service-type">
+            <div class="service-icon-chip">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M3 9h18"></path><path d="M9 21V9"></path>
+              </svg>
+            </div>
+            <span class="service-label">墙面翻新</span>
+          </a>
+          <a class="service-item" data-dom-id="svc-pipe" data-action="select-service-type">
+            <div class="service-icon-chip">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path>
+                <path d="M4.93 4.93l14.14 14.14"></path>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10"></path>
+                <path d="M2 12h20"></path>
+              </svg>
+            </div>
+            <span class="service-label">管道疏通</span>
+          </a>
+          <a class="service-item" data-dom-id="svc-lock" data-action="select-service-type">
+            <div class="service-icon-chip">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+            </div>
+            <span class="service-label">开锁换锁</span>
+          </a>
+          <a class="service-item" data-dom-id="svc-furniture" data-action="select-service-type">
+            <div class="service-icon-chip">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line>
+              </svg>
+            </div>
+            <span class="service-label">家具维修</span>
+          </a>
+          <a class="service-item" data-dom-id="svc-install" data-action="select-service-type">
+            <div class="service-icon-chip">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22V8"></path><path d="M5 12H2a10 10 0 0 0 20 0h-3"></path>
+                <path d="M8 8a4 4 0 0 1 8 0"></path><path d="M6 12v0"></path><path d="M18 12v0"></path>
+              </svg>
+            </div>
+            <span class="service-label">电器安装</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== PROBLEM DESCRIPTION (textarea + address + time + tags in ONE card) ===== -->
+  <div class="section">
+    <div class="section-label">问题描述</div>
+    <div class="card">
+      <div class="desc-card">
+        <textarea class="desc-textarea" placeholder="请详细描述您遇到的问题..." maxlength="500" data-dom-id="desc-input" data-action="input-service-description"></textarea>
+        <div class="char-count"><span data-dom-id="char-count">0</span>/500</div>
+
+        <!-- Address row (inside desc card) -->
+        <div class="info-row" data-dom-id="address-row" data-target-page="page-client-address">
+          <span class="info-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+          </span>
+          <span class="info-text">北京市朝阳区建国路88号</span>
+          <span class="info-chevron">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m9 18 6-6-6-6"></path>
+            </svg>
+          </span>
+        </div>
+
+        <!-- Time row (inside desc card) -->
+        <div class="info-row" data-dom-id="time-row" data-action="open-service-time-picker">
+          <span class="info-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2"></rect>
+              <path d="M3 10h18"></path>
+              <path d="M8 2v4"></path><path d="M16 2v4"></path>
+            </svg>
+          </span>
+          <span class="info-text">今天 15:00 - 18:00</span>
+          <span class="info-chevron">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m9 18 6-6-6-6"></path>
+            </svg>
+          </span>
+        </div>
+
+        <!-- Tag chips (inside desc card) -->
+        <div class="tag-row">
+          <button class="tag-chip" data-dom-id="problem-tag-leak" data-action="toggle-problem-tag">漏水</button>
+          <button class="tag-chip" data-dom-id="problem-tag-kitchen" data-action="toggle-problem-tag">厨房</button>
+          <button class="tag-chip" data-dom-id="problem-tag-urgent" data-action="toggle-problem-tag">紧急</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== ORDER MODE SELECTION (3 mode cards) ===== -->
+  <div class="section">
+    <div class="section-label">选择下单模式</div>
+    <div class="mode-grid">
+      <div class="card mode-card selected" data-dom-id="mode-bid" data-action="select-order-mode">
+        <div class="mode-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="16 18 22 12 16 6"></polyline>
+            <polyline points="8 6 2 12 8 18"></polyline>
+          </svg>
+        </div>
+        <div class="mode-title">竞价模式</div>
+        <div class="mode-desc">师傅报价<br>择优选择</div>
+      </div>
+      <div class="card mode-card" data-dom-id="mode-fixed" data-action="select-order-mode">
+        <div class="mode-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="M14.5 9.5a2.5 2.5 0 0 0-2.5-1.5c-1.4 0-2.5.8-2.5 2s1.1 1.8 2.5 2 2.5.8 2.5 2-1.1 2-2.5 2a2.5 2.5 0 0 1-2.5-1.5"></path>
+            <path d="M12 6v2"></path><path d="M12 16v2"></path>
+          </svg>
+        </div>
+        <div class="mode-title">一口价</div>
+        <div class="mode-desc">明码标价<br>快速成交</div>
+      </div>
+      <div class="card mode-card" data-dom-id="mode-bounty" data-action="select-order-mode">
+        <div class="mode-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2 4 7v5c0 5 3.5 7.5 8 10 4.5-2.5 8-5 8-10V7l-8-5Z"></path>
+            <path d="m9 12 2 2 4-4"></path>
+          </svg>
+        </div>
+        <div class="mode-title">悬赏模式</div>
+        <div class="mode-desc">自主定价<br>急速响应</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== BOTTOM SUMMARY BAR ===== -->
+  <div class="summary-bar" style="height: 70px; top: 20px;">
+    <div class="summary-left">
+      <span class="summary-label">预估费用</span>
+      <span class="summary-price"><span class="currency">¥</span>128</span>
+    </div>
+    <button class="btn-neu-primary" data-dom-id="publish-submit" data-action="submit-service-request" data-target-page="page-client-order-detail">发布需求</button>
+  </div>
+
+  <!-- ===== FLOATING TAB BAR ===== -->
+  <nav class="tab-bar" data-mobile-nav="global" style="top: 1077px;">
+  <a class="tab-item" data-dom-id="nav-home" data-nav-key="home" data-target-page="page-client-home" aria-label="首页">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+    <span class="tab-label whitespace-nowrap">首页</span>
+  </a>
+  <a class="tab-item" data-active="true" data-dom-id="nav-publish" data-nav-key="publish" data-target-page="page-client-publish" aria-label="发布">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+    <span class="tab-label whitespace-nowrap">发布</span>
+  </a>
+  <a class="tab-item" data-dom-id="nav-orders" data-nav-key="orders" data-target-page="page-client-orders" aria-label="订单">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+    <span class="tab-label whitespace-nowrap">订单</span>
+  </a>
+  <a class="tab-item" data-dom-id="nav-mine" data-nav-key="mine" data-target-page="page-client-mine" aria-label="我的">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+    <span class="tab-label whitespace-nowrap">我的</span>
+  </a>
+</nav>
+
+  <!-- Liquid Glass SVG Refraction Filter -->
+  <svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+    <filter id="liquidGlassRefraction">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012 0.012" numOctaves="3" seed="2" result="noise"></feTurbulence>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="5" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
+    </filter>
+  </svg>
+
+</div>
+
+    <style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --brand:#0D9488;--brand-dark:#0A7A70;--brand-light:#CCFBF1;
+  --brand-glow:rgba(13,148,136,0.18);--brand-subtle:rgba(13,148,136,0.08);
+  --brand-gradient:linear-gradient(135deg,#0D9488 0%,#14B8A6 48%,#D4944C 100%);
+  --accent:#D4944C;--accent-light:#F5E6D0;--accent-glow:rgba(212,148,76,0.16);
+  --bg:#F2EDE8;--bg-elevated:#F7F3EF;
+  --neu-light:#FFF8F2;--neu-dark:#DDD6CE;
+  --text-1:#2C2824;--text-2:#8B8178;--text-3:#B5ADA5;
+  --sep:rgba(44,40,36,0.06);--fill:rgba(44,40,36,0.04);
+  --green:#5B8C5A;--red:#C4533A;
+  --r:1.2rem;--r-lg:1.6rem;--r-sm:0.75rem;--r-pill:9999px;--r-tab:24px;
+  /* Font */--font-display:'Cormorant Garamond', 'Noto Serif SC', 'STSong', Georgia, serif;
+  --font-body:'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --font-nums:'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
+  --font:var(--font-body);
+  --neu-out-sm:5px 5px 12px var(--neu-dark),-5px -5px 12px var(--neu-light);
+  --neu-out-md:8px 8px 18px var(--neu-dark),-8px -8px 18px var(--neu-light);
+  --neu-in:inset 4px 4px 8px var(--neu-dark),inset -4px -4px 8px var(--neu-light);
+  --neu-in-deep:inset 5px 5px 10px var(--neu-dark),inset -5px -5px 10px var(--neu-light);
+  --icon-raise:5px 5px 10px var(--neu-dark),-5px -5px 10px var(--neu-light);
+  --glass-tab-bg:rgba(255,255,255,0.18);--glass-tab-blur:blur(48px) saturate(210%);--glass-tab-border:rgba(255,255,255,0.45);
+  --spring:cubic-bezier(0.175,0.885,0.32,1.275);--ease:cubic-bezier(0.25,0.46,0.45,0.94);--dur:0.2s;
+}
+html,body{font-family:var(--font);color:var(--text-1);-webkit-font-smoothing:antialiased}
+body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh;background:#E8E4DF;letter-spacing:-0.01em}
+
+/* ===== Phone Frame ===== */
+.phone{position:relative;width:414px;min-height:896px;background:var(--bg);border-radius:48px;overflow:hidden;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.12),0 4px 16px rgba(0,0,0,.06);padding-bottom:82px}
+.phone::after{content:'';position:absolute;bottom:0;left:0;right:0;height:260px;background:radial-gradient(ellipse 200px 140px at 20% 90%,rgba(13,148,136,.06) 0%,transparent 70%),radial-gradient(ellipse 180px 120px at 80% 85%,rgba(212,148,76,.05) 0%,transparent 70%),radial-gradient(ellipse 160px 100px at 50% 95%,rgba(20,184,166,.04) 0%,transparent 70%);pointer-events:none;z-index:0}
+.phone>*:not(.tab-bar){position:relative;z-index:1}
+
+/* ===== Hero ===== */
+.hero{padding: max(38px, env(safe-area-inset-top)) 24px 36px;position:relative;z-index:1;background:radial-gradient(ellipse 240px 200px at 75% 40%,rgba(212,148,76,.16) 0%,transparent 70%),radial-gradient(ellipse 200px 160px at 20% 80%,rgba(13,148,136,.12) 0%,transparent 70%),linear-gradient(135deg,rgba(13,148,136,.12) 0%,rgba(212,148,76,.14) 50%,rgba(20,184,166,.12) 100%);border-radius:0 0 32px 32px;overflow:hidden;color:var(--text-1)}
+.hero-head{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px;position:relative;z-index:2}
+.hero-title h1{font-size:22px;font-weight:700;color:var(--text-1);letter-spacing:-0.02em;line-height:1.2}
+.hero-title p{font-size:13px;color:var(--text-2);margin-top:2px;font-weight:500}
+
+/* Close button (Glass circle on gradient Hero) */
+.close-btn{width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.50);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.75);display:flex;align-items:center;justify-content:center;color:var(--text-1);cursor:pointer;flex-shrink:0;box-shadow:inset 0 1px 1.5px rgba(255,255,255,0.50),0 4px 12px rgba(0,0,0,0.05);transition:transform var(--dur) var(--ease),background 0.15s var(--ease)}
+.close-btn:active{transform:scale(0.88);background:rgba(255,255,255,.70)}
+
+/* ===== Step Indicators (Glass on gradient Hero) ===== */
+.steps{display:flex;align-items:center;gap:0;position:relative;z-index:2;padding:0 4px;margin-top:20px}
+.step-circle{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;font-family:var(--font-nums);flex-shrink:0;transition:transform var(--dur) var(--spring)}
+.step-done{background:rgba(255,255,255,0.85);color:var(--brand);box-shadow:0 2px 8px rgba(0,0,0,0.08)}
+.step-current{background:transparent;border:1.5px solid rgba(255,255,255,0.8);color:var(--text-1)}
+.step-pending{background:rgba(255,255,255,0.15);border:1.5px solid rgba(255,255,255,0.25);color:rgba(44,40,36,0.6)}
+.step-line{flex:1;height:2px;background:rgba(255,255,255,0.25);margin:0 8px;border-radius:1px}
+.step-line.active{background:rgba(255,255,255,0.7)}
+
+/* ===== Section ===== */
+.section{padding:0 24px;margin-top:20px;position:relative;z-index:2}
+.section+.section{margin-top:16px}
+.section-label{font-size:13px;font-weight:600;color:var(--text-2);margin-bottom:10px;padding-left:2px;letter-spacing:0.2px;display:flex;align-items:center;gap:6px}
+.section-label .req{color:var(--brand);font-weight:700}
+
+/* ===== Glass Card ===== */
+.card{background:rgba(255,255,255,0.52);backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);border:1px solid rgba(255,255,255,0.70);border-radius:var(--r);box-shadow:var(--neu-out-md),0 6px 28px rgba(0,0,0,0.06),0 0 0 1px rgba(44,40,36,0.05),0 2px 8px rgba(13,148,136,.04);position:relative;overflow:hidden}
+.card::before{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(165deg,rgba(255,255,255,0.22) 0%,rgba(255,255,255,0.05) 30%,transparent 55%);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;padding:0.5px;pointer-events:none}
+
+/* ===== Service Scroll (horizontal scrolling, neumorphic icon circles) ===== */
+.service-card{padding:16px 0 16px 20px;position:relative;z-index:1;overflow:hidden}
+.service-grid{display:flex;gap:14px;overflow-x:auto;scrollbar-width:none;padding-right:20px}
+.service-grid::-webkit-scrollbar{display:none}
+.service-item{display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;text-decoration:none;flex-shrink:0;width:60px;transition:transform var(--dur) var(--spring)}
+.service-item:active{transform:scale(0.88)}
+.service-icon-chip{width:44px;height:44px;border-radius:50%;background:var(--bg);box-shadow:var(--icon-raise),inset 0 1.5px 2px rgba(255,255,255,0.65);display:flex;align-items:center;justify-content:center;color:var(--brand);transition:all 0.2s var(--ease)}
+.service-item:active .service-icon-chip,.service-item.selected .service-icon-chip{box-shadow:var(--neu-in)}
+.service-item.selected .service-icon-chip{background:rgba(13,148,136,.07);color:var(--brand)}
+.service-label{font-size:12px;font-weight:500;color:var(--text-1);text-align:center;line-height:1.25}
+.service-item.selected .service-label{color:var(--brand);font-weight:600}
+
+/* ===== Problem Description Card ===== */
+.desc-card{padding:16px;position:relative;z-index:1}
+.desc-textarea{width:100%;min-height:96px;border:none;border-radius:var(--r-sm);background:var(--bg);padding:12px 14px;font-family:var(--font);font-size:14px;color:var(--text-1);resize:none;outline:none;line-height:1.55;box-shadow:var(--neu-in);-webkit-appearance:none}
+.desc-textarea::placeholder{color:var(--text-3)}
+.desc-textarea:focus{box-shadow:var(--neu-in),0 0 0 2px var(--brand-subtle),0 0 0 4px var(--brand-glow)}
+.char-count{text-align:right;font-size:11.5px;color:var(--text-3);margin-top:6px;padding-right:2px;font-weight:500;font-variant-numeric:tabular-nums;position:relative;z-index:1}
+
+.info-row{display:flex;align-items:center;gap:12px;padding:13px 6px;border-top:0.5px solid var(--sep);cursor:pointer;border-radius:var(--r-sm);margin:0 -6px;transition:background 0.2s ease,transform var(--dur) var(--spring)}
+.info-row:active{background:var(--fill);transform:scale(0.98)}
+.info-icon{width:22px;height:22px;color:var(--brand);flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.info-text{flex:1;font-size:14.5px;font-weight:500;color:var(--text-1);letter-spacing:-0.01em}
+.info-chevron{color:var(--text-3);flex-shrink:0;display:flex;align-items:center}
+
+.tag-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;padding-top:14px;border-top:0.5px solid var(--sep)}
+.tag-chip{background:rgba(13,148,136,.06);color:var(--brand);border:0.5px solid rgba(13,148,136,.09);border-radius:var(--r-pill);padding:7px 16px;font-size:12.5px;font-weight:600;font-family:var(--font);cursor:pointer;transition:transform var(--dur) var(--spring),background 0.2s ease}
+.tag-chip:active{transform:scale(0.9);background:rgba(13,148,136,.10)}
+
+/* ===== Order Mode Selection (3 mode cards, neumorphic glass) ===== */
+.mode-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.mode-card{padding:16px 8px;text-align:center;cursor:pointer;transition:transform var(--dur) var(--spring),all 0.2s ease}
+.mode-card:active{transform:scale(0.94)}
+.mode-card.selected{border:1.5px solid var(--brand);background:rgba(13,148,136,.04);box-shadow:var(--neu-out-sm),0 4px 14px var(--brand-glow),0 0 0 0.5px rgba(13,148,136,.04)}
+.mode-icon{width:44px;height:44px;border-radius:50%;background:var(--bg);box-shadow:var(--neu-out-sm),inset 0 1px 1px rgba(255,255,255,0.45);display:flex;align-items:center;justify-content:center;margin:0 auto 10px;color:var(--text-2);transition:all 0.2s ease}
+.mode-card.selected .mode-icon{background:rgba(13,148,136,.07);color:var(--brand)}
+.mode-title{font-size:14px;font-weight:700;color:var(--text-1);margin-bottom:4px;letter-spacing:-0.01em}
+.mode-card.selected .mode-title{color:var(--brand)}
+.mode-desc{font-size:11px;color:var(--text-2);line-height:1.4}
+
+/* ===== Bottom Summary Bar (Fixed) ===== */
+.summary-bar{
+  position:fixed;
+  bottom:calc(64px + max(14px, env(safe-area-inset-bottom)));
+  left:50%;
+  transform:translateX(-50%);
+  width:calc(100% - 32px);
+  max-width:360px;
+  padding:14px 18px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:rgba(255,255,255,0.22);
+  backdrop-filter:blur(48px) saturate(210%);
+  -webkit-backdrop-filter:blur(48px) saturate(210%);
+  border:0.5px solid rgba(255,255,255,0.50);
+  border-radius:28px;
+  box-shadow:
+    inset 0 1.5px 3px rgba(255,255,255,0.60),
+    inset 0 -0.5px 1px rgba(255,255,255,0.20),
+    0 0 0 0.5px rgba(0,0,0,0.04),
+    0 2px 10px rgba(0,0,0,0.06),
+    0 12px 36px rgba(0,0,0,0.08);
+  z-index:99;
+}
+.summary-bar::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  background:linear-gradient(160deg,
+    rgba(255,255,255,0.42) 0%,
+    rgba(255,255,255,0.16) 20%,
+    rgba(255,255,255,0.03) 40%,
+    transparent 60%);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
+  padding:0.5px;
+  pointer-events:none;
+  z-index:1;
+}
+.summary-bar::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  background:linear-gradient(320deg,
+    transparent 60%,
+    rgba(13,148,136,.04) 80%,
+    rgba(255,255,255,0.04) 100%);
+  pointer-events:none;
+  z-index:1;
+}
+.summary-left{display:flex;flex-direction:column;gap:3px;position:relative;z-index:2}
+.summary-bar .btn-neu-primary{position:relative;z-index:2}
+.summary-label{font-size:12.5px;color:var(--text-2);font-weight:500}
+.summary-price{font-size:26px;font-weight:700;font-family:var(--font-nums);color:var(--brand);line-height:1.1;letter-spacing:-0.02em}
+.summary-price .currency{font-size:15px;font-weight:600;margin-right:1px}
+
+@media (prefers-reduced-motion:reduce){.tab-item,.tab-item svg,.step-circle,.service-item,.mode-card,.tag-chip,.close-btn,.publish-btn{transition:none}.tab-item[data-active="true"] svg{transform:none}}
+</style>
+    <style>@theme inline{--color-background:var(--background);--color-foreground:var(--foreground);--color-card:var(--card);--color-card-foreground:var(--card-foreground);--color-popover:var(--popover);--color-popover-foreground:var(--popover-foreground);--color-primary:var(--primary);--color-primary-foreground:var(--primary-foreground);--color-muted:var(--muted);--color-muted-foreground:var(--muted-foreground);--color-border:var(--border);--color-input:var(--input);--color-ring:var(--ring);--font-sans:'Noto Serif SC','Cormorant Garamond','STSong',Georgia,serif;--font-serif:'Noto Serif SC','Cormorant Garamond','STSong',Georgia,serif;--radius-md:var(--radius-md);}</style>
+</body>
+</html>

@@ -1,0 +1,298 @@
+/* AUTO-GENERATED DESIGN STYLE ENTRY; page-specific overrides may follow this import. */
+@import "../../../styles/generated-detail-page.wxss";
+
+/* ============================================================
+ * Glass-Neu: client-order-cancel 取消订单
+ * 客户端 Teal 品牌 + 琥珀点缀
+ * ============================================================ */
+
+.design-detail-page {
+  background: var(--canvas);
+  min-height: 100vh;
+}
+
+.design-detail-page::after {
+  background:
+    radial-gradient(ellipse 400rpx 280rpx at 20% 90%, rgba(13, 148, 136, 0.07) 0%, transparent 70%),
+    radial-gradient(ellipse 360rpx 240rpx at 80% 85%, rgba(212, 148, 76, 0.06) 0%, transparent 70%);
+}
+
+.topbar {
+  background:
+    radial-gradient(ellipse 440rpx 320rpx at 78% 45%, rgba(212, 148, 76, 0.14) 0%, transparent 70%),
+    radial-gradient(ellipse 360rpx 280rpx at 18% 75%, rgba(13, 148, 136, 0.16) 0%, transparent 70%),
+    linear-gradient(135deg, rgba(13, 148, 136, 0.14) 0%, rgba(212, 148, 76, 0.08) 50%, rgba(13, 148, 136, 0.06) 100%);
+}
+
+.hero {
+  padding: 36rpx 40rpx;
+  margin: 0 0 32rpx;
+  background:
+    radial-gradient(ellipse 360rpx 240rpx at 88% 15%, rgba(212, 148, 76, 0.12) 0%, transparent 72%),
+    radial-gradient(ellipse 300rpx 220rpx at 8% 90%, rgba(13, 148, 136, 0.12) 0%, transparent 72%),
+    rgba(255, 255, 255, 0.48);
+  backdrop-filter: blur(40rpx) saturate(150%);
+  -webkit-backdrop-filter: blur(40rpx) saturate(150%);
+  border: 1rpx solid rgba(255, 255, 255, 0.70);
+  border-radius: var(--r-lg);
+  box-shadow:
+    var(--neu-raised),
+    0 12rpx 56rpx rgba(0, 0, 0, 0.06),
+    0 0 0 2rpx rgba(44, 40, 36, 0.05),
+    0 4rpx 16rpx rgba(13, 148, 136, 0.04);
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(165deg,
+    rgba(255, 255, 255, 0.22) 0%,
+    rgba(255, 255, 255, 0.05) 30%,
+    transparent 55%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero > view,
+.hero > text {
+  position: relative;
+  z-index: 1;
+}
+
+.hero .tag-h1 {
+  margin: 0 0 12rpx;
+  font-size: 40rpx;
+  font-weight: 700;
+  color: var(--text-1);
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+
+.hero .tag-p {
+  margin: 0;
+  font-size: 26rpx;
+  color: var(--text-2);
+  line-height: 1.55;
+}
+
+.card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(40rpx) saturate(150%);
+  -webkit-backdrop-filter: blur(40rpx) saturate(150%);
+  border: 1rpx solid rgba(255, 255, 255, 0.70);
+  border-radius: var(--r-md);
+  box-shadow:
+    var(--neu-raised),
+    0 12rpx 56rpx rgba(0, 0, 0, 0.06),
+    0 0 0 2rpx rgba(44, 40, 36, 0.05),
+    0 4rpx 16rpx rgba(13, 148, 136, 0.04);
+  overflow: hidden;
+  position: relative;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(165deg,
+    rgba(255, 255, 255, 0.22) 0%,
+    rgba(255, 255, 255, 0.05) 30%,
+    transparent 55%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.card > view,
+.card > text {
+  position: relative;
+  z-index: 1;
+}
+
+.reason-item {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  min-height: 112rpx;
+  padding: 24rpx 28rpx;
+  border-bottom: 1rpx solid var(--sep);
+}
+
+.reason-item:last-child {
+  border-bottom: 0;
+}
+
+.reason-item .radio {
+  flex: 0 0 40rpx;
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 50%;
+  border: 3rpx solid var(--text-3);
+  background: var(--canvas);
+  box-shadow: var(--neu-inset);
+  display: grid;
+  place-items: center;
+  transition: all 0.2s var(--ease);
+}
+
+.reason-item .radio.checked {
+  border-color: var(--brand);
+}
+
+.reason-item .radio.checked::after {
+  content: "";
+  width: 20rpx;
+  height: 20rpx;
+  border-radius: 50%;
+  background: var(--brand);
+  box-shadow: 0 0 0 4rpx var(--brand-subtle);
+}
+
+.reason-item .radio svg {
+  width: 20rpx;
+  height: 20rpx;
+  stroke: var(--brand);
+}
+
+.reason-item .reason-text {
+  flex: 1;
+  color: var(--text-1);
+  font-size: 28rpx;
+  font-weight: 500;
+}
+
+.remark-field {
+  padding: 28rpx;
+}
+
+.remark-field .tag-label {
+  display: block;
+  margin: 0 8rpx 16rpx;
+  color: var(--text-2);
+  font-size: 26rpx;
+  font-weight: 500;
+}
+
+.textarea {
+  width: 100%;
+  border: 0;
+  border-radius: var(--r-md);
+  outline: 0;
+  color: var(--text-1);
+  background: var(--canvas);
+  box-shadow: var(--neu-inset);
+  font-size: 28rpx;
+  font-family: var(--font-body);
+  min-height: 212rpx;
+  padding: 28rpx 32rpx;
+  resize: none;
+  line-height: 1.55;
+}
+
+.textarea::placeholder { color: var(--text-3); }
+
+.section-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 12rpx 18rpx;
+}
+
+.section-title .tag-strong {
+  color: var(--text-1);
+  font-size: 32rpx;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.notice {
+  margin-bottom: 26rpx;
+  padding: 24rpx 28rpx;
+  border: 1rpx solid rgba(212, 148, 76, 0.20);
+  border-radius: var(--r-sm);
+  color: #986326;
+  background: rgba(212, 148, 76, 0.10);
+  font-size: 24rpx;
+  line-height: 1.55;
+}
+
+.spacer { height: 24rpx; }
+
+.fixed-actions {
+  position: absolute;
+  left: 32rpx;
+  right: 32rpx;
+  bottom: 28rpx;
+  padding: 20rpx;
+  display: flex;
+  gap: 22rpx;
+  border: 1rpx solid rgba(255, 255, 255, 0.45);
+  border-radius: var(--r-md);
+  background: rgba(255, 255, 255, 0.24);
+  backdrop-filter: blur(40rpx) saturate(180%);
+  -webkit-backdrop-filter: blur(40rpx) saturate(180%);
+  box-shadow:
+    inset 0 2rpx 4rpx rgba(255, 255, 255, 0.40),
+    0 4rpx 16rpx rgba(0, 0, 0, 0.04);
+}
+
+.btn.primary {
+  flex: 1;
+  min-height: 96rpx;
+  border: none;
+  border-radius: var(--r-pill);
+  padding: 0 36rpx;
+  font-weight: 600;
+  font-size: 28rpx;
+  color: #fff;
+  background: var(--brand-gradient);
+  box-shadow:
+    var(--neu-raised-sm),
+    0 4rpx 8rpx var(--brand-glow),
+    0 12rpx 28rpx var(--brand-glow),
+    inset 0 2rpx 2rpx rgba(255, 255, 255, 0.40),
+    inset 0 -2rpx 2rpx rgba(0, 0, 0, 0.16);
+  transition: transform var(--dur-base) var(--spring), box-shadow var(--dur-base) var(--ease);
+}
+
+.btn.primary:active {
+  transform: scale(0.96);
+  box-shadow: var(--neu-inset);
+}
+
+.btn.secondary {
+  flex: 1;
+  min-height: 96rpx;
+  border: none;
+  border-radius: var(--r-pill);
+  padding: 0 36rpx;
+  font-weight: 600;
+  font-size: 28rpx;
+  color: var(--brand);
+  background: var(--surface-strong);
+  box-shadow: var(--neu-raised-sm);
+  transition: transform var(--dur-base) var(--spring), box-shadow var(--dur-base) var(--ease);
+}
+
+.btn.secondary:active {
+  transform: scale(0.96);
+  box-shadow: var(--neu-inset);
+}
+
+.icon-button {
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: 50%;
+  background: var(--bg-elevated);
+  box-shadow: var(--neu-raised-sm), inset 0 2rpx 2rpx rgba(255, 255, 255, 0.5);
+  display: grid;
+  place-items: center;
+  transition: transform var(--dur-base) var(--spring), box-shadow var(--dur-base) var(--ease);
+}
+
+.icon-button:active {
+  box-shadow: var(--neu-inset);
+  transform: scale(0.94);
+}

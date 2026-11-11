@@ -1,0 +1,220 @@
+/* pages/client-other-services/index.wxss — 其他服务 */
+.page {
+  position: relative;
+  min-height: 100vh;
+  background: var(--canvas);
+  --brand: #0D9488;
+  --brand-dark: #0A7A70;
+  --brand-mid: #14B8A6;
+  --brand-light: #CCFBF1;
+  --brand-glow: rgba(13, 148, 136, 0.28);
+  --brand-subtle: rgba(13, 148, 136, 0.08);
+  --brand-gradient: linear-gradient(135deg, #0D9488 0%, #14B8A6 50%, #D4944C 100%);
+}
+
+.page-scroll {
+  height: 100vh;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 1;
+}
+
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.12;
+}
+
+.hero {
+  padding: 0 48rpx 32rpx;
+}
+
+.nav-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16rpx;
+}
+
+.nav-icon-btn {
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: 50%;
+  background: var(--bg-elevated);
+  box-shadow: var(--neu-raised-sm), inset 0 2rpx 2rpx rgba(255, 255, 255, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.nav-icon-btn:active {
+  box-shadow: var(--neu-inset);
+  transform: scale(0.94);
+}
+
+.nav-icon { width: 40rpx; height: 40rpx; }
+
+.nav-title {
+  font-size: 34rpx;
+  font-weight: 700;
+  color: var(--text-1);
+  letter-spacing: -0.02em;
+}
+
+.nav-spacer { width: 88rpx; height: 88rpx; }
+
+.search-bar {
+  margin-top: 32rpx;
+}
+
+.search-input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  padding: 20rpx 28rpx;
+  background: var(--bg);
+  box-shadow: var(--neu-inset);
+  border-radius: var(--r-pill);
+}
+
+.search-icon { font-size: 32rpx; }
+
+.search-input {
+  flex: 1;
+  font-size: 28rpx;
+  color: var(--text-1);
+}
+
+.section {
+  padding: 0 40rpx;
+}
+
+.category-tabs {
+  display: flex;
+  gap: 16rpx;
+  margin-bottom: 28rpx;
+  overflow-x: auto;
+}
+
+.tab-item {
+  padding: 16rpx 32rpx;
+  border-radius: var(--r-pill);
+  background: var(--bg);
+  box-shadow: var(--neu-raised-sm);
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.tab-item.active {
+  background: var(--brand-gradient);
+  box-shadow: 0 8rpx 24rpx var(--brand-glow);
+}
+
+.tab-text {
+  font-size: 26rpx;
+  color: var(--text-2);
+}
+
+.tab-item.active .tab-text {
+  color: #fff;
+  font-weight: 600;
+}
+
+.service-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24rpx;
+}
+
+.glass-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.52);
+  backdrop-filter: blur(40rpx) saturate(150%);
+  -webkit-backdrop-filter: blur(40rpx) saturate(150%);
+  border: 1rpx solid rgba(255, 255, 255, 0.70);
+  border-radius: var(--r-lg);
+  box-shadow:
+    var(--neu-raised),
+    0 12rpx 56rpx rgba(0, 0, 0, 0.06),
+    0 0 0 2rpx rgba(44, 40, 36, 0.05),
+    0 4rpx 16rpx rgba(13, 148, 136, 0.04);
+  padding: 28rpx;
+}
+
+.glass-card::before {
+  content: "";
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  border-radius: inherit;
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.05) 30%, transparent 55%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.glass-card > view, .glass-card > text { position: relative; z-index: 1; }
+
+.service-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+  transition: transform 0.2s ease;
+}
+
+.service-card:active {
+  transform: scale(0.97);
+}
+
+.service-icon-wrap {
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: var(--r-md);
+  background: var(--brand-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.service-icon { font-size: 44rpx; }
+
+.service-name {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: var(--text-1);
+}
+
+.service-price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 4rpx;
+}
+
+.service-price {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.service-unit {
+  font-size: 22rpx;
+  color: var(--text-3);
+}
+
+.service-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8rpx;
+}
+
+.service-tag {
+  padding: 6rpx 16rpx;
+  background: var(--bg);
+  border-radius: var(--r-pill);
+}
+
+.tag-text {
+  font-size: 20rpx;
+  color: var(--text-2);
+}

@@ -1,0 +1,65 @@
+/* AUTO-GENERATED DESIGN STYLE ENTRY; page-specific overrides may follow this import. */
+@import "../../../styles/generated-detail-page.wxss";
+
+.phone-page {
+  --neu-raised: var(--neu-out-md);
+  --glass-bg: rgba(255, 255, 255, 0.52);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.phone-page .notice.info {
+  border-radius: var(--radius-md);
+}
+
+.phone-page .card {
+  padding: 32rpx;
+  margin-bottom: 28rpx;
+}
+
+.phone-page .field {
+  margin-bottom: 28rpx;
+}
+
+.phone-page .field .tag-label {
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.phone-page .input,
+.phone-page .select-like {
+  font-size: 28rpx;
+  background: var(--bg);
+}
+
+.phone-page .input:disabled {
+  opacity: 0.6;
+  color: var(--faint);
+}
+
+.phone-page .select-like.is-disabled {
+  opacity: 0.6;
+  color: var(--faint);
+}
+
+.phone-page .grid-2 {
+  grid-template-columns: 1fr 240rpx;
+  gap: 16rpx;
+  align-items: center;
+}
+
+.phone-page .btn.is-disabled {
+  opacity: 0.52;
+  pointer-events: none;
+}
+
+.phone-page .btn.primary.block {
+  margin-top: 32rpx;
+}
+
+.phone-page .btn.primary.block.is-disabled {
+  background: var(--brand-gradient);
+  opacity: 0.5;
+  pointer-events: none;
+}

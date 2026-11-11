@@ -1,0 +1,108 @@
+<view class="page">
+  <view class="blob" style="top: -80rpx; right: -120rpx; width: 560rpx; height: 560rpx; background: var(--brand);"></view>
+  <view class="blob" style="top: 480rpx; left: -160rpx; width: 480rpx; height: 480rpx; background: var(--accent);"></view>
+
+  <scroll-view scroll-y class="page-scroll hide-scroll" style="padding-bottom: 220rpx;">
+    <view class="hero" style="padding-top: calc({{statusBarHeight}}px + 76rpx);">
+      <view class="nav-row">
+        <view class="nav-icon-btn" bindtap="onBack">
+          <image src="{{icons.back}}" mode="aspectFit" class="nav-icon" lazy-load="{{false}}" />
+        </view>
+        <text class="nav-title">套餐详情</text>
+        <view class="nav-spacer"></view>
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="package-hero-card">
+        <view class="package-badge">{{package.badge}}</view>
+        <text class="package-name">{{package.name}}</text>
+        <text class="package-desc">{{package.description}}</text>
+        <view class="package-price-row">
+          <text class="package-price-symbol">¥</text>
+          <text class="package-price">{{package.price}}</text>
+          <text class="package-original-price">¥{{package.originalPrice}}</text>
+          <view class="package-save-tag">
+            <text class="save-tag-text">省¥{{package.originalPrice - package.price}}</text>
+          </view>
+        </view>
+        <view class="package-meta">
+          <view class="meta-item">
+            <text class="meta-icon">👥</text>
+            <text class="meta-value">{{package.people}}人</text>
+          </view>
+          <view class="meta-item">
+            <text class="meta-icon">⏱️</text>
+            <text class="meta-value">{{package.duration}}</text>
+          </view>
+          <view class="meta-item">
+            <text class="meta-icon">⭐</text>
+            <text class="meta-value">{{package.sales}}已售</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="section-title-row">
+        <text class="section-title-text">服务内容</text>
+      </view>
+      <view class="glass-card">
+        <view class="service-item" wx:for="{{package.services}}" wx:key="id">
+          <view class="service-check">
+            <text class="check-icon">✓</text>
+          </view>
+          <view class="service-detail">
+            <text class="service-title">{{item.title}}</text>
+            <text class="service-desc">{{item.desc}}</text>
+          </view>
+          <view class="service-duration">
+            <text class="duration-text">{{item.duration}}</text>
+          </view>
+        </view>
+      </view>
+      <view class="section-title-row">
+        <text class="section-title-text">套餐亮点</text>
+      </view>
+      <view class="highlight-grid">
+        <view class="glass-card highlight-card" wx:for="{{package.highlights}}" wx:key="id">
+          <text class="highlight-icon">{{item.icon}}</text>
+          <text class="highlight-text">{{item.text}}</text>
+        </view>
+      </view>
+      <view class="section-title-row">
+        <text class="section-title-text">温馨提示</text>
+      </view>
+      <view class="glass-card">
+        <view class="notice-item" wx:for="{{package.notices}}" wx:key="index">
+          <text class="notice-dot">·</text>
+          <text class="notice-text">{{item}}</text>
+        </view>
+      </view>
+      <view class="section-title-row">
+        <text class="section-title-text">购买须知</text>
+      </view>
+      <view class="glass-card">
+        <view class="notice-item">
+          <text class="notice-dot">·</text>
+          <text class="notice-text">有效期：购买后 12 个月内有效</text>
+        </view>
+        <view class="notice-item">
+          <text class="notice-dot">·</text>
+          <text class="notice-text">适用范围：全国 300+ 城市可用</text>
+        </view>
+        <view class="notice-item">
+          <text class="notice-dot">·</text>
+          <text class="notice-text">退款政策：未使用可全额退款</text>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+
+  <view class="cta-bar safe-bottom">
+    <view class="btn-fav {{isFav ? 'active' : ''}}" bindtap="onToggleFav">
+      <text class="fav-icon">{{isFav ? '❤️' : '🤍'}}</text>
+    </view>
+    <view class="btn-cta" bindtap="onBuy">立即购买 ¥{{package.price}}</view>
+  </view>
+</view>

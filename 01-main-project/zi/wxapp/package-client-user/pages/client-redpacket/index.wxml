@@ -1,0 +1,99 @@
+<!-- pages/client-redpacket/index.wxml — 红包页面 玻璃新拟态 -->
+<view class="page">
+  <view class="blob" style="top: -40px; right: -60px; width: 280px; height: 280px; background: var(--brand);"></view>
+  <view class="blob" style="top: 320px; left: -80px; width: 240px; height: 240px; background: var(--accent);"></view>
+
+  <view class="nav-bar" style="padding-top: calc({{statusBarHeight}}px + 36rpx);">
+    <view class="nav-icon-btn press-neu" bindtap="onBack">
+      <image class="nav-icon" src="{{icons.back}}" mode="aspectFit" lazy-load="{{false}}" />
+    </view>
+    <text class="nav-title">红包</text>
+    <view class="nav-placeholder"></view>
+  </view>
+
+  <scroll-view scroll-y class="page-scroll" style="padding-bottom: 200rpx;">
+    <view class="section">
+      <view class="glass-neu-card redpacket-hero">
+        <view class="hero-bg-deco"></view>
+        <view class="redpacket-amount">
+          <text class="amount-label">我的红包</text>
+          <view class="amount-value">
+            <text class="cur">¥</text>
+            <text class="num">{{totalAmount}}</text>
+          </view>
+          <text class="amount-sub">共 {{count}} 个红包待领取</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="section-title">
+        <text class="title-text">可领取</text>
+        <text class="title-count">{{availableList.length}} 个</text>
+      </view>
+      <view class="redpacket-list" wx:if="{{availableList.length}}">
+        <view
+          class="redpacket-item press-scale"
+          wx:for="{{availableList}}"
+          wx:key="id"
+          data-id="{{item.id}}"
+          bindtap="onReceive"
+        >
+          <view class="rp-left">
+            <view class="rp-avatar">
+              <image wx:if="{{item.avatar}}" src="{{item.avatar}}" mode="aspectFill" class="rp-avatar-img" lazy-load="{{false}}" />
+              <text wx:else class="rp-avatar-text">{{item.initial}}</text>
+            </view>
+          </view>
+          <view class="rp-main">
+            <text class="rp-title">{{item.title}}</text>
+            <text class="rp-desc">{{item.desc}}</text>
+            <text class="rp-time">{{item.time}}</text>
+          </view>
+          <view class="rp-right">
+            <view class="rp-amount">
+              <text class="rp-cur">¥</text>
+              <text class="rp-num">{{item.amount}}</text>
+            </view>
+            <view class="btn-receive press-neu">
+              <text>领取</text>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="glass-neu-card empty-card" wx:else>
+        <text class="empty-text">暂无待领取的红包</text>
+      </view>
+    </view>
+
+    <view class="section" wx:if="{{historyList.length}}">
+      <view class="section-title">
+        <text class="title-text">已领取</text>
+        <text class="title-count">最近 {{historyList.length}} 条</text>
+      </view>
+      <view class="glass-neu-card history-list">
+        <view class="history-item" wx:for="{{historyList}}" wx:key="id">
+          <view class="his-icon">
+            <text>¥</text>
+          </view>
+          <view class="his-main">
+            <text class="his-title">{{item.title}}</text>
+            <text class="his-time">{{item.time}}</text>
+          </view>
+          <text class="his-amount">+¥{{item.amount}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="cta-spacer"></view>
+  </scroll-view>
+
+  <view class="cta-bar">
+    <view class="cta-secondary press-scale" bindtap="onDetail">
+      <text class="cta-secondary-text">红包明细</text>
+    </view>
+    <view class="cta-primary press-scale" bindtap="onSend">
+      <text class="cta-primary-text">发红包</text>
+    </view>
+  </view>
+</view>

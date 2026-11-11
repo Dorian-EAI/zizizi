@@ -1,0 +1,53 @@
+<view class="phone-page design-detail-page" data-page-id="page-client-template-detail">
+  <view class="topbar">
+    <view class="icon-button design-button" bindtap="onBack"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m15%2018-6-6%206-6M9%2012h10%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view>
+    <view class="tag-h1">服务模板</view>
+    <view class="top-action design-button" bindtap="onFavorite">{{favorited ? '已收藏' : '收藏'}}</view>
+  </view>
+
+  <view class="page-body">
+    <view class="hero">
+      <view class="hero-kicker">SERVICE TEMPLATE</view>
+      <view class="tag-h2">{{template.name}}</view>
+      <view class="tag-p">{{template.description}}</view>
+      <view class="hero-price">¥{{template.basePrice}} 起</view>
+    </view>
+
+    <view class="section">
+      <view class="section-title"><text class="tag-strong">服务详情</text></view>
+      <view class="card">
+        <view class="info-list">
+          <view class="info-row"><text class="info-label">服务类型</text><text class="info-value">{{template.category}}</text></view>
+          <view class="info-row"><text class="info-label">服务时长</text><text class="info-value">{{template.duration}}</text></view>
+          <view class="info-row"><text class="info-label">服务区域</text><text class="info-value">{{template.area}}</text></view>
+          <view class="info-row"><text class="info-label">师傅要求</text><text class="info-value">{{template.workerReq}}</text></view>
+        </view>
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="section-title"><text class="tag-strong">服务内容</text></view>
+      <view class="card">
+        <view class="chips">
+          <view class="chip" wx:for="{{template.items}}" wx:key="*this">{{item}}</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="section-title"><text class="tag-strong">价格说明</text></view>
+      <view class="card">
+        <view class="info-list">
+          <view class="info-row"><text class="info-label">基础服务费</text><text class="info-value">¥{{template.basePrice}}</text></view>
+          <view class="info-row"><text class="info-label">材料费</text><text class="info-value">按实际收取</text></view>
+          <view class="info-row"><text class="info-label">上门费</text><text class="info-value">{{template.visitFee}}</text></view>
+          <view class="info-row"><text class="info-label">预计总价</text><text class="info-value">¥{{template.estimatedPrice}}</text></view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="fixed-actions">
+    <view class="btn primary design-button" bindtap="onUseTemplate">使用此模板发布需求</view>
+  </view>
+</view>

@@ -1,0 +1,97 @@
+@import "../../../styles/glass-detail-page.wxss";
+
+/* —— 评价详情页面特定样式 —— */
+
+/* Hero 渐变：暖金评价主题 */
+.hero {
+  background:
+    radial-gradient(ellipse 340rpx 220rpx at 86% 14%, rgba(212, 148, 76, 0.14) 0%, transparent 72%),
+    radial-gradient(ellipse 280rpx 180rpx at 14% 86%, rgba(13, 148, 136, 0.10) 0%, transparent 72%),
+    rgba(255, 255, 255, 0.44);
+}
+
+/* 评价头部卡片 */
+.card {
+  padding: 24rpx 28rpx;
+  margin-bottom: 24rpx;
+}
+
+.card .list-row {
+  min-height: auto;
+  padding: 8rpx 0;
+}
+
+.card .avatar {
+  width: 88rpx;
+  height: 88rpx;
+  font-size: 32rpx;
+  flex: 0 0 88rpx;
+}
+
+/* 评分星星 */
+.row-value .tag-b {
+  font-family: var(--font-number);
+  font-size: 32rpx;
+  color: var(--accent);
+  letter-spacing: 0.02em;
+}
+
+/* 状态徽章 */
+.row-value .badge {
+  font-size: 22rpx;
+  padding: 6rpx 16rpx;
+  margin-bottom: 6rpx;
+}
+
+/* 评价内容 */
+.section .card .card-copy {
+  font-size: 28rpx;
+  line-height: 1.7;
+  color: var(--text-1);
+  margin-bottom: 16rpx;
+}
+
+/* 评价图片网格 */
+.upload-grid {
+  gap: 12rpx;
+  margin-top: 16rpx;
+}
+
+.upload-grid .upload-tile {
+  min-height: 150rpx;
+}
+
+/* 标签组 */
+.chips {
+  margin-top: 20rpx;
+}
+
+.chips .chip.active {
+  background: var(--brand-subtle);
+  color: var(--brand);
+  font-size: 24rpx;
+  padding: 10rpx 20rpx;
+  box-shadow: var(--neu-inset-sm);
+}
+
+/* 审核说明 */
+.notice.warning {
+  margin-top: 12rpx;
+  font-size: 26rpx;
+  line-height: 1.6;
+}
+
+/* 师傅回复 */
+.notice.info {
+  font-size: 26rpx;
+  line-height: 1.7;
+}
+
+/* 服务信息列表 */
+.card.list-card {
+  padding: 8rpx 24rpx;
+}
+
+.card.list-card .list-row {
+  min-height: 88rpx;
+}

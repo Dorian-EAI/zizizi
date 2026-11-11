@@ -1,0 +1,78 @@
+@import "../../../styles/glass-detail-page.wxss";
+
+/* —— 退款卡申请页面特定样式 —— */
+
+/* Hero 渐变：琥珀年卡主题 */
+.hero {
+  background:
+    radial-gradient(ellipse 360rpx 240rpx at 82% 16%, rgba(212, 148, 76, 0.18) 0%, transparent 72%),
+    radial-gradient(ellipse 300rpx 200rpx at 18% 84%, rgba(13, 148, 136, 0.08) 0%, transparent 72%),
+    rgba(255, 255, 255, 0.46);
+}
+
+/* 原购卡价格展示 */
+.hero .hero-number {
+  display: block;
+  margin: 8rpx 0;
+  font-size: 60rpx;
+  font-weight: 700;
+  font-family: var(--font-number);
+  color: var(--accent-dark);
+}
+
+.hero .hero-number .tag-small {
+  font-size: 24rpx;
+  font-weight: 500;
+  color: var(--text-2);
+}
+
+/* 剩余有效期 */
+.hero .tag-h2 {
+  font-size: 36rpx;
+  color: var(--text-1);
+}
+
+/* 退卡原因胶囊组 */
+.chips {
+  gap: 16rpx;
+}
+
+.chips .chip {
+  font-size: 26rpx;
+  padding: 16rpx 28rpx;
+  background: var(--glass-bg);
+}
+
+.chips .chip.active {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 6rpx 20rpx rgba(212, 148, 76, 0.24);
+}
+
+/* 退款信息列表 */
+.card.list-card {
+  padding: 8rpx 24rpx;
+}
+
+.card.list-card .list-row {
+  min-height: 96rpx;
+}
+
+/* 退款方式不可用提示 */
+.list-row .row-value {
+  font-size: 24rpx;
+  color: var(--text-3);
+}
+
+/* 错误提示 */
+.notice.error {
+  margin-bottom: 20rpx;
+}
+
+/* 底部不可用按钮 */
+.fixed-actions .btn.danger.is-disabled {
+  background: var(--neu-dark);
+  color: var(--text-3);
+  box-shadow: none;
+  font-size: 28rpx;
+}

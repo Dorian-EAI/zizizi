@@ -1,0 +1,92 @@
+<view class="page">
+  <!-- ===== TOP HEADER ===== -->
+  <view class="top-header">
+    <view class="hero">
+      <view class="greeting-row">
+        <view class="greeting-text">
+          <text class="greeting-title">我的订单</text>
+          <text class="greeting-subtitle">查看和管理您的服务订单</text>
+        </view>
+        <view class="search-btn" bindtap="onSearch" aria-label="搜索订单">
+          <image class="search-btn-svg" src="/assets/svg/search.svg" mode="aspectFit" />
+        </view>
+      </view>
+    </view>
+
+    <!-- Filter Tabs (overlaps hero) -->
+    <view class="filter-tabs">
+      <view class="filter-pill {{activeTab === item.key ? 'active' : ''}}"
+            wx:for="{{filterTabs}}" wx:key="key"
+            bindtap="onTabTap" data-key="{{item.key}}">
+        <text>{{item.text}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- ===== ORDER LIST ===== -->
+  <view class="order-list">
+    <view class="order-card" wx:for="{{orders}}" wx:key="id"
+          bindtap="goDetail" data-id="{{item.id}}">
+      <view class="card-top">
+        <text class="status-badge badge-{{item.badge_type}}">
+          <text class="badge-dot"></text>
+          {{item.status_text}}
+        </text>
+        <text class="order-date">{{item.date}}</text>
+      </view>
+
+      <text class="order-title">{{item.service_name}}</text>
+
+      <view class="order-address">
+        <image class="address-svg" src="/assets/svg/location.svg" mode="aspectFit" />
+        <text class="address-text">{{item.address}}</text>
+      </view>
+
+      <view class="card-sep"></view>
+
+      <view class="card-bottom">
+        <view class="bottom-info">
+          <text class="info-main">{{item.info_main}}</text>
+          <text class="info-price" wx:if="{{item.info_price}}">¥{{item.info_price}}</text>
+        </view>
+        <view class="btn-neu-secondary" catchtap="goDetail" data-id="{{item.id}}">
+          <image wx:if="{{item.action_icon}}" class="btn-icon" src="{{item.action_icon}}" mode="aspectFit" />
+          <text>{{item.action_text}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- Empty state -->
+  <view wx:if="{{!loading && orders.length === 0}}" class="empty-state">
+    <text class="empty-icon-text">📋</text>
+    <text class="empty-text">暂无相关订单</text>
+  </view>
+
+  <!-- Loading -->
+  <view wx:if="{{loading}}" class="loading">加载中...</view>
+
+  <!-- Bottom padding -->
+  <view class="tabbar-placeholder"></view>
+
+  <!-- Tab Bar -->
+  <view class="tab-bar">
+    <view class="tab-item" bindtap="goHome">
+      <text class="tab-icon">🏠</text>
+      <text class="tab-label">首页</text>
+    </view>
+    <view class="tab-item" bindtap="goPublish">
+      <text class="tab-icon">＋</text>
+      <text class="tab-label">发布</text>
+    </view>
+    <view class="tab-item tab-item-active">
+      <view class="tab-item-active-bg"></view>
+      <text class="tab-icon tab-icon-active">📋</text>
+      <text class="tab-label tab-label-active">订单</text>
+    </view>
+    <view class="tab-item" bindtap="goMine">
+      <text class="tab-icon">👤</text>
+      <text class="tab-label">我的</text>
+    </view>
+  </view>
+</view>

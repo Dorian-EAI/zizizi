@@ -1,0 +1,75 @@
+<!-- pages/client-service-subcategory/index.wxml — 服务子分类页面 玻璃新拟态 -->
+<view class="page">
+  <view class="blob" style="top: -40px; right: -60px; width: 280px; height: 280px; background: var(--brand);"></view>
+  <view class="blob" style="top: 320px; left: -80px; width: 240px; height: 240px; background: var(--accent);"></view>
+
+  <view class="nav-bar" style="padding-top: calc({{statusBarHeight}}px + 36rpx);">
+    <view class="nav-icon-btn press-neu" bindtap="onBack">
+      <image class="nav-icon" src="{{icons.back}}" mode="aspectFit" lazy-load="{{false}}" />
+    </view>
+    <text class="nav-title">{{categoryName || '服务分类'}}</text>
+    <view class="nav-placeholder"></view>
+  </view>
+
+  <scroll-view scroll-y class="page-scroll" style="padding-bottom: 120rpx;">
+    <view class="section">
+      <view class="glass-neu-card banner-card">
+        <view class="banner-bg-deco"></view>
+        <view class="banner-content">
+          <text class="banner-title">{{categoryName || '全部分类'}}</text>
+          <text class="banner-desc">选择您需要的服务类型</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="category-grid" wx:if="{{subCategories.length}}">
+        <view
+          class="glass-neu-card category-item press-scale"
+          wx:for="{{subCategories}}"
+          wx:key="id"
+          data-id="{{item.id}}"
+          bindtap="onSelect"
+        >
+          <view class="cat-icon-wrap">
+            <image src="{{item.iconUrl}}" mode="aspectFit" class="cat-icon" lazy-load="{{false}}" />
+          </view>
+          <text class="cat-name">{{item.name}}</text>
+          <text class="cat-count">{{item.count}} 位师傅</text>
+        </view>
+      </view>
+      <view class="glass-neu-card empty-card" wx:else>
+        <text class="empty-text">暂无子分类</text>
+      </view>
+    </view>
+
+    <view class="section" wx:if="{{hotServices.length}}">
+      <view class="section-title">
+        <text class="title-text">热门服务</text>
+        <text class="title-link" bindtap="onMore">查看全部</text>
+      </view>
+      <view class="hot-list">
+        <view
+          class="glass-neu-card hot-item press-scale"
+          wx:for="{{hotServices}}"
+          wx:key="id"
+          data-id="{{item.id}}"
+          bindtap="onService"
+        >
+          <view class="hot-icon">
+            <image src="{{item.iconUrl}}" mode="aspectFit" class="hot-icon-img" lazy-load="{{false}}" />
+          </view>
+          <view class="hot-info">
+            <text class="hot-name">{{item.name}}</text>
+            <text class="hot-desc">{{item.desc}}</text>
+          </view>
+          <view class="hot-arrow">
+            <text class="arrow-icon">›</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="cta-spacer"></view>
+  </scroll-view>
+</view>

@@ -1,0 +1,52 @@
+<view class="phone-page design-detail-page worker-theme">
+  <view class="topbar">
+    <view class="icon-button design-button" bindtap="onBack"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m15%2018-6-6%206-6M9%2012h10%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view>
+    <view class="tag-h1">编辑资料</view>
+    <view class="top-action"></view>
+  </view>
+
+  <view class="page-body">
+    <view class="avatar-upload">
+      <view class="avatar-circle design-button" bindtap="onChangeAvatar">{{profile.initial}}</view>
+    </view>
+    <view class="avatar-edit-hint">点击更换头像</view>
+
+    <view class="section">
+      <view class="section-title">基本信息</view>
+      <view class="card">
+        <view class="field">
+          <view class="tag-label">昵称</view>
+          <input class="input" placeholder="请输入昵称" value="{{profile.name}}" bindinput="onInput" data-field="name" />
+        </view>
+        <view class="field">
+          <view class="tag-label">个人简介</view>
+          <textarea class="textarea" placeholder="介绍一下自己吧" value="{{profile.bio}}" bindinput="onInput" data-field="bio"></textarea>
+        </view>
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="section-title">服务设置</view>
+      <view class="card">
+        <view class="field">
+          <view class="tag-label">擅长服务类型</view>
+          <view class="chips">
+            <view class="chip {{item.active ? 'active' : ''}}" wx:for="{{serviceOptions}}" wx:key="key" data-key="{{item.key}}" bindtap="onToggleService">{{item.name}}</view>
+          </view>
+        </view>
+        <view class="field">
+          <view class="tag-label">服务区域</view>
+          <input class="input" placeholder="请输入服务区域" value="{{profile.area}}" bindinput="onInput" data-field="area" />
+        </view>
+        <view class="field">
+          <view class="tag-label">接单时间</view>
+          <input class="input" placeholder="例如：8:00 - 20:00" value="{{profile.workingHours}}" bindinput="onInput" data-field="workingHours" />
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="fixed-actions">
+    <view class="btn primary design-button" bindtap="onSave">保存修改</view>
+  </view>
+</view>

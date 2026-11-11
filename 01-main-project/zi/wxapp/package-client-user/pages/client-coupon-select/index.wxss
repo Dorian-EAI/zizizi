@@ -1,0 +1,111 @@
+/* AUTO-GENERATED DESIGN STYLE ENTRY; page-specific overrides may follow this import. */
+@import "../../../styles/generated-detail-page.wxss";
+@import "../../../styles/glass-neu.wxss";
+
+/* ===== 优惠券选择页 玻璃新拟态覆盖 ===== */
+
+/* Hero 区域 - 玻璃增强 */
+.hero {
+  background:
+    radial-gradient(ellipse 360rpx 240rpx at 88% 15%, rgba(212, 148, 76, 0.10) 0%, transparent 72%),
+    radial-gradient(ellipse 300rpx 220rpx at 8% 90%, rgba(13, 148, 136, 0.12) 0%, transparent 72%),
+    rgba(255, 255, 255, 0.52);
+  backdrop-filter: blur(48rpx) saturate(160%);
+  -webkit-backdrop-filter: blur(48rpx) saturate(160%);
+}
+
+/* Hero 中优惠券数量大字 */
+.hero .tag-h2 {
+  color: var(--text-1);
+  font-weight: 700;
+}
+
+/* 优惠券卡片 - 玻璃新拟态 */
+.card {
+  background: rgba(255, 255, 255, 0.52);
+  backdrop-filter: blur(40rpx) saturate(150%);
+  -webkit-backdrop-filter: blur(40rpx) saturate(150%);
+  border: 2rpx solid rgba(255, 255, 255, 0.70);
+  box-shadow: var(--neu-out-md), 0 12rpx 56rpx rgba(0, 0, 0, 0.06), 0 4rpx 16rpx rgba(13, 148, 136, 0.04);
+  transition: all 0.25s var(--ease);
+}
+
+/* 选中状态卡片 */
+.card.is-selected {
+  background: rgba(255, 255, 255, 0.68);
+  border: 2rpx solid var(--brand);
+  box-shadow: var(--neu-out-md), 0 12rpx 56rpx rgba(0, 0, 0, 0.08), 0 0 0 4rpx var(--brand-glow), 0 8rpx 32rpx var(--brand-glow);
+}
+
+/* 优惠券金额 */
+.list-row .amount {
+  color: var(--accent);
+  font: 700 40rpx/1.1 var(--font-nums);
+  font-variant-numeric: tabular-nums;
+}
+
+.list-row .amount .tag-small {
+  font-size: 26rpx;
+  color: var(--accent-dark);
+}
+
+/* 优惠券列表行图标 */
+.list-row .row-icon {
+  background: var(--bg-elevated);
+  box-shadow: var(--neu-out-sm), inset 0 2rpx 2rpx rgba(255, 255, 255, 0.5);
+}
+
+/* 查看规则按钮 */
+.top-action {
+  color: var(--brand);
+  font-size: 24rpx;
+  font-weight: 600;
+  padding: 10rpx 20rpx;
+  border-radius: var(--r-pill);
+  background: var(--brand-soft);
+  backdrop-filter: blur(16rpx);
+  -webkit-backdrop-filter: blur(16rpx);
+  box-shadow: inset 0 1rpx 2rpx rgba(255, 255, 255, 0.4);
+}
+
+/* 状态徽章 - 玻璃 */
+.badge {
+  backdrop-filter: blur(20rpx);
+  -webkit-backdrop-filter: blur(20rpx);
+}
+
+.badge.success {
+  box-shadow: inset 0 1rpx 2rpx rgba(255, 255, 255, 0.5);
+}
+
+/* 底部固定操作栏 */
+.fixed-actions {
+  background: rgba(255, 255, 255, 0.32);
+  backdrop-filter: blur(56rpx) saturate(180%);
+  -webkit-backdrop-filter: blur(56rpx) saturate(180%);
+  border: 1rpx solid rgba(255, 255, 255, 0.55);
+  box-shadow: var(--neu-out-md), inset 0 2rpx 4rpx rgba(255, 255, 255, 0.5);
+}
+
+/* 主按钮 */
+.btn.primary {
+  background: var(--brand-gradient);
+  box-shadow: inset 0 2rpx 2rpx rgba(255, 255, 255, 0.40), inset 0 -2rpx 2rpx rgba(0, 0, 0, 0.16), 0 4rpx 8rpx var(--brand-glow), 0 12rpx 28rpx var(--brand-glow);
+}
+
+/* 错误提示 */
+.notice.error {
+  backdrop-filter: blur(20rpx);
+  -webkit-backdrop-filter: blur(20rpx);
+}
+
+/* 空状态 */
+.empty-state.truthful-empty {
+  padding: 80rpx 48rpx;
+  background: rgba(255, 255, 255, 0.36);
+  backdrop-filter: blur(32rpx);
+  -webkit-backdrop-filter: blur(32rpx);
+  border-radius: var(--r-lg);
+  border: 2rpx solid rgba(255, 255, 255, 0.60);
+  box-shadow: var(--neu-out-md);
+}

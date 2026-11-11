@@ -1,0 +1,256 @@
+/* AUTO-GENERATED DESIGN STYLE ENTRY; page-specific overrides may follow this import. */
+@import "../../../styles/generated-detail-page.wxss";
+
+/* ============================================================
+ * Glass-Neu: client-notification 消息通知
+ * 客户端 Teal 品牌 + 琥珀点缀
+ * ============================================================ */
+
+.design-detail-page {
+  background: var(--canvas);
+  min-height: 100vh;
+}
+
+.design-detail-page::after {
+  background:
+    radial-gradient(ellipse 400rpx 280rpx at 20% 90%, rgba(13, 148, 136, 0.07) 0%, transparent 70%),
+    radial-gradient(ellipse 360rpx 240rpx at 80% 85%, rgba(212, 148, 76, 0.06) 0%, transparent 70%);
+}
+
+.topbar {
+  background:
+    radial-gradient(ellipse 440rpx 320rpx at 78% 45%, rgba(212, 148, 76, 0.14) 0%, transparent 70%),
+    radial-gradient(ellipse 360rpx 280rpx at 18% 75%, rgba(13, 148, 136, 0.16) 0%, transparent 70%),
+    linear-gradient(135deg, rgba(13, 148, 136, 0.14) 0%, rgba(212, 148, 76, 0.08) 50%, rgba(13, 148, 136, 0.06) 100%);
+}
+
+.segmented {
+  display: flex;
+  gap: 12rpx;
+  padding: 16rpx;
+  margin-bottom: 32rpx;
+  background: rgba(255, 255, 255, 0.52);
+  backdrop-filter: blur(40rpx) saturate(150%);
+  -webkit-backdrop-filter: blur(40rpx) saturate(150%);
+  border: 1rpx solid rgba(255, 255, 255, 0.70);
+  border-radius: var(--r-md);
+  box-shadow:
+    var(--neu-raised-sm),
+    inset 0 2rpx 4rpx rgba(255, 255, 255, 0.40);
+}
+
+.segment {
+  flex: 1;
+  text-align: center;
+  padding: 20rpx 10rpx;
+  border-radius: var(--r-sm);
+  font-size: 26rpx;
+  font-weight: 600;
+  color: var(--text-2);
+  background: var(--canvas);
+  box-shadow: var(--neu-raised-sm), inset 0 2rpx 2rpx rgba(255, 255, 255, 0.45);
+  transition: transform var(--dur-base) var(--spring), all 0.2s var(--ease);
+}
+
+.segment:active {
+  transform: scale(0.94);
+}
+
+.segment.active {
+  background: var(--brand-subtle);
+  box-shadow: inset 2rpx 2rpx 5rpx var(--neu-dark), inset -2rpx -2rpx 5rpx var(--neu-light);
+  color: var(--brand);
+}
+
+.card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(40rpx) saturate(150%);
+  -webkit-backdrop-filter: blur(40rpx) saturate(150%);
+  border: 1rpx solid rgba(255, 255, 255, 0.70);
+  border-radius: var(--r-md);
+  box-shadow:
+    var(--neu-raised),
+    0 12rpx 56rpx rgba(0, 0, 0, 0.06),
+    0 0 0 2rpx rgba(44, 40, 36, 0.05),
+    0 4rpx 16rpx rgba(13, 148, 136, 0.04);
+  overflow: hidden;
+  position: relative;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(165deg,
+    rgba(255, 255, 255, 0.22) 0%,
+    rgba(255, 255, 255, 0.05) 30%,
+    transparent 55%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.card > view,
+.card > text {
+  position: relative;
+  z-index: 1;
+}
+
+.notification-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 20rpx;
+  padding: 28rpx;
+  border-bottom: 1rpx solid var(--sep);
+}
+
+.notification-item:last-child {
+  border-bottom: 0;
+}
+
+.notification-item.unread {
+  background: rgba(13, 148, 136, 0.03);
+}
+
+.notification-item .notification-icon {
+  flex: 0 0 72rpx;
+  width: 72rpx;
+  height: 72rpx;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--brand);
+  background: var(--canvas);
+  box-shadow: var(--neu-raised-sm), inset 0 2rpx 2rpx rgba(255, 255, 255, 0.45);
+}
+
+.notification-item .notification-icon svg {
+  width: 32rpx;
+  height: 32rpx;
+  stroke: currentColor;
+}
+
+.notification-item .notification-icon.secondary {
+  color: #D4944C;
+}
+
+.notification-item .notification-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.notification-item .notification-content .tag-h4 {
+  margin: 0;
+  color: var(--text-1);
+  font-size: 28rpx;
+  font-weight: 600;
+}
+
+.notification-item .notification-content .tag-p {
+  margin: 8rpx 0 0;
+  color: var(--text-2);
+  font-size: 24rpx;
+  line-height: 1.5;
+}
+
+.notification-item .notification-meta {
+  display: block;
+  margin-top: 10rpx;
+  color: var(--text-3);
+  font-size: 22rpx;
+}
+
+.notification-item .unread-dot {
+  flex: 0 0 16rpx;
+  width: 16rpx;
+  height: 16rpx;
+  margin-top: 8rpx;
+  border-radius: 50%;
+  background: var(--brand);
+  box-shadow: 0 0 0 4rpx var(--brand-subtle);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8rpx;
+  border-radius: var(--r-pill);
+  padding: 10rpx 18rpx;
+  font-size: 22rpx;
+  font-weight: 600;
+}
+
+.badge.info { color: var(--brand); background: var(--brand-subtle); }
+.badge.warning { color: #986326; background: rgba(212, 148, 76, 0.10); }
+
+.empty-state {
+  padding: 72rpx 44rpx;
+  text-align: center;
+}
+
+.empty-state .tag-h3 {
+  margin: 0;
+  font-size: 32rpx;
+  color: var(--text-1);
+  font-weight: 700;
+}
+
+.empty-state .tag-p {
+  margin: 16rpx 0 0;
+  color: var(--text-2);
+  font-size: 26rpx;
+}
+
+.notice {
+  margin-bottom: 26rpx;
+  padding: 24rpx 28rpx;
+  border: 1rpx solid rgba(90, 143, 173, 0.18);
+  border-radius: var(--r-sm);
+  color: #315F74;
+  background: rgba(90, 143, 173, 0.09);
+  font-size: 24rpx;
+  line-height: 1.55;
+}
+
+.spacer { height: 24rpx; }
+
+.btn.primary {
+  min-height: 96rpx;
+  border: none;
+  border-radius: var(--r-pill);
+  padding: 0 36rpx;
+  font-weight: 600;
+  font-size: 28rpx;
+  color: #fff;
+  background: var(--brand-gradient);
+  box-shadow:
+    var(--neu-raised-sm),
+    0 4rpx 8rpx var(--brand-glow),
+    0 12rpx 28rpx var(--brand-glow),
+    inset 0 2rpx 2rpx rgba(255, 255, 255, 0.40),
+    inset 0 -2rpx 2rpx rgba(0, 0, 0, 0.16);
+  transition: transform var(--dur-base) var(--spring), box-shadow var(--dur-base) var(--ease);
+}
+
+.btn.primary:active {
+  transform: scale(0.96);
+  box-shadow: var(--neu-inset);
+}
+
+.btn.block { width: 100%; }
+
+.icon-button {
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: 50%;
+  background: var(--bg-elevated);
+  box-shadow: var(--neu-raised-sm), inset 0 2rpx 2rpx rgba(255, 255, 255, 0.5);
+  display: grid;
+  place-items: center;
+  transition: transform var(--dur-base) var(--spring), box-shadow var(--dur-base) var(--ease);
+}
+
+.icon-button:active {
+  box-shadow: var(--neu-inset);
+  transform: scale(0.94);
+}

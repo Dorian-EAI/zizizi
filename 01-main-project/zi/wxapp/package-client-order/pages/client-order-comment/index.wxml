@@ -1,0 +1,104 @@
+<view class="page">
+  <view class="blob" style="top: -80rpx; right: -120rpx; width: 560rpx; height: 560rpx; background: var(--brand);"></view>
+  <view class="blob" style="top: 480rpx; left: -160rpx; width: 480rpx; height: 480rpx; background: var(--accent);"></view>
+
+  <scroll-view scroll-y class="page-scroll hide-scroll" style="padding-bottom: 220rpx;">
+    <view class="hero" style="padding-top: calc({{statusBarHeight}}px + 76rpx);">
+      <view class="nav-row">
+        <view class="nav-icon-btn" bindtap="onBack">
+          <image src="{{icons.back}}" mode="aspectFit" class="nav-icon" lazy-load="{{false}}" />
+        </view>
+        <text class="nav-title">订单评价</text>
+        <view class="nav-spacer"></view>
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="card worker-card">
+        <view class="worker-avatar-wrap">
+          <view class="avatar">
+            <image src="{{order.workerAvatar}}" mode="aspectFill" class="avatar-img" lazy-load="{{false}}" />
+          </view>
+          <text class="worker-name">{{order.workerName}}</text>
+          <view class="rating-display">
+            <text class="rating-stars">{{'★★★★★'}}</text>
+            <text class="rating-score">{{order.workerRating}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="section-title-row">
+        <text class="section-title-text">订单信息</text>
+      </view>
+      <view class="glass-card">
+        <view class="order-info-row">
+          <text class="order-info-label">订单编号</text>
+          <text class="order-info-value">{{order.orderNo}}</text>
+        </view>
+        <view class="order-info-row">
+          <text class="order-info-label">服务类型</text>
+          <text class="order-info-value">{{order.serviceType}}</text>
+        </view>
+        <view class="order-info-row">
+          <text class="order-info-label">完成时间</text>
+          <text class="order-info-value">{{order.completedAt}}</text>
+        </view>
+        <view class="order-info-row">
+          <text class="order-info-label">订单金额</text>
+          <text class="order-info-value price">¥{{order.price}}</text>
+        </view>
+      </view>
+      <view class="glass-card">
+        <view class="rating-section">
+          <text class="rating-question">整体服务评分</text>
+          <view class="star-rating">
+            <view class="star {{rating >= 1 ? 'active' : ''}}" data-rating="1" bindtap="onRateChange">★</view>
+            <view class="star {{rating >= 2 ? 'active' : ''}}" data-rating="2" bindtap="onRateChange">★</view>
+            <view class="star {{rating >= 3 ? 'active' : ''}}" data-rating="3" bindtap="onRateChange">★</view>
+            <view class="star {{rating >= 4 ? 'active' : ''}}" data-rating="4" bindtap="onRateChange">★</view>
+            <view class="star {{rating >= 5 ? 'active' : ''}}" data-rating="5" bindtap="onRateChange">★</view>
+          </view>
+        </view>
+        <view class="rating-section">
+          <text class="rating-question">专业程度</text>
+          <view class="star-rating">
+            <view class="star {{professional >= 1 ? 'active' : ''}}" data-rating="1" data-field="professional" bindtap="onRateField">★</view>
+            <view class="star {{professional >= 2 ? 'active' : ''}}" data-rating="2" data-field="professional" bindtap="onRateField">★</view>
+            <view class="star {{professional >= 3 ? 'active' : ''}}" data-rating="3" data-field="professional" bindtap="onRateField">★</view>
+            <view class="star {{professional >= 4 ? 'active' : ''}}" data-rating="4" data-field="professional" bindtap="onRateField">★</view>
+            <view class="star {{professional >= 5 ? 'active' : ''}}" data-rating="5" data-field="professional" bindtap="onRateField">★</view>
+          </view>
+        </view>
+        <view class="rating-section">
+          <text class="rating-question">服务态度</text>
+          <view class="star-rating">
+            <view class="star {{attitude >= 1 ? 'active' : ''}}" data-rating="1" data-field="attitude" bindtap="onRateField">★</view>
+            <view class="star {{attitude >= 2 ? 'active' : ''}}" data-rating="2" data-field="attitude" bindtap="onRateField">★</view>
+            <view class="star {{attitude >= 3 ? 'active' : ''}}" data-rating="3" data-field="attitude" bindtap="onRateField">★</view>
+            <view class="star {{attitude >= 4 ? 'active' : ''}}" data-rating="4" data-field="attitude" bindtap="onRateField">★</view>
+            <view class="star {{attitude >= 5 ? 'active' : ''}}" data-rating="5" data-field="attitude" bindtap="onRateField">★</view>
+          </view>
+        </view>
+      </view>
+      <view class="glass-card">
+        <view class="section-title-row">
+          <text class="section-title-text">评价内容</text>
+        </view>
+        <textarea class="neu-textarea" placeholder="说说这次服务的体验吧..." value="{{content}}" bindinput="onContentInput" maxlength="500" />
+        <view class="char-count">{{content.length}}/500</view>
+        <view class="upload-row">
+          <view class="upload-btn" bindtap="onUploadImage">
+            <text class="upload-icon">📷</text>
+            <text class="upload-text">上传图片 (选填)</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+
+  <view class="cta-bar safe-bottom">
+    <view class="btn-cta" bindtap="onSubmitReview">提交评价</view>
+  </view>
+</view>

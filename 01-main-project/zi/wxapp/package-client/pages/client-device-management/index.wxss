@@ -1,0 +1,139 @@
+/* AUTO-GENERATED DESIGN STYLE ENTRY; page-specific overrides may follow this import. */
+@import "../../../styles/generated-detail-page.wxss";
+@import "../../../styles/glass-neu.wxss";
+
+/* ===== 登录设备管理页 玻璃新拟态覆盖 ===== */
+
+/* 分区标题 - 玻璃 */
+.section-title {
+  color: var(--text-2);
+  font-size: 26rpx;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.section-title .tag-strong {
+  color: var(--text-1);
+  font-size: 32rpx;
+  font-weight: 700;
+}
+
+/* 设备卡片 - 玻璃新拟态 */
+.card {
+  background: rgba(255, 255, 255, 0.52);
+  backdrop-filter: blur(40rpx) saturate(150%);
+  -webkit-backdrop-filter: blur(40rpx) saturate(150%);
+  border: 2rpx solid rgba(255, 255, 255, 0.70);
+  box-shadow: var(--neu-out-md), 0 12rpx 56rpx rgba(0, 0, 0, 0.06), 0 4rpx 16rpx rgba(13, 148, 136, 0.04);
+}
+
+.card.list-card {
+  background: rgba(255, 255, 255, 0.52);
+  backdrop-filter: blur(40rpx) saturate(150%);
+  -webkit-backdrop-filter: blur(40rpx) saturate(150%);
+  border: 2rpx solid rgba(255, 255, 255, 0.70);
+  box-shadow: var(--neu-out-md), 0 12rpx 56rpx rgba(0, 0, 0, 0.06), 0 4rpx 16rpx rgba(13, 148, 136, 0.04);
+}
+
+/* 列表行图标 - 新拟态 */
+.list-row .row-icon {
+  background: var(--bg-elevated);
+  box-shadow: var(--neu-out-sm), inset 0 2rpx 2rpx rgba(255, 255, 255, 0.5);
+}
+
+/* 设备列表行 */
+.list-row {
+  min-height: 112rpx;
+}
+
+/* 当前设备徽章 */
+.badge.success {
+  backdrop-filter: blur(20rpx);
+  -webkit-backdrop-filter: blur(20rpx);
+  box-shadow: inset 0 1rpx 2rpx rgba(255, 255, 255, 0.5);
+}
+
+/* 时间线 - 玻璃增强 */
+.timeline {
+  position: relative;
+  padding-left: 54rpx;
+}
+
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 16rpx;
+  top: 14rpx;
+  bottom: 24rpx;
+  width: 4rpx;
+  background: var(--sep);
+  border-radius: 2rpx;
+}
+
+.timeline-item {
+  position: relative;
+  padding-bottom: 34rpx;
+}
+
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  left: -48rpx;
+  top: 8rpx;
+  width: 20rpx;
+  height: 20rpx;
+  border: 6rpx solid var(--bg);
+  border-radius: 50%;
+  background: var(--brand);
+  box-shadow: 0 0 0 4rpx var(--brand-glow);
+}
+
+.timeline-item.pending::before {
+  background: var(--bg);
+  box-shadow: 0 0 0 4rpx var(--text-3);
+}
+
+.timeline-item .tag-strong {
+  display: block;
+  font-size: 28rpx;
+  color: var(--text-1);
+}
+
+.timeline-item .tag-span {
+  display: block;
+  margin-top: 8rpx;
+  color: var(--text-2);
+  font-size: 24rpx;
+}
+
+/* 设备删除按钮 */
+.text-danger {
+  color: var(--danger);
+  font-weight: 600;
+}
+
+/* 通知条 - 玻璃 */
+.notice.info {
+  backdrop-filter: blur(20rpx);
+  -webkit-backdrop-filter: blur(20rpx);
+}
+
+/* 底部固定操作栏 */
+.fixed-actions {
+  background: rgba(255, 255, 255, 0.32);
+  backdrop-filter: blur(56rpx) saturate(180%);
+  -webkit-backdrop-filter: blur(56rpx) saturate(180%);
+  border: 1rpx solid rgba(255, 255, 255, 0.55);
+  box-shadow: var(--neu-out-md), inset 0 2rpx 4rpx rgba(255, 255, 255, 0.5);
+}
+
+/* 主按钮 */
+.btn.primary {
+  background: var(--brand-gradient);
+  box-shadow: inset 0 2rpx 2rpx rgba(255, 255, 255, 0.40), inset 0 -2rpx 2rpx rgba(0, 0, 0, 0.16), 0 4rpx 8rpx var(--brand-glow), 0 12rpx 28rpx var(--brand-glow);
+}
+
+.btn.primary:active {
+  transform: scale(0.96);
+  box-shadow: var(--neu-in);
+}

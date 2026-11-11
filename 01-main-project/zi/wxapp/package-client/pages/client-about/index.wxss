@@ -1,0 +1,64 @@
+/* AUTO-GENERATED DESIGN STYLE ENTRY; page-specific overrides may follow this import. */
+@import "../../../styles/generated-detail-page.wxss";
+
+.phone-page {
+  --neu-raised: var(--neu-out-md);
+  --glass-bg: rgba(255, 255, 255, 0.52);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.phone-page .topbar {
+  border-bottom: 1rpx solid rgba(255, 255, 255, 0.45);
+}
+
+.phone-page .hero {
+  text-align: center;
+  padding: 48rpx 40rpx;
+}
+
+.phone-page .hero .tag-h2 {
+  font-size: 56rpx;
+  margin-top: 12rpx;
+}
+
+.phone-page .hero .tag-p {
+  margin-top: 8rpx;
+  font-size: 24rpx;
+  letter-spacing: 0.04em;
+}
+
+.phone-page .card {
+  margin-bottom: 28rpx;
+}
+
+.phone-page .list-card {
+  padding: 8rpx 28rpx;
+}
+
+.phone-page .list-row {
+  min-height: 120rpx;
+}
+
+.phone-page .row-icon {
+  background: var(--brand-soft);
+  box-shadow: var(--neu-out-sm), inset 0 2rpx 2rpx rgba(255, 255, 255, 0.5);
+}
+
+.phone-page .row-icon .design-svg-icon {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.phone-page .chevron {
+  color: var(--faint);
+}
+
+.phone-page .section-title .tag-strong {
+  font-size: 30rpx;
+}
+
+.phone-page .notice {
+  margin-bottom: 32rpx;
+}

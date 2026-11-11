@@ -1,0 +1,342 @@
+/* AUTO-GENERATED DESIGN STYLE ENTRY; page-specific overrides may follow this import. */
+@import "../../../styles/glass-neu.wxss";
+
+/* ===== 客服工单页 玻璃新拟态完整覆盖 ===== */
+
+.service-page {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+/* ===== 顶部导航栏 - 玻璃新拟态 ===== */
+.compact-nav {
+  padding: 28rpx 40rpx;
+  padding-top: calc(env(safe-area-inset-top) + 28rpx);
+  border-radius: 0 0 48rpx 48rpx;
+  flex-shrink: 0;
+  background:
+    radial-gradient(ellipse 440rpx 320rpx at 78% 45%, rgba(212, 148, 76, 0.12) 0%, transparent 70%),
+    radial-gradient(ellipse 360rpx 280rpx at 18% 75%, rgba(13, 148, 136, 0.14) 0%, transparent 70%),
+    linear-gradient(135deg, rgba(13, 148, 136, 0.12) 0%, rgba(212, 148, 76, 0.06) 50%, rgba(13, 148, 136, 0.04) 100%);
+  backdrop-filter: blur(48rpx) saturate(160%);
+  -webkit-backdrop-filter: blur(48rpx) saturate(160%);
+}
+
+.compact-nav .nav-icon-btn {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 28rpx;
+  background: var(--bg-elevated);
+  box-shadow: var(--neu-out-sm), inset 0 2rpx 2rpx rgba(255, 255, 255, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--dur) var(--spring), box-shadow var(--dur) var(--ease);
+}
+
+.compact-nav .nav-icon-btn:active {
+  box-shadow: var(--neu-in);
+  transform: scale(0.94);
+}
+
+.compact-nav .nav-icon {
+  width: 36rpx;
+  height: 36rpx;
+}
+
+.nav-title-area {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.nav-title-area .nav-title {
+  font-size: 34rpx;
+  margin-bottom: 4rpx;
+  font-weight: 700;
+  color: var(--text-1);
+  letter-spacing: -0.02em;
+}
+
+.nav-status {
+  font-size: 22rpx;
+  color: var(--green);
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+}
+
+/* ===== 聊天区域 ===== */
+.chat-area {
+  flex: 1;
+  min-height: 0;
+  padding: 32rpx 40rpx;
+  box-sizing: border-box;
+}
+
+.chat-date {
+  text-align: center;
+  font-size: 22rpx;
+  color: var(--text-3);
+  margin: 24rpx 0;
+}
+
+/* 消息行 */
+.msg-row {
+  display: flex;
+  margin-bottom: 32rpx;
+  align-items: flex-end;
+  gap: 16rpx;
+}
+
+.msg-row.user {
+  flex-direction: row-reverse;
+}
+
+.msg-avatar {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 24rpx;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 28rpx;
+  font-weight: 600;
+  box-shadow: var(--neu-out-sm);
+}
+
+.msg-avatar.service {
+  background: linear-gradient(135deg, var(--brand) 0%, var(--brand-mid) 100%);
+}
+
+.msg-avatar.user {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+}
+
+.msg-content {
+  max-width: 70%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 消息气泡 - 玻璃新拟态 */
+.msg-bubble {
+  padding: 24rpx 32rpx;
+  border-radius: 36rpx;
+  font-size: 28rpx;
+  line-height: 1.6;
+  word-break: break-all;
+  white-space: pre-wrap;
+}
+
+.msg-row.service .msg-bubble {
+  background: rgba(255, 255, 255, 0.60);
+  backdrop-filter: blur(28rpx) saturate(150%);
+  -webkit-backdrop-filter: blur(28rpx) saturate(150%);
+  border-bottom-left-radius: 12rpx;
+  box-shadow: var(--neu-out-sm);
+  border: 1rpx solid rgba(255, 255, 255, 0.60);
+  color: var(--text-1);
+}
+
+.msg-row.user .msg-bubble {
+  background: var(--brand-gradient);
+  color: #fff;
+  border-bottom-right-radius: 12rpx;
+  box-shadow: 0 8rpx 28rpx var(--brand-glow);
+}
+
+.msg-time {
+  font-size: 20rpx;
+  color: var(--text-3);
+  margin-top: 8rpx;
+}
+
+.msg-row.user .msg-time {
+  text-align: right;
+}
+
+/* 快捷回复 */
+.quick-replies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+  margin-top: 16rpx;
+}
+
+.quick-reply {
+  padding: 16rpx 28rpx;
+  background: rgba(255, 255, 255, 0.52);
+  backdrop-filter: blur(20rpx);
+  -webkit-backdrop-filter: blur(20rpx);
+  border: 1rpx solid rgba(255, 255, 255, 0.60);
+  border-radius: var(--r-pill);
+  font-size: 24rpx;
+  color: var(--brand);
+  box-shadow: var(--neu-out-sm);
+  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+
+.quick-reply:active {
+  box-shadow: var(--neu-in);
+  transform: scale(0.95);
+}
+
+/* 关联订单卡片 */
+.order-card {
+  margin: 0 0 32rpx 88rpx;
+  padding: 24rpx;
+  background: rgba(255, 255, 255, 0.52);
+  backdrop-filter: blur(28rpx) saturate(150%);
+  -webkit-backdrop-filter: blur(28rpx) saturate(150%);
+  border-radius: 24rpx;
+  border: 1rpx solid rgba(255, 255, 255, 0.60);
+  box-shadow: var(--neu-out-sm);
+  display: flex;
+  align-items: center;
+}
+
+.order-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.order-card-title {
+  font-size: 26rpx;
+  font-weight: 600;
+  margin-bottom: 8rpx;
+  color: var(--text-1);
+}
+
+.order-card-desc {
+  font-size: 22rpx;
+  color: var(--text-2);
+}
+
+.order-arrow {
+  width: 32rpx;
+  height: 32rpx;
+}
+
+/* ===== 底部输入栏 - 玻璃新拟态 ===== */
+.input-bar {
+  z-index: 100;
+  padding: 24rpx 32rpx;
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(48rpx) saturate(160%);
+  -webkit-backdrop-filter: blur(48rpx) saturate(160%);
+  border-top: 1rpx solid rgba(255, 255, 255, 0.60);
+  flex-shrink: 0;
+}
+
+.input-row {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+}
+
+.input-action-btn {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 50%;
+  background: var(--bg-elevated);
+  box-shadow: var(--neu-out-sm), inset 0 2rpx 2rpx rgba(255, 255, 255, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-2);
+  flex-shrink: 0;
+  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+
+.input-action-btn:active {
+  box-shadow: var(--neu-in);
+  transform: scale(0.94);
+}
+
+.input-action-btn image {
+  width: 36rpx;
+  height: 36rpx;
+}
+
+.input-wrapper {
+  flex: 1;
+  position: relative;
+}
+
+.chat-input {
+  width: 100%;
+  height: 80rpx;
+  padding: 20rpx 88rpx 20rpx 32rpx;
+  border-radius: var(--r-pill);
+  background: var(--bg-elevated);
+  box-shadow: var(--neu-in);
+  font-size: 28rpx;
+  color: var(--text-1);
+}
+
+.send-btn {
+  position: absolute;
+  right: 12rpx;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 60rpx;
+  height: 60rpx;
+  padding: 0;
+  border-radius: 50%;
+  background: var(--brand-gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4rpx 16rpx var(--brand-glow);
+  transition: transform var(--dur) var(--ease);
+}
+
+.send-btn:active {
+  transform: translateY(-50%) scale(0.92);
+}
+
+.send-btn image {
+  width: 32rpx;
+  height: 32rpx;
+}
+
+.send-btn[disabled] {
+  background: var(--neu-dark);
+  box-shadow: none;
+}
+
+/* ===== 状态占位 ===== */
+.state-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24rpx;
+  padding: 120rpx 32rpx;
+  color: var(--text-2);
+  font-size: 26rpx;
+  text-align: center;
+}
+
+.state-block.compact {
+  padding: 40rpx;
+}
+
+.retry-btn {
+  font-size: 26rpx;
+  color: #fff;
+  background: var(--brand);
+  border-radius: var(--r-pill);
+  padding: 12rpx 36rpx;
+}
+
+.chat-spacer {
+  height: 32rpx;
+}

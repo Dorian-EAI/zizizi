@@ -1,4 +1,8 @@
-# Operating-system and editor metadata
+# 本地归档，不上传 GitHub
+/03-archive/
+/.screenshots/
+
+# 操作系统与编辑器元数据
 .DS_Store
 ._*
 Thumbs.db
@@ -6,67 +10,14 @@ Desktop.ini
 .idea/
 .vscode/
 
-# Local agent state, caches, backups, and uploads
-.trae/
-**/.trae/
-.uploads/
-.uv-cache/
-.uv-python/
-**/.backups/
-**/uploads/
-**/logs/
-*.log
-.tmp_wechat_localappdata_cli/
-.codex-tools/
-
-# Python environments and generated files
-**/.venv/
+# 本地缓存与运行产物
 **/venv/
+**/.venv/
 **/venv_win/
-**/__pycache__/
-*.py[cod]
-*.pyo
-.pytest_cache/
-**/.pytest_cache/
-.mypy_cache/
-.ruff_cache/
-.coverage
-htmlcov/
-
-# JavaScript dependencies and diagnostics
 **/node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# Secrets and machine-local configuration
-**/.env
-**/.env.*
-!**/.env.example
-**/project.private.config.json
-*.pem
-*.key
-*.p12
-*.pfx
-*.jks
-
-# Local databases and runtime artifacts
-*.db
-*.sqlite
-*.sqlite3
-*.pid
-**/.test_body.json
-**/_scan_classes.ps1
-**/_scan_result.txt
-**/runtime-orchestration-summary.json
-/hero-check.png
-/zjrnew/old/
-/自家人家居维修-玻璃新拟态/
-/WXapp/
-/wxapp/.trae/
-legacy/client/assets/svg/
-legacy/client/assets/tabbar/
-
-# Full source fonts are unused; the application loads the subset WOFF2 files
-/zjrnew/assets/NotoSerifSC-Bold.otf
-/zjrnew/assets/NotoSerifSC-Regular.otf
+**/__pycache__/
+**/.pytest_cache/
+**/.uv-cache/
+**/.uv-python/
+**/.tmp_wechat_localappdata*/
+*.log

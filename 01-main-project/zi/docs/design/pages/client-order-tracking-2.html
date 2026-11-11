@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自家人居家维修 · 玻璃新拟态 · 实时追踪</title>
+    <style id="theme-vars">
+/* 自家人居家维修 - 玻璃新拟态 */
+:root {
+  /* Brand - Client (Teal) */
+  --brand: #0D9488;
+  --brand-dark: #0A7A70;
+  --brand-mid: #14B8A6;
+  --brand-light: #CCFBF1;
+  --brand-glow: rgba(13, 148, 136, 0.24);
+  --brand-subtle: rgba(13, 148, 136, 0.10);
+
+  /* Accent (Amber) */
+  --accent: #D4944C;
+  --accent-dark: #A0723C;
+  --accent-mid: #E8C088;
+  --accent-light: #F5E6D0;
+  --accent-glow: rgba(212, 148, 76, 0.20);
+
+  /* Background */
+  --background: #F2EDE8;
+  --foreground: #2C2824;
+  --body-bg: #E8E4DF;
+  --bg-elevated: #F7F3EF;
+
+  /* Neumorphic */
+  --neu-light: #FFF8F2;
+  --neu-dark: #DDD6CE;
+  --neu-highlight: rgba(255, 255, 255, 0.55);
+
+  /* Surface & Card */
+  --card: rgba(255, 255, 255, 0.52);
+  --card-foreground: #2C2824;
+  --popover: #fff;
+  --popover-foreground: #2C2824;
+
+  /* Muted */
+  --muted: #F7F3EF;
+  --muted-foreground: #8B8178;
+
+  /* Border & Input */
+  --border: rgba(44, 40, 36, 0.06);
+  --input: rgba(44, 40, 36, 0.06);
+  --ring: #0D9488;
+
+  /* Primary */
+  --primary: #0D9488;
+  --primary-foreground: #ffffff;
+
+  /* Semantic aliases */
+  --state-success: #5B8C5A;
+  --state-warning: #D4944C;
+  --state-error: #C4533A;
+  --state-info: #5A8FAD;
+
+  /* Text */
+  --text-1: #2C2824;
+  --text-2: #8B8178;
+  --text-3: #B5ADA5;
+  --text-inverse: #ffffff;
+
+  /* Sep & Fill */
+  --sep: rgba(44, 40, 36, 0.06);
+  --fill: rgba(44, 40, 36, 0.04);
+
+  /* Green/Red/Orange/Blue semantic */
+  --green: #5B8C5A;
+  --red: #C4533A;
+  --orange: #D4944C;
+  --blue: #5A8FAD;
+
+  /* Radius */
+  --radius-sm: 0.75rem;
+  --radius-md: 1.2rem;
+  --radius-lg: 1.6rem;
+  --radius-full: 9999px;
+
+  /* Font — unified serif system */
+  --font-display: 'Cormorant Garamond', 'Noto Serif SC', 'STSong', Georgia, serif;
+  --font-body:    'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --font-nums:    'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
+  --font:         var(--font-body);
+
+  /* Motion */
+  --spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --dur: 0.2s;
+
+  /* Glass */
+  --glass-bg: rgba(255, 255, 255, 0.18);
+  --glass-blur: blur(12px) saturate(140%);
+  --glass-border: rgba(255, 255, 255, 0.60);
+
+  /* Surface presets for glass-neumorphic components */
+  --surface-1: rgba(255, 255, 255, 0.50);
+  --surface-2: rgba(255, 255, 255, 0.45);
+
+  /* Neumorphic shadow presets */
+  --neu-out-sm: 6px 6px 14px var(--neu-dark), -6px -6px 14px var(--neu-light), 0 4px 16px rgba(0, 0, 0, 0.04);
+  --neu-out-md: 8px 8px 18px var(--neu-dark), -8px -8px 18px var(--neu-light), 0 6px 24px rgba(0, 0, 0, 0.05);
+  --neu-out-lg: 10px 10px 24px var(--neu-dark), -10px -10px 24px var(--neu-light), 0 8px 32px rgba(0, 0, 0, 0.06);
+  --neu-in: inset 4px 4px 8px var(--neu-dark), inset -4px -4px 8px var(--neu-light);
+  --neu-in-deep: inset 5px 5px 10px var(--neu-dark), inset -5px -5px 10px var(--neu-light);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-full: var(--radius-full);
+}
+
+/* Semantic token fallback */
+#semantic-token-fallback {
+  --brand-background: var(--background);
+  --brand-foreground: var(--foreground);
+  --brand-card: var(--card);
+  --brand-card-foreground: var(--card-foreground);
+  --brand-popover: var(--popover);
+  --brand-popover-foreground: var(--popover-foreground);
+  --brand-primary: var(--primary);
+  --brand-primary-foreground: var(--primary-foreground);
+  --brand-muted: var(--muted);
+  --brand-muted-foreground: var(--muted-foreground);
+  --brand-border: var(--border);
+  --brand-input: var(--input);
+  --brand-ring: var(--ring);
+  --brand-radius-sm: var(--radius-sm);
+  --brand-radius-md: var(--radius-md);
+  --brand-radius-lg: var(--radius-lg);
+}
+
+/* ===== Global Neumorphic Components ===== */
+/* Tab Bar — Premium Liquid Glass, absolute-positioned within .phone frame */
+.tab-bar{
+  position:absolute;
+  bottom:10px;
+  left:50%;
+  transform:translateX(-50%);
+  width:calc(100% - 32px);
+  max-width:360px;
+  height:56px;
+  z-index:100;
+  background:rgba(255,255,255,0.18);
+  backdrop-filter:blur(48px) saturate(210%);
+  -webkit-backdrop-filter:blur(48px) saturate(210%);
+  border:0.5px solid rgba(255,255,255,0.45);
+  border-radius:24px;
+  box-shadow:
+    inset 0 1.5px 3px rgba(255,255,255,0.60),
+    inset 0 -0.5px 1px rgba(255,255,255,0.20),
+    0 0 0 0.5px rgba(0,0,0,0.04),
+    0 2px 10px rgba(0,0,0,0.06),
+    0 12px 36px rgba(0,0,0,0.08);
+  display:flex;
+  align-items:center;
+  justify-content:space-around;
+  padding:0 6px;
+}
+.tab-bar::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  background:linear-gradient(160deg,
+    rgba(255,255,255,0.42) 0%,
+    rgba(255,255,255,0.16) 20%,
+    rgba(255,255,255,0.03) 40%,
+    transparent 60%);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
+  padding:0.5px;
+  pointer-events:none;
+  z-index:1;
+}
+.tab-bar::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  background:linear-gradient(320deg,
+    transparent 60%,
+    rgba(13,148,136,0.06) 80%,
+    rgba(255,255,255,0.04) 100%);
+  pointer-events:none;
+  z-index:1;
+}
+.tab-item{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+  width:68px;
+  height:44px;
+  border-radius:14px;
+  color:var(--text-3);
+  font-size:11px;
+  font-weight:500;
+  text-decoration:none;
+  position:relative;
+  transition:all .2s;
+}
+.tab-item svg{
+  width:20px;
+  height:20px;
+  stroke:currentColor;
+  fill:none;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.tab-item[data-active="true"]{
+  color:var(--brand);
+  font-weight:600;
+}
+.tab-item[data-active="true"]::before{
+  content:"";
+  position:absolute;
+  width:54px;
+  height:42px;
+  border-radius:16px;
+  background:rgba(13,148,136,0.16);
+  backdrop-filter:blur(24px);
+  -webkit-backdrop-filter:blur(24px);
+  border:0.5px solid rgba(13,148,136,0.30);
+  box-shadow:
+    inset 0 1px 3px rgba(255,255,255,0.55),
+    inset 0 -0.5px 1px rgba(255,255,255,0.15),
+    0 2px 10px rgba(13,148,136,0.20),
+    0 0 0 0.5px rgba(13,148,136,0.08);
+  z-index:0;
+}
+.tab-item[data-active="true"] svg{
+  transform:scale(1.08);
+  position:relative;
+  z-index:1;
+}
+
+/* Buttons */
+.btn-neu-primary{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:var(--brand);color:var(--text-inverse);
+  border:none;border-radius:9999px;
+  padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
+  cursor:pointer;
+  box-shadow:var(--neu-out-sm),0 2px 8px var(--brand-glow);
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
+.btn-neu-primary:active{box-shadow:var(--neu-in);transform:scale(0.94)}
+
+.btn-neu-secondary{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,0.50);color:var(--brand);
+  border:0.5px solid rgba(255,255,255,0.60);border-radius:9999px;
+  padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
+  cursor:pointer;
+  box-shadow:var(--neu-out-sm);
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
+.btn-neu-secondary:active{box-shadow:var(--neu-in);transform:scale(0.94)}
+
+.btn-neu-ghost{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:transparent;color:var(--text-2);
+  border:0.5px solid var(--border);border-radius:9999px;
+  padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
+  cursor:pointer;
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease),color var(--dur) var(--ease);
+}
+.btn-neu-ghost:active{transform:scale(0.94);color:var(--brand)}
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-accent: var(--accent);
+    --radius-sm: var(--radius-sm);
+    --radius-md: var(--radius-md);
+    --radius-lg: var(--radius-lg);
+    --radius-full: var(--radius-full);
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+    <style id="semantic-token-fallback">
+      .bg-background { background-color: var(--background); }
+      .text-background { color: var(--background); }
+      .border-background { border-color: var(--background); }
+      .ring-background { --tw-ring-color: var(--background); }
+      .bg-foreground { background-color: var(--foreground); }
+      .text-foreground { color: var(--foreground); }
+      .border-foreground { border-color: var(--foreground); }
+      .ring-foreground { --tw-ring-color: var(--foreground); }
+      .bg-card { background-color: var(--card); }
+      .text-card { color: var(--card); }
+      .border-card { border-color: var(--card); }
+      .ring-card { --tw-ring-color: var(--card); }
+      .bg-card-foreground { background-color: var(--card-foreground); }
+      .text-card-foreground { color: var(--card-foreground); }
+      .border-card-foreground { border-color: var(--card-foreground); }
+      .ring-card-foreground { --tw-ring-color: var(--card-foreground); }
+      .bg-popover { background-color: var(--popover); }
+      .text-popover { color: var(--popover); }
+      .border-popover { border-color: var(--popover); }
+      .ring-popover { --tw-ring-color: var(--popover); }
+      .bg-popover-foreground { background-color: var(--popover-foreground); }
+      .text-popover-foreground { color: var(--popover-foreground); }
+      .border-popover-foreground { border-color: var(--popover-foreground); }
+      .ring-popover-foreground { --tw-ring-color: var(--popover-foreground); }
+      .bg-primary { background-color: var(--primary); }
+      .text-primary { color: var(--primary); }
+      .border-primary { border-color: var(--primary); }
+      .ring-primary { --tw-ring-color: var(--primary); }
+      .bg-primary-foreground { background-color: var(--primary-foreground); }
+      .text-primary-foreground { color: var(--primary-foreground); }
+      .border-primary-foreground { border-color: var(--primary-foreground); }
+      .ring-primary-foreground { --tw-ring-color: var(--primary-foreground); }
+      .bg-muted { background-color: var(--muted); }
+      .text-muted { color: var(--muted); }
+      .border-muted { border-color: var(--muted); }
+      .ring-muted { --tw-ring-color: var(--muted); }
+      .bg-muted-foreground { background-color: var(--muted-foreground); }
+      .text-muted-foreground { color: var(--muted-foreground); }
+      .border-muted-foreground { border-color: var(--muted-foreground); }
+      .ring-muted-foreground { --tw-ring-color: var(--muted-foreground); }
+      .bg-border { background-color: var(--border); }
+      .text-border { color: var(--border); }
+      .border-border { border-color: var(--border); }
+      .ring-border { --tw-ring-color: var(--border); }
+      .bg-input { background-color: var(--input); }
+      .text-input { color: var(--input); }
+      .border-input { border-color: var(--input); }
+      .ring-input { --tw-ring-color: var(--input); }
+      .bg-ring { background-color: var(--ring); }
+      .text-ring { color: var(--ring); }
+      .border-ring { border-color: var(--ring); }
+      .ring-ring { --tw-ring-color: var(--ring); }
+      .bg-accent { background-color: var(--accent); }
+      .text-accent { color: var(--accent); }
+      .border-accent { border-color: var(--accent); }
+      .ring-accent { --tw-ring-color: var(--accent); }
+    </style>
+    <style>
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      [data-icon] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        background-color: currentColor;
+      }
+    </style>
+</head>
+<body>
+<div class="phone" data-dom-id="page-client-order-tracking">
+
+  <!-- Top Header: Hero + Tracking Status Tabs -->
+  <header class="top-header">
+    <section class="hero">
+      <div class="nav-content">
+        <button class="nav-back" data-dom-id="back-btn" data-target-page="page-client-order-detail" aria-label="返回">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m15 18-6-6 6-6"></path>
+          </svg>
+        </button>
+        <h1 class="nav-title">实时追踪</h1>
+        <button class="nav-edit" data-dom-id="refresh-btn" data-action="refresh-tracking" aria-label="刷新">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+            <path d="M3 3v5h5"></path>
+            <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"></path>
+            <path d="M16 16h5v5"></path>
+          </svg>
+        </button>
+      </div>
+    </section>
+
+    <div class="filter-tabs" data-dom-id="tracking-status-summary" data-action="expand-tracking-status">
+      <div class="status-bar-main">
+        <div class="status-bar-title">
+          <span class="status-pulse-dot"></span>
+          师傅正在赶来
+        </div>
+        <div class="status-bar-meta">约10分钟到达 · 1.5km</div>
+      </div>
+      <div class="status-bar-arrow">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m9 18 6-6-6-6"></path>
+        </svg>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== TRACKING MAP AREA ===== -->
+  <section class="tracking-map-section" style="top: 0px;" data-dom-id="tracking-map-area" data-action="pan-zoom-map">
+    
+  </section>
+
+  <!-- ===== WORKER INFO CARD ===== -->
+  <section class="section" style="top: 0px;">
+    <div class="glass-neu-card tracking-worker-card" data-dom-id="tracking-worker-card" data-target-page="page-client-worker-detail">
+      <div class="avatar-col">
+        <div class="worker-avatar avatar-glass">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </div>
+        <span class="verify-badge avatar-verify">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 6 9 17l-5-5"></path>
+          </svg>
+          已认证
+        </span>
+      </div>
+      <div class="worker-info">
+        <div class="worker-name-row">
+          <span class="worker-name">张师傅</span>
+        </div>
+        <div class="worker-meta">
+          <span class="worker-star">★ 4.8</span>
+          <span class="meta-dot">·</span>
+          <span>158次服务</span>
+        </div>
+      </div>
+      <div class="worker-actions">
+        <button class="action-circle" data-dom-id="call-worker" data-action="call-worker" aria-label="拨打电话">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path>
+          </svg>
+        </button>
+        <button class="action-circle" data-dom-id="open-nav" data-action="open-system-navigation" aria-label="导航">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SERVICE PROGRESS TIMELINE ===== -->
+  <section class="section" style="top: 0px;">
+    <div class="glass-neu-card tracking-timeline-card">
+      <div class="card-title">服务进度</div>
+      <div class="tracking-timeline">
+
+        <div class="tt-item tt-done">
+          <div class="tt-rail">
+            <div class="tt-dot">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 6 9 17l-5-5"></path>
+              </svg>
+            </div>
+            <div class="tt-line"></div>
+          </div>
+          <div class="tt-content">
+            <div class="tt-head">
+              <span class="tt-title">师傅接单</span>
+              <span class="tt-time mono">10:30</span>
+            </div>
+            <div class="tt-desc">师傅已确认接单，准备出发</div>
+          </div>
+        </div>
+
+        <div class="tt-item tt-done">
+          <div class="tt-rail">
+            <div class="tt-dot">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 6 9 17l-5-5"></path>
+              </svg>
+            </div>
+            <div class="tt-line"></div>
+          </div>
+          <div class="tt-content">
+            <div class="tt-head">
+              <span class="tt-title">师傅出发</span>
+              <span class="tt-time mono">10:35</span>
+            </div>
+            <div class="tt-desc">师傅已离开上一服务地点</div>
+          </div>
+        </div>
+
+        <div class="tt-item tt-active">
+          <div class="tt-rail">
+            <div class="tt-dot">
+              <span class="tt-dot-inner"></span>
+              <span class="tt-dot-pulse"></span>
+            </div>
+            <div class="tt-line"></div>
+          </div>
+          <div class="tt-content">
+            <div class="tt-head">
+              <span class="tt-title">师傅到达</span>
+              <span class="tt-time mono">预计 10:45</span>
+            </div>
+            <div class="tt-desc">师傅正在赶来，距离1.5km</div>
+          </div>
+        </div>
+
+        <div class="tt-item tt-pending">
+          <div class="tt-rail">
+            <div class="tt-dot"></div>
+            <div class="tt-line"></div>
+          </div>
+          <div class="tt-content">
+            <div class="tt-head">
+              <span class="tt-title">开始服务</span>
+              <span class="tt-time mono">--:--</span>
+            </div>
+            <div class="tt-desc">等待师傅到场后开始</div>
+          </div>
+        </div>
+
+        <div class="tt-item tt-pending tt-last">
+          <div class="tt-rail">
+            <div class="tt-dot"></div>
+          </div>
+          <div class="tt-content">
+            <div class="tt-head">
+              <span class="tt-title">服务完成</span>
+              <span class="tt-time mono">--:--</span>
+            </div>
+            <div class="tt-desc">服务完成后请验收确认</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ORDER DETAIL LINK ===== -->
+  <section class="section section-link" style="top: 0px;">
+    <button class="order-detail-link" data-dom-id="view-order-detail" data-target-page="page-client-order-detail">
+      查看订单详情
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m9 18 6-6-6-6"></path>
+      </svg>
+    </button>
+  </section>
+
+</div>
+
+    <style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --brand:#0D9488;--brand-dark:#0A7A70;--brand-mid:#14B8A6;--brand-light:#CCFBF1;
+  --brand-glow:rgba(13,148,136,0.18);--brand-subtle:rgba(13,148,136,0.08);
+  --brand-gradient:linear-gradient(135deg,#0D9488 0%,#14B8A6 48%,#D4944C 100%);
+  --accent:#D4944C;--accent-dark:#A0723C;--accent-light:#F5E6D0;--accent-glow:rgba(212,148,76,0.16);
+  --bg:#F2EDE8;--bg-elevated:#F7F3EF;
+  --neu-light:#FFF8F2;--neu-dark:#DDD6CE;
+  --text-1:#2C2824;--text-2:#8B8178;--text-3:#B5ADA5;--text-inverse:#FFFFFF;
+  --sep:rgba(44,40,36,0.06);--fill:rgba(44,40,36,0.04);
+  --green:#5B8C5A;--red:#C4533A;--orange:#D4944C;--blue:#5A8FAD;
+  --r:1.2rem;--r-lg:1.6rem;--r-sm:0.75rem;--r-pill:9999px;--r-tab:24px;
+  /* Font */--font-display:'Cormorant Garamond', 'Noto Serif SC', 'STSong', Georgia, serif;
+  --font-body:'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --font-nums:'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
+  --font:var(--font-body);
+  --neu-out-sm:6px 6px 14px var(--neu-dark),-6px -6px 14px var(--neu-light),0 4px 16px rgba(0,0,0,0.04);
+  --neu-out-md:8px 8px 18px var(--neu-dark),-8px -8px 18px var(--neu-light),0 6px 24px rgba(0,0,0,0.05);
+  --neu-out-lg:10px 10px 24px var(--neu-dark),-10px -10px 24px var(--neu-light),0 8px 32px rgba(0,0,0,0.06);
+  --neu-in:inset 4px 4px 8px var(--neu-dark),inset -4px -4px 8px var(--neu-light);
+  --neu-in-deep:inset 5px 5px 10px var(--neu-dark),inset -5px -5px 10px var(--neu-light);
+  --spring:cubic-bezier(0.175,0.885,0.32,1.275);--ease:cubic-bezier(0.25,0.46,0.45,0.94);--dur:0.2s;
+}
+html,body{font-family:var(--font);color:var(--text-1);-webkit-font-smoothing:antialiased}
+body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh;background:#E8E4DF;letter-spacing:-0.01em}
+
+/* ===== Phone Frame ===== */
+.phone{position:relative;width:414px;min-height:896px;background:var(--bg);border-radius:48px;overflow:hidden;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.12),0 4px 16px rgba(0,0,0,.06);padding-bottom:82px}
+
+/* Mono / Tabular nums */
+.mono{font-variant-numeric:tabular-nums;letter-spacing:-0.01em}
+
+/* Top Header */
+.top-header{position:sticky;top:0;z-index:50}
+
+/* Hero */
+.hero{padding: max(38px, env(safe-area-inset-top)) 24px 24px;position:relative;z-index:1;background:radial-gradient(ellipse 240px 200px at 75% 40%,rgba(212,148,76,.16) 0%,transparent 70%),radial-gradient(ellipse 200px 160px at 20% 80%,rgba(13,148,136,.12) 0%,transparent 70%),linear-gradient(135deg,rgba(13,148,136,.12) 0%,rgba(212,148,76,.14) 50%,rgba(20,184,166,.12) 100%);border-radius:0 0 32px 32px}
+.hero::before{content:"";position:absolute;top:-40%;right:-20%;width:300px;height:300px;background:radial-gradient(circle,rgba(255,255,255,0.15) 0%,transparent 70%);border-radius:50%;pointer-events:none}
+.hero::after{content:"";position:absolute;bottom:-30%;left:-10%;width:220px;height:220px;background:radial-gradient(circle,rgba(200,255,250,0.10) 0%,transparent 70%);border-radius:50%;pointer-events:none}
+.nav-content{display:grid;grid-template-columns:40px 1fr 40px;align-items:center;gap:8px;position:relative;z-index:2}
+.nav-back{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.18);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:0.5px solid rgba(255,255,255,0.30);display:flex;align-items:center;justify-content:center;color:var(--text-1);cursor:pointer;box-shadow:inset 0 1px 2px rgba(255,255,255,0.3);flex-shrink:0;transition:transform var(--dur) var(--spring),background 0.2s var(--ease)}
+.nav-back:active{transform:scale(0.85);background:rgba(255,255,255,0.32)}
+.nav-back svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.nav-title{font-size:22px;font-weight:700;color:var(--text-1);letter-spacing:-0.02em;text-align:center;justify-self:center}
+.nav-edit{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.18);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:0.5px solid rgba(255,255,255,0.30);display:flex;align-items:center;justify-content:center;color:var(--text-1);cursor:pointer;box-shadow:inset 0 1px 2px rgba(255,255,255,0.3);flex-shrink:0;transition:transform var(--dur) var(--spring),background 0.2s var(--ease);justify-self:end}
+.nav-edit:active{transform:scale(0.85);background:rgba(255,255,255,0.32)}
+.nav-edit svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+/* ===== Sections ===== */
+.section{padding:0 20px;margin-top:16px;position:relative;z-index:2}
+.section:first-of-type{margin-top:0}
+.section-link{display:flex;justify-content:center;padding-top:4px;padding-bottom:20px}
+
+/* ===== Glass + Neumorphic Card ===== */
+.glass-neu-card{
+  background:rgba(255,255,255,0.52);
+  backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);
+  border:1px solid rgba(255,255,255,0.70);
+  border-radius:var(--r-lg);
+  box-shadow:var(--neu-out-md),0 6px 28px rgba(0,0,0,0.06),0 2px 8px rgba(13,148,136,.04),0 0 0 1px rgba(44,40,36,0.05);
+  position:relative;overflow:hidden;
+}
+.glass-neu-card::before{
+  content:'';position:absolute;inset:0;border-radius:inherit;
+  background:linear-gradient(165deg,rgba(255,255,255,0.22) 0%,rgba(255,255,255,0.05) 30%,transparent 55%);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;padding:0.5px;pointer-events:none;
+}
+
+/* Card Title */
+.card-title{font-size:16px;font-weight:700;color:var(--text-1);letter-spacing:-0.01em;margin-bottom:14px}
+
+/* ===== Tracking Map Section ===== */
+.tracking-map-section{position:relative;margin-top:0;z-index:1}
+.tracking-map{
+  position:relative;width:100%;height:420px;
+  background:linear-gradient(180deg,#DBE8EC 0%,#C8D8DE 60%,#BECED4 100%);
+  overflow:hidden;
+}
+
+/* Simulated map grid */
+.map-grid{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.28) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.28) 1px, transparent 1px);
+  background-size:42px 42px;
+  opacity:0.6;
+}
+
+/* Simulated roads */
+.map-road{
+  position:absolute;background:rgba(255,255,255,0.55);
+  border-radius:9999px;
+  box-shadow:inset 0 1px 2px rgba(255,255,255,0.7),0 1px 2px rgba(0,0,0,0.04);
+}
+.map-road-1{top:18%;left:-10%;width:120%;height:18px;transform:rotate(-12deg)}
+.map-road-2{top:48%;left:-5%;width:110%;height:14px;transform:rotate(6deg)}
+.map-road-3{top:72%;left:5%;width:90%;height:16px;transform:rotate(-4deg)}
+.map-park{
+  position:absolute;top:10%;right:-20px;width:140px;height:140px;
+  background:rgba(91,140,90,0.16);
+  border-radius:50%;
+  filter:blur(2px);
+}
+
+/* Floating map controls */
+.map-float-btn{
+  position:absolute;z-index:10;
+  display:inline-flex;align-items:center;justify-content:center;gap:4px;
+  height:38px;padding:0 12px;
+  background:rgba(255,255,255,0.72);
+  backdrop-filter:blur(12px) saturate(150%);-webkit-backdrop-filter:blur(12px) saturate(150%);
+  border:1px solid rgba(255,255,255,0.70);
+  border-radius:var(--r-pill);
+  box-shadow:var(--neu-out-sm),0 4px 12px rgba(0,0,0,0.06);
+  color:var(--text-1);font-size:12px;font-weight:600;
+  cursor:pointer;
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
+.map-float-btn:active{box-shadow:var(--neu-in);transform:scale(0.94)}
+.map-float-btn svg{width:18px;height:18px;flex-shrink:0}
+.map-float-back{top:14px;left:16px;width:38px;padding:0}
+.map-float-refresh{top:14px;right:16px}
+
+/* Route polyline */
+.route-svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.route-line{
+  fill:none;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;
+  stroke:var(--brand);
+  stroke-dasharray:8 6;
+  animation:routeFlow 1.6s linear infinite;
+}
+.route-line-shadow{
+  stroke:rgba(255,255,255,0.55);stroke-width:9;
+  stroke-dasharray:none;animation:none;
+}
+@keyframes routeFlow{
+  0%{stroke-dashoffset:28}
+  100%{stroke-dashoffset:0}
+}
+
+/* Map markers */
+.map-marker{position:absolute;z-index:5;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.marker-core{
+  width:44px;height:44px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:var(--neu-out-sm),0 4px 14px rgba(0,0,0,0.12);
+  position:relative;z-index:2;
+}
+.marker-core svg{width:22px;height:22px;color:var(--text-inverse)}
+.worker-marker{top:24%;right:22%;width:44px;height:44px}
+.worker-marker-core{background:var(--brand)}
+.marker-pulse{
+  position:absolute;width:48px;height:48px;border-radius:50%;
+  top:50%;left:50%;transform:translate(-50%,-50%);
+  background:var(--brand);
+  opacity:0.25;animation:markerPulse 2s var(--ease) infinite;
+}
+@keyframes markerPulse{
+  0%{transform:scale(1);opacity:0.25}
+  70%{transform:scale(1.6);opacity:0}
+  100%{transform:scale(1.6);opacity:0}
+}
+.dest-marker{bottom:22%;left:26%}
+.dest-marker-core{background:var(--red);width:40px;height:40px}
+.dest-marker-core svg{width:20px;height:20px}
+.marker-pin{
+  width:0;height:0;
+  border-left:8px solid transparent;border-right:8px solid transparent;
+  border-top:12px solid var(--red);
+  margin-top:-4px;
+}
+
+/* Filter Status Tabs (overlaps hero) */
+.filter-tabs{margin:-18px 20px 0;background:rgba(255,255,255,0.52);backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);border:1px solid rgba(255,255,255,0.70);border-radius:var(--r);box-shadow:var(--neu-out-md),0 6px 28px rgba(0,0,0,0.06),0 0 0 1px rgba(44,40,36,0.05);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;position:relative;z-index:10}
+.filter-tabs::before{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(165deg,rgba(255,255,255,0.22) 0%,rgba(255,255,255,0.05) 30%,transparent 55%);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;padding:0.5px;pointer-events:none}
+.status-bar-main{flex:1;min-width:0;position:relative;z-index:1}
+.status-bar-title{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:700;color:var(--text-1);letter-spacing:-0.01em;margin-bottom:5px}
+.status-pulse-dot{width:10px;height:10px;border-radius:50%;background:var(--brand);box-shadow:0 0 0 4px rgba(13,148,136,.10);animation:dotPulse 1.8s var(--ease) infinite}
+@keyframes dotPulse{0%{transform:scale(1);opacity:1}70%{transform:scale(2.2);opacity:0}100%{transform:scale(2.2);opacity:0}}
+.status-bar-meta{font-size:13px;color:var(--text-2);font-weight:500}
+.status-bar-arrow{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--bg-elevated);box-shadow:var(--neu-out-sm),inset 0 1px 1px rgba(255,255,255,0.45);color:var(--text-2);flex-shrink:0}
+.status-bar-arrow svg{width:16px;height:16px}
+
+/* ===== Tracking Worker Card ===== */
+.tracking-worker-card{display:flex;align-items:center;gap:14px;padding:16px 18px}
+.avatar-col{display:flex;flex-direction:column;align-items:center;gap:5px;flex-shrink:0}
+.worker-avatar{
+  width:44px;height:44px;border-radius:50%;flex-shrink:0;
+  background:var(--bg-elevated);
+  box-shadow:var(--neu-in-deep);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--brand);
+}
+.worker-avatar.avatar-glass{
+  position:relative;overflow:hidden;
+  background:linear-gradient(145deg,rgba(255,255,255,0.68) 0%,rgba(255,255,255,0.28) 40%,var(--brand-subtle) 78%,rgba(255,255,255,0.18) 100%);
+  backdrop-filter:blur(10px) saturate(160%);-webkit-backdrop-filter:blur(10px) saturate(160%);
+  border:0.5px solid rgba(255,255,255,0.75);
+  box-shadow:inset 0 2px 3px rgba(255,255,255,0.88),inset 0 -1px 2px rgba(0,0,0,0.04),var(--neu-out-sm);
+}
+.worker-avatar.avatar-glass::before{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(160deg,rgba(255,255,255,0.48) 0%,rgba(255,255,255,0.12) 35%,transparent 60%);pointer-events:none}
+.worker-avatar svg{width:28px;height:28px}
+.worker-info{flex:1;min-width:0}
+.worker-name-row{display:flex;align-items:center;gap:8px;margin-bottom:5px}
+.worker-name{font-size:17px;font-weight:700;color:var(--text-1);letter-spacing:-0.01em}
+.verify-badge{
+  display:inline-flex;align-items:center;gap:3px;
+  background:var(--brand-subtle);color:var(--brand);
+  font-size:10.5px;font-weight:600;
+  padding:2px 8px;border-radius:var(--r-pill);
+  border:0.5px solid rgba(13,148,136,.10);
+}
+.verify-badge svg{width:11px;height:11px}
+.worker-meta{display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--text-2);font-weight:500}
+.worker-star{color:var(--orange);font-weight:600}
+.meta-dot{color:var(--text-3)}
+.worker-actions{display:flex;gap:10px;flex-shrink:0}
+.action-circle{
+  width:48px;height:48px;border-radius:50%;border:none;
+  background:var(--bg-elevated);
+  box-shadow:var(--neu-out-sm),inset 0 1px 1px rgba(255,255,255,0.45);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--brand);cursor:pointer;
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
+.action-circle:active{box-shadow:var(--neu-in);transform:scale(0.94)}
+.action-circle svg{width:22px;height:22px}
+.action-circle:last-child{color:var(--accent-dark)}
+
+/* ===== Tracking Timeline ===== */
+.tracking-timeline-card{padding:18px}
+.tracking-timeline{display:flex;flex-direction:column}
+.tt-item{display:flex;gap:14px;position:relative}
+.tt-item:not(.tt-last){padding-bottom:18px}
+.tt-rail{display:flex;flex-direction:column;align-items:center;flex-shrink:0;width:22px;padding-top:2px}
+.tt-dot{
+  width:22px;height:22px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;z-index:2;
+}
+.tt-dot svg{width:12px;height:12px}
+.tt-line{
+  flex:1;width:2px;min-height:18px;margin-top:4px;
+  border-radius:var(--r-pill);opacity:0.35;
+}
+.tt-content{flex:1;min-width:0;padding-top:1px}
+.tt-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:3px}
+.tt-title{font-size:14.5px;font-weight:700;letter-spacing:-0.01em}
+.tt-time{font-size:12px;font-weight:500}
+.tt-desc{font-size:12px;color:var(--text-2);font-weight:500;line-height:1.45}
+
+/* Done */
+.tt-done .tt-dot{
+  background:var(--brand);color:var(--text-inverse);
+  box-shadow:0 0 0 4px var(--brand-subtle),0 2px 6px var(--brand-glow);
+}
+.tt-done .tt-line{background:linear-gradient(180deg,var(--brand) 0%,var(--brand-mid) 100%)}
+.tt-done .tt-title{color:var(--text-1)}
+.tt-done .tt-time{color:var(--text-2)}
+
+/* Active */
+.tt-active .tt-dot{
+  background:var(--accent);color:var(--text-inverse);
+  box-shadow:0 0 0 4px rgba(212,148,76,.10),0 2px 8px var(--accent-glow);
+}
+.tt-active .tt-line{background:linear-gradient(180deg,var(--accent) 0%,var(--text-3) 100%)}
+.tt-active .tt-title{color:var(--accent-dark)}
+.tt-active .tt-time{color:var(--orange)}
+.tt-dot-inner{
+  width:8px;height:8px;border-radius:50%;background:var(--text-inverse);
+  box-shadow:0 0 0 2px rgba(255,255,255,0.35);
+}
+.tt-dot-pulse{
+  position:absolute;inset:0;border-radius:50%;
+  border:2px solid var(--accent);
+  animation:tlPulse 1.8s var(--ease) infinite;
+}
+@keyframes tlPulse{
+  0%{transform:scale(1);opacity:0.6}
+  70%{transform:scale(1.5);opacity:0}
+  100%{transform:scale(1.5);opacity:0}
+}
+
+/* Pending */
+.tt-pending .tt-dot{
+  background:var(--bg-elevated);
+  box-shadow:var(--neu-in),inset 0 1px 1px rgba(255,255,255,0.3);
+  border:1.5px solid var(--neu-dark);
+}
+.tt-pending .tt-line{background:var(--neu-dark)}
+.tt-pending .tt-title{color:var(--text-3)}
+.tt-pending .tt-time{color:var(--text-3)}
+.tt-pending .tt-desc{color:var(--text-3)}
+
+/* ===== Order Detail Link ===== */
+.order-detail-link{
+  display:inline-flex;align-items:center;gap:4px;
+  background:transparent;border:none;
+  font-size:14px;font-weight:600;font-family:var(--font);
+  color:var(--brand);cursor:pointer;
+  padding:8px 12px;
+  transition:transform var(--dur) var(--spring),color var(--dur) var(--ease);
+}
+.order-detail-link:active{transform:scale(0.96);color:var(--brand-dark)}
+.order-detail-link svg{width:16px;height:16px}
+
+/* ===== Reduced Motion ===== */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{
+    animation-duration:0.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:0.01ms !important;
+  }
+  .marker-pulse,.tt-dot-pulse,.status-pulse-dot{animation:none;opacity:0}
+}
+    </style>
+    <style>@theme inline{--font-sans: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+--font-serif: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+--color-background:var(--background);--color-foreground:var(--foreground);--color-card:var(--card);--color-card-foreground:var(--card-foreground);--color-popover:var(--popover);--color-popover-foreground:var(--popover-foreground);--color-primary:var(--primary);--color-primary-foreground:var(--primary-foreground);--color-muted:var(--muted);--color-muted-foreground:var(--muted-foreground);--color-border:var(--border);--color-input:var(--input);--color-ring:var(--ring);--radius-md:var(--radius-md);}</style>
+    <style>@layer base{body{background:var(--background);color:var(--foreground);font-family:var(--font-body);}}</style>
+</body>
+</html>

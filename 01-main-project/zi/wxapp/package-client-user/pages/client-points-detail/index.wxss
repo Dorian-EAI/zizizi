@@ -1,0 +1,95 @@
+@import "../../../styles/glass-detail-page.wxss";
+
+/* —— 积分详情页面特定样式 —— */
+
+/* Hero 渐变：金色+青色，积分财富主题 */
+.hero {
+  background:
+    radial-gradient(ellipse 340rpx 220rpx at 86% 14%, rgba(212, 148, 76, 0.16) 0%, transparent 72%),
+    radial-gradient(ellipse 300rpx 200rpx at 14% 86%, rgba(13, 148, 136, 0.12) 0%, transparent 72%),
+    rgba(255, 255, 255, 0.46);
+}
+
+/* Hero 积分余额：大号展示数字 */
+.hero .tag-h2 {
+  font-size: 56rpx;
+  font-weight: 700;
+  color: var(--brand-dark);
+  font-family: var(--font-number);
+  letter-spacing: -0.02em;
+  margin-bottom: 8rpx;
+}
+
+.hero .tag-p {
+  font-size: 24rpx;
+}
+
+/* Hero 快捷操作胶囊 */
+.hero .chips {
+  margin-top: 24rpx;
+}
+
+.hero .chips .chip {
+  font-size: 24rpx;
+  padding: 14rpx 24rpx;
+  background: var(--glass-bg-strong);
+}
+
+.hero .chips .chip.active {
+  background: var(--brand);
+  color: #fff;
+  box-shadow: 0 6rpx 20rpx rgba(13, 148, 136, 0.28);
+}
+
+/* 积分记录列表 */
+.card.list-card {
+  padding: 8rpx 24rpx;
+}
+
+.card.list-card .list-row {
+  min-height: 96rpx;
+}
+
+/* 收入/支出图标 */
+.list-row .row-icon {
+  font-family: var(--font-number);
+  font-weight: 700;
+  font-size: 32rpx;
+  color: var(--brand);
+  background: var(--brand-subtle);
+  flex: 0 0 56rpx;
+  width: 56rpx;
+  height: 56rpx;
+}
+
+/* 积分数值 */
+.list-row .row-value {
+  font-family: var(--font-number);
+  font-weight: 700;
+  font-size: 32rpx;
+  color: var(--brand-dark);
+}
+
+.list-row .row-value .tag-small {
+  font-size: 22rpx;
+  color: var(--text-2);
+  font-weight: 500;
+  margin-top: 4rpx;
+}
+
+/* 筛选分段控件 */
+.segmented {
+  margin-bottom: 24rpx;
+}
+
+/* 底部备注 */
+.note .tag-p {
+  font-size: 22rpx;
+  color: var(--text-3);
+  text-align: center;
+}
+
+/* 加载/错误卡片紧凑 */
+.section.card {
+  padding: 28rpx 32rpx;
+}

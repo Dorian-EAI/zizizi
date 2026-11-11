@@ -1,0 +1,79 @@
+@import "../../../styles/glass-detail-page.wxss";
+
+/* —— 隐私设置页面特定样式 —— */
+
+/* Hero 渐变：中性蓝灰 */
+.hero {
+  background:
+    radial-gradient(ellipse 340rpx 220rpx at 86% 14%, rgba(90, 143, 173, 0.12) 0%, transparent 72%),
+    radial-gradient(ellipse 280rpx 180rpx at 14% 86%, rgba(13, 148, 136, 0.08) 0%, transparent 72%),
+    rgba(255, 255, 255, 0.42);
+}
+
+/* 权限卡片：分段式列表 */
+.card.list-card {
+  padding: 8rpx 24rpx;
+}
+
+.card.list-card .list-row {
+  min-height: 100rpx;
+}
+
+/* 权限开关：紧凑胶囊 */
+.list-row .chip {
+  font-size: 22rpx;
+  padding: 8rpx 20rpx;
+  min-width: 120rpx;
+  text-align: center;
+  justify-content: center;
+}
+
+.list-row .chip.active {
+  box-shadow: inset 6rpx 6rpx 12rpx var(--neu-dark), inset -6rpx -6rpx 12rpx var(--neu-light);
+}
+
+/* 图标容器 */
+.list-row .row-icon {
+  width: 64rpx;
+  height: 64rpx;
+  flex: 0 0 64rpx;
+}
+
+/* 注销账号图标红色 */
+.list-row .row-icon.text-danger {
+  color: #C4533A;
+  background: rgba(196, 83, 58, 0.08);
+}
+
+/* 分组标题 */
+.section-title .tag-strong {
+  font-size: 28rpx;
+  color: var(--text-1);
+}
+
+/* 数据使用行内说明 */
+.list-row .row-copy {
+  font-size: 24rpx;
+}
+
+/* 顶部 notice */
+.notice.info {
+  margin-bottom: 20rpx;
+}
+
+/* 底部保存按钮 */
+.fixed-actions {
+  padding: 20rpx 28rpx;
+}
+
+.fixed-actions .btn.primary {
+  font-size: 30rpx;
+  font-weight: 700;
+}
+
+/* 清除缓存行 */
+.list-row .row-value {
+  font-family: var(--font-number);
+  font-size: 24rpx;
+  color: var(--text-3);
+}

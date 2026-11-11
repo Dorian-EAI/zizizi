@@ -1,0 +1,191 @@
+/* AUTO-GENERATED DESIGN STYLE ENTRY; page-specific overrides may follow this import. */
+@import "../../../styles/generated-detail-page.wxss";
+@import "../../../styles/glass-neu.wxss";
+
+/* ===== 帮助中心页 玻璃新拟态覆盖 ===== */
+
+/* Hero 区域 - 玻璃增强 */
+.hero {
+  background:
+    radial-gradient(ellipse 360rpx 240rpx at 88% 15%, rgba(212, 148, 76, 0.10) 0%, transparent 72%),
+    radial-gradient(ellipse 300rpx 220rpx at 8% 90%, rgba(13, 148, 136, 0.10) 0%, transparent 72%),
+    rgba(255, 255, 255, 0.52);
+  backdrop-filter: blur(48rpx) saturate(160%);
+  -webkit-backdrop-filter: blur(48rpx) saturate(160%);
+}
+
+/* 分区标题 */
+.section-title {
+  color: var(--text-2);
+  font-size: 26rpx;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.section-title .tag-strong {
+  color: var(--text-1);
+  font-size: 32rpx;
+  font-weight: 700;
+}
+
+/* 搜索输入字段 */
+.field {
+  margin-bottom: 32rpx;
+}
+
+.field .tag-label {
+  display: block;
+  margin: 0 8rpx 16rpx;
+  color: var(--text-2);
+  font-size: 26rpx;
+  font-weight: 500;
+}
+
+.input {
+  width: 100%;
+  border: 2rpx solid rgba(255, 255, 255, 0.55);
+  border-radius: var(--r-md);
+  outline: 0;
+  color: var(--text-1);
+  background: rgba(238, 233, 228, 0.72);
+  backdrop-filter: blur(28rpx);
+  -webkit-backdrop-filter: blur(28rpx);
+  box-shadow: var(--neu-in);
+}
+
+.input:focus {
+  box-shadow: var(--neu-in), 0 0 0 4rpx var(--brand-soft), 0 0 0 8rpx var(--brand-glow);
+}
+
+/* 分类标签 - 玻璃新拟态 */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18rpx;
+}
+
+.chip {
+  border: 0;
+  border-radius: var(--r-pill);
+  padding: 16rpx 28rpx;
+  color: var(--text-2);
+  background: var(--bg-elevated);
+  backdrop-filter: blur(24rpx);
+  -webkit-backdrop-filter: blur(24rpx);
+  box-shadow: var(--neu-out-sm), inset 0 2rpx 2rpx rgba(255, 255, 255, 0.45);
+  font-size: 24rpx;
+  font-weight: 500;
+  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+
+.chip.active {
+  color: var(--brand);
+  background: var(--brand-soft);
+  box-shadow: var(--neu-in);
+  font-weight: 600;
+}
+
+.chip:active {
+  transform: scale(0.96);
+}
+
+/* FAQ 卡片 - 玻璃新拟态 */
+.card.list-card {
+  background: rgba(255, 255, 255, 0.52);
+  backdrop-filter: blur(40rpx) saturate(150%);
+  -webkit-backdrop-filter: blur(40rpx) saturate(150%);
+  border: 2rpx solid rgba(255, 255, 255, 0.70);
+  box-shadow: var(--neu-out-md), 0 12rpx 56rpx rgba(0, 0, 0, 0.06), 0 4rpx 16rpx rgba(13, 148, 136, 0.04);
+}
+
+/* FAQ 列表行图标 */
+.list-row .row-icon {
+  background: var(--bg-elevated);
+  box-shadow: var(--neu-out-sm), inset 0 2rpx 2rpx rgba(255, 255, 255, 0.5);
+}
+
+/* FAQ 展开状态 */
+.list-row .row-copy {
+  color: var(--text-1);
+  font-size: 26rpx;
+  line-height: 1.55;
+}
+
+/* 状态徽章 */
+.badge {
+  backdrop-filter: blur(20rpx);
+  -webkit-backdrop-filter: blur(20rpx);
+}
+
+.badge.info {
+  box-shadow: inset 0 1rpx 2rpx rgba(255, 255, 255, 0.5);
+}
+
+/* 通知提示 - 玻璃 */
+.notice {
+  backdrop-filter: blur(20rpx);
+  -webkit-backdrop-filter: blur(20rpx);
+  border-radius: var(--r-sm);
+}
+
+.notice.info {
+  border-radius: var(--r-sm);
+}
+
+.notice.error {
+  border-radius: var(--r-sm);
+}
+
+/* 空状态 */
+.empty-state {
+  padding: 72rpx 44rpx;
+  background: rgba(255, 255, 255, 0.36);
+  backdrop-filter: blur(32rpx);
+  -webkit-backdrop-filter: blur(32rpx);
+  border-radius: var(--r-lg);
+  border: 2rpx solid rgba(255, 255, 255, 0.60);
+  box-shadow: var(--neu-out-md);
+}
+
+.empty-state .tag-h3 {
+  color: var(--text-1);
+}
+
+.empty-state .tag-p {
+  color: var(--text-2);
+}
+
+/* 全宽按钮 */
+.btn.block {
+  margin-top: 16rpx;
+}
+
+.btn.block.secondary {
+  background: var(--surface-strong);
+  color: var(--brand);
+  box-shadow: var(--neu-out-sm);
+}
+
+.btn.block.secondary:active {
+  box-shadow: var(--neu-in);
+  transform: scale(0.98);
+}
+
+/* 底部固定操作栏 */
+.fixed-actions {
+  background: rgba(255, 255, 255, 0.32);
+  backdrop-filter: blur(56rpx) saturate(180%);
+  -webkit-backdrop-filter: blur(56rpx) saturate(180%);
+  border: 1rpx solid rgba(255, 255, 255, 0.55);
+  box-shadow: var(--neu-out-md), inset 0 2rpx 4rpx rgba(255, 255, 255, 0.5);
+}
+
+/* 主按钮 */
+.btn.primary {
+  background: var(--brand-gradient);
+  box-shadow: inset 0 2rpx 2rpx rgba(255, 255, 255, 0.40), inset 0 -2rpx 2rpx rgba(0, 0, 0, 0.16), 0 4rpx 8rpx var(--brand-glow), 0 12rpx 28rpx var(--brand-glow);
+}
+
+.btn.primary:active {
+  transform: scale(0.96);
+}

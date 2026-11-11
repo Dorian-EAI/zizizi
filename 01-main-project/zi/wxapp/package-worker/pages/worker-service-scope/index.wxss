@@ -1,0 +1,47 @@
+@import "../../../styles/generated-detail-page.wxss";
+
+.page, .phone-page {
+  --brand: #2D6CDF;
+  --brand-dark: #2456B8;
+  --brand-mid: #5A8EE8;
+  --brand-light: #DCE8FB;
+  --brand-glow: rgba(45, 108, 223, 0.28);
+  --brand-subtle: rgba(45, 108, 223, 0.08);
+  --brand-gradient: linear-gradient(135deg, #2D6CDF 0%, #5A8EE8 50%, #D4944C 100%);
+  --ring: #2D6CDF;
+  --primary: #2D6CDF;
+
+  position: relative;
+  min-height: 100vh;
+  background: var(--bg);
+}
+
+.page-scroll {
+  height: 100vh;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 1;
+}
+
+.hero {
+  padding: 0 48rpx 48rpx;
+}
+
+.hero .chips {
+  margin-top: 24rpx;
+}
+
+.fixed-actions {
+  position: fixed;
+  left: 32rpx;
+  right: 32rpx;
+  bottom: 28rpx;
+  z-index: 20;
+}
+
+.page::after {
+  background:
+    radial-gradient(ellipse 400rpx 280rpx at 20% 90%, rgba(45, 108, 223, 0.07) 0%, transparent 70%),
+    radial-gradient(ellipse 360rpx 240rpx at 80% 85%, rgba(212,148,76,.06) 0%, transparent 70%),
+    radial-gradient(ellipse 320rpx 200rpx at 50% 95%, rgba(90, 142, 232, 0.04) 0%, transparent 70%);
+}

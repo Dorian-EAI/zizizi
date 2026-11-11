@@ -1,0 +1,111 @@
+@import "../../../styles/glass-detail-page.wxss";
+
+/* —— 聊天页面特定样式 —— */
+
+/* Hero 渐变：青-琥珀光晕，配合订单沟通主题 */
+.hero {
+  background:
+    radial-gradient(ellipse 340rpx 220rpx at 86% 12%, rgba(13, 148, 136, 0.14) 0%, transparent 72%),
+    radial-gradient(ellipse 280rpx 180rpx at 14% 88%, rgba(212, 148, 76, 0.10) 0%, transparent 72%),
+    rgba(255, 255, 255, 0.44);
+}
+
+/* 聊天消息卡片：紧凑气泡风格 */
+.section .card {
+  padding: 24rpx 28rpx;
+}
+
+.card .list-row {
+  min-height: auto;
+  padding: 16rpx 0;
+  gap: 20rpx;
+}
+
+.card .list-row .row-copy {
+  font-size: 28rpx;
+  line-height: 1.55;
+}
+
+/* 对方消息：左侧头像气泡 */
+.list-row:not([style*="text-align:right"]) .row-main .row-copy {
+  background: var(--glass-bg-strong);
+  padding: 16rpx 20rpx;
+  border-radius: var(--r-md);
+  display: inline-block;
+  max-width: 420rpx;
+  box-shadow: var(--neu-inset-sm);
+}
+
+/* 自己消息：右侧品牌色气泡 */
+.list-row[style*="text-align:right"] .row-main {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.list-row[style*="text-align:right"] .row-main .row-copy {
+  background: var(--brand-subtle);
+  color: var(--brand-dark);
+  padding: 16rpx 20rpx;
+  border-radius: var(--r-md);
+  display: inline-block;
+  max-width: 420rpx;
+  box-shadow: var(--neu-inset-sm);
+}
+
+/* 消息时间戳 */
+.list-row .row-value {
+  font-size: 22rpx;
+  color: var(--text-3);
+  white-space: nowrap;
+}
+
+/* 底部输入栏 */
+.fixed-actions {
+  padding: 16rpx 20rpx;
+  gap: 16rpx;
+  padding-bottom: calc(16rpx + env(safe-area-inset-bottom));
+}
+
+.fixed-actions .btn.secondary {
+  flex: 0 0 80rpx;
+  min-height: 80rpx;
+  padding: 0;
+  font-size: 44rpx;
+  border-radius: 50%;
+}
+
+.fixed-actions .input {
+  flex: 1;
+  min-height: 80rpx;
+  font-size: 28rpx;
+}
+
+/* 快捷消息胶囊 */
+.chips .chip {
+  font-size: 26rpx;
+  padding: 14rpx 24rpx;
+}
+
+/* 在线状态徽章发光 */
+.badge.success {
+  box-shadow: 0 4rpx 14rpx rgba(91, 140, 90, 0.20);
+}
+
+.badge.info {
+  box-shadow: 0 4rpx 14rpx rgba(90, 143, 173, 0.20);
+}
+
+/* 订单摘要卡片紧凑 */
+.list-card .list-row .row-icon {
+  flex: 0 0 64rpx;
+  width: 64rpx;
+  height: 64rpx;
+}
+
+/* 分割线弱化 */
+.card .divider {
+  height: 1rpx;
+  margin: 8rpx 0;
+  background: var(--sep);
+}

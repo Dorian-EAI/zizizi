@@ -1,0 +1,100 @@
+<!-- pages/client-refund-success/index.wxml — 退款成功页面 玻璃新拟态 -->
+<view class="page">
+  <view class="blob" style="top: -40px; right: -60px; width: 280px; height: 280px; background: var(--brand);"></view>
+  <view class="blob" style="top: 320px; left: -80px; width: 240px; height: 240px; background: var(--accent);"></view>
+
+  <view class="nav-bar" style="padding-top: calc({{statusBarHeight}}px + 36rpx);">
+    <view class="nav-icon-btn press-neu" bindtap="onBack">
+      <image class="nav-icon" src="{{icons.back}}" mode="aspectFit" lazy-load="{{false}}" />
+    </view>
+    <text class="nav-title">退款申请</text>
+    <view class="nav-placeholder"></view>
+  </view>
+
+  <scroll-view scroll-y class="page-scroll" style="padding-bottom: 200rpx;">
+    <view class="section">
+      <view class="glass-neu-card result-card success-card">
+        <view class="result-icon-wrap">
+          <view class="result-icon">
+            <image src="{{icons.check}}" mode="aspectFit" class="result-icon-img" lazy-load="{{false}}" />
+          </view>
+        </view>
+        <text class="result-title">退款申请已提交</text>
+        <text class="result-desc">您的退款申请已成功提交，预计 1-7 个工作日内处理完成</text>
+        <view class="result-amount">
+          <text class="amount-cur">¥</text>
+          <text class="amount-num">{{refundAmount}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="glass-neu-card info-card">
+        <view class="info-row">
+          <text class="info-label">退款单号</text>
+          <text class="info-value mono">{{refundNo}}</text>
+        </view>
+        <view class="info-row">
+          <text class="info-label">关联订单</text>
+          <text class="info-value mono">{{orderNo}}</text>
+        </view>
+        <view class="info-row">
+          <text class="info-label">退款方式</text>
+          <text class="info-value">{{refundMethod}}</text>
+        </view>
+        <view class="info-row">
+          <text class="info-label">申请时间</text>
+          <text class="info-value">{{applyTime}}</text>
+        </view>
+        <view class="info-row">
+          <text class="info-label">预计到账</text>
+          <text class="info-value">1-7 个工作日</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="glass-neu-card step-card">
+        <view class="step-item done">
+          <view class="step-dot"></view>
+          <view class="step-content">
+            <text class="step-title">申请提交</text>
+            <text class="step-time">已完成</text>
+          </view>
+        </view>
+        <view class="step-item active">
+          <view class="step-dot"></view>
+          <view class="step-content">
+            <text class="step-title">商家审核</text>
+            <text class="step-time">进行中</text>
+          </view>
+        </view>
+        <view class="step-item">
+          <view class="step-dot"></view>
+          <view class="step-content">
+            <text class="step-title">退款处理</text>
+            <text class="step-time">待处理</text>
+          </view>
+        </view>
+        <view class="step-item">
+          <view class="step-dot"></view>
+          <view class="step-content">
+            <text class="step-title">退款到账</text>
+            <text class="step-time">待处理</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="cta-spacer"></view>
+  </scroll-view>
+
+  <view class="cta-bar">
+    <view class="cta-secondary press-scale" bindtap="onViewOrder">
+      <text class="cta-secondary-text">查看订单</text>
+    </view>
+    <view class="cta-primary press-scale" bindtap="onBackHome">
+      <text class="cta-primary-text">返回首页</text>
+    </view>
+  </view>
+</view>

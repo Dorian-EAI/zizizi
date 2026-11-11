@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自家人居家维修 · 玻璃新拟态 · 提交报价</title>
+    <style id="theme-vars">
+/* 自家人居家维修 - 玻璃新拟态 */
+:root {
+  /* Brand - Worker (Blue) */
+  --brand: #2D6CDF;
+  --brand-dark: #2456B8;
+  --brand-mid: #5A8EE8;
+  --brand-light: #DCE8FB;
+  --brand-glow: rgba(45, 108, 223, 0.18);
+  --brand-subtle: rgba(45, 108, 223, 0.08);
+
+  /* Accent (Amber) */
+  --accent: #D4944C;
+  --accent-dark: #A0723C;
+  --accent-mid: #E8C088;
+  --accent-light: #F5E6D0;
+  --accent-glow: rgba(212, 148, 76, 0.20);
+
+  /* Background */
+  --background: #F2EDE8;
+  --foreground: #2C2824;
+  --body-bg: #E8E4DF;
+  --bg-elevated: #F7F3EF;
+
+  /* Neumorphic */
+  --neu-light: #FFF8F2;
+  --neu-dark: #DDD6CE;
+  --neu-highlight: rgba(255, 255, 255, 0.55);
+
+  /* Surface & Card */
+  --card: rgba(255, 255, 255, 0.52);
+  --card-foreground: #2C2824;
+  --popover: #fff;
+  --popover-foreground: #2C2824;
+
+  /* Muted */
+  --muted: #F7F3EF;
+  --muted-foreground: #8B8178;
+
+  /* Border & Input */
+  --border: rgba(44, 40, 36, 0.06);
+  --input: rgba(44, 40, 36, 0.06);
+  --ring: #2D6CDF;
+
+  /* Primary */
+  --primary: #2D6CDF;
+  --primary-foreground: #ffffff;
+
+  /* Semantic aliases */
+  --state-success: #5B8C5A;
+  --state-warning: #D4944C;
+  --state-error: #C4533A;
+  --state-info: #5A8FAD;
+
+  /* Text */
+  --text-1: #2C2824;
+  --text-2: #8B8178;
+  --text-3: #B5ADA5;
+  --text-inverse: #ffffff;
+
+  /* Sep & Fill */
+  --sep: rgba(44, 40, 36, 0.06);
+  --fill: rgba(44, 40, 36, 0.04);
+
+  /* Green/Red/Orange/Blue semantic */
+  --green: #5B8C5A;
+  --red: #C4533A;
+  --orange: #D4944C;
+  --blue: #5A8FAD;
+
+  /* Radius */
+  --radius-sm: 0.75rem;
+  --radius-md: 1.2rem;
+  --radius-lg: 1.6rem;
+  --radius-full: 9999px;
+
+  /* Font — unified serif system */
+  --font-display: 'Cormorant Garamond', 'Noto Serif SC', 'STSong', Georgia, serif;
+  --font-body:    'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --font-nums:    'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
+  --font:         var(--font-body);
+
+  /* Motion */
+  --spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --dur: 0.2s;
+
+  /* Glass */
+  --glass-bg: rgba(255, 255, 255, 0.18);
+  --glass-blur: blur(12px) saturate(140%);
+  --glass-border: rgba(255, 255, 255, 0.60);
+
+  /* Surface presets for glass-neumorphic components */
+  --surface-1: rgba(255, 255, 255, 0.50);
+  --surface-2: rgba(255, 255, 255, 0.45);
+
+  /* Neumorphic shadow presets */
+  --neu-out-sm: 6px 6px 14px var(--neu-dark), -6px -6px 14px var(--neu-light), 0 4px 16px rgba(0, 0, 0, 0.04);
+  --neu-out-md: 8px 8px 18px var(--neu-dark), -8px -8px 18px var(--neu-light), 0 6px 24px rgba(0, 0, 0, 0.05);
+  --neu-out-lg: 10px 10px 24px var(--neu-dark), -10px -10px 24px var(--neu-light), 0 8px 32px rgba(0, 0, 0, 0.06);
+  --neu-in: inset 4px 4px 8px var(--neu-dark), inset -4px -4px 8px var(--neu-light);
+  --neu-in-deep: inset 5px 5px 10px var(--neu-dark), inset -5px -5px 10px var(--neu-light);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-full: var(--radius-full);
+}
+
+/* Semantic token fallback */
+#semantic-token-fallback {
+  --brand-background: var(--background);
+  --brand-foreground: var(--foreground);
+  --brand-card: var(--card);
+  --brand-card-foreground: var(--card-foreground);
+  --brand-popover: var(--popover);
+  --brand-popover-foreground: var(--popover-foreground);
+  --brand-primary: var(--primary);
+  --brand-primary-foreground: var(--primary-foreground);
+  --brand-muted: var(--muted);
+  --brand-muted-foreground: var(--muted-foreground);
+  --brand-border: var(--border);
+  --brand-input: var(--input);
+  --brand-ring: var(--ring);
+  --brand-radius-sm: var(--radius-sm);
+  --brand-radius-md: var(--radius-md);
+  --brand-radius-lg: var(--radius-lg);
+}
+
+/* ===== Global Neumorphic Components ===== */
+/* Tab Bar — Premium Liquid Glass, absolute-positioned within .phone frame */
+.tab-bar{
+  position:absolute;
+  bottom:10px;
+  left:50%;
+  transform:translateX(-50%);
+  width:calc(100% - 32px);
+  max-width:360px;
+  height:56px;
+  z-index:100;
+  background:rgba(255,255,255,0.18);
+  backdrop-filter:blur(48px) saturate(210%);
+  -webkit-backdrop-filter:blur(48px) saturate(210%);
+  border:0.5px solid rgba(255,255,255,0.45);
+  border-radius:24px;
+  box-shadow:
+    inset 0 1.5px 3px rgba(255,255,255,0.60),
+    inset 0 -0.5px 1px rgba(255,255,255,0.20),
+    0 0 0 0.5px rgba(0,0,0,0.04),
+    0 2px 10px rgba(0,0,0,0.06),
+    0 12px 36px rgba(0,0,0,0.08);
+  display:flex;
+  align-items:center;
+  justify-content:space-around;
+  padding:0 6px;
+}
+.tab-bar::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  background:linear-gradient(160deg,
+    rgba(255,255,255,0.42) 0%,
+    rgba(255,255,255,0.16) 20%,
+    rgba(255,255,255,0.03) 40%,
+    transparent 60%);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
+  padding:0.5px;
+  pointer-events:none;
+  z-index:1;
+}
+.tab-bar::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  background:linear-gradient(320deg,
+    transparent 60%,
+    rgba(13,148,136,0.06) 80%,
+    rgba(255,255,255,0.04) 100%);
+  pointer-events:none;
+  z-index:1;
+}
+.tab-item{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+  width:68px;
+  height:44px;
+  border-radius:14px;
+  color:var(--text-3);
+  font-size:11px;
+  font-weight:500;
+  text-decoration:none;
+  position:relative;
+  transition:all .2s;
+}
+.tab-item svg{
+  width:20px;
+  height:20px;
+  stroke:currentColor;
+  fill:none;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.tab-item[data-active="true"]{
+  color:var(--brand);
+  font-weight:600;
+}
+.tab-item[data-active="true"]::before{
+  content:"";
+  position:absolute;
+  width:54px;
+  height:42px;
+  border-radius:16px;
+  background:rgba(13,148,136,0.16);
+  backdrop-filter:blur(24px);
+  -webkit-backdrop-filter:blur(24px);
+  border:0.5px solid rgba(13,148,136,0.30);
+  box-shadow:
+    inset 0 1px 3px rgba(255,255,255,0.55),
+    inset 0 -0.5px 1px rgba(255,255,255,0.15),
+    0 2px 10px rgba(13,148,136,0.20),
+    0 0 0 0.5px rgba(13,148,136,0.08);
+  z-index:0;
+}
+.tab-item[data-active="true"] svg{
+  transform:scale(1.08);
+  position:relative;
+  z-index:1;
+}
+
+/* Buttons */
+.btn-neu-primary{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:var(--brand);color:var(--text-inverse);
+  border:none;border-radius:9999px;
+  padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
+  cursor:pointer;
+  box-shadow:var(--neu-out-sm),0 2px 8px var(--brand-glow);
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
+.btn-neu-primary:active{box-shadow:var(--neu-in);transform:scale(0.94)}
+
+.btn-neu-secondary{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,0.50);color:var(--brand);
+  border:0.5px solid rgba(255,255,255,0.60);border-radius:9999px;
+  padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
+  cursor:pointer;
+  box-shadow:var(--neu-out-sm);
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
+.btn-neu-secondary:active{box-shadow:var(--neu-in);transform:scale(0.94)}
+
+.btn-neu-ghost{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:transparent;color:var(--text-2);
+  border:0.5px solid var(--border);border-radius:9999px;
+  padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
+  cursor:pointer;
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease),color var(--dur) var(--ease);
+}
+.btn-neu-ghost:active{transform:scale(0.94);color:var(--brand)}
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-accent: var(--accent);
+    --radius-sm: var(--radius-sm);
+    --radius-md: var(--radius-md);
+    --radius-lg: var(--radius-lg);
+    --radius-full: var(--radius-full);
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+    <style id="semantic-token-fallback">
+      .bg-background { background-color: var(--background); }
+      .text-background { color: var(--background); }
+      .border-background { border-color: var(--background); }
+      .ring-background { --tw-ring-color: var(--background); }
+      .bg-foreground { background-color: var(--foreground); }
+      .text-foreground { color: var(--foreground); }
+      .border-foreground { border-color: var(--foreground); }
+      .ring-foreground { --tw-ring-color: var(--foreground); }
+      .bg-card { background-color: var(--card); }
+      .text-card { color: var(--card); }
+      .border-card { border-color: var(--card); }
+      .ring-card { --tw-ring-color: var(--card); }
+      .bg-card-foreground { background-color: var(--card-foreground); }
+      .text-card-foreground { color: var(--card-foreground); }
+      .border-card-foreground { border-color: var(--card-foreground); }
+      .ring-card-foreground { --tw-ring-color: var(--card-foreground); }
+      .bg-popover { background-color: var(--popover); }
+      .text-popover { color: var(--popover); }
+      .border-popover { border-color: var(--popover); }
+      .ring-popover { --tw-ring-color: var(--popover); }
+      .bg-popover-foreground { background-color: var(--popover-foreground); }
+      .text-popover-foreground { color: var(--popover-foreground); }
+      .border-popover-foreground { border-color: var(--popover-foreground); }
+      .ring-popover-foreground { --tw-ring-color: var(--popover-foreground); }
+      .bg-primary { background-color: var(--primary); }
+      .text-primary { color: var(--primary); }
+      .border-primary { border-color: var(--primary); }
+      .ring-primary { --tw-ring-color: var(--primary); }
+      .bg-primary-foreground { background-color: var(--primary-foreground); }
+      .text-primary-foreground { color: var(--primary-foreground); }
+      .border-primary-foreground { border-color: var(--primary-foreground); }
+      .ring-primary-foreground { --tw-ring-color: var(--primary-foreground); }
+      .bg-muted { background-color: var(--muted); }
+      .text-muted { color: var(--muted); }
+      .border-muted { border-color: var(--muted); }
+      .ring-muted { --tw-ring-color: var(--muted); }
+      .bg-muted-foreground { background-color: var(--muted-foreground); }
+      .text-muted-foreground { color: var(--muted-foreground); }
+      .border-muted-foreground { border-color: var(--muted-foreground); }
+      .ring-muted-foreground { --tw-ring-color: var(--muted-foreground); }
+      .bg-border { background-color: var(--border); }
+      .text-border { color: var(--border); }
+      .border-border { border-color: var(--border); }
+      .ring-border { --tw-ring-color: var(--border); }
+      .bg-input { background-color: var(--input); }
+      .text-input { color: var(--input); }
+      .border-input { border-color: var(--input); }
+      .ring-input { --tw-ring-color: var(--input); }
+      .bg-ring { background-color: var(--ring); }
+      .text-ring { color: var(--ring); }
+      .border-ring { border-color: var(--ring); }
+      .ring-ring { --tw-ring-color: var(--ring); }
+      .bg-accent { background-color: var(--accent); }
+      .text-accent { color: var(--accent); }
+      .border-accent { border-color: var(--accent); }
+      .ring-accent { --tw-ring-color: var(--accent); }
+    </style>
+    <style>
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      [data-icon] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        background-color: currentColor;
+      }
+    </style>
+</head>
+<body>
+<div class="phone" data-dom-id="page-worker-quote-submit">
+
+  <!-- ===== TOP NAV BAR (sticky) ===== -->
+  <header class="nav-bar">
+    <button class="nav-icon-btn" data-dom-id="quote-submit-back" data-target-page="page-worker-home" aria-label="返回">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m15 18-6-6 6-6"/>
+      </svg>
+    </button>
+    <h1 class="nav-title">提交报价</h1>
+    <div class="nav-placeholder" aria-hidden="true"></div>
+  </header>
+
+  <!-- ===== ORDER SUMMARY CARD (read-only) ===== -->
+  <section class="section">
+    <div class="glass-neu-card summary-card">
+      <div class="card-title">订单摘要</div>
+      <div class="summary-list">
+        <div class="summary-row">
+          <span class="summary-label">
+            <svg class="summary-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            服务类型
+          </span>
+          <span class="summary-value">防水维修</span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label">
+            <svg class="summary-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+            客户地址
+          </span>
+          <span class="summary-value">北京市朝阳区建国路88号</span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label">
+            <svg class="summary-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="M8 2v4"/><path d="M16 2v4"/></svg>
+            预约时间
+          </span>
+          <span class="summary-value mono">今天 15:00-18:00</span>
+        </div>
+        <div class="summary-desc">
+          <div class="summary-desc-label">问题描述</div>
+          <div class="summary-desc-text">卫生间墙面渗水，需检查防水层</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== QUOTE AMOUNT INPUT CARD ===== -->
+  <section class="section">
+    <div class="glass-neu-card amount-card">
+      <div class="amount-label">报价金额</div>
+      <div class="amount-field">
+        <span class="amount-symbol">&yen;</span>
+        <input class="amount-input" type="text" inputmode="decimal" value="150" placeholder="0" data-dom-id="quote-amount" aria-label="报价金额">
+      </div>
+      <div class="amount-divider"></div>
+      <div class="amount-quick">
+        <button class="quick-chip" data-amount="100" data-dom-id="quote-submit-quick-100" data-action="set-quote-amount">&yen;100</button>
+        <button class="quick-chip is-active" data-amount="150" data-dom-id="quote-submit-quick-150" data-action="set-quote-amount">&yen;150</button>
+        <button class="quick-chip" data-amount="200" data-dom-id="quote-submit-quick-200" data-action="set-quote-amount">&yen;200</button>
+        <button class="quick-chip" data-amount="custom" data-dom-id="quote-submit-quick-custom" data-action="focus-custom-quote-amount">自定义</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FORM CARD ===== -->
+  <section class="section">
+    <div class="glass-neu-card form-card">
+      <div class="card-title">报价明细</div>
+
+      <!-- 预计用时 -->
+      <div class="form-row">
+        <span class="form-label">预计用时</span>
+        <div class="duration-group">
+          <button class="dur-chip" data-dur="1" data-dom-id="quote-submit-duration-1" data-action="set-service-duration">1h</button>
+          <button class="dur-chip is-active" data-dur="1.5" data-dom-id="quote-submit-duration-1-5" data-action="set-service-duration">1.5h</button>
+          <button class="dur-chip" data-dur="2" data-dom-id="quote-submit-duration-2" data-action="set-service-duration">2h</button>
+          <button class="dur-chip" data-dur="3" data-dom-id="quote-submit-duration-3" data-action="set-service-duration">3h+</button>
+        </div>
+      </div>
+
+      <!-- 材料费（选填） -->
+      <div class="form-row">
+        <span class="form-label">材料费<span class="form-label-opt">选填</span></span>
+        <div class="neu-input">
+          <span class="neu-input-prefix">&yen;</span>
+          <input type="text" inputmode="decimal" placeholder="0.00" data-dom-id="material-fee" aria-label="材料费">
+        </div>
+      </div>
+
+      <!-- 上门时间 -->
+      <div class="form-row">
+        <span class="form-label">上门时间</span>
+        <div class="neu-input">
+          <input type="text" readonly value="今天 15:00-18:00" data-dom-id="visit-time" aria-label="上门时间">
+          <svg class="neu-input-suffix-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="M8 2v4"/><path d="M16 2v4"/></svg>
+        </div>
+      </div>
+
+      <!-- 报价说明（选填） -->
+      <div class="form-row">
+        <span class="form-label">报价说明<span class="form-label-opt">选填</span></span>
+        <div class="neu-input neu-input-area">
+          <textarea placeholder="补充说明维修方案、所用材料等" data-dom-id="quote-note" aria-label="报价说明"></textarea>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== QUOTE HINT CARD ===== -->
+  <section class="section">
+    <div class="glass-neu-card hint-card">
+      <div class="hint-ic">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>
+      </div>
+      <div class="hint-text">合理报价更易被客户选中，平台抽成 <span class="hi-strong">5%</span>，预计到手 <span class="hi-net" data-dom-id="payout-amount">&yen;142.5</span></div>
+    </div>
+  </section>
+
+  <!-- ===== BOTTOM FIXED ACTION BAR ===== -->
+  <footer class="action-bar">
+    <button class="action-btn-secondary" data-dom-id="quote-submit-save-draft" data-action="save-quote-draft">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></svg>
+      <span>保存草稿</span>
+    </button>
+    <button class="action-btn-primary" data-dom-id="quote-submit-confirm" data-action="submit-quote">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+      <span>提交报价</span>
+    </button>
+  </footer>
+
+</div>
+
+    <style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --brand:#2D6CDF;--brand-dark:#2456B8;--brand-mid:#5A8EE8;--brand-light:#DCE8FB;
+  --brand-glow:rgba(45,108,223,0.18);--brand-subtle:rgba(45,108,223,0.08);
+  --brand-gradient:linear-gradient(135deg,#2D6CDF 0%,#5A8EE8 48%,#D4944C 100%);
+  --accent:#D4944C;--accent-dark:#A0723C;--accent-light:#F5E6D0;--accent-glow:rgba(212,148,76,0.16);
+  --bg:#F2EDE8;--bg-elevated:#F7F3EF;
+  --neu-light:#FFF8F2;--neu-dark:#DDD6CE;
+  --text-1:#2C2824;--text-2:#8B8178;--text-3:#B5ADA5;--text-inverse:#FFFFFF;
+  --sep:rgba(44,40,36,0.06);--fill:rgba(44,40,36,0.04);
+  --green:#5B8C5A;--red:#C4533A;--orange:#D4944C;--blue:#5A8FAD;
+  --r:1.2rem;--r-lg:1.6rem;--r-sm:0.75rem;--r-pill:9999px;--r-tab:24px;
+  /* Font */--font-display:'Cormorant Garamond', 'Noto Serif SC', 'STSong', Georgia, serif;
+  --font-body:'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --font-nums:'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
+  --font:var(--font-body);
+  --neu-out-sm:6px 6px 14px var(--neu-dark),-6px -6px 14px var(--neu-light),0 4px 16px rgba(0,0,0,0.04);
+  --neu-out-md:8px 8px 18px var(--neu-dark),-8px -8px 18px var(--neu-light),0 6px 24px rgba(0,0,0,0.05);
+  --neu-out-lg:10px 10px 24px var(--neu-dark),-10px -10px 24px var(--neu-light),0 8px 32px rgba(0,0,0,0.06);
+  --neu-in:inset 4px 4px 8px var(--neu-dark),inset -4px -4px 8px var(--neu-light);
+  --neu-in-deep:inset 5px 5px 10px var(--neu-dark),inset -5px -5px 10px var(--neu-light);
+  --spring:cubic-bezier(0.175,0.885,0.32,1.275);--ease:cubic-bezier(0.25,0.46,0.45,0.94);--dur:0.2s;
+}
+html,body{font-family:var(--font);color:var(--text-1);-webkit-font-smoothing:antialiased}
+body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh;background:#E8E4DF;letter-spacing:-0.01em}
+
+/* ===== Phone Frame (活力渐变布局: 无圆角/无overflow) ===== */
+.phone{position:relative;width:414px;min-height:896px;background:var(--bg);border-radius:48px;overflow:hidden;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.12),0 4px 16px rgba(0,0,0,.06);padding-bottom:82px}
+
+/* Mono / Tabular nums */
+.mono{font-variant-numeric:tabular-nums;letter-spacing:-0.01em}
+
+/* ===== Top Nav Bar (sticky) ===== */
+.nav-bar{background:radial-gradient(ellipse 220px 160px at 78% 45%,rgba(212,148,76,.10) 0%,transparent 70%),radial-gradient(ellipse 180px 140px at 18% 75%,rgba(45,108,223,.10) 0%,transparent 70%),linear-gradient(135deg,rgba(45,108,223,.08) 0%,rgba(212,148,76,.04) 50%,rgba(45,108,223,.05) 100%);position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:18px 20px;padding-top:max(18px,env(safe-area-inset-top)); border-radius:0 0 28px 28px; overflow:hidden;}
+.nav-icon-btn{
+  width:44px;height:44px;border-radius:50%;border:none;
+  background:var(--bg-elevated);
+  box-shadow:var(--neu-out-sm),inset 0 1px 1px rgba(255,255,255,0.45);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--text-1);cursor:pointer;flex-shrink:0;
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
+.nav-icon-btn:active{box-shadow:var(--neu-in);transform:scale(0.94)}
+.nav-icon-btn svg{width:22px;height:22px}
+.nav-title{font-size:17px;font-weight:700;color:var(--text-1);letter-spacing:-0.02em}
+.nav-placeholder{width:44px;height:44px;flex-shrink:0}
+
+/* ===== Sections ===== */
+.section{padding:0 20px;margin-top:16px;position:relative;z-index:2}
+.section:first-of-type{margin-top:18px}
+
+/* ===== Glass + Neumorphic Card ===== */
+.glass-neu-card{
+  background:rgba(255,255,255,0.52);
+  backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);
+  border:1px solid rgba(255,255,255,0.70);
+  border-radius:var(--r-lg);
+  box-shadow:var(--neu-out-md),0 6px 28px rgba(0,0,0,0.06),0 2px 8px rgba(45,108,223,.04),0 0 0 1px rgba(44,40,36,0.05);
+  position:relative;overflow:hidden;
+}
+.glass-neu-card::before{
+  content:'';position:absolute;inset:0;border-radius:inherit;
+  background:linear-gradient(165deg,rgba(255,255,255,0.22) 0%,rgba(255,255,255,0.05) 30%,transparent 55%);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;padding:0.5px;pointer-events:none;
+}
+
+/* ===== Card Title ===== */
+.card-title{font-size:16px;font-weight:700;color:var(--text-1);letter-spacing:-0.01em;margin-bottom:14px}
+
+/* ===== Bottom Fixed Action Bar ===== */
+.action-bar{
+  position:fixed;bottom:0;left:50%;transform:translateX(-50%);
+  width:100%;max-width:414px;
+  display:flex;align-items:center;gap:12px;
+  padding:14px 20px;padding-bottom:max(14px,env(safe-area-inset-bottom));
+  background:rgba(242,237,232,0.88);
+  backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);
+  border-top:0.5px solid rgba(255,255,255,0.55);
+  box-shadow:0 -4px 20px rgba(0,0,0,0.05);
+  z-index:60;
+}
+.action-btn-secondary{
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  height:48px;flex:0 0 38%;
+  background:var(--bg-elevated);color:var(--text-1);
+  border:0.5px solid rgba(255,255,255,0.60);border-radius:var(--r-pill);
+  font-size:14px;font-weight:600;font-family:var(--font);cursor:pointer;
+  box-shadow:var(--neu-out-sm),inset 0 1px 1px rgba(255,255,255,0.45);
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
+.action-btn-secondary:active{box-shadow:var(--neu-in);transform:scale(0.96)}
+.action-btn-secondary svg{width:18px;height:18px;color:var(--text-2)}
+.action-btn-primary{
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  height:48px;flex:1;
+  background:var(--brand-gradient);color:var(--text-inverse);
+  border:none;border-radius:var(--r-pill);
+  font-size:15px;font-weight:700;font-family:var(--font);cursor:pointer;
+  letter-spacing:0.02em;
+  box-shadow:var(--neu-out-sm),0 4px 14px var(--brand-glow);
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
+.action-btn-primary:active{box-shadow:var(--neu-in);transform:scale(0.96)}
+.action-btn-primary svg{width:19px;height:19px}
+
+/* ===== Reduced Motion ===== */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{
+    animation-duration:0.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:0.01ms !important;
+  }
+}
+
+    </style>
+    <style>
+/* ===== Page-Specific: Worker Quote Submit ===== */
+
+/* ----- Order Summary Card (compact, read-only) ----- */
+.summary-card{padding:16px 18px}
+.summary-list{display:flex;flex-direction:column;gap:0}
+.summary-row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:9px 0;
+  border-bottom:0.5px solid var(--sep);
+}
+.summary-row:last-of-type{border-bottom:none}
+.summary-label{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:13px;color:var(--text-2);font-weight:500;flex-shrink:0;
+}
+.summary-ic{width:14px;height:14px;color:var(--text-3);flex-shrink:0}
+.summary-value{font-size:13px;color:var(--text-1);font-weight:600;text-align:right;max-width:62%}
+.summary-desc{
+  margin-top:10px;padding:11px 13px;
+  background:var(--fill);border-radius:var(--r-sm);
+  border:0.5px solid var(--sep);
+}
+.summary-desc-label{font-size:11px;color:var(--text-2);font-weight:600;margin-bottom:4px;letter-spacing:0.02em}
+.summary-desc-text{font-size:12.5px;color:var(--text-1);line-height:1.5;font-weight:500}
+
+/* ----- Quote Amount Input Card ----- */
+.amount-card{padding:18px}
+.amount-label{font-size:13.5px;color:var(--text-2);font-weight:600;margin-bottom:4px;letter-spacing:-0.01em}
+.amount-field{
+  display:flex;align-items:baseline;gap:6px;
+  padding:6px 2px 2px;
+}
+.amount-symbol{
+  font-size:38px;font-weight:800;color:var(--brand);
+  line-height:1;letter-spacing:-0.02em;
+  font-variant-numeric:tabular-nums;
+}
+.amount-input{
+  flex:1;min-width:0;
+  border:none;outline:none;background:transparent;
+  font-family:var(--font);font-size:48px;font-weight:800;
+  color:var(--brand);text-align:left;letter-spacing:-0.02em;
+  font-variant-numeric:tabular-nums;line-height:1.1;
+  padding:0;
+}
+.amount-input::placeholder{color:var(--text-3);font-weight:700;opacity:0.7}
+.amount-divider{height:0.5px;background:var(--sep);margin:6px 0 14px}
+.amount-quick{display:flex;gap:8px}
+.quick-chip{
+  flex:1;min-width:0;height:36px;
+  display:inline-flex;align-items:center;justify-content:center;
+  background:var(--bg-elevated);color:var(--text-2);
+  font-size:13px;font-weight:600;font-family:var(--font);
+  border:0.5px solid rgba(255,255,255,0.60);border-radius:var(--r-pill);
+  box-shadow:var(--neu-out-sm),inset 0 1px 1px rgba(255,255,255,0.45);
+  cursor:pointer;
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease),color var(--dur) var(--ease),background var(--dur) var(--ease);
+}
+.quick-chip:active{box-shadow:var(--neu-in);transform:scale(0.95)}
+.quick-chip.is-active{
+  background:var(--brand);color:var(--text-inverse);
+  box-shadow:var(--neu-in),inset 0 0 0 1px rgba(45,108,223,.12);
+}
+
+/* ----- Form Card ----- */
+.form-card{padding:18px}
+.form-row{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.form-row:last-child{margin-bottom:0}
+.form-label{
+  font-size:13.5px;color:var(--text-2);font-weight:600;letter-spacing:-0.01em;
+  display:inline-flex;align-items:center;gap:6px;
+}
+.form-label-opt{
+  font-size:11px;color:var(--text-3);font-weight:500;
+  background:var(--fill);padding:1px 6px;border-radius:var(--r-pill);
+  border:0.5px solid var(--sep);
+}
+
+/* ----- Neumorphic Inset Input ----- */
+.neu-input{
+  width:100%;
+  display:flex;align-items:center;gap:8px;
+  background:var(--bg);border:none;border-radius:var(--r);
+  box-shadow:var(--neu-in);
+  padding:12px 14px;
+  transition:box-shadow var(--dur) var(--ease);
+}
+.neu-input:focus-within{
+  box-shadow:var(--neu-in),0 0 0 3px var(--brand-subtle);
+}
+.neu-input input,
+.neu-input textarea{
+  flex:1;min-width:0;border:none;outline:none;background:transparent;
+  font-family:var(--font);font-size:15px;color:var(--text-1);font-weight:500;
+  padding:0;line-height:1.4;
+}
+.neu-input input::placeholder,
+.neu-input textarea::placeholder{color:var(--text-3);font-weight:400}
+.neu-input-prefix{font-size:15px;color:var(--brand);font-weight:700;flex-shrink:0}
+.neu-input-suffix-ic{width:20px;height:20px;color:var(--text-3);flex-shrink:0;cursor:pointer}
+
+/* Textarea variant */
+.neu-input.neu-input-area{align-items:flex-start}
+.neu-input.neu-input-area textarea{
+  resize:none;min-height:90px;line-height:1.55;
+}
+
+/* ----- Duration Chips ----- */
+.duration-group{display:flex;gap:8px}
+.dur-chip{
+  flex:1;height:42px;
+  display:inline-flex;align-items:center;justify-content:center;
+  background:var(--bg-elevated);color:var(--text-2);
+  font-size:13.5px;font-weight:600;font-family:var(--font);
+  border:0.5px solid rgba(255,255,255,0.60);border-radius:var(--r);
+  box-shadow:var(--neu-out-sm),inset 0 1px 1px rgba(255,255,255,0.45);
+  cursor:pointer;
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease),color var(--dur) var(--ease),background var(--dur) var(--ease);
+}
+.dur-chip:active{box-shadow:var(--neu-in);transform:scale(0.96)}
+.dur-chip.is-active{
+  background:var(--brand);color:var(--text-inverse);
+  box-shadow:var(--neu-in),inset 0 0 0 1px rgba(45,108,223,.12);
+}
+
+/* ----- Quote Hint Card (light tinted) ----- */
+.hint-card{
+  padding:14px 16px;
+  background:rgba(45,108,223,.04);
+  border-color:rgba(45,108,223,.08);
+  display:flex;align-items:flex-start;gap:10px;
+}
+.hint-ic{
+  width:26px;height:26px;border-radius:50%;flex-shrink:0;
+  background:var(--brand);color:var(--text-inverse);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 2px 8px var(--brand-glow),inset 0 1px 1px rgba(255,255,255,0.3);
+}
+.hint-ic svg{width:15px;height:15px}
+.hint-text{font-size:12.5px;color:var(--text-1);line-height:1.55;font-weight:500;flex:1;padding-top:2px}
+.hint-text .hi-strong{color:var(--brand);font-weight:700}
+.hint-text .hi-net{
+  color:var(--brand);font-weight:800;font-size:14px;
+  font-variant-numeric:tabular-nums;letter-spacing:-0.01em;
+}
+
+    </style>
+    <style>@theme inline{--font-sans: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+--font-serif: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+--color-background:var(--background);--color-foreground:var(--foreground);--color-card:var(--card);--color-card-foreground:var(--card-foreground);--color-popover:var(--popover);--color-popover-foreground:var(--popover-foreground);--color-primary:var(--primary);--color-primary-foreground:var(--primary-foreground);--color-muted:var(--muted);--color-muted-foreground:var(--muted-foreground);--color-border:var(--border);--color-input:var(--input);--color-ring:var(--ring);--radius-md:var(--radius-md);}</style>
+    <style>@layer base{body{background:var(--background);color:var(--foreground);font-family:var(--font-body);}}</style>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!-- components/tab-bar/index.wxml
+  Premium Liquid Glass 浮动 TabBar（忠于设计画布）
+  - 容器：高 blur + 高 saturate + 半透明边框
+  - 激活态：独立玻璃背景层 + 品牌色边框 + 多层阴影
+-->
+<view class="tab-bar {{role === 'worker' ? 'tab-bar-worker' : ''}}">
+  <view class="tab-bar-inner">
+    <block wx:for="{{tabs}}" wx:key="key">
+      <view
+        class="tab-item {{active === item.key ? 'is-active' : ''}}"
+        data-key="{{item.key}}"
+        data-path="{{item.path}}"
+        bindtap="onTap"
+        hover-class="tab-item-hover"
+        hover-stay-time="80"
+      >
+        <!-- 选中态玻璃背景层（替代 ::before 伪元素） -->
+        <view wx:if="{{active === item.key}}" class="tab-item__glass"></view>
+
+        <view class="tab-item__content">
+          <image
+            src="{{active === item.key ? item.iconActive : item.iconSrc}}"
+            mode="aspectFit"
+            class="tab-icon"
+            lazy-load="{{false}}"
+          />
+          <text class="tab-text">{{item.text}}</text>
+        </view>
+      </view>
+    </block>
+  </view>
+</view>

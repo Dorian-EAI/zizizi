@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自家人居家维修 · 玻璃新拟态 · 服务详情</title>
+    <style id="theme-vars">
+/* 自家人居家维修 - 玻璃新拟态 */
+:root {
+  /* Brand - Client (Teal) */
+  --brand: #0D9488;
+  --brand-dark: #0A7A70;
+  --brand-mid: #14B8A6;
+  --brand-light: #CCFBF1;
+  --brand-glow: rgba(13, 148, 136, 0.24);
+  --brand-subtle: rgba(13, 148, 136, 0.10);
+
+  /* Accent (Amber) */
+  --accent: #D4944C;
+  --accent-dark: #A0723C;
+  --accent-mid: #E8C088;
+  --accent-light: #F5E6D0;
+  --accent-glow: rgba(212, 148, 76, 0.20);
+
+  /* Background */
+  --background: #F2EDE8;
+  --foreground: #2C2824;
+  --body-bg: #E8E4DF;
+  --bg-elevated: #F7F3EF;
+
+  /* Neumorphic */
+  --neu-light: #FFF8F2;
+  --neu-dark: #DDD6CE;
+  --neu-highlight: rgba(255, 255, 255, 0.55);
+
+  /* Surface & Card */
+  --card: rgba(255, 255, 255, 0.52);
+  --card-foreground: #2C2824;
+  --popover: #fff;
+  --popover-foreground: #2C2824;
+
+  /* Muted */
+  --muted: #F7F3EF;
+  --muted-foreground: #8B8178;
+
+  /* Border & Input */
+  --border: rgba(44, 40, 36, 0.06);
+  --input: rgba(44, 40, 36, 0.06);
+  --ring: #0D9488;
+
+  /* Primary */
+  --primary: #0D9488;
+  --primary-foreground: #ffffff;
+
+  /* Semantic aliases */
+  --state-success: #5B8C5A;
+  --state-warning: #D4944C;
+  --state-error: #C4533A;
+  --state-info: #5A8FAD;
+
+  /* Text */
+  --text-1: #2C2824;
+  --text-2: #8B8178;
+  --text-3: #B5ADA5;
+  --text-inverse: #ffffff;
+
+  /* Sep & Fill */
+  --sep: rgba(44, 40, 36, 0.06);
+  --fill: rgba(44, 40, 36, 0.04);
+
+  /* Green/Red/Orange/Blue semantic */
+  --green: #5B8C5A;
+  --red: #C4533A;
+  --orange: #D4944C;
+  --blue: #5A8FAD;
+
+  /* Radius */
+  --radius-sm: 0.75rem;
+  --radius-md: 1.2rem;
+  --radius-lg: 1.6rem;
+  --radius-full: 9999px;
+
+  /* Font — unified serif system */
+  --font-display: 'Cormorant Garamond', 'Noto Serif SC', 'STSong', Georgia, serif;
+  --font-body:    'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --font-nums:    'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
+  --font:         var(--font-body);
+
+  /* Motion */
+  --spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --dur: 0.2s;
+
+  /* Glass */
+  --glass-bg: rgba(255, 255, 255, 0.18);
+  --glass-blur: blur(12px) saturate(140%);
+  --glass-border: rgba(255, 255, 255, 0.60);
+
+  /* Surface presets for glass-neumorphic components */
+  --surface-1: rgba(255, 255, 255, 0.50);
+  --surface-2: rgba(255, 255, 255, 0.45);
+
+  /* Neumorphic shadow presets */
+  --neu-out-sm: 6px 6px 14px var(--neu-dark), -6px -6px 14px var(--neu-light), 0 4px 16px rgba(0, 0, 0, 0.04);
+  --neu-out-md: 8px 8px 18px var(--neu-dark), -8px -8px 18px var(--neu-light), 0 6px 24px rgba(0, 0, 0, 0.05);
+  --neu-out-lg: 10px 10px 24px var(--neu-dark), -10px -10px 24px var(--neu-light), 0 8px 32px rgba(0, 0, 0, 0.06);
+  --neu-in: inset 4px 4px 8px var(--neu-dark), inset -4px -4px 8px var(--neu-light);
+  --neu-in-deep: inset 5px 5px 10px var(--neu-dark), inset -5px -5px 10px var(--neu-light);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-full: var(--radius-full);
+}
+
+/* Semantic token fallback */
+#semantic-token-fallback {
+  --brand-background: var(--background);
+  --brand-foreground: var(--foreground);
+  --brand-card: var(--card);
+  --brand-card-foreground: var(--card-foreground);
+  --brand-popover: var(--popover);
+  --brand-popover-foreground: var(--popover-foreground);
+  --brand-primary: var(--primary);
+  --brand-primary-foreground: var(--primary-foreground);
+  --brand-muted: var(--muted);
+  --brand-muted-foreground: var(--muted-foreground);
+  --brand-border: var(--border);
+  --brand-input: var(--input);
+  --brand-ring: var(--ring);
+  --brand-radius-sm: var(--radius-sm);
+  --brand-radius-md: var(--radius-md);
+  --brand-radius-lg: var(--radius-lg);
+}
+
+/* ===== Global Neumorphic Components ===== */
+/* Tab Bar — Premium Liquid Glass, absolute-positioned within .phone frame */
+.tab-bar{
+  position:absolute;
+  bottom:10px;
+  left:50%;
+  transform:translateX(-50%);
+  width:calc(100% - 32px);
+  max-width:360px;
+  height:56px;
+  z-index:100;
+  background:rgba(255,255,255,0.18);
+  backdrop-filter:blur(48px) saturate(210%);
+  -webkit-backdrop-filter:blur(48px) saturate(210%);
+  border:0.5px solid rgba(255,255,255,0.45);
+  border-radius:24px;
+  box-shadow:
+    inset 0 1.5px 3px rgba(255,255,255,0.60),
+    inset 0 -0.5px 1px rgba(255,255,255,0.20),
+    0 0 0 0.5px rgba(0,0,0,0.04),
+    0 2px 10px rgba(0,0,0,0.06),
+    0 12px 36px rgba(0,0,0,0.08);
+  display:flex;
+  align-items:center;
+  justify-content:space-around;
+  padding:0 6px;
+}
+.tab-bar::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  background:linear-gradient(160deg,
+    rgba(255,255,255,0.42) 0%,
+    rgba(255,255,255,0.16) 20%,
+    rgba(255,255,255,0.03) 40%,
+    transparent 60%);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
+  padding:0.5px;
+  pointer-events:none;
+  z-index:1;
+}
+.tab-bar::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  background:linear-gradient(320deg,
+    transparent 60%,
+    rgba(13,148,136,0.06) 80%,
+    rgba(255,255,255,0.04) 100%);
+  pointer-events:none;
+  z-index:1;
+}
+.tab-item{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+  width:68px;
+  height:44px;
+  border-radius:14px;
+  color:var(--text-3);
+  font-size:11px;
+  font-weight:500;
+  text-decoration:none;
+  position:relative;
+  transition:all .2s;
+}
+.tab-item svg{
+  width:20px;
+  height:20px;
+  stroke:currentColor;
+  fill:none;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.tab-item[data-active="true"]{
+  color:var(--brand);
+  font-weight:600;
+}
+.tab-item[data-active="true"]::before{
+  content:"";
+  position:absolute;
+  width:54px;
+  height:42px;
+  border-radius:16px;
+  background:rgba(13,148,136,0.16);
+  backdrop-filter:blur(24px);
+  -webkit-backdrop-filter:blur(24px);
+  border:0.5px solid rgba(13,148,136,0.30);
+  box-shadow:
+    inset 0 1px 3px rgba(255,255,255,0.55),
+    inset 0 -0.5px 1px rgba(255,255,255,0.15),
+    0 2px 10px rgba(13,148,136,0.20),
+    0 0 0 0.5px rgba(13,148,136,0.08);
+  z-index:0;
+}
+.tab-item[data-active="true"] svg{
+  transform:scale(1.08);
+  position:relative;
+  z-index:1;
+}
+
+/* Buttons */
+.btn-neu-primary{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:var(--brand);color:var(--text-inverse);
+  border:none;border-radius:9999px;
+  padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
+  cursor:pointer;
+  box-shadow:var(--neu-out-sm),0 2px 8px var(--brand-glow);
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
+.btn-neu-primary:active{box-shadow:var(--neu-in);transform:scale(0.94)}
+
+.btn-neu-secondary{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,0.50);color:var(--brand);
+  border:0.5px solid rgba(255,255,255,0.60);border-radius:9999px;
+  padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
+  cursor:pointer;
+  box-shadow:var(--neu-out-sm);
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
+.btn-neu-secondary:active{box-shadow:var(--neu-in);transform:scale(0.94)}
+
+.btn-neu-ghost{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:transparent;color:var(--text-2);
+  border:0.5px solid var(--border);border-radius:9999px;
+  padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
+  cursor:pointer;
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease),color var(--dur) var(--ease);
+}
+.btn-neu-ghost:active{transform:scale(0.94);color:var(--brand)}
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-accent: var(--accent);
+    --radius-sm: var(--radius-sm);
+    --radius-md: var(--radius-md);
+    --radius-lg: var(--radius-lg);
+    --radius-full: var(--radius-full);
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+    <style id="semantic-token-fallback">
+      .bg-background { background-color: var(--background); }
+      .text-background { color: var(--background); }
+      .border-background { border-color: var(--background); }
+      .ring-background { --tw-ring-color: var(--background); }
+      .bg-foreground { background-color: var(--foreground); }
+      .text-foreground { color: var(--foreground); }
+      .border-foreground { border-color: var(--foreground); }
+      .ring-foreground { --tw-ring-color: var(--foreground); }
+      .bg-card { background-color: var(--card); }
+      .text-card { color: var(--card); }
+      .border-card { border-color: var(--card); }
+      .ring-card { --tw-ring-color: var(--card); }
+      .bg-card-foreground { background-color: var(--card-foreground); }
+      .text-card-foreground { color: var(--card-foreground); }
+      .border-card-foreground { border-color: var(--card-foreground); }
+      .ring-card-foreground { --tw-ring-color: var(--card-foreground); }
+      .bg-popover { background-color: var(--popover); }
+      .text-popover { color: var(--popover); }
+      .border-popover { border-color: var(--popover); }
+      .ring-popover { --tw-ring-color: var(--popover); }
+      .bg-popover-foreground { background-color: var(--popover-foreground); }
+      .text-popover-foreground { color: var(--popover-foreground); }
+      .border-popover-foreground { border-color: var(--popover-foreground); }
+      .ring-popover-foreground { --tw-ring-color: var(--popover-foreground); }
+      .bg-primary { background-color: var(--primary); }
+      .text-primary { color: var(--primary); }
+      .border-primary { border-color: var(--primary); }
+      .ring-primary { --tw-ring-color: var(--primary); }
+      .bg-primary-foreground { background-color: var(--primary-foreground); }
+      .text-primary-foreground { color: var(--primary-foreground); }
+      .border-primary-foreground { border-color: var(--primary-foreground); }
+      .ring-primary-foreground { --tw-ring-color: var(--primary-foreground); }
+      .bg-muted { background-color: var(--muted); }
+      .text-muted { color: var(--muted); }
+      .border-muted { border-color: var(--muted); }
+      .ring-muted { --tw-ring-color: var(--muted); }
+      .bg-muted-foreground { background-color: var(--muted-foreground); }
+      .text-muted-foreground { color: var(--muted-foreground); }
+      .border-muted-foreground { border-color: var(--muted-foreground); }
+      .ring-muted-foreground { --tw-ring-color: var(--muted-foreground); }
+      .bg-border { background-color: var(--border); }
+      .text-border { color: var(--border); }
+      .border-border { border-color: var(--border); }
+      .ring-border { --tw-ring-color: var(--border); }
+      .bg-input { background-color: var(--input); }
+      .text-input { color: var(--input); }
+      .border-input { border-color: var(--input); }
+      .ring-input { --tw-ring-color: var(--input); }
+      .bg-ring { background-color: var(--ring); }
+      .text-ring { color: var(--ring); }
+      .border-ring { border-color: var(--ring); }
+      .ring-ring { --tw-ring-color: var(--ring); }
+      .bg-accent { background-color: var(--accent); }
+      .text-accent { color: var(--accent); }
+      .border-accent { border-color: var(--accent); }
+      .ring-accent { --tw-ring-color: var(--accent); }
+    </style>
+    <style>
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      [data-icon] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        background-color: currentColor;
+      }
+    </style>
+</head>
+<body>
+<div class="phone" data-dom-id="page-client-service-detail">
+
+  <!-- ===== TOP NAV BAR (sticky) ===== -->
+  <header class="nav-bar">
+    <button class="nav-btn" data-dom-id="back-btn" data-target-page="page-client-home" aria-label="返回">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="19" y1="12" x2="5" y2="12"/>
+        <polyline points="12 19 5 12 12 5"/>
+      </svg>
+    </button>
+    <h1 class="nav-title">服务详情</h1>
+    <button class="nav-btn" data-dom-id="fav-btn" data-action="toggle-favorite-service" aria-label="收藏">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+      </svg>
+    </button>
+  </header>
+
+  <!-- ===== SERVICE HERO ===== -->
+  <section class="service-hero">
+    <div class="hero-deco hero-deco-1"></div>
+    <div class="hero-deco hero-deco-2"></div>
+    <div class="hero-deco hero-deco-3"></div>
+    <svg class="hero-watermark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+    </svg>
+    <div class="hero-content">
+      <div class="hero-tag">官方认证服务</div>
+      <h2 class="service-name">防水维修</h2>
+      <div class="service-meta">
+        <span class="meta-star">&#9733; 4.9</span>
+        <span class="meta-dot">&middot;</span>
+        <span>128次服务</span>
+        <span class="meta-dot">&middot;</span>
+        <span>3分钟响应</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PRICE CARD ===== -->
+  <div class="section">
+    <div class="glass-neu-card price-card">
+      <div class="card-title">
+        <span class="title-bar"></span>
+        <span>服务报价</span>
+      </div>
+      <div class="price-list">
+        <div class="price-row" data-selected="false" data-dom-id="service-price-basic" data-action="select-service-price">
+          <div class="price-left">
+            <div class="price-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+              </svg>
+            </div>
+            <div class="price-info">
+              <div class="price-name">基础维修</div>
+              <div class="price-desc">小面积渗漏修补</div>
+            </div>
+          </div>
+          <div class="price-right">
+            <div class="price-value"><span class="cur">&yen;</span><span class="amt">128</span></div>
+            <div class="price-radio">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="price-row" data-selected="true" data-dom-id="service-price-standard" data-action="select-service-price">
+          <div class="price-left">
+            <div class="price-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+              </svg>
+            </div>
+            <div class="price-info">
+              <div class="price-name">标准维修</div>
+              <div class="price-desc">中等面积渗漏治理</div>
+            </div>
+          </div>
+          <div class="price-right">
+            <div class="price-value"><span class="cur">&yen;</span><span class="amt">268</span></div>
+            <div class="price-radio">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="price-row" data-selected="false" data-dom-id="service-price-full" data-action="select-service-price">
+          <div class="price-left">
+            <div class="price-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                <path d="m9 12 2 2 4-4"/>
+              </svg>
+            </div>
+            <div class="price-info">
+              <div class="price-name">全面维修</div>
+              <div class="price-desc">大面积防水层重做</div>
+            </div>
+          </div>
+          <div class="price-right">
+            <div class="price-value"><span class="cur">&yen;</span><span class="amt">468</span></div>
+            <div class="price-radio">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SERVICE CONTENT CARD ===== -->
+  <div class="section">
+    <div class="glass-neu-card content-card">
+      <div class="card-title">
+        <span class="title-bar"></span>
+        <span>服务内容</span>
+      </div>
+      <div class="content-list">
+        <div class="content-item" data-dom-id="service-step-survey" data-action="expand-service-step">
+          <div class="check-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <span class="step-text">现场勘查</span>
+          <svg class="step-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div class="content-item" data-dom-id="service-step-plan" data-action="expand-service-step">
+          <div class="check-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <span class="step-text">方案制定</span>
+          <svg class="step-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div class="content-item" data-dom-id="service-step-repair" data-action="expand-service-step">
+          <div class="check-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <span class="step-text">施工维修</span>
+          <svg class="step-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div class="content-item" data-dom-id="service-step-acceptance" data-action="expand-service-step">
+          <div class="check-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <span class="step-text">验收保洁</span>
+          <svg class="step-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== RECOMMENDED MASTERS ===== -->
+  <div class="section">
+    <div class="section-title">
+      <span>推荐师傅</span>
+      <span class="more" data-dom-id="recommended-workers-more" data-action="show-all-recommended-workers">查看全部 &#8250;</span>
+    </div>
+    <div class="master-scroll no-scrollbar">
+      <div class="master-card" data-dom-id="recommended-worker-1" data-target-page="page-client-worker-detail">
+        <div class="master-avatar"><div class="avatar-inner">王</div></div>
+        <div class="master-name">王师傅</div>
+        <div class="master-stats"><span class="star">&#9733; 4.9</span> &middot; 326次服务</div>
+        <button class="btn-neu-primary master-book" data-dom-id="book-worker-1" data-target-page="page-client-publish">预约</button>
+      </div>
+      <div class="master-card" data-dom-id="recommended-worker-2" data-target-page="page-client-worker-detail">
+        <div class="master-avatar"><div class="avatar-inner avatar-amber">陈</div></div>
+        <div class="master-name">陈师傅</div>
+        <div class="master-stats"><span class="star">&#9733; 4.8</span> &middot; 215次服务</div>
+        <button class="btn-neu-primary master-book" data-dom-id="book-worker-2" data-target-page="page-client-publish">预约</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== USER REVIEWS ===== -->
+  <div class="section">
+    <div class="section-title">
+      <span>用户评价</span>
+      <span class="more" data-dom-id="service-reviews-more" data-target-page="page-client-review-list">查看全部 &#8250;</span>
+    </div>
+    <div class="review-list">
+      <div class="glass-neu-card review-card">
+        <div class="review-head">
+          <div class="review-avatar"><div class="avatar-inner">李</div></div>
+          <div class="review-info">
+            <div class="review-name">李女士</div>
+            <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          </div>
+          <div class="review-date">2026-07-15</div>
+        </div>
+        <div class="review-text">师傅很专业，防水做得很细致，施工后没有再渗水，沟通也很顺畅，强烈推荐！</div>
+      </div>
+      <div class="glass-neu-card review-card">
+        <div class="review-head">
+          <div class="review-avatar"><div class="avatar-inner avatar-amber">张</div></div>
+          <div class="review-info">
+            <div class="review-name">张先生</div>
+            <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          </div>
+          <div class="review-date">2026-07-09</div>
+        </div>
+        <div class="review-text">响应很快，三分钟就有师傅接单，价格透明无隐形消费，整体体验非常好。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- spacer so content clears the fixed CTA bar -->
+  <div class="cta-spacer" aria-hidden="true"></div>
+
+  <!-- ===== BOTTOM FIXED CTA BAR ===== -->
+  <div class="cta-bar">
+    <button class="cta-icon-btn" data-dom-id="cs-btn" data-target-page="page-client-customer-service" aria-label="客服">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 18v-6a9 9 0 0 1 18 0v6"/>
+        <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3z"/>
+        <path d="M3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/>
+      </svg>
+    </button>
+    <button class="cta-icon-btn" data-dom-id="fav-cta-btn" data-action="toggle-favorite-service" aria-label="收藏">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+      </svg>
+    </button>
+    <button class="cta-primary" data-dom-id="book-now" data-target-page="page-client-publish">立即预约</button>
+  </div>
+
+</div>
+
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+
+/* Page-specific token aliases (theme-vars :root kept unchanged) */
+:root{
+  --bg: var(--background);
+  --bg-elevated: #F7F3EF;
+  --brand-gradient: linear-gradient(135deg,#0D9488 0%,#14B8A6 48%,#D4944C 100%);
+  --r: var(--radius-md);
+  --r-lg: var(--radius-lg);
+  --r-sm: var(--radius-sm);
+  --r-pill: var(--radius-full);
+}
+
+html,body{font-family:var(--font);color:var(--text-1);-webkit-font-smoothing:antialiased}
+body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh;background:#E8E4DF;letter-spacing:-0.01em}
+
+/* ===== Phone Frame (subpage, full-width, no radius/overflow) ===== */
+.phone{position:relative;width:414px;min-height:896px;background:var(--bg);border-radius:48px;overflow:hidden;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.12),0 4px 16px rgba(0,0,0,.06);padding-bottom:82px}
+.phone>*:not(.tab-bar){position:relative;z-index:1}
+
+/* ===== Top Nav Bar (sticky) ===== */
+.nav-bar{background:radial-gradient(ellipse 220px 160px at 78% 45%,rgba(212,148,76,.10) 0%,transparent 70%),radial-gradient(ellipse 180px 140px at 18% 75%,rgba(13,148,136,.10) 0%,transparent 70%),linear-gradient(135deg,rgba(13,148,136,.08) 0%,rgba(212,148,76,.06) 50%,rgba(13,148,136,.05) 100%);position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:max(18px, env(safe-area-inset-top)) 16px 12px; border-radius:0 0 28px 28px; overflow:hidden;}
+.nav-btn{
+  width:44px;height:44px;border-radius:50%;
+  background:var(--bg-elevated);border:none;
+  box-shadow:var(--neu-out-sm),inset 0 1px 1px rgba(255,255,255,0.5);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--text-1);cursor:pointer;flex-shrink:0;
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
+.nav-btn:active{box-shadow:var(--neu-in);transform:scale(0.94)}
+.nav-btn svg{width:20px;height:20px}
+.nav-title{font-size:17px;font-weight:700;color:var(--text-1);letter-spacing:-0.01em}
+
+/* ===== Service Hero ===== */
+.service-hero{position:relative;height:180px;margin:16px;border-radius:var(--r-lg);overflow:hidden;
+  background:linear-gradient(135deg,#0A7A70 0%,#0D9488 50%,#14B8A6 100%);
+  box-shadow:var(--neu-out-md),0 8px 28px rgba(13,148,136,.12);}
+.hero-deco{position:absolute;border-radius:50%;pointer-events:none}
+.hero-deco-1{top:-44px;right:-30px;width:160px;height:160px;background:rgba(255,255,255,0.14)}
+.hero-deco-2{bottom:-52px;left:-22px;width:144px;height:144px;background:rgba(255,255,255,0.10)}
+.hero-deco-3{top:24px;right:42%;width:58px;height:58px;background:rgba(255,255,255,0.08)}
+.hero-watermark{
+  position:absolute;top:18px;right:22px;width:46px;height:46px;color:rgba(255,255,255,0.22);
+  pointer-events:none;z-index:1;
+}
+.hero-content{position:absolute;left:22px;right:22px;bottom:20px;z-index:2}
+.hero-tag{
+  display:inline-block;font-size:10.5px;font-weight:600;color:#fff;
+  background:rgba(255,255,255,0.18);border:0.5px solid rgba(255,255,255,0.35);
+  padding:3px 9px;border-radius:var(--r-pill);margin-bottom:10px;backdrop-filter:blur(6px);
+}
+.service-name{font-size:24px;font-weight:700;color:#fff;letter-spacing:-0.02em;text-shadow:0 1px 4px rgba(0,0,0,0.15)}
+.service-meta{display:flex;align-items:center;gap:6px;margin-top:8px;font-size:12.5px;color:rgba(255,255,255,0.92);font-weight:500;font-variant-numeric:tabular-nums}
+.service-meta .meta-star{color:#FFE3B0;font-weight:700}
+.service-meta .meta-dot{opacity:0.7}
+
+/* ===== Sections ===== */
+.section{padding:0 16px;margin-top:18px;position:relative;z-index:2}
+.section:first-of-type{margin-top:16px}
+.section-title{font-size:17px;font-weight:700;color:var(--text-1);margin-bottom:12px;letter-spacing:-0.02em;display:flex;align-items:center;justify-content:space-between}
+.section-title .more{font-size:12.5px;font-weight:500;color:var(--text-2);cursor:pointer;transition:transform var(--dur) var(--spring)}
+.section-title .more:active{transform:scale(0.92)}
+
+/* ===== Glass + Neumorphic Card ===== */
+.glass-neu-card{
+  background:rgba(255,255,255,0.52);
+  backdrop-filter:blur(20px) saturate(150%);
+  -webkit-backdrop-filter:blur(20px) saturate(150%);
+  border:1px solid rgba(255,255,255,0.70);
+  border-radius:var(--r-lg);
+  box-shadow:var(--neu-out-md),0 6px 28px rgba(0,0,0,0.06),0 2px 8px rgba(13,148,136,.04),0 0 0 1px rgba(44,40,36,0.05);
+  position:relative;overflow:hidden;
+}
+.glass-neu-card::before{
+  content:'';position:absolute;inset:0;border-radius:inherit;
+  background:linear-gradient(165deg,rgba(255,255,255,0.22) 0%,rgba(255,255,255,0.05) 30%,transparent 55%);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;padding:0.5px;pointer-events:none;
+}
+
+/* Card title */
+.card-title{font-size:16px;font-weight:700;color:var(--text-1);margin-bottom:14px;letter-spacing:-0.01em;display:flex;align-items:center;gap:8px;position:relative;z-index:2}
+.title-bar{width:3px;height:15px;border-radius:2px;background:var(--brand-gradient);flex-shrink:0}
+
+/* ===== Price Card ===== */
+.price-card{padding:18px}
+.price-list{display:flex;flex-direction:column;gap:10px;position:relative;z-index:2}
+.price-row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px;border-radius:var(--r);
+  background:var(--bg-elevated);
+  box-shadow:var(--neu-out-sm),inset 0 1px 1px rgba(255,255,255,0.5);
+  cursor:pointer;
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease),background var(--dur) var(--ease);
+}
+.price-row:active{box-shadow:var(--neu-in);transform:scale(0.97)}
+.price-row[data-selected="true"]{background:var(--brand-subtle);box-shadow:var(--neu-in),0 0 0 1px rgba(13,148,136,.11)}
+.price-left{display:flex;align-items:center;gap:12px;min-width:0}
+.price-icon{
+  width:40px;height:40px;border-radius:var(--r-sm);background:var(--bg);
+  box-shadow:var(--neu-out-sm);display:flex;align-items:center;justify-content:center;
+  color:var(--brand);flex-shrink:0;transition:background var(--dur) var(--ease),color var(--dur) var(--ease),box-shadow var(--dur) var(--ease);
+}
+.price-row[data-selected="true"] .price-icon{background:var(--brand-gradient);color:#fff;box-shadow:var(--neu-out-sm),0 4px 12px var(--brand-glow)}
+.price-icon svg{width:20px;height:20px}
+.price-info{min-width:0}
+.price-name{font-size:14.5px;font-weight:700;color:var(--text-1)}
+.price-desc{font-size:11.5px;color:var(--text-2);margin-top:2px}
+.price-right{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.price-value{display:flex;align-items:baseline;gap:1px;font-variant-numeric:tabular-nums}
+.price-value .cur{font-size:12px;color:var(--red);font-weight:600}
+.price-value .amt{font-size:16px;color:var(--red);font-weight:700;letter-spacing:-0.02em}
+.price-radio{
+  width:22px;height:22px;border-radius:50%;border:2px solid var(--text-3);background:transparent;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  transition:border-color var(--dur) var(--ease),background var(--dur) var(--ease);
+}
+.price-row[data-selected="true"] .price-radio{border-color:var(--brand);background:var(--brand)}
+.price-radio svg{width:12px;height:12px;color:#fff;opacity:0;transition:opacity var(--dur) var(--ease)}
+.price-row[data-selected="true"] .price-radio svg{opacity:1}
+
+/* ===== Service Content Card ===== */
+.content-card{padding:18px}
+.content-list{display:flex;flex-direction:column;gap:10px;position:relative;z-index:2}
+.content-item{
+  display:flex;align-items:center;gap:12px;padding:13px 14px;border-radius:var(--r);
+  background:var(--bg-elevated);box-shadow:var(--neu-out-sm),inset 0 1px 1px rgba(255,255,255,0.5);
+  cursor:pointer;transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
+.content-item:active{box-shadow:var(--neu-in);transform:scale(0.97)}
+.check-icon{
+  width:26px;height:26px;border-radius:50%;background:var(--brand-gradient);color:#fff;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 2px 8px var(--brand-glow);
+}
+.check-icon svg{width:14px;height:14px}
+.step-text{font-size:14px;font-weight:600;color:var(--text-1);flex:1}
+.step-arrow{width:18px;height:18px;color:var(--text-3);flex-shrink:0}
+
+/* ===== Master Cards ===== */
+.master-scroll{display:flex;gap:12px;overflow-x:auto;padding-bottom:6px}
+.master-card{
+  flex-shrink:0;width:172px;padding:16px;border-radius:var(--r);
+  background:rgba(255,255,255,0.52);
+  backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);
+  border:1px solid rgba(255,255,255,0.70);
+  box-shadow:var(--neu-out-sm),0 4px 18px rgba(0,0,0,0.05);
+  display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
+.master-card:active{transform:scale(0.96);box-shadow:var(--neu-in)}
+.master-avatar{
+  width:48px;height:48px;border-radius:50%;background:var(--bg-elevated);
+  box-shadow:var(--neu-in);display:flex;align-items:center;justify-content:center;
+}
+.master-avatar .avatar-inner{
+  width:38px;height:38px;border-radius:50%;background:var(--brand-gradient);
+  display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:20px;
+}
+.avatar-inner.avatar-amber{background:linear-gradient(135deg,#A0723C 0%,#D4944C 50%,#E8C088 100%)}
+.master-name{font-size:14.5px;font-weight:700;color:var(--text-1)}
+.master-stats{font-size:11.5px;color:var(--text-2);font-variant-numeric:tabular-nums}
+.master-stats .star{color:var(--orange);font-weight:700}
+.master-book{width:100%;padding:7px 0;font-size:12.5px;margin-top:2px;background:var(--brand-gradient)}
+
+/* ===== Review Cards ===== */
+.review-list{display:flex;flex-direction:column;gap:12px}
+.review-card{padding:16px}
+.review-head{display:flex;align-items:center;gap:12px;margin-bottom:10px;position:relative;z-index:2}
+.review-avatar{
+  width:42px;height:42px;border-radius:50%;background:var(--bg-elevated);
+  box-shadow:var(--neu-in);display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.review-avatar .avatar-inner{
+  width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#D4944C,#E8C088);
+  display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:14px;
+}
+.review-info{flex:1;min-width:0}
+.review-name{font-size:14px;font-weight:600;color:var(--text-1)}
+.review-stars{font-size:12px;color:var(--orange);margin-top:2px;letter-spacing:1px}
+.review-date{font-size:11.5px;color:var(--text-3);font-variant-numeric:tabular-nums;flex-shrink:0}
+.review-text{font-size:13.5px;color:var(--text-1);line-height:1.6;position:relative;z-index:2}
+
+/* ===== CTA Spacer & Fixed Bar ===== */
+.cta-spacer{height:84px}
+
+.cta-bar{
+  position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:100%;max-width:414px;
+  display:flex;align-items:center;gap:10px;
+  padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px));
+  background:rgba(242,237,232,0.88);
+  backdrop-filter:blur(24px) saturate(160%);-webkit-backdrop-filter:blur(24px) saturate(160%);
+  border-top:0.5px solid rgba(255,255,255,0.65);
+  box-shadow:0 -6px 24px rgba(0,0,0,0.06);z-index:60;
+}
+.cta-icon-btn{
+  width:46px;height:46px;border-radius:50%;background:var(--bg-elevated);border:none;
+  box-shadow:var(--neu-out-sm),inset 0 1px 1px rgba(255,255,255,0.5);
+  display:flex;align-items:center;justify-content:center;color:var(--text-2);cursor:pointer;flex-shrink:0;
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
+.cta-icon-btn:active{box-shadow:var(--neu-in);transform:scale(0.94)}
+.cta-icon-btn svg{width:20px;height:20px}
+.cta-primary{
+  flex:1;height:48px;border:none;border-radius:var(--r-pill);
+  background:var(--brand-gradient);color:#fff;font-size:15px;font-weight:700;
+  font-family:var(--font);letter-spacing:0.02em;cursor:pointer;
+  box-shadow:var(--neu-out-sm),0 8px 20px var(--brand-glow);
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
+.cta-primary:active{box-shadow:var(--neu-in);transform:scale(0.97)}
+
+/* ===== Reduced motion ===== */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{transition:none !important;animation:none !important}
+}
+</style>
+</body>
+</html>

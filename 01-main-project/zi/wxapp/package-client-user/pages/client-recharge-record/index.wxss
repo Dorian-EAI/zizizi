@@ -1,0 +1,82 @@
+@import "../../../styles/glass-detail-page.wxss";
+
+/* —— 充值记录页面特定样式 —— */
+
+/* Hero 渐变：青蓝金融主题 */
+.hero {
+  background:
+    radial-gradient(ellipse 360rpx 240rpx at 82% 16%, rgba(13, 148, 136, 0.16) 0%, transparent 72%),
+    radial-gradient(ellipse 300rpx 200rpx at 18% 84%, rgba(90, 143, 173, 0.12) 0%, transparent 72%),
+    rgba(255, 255, 255, 0.46);
+}
+
+/* 本月充值大号数字 */
+.hero .hero-number {
+  font-size: 68rpx;
+  font-weight: 700;
+  color: var(--brand-dark);
+  font-family: var(--font-number);
+  display: block;
+  margin: 8rpx 0;
+}
+
+.hero .tag-p {
+  font-size: 24rpx;
+}
+
+/* 交易记录列表 */
+.card.list-card {
+  padding: 8rpx 24rpx;
+}
+
+.card.list-card .list-row {
+  min-height: 100rpx;
+}
+
+/* 交易图标 */
+.list-row .row-icon {
+  background: var(--brand-subtle);
+  color: var(--brand);
+}
+
+/* 金额正负色 */
+.row-value .tag-strong {
+  font-family: var(--font-number);
+  font-size: 32rpx;
+  color: var(--brand-dark);
+}
+
+/* 状态徽章紧凑 */
+.list-row .row-value .badge {
+  font-size: 20rpx;
+  padding: 6rpx 14rpx;
+  margin-top: 6rpx;
+  display: inline-block;
+}
+
+/* 刷新按钮 */
+.btn.secondary.block {
+  margin-top: 16rpx;
+  background: var(--glass-bg-strong);
+  font-size: 28rpx;
+}
+
+/* 空状态 */
+.empty-state.truthful-empty {
+  padding: 56rpx 44rpx;
+}
+
+.empty-state.truthful-empty .tag-h3 {
+  font-size: 30rpx;
+}
+
+/* 筛选器微调 */
+.segmented {
+  margin-bottom: 16rpx;
+}
+
+.segmented .segment.active {
+  background: var(--brand);
+  color: #fff;
+  box-shadow: 0 4rpx 12rpx rgba(13, 148, 136, 0.24);
+}

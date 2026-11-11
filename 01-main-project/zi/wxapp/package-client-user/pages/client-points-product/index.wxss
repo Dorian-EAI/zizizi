@@ -1,0 +1,94 @@
+@import "../../../styles/glass-detail-page.wxss";
+
+/* —— 积分产品详情页面特定样式 —— */
+
+/* Hero 渐变：金色商品主题 */
+.hero {
+  background:
+    radial-gradient(ellipse 340rpx 220rpx at 86% 14%, rgba(212, 148, 76, 0.16) 0%, transparent 72%),
+    radial-gradient(ellipse 280rpx 180rpx at 12% 86%, rgba(13, 148, 136, 0.10) 0%, transparent 72%),
+    rgba(255, 255, 255, 0.46);
+}
+
+/* 商品大图预览 */
+.media-placeholder.product-visual {
+  min-height: 400rpx;
+  margin: 0 0 32rpx;
+  border-radius: var(--r-lg);
+  background: linear-gradient(135deg, var(--brand-subtle), var(--accent-subtle));
+  box-shadow: var(--neu-raised);
+  font-size: 96rpx;
+  color: var(--brand);
+}
+
+/* 积分金额展示 */
+.section.card .amount {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 8rpx;
+  margin: 24rpx 0 16rpx;
+  font-size: 80rpx;
+  font-weight: 700;
+  color: var(--accent-dark);
+  font-family: var(--font-number);
+}
+
+.section.card .amount .tag-small {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: var(--text-2);
+}
+
+/* 开放条件列表 */
+.card.list-card {
+  padding: 8rpx 24rpx;
+}
+
+.card.list-card .list-row {
+  min-height: 92rpx;
+}
+
+.card.list-card .list-row .row-icon {
+  width: 56rpx;
+  height: 56rpx;
+  flex: 0 0 56rpx;
+}
+
+.card.list-card .list-row .row-value {
+  font-size: 24rpx;
+  color: var(--text-3);
+}
+
+/* 安全标签组 */
+.chips {
+  margin-bottom: 20rpx;
+}
+
+.chips .chip {
+  font-size: 24rpx;
+  background: var(--glass-bg);
+}
+
+.chips .chip.active {
+  background: rgba(91, 140, 90, 0.12);
+  color: #5B8C5A;
+  box-shadow: var(--neu-inset-sm);
+}
+
+/* 底部操作栏 */
+.fixed-actions {
+  padding: 20rpx 28rpx;
+  gap: 20rpx;
+}
+
+.fixed-actions .btn {
+  min-height: 88rpx;
+  font-size: 28rpx;
+}
+
+/* Hero 标题 */
+.hero .tag-h2 {
+  font-size: 36rpx;
+  color: var(--accent-dark);
+}

@@ -1,0 +1,260 @@
+@import "../../styles/glass-detail-page.wxss";
+
+/* —— 登录页面特定样式 —— */
+
+/* 页面容器 */
+.login-page {
+  min-height: 100vh;
+  background: var(--bg);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* Hero 渐变背景 */
+.login-hero {
+  position: relative;
+  overflow: hidden;
+  padding: 80rpx 48rpx 60rpx;
+  padding-top: calc(env(safe-area-inset-top) + 80rpx);
+  text-align: center;
+  background:
+    radial-gradient(ellipse 400rpx 280rpx at 78% 30%, rgba(13, 148, 136, 0.14) 0%, transparent 72%),
+    radial-gradient(ellipse 340rpx 240rpx at 20% 70%, rgba(212, 148, 76, 0.12) 0%, transparent 72%),
+    linear-gradient(135deg, rgba(13, 148, 136, 0.08) 0%, rgba(212, 148, 76, 0.06) 50%, rgba(13, 148, 136, 0.04) 100%);
+}
+
+.login-hero::before {
+  content: "";
+  position: absolute;
+  top: -20%;
+  right: -10%;
+  width: 360rpx;
+  height: 360rpx;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.18) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.login-hero > view,
+.login-hero > text {
+  position: relative;
+  z-index: 1;
+}
+
+/* Logo 圆徽 */
+.logo-circle {
+  position: relative;
+  width: 140rpx;
+  height: 140rpx;
+  margin: 0 auto 28rpx;
+  border-radius: 50%;
+  background: var(--glass-bg);
+  backdrop-filter: blur(40rpx) saturate(150%);
+  -webkit-backdrop-filter: blur(40rpx) saturate(150%);
+  border: 2rpx solid rgba(255, 255, 255, 0.70);
+  box-shadow: var(--neu-raised), 0 12rpx 40rpx rgba(0, 0, 0, 0.06);
+  display: grid;
+  place-items: center;
+}
+
+.logo-circle::after {
+  content: "";
+  position: absolute;
+  inset: -8rpx;
+  border-radius: 50%;
+  background: var(--brand-gradient);
+  opacity: 0.24;
+  filter: blur(20rpx);
+  z-index: -1;
+}
+
+.logo-icon {
+  width: 72rpx;
+  height: 72rpx;
+}
+
+.app-name {
+  display: block;
+  font-size: 48rpx;
+  font-weight: 700;
+  color: var(--text-1);
+  letter-spacing: -0.02em;
+  margin-bottom: 12rpx;
+}
+
+.app-slogan {
+  display: block;
+  font-size: 26rpx;
+  color: var(--text-2);
+  letter-spacing: 0.02em;
+}
+
+/* 登录内容区 */
+.login-content {
+  flex: 1;
+  padding: 48rpx 48rpx 32rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 32rpx;
+}
+
+.welcome-title {
+  display: block;
+  font-size: 36rpx;
+  font-weight: 700;
+  color: var(--text-1);
+  letter-spacing: -0.01em;
+  margin-bottom: 12rpx;
+}
+
+.welcome-desc {
+  display: block;
+  font-size: 26rpx;
+  color: var(--text-2);
+  line-height: 1.6;
+  margin-bottom: 24rpx;
+  white-space: pre-line;
+}
+
+/* 登录选项按钮 */
+.login-option {
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+  padding: 32rpx 28rpx;
+  border: 2rpx solid rgba(255, 255, 255, 0.70);
+  border-radius: var(--r-lg);
+  background: var(--glass-bg);
+  backdrop-filter: blur(40rpx) saturate(150%);
+  -webkit-backdrop-filter: blur(40rpx) saturate(150%);
+  box-shadow: var(--neu-raised);
+  font-family: var(--font-body);
+  transition: transform var(--dur) var(--spring), box-shadow var(--dur) var(--ease);
+  text-align: left;
+}
+
+.login-option:active {
+  transform: scale(0.97);
+  box-shadow: var(--neu-inset);
+}
+
+.login-option-icon {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  font-size: 32rpx;
+  font-weight: 700;
+}
+
+.login-option-icon.wechat {
+  background: linear-gradient(135deg, #07C160, #06AD56);
+  color: #fff;
+  box-shadow: 0 8rpx 24rpx rgba(7, 193, 96, 0.28);
+}
+
+.login-option-icon.wechat .wechat-mark {
+  font-size: 36rpx;
+}
+
+.login-option-icon.mobile {
+  background: var(--brand-subtle);
+  color: var(--brand);
+  box-shadow: var(--neu-raised-sm);
+}
+
+.login-option-icon.mobile image {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.login-option-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4rpx;
+}
+
+.login-option-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: var(--text-1);
+}
+
+.login-option-desc {
+  font-size: 22rpx;
+  color: var(--text-3);
+}
+
+.login-option-arrow {
+  width: 32rpx;
+  height: 32rpx;
+  flex-shrink: 0;
+  opacity: 0.4;
+}
+
+/* 协议区 */
+.agreement-section {
+  display: flex;
+  align-items: flex-start;
+  gap: 16rpx;
+  padding: 0 48rpx;
+}
+
+.agreement-checkbox {
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 50%;
+  background: var(--bg-elevated);
+  box-shadow: var(--neu-inset-sm);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  transition: all var(--dur) var(--ease);
+  margin-top: 2rpx;
+}
+
+.agreement-checkbox:active {
+  transform: scale(0.92);
+}
+
+.agreement-checkbox.checked {
+  box-shadow: inset 4rpx 4rpx 8rpx var(--neu-dark), inset -4rpx -4rpx 8rpx var(--neu-light), 0 4rpx 12rpx rgba(13, 148, 136, 0.20);
+  background: var(--brand-subtle);
+}
+
+.agreement-checkbox image {
+  width: 24rpx;
+  height: 24rpx;
+}
+
+.agreement-text {
+  font-size: 24rpx;
+  color: var(--text-2);
+  line-height: 1.6;
+}
+
+.agreement-link {
+  font-weight: 600;
+  color: var(--brand);
+  text-decoration: underline;
+  text-underline-offset: 4rpx;
+}
+
+/* 页脚 */
+.login-footer {
+  padding: 32rpx 48rpx;
+  padding-bottom: calc(32rpx + env(safe-area-inset-bottom));
+  text-align: center;
+  font-size: 22rpx;
+  color: var(--text-3);
+  backdrop-filter: blur(20rpx);
+  -webkit-backdrop-filter: blur(20rpx);
+}

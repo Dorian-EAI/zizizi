@@ -1,0 +1,103 @@
+<view class="page">
+  <view class="blob" style="top: -80rpx; right: -120rpx; width: 560rpx; height: 560rpx; background: var(--brand);"></view>
+  <view class="blob" style="top: 480rpx; left: -160rpx; width: 480rpx; height: 480rpx; background: var(--accent);"></view>
+
+  <scroll-view scroll-y class="page-scroll hide-scroll" style="padding-bottom: 40rpx;">
+    <view class="hero" style="padding-top: calc({{statusBarHeight}}px + 76rpx);">
+      <view class="nav-row">
+        <view class="nav-icon-btn" bindtap="onBack">
+          <image src="{{icons.back}}" mode="aspectFit" class="nav-icon" lazy-load="{{false}}" />
+        </view>
+        <text class="nav-title">我的评价</text>
+        <view class="nav-spacer"></view>
+      </view>
+
+      <view class="rating-summary">
+        <view class="rating-score-display">
+          <text class="rating-num">{{summary.avgRating}}</text>
+          <text class="rating-label">综合评分</text>
+        </view>
+        <view class="rating-breakdown">
+          <view class="breakdown-item">
+            <text class="breakdown-label">服务总量</text>
+            <text class="breakdown-value">{{summary.totalCount}} 单</text>
+          </view>
+          <view class="breakdown-item">
+            <text class="breakdown-label">好评率</text>
+            <text class="breakdown-value">{{summary.goodRate}}%</text>
+          </view>
+          <view class="breakdown-item">
+            <text class="breakdown-label">有图评价</text>
+            <text class="breakdown-value">{{summary.hasImageCount}} 条</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="filter-bar">
+      <view class="filter-item {{filter === 'all' ? 'active' : ''}}" data-filter="all" bindtap="onFilter">
+        <text class="filter-text">全部</text>
+      </view>
+      <view class="filter-item {{filter === 'good' ? 'active' : ''}}" data-filter="good" bindtap="onFilter">
+        <text class="filter-text">好评</text>
+      </view>
+      <view class="filter-item {{filter === 'mid' ? 'active' : ''}}" data-filter="mid" bindtap="onFilter">
+        <text class="filter-text">中评</text>
+      </view>
+      <view class="filter-item {{filter === 'bad' ? 'active' : ''}}" data-filter="bad" bindtap="onFilter">
+        <text class="filter-text">差评</text>
+      </view>
+      <view class="filter-item {{filter === 'image' ? 'active' : ''}}" data-filter="image" bindtap="onFilter">
+        <text class="filter-text">有图</text>
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="review-list">
+        <view class="glass-card review-item" wx:for="{{reviews}}" wx:key="id">
+          <view class="review-header">
+            <view class="reviewer-avatar">
+              <image src="{{item.workerAvatar}}" mode="aspectFill" class="avatar-img" lazy-load="{{false}}" />
+            </view>
+            <view class="reviewer-info">
+              <text class="reviewer-name">{{item.workerName}}</text>
+              <text class="review-time">{{item.createdAt}}</text>
+            </view>
+            <view class="review-score">
+              <text class="score-text">{{item.rating}}</text>
+              <text class="score-unit">分</text>
+            </view>
+          </view>
+          <view class="review-stars">
+            <text class="review-star">{{item.stars}}</text>
+          </view>
+          <view class="review-content">{{item.content}}</view>
+          <view class="review-tags" wx:if="{{item.tags.length > 0}}">
+            <view class="review-tag" wx:for="{{item.tags}}" wx:for-item="tag" wx:key="*this">
+              <text class="tag-text">{{tag}}</text>
+            </view>
+          </view>
+          <view class="review-images" wx:if="{{item.images.length > 0}}">
+            <image wx:for="{{item.images}}" wx:for-item="img" wx:key="*this" src="{{img}}" mode="aspectFill" class="review-img" lazy-load="{{false}}" />
+          </view>
+          <view class="review-footer">
+            <view class="review-meta">
+              <text class="meta-text">服务：{{item.serviceType}}</text>
+            </view>
+            <view class="review-actions">
+              <view class="action-item" bindtap="onLike" data-index="{{index}}">
+                <text class="action-icon">{{item.liked ? '❤️' : '🤍'}}</text>
+                <text class="action-count">{{item.likeCount}}</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <view wx:if="{{reviews.length === 0}}" class="empty-state">
+        <text class="empty-icon">📝</text>
+        <text class="empty-text">暂无评价记录</text>
+      </view>
+    </view>
+  </scroll-view>
+</view>

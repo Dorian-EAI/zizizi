@@ -1,0 +1,270 @@
+/* AUTO-GENERATED DESIGN STYLE ENTRY; page-specific overrides may follow this import. */
+@import "../../../styles/generated-detail-page.wxss";
+
+/* ============================================================
+ * Glass-Neu: client-map-picker 地图选点
+ * 客户端 Teal 品牌 + 琥珀点缀
+ * ============================================================ */
+
+.design-detail-page {
+  background: var(--canvas);
+  min-height: 100vh;
+}
+
+.design-detail-page::after {
+  background:
+    radial-gradient(ellipse 400rpx 280rpx at 20% 90%, rgba(13, 148, 136, 0.07) 0%, transparent 70%),
+    radial-gradient(ellipse 360rpx 240rpx at 80% 85%, rgba(212, 148, 76, 0.06) 0%, transparent 70%);
+}
+
+.topbar {
+  background:
+    radial-gradient(ellipse 440rpx 320rpx at 78% 45%, rgba(212, 148, 76, 0.14) 0%, transparent 70%),
+    radial-gradient(ellipse 360rpx 280rpx at 18% 75%, rgba(13, 148, 136, 0.16) 0%, transparent 70%),
+    linear-gradient(135deg, rgba(13, 148, 136, 0.14) 0%, rgba(212, 148, 76, 0.08) 50%, rgba(13, 148, 136, 0.06) 100%);
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 18rpx;
+  padding: 20rpx 28rpx;
+  margin: 0 0 20rpx;
+  border: 1rpx solid rgba(255, 255, 255, 0.70);
+  border-radius: var(--r-pill);
+  background: rgba(255, 255, 255, 0.52);
+  backdrop-filter: blur(40rpx) saturate(150%);
+  -webkit-backdrop-filter: blur(40rpx) saturate(150%);
+  box-shadow:
+    var(--neu-raised-sm),
+    inset 0 2rpx 4rpx rgba(255, 255, 255, 0.40);
+}
+
+.search-bar .search-icon {
+  width: 36rpx;
+  height: 36rpx;
+  color: var(--text-3);
+  flex-shrink: 0;
+}
+
+.search-bar .search-input {
+  flex: 1;
+  height: 56rpx;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--text-1);
+  font-size: 28rpx;
+  font-family: var(--font-body);
+}
+
+.search-bar .search-input::placeholder { color: var(--text-3); }
+
+.card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(40rpx) saturate(150%);
+  -webkit-backdrop-filter: blur(40rpx) saturate(150%);
+  border: 1rpx solid rgba(255, 255, 255, 0.70);
+  border-radius: var(--r-md);
+  box-shadow:
+    var(--neu-raised),
+    0 12rpx 56rpx rgba(0, 0, 0, 0.06),
+    0 0 0 2rpx rgba(44, 40, 36, 0.05),
+    0 4rpx 16rpx rgba(13, 148, 136, 0.04);
+  overflow: hidden;
+  position: relative;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(165deg,
+    rgba(255, 255, 255, 0.22) 0%,
+    rgba(255, 255, 255, 0.05) 30%,
+    transparent 55%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.card > view,
+.card > text {
+  position: relative;
+  z-index: 1;
+}
+
+.current-location {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  padding: 24rpx 28rpx;
+  margin-bottom: 20rpx;
+}
+
+.current-location .location-icon {
+  width: 64rpx;
+  height: 64rpx;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--brand);
+  background: var(--canvas);
+  box-shadow: var(--neu-raised-sm), inset 0 2rpx 2rpx rgba(255, 255, 255, 0.45);
+}
+
+.current-location .location-icon svg {
+  width: 32rpx;
+  height: 32rpx;
+  stroke: currentColor;
+}
+
+.current-location .location-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.current-location .location-info .tag-h3 {
+  margin: 0;
+  font-size: 28rpx;
+  color: var(--text-1);
+  font-weight: 600;
+}
+
+.current-location .location-info .tag-p {
+  margin: 6rpx 0 0;
+  color: var(--text-2);
+  font-size: 24rpx;
+  line-height: 1.45;
+}
+
+.poi-list {
+  padding: 8rpx 28rpx;
+}
+
+.poi-item {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  min-height: 120rpx;
+  border-bottom: 1rpx solid var(--sep);
+}
+
+.poi-item:last-child {
+  border-bottom: 0;
+}
+
+.poi-item .poi-icon {
+  flex: 0 0 64rpx;
+  width: 64rpx;
+  height: 64rpx;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--brand);
+  background: var(--canvas);
+  box-shadow: var(--neu-raised-sm), inset 0 2rpx 2rpx rgba(255, 255, 255, 0.45);
+}
+
+.poi-item .poi-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.poi-item .poi-main .tag-h4 {
+  margin: 0;
+  color: var(--text-1);
+  font-size: 28rpx;
+  font-weight: 600;
+}
+
+.poi-item .poi-main .tag-p {
+  margin: 6rpx 0 0;
+  color: var(--text-2);
+  font-size: 24rpx;
+  line-height: 1.45;
+}
+
+.poi-item .poi-distance {
+  flex-shrink: 0;
+  color: var(--brand);
+  font-size: 24rpx;
+  font-weight: 600;
+}
+
+.selected-mark {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  padding: 16rpx 24rpx;
+  margin-bottom: 20rpx;
+  border-radius: var(--r-pill);
+  background: var(--brand-subtle);
+  color: var(--brand);
+  font-size: 26rpx;
+  font-weight: 600;
+  box-shadow: var(--neu-inset);
+}
+
+.selected-mark .check-icon {
+  width: 32rpx;
+  height: 32rpx;
+}
+
+.fixed-actions {
+  position: absolute;
+  left: 32rpx;
+  right: 32rpx;
+  bottom: 28rpx;
+  padding: 20rpx;
+  display: flex;
+  gap: 22rpx;
+  border: 1rpx solid rgba(255, 255, 255, 0.45);
+  border-radius: var(--r-md);
+  background: rgba(255, 255, 255, 0.24);
+  backdrop-filter: blur(40rpx) saturate(180%);
+  -webkit-backdrop-filter: blur(40rpx) saturate(180%);
+  box-shadow:
+    inset 0 2rpx 4rpx rgba(255, 255, 255, 0.40),
+    0 4rpx 16rpx rgba(0, 0, 0, 0.04);
+}
+
+.btn.primary {
+  flex: 1;
+  min-height: 96rpx;
+  border: none;
+  border-radius: var(--r-pill);
+  padding: 0 36rpx;
+  font-weight: 600;
+  font-size: 28rpx;
+  color: #fff;
+  background: var(--brand-gradient);
+  box-shadow:
+    var(--neu-raised-sm),
+    0 4rpx 8rpx var(--brand-glow),
+    0 12rpx 28rpx var(--brand-glow),
+    inset 0 2rpx 2rpx rgba(255, 255, 255, 0.40),
+    inset 0 -2rpx 2rpx rgba(0, 0, 0, 0.16);
+  transition: transform var(--dur-base) var(--spring), box-shadow var(--dur-base) var(--ease);
+}
+
+.btn.primary:active {
+  transform: scale(0.96);
+  box-shadow: var(--neu-inset);
+}
+
+.icon-button {
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: 50%;
+  background: var(--bg-elevated);
+  box-shadow: var(--neu-raised-sm), inset 0 2rpx 2rpx rgba(255, 255, 255, 0.5);
+  display: grid;
+  place-items: center;
+  transition: transform var(--dur-base) var(--spring), box-shadow var(--dur-base) var(--ease);
+}
+
+.icon-button:active {
+  box-shadow: var(--neu-inset);
+  transform: scale(0.94);
+}

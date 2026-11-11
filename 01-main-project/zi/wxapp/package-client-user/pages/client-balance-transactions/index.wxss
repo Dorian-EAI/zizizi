@@ -1,0 +1,69 @@
+/* AUTO-GENERATED DESIGN STYLE ENTRY; page-specific overrides may follow this import. */
+@import "../../../styles/generated-detail-page.wxss";
+
+.phone-page {
+  --neu-raised: var(--neu-out-md);
+  --glass-bg: rgba(255, 255, 255, 0.52);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.phone-page .hero {
+  text-align: center;
+  padding: 48rpx 40rpx;
+}
+
+.phone-page .hero-number {
+  font-size: 68rpx;
+  color: var(--brand-dark);
+  text-shadow: 0 2rpx 8rpx var(--brand-glow);
+}
+
+.phone-page .segmented {
+  margin-bottom: 24rpx;
+}
+
+.phone-page .segment {
+  font-size: 26rpx;
+}
+
+.phone-page .list-row {
+  min-height: 112rpx;
+}
+
+.phone-page .row-icon {
+  background: var(--brand-soft);
+  color: var(--brand);
+  font-size: 32rpx;
+  font-weight: 600;
+}
+
+.phone-page .amount-income {
+  color: var(--success);
+}
+
+.phone-page .amount-expense {
+  color: var(--danger);
+}
+
+.phone-page .row-value {
+  font-weight: 600;
+  font-size: 28rpx;
+}
+
+.phone-page .empty-state {
+  padding: 60rpx 44rpx;
+}
+
+.phone-page .fixed-actions {
+  border: 1rpx solid rgba(13, 148, 136, 0.18);
+}
+
+.phone-page .btn.secondary {
+  color: var(--brand);
+}
+
+.phone-page .btn.primary {
+  background: var(--brand-gradient);
+}

@@ -1,0 +1,262 @@
+/* pages/worker-leave/index.wxss — 师傅请假页 玻璃新拟态
+ * 师傅端蓝色主题
+ */
+
+@import "../../../styles/generated-detail-page.wxss";
+
+.phone-page {
+  position: relative;
+  min-height: 100vh;
+  background: var(--bg);
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  min-height: 160rpx;
+  padding: 36rpx 40rpx;
+  padding-top: max(36rpx, env(safe-area-inset-top));
+  display: grid;
+  grid-template-columns: 88rpx 1fr 88rpx;
+  align-items: center;
+  gap: 12rpx;
+  overflow: hidden;
+  border-radius: 0 0 56rpx 56rpx;
+  background:
+    radial-gradient(ellipse 440rpx 320rpx at 78% 45%, rgba(212, 148, 76, 0.14) 0%, transparent 70%),
+    radial-gradient(ellipse 360rpx 280rpx at 18% 75%, rgba(45, 108, 223, 0.16) 0%, transparent 70%),
+    linear-gradient(135deg, rgba(45, 108, 223, 0.14) 0%, rgba(212, 148, 76, 0.08) 50%, rgba(45, 108, 223, 0.06) 100%);
+}
+
+.topbar .tag-h1 {
+  margin: 0;
+  text-align: center;
+  color: var(--ink);
+  font: 700 34rpx/1.3 var(--font-body);
+  letter-spacing: -0.02em;
+}
+
+.topbar .icon-button {
+  width: 88rpx;
+  height: 88rpx;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  color: var(--ink);
+  background: var(--bg-elevated);
+  box-shadow: var(--neu-out-sm), inset 0 2rpx 2rpx rgba(255, 255, 255, 0.5);
+  display: inline-grid;
+  place-items: center;
+}
+
+.topbar .icon-button:active {
+  box-shadow: var(--neu-in);
+  transform: scale(0.94);
+}
+
+.page-body {
+  padding: 36rpx 40rpx 224rpx;
+}
+
+.status-banner {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  padding: 28rpx 32rpx;
+  margin-bottom: 36rpx;
+  border: 2rpx solid rgba(255, 255, 255, 0.70);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  backdrop-filter: blur(40rpx) saturate(150%);
+  -webkit-backdrop-filter: blur(40rpx) saturate(150%);
+  box-shadow:
+    var(--neu-raised),
+    0 12rpx 56rpx rgba(0, 0, 0, 0.06),
+    0 0 0 2rpx rgba(44, 40, 36, 0.05);
+}
+
+.status-dot {
+  width: 24rpx;
+  height: 24rpx;
+  border-radius: 50%;
+  background: var(--brand);
+  box-shadow: 0 0 0 6rpx var(--brand-soft);
+}
+
+.status-text {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.section {
+  margin: 0 0 36rpx;
+}
+
+.section-title {
+  margin: 0 0 18rpx;
+  color: var(--ink);
+  font-size: 32rpx;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.card {
+  position: relative;
+  padding: 32rpx;
+  border: 2rpx solid rgba(255, 255, 255, 0.70);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  backdrop-filter: blur(40rpx) saturate(150%);
+  -webkit-backdrop-filter: blur(40rpx) saturate(150%);
+  box-shadow:
+    var(--neu-raised),
+    0 12rpx 56rpx rgba(0, 0, 0, 0.06),
+    0 0 0 2rpx rgba(44, 40, 36, 0.05),
+    0 4rpx 16rpx rgba(45, 108, 223, 0.04);
+}
+
+.field {
+  margin-bottom: 32rpx;
+}
+
+.field:last-child {
+  margin-bottom: 0;
+}
+
+.field .tag-label {
+  display: block;
+  margin: 0 8rpx 16rpx;
+  color: var(--muted);
+  font-size: 26rpx;
+  font-weight: 500;
+}
+
+.input, .textarea {
+  width: 100%;
+  border: 0;
+  border-radius: var(--radius-md);
+  outline: 0;
+  color: var(--ink);
+  background: var(--bg);
+  box-shadow: var(--neu-in);
+  font-size: 28rpx;
+  padding: 24rpx 32rpx;
+}
+
+.textarea {
+  min-height: 160rpx;
+  resize: none;
+  line-height: 1.55;
+}
+
+.input:focus, .textarea:focus {
+  box-shadow: var(--neu-in), 0 0 0 4rpx var(--brand-soft);
+}
+
+.date-row {
+  display: flex;
+  gap: 24rpx;
+}
+
+.date-row .field {
+  flex: 1;
+}
+
+.history-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24rpx 0;
+  border-bottom: 1rpx solid var(--sep);
+}
+
+.history-item:last-child {
+  border-bottom: none;
+}
+
+.history-info {
+  flex: 1;
+}
+
+.history-date {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.history-reason {
+  font-size: 24rpx;
+  color: var(--muted);
+  margin-top: 6rpx;
+}
+
+.history-status {
+  font-size: 24rpx;
+  font-weight: 600;
+  padding: 8rpx 20rpx;
+  border-radius: var(--radius-full);
+}
+
+.history-status.approved {
+  color: var(--success);
+  background: var(--success-soft);
+}
+
+.history-status.pending {
+  color: var(--orange);
+  background: rgba(212, 148, 76, 0.14);
+}
+
+.history-status.rejected {
+  color: var(--error);
+  background: rgba(217, 48, 37, 0.10);
+}
+
+.fixed-actions {
+  position: fixed;
+  z-index: 20;
+  left: 32rpx;
+  right: 32rpx;
+  bottom: 28rpx;
+  padding: 20rpx;
+  display: flex;
+  gap: 22rpx;
+  border: 1rpx solid rgba(255, 255, 255, 0.45);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(40rpx) saturate(180%);
+  -webkit-backdrop-filter: blur(40rpx) saturate(180%);
+  box-shadow: inset 0 2rpx 4rpx rgba(255, 255, 255, 0.40), 0 4rpx 16rpx rgba(0, 0, 0, 0.04);
+  padding-bottom: calc(20rpx + env(safe-area-inset-bottom));
+}
+
+.fixed-actions .btn.primary {
+  flex: 1;
+  min-height: 96rpx;
+  border: 0;
+  border-radius: var(--radius-full);
+  padding: 0 36rpx;
+  font-weight: 600;
+  font-size: 28rpx;
+  color: var(--text-inverse);
+  background: var(--brand-gradient);
+  box-shadow: inset 0 2rpx 2rpx rgba(255, 255, 255, 0.40), inset 0 -2rpx 2rpx rgba(0, 0, 0, 0.16), 0 4rpx 8rpx var(--brand-glow), 0 12rpx 28rpx var(--brand-glow);
+}
+
+.fixed-actions .btn.primary:active {
+  transform: scale(0.96);
+  box-shadow: var(--neu-in);
+}
+
+.notice {
+  margin-bottom: 26rpx;
+  padding: 24rpx 28rpx;
+  border: 1rpx solid rgba(212, 148, 76, 0.14);
+  border-radius: var(--radius-sm);
+  color: #77501F;
+  background: rgba(245, 230, 208, 0.58);
+  font-size: 24rpx;
+  line-height: 1.55;
+}

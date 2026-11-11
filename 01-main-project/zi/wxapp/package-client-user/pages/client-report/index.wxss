@@ -1,0 +1,103 @@
+@import "../../../styles/glass-detail-page.wxss";
+
+/* —— 投诉举报页面特定样式 —— */
+
+/* Hero 渐变：严肃深蓝主题 */
+.hero {
+  background:
+    radial-gradient(ellipse 360rpx 240rpx at 82% 16%, rgba(90, 143, 173, 0.14) 0%, transparent 72%),
+    radial-gradient(ellipse 300rpx 200rpx at 18% 84%, rgba(196, 83, 58, 0.08) 0%, transparent 72%),
+    rgba(255, 255, 255, 0.44);
+}
+
+/* 被投诉对象卡片 */
+.section.card {
+  padding: 24rpx 28rpx;
+}
+
+.section.card .list-row {
+  min-height: 100rpx;
+}
+
+.section.card .avatar {
+  width: 88rpx;
+  height: 88rpx;
+  font-size: 32rpx;
+}
+
+/* 投诉类型胶囊 */
+.chips {
+  gap: 16rpx;
+  margin-bottom: 8rpx;
+}
+
+.chips .chip {
+  font-size: 26rpx;
+  padding: 14rpx 24rpx;
+  background: var(--glass-bg);
+}
+
+.chips .chip.active {
+  background: rgba(196, 83, 58, 0.12);
+  color: #C4533A;
+  box-shadow: inset 6rpx 6rpx 12rpx var(--neu-dark), inset -6rpx -6rpx 12rpx var(--neu-light);
+}
+
+/* 投诉内容文本域 */
+.field .textarea {
+  min-height: 200rpx;
+}
+
+.field .tag-label {
+  font-size: 24rpx;
+}
+
+/* 证据上传网格 */
+.upload-grid {
+  gap: 16rpx;
+}
+
+.upload-tile.upload-item {
+  position: relative;
+  overflow: hidden;
+}
+
+.upload-tile.upload-item image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.upload-tile.upload-item .design-button {
+  position: absolute;
+  top: 8rpx;
+  right: 8rpx;
+  width: 44rpx;
+  height: 44rpx;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28rpx;
+}
+
+.upload-tile.upload-add {
+  border-style: dashed;
+  border-color: rgba(90, 143, 173, 0.24);
+}
+
+/* 说明文字 */
+.tag-p[style*="text-align"] {
+  font-size: 22rpx;
+  text-align: center;
+  color: var(--text-3);
+}
+
+/* 提交按钮 */
+.fixed-actions .btn.primary {
+  background: var(--brand-gradient);
+  font-weight: 700;
+  font-size: 30rpx;
+}

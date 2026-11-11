@@ -1,0 +1,87 @@
+@import "../../../styles/glass-detail-page.wxss";
+
+/* —— 支付结果页面特定样式 —— */
+
+/* Hero 渐变：成功绿 / 失败红的中性底色 */
+.hero {
+  background:
+    radial-gradient(ellipse 360rpx 240rpx at 80% 16%, rgba(13, 148, 136, 0.12) 0%, transparent 72%),
+    radial-gradient(ellipse 300rpx 200rpx at 16% 84%, rgba(212, 148, 76, 0.10) 0%, transparent 72%),
+    rgba(255, 255, 255, 0.48);
+  text-align: center;
+}
+
+/* 结果状态头像：大尺寸居中 */
+.hero .avatar {
+  width: 120rpx;
+  height: 120rpx;
+  font-size: 44rpx;
+  margin: 0 auto 24rpx;
+  background: var(--bg-elevated);
+  box-shadow: var(--neu-raised), 0 8rpx 28rpx rgba(0, 0, 0, 0.06);
+}
+
+.hero .avatar.state-success {
+  color: #5B8C5A;
+  background: rgba(91, 140, 90, 0.12);
+  box-shadow: var(--neu-raised), 0 8rpx 28rpx rgba(91, 140, 90, 0.20);
+}
+
+.hero .avatar.state-danger {
+  color: #C4533A;
+  background: rgba(196, 83, 58, 0.10);
+  box-shadow: var(--neu-raised), 0 8rpx 28rpx rgba(196, 83, 58, 0.20);
+}
+
+.hero .avatar.state-warning {
+  color: var(--accent);
+  background: rgba(212, 148, 76, 0.12);
+  box-shadow: var(--neu-raised), 0 8rpx 28rpx rgba(212, 148, 76, 0.20);
+}
+
+/* 金额展示：大号衬线数字 */
+.hero .hero-number {
+  display: block;
+  margin: 16rpx 0 8rpx;
+  font-size: 72rpx;
+  color: var(--brand-dark);
+}
+
+/* 交易信息卡 */
+.card.list-card {
+  padding: 8rpx 28rpx;
+}
+
+.card.list-card .list-row {
+  min-height: 100rpx;
+}
+
+/* 状态徽章 */
+.section-title .badge {
+  font-size: 24rpx;
+  padding: 8rpx 20rpx;
+  box-shadow: 0 4rpx 14rpx rgba(0, 0, 0, 0.04);
+}
+
+/* 刷新按钮 */
+.btn.secondary.block {
+  margin-top: 24rpx;
+  background: var(--glass-bg-strong);
+}
+
+/* 底部操作栏紧凑 */
+.fixed-actions {
+  padding: 20rpx 28rpx;
+  gap: 20rpx;
+}
+
+.fixed-actions .btn {
+  min-height: 88rpx;
+  font-size: 28rpx;
+}
+
+/* Hero 标题 */
+.hero .tag-h2 {
+  font-size: 36rpx;
+  margin-bottom: 8rpx;
+}

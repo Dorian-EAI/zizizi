@@ -1,0 +1,456 @@
+/* ============================================================
+ * 自家人居家维修 · 玻璃新拟态 · 全局设计 Token
+ * Client: Teal (#0D9488) + Amber (#D4944C)
+ * 1px = 2rpx
+ * ============================================================ */
+
+page {
+  /* Brand - Client (Teal) */
+  --brand: #0D9488;
+  --brand-dark: #0A7A70;
+  --brand-mid: #14B8A6;
+  --brand-light: #CCFBF1;
+  --brand-glow: rgba(13, 148, 136, 0.24);
+  --brand-subtle: rgba(13, 148, 136, 0.10);
+
+  /* Accent (Amber) */
+  --accent: #D4944C;
+  --accent-dark: #A0723C;
+  --accent-mid: #E8C088;
+  --accent-light: #F5E6D0;
+  --accent-glow: rgba(212, 148, 76, 0.20);
+
+  /* Background */
+  --background: #F2EDE8;
+  --foreground: #2C2824;
+  --body-bg: #E8E4DF;
+  --bg-elevated: #F7F3EF;
+
+  /* Neumorphic */
+  --neu-light: #FFF8F2;
+  --neu-dark: #DDD6CE;
+  --neu-highlight: rgba(255, 255, 255, 0.55);
+
+  /* Surface & Card */
+  --surface-1: rgba(255, 255, 255, 0.50);
+  --surface-2: rgba(255, 255, 255, 0.45);
+  --card-bg: rgba(255, 255, 255, 0.52);
+  --card: rgba(255, 255, 255, 0.52);
+  --popover: #fff;
+
+  /* Border & Input */
+  --border-subtle: rgba(44, 40, 36, 0.06);
+  --glass-border: rgba(255, 255, 255, 0.60);
+  --border: rgba(44, 40, 36, 0.06);
+  --input: rgba(44, 40, 36, 0.06);
+
+  /* Focus ring & Primary */
+  --ring: #0D9488;
+  --primary: #0D9488;
+  --primary-foreground: #ffffff;
+
+  /* Semantic */
+  --state-success: #5B8C5A;
+  --state-warning: #D4944C;
+  --state-error: #C4533A;
+  --state-info: #5A8FAD;
+
+  /* Text */
+  --text-1: #2C2824;
+  --text-2: #8B8178;
+  --text-3: #B5ADA5;
+  --text-inverse: #ffffff;
+
+  /* Semantic aliases */
+  --green: #5B8C5A;
+  --red: #C4533A;
+  --orange: #D4944C;
+  --blue: #5A8FAD;
+
+  /* Radius */
+  --radius-sm: 16rpx;
+  --radius-md: 24rpx;
+  --radius-lg: 32rpx;
+  --radius-xl: 48rpx;
+  --radius-2xl: 64rpx;
+  --radius-full: 9999rpx;
+
+  /* Font — 衬线系统 */
+  --font-serif: 'Noto Serif SC', 'Source Han Serif SC', 'STSong', 'SimSun', Georgia, serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', sans-serif;
+  --font-number: 'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
+  --font: var(--font-serif);
+  --font-display: 'Cormorant Garamond', 'Noto Serif SC', 'STSong', Georgia, serif;
+  --font-body: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --font-nums: 'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
+
+  /* Motion */
+  --spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+  /* Neumorphic shadow presets — 双偏移 + 黑色环境投影 */
+  --neu-out-sm: 12rpx 12rpx 28rpx var(--neu-dark), -12rpx -12rpx 28rpx var(--neu-light), 0 8rpx 32rpx rgba(0, 0, 0, 0.04);
+  --neu-out-md: 16rpx 16rpx 36rpx var(--neu-dark), -16rpx -16rpx 36rpx var(--neu-light), 0 12rpx 48rpx rgba(0, 0, 0, 0.05);
+  --neu-out-lg: 20rpx 20rpx 48rpx var(--neu-dark), -20rpx -20rpx 48rpx var(--neu-light), 0 16rpx 64rpx rgba(0, 0, 0, 0.06);
+  --neu-in: inset 8rpx 8rpx 16rpx var(--neu-dark), inset -8rpx -8rpx 16rpx var(--neu-light);
+  --neu-in-deep: inset 10rpx 10rpx 20rpx var(--neu-dark), inset -10rpx -10rpx 20rpx var(--neu-light);
+
+  /* Icon specific shadows */
+  --icon-raise: 10rpx 10rpx 20rpx var(--neu-dark), -10rpx -10rpx 20rpx var(--neu-light);
+  --icon-inset: inset 6rpx 6rpx 12rpx var(--neu-dark), inset -6rpx -6rpx 12rpx var(--neu-light);
+
+  /* Brand gradient */
+  --brand-gradient: linear-gradient(135deg, #0D9488 0%, #14B8A6 50%, #D4944C 100%);
+
+  /* Glass — 玻璃材质分级 */
+  --glass-light-bg: rgba(255, 255, 255, 0.18);
+  --glass-light-blur: blur(24rpx) saturate(210%);
+  --glass-heavy-bg: rgba(255, 255, 255, 0.72);
+  --glass-heavy-blur: blur(32rpx);
+
+  /* Page background */
+  background: var(--background);
+  color: var(--text-1);
+  font-family: var(--font-serif);
+  font-size: 28rpx;
+  min-height: 100vh;
+  letter-spacing: -0.01em;
+}
+
+page::after {
+  content: '';
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 520rpx;
+  background:
+    radial-gradient(ellipse 400rpx 280rpx at 20% 90%, rgba(13, 148, 136, 0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 360rpx 240rpx at 80% 85%, rgba(212, 148, 76, 0.06) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+view, text, input, button, textarea, navigator, scroll-view {
+  box-sizing: border-box;
+}
+
+button::after {
+  border: none;
+}
+
+/* ============================================================
+ * 工具类 — Glass Neu Card (玻璃 + 新拟态融合卡片)
+ * ============================================================ */
+.glass-neu-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(40rpx) saturate(150%);
+  -webkit-backdrop-filter: blur(40rpx) saturate(150%);
+  border: 2rpx solid rgba(255, 255, 255, 0.70);
+  border-radius: var(--radius-md);
+  box-shadow:
+    var(--neu-out-md),
+    0 12rpx 56rpx rgba(0, 0, 0, 0.06),
+    0 0 0 2rpx rgba(44, 40, 36, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-neu-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.22) 0%, transparent 100%);
+  pointer-events: none;
+}
+
+/* ============================================================
+ * 工具类 — 按钮
+ * ============================================================ */
+.btn-neu-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--brand-gradient);
+  color: var(--text-inverse);
+  border: 1rpx solid rgba(255, 255, 255, 0.40);
+  border-radius: var(--radius-full);
+  padding: 16rpx 32rpx;
+  font-size: 26rpx;
+  font-weight: 600;
+  font-family: var(--font-serif);
+  box-shadow: var(--neu-out-sm), 0 8rpx 28rpx var(--brand-glow);
+  transition: transform 0.2s var(--spring), box-shadow 0.2s var(--ease);
+}
+
+.btn-neu-primary:active {
+  box-shadow: var(--neu-in);
+  transform: scale(0.94);
+}
+
+.btn-neu-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--brand);
+  border: 1rpx solid rgba(255, 255, 255, 0.95);
+  border-radius: var(--radius-full);
+  padding: 16rpx 32rpx;
+  font-size: 26rpx;
+  font-weight: 600;
+  font-family: var(--font-serif);
+  box-shadow: var(--neu-out-md), inset 0 3rpx 4rpx rgba(255, 255, 255, 0.65);
+  transition: transform 0.2s var(--spring), box-shadow 0.2s var(--ease);
+}
+
+.btn-neu-secondary:active {
+  box-shadow: var(--neu-in-deep);
+  transform: scale(0.94);
+}
+
+.btn-neu-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  color: var(--text-2);
+  border: 1rpx solid var(--border-subtle);
+  border-radius: var(--radius-full);
+  padding: 16rpx 32rpx;
+  font-size: 26rpx;
+  font-weight: 600;
+  font-family: var(--font-serif);
+  transition: transform 0.2s var(--spring), color 0.2s var(--ease);
+}
+
+.btn-neu-ghost:active {
+  transform: scale(0.94);
+  color: var(--brand);
+}
+
+/* ============================================================
+ * 工具类 — Hero 渐变背景
+ * ============================================================ */
+.hero-gradient {
+  background:
+    radial-gradient(ellipse 480rpx 360rpx at 75% 45%, rgba(212, 148, 76, 0.14) 0%, transparent 70%),
+    radial-gradient(ellipse 360rpx 280rpx at 20% 80%, rgba(13, 148, 136, 0.14) 0%, transparent 70%),
+    linear-gradient(135deg, rgba(13, 148, 136, 0.16) 0%, rgba(212, 148, 76, 0.10) 50%, rgba(13, 148, 136, 0.06) 100%);
+}
+
+.hero-gradient-deep {
+  background:
+    radial-gradient(ellipse 560rpx 400rpx at 75% 40%, rgba(212, 148, 76, 0.32) 0%, transparent 70%),
+    radial-gradient(ellipse 480rpx 320rpx at 20% 80%, rgba(13, 148, 136, 0.24) 0%, transparent 70%),
+    linear-gradient(135deg, rgba(13, 148, 136, 0.28) 0%, rgba(212, 148, 76, 0.20) 50%, rgba(20, 184, 166, 0.12) 100%);
+}
+
+/* ============================================================
+ * 工具类 — 通用布局
+ * ============================================================ */
+.flex-row { display: flex; flex-direction: row; }
+.flex-col { display: flex; flex-direction: column; }
+.items-center { align-items: center; }
+.justify-center { justify-content: center; }
+.justify-between { justify-content: space-between; }
+.flex-1 { flex: 1; }
+.relative { position: relative; }
+
+.safe-bottom {
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 120rpx);
+}
+
+/* ============================================================
+ * 工具类 — Hero 问候语样式
+ * ============================================================ */
+.hero-greeting {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: var(--text-1);
+  letter-spacing: -0.4rpx;
+  font-family: var(--font-serif);
+  margin-bottom: 20rpx;
+}
+.hero-greeting-sub {
+  font-size: 26rpx;
+  color: var(--text-2);
+  font-weight: 500;
+}
+
+/* ============================================================
+ * 工具类 — 统计卡片（3列）
+ * ============================================================ */
+.stats-row {
+  display: flex;
+  gap: 16rpx;
+  margin: 28rpx 48rpx 0;
+}
+.stats-item {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.52);
+  backdrop-filter: blur(40rpx) saturate(150%);
+  -webkit-backdrop-filter: blur(40rpx) saturate(150%);
+  border: 2rpx solid rgba(255, 255, 255, 0.70);
+  border-radius: 32rpx;
+  box-shadow: var(--neu-out-sm), 0 8rpx 32rpx rgba(0,0,0,0.04);
+  padding: 24rpx 16rpx;
+  text-align: center;
+}
+.stats-num {
+  font-size: 44rpx;
+  font-weight: 700;
+  color: var(--text-1);
+  letter-spacing: -0.5rpx;
+  line-height: 1;
+  display: block;
+}
+.stats-num .unit {
+  font-size: 24rpx;
+  color: var(--text-2);
+  margin-left: 4rpx;
+}
+.stats-label {
+  font-size: 24rpx;
+  color: var(--text-2);
+  font-weight: 500;
+  margin-top: 8rpx;
+  display: block;
+}
+
+/* ============================================================
+ * 工具类 — 筛选标签容器
+ * ============================================================ */
+.filter-tabs {
+  display: flex;
+  gap: 12rpx;
+  padding: 16rpx 20rpx;
+  margin: 28rpx 48rpx 0;
+  background: rgba(255, 255, 255, 0.52);
+  backdrop-filter: blur(40rpx) saturate(150%);
+  -webkit-backdrop-filter: blur(40rpx) saturate(150%);
+  border: 2rpx solid rgba(255, 255, 255, 0.70);
+  border-radius: 32rpx;
+  box-shadow: var(--neu-out-md), 0 12rpx 48rpx rgba(0,0,0,0.05);
+  position: relative;
+  z-index: 10;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+.filter-tabs::-webkit-scrollbar {
+  display: none;
+}
+.filter-pill {
+  flex-shrink: 0;
+  padding: 16rpx 36rpx;
+  border-radius: 24rpx;
+  font-size: 26rpx;
+  font-weight: 600;
+  text-align: center;
+  transition: all 0.2s var(--spring);
+}
+.filter-pill.active {
+  background: var(--brand-subtle);
+  color: var(--brand);
+  box-shadow: var(--neu-in), 0 0 0 1rpx rgba(13,148,136,0.15);
+}
+.filter-pill:not(.active) {
+  background: var(--bg-elevated);
+  color: var(--text-2);
+  box-shadow: var(--neu-out-sm);
+}
+
+/* ============================================================
+ * 工具类 — 底部 Tab Bar 增强版
+ * ============================================================ */
+.tab-bar-premium {
+  position: fixed;
+  bottom: max(20rpx, env(safe-area-inset-bottom));
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 64rpx);
+  max-width: 720rpx;
+  height: 112rpx;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(96rpx) saturate(210%);
+  -webkit-backdrop-filter: blur(96rpx) saturate(210%);
+  border: 1rpx solid rgba(255, 255, 255, 0.45);
+  border-radius: 48rpx;
+  box-shadow:
+    inset 0 3rpx 6rpx rgba(255, 255, 255, 0.60),
+    inset 0 -1rpx 2rpx rgba(255, 255, 255, 0.20),
+    0 0 0 1rpx rgba(0, 0, 0, 0.04),
+    0 4rpx 20rpx rgba(0, 0, 0, 0.06),
+    0 24rpx 72rpx rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0 12rpx;
+}
+
+/* ============================================================
+ * 工具类 — 底部安全区
+ * ============================================================ */
+.bottom-safe {
+  height: calc(140rpx + env(safe-area-inset-bottom, 0px));
+}
+
+/* ============================================================
+ * 工具类 — 服务图标 4列网格
+ * ============================================================ */
+.services-grid-4col {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20rpx;
+  padding: 28rpx 48rpx;
+}
+
+/* ============================================================
+ * 工具类 — 品牌色辉光效果
+ * ============================================================ */
+.brand-glow {
+  box-shadow: 0 8rpx 28rpx var(--brand-glow);
+}
+
+/* ============================================================
+ * 工具类 — 胶囊按钮样式
+ * ============================================================ */
+.pill-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16rpx 40rpx;
+  border-radius: 9999rpx;
+  font-size: 28rpx;
+  font-weight: 600;
+  font-family: var(--font-serif);
+  transition: transform 0.2s var(--spring), box-shadow 0.2s var(--ease);
+}
+.pill-btn:active {
+  transform: scale(0.94);
+}
+
+/* ============================================================
+ * 工具类 — 圆形图标按钮
+ * ============================================================ */
+.icon-circle-btn {
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: 50%;
+  background: var(--bg-elevated);
+  box-shadow: var(--neu-out-sm), inset 0 2rpx 3rpx rgba(255,255,255,0.50);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--brand);
+  flex-shrink: 0;
+  transition: box-shadow 0.2s var(--ease), transform 0.2s var(--spring);
+}
+.icon-circle-btn:active {
+  box-shadow: var(--neu-in);
+  transform: scale(0.94);
+}

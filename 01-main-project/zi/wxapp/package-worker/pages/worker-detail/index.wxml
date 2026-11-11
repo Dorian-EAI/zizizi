@@ -1,0 +1,60 @@
+<view class="phone-page design-detail-page worker-theme">
+  <view class="topbar">
+    <view class="icon-button design-button" bindtap="onBack"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m15%2018-6-6%206-6M9%2012h10%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view>
+    <view class="tag-h1">师傅详情</view>
+    <view class="top-action design-button" bindtap="onShare">分享</view>
+  </view>
+
+  <view class="page-body">
+    <view class="hero">
+      <view class="hero-avatar">{{worker.initial}}</view>
+      <view class="hero-name">{{worker.name}}</view>
+      <view class="hero-rating">★ {{worker.rating}} · 已认证</view>
+      <view class="hero-meta">
+        <text>完成 {{worker.completed}} 单</text>
+        <text>·</text>
+        <text>好评率 {{worker.praiseRate}}</text>
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="section-title"><text class="tag-strong">个人简介</text></view>
+      <view class="card">
+        <view class="tag-p">{{worker.bio}}</view>
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="section-title"><text class="tag-strong">擅长服务</text></view>
+      <view class="card">
+        <view class="chips">
+          <view class="chip" wx:for="{{worker.skills}}" wx:key="*this">{{item}}</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="section-title"><text class="tag-strong">工作信息</text></view>
+      <view class="card">
+        <view class="info-list">
+          <view class="info-row"><text class="info-label">工作年限</text><text class="info-value">{{worker.experience}}</text></view>
+          <view class="info-row"><text class="info-label">服务区域</text><text class="info-value">{{worker.area}}</text></view>
+          <view class="info-row"><text class="info-label">接单时间</text><text class="info-value">{{worker.workingHours}}</text></view>
+          <view class="info-row"><text class="info-label">保证金</text><text class="info-value">¥2000</text></view>
+        </view>
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="section-title"><text class="tag-strong">客户评价</text></view>
+      <view class="card" wx:for="{{reviews}}" wx:key="id">
+        <view class="card-title">{{item.ratingText}}</view>
+        <view class="tag-p">{{item.content}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="fixed-actions">
+    <view class="btn primary design-button" bindtap="onContact">联系师傅</view>
+  </view>
+</view>

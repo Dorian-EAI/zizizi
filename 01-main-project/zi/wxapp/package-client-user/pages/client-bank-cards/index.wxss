@@ -1,0 +1,47 @@
+/* AUTO-GENERATED DESIGN STYLE ENTRY; page-specific overrides may follow this import. */
+@import "../../../styles/generated-detail-page.wxss";
+
+.phone-page {
+  --neu-raised: var(--neu-out-md);
+  --glass-bg: rgba(255, 255, 255, 0.52);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.phone-page .empty-state {
+  padding: 80rpx 44rpx;
+}
+
+.phone-page .empty-state .avatar {
+  width: 120rpx;
+  height: 120rpx;
+  font-size: 40rpx;
+  margin: 0 auto 28rpx;
+}
+
+.phone-page .empty-state .tag-h3 {
+  margin: 0 0 12rpx;
+  font-size: 32rpx;
+  color: var(--ink);
+}
+
+.phone-page .empty-state .tag-p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 26rpx;
+  line-height: 1.55;
+}
+
+.phone-page .btn.secondary.block {
+  margin-bottom: 24rpx;
+}
+
+.phone-page .notice.warning {
+  border-radius: var(--radius-md);
+  margin-bottom: 32rpx;
+}
+
+.phone-page .btn.secondary.block:last-of-type {
+  margin-bottom: 48rpx;
+}

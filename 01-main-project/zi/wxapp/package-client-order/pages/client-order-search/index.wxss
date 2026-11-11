@@ -1,0 +1,85 @@
+@import "../../../styles/glass-detail-page.wxss";
+
+/* —— 订单搜索页面特定样式 —— */
+
+/* Hero 渐变：冷调青+浅灰蓝色，专注搜索体验 */
+.hero {
+  background:
+    radial-gradient(ellipse 320rpx 200rpx at 20% 12%, rgba(13, 148, 136, 0.16) 0%, transparent 72%),
+    radial-gradient(ellipse 280rpx 180rpx at 82% 88%, rgba(90, 143, 173, 0.10) 0%, transparent 72%),
+    rgba(255, 255, 255, 0.42);
+}
+
+/* 搜索框容器：独立玻璃质感 */
+.page-body .field {
+  background: var(--glass-bg);
+  padding: 28rpx;
+  border-radius: var(--r-lg);
+  border: 2rpx solid rgba(255, 255, 255, 0.70);
+  box-shadow: var(--neu-raised), 0 12rpx 40rpx rgba(0, 0, 0, 0.04);
+  backdrop-filter: blur(40rpx) saturate(150%);
+  -webkit-backdrop-filter: blur(40rpx) saturate(150%);
+}
+
+/* 搜索输入框：紧凑内陷 */
+.page-body .field .input {
+  min-height: 80rpx;
+  padding: 0 80rpx 0 28rpx;
+  font-size: 28rpx;
+}
+
+/* 清除按钮定位 */
+.page-body .field [style*="position: absolute"] {
+  box-shadow: var(--neu-inset-sm);
+}
+
+/* 搜索按钮：品牌渐变 */
+.page-body .field .btn.primary {
+  margin-top: 20rpx;
+  min-height: 84rpx;
+  font-size: 28rpx;
+}
+
+/* 热门搜索列表紧凑化 */
+.list-card .list-row {
+  min-height: 92rpx;
+}
+
+.list-card .list-row .row-icon {
+  font-family: var(--font-number);
+  font-weight: 700;
+  color: var(--accent);
+  background: var(--bg-elevated);
+  flex: 0 0 56rpx;
+  width: 56rpx;
+  height: 56rpx;
+  font-size: 28rpx;
+}
+
+/* 搜索结果状态徽章 */
+.row-value .badge.info {
+  font-size: 20rpx;
+  padding: 6rpx 12rpx;
+  margin-right: 12rpx;
+  box-shadow: 0 2rpx 8rpx rgba(90, 143, 173, 0.14);
+}
+
+/* 空结果提示 */
+.card[style*="text-align: center"] {
+  padding: 56rpx 32rpx !important;
+}
+
+.card[style*="text-align: center"] .tag-h2 {
+  margin: 16rpx 0 8rpx;
+}
+
+/* 搜索历史胶囊 */
+.chips .chip {
+  font-size: 26rpx;
+  background: var(--glass-bg);
+}
+
+/* 结果列表行间距 */
+.page-body .section:not(:last-child) {
+  margin-bottom: 32rpx;
+}

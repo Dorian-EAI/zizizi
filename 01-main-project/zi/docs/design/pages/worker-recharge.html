@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自家人居家维修 · 玻璃新拟态 · 师傅充值</title>
+    <style id="theme-vars">
+/* 自家人居家维修 - 玻璃新拟态 */
+:root {
+  /* Brand - Worker (Blue) */
+  --brand: #2D6CDF;
+  --brand-dark: #2456B8;
+  --brand-mid: #5A8EE8;
+  --brand-light: #DCE8FB;
+  --brand-glow: rgba(45, 108, 223, 0.18);
+  --brand-subtle: rgba(45, 108, 223, 0.08);
+
+  /* Accent (Amber) */
+  --accent: #D4944C;
+  --accent-dark: #A0723C;
+  --accent-mid: #E8C088;
+  --accent-light: #F5E6D0;
+  --accent-glow: rgba(212, 148, 76, 0.20);
+
+  /* Background */
+  --background: #F2EDE8;
+  --foreground: #2C2824;
+  --body-bg: #E8E4DF;
+  --bg-elevated: #F7F3EF;
+
+  /* Neumorphic */
+  --neu-light: #FFF8F2;
+  --neu-dark: #DDD6CE;
+  --neu-highlight: rgba(255, 255, 255, 0.55);
+
+  /* Surface & Card */
+  --card: rgba(255, 255, 255, 0.52);
+  --card-foreground: #2C2824;
+  --popover: #fff;
+  --popover-foreground: #2C2824;
+
+  /* Muted */
+  --muted: #F7F3EF;
+  --muted-foreground: #8B8178;
+
+  /* Border & Input */
+  --border: rgba(44, 40, 36, 0.06);
+  --input: rgba(44, 40, 36, 0.06);
+  --ring: #2D6CDF;
+
+  /* Primary */
+  --primary: #2D6CDF;
+  --primary-foreground: #ffffff;
+
+  /* Semantic aliases */
+  --state-success: #5B8C5A;
+  --state-warning: #D4944C;
+  --state-error: #C4533A;
+  --state-info: #5A8FAD;
+
+  /* Text */
+  --text-1: #2C2824;
+  --text-2: #8B8178;
+  --text-3: #B5ADA5;
+  --text-inverse: #ffffff;
+
+  /* Sep & Fill */
+  --sep: rgba(44, 40, 36, 0.06);
+  --fill: rgba(44, 40, 36, 0.04);
+
+  /* Green/Red/Orange/Blue semantic */
+  --green: #5B8C5A;
+  --red: #C4533A;
+  --orange: #D4944C;
+  --blue: #5A8FAD;
+
+  /* Radius */
+  --radius-sm: 0.75rem;
+  --radius-md: 1.2rem;
+  --radius-lg: 1.6rem;
+  --radius-full: 9999px;
+
+  /* Font — unified serif system */
+  --font-display: 'Cormorant Garamond', 'Noto Serif SC', 'STSong', Georgia, serif;
+  --font-body:    'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --font-nums:    'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
+  --font:         var(--font-body);
+
+  /* Motion */
+  --spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --dur: 0.2s;
+
+  /* Glass */
+  --glass-bg: rgba(255, 255, 255, 0.18);
+  --glass-blur: blur(12px) saturate(140%);
+  --glass-border: rgba(255, 255, 255, 0.60);
+
+  /* Surface presets for glass-neumorphic components */
+  --surface-1: rgba(255, 255, 255, 0.50);
+  --surface-2: rgba(255, 255, 255, 0.45);
+
+  /* Neumorphic shadow presets */
+  --neu-out-sm: 6px 6px 14px var(--neu-dark), -6px -6px 14px var(--neu-light), 0 4px 16px rgba(0, 0, 0, 0.04);
+  --neu-out-md: 8px 8px 18px var(--neu-dark), -8px -8px 18px var(--neu-light), 0 6px 24px rgba(0, 0, 0, 0.05);
+  --neu-out-lg: 10px 10px 24px var(--neu-dark), -10px -10px 24px var(--neu-light), 0 8px 32px rgba(0, 0, 0, 0.06);
+  --neu-in: inset 4px 4px 8px var(--neu-dark), inset -4px -4px 8px var(--neu-light);
+  --neu-in-deep: inset 5px 5px 10px var(--neu-dark), inset -5px -5px 10px var(--neu-light);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-full: var(--radius-full);
+}
+
+/* Semantic token fallback */
+#semantic-token-fallback {
+  --brand-background: var(--background);
+  --brand-foreground: var(--foreground);
+  --brand-card: var(--card);
+  --brand-card-foreground: var(--card-foreground);
+  --brand-popover: var(--popover);
+  --brand-popover-foreground: var(--popover-foreground);
+  --brand-primary: var(--primary);
+  --brand-primary-foreground: var(--primary-foreground);
+  --brand-muted: var(--muted);
+  --brand-muted-foreground: var(--muted-foreground);
+  --brand-border: var(--border);
+  --brand-input: var(--input);
+  --brand-ring: var(--ring);
+  --brand-radius-sm: var(--radius-sm);
+  --brand-radius-md: var(--radius-md);
+  --brand-radius-lg: var(--radius-lg);
+}
+
+/* ===== Global Neumorphic Components ===== */
+/* Tab Bar — Premium Liquid Glass, absolute-positioned within .phone frame */
+.tab-bar{
+  position:absolute;
+  bottom:10px;
+  left:50%;
+  transform:translateX(-50%);
+  width:calc(100% - 32px);
+  max-width:360px;
+  height:56px;
+  z-index:100;
+  background:rgba(255,255,255,0.18);
+  backdrop-filter:blur(48px) saturate(210%);
+  -webkit-backdrop-filter:blur(48px) saturate(210%);
+  border:0.5px solid rgba(255,255,255,0.45);
+  border-radius:24px;
+  box-shadow:
+    inset 0 1.5px 3px rgba(255,255,255,0.60),
+    inset 0 -0.5px 1px rgba(255,255,255,0.20),
+    0 0 0 0.5px rgba(0,0,0,0.04),
+    0 2px 10px rgba(0,0,0,0.06),
+    0 12px 36px rgba(0,0,0,0.08);
+  display:flex;
+  align-items:center;
+  justify-content:space-around;
+  padding:0 6px;
+}
+.tab-bar::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  background:linear-gradient(160deg,
+    rgba(255,255,255,0.42) 0%,
+    rgba(255,255,255,0.16) 20%,
+    rgba(255,255,255,0.03) 40%,
+    transparent 60%);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
+  padding:0.5px;
+  pointer-events:none;
+  z-index:1;
+}
+.tab-bar::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  background:linear-gradient(320deg,
+    transparent 60%,
+    rgba(13,148,136,0.06) 80%,
+    rgba(255,255,255,0.04) 100%);
+  pointer-events:none;
+  z-index:1;
+}
+.tab-item{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+  width:68px;
+  height:44px;
+  border-radius:14px;
+  color:var(--text-3);
+  font-size:11px;
+  font-weight:500;
+  text-decoration:none;
+  position:relative;
+  transition:all .2s;
+}
+.tab-item svg{
+  width:20px;
+  height:20px;
+  stroke:currentColor;
+  fill:none;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.tab-item[data-active="true"]{
+  color:var(--brand);
+  font-weight:600;
+}
+.tab-item[data-active="true"]::before{
+  content:"";
+  position:absolute;
+  width:54px;
+  height:42px;
+  border-radius:16px;
+  background:rgba(13,148,136,0.16);
+  backdrop-filter:blur(24px);
+  -webkit-backdrop-filter:blur(24px);
+  border:0.5px solid rgba(13,148,136,0.30);
+  box-shadow:
+    inset 0 1px 3px rgba(255,255,255,0.55),
+    inset 0 -0.5px 1px rgba(255,255,255,0.15),
+    0 2px 10px rgba(13,148,136,0.20),
+    0 0 0 0.5px rgba(13,148,136,0.08);
+  z-index:0;
+}
+.tab-item[data-active="true"] svg{
+  transform:scale(1.08);
+  position:relative;
+  z-index:1;
+}
+
+/* Buttons */
+.btn-neu-primary{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:var(--brand);color:var(--text-inverse);
+  border:none;border-radius:9999px;
+  padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
+  cursor:pointer;
+  box-shadow:var(--neu-out-sm),0 2px 8px var(--brand-glow);
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
+.btn-neu-primary:active{box-shadow:var(--neu-in);transform:scale(0.94)}
+
+.btn-neu-secondary{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,0.50);color:var(--brand);
+  border:0.5px solid rgba(255,255,255,0.60);border-radius:9999px;
+  padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
+  cursor:pointer;
+  box-shadow:var(--neu-out-sm);
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);
+}
+.btn-neu-secondary:active{box-shadow:var(--neu-in);transform:scale(0.94)}
+
+.btn-neu-ghost{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:transparent;color:var(--text-2);
+  border:0.5px solid var(--border);border-radius:9999px;
+  padding:8px 16px;font-size:13px;font-weight:600;font-family:var(--font);
+  cursor:pointer;
+  transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease),color var(--dur) var(--ease);
+}
+.btn-neu-ghost:active{transform:scale(0.94);color:var(--brand)}
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-accent: var(--accent);
+    --radius-sm: var(--radius-sm);
+    --radius-md: var(--radius-md);
+    --radius-lg: var(--radius-lg);
+    --radius-full: var(--radius-full);
+  }
+  @layer base {
+    body { background: var(--background); color: var(--foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+    <style id="semantic-token-fallback">
+      .bg-background { background-color: var(--background); }
+      .text-background { color: var(--background); }
+      .border-background { border-color: var(--background); }
+      .ring-background { --tw-ring-color: var(--background); }
+      .bg-foreground { background-color: var(--foreground); }
+      .text-foreground { color: var(--foreground); }
+      .border-foreground { border-color: var(--foreground); }
+      .ring-foreground { --tw-ring-color: var(--foreground); }
+      .bg-card { background-color: var(--card); }
+      .text-card { color: var(--card); }
+      .border-card { border-color: var(--card); }
+      .ring-card { --tw-ring-color: var(--card); }
+      .bg-card-foreground { background-color: var(--card-foreground); }
+      .text-card-foreground { color: var(--card-foreground); }
+      .border-card-foreground { border-color: var(--card-foreground); }
+      .ring-card-foreground { --tw-ring-color: var(--card-foreground); }
+      .bg-popover { background-color: var(--popover); }
+      .text-popover { color: var(--popover); }
+      .border-popover { border-color: var(--popover); }
+      .ring-popover { --tw-ring-color: var(--popover); }
+      .bg-popover-foreground { background-color: var(--popover-foreground); }
+      .text-popover-foreground { color: var(--popover-foreground); }
+      .border-popover-foreground { border-color: var(--popover-foreground); }
+      .ring-popover-foreground { --tw-ring-color: var(--popover-foreground); }
+      .bg-primary { background-color: var(--primary); }
+      .text-primary { color: var(--primary); }
+      .border-primary { border-color: var(--primary); }
+      .ring-primary { --tw-ring-color: var(--primary); }
+      .bg-primary-foreground { background-color: var(--primary-foreground); }
+      .text-primary-foreground { color: var(--primary-foreground); }
+      .border-primary-foreground { border-color: var(--primary-foreground); }
+      .ring-primary-foreground { --tw-ring-color: var(--primary-foreground); }
+      .bg-muted { background-color: var(--muted); }
+      .text-muted { color: var(--muted); }
+      .border-muted { border-color: var(--muted); }
+      .ring-muted { --tw-ring-color: var(--muted); }
+      .bg-muted-foreground { background-color: var(--muted-foreground); }
+      .text-muted-foreground { color: var(--muted-foreground); }
+      .border-muted-foreground { border-color: var(--muted-foreground); }
+      .ring-muted-foreground { --tw-ring-color: var(--muted-foreground); }
+      .bg-border { background-color: var(--border); }
+      .text-border { color: var(--border); }
+      .border-border { border-color: var(--border); }
+      .ring-border { --tw-ring-color: var(--border); }
+      .bg-input { background-color: var(--input); }
+      .text-input { color: var(--input); }
+      .border-input { border-color: var(--input); }
+      .ring-input { --tw-ring-color: var(--input); }
+      .bg-ring { background-color: var(--ring); }
+      .text-ring { color: var(--ring); }
+      .border-ring { border-color: var(--ring); }
+      .ring-ring { --tw-ring-color: var(--ring); }
+      .bg-accent { background-color: var(--accent); }
+      .text-accent { color: var(--accent); }
+      .border-accent { border-color: var(--accent); }
+      .ring-accent { --tw-ring-color: var(--accent); }
+    </style>
+    <style>
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      [data-icon] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        background-color: currentColor;
+      }
+    </style>
+</head>
+<body>
+<div class="phone" data-dom-id="page-worker-recharge">
+
+  <!-- ===== Top Back Bar ===== -->
+  <div class="back-bar">
+    <button class="back-btn" data-dom-id="back-btn" aria-label="返回">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 18 9 12 15 6"/>
+      </svg>
+    </button>
+    <h1 class="back-title">充值</h1>
+    <span class="back-spacer"></span>
+  </div>
+
+  <!-- ===== Balance Card (glass gradient) ===== -->
+  <section class="balance-card">
+    <div class="bc-glow"></div>
+    <div class="bc-label">钱包余额</div>
+    <div class="bc-amount">¥2,546.50</div>
+    <div class="bc-sub">可提现 ¥2,546.50</div>
+  </section>
+
+  <!-- ===== Activity Banner (amber) ===== -->
+  <div class="activity-banner" data-dom-id="activity-banner">
+    <span class="ab-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="20 12 20 22 4 22 4 12"/>
+        <rect x="2" y="7" width="20" height="5"/>
+        <line x1="12" y1="22" x2="12" y2="7"/>
+        <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/>
+        <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/>
+      </svg>
+    </span>
+    <span class="ab-text">充1000送50，限时活动</span>
+    <svg class="ab-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="9 18 15 12 9 6"/>
+    </svg>
+  </div>
+
+  <!-- ===== Recharge Amount Section ===== -->
+  <div class="section">
+    <div class="section-title">
+      <span>选择金额</span>
+    </div>
+    <div class="amount-grid">
+      <button class="amount-cell" type="button" data-dom-id="amount-100">
+        <span class="ac-symbol">¥</span><span class="ac-value">100</span>
+      </button>
+      <button class="amount-cell" type="button" data-dom-id="amount-200">
+        <span class="ac-symbol">¥</span><span class="ac-value">200</span>
+      </button>
+      <button class="amount-cell selected" type="button" data-dom-id="amount-500" data-selected="true">
+        <span class="ac-symbol">¥</span><span class="ac-value">500</span>
+        <span class="ac-check">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </span>
+      </button>
+      <button class="amount-cell" type="button" data-dom-id="amount-1000">
+        <span class="ac-symbol">¥</span><span class="ac-value">1,000</span>
+      </button>
+      <button class="amount-cell" type="button" data-dom-id="amount-2000">
+        <span class="ac-symbol">¥</span><span class="ac-value">2,000</span>
+      </button>
+      <div class="amount-cell custom" data-dom-id="amount-custom">
+        <span class="ac-custom-label">自定义</span>
+        <div class="ac-custom-input">
+          <span class="ac-prefix">¥</span>
+          <input type="text" inputmode="decimal" placeholder="输入金额" data-dom-id="custom-input" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Payment Method Section ===== -->
+  <div class="section">
+    <div class="section-title">
+      <span>支付方式</span>
+    </div>
+    <div class="card pay-card">
+      <div class="pay-row selected" data-dom-id="pay-wechat" data-selected="true">
+        <div class="pay-icon pay-icon-green">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+          </svg>
+        </div>
+        <span class="pay-name">微信支付</span>
+        <span class="pay-badge">推荐</span>
+        <span class="pay-radio" data-selected="true">
+          <span class="pay-radio-dot"></span>
+        </span>
+      </div>
+      <div class="pay-row" data-dom-id="pay-alipay">
+        <div class="pay-icon pay-icon-blue">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="5" width="20" height="14" rx="2"/>
+            <path d="M7 12h5"/>
+            <path d="M17 10c-1.5 1.2-3 2-5 2.5"/>
+          </svg>
+        </div>
+        <span class="pay-name">支付宝</span>
+        <span class="pay-radio">
+          <span class="pay-radio-dot"></span>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Recharge Notes Section ===== -->
+  <div class="section notes-section">
+    <div class="section-title">
+      <span>充值说明</span>
+    </div>
+    <div class="notes-card">
+      <div class="note-row">
+        <span class="note-dot"></span>
+        <span class="note-text">充值金额即时到账，可用于平台服务抵扣。</span>
+      </div>
+      <div class="note-row">
+        <span class="note-dot"></span>
+        <span class="note-text">充值金额不可退款、不可提现，请按需充值。</span>
+      </div>
+      <div class="note-row">
+        <span class="note-dot"></span>
+        <span class="note-text">仅用于平台服务抵扣，活动赠送金额有效期以活动规则为准。</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Bottom Fixed CTA ===== -->
+  <div class="cta-bar">
+    <button class="btn-neu-primary cta-btn" type="button" data-dom-id="btn-recharge">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px">
+        <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/>
+      </svg>
+      <span class="cta-text">立即充值</span>
+      <span class="cta-amount">¥500</span>
+    </button>
+  </div>
+
+</div>
+
+    <style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --brand:#2D6CDF;--brand-dark:#2456B8;--brand-light:#DCE8FB;
+  --brand-glow:rgba(45,108,223,0.18);--brand-subtle:rgba(45,108,223,0.08);
+  --brand-gradient:linear-gradient(135deg,#2D6CDF 0%,#5A8EE8 48%,#D4944C 100%);
+  --accent:#D4944C;--accent-light:#F5E6D0;--accent-glow:rgba(212,148,76,0.16);
+  --bg:#F2EDE8;--bg-elevated:#F7F3EF;
+  --neu-light:#FFF8F2;--neu-dark:#DDD6CE;
+  --text-1:#2C2824;--text-2:#8B8178;--text-3:#B5ADA5;--text-inverse:#FFFFFF;
+  --sep:rgba(44,40,36,0.06);--fill:rgba(44,40,36,0.04);
+  --green:#5B8C5A;--red:#C4533A;--orange:#D4944C;--blue:#5A8FAD;
+  --r:1.2rem;--r-lg:1.6rem;--r-sm:0.75rem;--r-pill:9999px;--r-tab:24px;
+  /* Font */--font-display:'Cormorant Garamond', 'Noto Serif SC', 'STSong', Georgia, serif;
+  --font-body:'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+  --font-nums:'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
+  --font:var(--font-body);
+  --neu-out-sm:5px 5px 12px var(--neu-dark),-5px -5px 12px var(--neu-light);
+  --neu-out-md:8px 8px 18px var(--neu-dark),-8px -8px 18px var(--neu-light);
+  --neu-out-lg:10px 10px 24px var(--neu-dark),-10px -10px 24px var(--neu-light);
+  --neu-in:inset 4px 4px 8px var(--neu-dark),inset -4px -4px 8px var(--neu-light);
+  --neu-in-deep:inset 5px 5px 10px var(--neu-dark),inset -5px -5px 10px var(--neu-light);
+  --glass-tab-bg:rgba(255,255,255,0.18);--glass-tab-blur:blur(48px) saturate(210%);--glass-tab-border:rgba(255,255,255,0.45);
+  --spring:cubic-bezier(0.175,0.885,0.32,1.275);--ease:cubic-bezier(0.25,0.46,0.45,0.94);--dur:0.2s;
+}
+html,body{font-family:var(--font);color:var(--text-1);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+body{display:flex;align-items:flex-start;justify-content:center;min-height:100vh;background:#E8E4DF;letter-spacing:-0.01em}
+.phone{position:relative;width:414px;min-height:896px;background:var(--bg);border-radius:48px;overflow:hidden;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.12),0 4px 16px rgba(0,0,0,.06);padding-bottom:96px}
+.phone::after{content:'';position:absolute;bottom:0;left:0;right:0;height:260px;background:radial-gradient(ellipse 200px 140px at 20% 90%,rgba(45,108,223,.04) 0%,transparent 70%),radial-gradient(ellipse 180px 120px at 80% 85%,rgba(212,148,76,.04) 0%,transparent 70%),radial-gradient(ellipse 160px 100px at 50% 95%,rgba(45,108,223,.04) 0%,transparent 70%);pointer-events:none;z-index:0}
+.phone>*:not(.tab-bar){position:relative;z-index:1}
+
+/* ===== Top Back Bar ===== */
+.back-bar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding: max(16px, env(safe-area-inset-top)) 20px 12px;background:radial-gradient(ellipse 220px 160px at 78% 45%,rgba(212,148,76,.10) 0%,transparent 70%),radial-gradient(ellipse 180px 140px at 18% 75%,rgba(45,108,223,.10) 0%,transparent 70%),linear-gradient(135deg,rgba(45,108,223,.08) 0%,rgba(212,148,76,.04) 50%,rgba(45,108,223,.05) 100%); border-radius:0 0 28px 28px; overflow:hidden;}
+.back-btn{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.52);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:0.5px solid rgba(255,255,255,0.60);box-shadow:var(--neu-out-sm),inset 0 1px 1.5px rgba(255,255,255,0.50);display:flex;align-items:center;justify-content:center;color:var(--text-1);cursor:pointer;flex-shrink:0;transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease)}
+.back-btn:active{box-shadow:var(--neu-in);transform:scale(0.9)}
+.back-btn svg{width:20px;height:20px}
+.back-title{font-size:17px;font-weight:700;color:var(--text-1);letter-spacing:-0.02em;text-align:center}
+.back-spacer{width:40px;flex-shrink:0}
+
+/* ===== Balance Card (glass gradient) ===== */
+.balance-card{position:relative;margin:6px 24px 0;padding:22px 22px 24px;border-radius:var(--r-lg);overflow:hidden;background:radial-gradient(ellipse 240px 200px at 25% 40%,rgba(212,148,76,.12) 0%,transparent 70%),radial-gradient(ellipse 200px 160px at 80% 80%,rgba(45,108,223,.12) 0%,transparent 70%),linear-gradient(135deg,rgba(45,108,223,.12) 0%,rgba(212,148,76,.08) 50%,rgba(45,108,223,.07) 100%);border:1px solid rgba(255,255,255,0.70);box-shadow:var(--neu-out-md),0 10px 36px rgba(45,108,223,.05),0 0 0 1px rgba(44,40,36,0.05);z-index:5}
+.balance-card::before{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(165deg,rgba(255,255,255,0.22) 0%,rgba(255,255,255,0.05) 30%,transparent 55%);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;padding:0.5px;pointer-events:none}
+.bc-glow{position:absolute;top:-30%;right:-12%;width:200px;height:200px;background:radial-gradient(circle,rgba(255,255,255,0.16) 0%,transparent 70%);border-radius:50%;pointer-events:none}
+.bc-label{font-size:13px;color:var(--text-2);font-weight:500;letter-spacing:0.02em;position:relative;z-index:2}
+.bc-amount{font-size:38px;font-weight:800;color:var(--brand);letter-spacing:-1.2px;line-height:1.1;font-variant-numeric:tabular-nums;margin-top:8px;position:relative;z-index:2}
+.bc-sub{font-size:13px;color:var(--text-2);font-weight:500;margin-top:10px;letter-spacing:-0.01em;position:relative;z-index:2}
+
+/* ===== Activity Banner (amber) ===== */
+.activity-banner{display:flex;align-items:center;gap:10px;margin:16px 24px 0;padding:13px 16px;border-radius:var(--r);background:linear-gradient(135deg,rgba(245,230,208,0.85) 0%,rgba(248,221,184,0.75) 100%);border:0.5px solid rgba(212,148,76,.16);box-shadow:var(--neu-out-sm),0 4px 16px rgba(212,148,76,0.10),inset 0 1px 1.5px rgba(255,255,255,0.50);cursor:pointer;position:relative;z-index:5;transition:transform var(--dur) var(--spring)}
+.activity-banner:active{transform:scale(0.98)}
+.ab-icon{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.55);display:flex;align-items:center;justify-content:center;color:var(--accent-dark);flex-shrink:0;box-shadow:inset 0 1px 1.5px rgba(255,255,255,0.55),0 2px 6px rgba(212,148,76,0.14)}
+.ab-icon svg{width:18px;height:18px}
+.ab-text{flex:1;font-size:13.5px;font-weight:600;color:var(--accent-dark);letter-spacing:-0.01em}
+.ab-chevron{width:16px;height:16px;color:var(--accent-dark);flex-shrink:0;opacity:0.7}
+
+/* ===== Section + Card ===== */
+.section{padding:0 24px;margin-top:20px;position:relative;z-index:5}
+.section-title{font-size:17px;font-weight:700;color:var(--text-1);margin-bottom:12px;letter-spacing:-0.02em;display:flex;align-items:center;justify-content:space-between}
+.section-title .more{font-size:13px;font-weight:500;color:var(--text-3)}
+
+.card{background:rgba(255,255,255,0.52);backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);border:1px solid rgba(255,255,255,0.70);border-radius:var(--r);box-shadow:var(--neu-out-md),0 6px 24px rgba(0,0,0,0.06),0 0 0 1px rgba(44,40,36,0.05),0 2px 8px rgba(20,184,166,0.04);overflow:hidden;position:relative}
+.card::before{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(165deg,rgba(255,255,255,0.22) 0%,rgba(255,255,255,0.05) 30%,transparent 55%);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;padding:0.5px;pointer-events:none}
+
+/* ===== Amount Grid ===== */
+.amount-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.amount-cell{position:relative;height:78px;border-radius:var(--r-sm);background:rgba(255,255,255,0.52);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.70);box-shadow:var(--neu-out-sm),0 4px 14px rgba(0,0,0,0.04),inset 0 1px 1px rgba(255,255,255,0.45);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:var(--text-1);font-family:var(--font);cursor:pointer;transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease),border-color var(--dur) var(--ease),background var(--dur) var(--ease);overflow:hidden}
+.amount-cell:active{transform:scale(0.96);box-shadow:var(--neu-in)}
+.amount-cell.selected{border:1.5px solid var(--brand);background:linear-gradient(135deg,rgba(45,108,223,.07) 0%,rgba(45,108,223,.04) 100%);box-shadow:0 4px 14px rgba(45,108,223,.09),inset 0 1px 1px rgba(255,255,255,0.50),0 0 0 0.5px rgba(45,108,223,.10)}
+.ac-symbol{font-size:12px;font-weight:600;color:var(--text-2);line-height:1;letter-spacing:-0.01em}
+.ac-value{font-size:20px;font-weight:700;color:var(--text-1);letter-spacing:-0.5px;line-height:1.1;font-variant-numeric:tabular-nums}
+.amount-cell.selected .ac-symbol{color:var(--brand)}
+.amount-cell.selected .ac-value{color:var(--brand)}
+.ac-check{position:absolute;top:6px;right:6px;width:16px;height:16px;border-radius:50%;background:var(--brand);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px var(--brand-glow)}
+.ac-check svg{width:10px;height:10px;color:#fff;stroke:#fff;fill:none}
+
+/* Custom amount cell */
+.amount-cell.custom{padding:0 8px;gap:3px}
+.ac-custom-label{font-size:11.5px;font-weight:600;color:var(--text-2);letter-spacing:-0.01em;line-height:1}
+.ac-custom-input{display:flex;align-items:center;gap:2px;width:100%;justify-content:center}
+.ac-prefix{font-size:13px;font-weight:600;color:var(--text-3)}
+.ac-custom-input input{width:100%;max-width:64px;border:none;background:transparent;font-family:var(--font);font-size:15px;font-weight:700;color:var(--brand);text-align:center;outline:none;letter-spacing:-0.5px;font-variant-numeric:tabular-nums}
+.ac-custom-input input::placeholder{color:var(--text-3);font-weight:500;font-size:12px}
+
+/* ===== Payment Method Card ===== */
+.pay-card{padding:2px 0}
+.pay-row{display:flex;align-items:center;gap:14px;padding:14px 18px;position:relative;cursor:pointer;transition:transform var(--dur) var(--ease);z-index:1}
+.pay-row:active{transform:scale(0.98)}
+.pay-row+.pay-row::before{content:"";position:absolute;top:0;left:60px;right:18px;height:0.5px;background:var(--sep)}
+.pay-icon{width:38px;height:38px;border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--bg);box-shadow:4px 4px 8px var(--neu-dark),-4px -4px 8px var(--neu-light),inset 0 1px 1px rgba(255,255,255,0.45)}
+.pay-icon svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.pay-icon-green{color:var(--green)}
+.pay-icon-blue{color:var(--blue)}
+.pay-name{flex:1;font-size:15px;font-weight:600;color:var(--text-1);letter-spacing:-0.01em}
+.pay-badge{font-size:10.5px;font-weight:600;color:var(--brand);background:var(--brand-light);padding:3px 8px;border-radius:var(--r-pill);letter-spacing:0.01em;margin-right:4px}
+.pay-radio{width:22px;height:22px;border-radius:50%;border:2px solid var(--text-3);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:border-color var(--dur) var(--ease);background:rgba(255,255,255,0.40)}
+.pay-radio-dot{width:10px;height:10px;border-radius:50%;background:var(--brand);opacity:0;transform:scale(0.4);transition:opacity var(--dur) var(--ease),transform var(--dur) var(--spring)}
+.pay-row.selected .pay-radio{border-color:var(--brand);background:rgba(45,108,223,.04)}
+.pay-row.selected .pay-radio-dot{opacity:1;transform:scale(1)}
+
+/* ===== Recharge Notes ===== */
+.notes-section{margin-top:18px}
+.notes-card{padding:14px 18px;background:rgba(255,255,255,0.40);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:0.5px solid rgba(255,255,255,0.55);border-radius:var(--r);box-shadow:var(--neu-out-sm),inset 0 1px 1px rgba(255,255,255,0.40);display:flex;flex-direction:column;gap:9px;position:relative}
+.note-row{display:flex;align-items:flex-start;gap:8px}
+.note-dot{width:4px;height:4px;border-radius:50%;background:var(--text-3);flex-shrink:0;margin-top:7px}
+.note-text{flex:1;font-size:12px;color:var(--text-2);line-height:1.55;letter-spacing:-0.01em;font-weight:500}
+
+/* ===== Bottom Fixed CTA ===== */
+.cta-bar{position:absolute;bottom:0;left:0;right:0;padding:14px 24px 26px;background:linear-gradient(180deg,rgba(242,237,232,0) 0%,rgba(242,237,232,0.85) 30%,rgba(242,237,232,0.98) 100%);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:60}
+.btn-neu-primary{display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;background:var(--brand-gradient);color:#fff;border:0.5px solid rgba(255,255,255,0.40);border-radius:var(--r-pill);padding:16px 20px;font-size:16px;font-weight:700;font-family:var(--font);cursor:pointer;box-shadow:0 8px 22px var(--brand-glow),inset 0 1px 2px rgba(255,255,255,0.25),0 0 0 0.5px rgba(45,108,223,.05);transition:transform var(--dur) var(--spring),box-shadow var(--dur) var(--ease);letter-spacing:-0.01em}
+.cta-btn:active{transform:scale(0.97);box-shadow:0 4px 12px var(--brand-glow),inset 0 2px 6px rgba(0,0,0,0.18)}
+.cta-text{font-size:16px;font-weight:700}
+.cta-amount{font-size:16px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-0.5px}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:0.01ms !important;animation-iteration-count:1 !important;transition-duration:0.01ms !important;scroll-behavior:auto !important}
+  .back-btn,.amount-cell,.pay-row,.cta-btn,.activity-banner{transition:none !important;transform:none !important}
+  .balance-card,.card,.notes-card,.activity-banner,.cta-bar{backdrop-filter:none;-webkit-backdrop-filter:none}
+}
+</style>
+    <style>@theme inline{--font-sans: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+--font-serif: 'Noto Serif SC', 'Cormorant Garamond', 'STSong', Georgia, serif;
+--color-background:var(--background);--color-foreground:var(--foreground);--color-card:var(--card);--color-card-foreground:var(--card-foreground);--color-popover:var(--popover);--color-popover-foreground:var(--popover-foreground);--color-primary:var(--primary);--color-primary-foreground:var(--primary-foreground);--color-muted:var(--muted);--color-muted-foreground:var(--muted-foreground);--color-border:var(--border);--color-input:var(--input);--color-ring:var(--ring);--radius-md:var(--radius-md);}</style>
+    <style>@layer base{body{background:var(--background);color:var(--foreground);font-family:var(--font-body);}}</style>
+</body>
+</html>

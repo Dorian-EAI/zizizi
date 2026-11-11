@@ -1,0 +1,141 @@
+/* AUTO-GENERATED DESIGN STYLE ENTRY; page-specific overrides may follow this import. */
+@import "../../../styles/generated-detail-page.wxss";
+@import "../../../styles/glass-neu.wxss";
+
+/* ===== 兑换结果页 玻璃新拟态覆盖 ===== */
+
+/* Hero 区域 - 玻璃增强 */
+.hero {
+  background:
+    radial-gradient(ellipse 360rpx 240rpx at 88% 15%, rgba(212, 148, 76, 0.10) 0%, transparent 72%),
+    radial-gradient(ellipse 300rpx 220rpx at 8% 90%, rgba(13, 148, 136, 0.10) 0%, transparent 72%),
+    rgba(255, 255, 255, 0.52);
+  backdrop-filter: blur(48rpx) saturate(160%);
+  -webkit-backdrop-filter: blur(48rpx) saturate(160%);
+}
+
+/* Hero 状态头像 */
+.hero .avatar {
+  width: 120rpx;
+  height: 120rpx;
+  font-size: 48rpx;
+  color: var(--text-1);
+  background: var(--surface);
+  backdrop-filter: blur(28rpx) saturate(160%);
+  -webkit-backdrop-filter: blur(28rpx) saturate(160%);
+  border: 2rpx solid rgba(255, 255, 255, 0.70);
+  box-shadow: var(--neu-out-md), 0 8rpx 32rpx var(--brand-glow);
+}
+
+.hero .avatar.success {
+  color: #fff;
+  background: linear-gradient(135deg, var(--brand) 0, var(--brand-mid) 100%);
+  box-shadow: var(--neu-out-md), 0 12rpx 40rpx var(--brand-glow);
+}
+
+.hero .avatar.danger {
+  color: #fff;
+  background: linear-gradient(135deg, var(--danger) 0, #D4755C 100%);
+  box-shadow: var(--neu-out-md), 0 12rpx 40rpx rgba(196, 83, 58, 0.32);
+}
+
+/* Hero 加载/错误状态头像 */
+.hero .avatar[style*="--info"] {
+  background: var(--info);
+  color: #fff;
+}
+
+/* 分区标题 */
+.section-title {
+  color: var(--text-2);
+  font-size: 26rpx;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.section-title .tag-strong {
+  color: var(--text-1);
+  font-size: 32rpx;
+  font-weight: 700;
+}
+
+/* 兑换详情卡片 - 玻璃新拟态 */
+.card.list-card {
+  background: rgba(255, 255, 255, 0.52);
+  backdrop-filter: blur(40rpx) saturate(150%);
+  -webkit-backdrop-filter: blur(40rpx) saturate(150%);
+  border: 2rpx solid rgba(255, 255, 255, 0.70);
+  box-shadow: var(--neu-out-md), 0 12rpx 56rpx rgba(0, 0, 0, 0.06), 0 4rpx 16rpx rgba(13, 148, 136, 0.04);
+}
+
+/* 列表行图标 */
+.list-row .row-icon {
+  background: var(--bg-elevated);
+  box-shadow: var(--neu-out-sm), inset 0 2rpx 2rpx rgba(255, 255, 255, 0.5);
+}
+
+/* 消耗积分 - 金色强调 */
+.list-row .amount {
+  color: var(--accent);
+  font: 700 40rpx/1.1 var(--font-nums);
+  font-variant-numeric: tabular-nums;
+}
+
+/* 状态徽章 - 玻璃 */
+.badge {
+  backdrop-filter: blur(20rpx);
+  -webkit-backdrop-filter: blur(20rpx);
+}
+
+.badge.success {
+  box-shadow: inset 0 1rpx 2rpx rgba(255, 255, 255, 0.5);
+}
+
+.badge.danger {
+  box-shadow: inset 0 1rpx 2rpx rgba(255, 255, 255, 0.5);
+}
+
+/* 通知提示 - 玻璃 */
+.notice {
+  backdrop-filter: blur(20rpx);
+  -webkit-backdrop-filter: blur(20rpx);
+}
+
+.notice.info {
+  border-radius: var(--r-sm);
+}
+
+.notice.warning {
+  border-radius: var(--r-sm);
+}
+
+/* 底部固定操作栏 */
+.fixed-actions {
+  background: rgba(255, 255, 255, 0.32);
+  backdrop-filter: blur(56rpx) saturate(180%);
+  -webkit-backdrop-filter: blur(56rpx) saturate(180%);
+  border: 1rpx solid rgba(255, 255, 255, 0.55);
+  box-shadow: var(--neu-out-md), inset 0 2rpx 4rpx rgba(255, 255, 255, 0.5);
+}
+
+/* 主按钮 - 品牌渐变 */
+.btn.primary {
+  background: var(--brand-gradient);
+  box-shadow: inset 0 2rpx 2rpx rgba(255, 255, 255, 0.40), inset 0 -2rpx 2rpx rgba(0, 0, 0, 0.16), 0 4rpx 8rpx var(--brand-glow), 0 12rpx 28rpx var(--brand-glow);
+}
+
+.btn.primary:active {
+  transform: scale(0.96);
+}
+
+/* 次按钮 */
+.btn.secondary {
+  background: var(--surface-strong);
+  color: var(--brand);
+  box-shadow: var(--neu-out-sm);
+}
+
+.btn.secondary:active {
+  box-shadow: var(--neu-in);
+  transform: scale(0.96);
+}

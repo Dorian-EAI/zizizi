@@ -1,0 +1,60 @@
+<view class="page">
+  <view class="blob" style="top: -80rpx; right: -120rpx; width: 560rpx; height: 560rpx; background: var(--brand);"></view>
+  <view class="blob" style="top: 480rpx; left: -160rpx; width: 480rpx; height: 480rpx; background: var(--accent);"></view>
+
+  <scroll-view scroll-y class="page-scroll hide-scroll" style="padding-bottom: 40rpx;">
+    <view class="hero" style="padding-top: calc({{statusBarHeight}}px + 76rpx);">
+      <view class="nav-row">
+        <view class="nav-icon-btn" bindtap="onBack">
+          <image src="{{icons.back}}" mode="aspectFit" class="nav-icon" lazy-load="{{false}}" />
+        </view>
+        <text class="nav-title">其他服务</text>
+        <view class="nav-spacer"></view>
+      </view>
+
+      <view class="search-bar">
+        <view class="search-input-wrap">
+          <text class="search-icon">🔍</text>
+          <input class="search-input" placeholder="搜索服务项目" value="{{keyword}}" bindinput="onSearch" />
+        </view>
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="category-tabs">
+        <view class="tab-item {{activeCategory === 'all' ? 'active' : ''}}" data-cat="all" bindtap="onCategoryChange">
+          <text class="tab-text">全部</text>
+        </view>
+        <view class="tab-item {{activeCategory === 'home' ? 'active' : ''}}" data-cat="home" bindtap="onCategoryChange">
+          <text class="tab-text">家政</text>
+        </view>
+        <view class="tab-item {{activeCategory === 'repair' ? 'active' : ''}}" data-cat="repair" bindtap="onCategoryChange">
+          <text class="tab-text">维修</text>
+        </view>
+        <view class="tab-item {{activeCategory === 'install' ? 'active' : ''}}" data-cat="install" bindtap="onCategoryChange">
+          <text class="tab-text">安装</text>
+        </view>
+        <view class="tab-item {{activeCategory === 'move' ? 'active' : ''}}" data-cat="move" bindtap="onCategoryChange">
+          <text class="tab-text">搬家</text>
+        </view>
+      </view>
+      <view class="service-grid">
+        <view class="glass-card service-card" wx:for="{{services}}" wx:key="id" bindtap="onServiceTap" data-id="{{item.id}}">
+          <view class="service-icon-wrap">
+            <text class="service-icon">{{item.icon}}</text>
+          </view>
+          <text class="service-name">{{item.name}}</text>
+          <view class="service-price-row">
+            <text class="service-price">¥{{item.startPrice}}</text>
+            <text class="service-unit">起</text>
+          </view>
+          <view class="service-tags">
+            <view wx:for="{{item.tags}}" wx:for-item="tag" wx:key="*this" class="service-tag">
+              <text class="tag-text">{{tag}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</view>

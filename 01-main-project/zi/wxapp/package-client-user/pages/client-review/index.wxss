@@ -1,0 +1,336 @@
+@import "../../../styles/glass-detail-page.wxss";
+
+/* —— 评价页面特定样式 —— */
+
+/* 页面容器 */
+.review-page {
+  min-height: 100vh;
+  background: var(--bg);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* 评价滚动区 */
+.review-scroll {
+  height: calc(100vh - 180rpx);
+}
+
+/* 师傅信息卡 */
+.worker-card {
+  margin: 24rpx 40rpx 0;
+  padding: 28rpx 32rpx;
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+}
+
+.worker-avatar {
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--brand);
+  background: var(--bg-elevated);
+  box-shadow: var(--neu-raised-sm), 0 6rpx 20rpx rgba(13, 148, 136, 0.16);
+  font: 700 36rpx/1 var(--font-body);
+  flex-shrink: 0;
+}
+
+.worker-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6rpx;
+}
+
+.worker-name {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: var(--text-1);
+  letter-spacing: -0.01em;
+}
+
+.worker-service {
+  font-size: 24rpx;
+  color: var(--text-2);
+}
+
+.worker-rating {
+  font-size: 22rpx;
+  color: var(--text-3);
+}
+
+/* 评价卡片区 */
+.review-page .section {
+  margin: 28rpx 40rpx;
+}
+
+/* 星星评价区 */
+.star-section {
+  padding: 32rpx;
+  background: var(--glass-bg);
+  border: 2rpx solid rgba(255, 255, 255, 0.70);
+  border-radius: var(--r-lg);
+  box-shadow: var(--neu-raised);
+  margin-bottom: 0;
+}
+
+.star-label {
+  display: block;
+  margin-bottom: 20rpx;
+  font-size: 28rpx;
+  font-weight: 600;
+  color: var(--text-1);
+}
+
+.stars {
+  display: flex;
+  gap: 16rpx;
+  align-items: center;
+}
+
+.stars .star {
+  transition: transform var(--dur) var(--spring);
+}
+
+.stars .star:active {
+  transform: scale(1.2);
+}
+
+.star-text {
+  margin-left: 16rpx;
+  font-size: 24rpx;
+  color: var(--text-2);
+}
+
+.star-text.active {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* 标签选择区 */
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+  padding: 16rpx 0 0;
+}
+
+.tag-item {
+  padding: 14rpx 28rpx;
+  border-radius: var(--r-pill);
+  font-size: 26rpx;
+  color: var(--text-2);
+  background: var(--bg-elevated);
+  box-shadow: var(--neu-raised-sm), inset 2rpx 2rpx 2rpx rgba(255, 255, 255, 0.45);
+  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+
+.tag-item:active {
+  transform: scale(0.94);
+}
+
+.tag-item.selected {
+  color: var(--brand);
+  background: var(--brand-subtle);
+  box-shadow: inset 6rpx 6rpx 12rpx var(--neu-dark), inset -6rpx -6rpx 12rpx var(--neu-light);
+  font-weight: 600;
+}
+
+/* 评价文本域 */
+.review-textarea {
+  width: 100%;
+  min-height: 240rpx;
+  padding: 28rpx 32rpx;
+  background: var(--bg-elevated);
+  box-shadow: var(--neu-inset);
+  border-radius: var(--r-md);
+  font-family: var(--font-body);
+  font-size: 28rpx;
+  line-height: 1.6;
+  color: var(--text-1);
+  box-sizing: border-box;
+}
+
+.textarea-counter {
+  display: block;
+  margin-top: 12rpx;
+  text-align: right;
+  font-size: 22rpx;
+  color: var(--text-3);
+}
+
+/* 上传网格 */
+.upload-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16rpx;
+}
+
+.upload-item {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: var(--r-md);
+  overflow: hidden;
+  box-shadow: var(--neu-raised-sm);
+}
+
+.upload-item image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.upload-delete {
+  position: absolute;
+  top: 8rpx;
+  right: 8rpx;
+  width: 44rpx;
+  height: 44rpx;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28rpx;
+  line-height: 1;
+}
+
+.upload-add {
+  aspect-ratio: 1;
+  border: 2rpx dashed rgba(13, 148, 136, 0.20);
+  border-radius: var(--r-md);
+  display: grid;
+  place-items: center;
+  gap: 8rpx;
+  background: rgba(255, 255, 255, 0.28);
+  box-shadow: var(--neu-raised-sm);
+  color: var(--brand);
+  font-size: 40rpx;
+}
+
+.upload-add image {
+  width: 48rpx;
+  height: 48rpx;
+}
+
+.upload-add-text {
+  font-size: 22rpx;
+  color: var(--text-3);
+}
+
+/* 匿名评价行 */
+.anon-row {
+  padding: 28rpx 32rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--glass-bg);
+  border: 2rpx solid rgba(255, 255, 255, 0.70);
+  border-radius: var(--r-lg);
+  box-shadow: var(--neu-raised-sm);
+  transition: box-shadow var(--dur) var(--ease);
+}
+
+.anon-left {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+}
+
+.anon-icon {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--bg-elevated);
+  box-shadow: var(--neu-raised-sm);
+}
+
+.anon-icon image {
+  width: 36rpx;
+  height: 36rpx;
+}
+
+.anon-text {
+  display: block;
+  font-size: 28rpx;
+  font-weight: 600;
+  color: var(--text-1);
+}
+
+.anon-desc {
+  display: block;
+  margin-top: 4rpx;
+  font-size: 22rpx;
+  color: var(--text-3);
+}
+
+/* 开关 */
+.toggle {
+  width: 88rpx;
+  height: 52rpx;
+  border-radius: var(--r-pill);
+  background: var(--bg);
+  box-shadow: var(--neu-inset-sm);
+  position: relative;
+  transition: all var(--dur) var(--ease);
+}
+
+.toggle.active {
+  background: var(--brand);
+  box-shadow: 0 4rpx 16rpx var(--brand-glow);
+}
+
+.toggle-dot {
+  position: absolute;
+  top: 6rpx;
+  left: 6rpx;
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: var(--neu-raised-sm);
+  transition: transform var(--dur) var(--spring);
+}
+
+.toggle.active .toggle-dot {
+  transform: translateX(36rpx);
+}
+
+/* 提交按钮 */
+.submit-bar {
+  position: fixed;
+  left: 32rpx;
+  right: 32rpx;
+  bottom: 28rpx;
+  padding-bottom: calc(28rpx + env(safe-area-inset-bottom));
+  z-index: 20;
+}
+
+.submit-btn {
+  width: 100%;
+  min-height: 96rpx;
+  border: 0;
+  border-radius: var(--r-pill);
+  background: var(--brand-gradient);
+  color: #fff;
+  font-size: 30rpx;
+  font-weight: 700;
+  font-family: var(--font-body);
+  box-shadow: var(--neu-raised-sm), 0 8rpx 28rpx var(--brand-glow);
+  transition: transform var(--dur) var(--spring), box-shadow var(--dur) var(--ease);
+}
+
+.submit-btn:active {
+  transform: scale(0.96);
+  box-shadow: var(--neu-inset);
+}
+
+/* 安全间距 */
+.scroll-spacer {
+  height: 200rpx;
+}

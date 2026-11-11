@@ -1,0 +1,145 @@
+<view class="page">
+  <!-- HERO（渐变区域） -->
+  <view class="hero">
+    <view class="profile-row">
+      <view class="avatar avatar-glass" bindtap="onEditProfile">
+        <view class="avatar-icon">👤</view>
+      </view>
+      <view class="profile-info">
+        <view class="profile-name">{{user.nickname || '小王'}}</view>
+        <view class="profile-phone">138****8888</view>
+      </view>
+      <view class="edit-btn" bindtap="onEditProfile">
+        <text class="edit-icon">✎</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 统计卡 -->
+  <view class="menu-card stats-card">
+    <view class="stat-col" bindtap="goOrders">
+      <text class="stat-num">4</text>
+      <text class="stat-label">个订单</text>
+    </view>
+    <view class="stat-sep"></view>
+    <view class="stat-col" bindtap="goReviews">
+      <text class="stat-num">2</text>
+      <text class="stat-label">个评价</text>
+    </view>
+    <view class="stat-sep"></view>
+    <view class="stat-col" bindtap="goFavorites">
+      <text class="stat-num">3</text>
+      <text class="stat-label">个收藏</text>
+    </view>
+  </view>
+
+  <!-- 会员卡入口（新增） -->
+  <view class="member-entry" bindtap="goMember">
+    <view class="member-icon">
+      <text class="member-icon-text">👑</text>
+    </view>
+    <view class="member-info">
+      <text class="member-title">升级为银卡会员</text>
+      <text class="member-desc">享专属权益 · 优先派单 · 免上门费</text>
+    </view>
+    <view class="member-arrow">
+      <text class="arrow-icon">›</text>
+    </view>
+  </view>
+
+  <!-- MENU CARD — 我的服务 -->
+  <view class="section">
+    <view class="menu-card">
+      <view class="menu-row" bindtap="goAddress">
+        <view class="menu-icon-wrap menu-icon-blue"><text class="icon-text">📍</text></view>
+        <text class="menu-label">我的地址</text>
+        <text class="menu-chevron">›</text>
+      </view>
+      <view class="menu-row-sep-wrap"><view class="menu-row-sep"></view></view>
+      <view class="menu-row" bindtap="goCoupons">
+        <view class="menu-icon-wrap menu-icon-amber"><text class="icon-text">🎟</text></view>
+        <text class="menu-label">优惠券</text>
+        <text class="menu-badge">2 张可用</text>
+        <text class="menu-chevron">›</text>
+      </view>
+      <view class="menu-row-sep-wrap"><view class="menu-row-sep"></view></view>
+      <view class="menu-row" bindtap="goWallet">
+        <view class="menu-icon-wrap menu-icon-teal"><text class="icon-text">💰</text></view>
+        <text class="menu-label">我的钱包</text>
+        <text class="menu-badge">¥128.00</text>
+        <text class="menu-chevron">›</text>
+      </view>
+      <view class="menu-row-sep-wrap"><view class="menu-row-sep"></view></view>
+      <view class="menu-row" bindtap="goInvoice">
+        <view class="menu-icon-wrap menu-icon-purple"><text class="icon-text">📄</text></view>
+        <text class="menu-label">发票与报销</text>
+        <text class="menu-chevron">›</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- MENU CARD — 设置与服务 -->
+  <view class="section">
+    <view class="menu-card">
+      <view class="menu-row" bindtap="goNotifications">
+        <view class="menu-icon-wrap menu-icon-red"><text class="icon-text">🔔</text></view>
+        <text class="menu-label">消息通知</text>
+        <view class="menu-badge-dot"></view>
+        <text class="menu-badge">3 条未读</text>
+        <text class="menu-chevron">›</text>
+      </view>
+      <view class="menu-row-sep-wrap"><view class="menu-row-sep"></view></view>
+      <view class="menu-row" bindtap="goSecurity">
+        <view class="menu-icon-wrap menu-icon-green"><text class="icon-text">🛡</text></view>
+        <text class="menu-label">账号安全</text>
+        <text class="menu-chevron">›</text>
+      </view>
+      <view class="menu-row-sep-wrap"><view class="menu-row-sep"></view></view>
+      <view class="menu-row" bindtap="goPrivacy">
+        <view class="menu-icon-wrap menu-icon-gray"><text class="icon-text">🔒</text></view>
+        <text class="menu-label">隐私设置</text>
+        <text class="menu-chevron">›</text>
+      </view>
+      <view class="menu-row-sep-wrap"><view class="menu-row-sep"></view></view>
+      <view class="menu-row" bindtap="goService">
+        <view class="menu-icon-wrap menu-icon-cyan"><text class="icon-text">☎</text></view>
+        <text class="menu-label">客服中心</text>
+        <text class="menu-chevron">›</text>
+      </view>
+      <view class="menu-row-sep-wrap"><view class="menu-row-sep"></view></view>
+      <view class="menu-row" bindtap="goSettings">
+        <view class="menu-icon-wrap menu-icon-slate"><text class="icon-text">⚙</text></view>
+        <text class="menu-label">设置</text>
+        <text class="menu-chevron">›</text>
+      </view>
+      <view class="menu-row-sep-wrap"><view class="menu-row-sep"></view></view>
+      <view class="menu-row" bindtap="goAbout">
+        <view class="menu-icon-wrap menu-icon-blue"><text class="icon-text">ⓘ</text></view>
+        <text class="menu-label">关于我们</text>
+        <text class="menu-badge">v2.4.0</text>
+        <text class="menu-chevron">›</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- Tab Bar -->
+  <view class="tab-bar">
+    <view class="tab-item" bindtap="goHome">
+      <text class="tab-icon">🏠</text>
+      <text class="tab-label">首页</text>
+    </view>
+    <view class="tab-item" bindtap="goPublish">
+      <text class="tab-icon">＋</text>
+      <text class="tab-label">发布</text>
+    </view>
+    <view class="tab-item" bindtap="goOrders">
+      <text class="tab-icon">📋</text>
+      <text class="tab-label">订单</text>
+    </view>
+    <view class="tab-item tab-item-active">
+      <view class="tab-item-active-bg"></view>
+      <text class="tab-icon tab-icon-active">👤</text>
+      <text class="tab-label tab-label-active">我的</text>
+    </view>
+  </view>
+</view>

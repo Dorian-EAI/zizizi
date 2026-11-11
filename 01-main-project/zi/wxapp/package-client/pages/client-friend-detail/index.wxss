@@ -1,0 +1,195 @@
+/* AUTO-GENERATED DESIGN STYLE ENTRY; page-specific overrides may follow this import. */
+@import "../../../styles/generated-detail-page.wxss";
+@import "../../../styles/glass-neu.wxss";
+
+/* ===== 邀请详情页 玻璃新拟态覆盖 ===== */
+
+/* Hero 区域 - 玻璃增强 */
+.hero {
+  background:
+    radial-gradient(ellipse 360rpx 240rpx at 88% 15%, rgba(212, 148, 76, 0.10) 0%, transparent 72%),
+    radial-gradient(ellipse 300rpx 220rpx at 8% 90%, rgba(13, 148, 136, 0.10) 0%, transparent 72%),
+    rgba(255, 255, 255, 0.52);
+  backdrop-filter: blur(48rpx) saturate(160%);
+  -webkit-backdrop-filter: blur(48rpx) saturate(160%);
+}
+
+/* Hero 头像 */
+.hero .avatar {
+  width: 104rpx;
+  height: 104rpx;
+  font-size: 40rpx;
+  background: var(--surface);
+  backdrop-filter: blur(28rpx) saturate(160%);
+  -webkit-backdrop-filter: blur(28rpx) saturate(160%);
+  border: 2rpx solid rgba(255, 255, 255, 0.70);
+  box-shadow: var(--neu-out-md), 0 8rpx 24rpx var(--brand-glow);
+}
+
+/* Hero 状态徽章 */
+.hero .badge {
+  backdrop-filter: blur(20rpx);
+  -webkit-backdrop-filter: blur(20rpx);
+}
+
+.hero .badge.warning {
+  box-shadow: inset 0 1rpx 2rpx rgba(255, 255, 255, 0.5);
+}
+
+/* 分区标题 */
+.section-title {
+  color: var(--text-2);
+  font-size: 26rpx;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.section-title .tag-strong {
+  color: var(--text-1);
+  font-size: 32rpx;
+  font-weight: 700;
+}
+
+/* 时间线 - 玻璃增强 */
+.timeline {
+  position: relative;
+  padding-left: 54rpx;
+}
+
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 16rpx;
+  top: 14rpx;
+  bottom: 24rpx;
+  width: 4rpx;
+  background: var(--sep);
+  border-radius: 2rpx;
+}
+
+.timeline-item {
+  position: relative;
+  padding-bottom: 34rpx;
+}
+
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  left: -48rpx;
+  top: 8rpx;
+  width: 20rpx;
+  height: 20rpx;
+  border: 6rpx solid var(--bg);
+  border-radius: 50%;
+  background: var(--brand);
+  box-shadow: 0 0 0 4rpx var(--brand-glow);
+}
+
+.timeline-item.pending::before {
+  background: var(--bg);
+  box-shadow: 0 0 0 4rpx var(--text-3);
+}
+
+.timeline-item .tag-strong {
+  display: block;
+  font-size: 28rpx;
+  color: var(--text-1);
+}
+
+.timeline-item .tag-span {
+  display: block;
+  margin-top: 8rpx;
+  color: var(--text-2);
+  font-size: 24rpx;
+}
+
+/* 玻璃新拟态卡片 */
+.card {
+  background: rgba(255, 255, 255, 0.52);
+  backdrop-filter: blur(40rpx) saturate(150%);
+  -webkit-backdrop-filter: blur(40rpx) saturate(150%);
+  border: 2rpx solid rgba(255, 255, 255, 0.70);
+  box-shadow: var(--neu-out-md), 0 12rpx 56rpx rgba(0, 0, 0, 0.06), 0 4rpx 16rpx rgba(13, 148, 136, 0.04);
+}
+
+/* 双列网格 - 奖励状态 */
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24rpx;
+}
+
+.grid-2 .card.metric {
+  padding: 28rpx 20rpx;
+  text-align: center;
+}
+
+.grid-2 .metric .tag-strong {
+  display: block;
+  color: var(--accent);
+  font: 700 44rpx/1.1 var(--font-nums);
+  font-variant-numeric: tabular-nums;
+}
+
+.grid-2 .metric .tag-span {
+  display: block;
+  margin-top: 14rpx;
+  color: var(--text-2);
+  font-size: 24rpx;
+}
+
+/* 通知提示 */
+.notice.info {
+  backdrop-filter: blur(20rpx);
+  -webkit-backdrop-filter: blur(20rpx);
+}
+
+/* 空状态 - 玻璃 */
+.empty-state {
+  padding: 80rpx 48rpx;
+  background: rgba(255, 255, 255, 0.36);
+  backdrop-filter: blur(32rpx);
+  -webkit-backdrop-filter: blur(32rpx);
+  border-radius: var(--r-lg);
+  border: 2rpx solid rgba(255, 255, 255, 0.60);
+  box-shadow: var(--neu-out-md);
+}
+
+.empty-state .tag-h3 {
+  color: var(--text-1);
+}
+
+.empty-state .tag-p {
+  color: var(--text-2);
+}
+
+/* 底部固定操作栏 */
+.fixed-actions {
+  background: rgba(255, 255, 255, 0.32);
+  backdrop-filter: blur(56rpx) saturate(180%);
+  -webkit-backdrop-filter: blur(56rpx) saturate(180%);
+  border: 1rpx solid rgba(255, 255, 255, 0.55);
+  box-shadow: var(--neu-out-md), inset 0 2rpx 4rpx rgba(255, 255, 255, 0.5);
+}
+
+/* 主按钮 */
+.btn.primary {
+  background: var(--brand-gradient);
+  box-shadow: inset 0 2rpx 2rpx rgba(255, 255, 255, 0.40), inset 0 -2rpx 2rpx rgba(0, 0, 0, 0.16), 0 4rpx 8rpx var(--brand-glow), 0 12rpx 28rpx var(--brand-glow);
+}
+
+.btn.primary:active {
+  transform: scale(0.96);
+}
+
+/* 次按钮 */
+.btn.secondary {
+  background: var(--surface-strong);
+  color: var(--brand);
+  box-shadow: var(--neu-out-sm);
+}
+
+.btn.secondary:active {
+  box-shadow: var(--neu-in);
+  transform: scale(0.96);
+}

@@ -1,0 +1,70 @@
+@import "../../../styles/glass-detail-page.wxss";
+
+/* —— 积分任务页面特定样式 —— */
+
+/* Hero 渐变：活力青金色 */
+.hero {
+  background:
+    radial-gradient(ellipse 340rpx 220rpx at 86% 14%, rgba(13, 148, 136, 0.14) 0%, transparent 72%),
+    radial-gradient(ellipse 280rpx 180rpx at 14% 86%, rgba(212, 148, 76, 0.12) 0%, transparent 72%),
+    rgba(255, 255, 255, 0.44);
+}
+
+/* Hero 积分余额 */
+.hero .tag-h2 {
+  font-size: 52rpx;
+  font-weight: 700;
+  color: var(--brand-dark);
+  font-family: var(--font-number);
+}
+
+/* 任务列表卡片 */
+.card.list-card {
+  padding: 8rpx 24rpx;
+}
+
+.card.list-card .list-row {
+  min-height: 96rpx;
+}
+
+/* 任务状态徽章 */
+.list-row .badge.success {
+  font-size: 22rpx;
+  padding: 6rpx 16rpx;
+  box-shadow: 0 4rpx 12rpx rgba(91, 140, 90, 0.18);
+}
+
+/* 任务图标 */
+.list-row .row-icon {
+  font-family: var(--font-number);
+  font-weight: 700;
+  font-size: 28rpx;
+  background: var(--brand-subtle);
+  color: var(--brand);
+  flex: 0 0 56rpx;
+  width: 56rpx;
+  height: 56rpx;
+}
+
+/* 每日签到完成态 */
+.list-row .row-title {
+  font-weight: 600;
+}
+
+/* 快捷跳转任务行 */
+.list-row[class*="design-button"]:active {
+  transform: scale(0.98);
+  box-shadow: var(--neu-inset-sm);
+}
+
+/* 加载状态卡片 */
+.section.card {
+  padding: 32rpx;
+  text-align: center;
+}
+
+/* Hero kicker 标签细化 */
+.hero .hero-kicker {
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}

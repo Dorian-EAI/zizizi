@@ -1,0 +1,5635 @@
+{
+  "data": [
+    {
+      "id": "page-client-mine",
+      "title": "客户端我的",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785233710888,
+      "canvasData": {
+        "x": 2830,
+        "y": 100,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-64d75d7d",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-mine.html",
+        "interactions": [
+          {
+            "domId": "mine-avatar",
+            "targetPageId": "page-client-profile"
+          },
+          {
+            "domId": "btn-edit-profile",
+            "targetPageId": "page-client-profile-edit"
+          },
+          {
+            "domId": "stat-orders",
+            "targetPageId": "page-client-orders"
+          },
+          {
+            "domId": "stat-reviews",
+            "targetPageId": "page-client-review-detail"
+          },
+          {
+            "domId": "stat-favorites",
+            "targetPageId": "page-client-favorite-workers"
+          },
+          {
+            "domId": "menu-address",
+            "targetPageId": "page-client-address"
+          },
+          {
+            "domId": "menu-coupon",
+            "targetPageId": "page-client-coupon"
+          },
+          {
+            "domId": "menu-wallet",
+            "targetPageId": "page-client-wallet"
+          },
+          {
+            "domId": "menu-invoice",
+            "targetPageId": "page-client-invoice"
+          },
+          {
+            "domId": "menu-notifications",
+            "targetPageId": "page-client-notification"
+          },
+          {
+            "domId": "menu-security",
+            "targetPageId": "page-client-account-security"
+          },
+          {
+            "domId": "menu-privacy",
+            "targetPageId": "page-client-privacy"
+          },
+          {
+            "domId": "menu-service",
+            "targetPageId": "page-client-customer-service"
+          },
+          {
+            "domId": "menu-settings",
+            "targetPageId": "page-client-settings"
+          },
+          {
+            "domId": "menu-about",
+            "targetPageId": "page-client-about"
+          },
+          {
+            "domId": "nav-home",
+            "targetPageId": "page-client-home-glass-neu-contrast-1"
+          },
+          {
+            "domId": "nav-publish",
+            "targetPageId": "page-client-publish"
+          },
+          {
+            "domId": "nav-orders",
+            "targetPageId": "page-client-orders"
+          },
+          {
+            "domId": "nav-mine",
+            "targetPageId": "page-client-mine"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-orders",
+      "title": "客户端订单",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785233710888,
+      "canvasData": {
+        "x": 1920,
+        "y": 100,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-1dc6cbe3",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-orders.html",
+        "interactions": [
+          {
+            "domId": "btn-search",
+            "targetPageId": "page-client-order-search"
+          },
+          {
+            "domId": "order-item-1",
+            "targetPageId": "page-client-order-detail"
+          },
+          {
+            "domId": "orders-view-quotes",
+            "targetPageId": "page-client-quote-list"
+          },
+          {
+            "domId": "order-item-2",
+            "targetPageId": "page-client-order-detail"
+          },
+          {
+            "domId": "order-item-3",
+            "targetPageId": "page-client-order-detail"
+          },
+          {
+            "domId": "orders-review-worker",
+            "targetPageId": "page-client-review"
+          },
+          {
+            "domId": "nav-home",
+            "targetPageId": "page-client-home-glass-neu-contrast-1"
+          },
+          {
+            "domId": "nav-publish",
+            "targetPageId": "page-client-publish"
+          },
+          {
+            "domId": "nav-orders",
+            "targetPageId": "page-client-orders"
+          },
+          {
+            "domId": "nav-mine",
+            "targetPageId": "page-client-mine"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-publish-grid",
+      "title": "客户端发布（网格版）",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785233710888,
+      "canvasData": {
+        "x": 1465,
+        "y": 100,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-da8bb60a",
+          "measuredAt": 1786115926982
+        },
+        "deviceType": "freeSize",
+        "windowSize": {
+          "width": 374,
+          "height": 1159
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-publish-grid.html",
+        "interactions": [
+          {
+            "domId": "nav-close",
+            "targetPageId": "page-client-home-glass-neu-contrast-1"
+          },
+          {
+            "domId": "address-row",
+            "targetPageId": "page-client-address"
+          },
+          {
+            "domId": "publish-submit",
+            "targetPageId": "page-client-order-detail"
+          },
+          {
+            "domId": "nav-home",
+            "targetPageId": "page-client-home-glass-neu-contrast-1"
+          },
+          {
+            "domId": "nav-publish",
+            "targetPageId": "page-client-publish"
+          },
+          {
+            "domId": "nav-orders",
+            "targetPageId": "page-client-orders"
+          },
+          {
+            "domId": "nav-mine",
+            "targetPageId": "page-client-mine"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-publish",
+      "title": "客户端发布",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785233710888,
+      "canvasData": {
+        "x": 1010,
+        "y": 100,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-da8bb60a",
+          "measuredAt": 1786115926982
+        },
+        "deviceType": "freeSize",
+        "windowSize": {
+          "width": 374,
+          "height": 1159
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-publish.html",
+        "interactions": [
+          {
+            "domId": "nav-close",
+            "targetPageId": "page-client-home-glass-neu-contrast-1"
+          },
+          {
+            "domId": "address-row",
+            "targetPageId": "page-client-address"
+          },
+          {
+            "domId": "publish-submit",
+            "targetPageId": "page-client-order-detail"
+          },
+          {
+            "domId": "nav-home",
+            "targetPageId": "page-client-home-glass-neu-contrast-1"
+          },
+          {
+            "domId": "nav-publish",
+            "targetPageId": "page-client-publish"
+          },
+          {
+            "domId": "nav-orders",
+            "targetPageId": "page-client-orders"
+          },
+          {
+            "domId": "nav-mine",
+            "targetPageId": "page-client-mine"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-home-glass-neu",
+      "title": "客户端首页 下拉后页面",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785244683938,
+      "canvasData": {
+        "x": 555,
+        "y": 100,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-110b2e72",
+          "measuredAt": 1786115926982
+        },
+        "deviceType": "freeSize",
+        "windowSize": {
+          "width": 374,
+          "height": 1183
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-home-glass-neu.html",
+        "interactions": [
+          {
+            "domId": "home-title-search",
+            "targetPageId": "page-client-search"
+          },
+          {
+            "domId": "home-search",
+            "targetPageId": "page-client-search"
+          },
+          {
+            "domId": "svc-waterproof",
+            "targetPageId": "page-client-service-detail"
+          },
+          {
+            "domId": "svc-appliance",
+            "targetPageId": "page-client-service-detail"
+          },
+          {
+            "domId": "svc-pipe",
+            "targetPageId": "page-client-service-detail"
+          },
+          {
+            "domId": "svc-lock",
+            "targetPageId": "page-client-service-detail"
+          },
+          {
+            "domId": "svc-cleaning",
+            "targetPageId": "page-client-service-detail"
+          },
+          {
+            "domId": "svc-wall",
+            "targetPageId": "page-client-service-detail"
+          },
+          {
+            "domId": "svc-furniture",
+            "targetPageId": "page-client-service-detail"
+          },
+          {
+            "domId": "svc-install",
+            "targetPageId": "page-client-service-detail"
+          },
+          {
+            "domId": "svc-more",
+            "targetPageId": "page-client-service"
+          },
+          {
+            "domId": "home-ai-card",
+            "targetPageId": "page-client-chat"
+          },
+          {
+            "domId": "home-ai-open",
+            "targetPageId": "page-client-chat"
+          },
+          {
+            "domId": "home-worker-zhang",
+            "targetPageId": "page-client-worker-detail"
+          },
+          {
+            "domId": "home-worker-li",
+            "targetPageId": "page-client-worker-detail"
+          },
+          {
+            "domId": "home-service-waterproof",
+            "targetPageId": "page-client-service-detail"
+          },
+          {
+            "domId": "home-book-waterproof",
+            "targetPageId": "page-client-publish"
+          },
+          {
+            "domId": "home-service-electric",
+            "targetPageId": "page-client-service-detail"
+          },
+          {
+            "domId": "home-book-electric",
+            "targetPageId": "page-client-publish"
+          },
+          {
+            "domId": "home-service-pipe",
+            "targetPageId": "page-client-service-detail"
+          },
+          {
+            "domId": "home-book-pipe",
+            "targetPageId": "page-client-publish"
+          },
+          {
+            "domId": "nav-home",
+            "targetPageId": "page-client-home-glass-neu-contrast-1"
+          },
+          {
+            "domId": "nav-publish",
+            "targetPageId": "page-client-publish"
+          },
+          {
+            "domId": "nav-orders",
+            "targetPageId": "page-client-orders"
+          },
+          {
+            "domId": "nav-mine",
+            "targetPageId": "page-client-mine"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-service-detail",
+      "title": "服务详情",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785314000000,
+      "canvasData": {
+        "x": 100,
+        "y": 1032,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-22b15fbe",
+          "measuredAt": 1786115926982
+        },
+        "deviceType": "freeSize",
+        "windowSize": {
+          "width": 374,
+          "height": 1656
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-service-detail.html",
+        "interactions": [
+          {
+            "domId": "back-btn",
+            "targetPageId": "page-client-home-glass-neu-contrast-1"
+          },
+          {
+            "domId": "recommended-worker-1",
+            "targetPageId": "page-client-worker-detail"
+          },
+          {
+            "domId": "book-worker-1",
+            "targetPageId": "page-client-publish"
+          },
+          {
+            "domId": "recommended-worker-2",
+            "targetPageId": "page-client-worker-detail"
+          },
+          {
+            "domId": "book-worker-2",
+            "targetPageId": "page-client-publish"
+          },
+          {
+            "domId": "service-reviews-more",
+            "targetPageId": "page-client-review-list"
+          },
+          {
+            "domId": "cs-btn",
+            "targetPageId": "page-client-customer-service"
+          },
+          {
+            "domId": "book-now",
+            "targetPageId": "page-client-publish"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-order-detail",
+      "title": "订单详情",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785314000000,
+      "canvasData": {
+        "x": 2830,
+        "y": 1032,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-e147ace8",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-order-detail.html",
+        "interactions": [
+          {
+            "domId": "back-btn",
+            "targetPageId": "page-client-orders"
+          },
+          {
+            "domId": "order-worker-card",
+            "targetPageId": "page-client-worker-detail"
+          },
+          {
+            "domId": "msg-worker",
+            "targetPageId": "page-client-order-chat"
+          },
+          {
+            "domId": "go-claim",
+            "targetPageId": "page-client-insurance-claim"
+          },
+          {
+            "domId": "contact-service",
+            "targetPageId": "page-client-customer-service"
+          },
+          {
+            "domId": "view-realtime",
+            "targetPageId": "page-client-order-tracking"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-quote-list",
+      "title": "报价列表",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785314000000,
+      "canvasData": {
+        "x": 1920,
+        "y": 1032,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-cc8f6777",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-quote-list.html",
+        "interactions": [
+          {
+            "domId": "back-btn",
+            "targetPageId": "page-client-order-detail"
+          },
+          {
+            "domId": "view-worker-1",
+            "targetPageId": "page-client-worker-detail"
+          },
+          {
+            "domId": "select-worker-1",
+            "targetPageId": "page-client-order-detail"
+          },
+          {
+            "domId": "view-worker-2",
+            "targetPageId": "page-client-worker-detail"
+          },
+          {
+            "domId": "select-worker-2",
+            "targetPageId": "page-client-order-detail"
+          },
+          {
+            "domId": "view-worker-3",
+            "targetPageId": "page-client-worker-detail"
+          },
+          {
+            "domId": "select-worker-3",
+            "targetPageId": "page-client-order-detail"
+          },
+          {
+            "domId": "view-worker-4",
+            "targetPageId": "page-client-worker-detail"
+          },
+          {
+            "domId": "select-worker-4",
+            "targetPageId": "page-client-order-detail"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-address",
+      "title": "地址管理",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785314000000,
+      "canvasData": {
+        "x": 4195,
+        "y": 1032,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-3cbadca9",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-address.html",
+        "interactions": [
+          {
+            "domId": "back-btn",
+            "targetPageId": "page-client-mine"
+          },
+          {
+            "domId": "addr-edit-0",
+            "targetPageId": "page-client-address-edit"
+          },
+          {
+            "domId": "addr-edit-1",
+            "targetPageId": "page-client-address-edit"
+          },
+          {
+            "domId": "addr-edit-2",
+            "targetPageId": "page-client-address-edit"
+          },
+          {
+            "domId": "add-address",
+            "targetPageId": "page-client-address-edit"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-coupon",
+      "title": "优惠券",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785314000000,
+      "canvasData": {
+        "x": 7380,
+        "y": 1032,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-f435b1ed",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-coupon.html",
+        "interactions": [
+          {
+            "domId": "back-btn",
+            "targetPageId": "page-client-mine"
+          },
+          {
+            "domId": "coupon-unused-1",
+            "targetPageId": "page-client-coupon-detail"
+          },
+          {
+            "domId": "use-coupon-1",
+            "targetPageId": "page-client-publish"
+          },
+          {
+            "domId": "coupon-unused-2",
+            "targetPageId": "page-client-coupon-detail"
+          },
+          {
+            "domId": "use-coupon-2",
+            "targetPageId": "page-client-publish"
+          },
+          {
+            "domId": "coupon-unused-3",
+            "targetPageId": "page-client-coupon-detail"
+          },
+          {
+            "domId": "use-coupon-3",
+            "targetPageId": "page-client-publish"
+          },
+          {
+            "domId": "coupon-used-1",
+            "targetPageId": "page-client-coupon-detail"
+          },
+          {
+            "domId": "coupon-used-2",
+            "targetPageId": "page-client-coupon-detail"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-settings",
+      "title": "设置",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785314000000,
+      "canvasData": {
+        "x": 10565,
+        "y": 1032,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-f63752b2",
+          "measuredAt": 1786115926982
+        },
+        "deviceType": "freeSize",
+        "windowSize": {
+          "width": 374,
+          "height": 1190
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-settings.html",
+        "interactions": [
+          {
+            "domId": "back-btn",
+            "targetPageId": "page-client-mine"
+          },
+          {
+            "domId": "edit-profile",
+            "targetPageId": "page-client-profile-edit"
+          },
+          {
+            "domId": "row-change-pwd",
+            "targetPageId": "page-client-password"
+          },
+          {
+            "domId": "row-bind-phone",
+            "targetPageId": "page-client-bind-phone"
+          },
+          {
+            "domId": "row-realname",
+            "targetPageId": "page-client-verification"
+          },
+          {
+            "domId": "row-privacy-setting",
+            "targetPageId": "page-client-privacy"
+          },
+          {
+            "domId": "row-auth-mgmt",
+            "targetPageId": "page-client-auth"
+          },
+          {
+            "domId": "row-about",
+            "targetPageId": "page-client-about"
+          },
+          {
+            "domId": "row-user-agreement",
+            "targetPageId": "page-client-agreement"
+          },
+          {
+            "domId": "row-privacy-policy",
+            "targetPageId": "page-client-agreement"
+          },
+          {
+            "domId": "logout",
+            "targetPageId": "page-client-login"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-worker-home",
+      "title": "师傅端接单大厅",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785234000000,
+      "canvasData": {
+        "x": 100,
+        "y": 5692,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-9ff125cb",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/worker-home.html",
+        "interactions": [
+          {
+            "domId": "order-card-1",
+            "targetPageId": "page-worker-order-detail"
+          },
+          {
+            "domId": "quote-btn-1",
+            "targetPageId": "page-worker-quote-submit"
+          },
+          {
+            "domId": "order-card-2",
+            "targetPageId": "page-worker-order-detail"
+          },
+          {
+            "domId": "quote-btn-2",
+            "targetPageId": "page-worker-quote-submit"
+          },
+          {
+            "domId": "order-card-3",
+            "targetPageId": "page-worker-order-detail"
+          },
+          {
+            "domId": "quote-btn-3",
+            "targetPageId": "page-worker-quote-submit"
+          },
+          {
+            "domId": "home-nav-worker-home",
+            "targetPageId": "page-worker-home"
+          },
+          {
+            "domId": "home-nav-worker-orders",
+            "targetPageId": "page-worker-orders"
+          },
+          {
+            "domId": "home-nav-worker-wallet",
+            "targetPageId": "page-worker-wallet"
+          },
+          {
+            "domId": "home-nav-worker-profile",
+            "targetPageId": "page-worker-profile"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-worker-orders",
+      "title": "师傅端订单管理",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785234000000,
+      "canvasData": {
+        "x": 555,
+        "y": 5692,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-dc26e657",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/worker-orders.html",
+        "interactions": [
+          {
+            "domId": "order-item-1",
+            "targetPageId": "page-worker-order-detail"
+          },
+          {
+            "domId": "order-action-1",
+            "targetPageId": "page-worker-order-detail"
+          },
+          {
+            "domId": "order-item-2",
+            "targetPageId": "page-worker-order-detail"
+          },
+          {
+            "domId": "order-action-2",
+            "targetPageId": "page-worker-order-detail"
+          },
+          {
+            "domId": "order-item-3",
+            "targetPageId": "page-worker-order-detail"
+          },
+          {
+            "domId": "order-action-3",
+            "targetPageId": "page-worker-order-detail"
+          },
+          {
+            "domId": "orders-nav-worker-home",
+            "targetPageId": "page-worker-home"
+          },
+          {
+            "domId": "orders-nav-worker-orders",
+            "targetPageId": "page-worker-orders"
+          },
+          {
+            "domId": "orders-nav-worker-wallet",
+            "targetPageId": "page-worker-wallet"
+          },
+          {
+            "domId": "orders-nav-worker-profile",
+            "targetPageId": "page-worker-profile"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-worker-profile",
+      "title": "师傅端个人中心",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785234000000,
+      "canvasData": {
+        "x": 1920,
+        "y": 5692,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-9725429f",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/worker-profile.html",
+        "interactions": [
+          {
+            "domId": "edit-profile",
+            "targetPageId": "page-client-profile-edit"
+          },
+          {
+            "domId": "info-scope",
+            "targetPageId": "page-worker-service-scope"
+          },
+          {
+            "domId": "info-experience",
+            "targetPageId": "page-worker-experience"
+          },
+          {
+            "domId": "info-area",
+            "targetPageId": "page-worker-service-area"
+          },
+          {
+            "domId": "info-verify",
+            "targetPageId": "page-worker-certification"
+          },
+          {
+            "domId": "menu-reviews",
+            "targetPageId": "page-worker-reviews"
+          },
+          {
+            "domId": "menu-income",
+            "targetPageId": "page-worker-income-stat"
+          },
+          {
+            "domId": "menu-help",
+            "targetPageId": "page-worker-help"
+          },
+          {
+            "domId": "menu-settings",
+            "targetPageId": "page-worker-settings"
+          },
+          {
+            "domId": "profile-nav-worker-home",
+            "targetPageId": "page-worker-home"
+          },
+          {
+            "domId": "profile-nav-worker-orders",
+            "targetPageId": "page-worker-orders"
+          },
+          {
+            "domId": "profile-nav-worker-wallet",
+            "targetPageId": "page-worker-wallet"
+          },
+          {
+            "domId": "profile-nav-worker-profile",
+            "targetPageId": "page-worker-profile"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-worker-wallet",
+      "title": "师傅端钱包",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785234000000,
+      "canvasData": {
+        "x": 1010,
+        "y": 5692,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-08698f29",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/worker-wallet.html",
+        "interactions": [
+          {
+            "domId": "btn-withdraw",
+            "targetPageId": "page-worker-withdraw"
+          },
+          {
+            "domId": "btn-deposit",
+            "targetPageId": "page-worker-deposit"
+          },
+          {
+            "domId": "btn-transactions",
+            "targetPageId": "page-worker-transactions"
+          },
+          {
+            "domId": "income-stat-card",
+            "targetPageId": "page-worker-income-stat"
+          },
+          {
+            "domId": "wallet-nav-worker-home",
+            "targetPageId": "page-worker-home"
+          },
+          {
+            "domId": "wallet-nav-worker-orders",
+            "targetPageId": "page-worker-orders"
+          },
+          {
+            "domId": "wallet-nav-worker-wallet",
+            "targetPageId": "page-worker-wallet"
+          },
+          {
+            "domId": "wallet-nav-worker-profile",
+            "targetPageId": "page-worker-profile"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-worker-quote-submit",
+      "title": "提交报价",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785314000000,
+      "canvasData": {
+        "x": 100,
+        "y": 7556,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-01d76931",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/worker-quote-submit.html",
+        "interactions": [
+          {
+            "domId": "quote-submit-back",
+            "targetPageId": "page-worker-home"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-worker-order-detail",
+      "title": "师傅订单详情",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785314000000,
+      "canvasData": {
+        "x": 100,
+        "y": 6624,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-35a737ee",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/worker-order-detail.html",
+        "interactions": [
+          {
+            "domId": "order-detail-back",
+            "targetPageId": "page-worker-orders"
+          },
+          {
+            "domId": "msg-client",
+            "targetPageId": "page-worker-chat"
+          },
+          {
+            "domId": "btn-apply-extra-fee",
+            "targetPageId": "page-worker-price-adjust-worker"
+          },
+          {
+            "domId": "contact-client",
+            "targetPageId": "page-worker-chat"
+          },
+          {
+            "domId": "btn-depart",
+            "targetPageId": "page-worker-location-report"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-worker-withdraw",
+      "title": "提现",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785314000000,
+      "canvasData": {
+        "x": 555,
+        "y": 6624,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-7d2a807b",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/worker-withdraw.html",
+        "interactions": [
+          {
+            "domId": "withdraw-back",
+            "targetPageId": "page-worker-wallet"
+          },
+          {
+            "domId": "change-bank",
+            "targetPageId": "page-client-bank-cards"
+          },
+          {
+            "domId": "withdraw-records",
+            "targetPageId": "page-client-withdraw-record"
+          },
+          {
+            "domId": "confirm-withdraw",
+            "targetPageId": "page-worker-withdraw-result"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-worker-transactions",
+      "title": "收支明细",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785314000000,
+      "canvasData": {
+        "x": 1010,
+        "y": 6624,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-53b413ea",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/worker-transactions.html",
+        "interactions": [
+          {
+            "domId": "transactions-back",
+            "targetPageId": "page-worker-wallet"
+          },
+          {
+            "domId": "tx-row-1",
+            "targetPageId": "page-client-transaction-detail"
+          },
+          {
+            "domId": "tx-row-2",
+            "targetPageId": "page-client-transaction-detail"
+          },
+          {
+            "domId": "tx-row-3",
+            "targetPageId": "page-client-transaction-detail"
+          },
+          {
+            "domId": "tx-row-4",
+            "targetPageId": "page-client-transaction-detail"
+          },
+          {
+            "domId": "tx-row-5",
+            "targetPageId": "page-client-transaction-detail"
+          },
+          {
+            "domId": "tx-row-6",
+            "targetPageId": "page-client-transaction-detail"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-worker-reviews",
+      "title": "评价管理",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785314000000,
+      "canvasData": {
+        "x": 6015,
+        "y": 6624,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-2f24c0ed",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/worker-reviews.html",
+        "interactions": [
+          {
+            "domId": "reviews-back",
+            "targetPageId": "page-worker-profile"
+          },
+          {
+            "domId": "review-card-1",
+            "targetPageId": "page-client-review-detail"
+          },
+          {
+            "domId": "review-card-2",
+            "targetPageId": "page-client-review-detail"
+          },
+          {
+            "domId": "review-card-3",
+            "targetPageId": "page-client-review-detail"
+          },
+          {
+            "domId": "review-card-4",
+            "targetPageId": "page-client-review-detail"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-worker-settings",
+      "title": "师傅设置",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785314000000,
+      "canvasData": {
+        "x": 6925,
+        "y": 6624,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-6ff0b5ad",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/worker-settings.html",
+        "interactions": [
+          {
+            "domId": "settings-back",
+            "targetPageId": "page-worker-profile"
+          },
+          {
+            "domId": "row-receive-range",
+            "targetPageId": "page-worker-order-setting"
+          },
+          {
+            "domId": "row-service-category",
+            "targetPageId": "page-worker-service-scope"
+          },
+          {
+            "domId": "row-change-pwd",
+            "targetPageId": "page-client-password"
+          },
+          {
+            "domId": "row-bind-phone",
+            "targetPageId": "page-client-bind-phone"
+          },
+          {
+            "domId": "row-realname",
+            "targetPageId": "page-worker-certification"
+          },
+          {
+            "domId": "row-certificates",
+            "targetPageId": "page-worker-cert-manage"
+          },
+          {
+            "domId": "row-about",
+            "targetPageId": "page-client-about"
+          },
+          {
+            "domId": "row-user-agreement",
+            "targetPageId": "page-client-agreement"
+          },
+          {
+            "domId": "row-privacy-policy",
+            "targetPageId": "page-client-agreement"
+          },
+          {
+            "domId": "logout",
+            "targetPageId": "page-client-login"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-chat",
+      "title": "AI智能助手",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785400000000,
+      "canvasData": {
+        "x": 1465,
+        "y": 1032,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-9dc30150",
+          "measuredAt": 1786115926982
+        },
+        "deviceType": "freeSize",
+        "windowSize": {
+          "width": 374,
+          "height": 929
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-chat.html",
+        "interactions": [
+          {
+            "domId": "back-btn",
+            "targetPageId": "page-client-home-glass-neu-contrast-1"
+          },
+          {
+            "domId": "recommended-service-card",
+            "targetPageId": "page-client-service-detail"
+          },
+          {
+            "domId": "book-pipe",
+            "targetPageId": "page-client-publish"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-member",
+      "title": "会员中心",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785400000000,
+      "canvasData": {
+        "x": 1010,
+        "y": 1032,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-3c9e4f9c",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-member.html",
+        "interactions": [
+          {
+            "domId": "back-btn",
+            "targetPageId": "page-client-mine"
+          },
+          {
+            "domId": "member-avatar",
+            "targetPageId": "page-client-profile"
+          },
+          {
+            "domId": "benefit-coupon",
+            "targetPageId": "page-client-coupon"
+          },
+          {
+            "domId": "benefit-service",
+            "targetPageId": "page-client-customer-service"
+          },
+          {
+            "domId": "benefit-mall",
+            "targetPageId": "page-client-points-mall"
+          },
+          {
+            "domId": "task-1",
+            "targetPageId": "page-client-publish"
+          },
+          {
+            "domId": "task-btn-publish",
+            "targetPageId": "page-client-publish"
+          },
+          {
+            "domId": "task-2",
+            "targetPageId": "page-client-orders"
+          },
+          {
+            "domId": "task-btn-review",
+            "targetPageId": "page-client-orders"
+          },
+          {
+            "domId": "task-3",
+            "targetPageId": "page-client-annual-card"
+          },
+          {
+            "domId": "task-btn-annual-card",
+            "targetPageId": "page-client-annual-card"
+          },
+          {
+            "domId": "task-4",
+            "targetPageId": "page-client-invite"
+          },
+          {
+            "domId": "task-btn-invite",
+            "targetPageId": "page-client-invite"
+          },
+          {
+            "domId": "nav-home",
+            "targetPageId": "page-client-home-glass-neu-contrast-1"
+          },
+          {
+            "domId": "nav-publish",
+            "targetPageId": "page-client-publish"
+          },
+          {
+            "domId": "nav-orders",
+            "targetPageId": "page-client-orders"
+          },
+          {
+            "domId": "nav-mine",
+            "targetPageId": "page-client-mine"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-favorite-workers",
+      "title": "收藏的师傅",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785400000000,
+      "canvasData": {
+        "x": 9200,
+        "y": 1032,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-93641818",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-favorite-workers.html",
+        "interactions": [
+          {
+            "domId": "back-btn",
+            "targetPageId": "page-client-mine"
+          },
+          {
+            "domId": "worker-card-1",
+            "targetPageId": "page-client-worker-detail"
+          },
+          {
+            "domId": "book-1",
+            "targetPageId": "page-client-publish"
+          },
+          {
+            "domId": "worker-card-2",
+            "targetPageId": "page-client-worker-detail"
+          },
+          {
+            "domId": "book-2",
+            "targetPageId": "page-client-publish"
+          },
+          {
+            "domId": "worker-card-3",
+            "targetPageId": "page-client-worker-detail"
+          },
+          {
+            "domId": "book-3",
+            "targetPageId": "page-client-publish"
+          },
+          {
+            "domId": "worker-card-4",
+            "targetPageId": "page-client-worker-detail"
+          },
+          {
+            "domId": "book-4",
+            "targetPageId": "page-client-publish"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-service",
+      "title": "客服中心",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785400000000,
+      "canvasData": {
+        "x": 2375,
+        "y": 100,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-f17b48c1",
+          "measuredAt": 1786115926982
+        },
+        "deviceType": "freeSize",
+        "windowSize": {
+          "width": 374,
+          "height": 1265
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-service.html",
+        "interactions": [
+          {
+            "domId": "back-btn",
+            "targetPageId": "page-client-mine"
+          },
+          {
+            "domId": "btn-online-service",
+            "targetPageId": "page-client-customer-service"
+          },
+          {
+            "domId": "btn-new-ticket",
+            "targetPageId": "page-client-ticket-submit"
+          },
+          {
+            "domId": "ticket-1",
+            "targetPageId": "page-client-ticket-detail"
+          },
+          {
+            "domId": "ticket-2",
+            "targetPageId": "page-client-ticket-detail"
+          },
+          {
+            "domId": "ticket-3",
+            "targetPageId": "page-client-ticket-detail"
+          },
+          {
+            "domId": "btn-new-ticket-bottom",
+            "targetPageId": "page-client-ticket-submit"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-feedback",
+      "title": "意见反馈",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785400000000,
+      "canvasData": {
+        "x": 9655,
+        "y": 1032,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-acf4c581",
+          "measuredAt": 1786115926982
+        },
+        "deviceType": "freeSize",
+        "windowSize": {
+          "width": 374,
+          "height": 1193
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-feedback.html",
+        "interactions": [
+          {
+            "domId": "back-btn",
+            "targetPageId": "page-client-mine"
+          },
+          {
+            "domId": "history-1",
+            "targetPageId": "page-client-feedback-detail"
+          },
+          {
+            "domId": "history-2",
+            "targetPageId": "page-client-feedback-detail"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-annual-card",
+      "title": "家庭年卡",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785400000000,
+      "canvasData": {
+        "x": 7835,
+        "y": 1032,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-1d398c93",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-annual-card.html",
+        "interactions": [
+          {
+            "domId": "back-btn",
+            "targetPageId": "page-client-mine"
+          },
+          {
+            "domId": "my-annual-card",
+            "targetPageId": "page-client-annual-card-record"
+          },
+          {
+            "domId": "btn-use-card",
+            "targetPageId": "page-client-publish"
+          },
+          {
+            "domId": "btn-refund-card",
+            "targetPageId": "page-client-refund-card"
+          },
+          {
+            "domId": "btn-buy",
+            "targetPageId": "page-client-payment"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-insurance-claim",
+      "title": "理赔申请",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785400000000,
+      "canvasData": {
+        "x": 10110,
+        "y": 1032,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-1970deab",
+          "measuredAt": 1786115926982
+        },
+        "deviceType": "freeSize",
+        "windowSize": {
+          "width": 374,
+          "height": 1289
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-insurance-claim.html",
+        "interactions": [
+          {
+            "domId": "back-btn",
+            "targetPageId": "page-client-order-detail"
+          },
+          {
+            "domId": "policy-card",
+            "targetPageId": "page-client-policy-detail"
+          },
+          {
+            "domId": "btn-submit-claim",
+            "targetPageId": "page-client-claim-result"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-worker-recharge",
+      "title": "师傅充值",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785400000000,
+      "canvasData": {
+        "x": 1920,
+        "y": 6624,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-fd294999",
+          "measuredAt": 1786115926982
+        },
+        "deviceType": "freeSize",
+        "windowSize": {
+          "width": 374,
+          "height": 998
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/worker-recharge.html",
+        "interactions": []
+      }
+    },
+    {
+      "id": "page-worker-certification",
+      "title": "资质认证",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785400000000,
+      "canvasData": {
+        "x": 5105,
+        "y": 6624,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-4aaac0dc",
+          "measuredAt": 1786115926982
+        },
+        "deviceType": "freeSize",
+        "windowSize": {
+          "width": 374,
+          "height": 1303
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/worker-certification.html",
+        "interactions": [
+          {
+            "domId": "certification-back",
+            "targetPageId": "page-worker-profile"
+          },
+          {
+            "domId": "view-skill",
+            "targetPageId": "page-worker-cert-manage"
+          },
+          {
+            "domId": "go-deposit",
+            "targetPageId": "page-worker-deposit"
+          },
+          {
+            "domId": "upload-license",
+            "targetPageId": "page-worker-certificate-edit"
+          },
+          {
+            "domId": "btn-supplement",
+            "targetPageId": "page-worker-certificate-edit"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-worker-deposit",
+      "title": "保证金管理",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785400000000,
+      "canvasData": {
+        "x": 5560,
+        "y": 6624,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-5ea5b0cd",
+          "measuredAt": 1786115926982
+        },
+        "deviceType": "freeSize",
+        "windowSize": {
+          "width": 374,
+          "height": 1289
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/worker-deposit.html",
+        "interactions": [
+          {
+            "domId": "deposit-back",
+            "targetPageId": "page-worker-wallet"
+          },
+          {
+            "domId": "btn-refund",
+            "targetPageId": "page-worker-deposit-refund"
+          },
+          {
+            "domId": "btn-pay",
+            "targetPageId": "page-worker-deposit-pay"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-worker-training",
+      "title": "培训中心",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785400000000,
+      "canvasData": {
+        "x": 1465,
+        "y": 5692,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-f019864b",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/worker-training.html",
+        "interactions": [
+          {
+            "domId": "training-back",
+            "targetPageId": "page-worker-profile"
+          },
+          {
+            "domId": "exam-1",
+            "targetPageId": "page-worker-training-exam"
+          },
+          {
+            "domId": "exam-2",
+            "targetPageId": "page-worker-training-exam"
+          },
+          {
+            "domId": "course-3",
+            "targetPageId": "page-worker-lesson"
+          },
+          {
+            "domId": "course-4",
+            "targetPageId": "page-worker-lesson"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-worker-training-exam",
+      "title": "在线考试",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785400000000,
+      "canvasData": {
+        "x": 2375,
+        "y": 6624,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-06544a9b",
+          "measuredAt": 1786115926982
+        },
+        "deviceType": "freeSize",
+        "windowSize": {
+          "width": 374,
+          "height": 1005
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/worker-training-exam.html",
+        "interactions": [
+          {
+            "domId": "training-exam-back",
+            "targetPageId": "page-worker-training"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-worker-appeal",
+      "title": "申诉中心",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785400000000,
+      "canvasData": {
+        "x": 7835,
+        "y": 6624,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-d47685af",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/worker-appeal.html",
+        "interactions": [
+          {
+            "domId": "appeal-back",
+            "targetPageId": "page-worker-settings"
+          },
+          {
+            "domId": "appeal-view-1",
+            "targetPageId": "page-worker-appeal-detail"
+          },
+          {
+            "domId": "appeal-view-2",
+            "targetPageId": "page-worker-appeal-detail"
+          },
+          {
+            "domId": "btn-submit-appeal",
+            "targetPageId": "page-worker-appeal-detail"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-order-tracking",
+      "title": "实时追踪",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785400000000,
+      "canvasData": {
+        "x": 555,
+        "y": 1964,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-e715dbcd",
+          "measuredAt": 1786115926982
+        },
+        "deviceType": "freeSize",
+        "windowSize": {
+          "width": 374,
+          "height": 1238
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-order-tracking.html",
+        "interactions": [
+          {
+            "domId": "back-btn",
+            "targetPageId": "page-client-order-detail"
+          },
+          {
+            "domId": "worker-map-marker",
+            "targetPageId": "page-client-worker-detail"
+          },
+          {
+            "domId": "tracking-worker-card",
+            "targetPageId": "page-client-worker-detail"
+          },
+          {
+            "domId": "view-order-detail",
+            "targetPageId": "page-client-order-detail"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-worker-location-report",
+      "title": "位置上报",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785400000000,
+      "canvasData": {
+        "x": 7380,
+        "y": 6624,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-9c65baae",
+          "measuredAt": 1786115926982
+        },
+        "deviceType": "freeSize",
+        "windowSize": {
+          "width": 374,
+          "height": 850
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/worker-location-report.html",
+        "interactions": [
+          {
+            "domId": "location-report-back",
+            "targetPageId": "page-worker-order-detail"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-order-tracking-2",
+      "title": "实时追踪 下拉页面",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785618977009,
+      "canvasData": {
+        "x": 1010,
+        "y": 1964,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-aab8db48",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-order-tracking-2.html",
+        "interactions": [
+          {
+            "domId": "back-btn",
+            "targetPageId": "page-client-order-detail"
+          },
+          {
+            "domId": "tracking-worker-card",
+            "targetPageId": "page-client-worker-detail"
+          },
+          {
+            "domId": "view-order-detail",
+            "targetPageId": "page-client-order-detail"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-home-glass-neu-contrast-1",
+      "title": "客户端首页",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785628913072,
+      "canvasData": {
+        "x": 100,
+        "y": 100,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-b36e1082",
+          "measuredAt": 1786115926982
+        },
+        "deviceType": "freeSize",
+        "windowSize": {
+          "width": 374,
+          "height": 1389
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-home-glass-neu-contrast-1.html",
+        "interactions": [
+          {
+            "domId": "home-title-search",
+            "targetPageId": "page-client-search"
+          },
+          {
+            "domId": "home-search",
+            "targetPageId": "page-client-search"
+          },
+          {
+            "domId": "svc-waterproof",
+            "targetPageId": "page-client-service-detail"
+          },
+          {
+            "domId": "svc-appliance",
+            "targetPageId": "page-client-service-detail"
+          },
+          {
+            "domId": "svc-pipe",
+            "targetPageId": "page-client-service-detail"
+          },
+          {
+            "domId": "svc-lock",
+            "targetPageId": "page-client-service-detail"
+          },
+          {
+            "domId": "svc-cleaning",
+            "targetPageId": "page-client-service-detail"
+          },
+          {
+            "domId": "svc-wall",
+            "targetPageId": "page-client-service-detail"
+          },
+          {
+            "domId": "svc-furniture",
+            "targetPageId": "page-client-service-detail"
+          },
+          {
+            "domId": "svc-install",
+            "targetPageId": "page-client-service-detail"
+          },
+          {
+            "domId": "svc-more",
+            "targetPageId": "page-client-service"
+          },
+          {
+            "domId": "home-ai-card",
+            "targetPageId": "page-client-chat"
+          },
+          {
+            "domId": "home-ai-open",
+            "targetPageId": "page-client-chat"
+          },
+          {
+            "domId": "home-worker-zhang",
+            "targetPageId": "page-client-worker-detail"
+          },
+          {
+            "domId": "home-worker-li",
+            "targetPageId": "page-client-worker-detail"
+          },
+          {
+            "domId": "home-service-waterproof",
+            "targetPageId": "page-client-service-detail"
+          },
+          {
+            "domId": "home-book-waterproof",
+            "targetPageId": "page-client-publish"
+          },
+          {
+            "domId": "home-service-electric",
+            "targetPageId": "page-client-service-detail"
+          },
+          {
+            "domId": "home-book-electric",
+            "targetPageId": "page-client-publish"
+          },
+          {
+            "domId": "home-service-pipe",
+            "targetPageId": "page-client-service-detail"
+          },
+          {
+            "domId": "home-book-pipe",
+            "targetPageId": "page-client-publish"
+          },
+          {
+            "domId": "nav-home",
+            "targetPageId": "page-client-home-glass-neu-contrast-1"
+          },
+          {
+            "domId": "nav-publish",
+            "targetPageId": "page-client-publish"
+          },
+          {
+            "domId": "nav-orders",
+            "targetPageId": "page-client-orders"
+          },
+          {
+            "domId": "nav-mine",
+            "targetPageId": "page-client-mine"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-login",
+      "title": "登录授权",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785761350742,
+      "canvasData": {
+        "x": 14205,
+        "y": 1964,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-f2a323db",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-login.html",
+        "interactions": [
+          {
+            "domId": "user-agreement-link",
+            "targetPageId": "page-client-agreement"
+          },
+          {
+            "domId": "privacy-policy-link",
+            "targetPageId": "page-client-privacy"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-customer-service",
+      "title": "在线客服",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785761350742,
+      "canvasData": {
+        "x": 5105,
+        "y": 1032,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-222343b1",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-customer-service.html",
+        "interactions": [
+          {
+            "domId": "back-btn",
+            "targetPageId": "page-client-service"
+          },
+          {
+            "domId": "order-card-in-chat",
+            "targetPageId": "page-client-order-detail"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-points",
+      "title": "积分中心",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785761350742,
+      "canvasData": {
+        "x": 8290,
+        "y": 1032,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-40f59366",
+          "measuredAt": 1786115926982
+        },
+        "deviceType": "freeSize",
+        "windowSize": {
+          "width": 374,
+          "height": 898
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-points.html",
+        "interactions": [
+          {
+            "domId": "back-btn",
+            "targetPageId": "page-client-mine"
+          },
+          {
+            "domId": "points-more-tasks",
+            "targetPageId": "page-client-points-tasks"
+          },
+          {
+            "domId": "earn-order",
+            "targetPageId": "page-client-publish"
+          },
+          {
+            "domId": "earn-review",
+            "targetPageId": "page-client-orders"
+          },
+          {
+            "domId": "earn-share",
+            "targetPageId": "page-client-invite"
+          },
+          {
+            "domId": "points-view-mall",
+            "targetPageId": "page-client-points-mall"
+          },
+          {
+            "domId": "mall-coupon-10",
+            "targetPageId": "page-client-points-product"
+          },
+          {
+            "domId": "mall-coupon-20",
+            "targetPageId": "page-client-points-product"
+          },
+          {
+            "domId": "mall-coupon-50",
+            "targetPageId": "page-client-points-product"
+          },
+          {
+            "domId": "mall-vip",
+            "targetPageId": "page-client-points-product"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-invite",
+      "title": "邀请奖励",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785761350742,
+      "canvasData": {
+        "x": 8745,
+        "y": 1032,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-8ff06923",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-invite.html",
+        "interactions": [
+          {
+            "domId": "back-btn",
+            "targetPageId": "page-client-mine"
+          },
+          {
+            "domId": "records-btn",
+            "targetPageId": "page-client-invite-record"
+          },
+          {
+            "domId": "invite-view-records",
+            "targetPageId": "page-client-invite-record"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-payment",
+      "title": "确认支付",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785761350742,
+      "canvasData": {
+        "x": 1465,
+        "y": 1964,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-947ad184",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-payment.html",
+        "interactions": [
+          {
+            "domId": "back-btn",
+            "targetPageId": "page-client-order-detail"
+          },
+          {
+            "domId": "help-btn",
+            "targetPageId": "page-client-customer-service"
+          },
+          {
+            "domId": "coupon-selector",
+            "targetPageId": "page-client-coupon-select"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-review",
+      "title": "服务评价",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785761350742,
+      "canvasData": {
+        "x": 1920,
+        "y": 1964,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-6601fba8",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-review.html",
+        "interactions": [
+          {
+            "domId": "back-btn",
+            "targetPageId": "page-client-order-detail"
+          },
+          {
+            "domId": "worker-info",
+            "targetPageId": "page-client-worker-detail"
+          },
+          {
+            "domId": "submit-review",
+            "targetPageId": "page-client-order-detail"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-price-adjust",
+      "title": "差价确认",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785761350742,
+      "canvasData": {
+        "x": 3740,
+        "y": 1964,
+        "group": 0,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-eb7154ab",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-price-adjust.html",
+        "interactions": [
+          {
+            "domId": "back-btn",
+            "targetPageId": "page-client-order-detail"
+          },
+          {
+            "domId": "help-btn",
+            "targetPageId": "page-client-customer-service"
+          },
+          {
+            "domId": "worker-info",
+            "targetPageId": "page-client-worker-detail"
+          },
+          {
+            "domId": "btn-reject",
+            "targetPageId": "page-client-order-detail"
+          },
+          {
+            "domId": "btn-confirm",
+            "targetPageId": "page-client-order-detail"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-about",
+      "title": "关于我们",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147424,
+      "canvasData": {
+        "x": 12840,
+        "y": 1964,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-fbc9e0be",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-about.html",
+        "interactions": [
+          {
+            "domId": "about-back",
+            "targetPageId": "page-client-settings"
+          },
+          {
+            "domId": "about-user-agreement",
+            "targetPageId": "page-client-agreement"
+          },
+          {
+            "domId": "about-privacy-policy",
+            "targetPageId": "page-client-agreement"
+          },
+          {
+            "domId": "about-service-terms",
+            "targetPageId": "page-client-agreement"
+          },
+          {
+            "domId": "about-platform-rules",
+            "targetPageId": "page-client-agreement"
+          },
+          {
+            "domId": "about-company",
+            "targetPageId": "page-client-agreement"
+          },
+          {
+            "domId": "about-feedback",
+            "targetPageId": "page-client-feedback"
+          },
+          {
+            "domId": "about-feedback-primary",
+            "targetPageId": "page-client-feedback"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-account-cancel",
+      "title": "注销账号",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147425,
+      "canvasData": {
+        "x": 7835,
+        "y": 3828,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-24f84c0d",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-account-cancel.html",
+        "interactions": [
+          {
+            "domId": "account-cancel-back",
+            "targetPageId": "page-client-privacy"
+          },
+          {
+            "domId": "account-cancel-order",
+            "targetPageId": "page-client-order-detail"
+          },
+          {
+            "domId": "account-cancel-service",
+            "targetPageId": "page-client-customer-service"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-account-security",
+      "title": "账号安全",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147426,
+      "canvasData": {
+        "x": 11475,
+        "y": 1964,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-b78ae1c6",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-account-security.html",
+        "interactions": [
+          {
+            "domId": "account-security-back",
+            "targetPageId": "page-client-settings"
+          },
+          {
+            "domId": "account-security-password",
+            "targetPageId": "page-client-password"
+          },
+          {
+            "domId": "account-security-phone",
+            "targetPageId": "page-client-bind-phone"
+          },
+          {
+            "domId": "account-security-verification",
+            "targetPageId": "page-client-verification"
+          },
+          {
+            "domId": "account-security-devices",
+            "targetPageId": "page-client-device-management"
+          },
+          {
+            "domId": "account-security-auth",
+            "targetPageId": "page-client-auth"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-address-edit",
+      "title": "新增地址",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147427,
+      "canvasData": {
+        "x": 4650,
+        "y": 1964,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-10bc7e83",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-address-edit.html",
+        "interactions": [
+          {
+            "domId": "address-edit-back",
+            "targetPageId": "page-client-address"
+          },
+          {
+            "domId": "address-edit-save-top",
+            "targetPageId": "page-client-address"
+          },
+          {
+            "domId": "address-edit-map",
+            "targetPageId": "page-client-map-picker"
+          },
+          {
+            "domId": "address-edit-save-primary",
+            "targetPageId": "page-client-address"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-agreement",
+      "title": "用户协议",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147428,
+      "canvasData": {
+        "x": 6470,
+        "y": 3828,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-5fecac37",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-agreement.html",
+        "interactions": [
+          {
+            "domId": "agreement-back",
+            "targetPageId": "page-client-about"
+          },
+          {
+            "domId": "agreement-accept",
+            "targetPageId": "page-client-about"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-annual-card-record",
+      "title": "使用记录",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147429,
+      "canvasData": {
+        "x": 6925,
+        "y": 1964,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-30ce6f47",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-annual-card-record.html",
+        "interactions": [
+          {
+            "domId": "annual-record-back",
+            "targetPageId": "page-client-annual-card"
+          },
+          {
+            "domId": "annual-record-order-water",
+            "targetPageId": "page-client-order-detail"
+          },
+          {
+            "domId": "annual-record-order-electric",
+            "targetPageId": "page-client-order-detail"
+          },
+          {
+            "domId": "annual-record-order-clean",
+            "targetPageId": "page-client-order-detail"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-auth",
+      "title": "授权管理",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147430,
+      "canvasData": {
+        "x": 13750,
+        "y": 1964,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-b43590ec",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-auth.html",
+        "interactions": [
+          {
+            "domId": "auth-back",
+            "targetPageId": "page-client-account-security"
+          },
+          {
+            "domId": "auth-current-device",
+            "targetPageId": "page-client-device-management"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-balance-transactions",
+      "title": "收支明细",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147431,
+      "canvasData": {
+        "x": 6015,
+        "y": 1964,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-389750a5",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-balance-transactions.html",
+        "interactions": [
+          {
+            "domId": "balance-transactions-back",
+            "targetPageId": "page-client-wallet"
+          },
+          {
+            "domId": "balance-transaction-order",
+            "targetPageId": "page-client-transaction-detail"
+          },
+          {
+            "domId": "balance-transaction-refund",
+            "targetPageId": "page-client-transaction-detail"
+          },
+          {
+            "domId": "balance-transaction-recharge",
+            "targetPageId": "page-client-transaction-detail"
+          },
+          {
+            "domId": "balance-transactions-recharge",
+            "targetPageId": "page-client-wallet-recharge"
+          },
+          {
+            "domId": "balance-transactions-withdraw",
+            "targetPageId": "page-client-wallet-withdraw"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-bank-card-add",
+      "title": "添加银行卡",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147432,
+      "canvasData": {
+        "x": 555,
+        "y": 4760,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-aacaa5d6",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-bank-card-add.html",
+        "interactions": [
+          {
+            "domId": "bank-add-back",
+            "targetPageId": "page-client-bank-cards"
+          },
+          {
+            "domId": "bank-add-submit",
+            "targetPageId": "page-client-bank-cards"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-bank-cards",
+      "title": "我的银行卡",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147433,
+      "canvasData": {
+        "x": 2375,
+        "y": 3828,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-5e0bedf2",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-bank-cards.html",
+        "interactions": [
+          {
+            "domId": "bank-cards-back",
+            "targetPageId": "page-client-wallet"
+          },
+          {
+            "domId": "bank-add-card",
+            "targetPageId": "page-client-bank-card-add"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-bind-phone",
+      "title": "绑定手机",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147434,
+      "canvasData": {
+        "x": 8290,
+        "y": 3828,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-cd94c501",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-bind-phone.html",
+        "interactions": [
+          {
+            "domId": "bind-phone-back",
+            "targetPageId": "page-client-account-security"
+          },
+          {
+            "domId": "bind-phone-help",
+            "targetPageId": "page-client-customer-service"
+          },
+          {
+            "domId": "bind-phone-confirm",
+            "targetPageId": "page-client-account-security"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-claim-result",
+      "title": "理赔结果",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147435,
+      "canvasData": {
+        "x": 11930,
+        "y": 1964,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-3e36c1f0",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-claim-result.html",
+        "interactions": [
+          {
+            "domId": "claim-result-back",
+            "targetPageId": "page-client-order-detail"
+          },
+          {
+            "domId": "claim-result-order",
+            "targetPageId": "page-client-order-detail"
+          },
+          {
+            "domId": "claim-result-policy",
+            "targetPageId": "page-client-policy-detail"
+          },
+          {
+            "domId": "claim-result-home",
+            "targetPageId": "page-client-home-glass-neu-contrast-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-coupon-detail",
+      "title": "优惠券详情",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147436,
+      "canvasData": {
+        "x": 6470,
+        "y": 1964,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-04484e69",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-coupon-detail.html",
+        "interactions": [
+          {
+            "domId": "coupon-detail-back",
+            "targetPageId": "page-client-coupon"
+          },
+          {
+            "domId": "coupon-use-now",
+            "targetPageId": "page-client-publish"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-coupon-select",
+      "title": "选择优惠券",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147437,
+      "canvasData": {
+        "x": 4650,
+        "y": 1032,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-2c0acf18",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-coupon-select.html",
+        "interactions": [
+          {
+            "domId": "coupon-select-back",
+            "targetPageId": "page-client-payment"
+          },
+          {
+            "domId": "coupon-select-detail-30",
+            "targetPageId": "page-client-coupon-detail"
+          },
+          {
+            "domId": "coupon-select-confirm",
+            "targetPageId": "page-client-payment"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-device-management",
+      "title": "登录设备管理",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147438,
+      "canvasData": {
+        "x": 7380,
+        "y": 3828,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-3771c08f",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-device-management.html",
+        "interactions": [
+          {
+            "domId": "device-management-back",
+            "targetPageId": "page-client-account-security"
+          },
+          {
+            "domId": "device-management-password",
+            "targetPageId": "page-client-password"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-exchange-result",
+      "title": "兑换结果",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147439,
+      "canvasData": {
+        "x": 100,
+        "y": 4760,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-60cec346",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-exchange-result.html",
+        "interactions": [
+          {
+            "domId": "exchange-result-back",
+            "targetPageId": "page-client-points-mall"
+          },
+          {
+            "domId": "exchange-result-product",
+            "targetPageId": "page-client-points-product"
+          },
+          {
+            "domId": "exchange-result-home",
+            "targetPageId": "page-client-home-glass-neu-contrast-1"
+          },
+          {
+            "domId": "exchange-result-mall",
+            "targetPageId": "page-client-points-mall"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-feedback-detail",
+      "title": "反馈详情",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147440,
+      "canvasData": {
+        "x": 10110,
+        "y": 1964,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-43edff65",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-feedback-detail.html",
+        "interactions": [
+          {
+            "domId": "feedback-detail-back",
+            "targetPageId": "page-client-feedback"
+          },
+          {
+            "domId": "feedback-detail-service",
+            "targetPageId": "page-client-customer-service"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-friend-detail",
+      "title": "邀请详情",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147441,
+      "canvasData": {
+        "x": 2830,
+        "y": 3828,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-88bd141c",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-friend-detail.html",
+        "interactions": [
+          {
+            "domId": "friend-detail-back",
+            "targetPageId": "page-client-invite-record"
+          },
+          {
+            "domId": "friend-detail-orders",
+            "targetPageId": "page-client-orders"
+          },
+          {
+            "domId": "friend-detail-invite",
+            "targetPageId": "page-client-invite"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-help",
+      "title": "帮助中心",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147442,
+      "canvasData": {
+        "x": 6015,
+        "y": 1032,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-e597820e",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-help.html",
+        "interactions": [
+          {
+            "domId": "help-back",
+            "targetPageId": "page-client-service"
+          },
+          {
+            "domId": "help-ticket",
+            "targetPageId": "page-client-ticket-submit"
+          },
+          {
+            "domId": "help-service",
+            "targetPageId": "page-client-customer-service"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-history",
+      "title": "浏览历史",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147443,
+      "canvasData": {
+        "x": 11020,
+        "y": 1032,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-3e0f284a",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-history.html",
+        "interactions": [
+          {
+            "domId": "history-back",
+            "targetPageId": "page-client-mine"
+          },
+          {
+            "domId": "history-service-water",
+            "targetPageId": "page-client-service-detail"
+          },
+          {
+            "domId": "history-worker-zhang",
+            "targetPageId": "page-client-worker-detail"
+          },
+          {
+            "domId": "history-product-cup",
+            "targetPageId": "page-client-points-product"
+          },
+          {
+            "domId": "history-service-air",
+            "targetPageId": "page-client-service-detail"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-income-stat",
+      "title": "收支统计",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147444,
+      "canvasData": {
+        "x": 9200,
+        "y": 1964,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-ee349b53",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-income-stat.html",
+        "interactions": [
+          {
+            "domId": "income-stat-back",
+            "targetPageId": "page-client-wallet"
+          },
+          {
+            "domId": "income-stat-transactions",
+            "targetPageId": "page-client-balance-transactions"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-invite-record",
+      "title": "邀请记录",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147445,
+      "canvasData": {
+        "x": 7835,
+        "y": 1964,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-c278ac24",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-invite-record.html",
+        "interactions": [
+          {
+            "domId": "invite-record-back",
+            "targetPageId": "page-client-invite"
+          },
+          {
+            "domId": "invite-friend-wang",
+            "targetPageId": "page-client-order-detail"
+          },
+          {
+            "domId": "invite-friend-li",
+            "targetPageId": "page-client-order-detail"
+          },
+          {
+            "domId": "invite-friend-chen",
+            "targetPageId": "page-client-order-detail"
+          },
+          {
+            "domId": "invite-record-more",
+            "targetPageId": "page-client-invite"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-invoice-detail",
+      "title": "发票详情",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147446,
+      "canvasData": {
+        "x": 5105,
+        "y": 3828,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-e3c6a550",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-invoice-detail.html",
+        "interactions": [
+          {
+            "domId": "invoice-detail-back",
+            "targetPageId": "page-client-invoice"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-invoice-orders",
+      "title": "可开票订单",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147447,
+      "canvasData": {
+        "x": 4195,
+        "y": 3828,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-80ced249",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-invoice-orders.html",
+        "interactions": [
+          {
+            "domId": "invoice-orders-back",
+            "targetPageId": "page-client-invoice"
+          },
+          {
+            "domId": "invoice-orders-view-order",
+            "targetPageId": "page-client-order-detail"
+          },
+          {
+            "domId": "invoice-orders-next",
+            "targetPageId": "page-client-invoice-title-edit"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-invoice-title-edit",
+      "title": "编辑发票抬头",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147448,
+      "canvasData": {
+        "x": 4650,
+        "y": 3828,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-88fc1aa9",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-invoice-title-edit.html",
+        "interactions": [
+          {
+            "domId": "invoice-title-back",
+            "targetPageId": "page-client-invoice"
+          },
+          {
+            "domId": "invoice-title-save",
+            "targetPageId": "page-client-invoice"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-invoice",
+      "title": "发票与报销",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147449,
+      "canvasData": {
+        "x": 10565,
+        "y": 1964,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-8d43dc24",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-invoice.html",
+        "interactions": [
+          {
+            "domId": "invoice-back",
+            "targetPageId": "page-client-mine"
+          },
+          {
+            "domId": "invoice-eligible-orders",
+            "targetPageId": "page-client-invoice-orders"
+          },
+          {
+            "domId": "invoice-record-issued",
+            "targetPageId": "page-client-invoice-detail"
+          },
+          {
+            "domId": "invoice-record-processing",
+            "targetPageId": "page-client-invoice-detail"
+          },
+          {
+            "domId": "invoice-title-personal",
+            "targetPageId": "page-client-invoice-title-edit"
+          },
+          {
+            "domId": "invoice-title-company",
+            "targetPageId": "page-client-invoice-title-edit"
+          },
+          {
+            "domId": "invoice-add-title",
+            "targetPageId": "page-client-invoice-title-edit"
+          },
+          {
+            "domId": "invoice-apply-primary",
+            "targetPageId": "page-client-invoice-orders"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-map-picker",
+      "title": "地图选点",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147450,
+      "canvasData": {
+        "x": 1010,
+        "y": 3828,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-55514115",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-map-picker.html",
+        "interactions": [
+          {
+            "domId": "map-picker-back",
+            "targetPageId": "page-client-address-edit"
+          },
+          {
+            "domId": "map-picker-confirm",
+            "targetPageId": "page-client-address-edit"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-message-detail",
+      "title": "消息详情",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147451,
+      "canvasData": {
+        "x": 13295,
+        "y": 1964,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-b000f04f",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-message-detail.html",
+        "interactions": [
+          {
+            "domId": "message-detail-back",
+            "targetPageId": "page-client-notification"
+          },
+          {
+            "domId": "message-detail-list",
+            "targetPageId": "page-client-notification"
+          },
+          {
+            "domId": "message-detail-order",
+            "targetPageId": "page-client-order-detail"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-notification",
+      "title": "消息通知",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147452,
+      "canvasData": {
+        "x": 11475,
+        "y": 1032,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-c602f0b5",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-notification.html",
+        "interactions": [
+          {
+            "domId": "notification-back",
+            "targetPageId": "page-client-mine"
+          },
+          {
+            "domId": "notification-order-1",
+            "targetPageId": "page-client-order-detail"
+          },
+          {
+            "domId": "notification-system-1",
+            "targetPageId": "page-client-message-detail"
+          },
+          {
+            "domId": "notification-activity-1",
+            "targetPageId": "page-client-message-detail"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-order-cancel",
+      "title": "取消订单",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147453,
+      "canvasData": {
+        "x": 2375,
+        "y": 1964,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-0f42efc9",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-order-cancel.html",
+        "interactions": [
+          {
+            "domId": "order-cancel-back",
+            "targetPageId": "page-client-order-detail"
+          },
+          {
+            "domId": "cancel-keep-order",
+            "targetPageId": "page-client-order-detail"
+          },
+          {
+            "domId": "cancel-confirm",
+            "targetPageId": "page-client-orders"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-order-chat",
+      "title": "李师傅",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147454,
+      "canvasData": {
+        "x": 4195,
+        "y": 1964,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-33dba0fd",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-order-chat.html",
+        "interactions": [
+          {
+            "domId": "order-chat-back",
+            "targetPageId": "page-client-order-detail"
+          },
+          {
+            "domId": "order-chat-order-card",
+            "targetPageId": "page-client-order-detail"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-order-picker",
+      "title": "选择关联订单",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147455,
+      "canvasData": {
+        "x": 3740,
+        "y": 1032,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-751889bf",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-order-picker.html",
+        "interactions": [
+          {
+            "domId": "order-picker-back",
+            "targetPageId": "page-client-ticket-submit"
+          },
+          {
+            "domId": "order-picker-confirm",
+            "targetPageId": "page-client-ticket-submit"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-order-search",
+      "title": "搜索订单",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147456,
+      "canvasData": {
+        "x": 3285,
+        "y": 1032,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-de377c64",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-order-search.html",
+        "interactions": [
+          {
+            "domId": "order-search-back",
+            "targetPageId": "page-client-orders"
+          },
+          {
+            "domId": "order-search-cancel",
+            "targetPageId": "page-client-orders"
+          },
+          {
+            "domId": "order-search-result-water",
+            "targetPageId": "page-client-order-detail"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-password",
+      "title": "修改密码",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147457,
+      "canvasData": {
+        "x": 5560,
+        "y": 3828,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-db008c42",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-password.html",
+        "interactions": [
+          {
+            "domId": "password-back",
+            "targetPageId": "page-client-account-security"
+          },
+          {
+            "domId": "password-confirm-primary",
+            "targetPageId": "page-client-account-security"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-payment-result",
+      "title": "支付结果",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147458,
+      "canvasData": {
+        "x": 100,
+        "y": 3828,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-95d5f20a",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-payment-result.html",
+        "interactions": [
+          {
+            "domId": "payment-result-points",
+            "targetPageId": "page-client-points-detail"
+          },
+          {
+            "domId": "payment-result-order",
+            "targetPageId": "page-client-order-detail"
+          },
+          {
+            "domId": "payment-result-home",
+            "targetPageId": "page-client-home-glass-neu-contrast-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-points-detail",
+      "title": "积分明细",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147459,
+      "canvasData": {
+        "x": 7380,
+        "y": 1964,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-cfb883f5",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-points-detail.html",
+        "interactions": [
+          {
+            "domId": "points-detail-back",
+            "targetPageId": "page-client-mine"
+          },
+          {
+            "domId": "points-detail-earn",
+            "targetPageId": "page-client-points-tasks"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-points-mall",
+      "title": "积分商城",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147460,
+      "canvasData": {
+        "x": 8290,
+        "y": 1964,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-05aa2eb9",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-points-mall.html",
+        "interactions": [
+          {
+            "domId": "points-mall-back",
+            "targetPageId": "page-client-points"
+          },
+          {
+            "domId": "points-mall-balance",
+            "targetPageId": "page-client-points-detail"
+          },
+          {
+            "domId": "mall-product-coupon",
+            "targetPageId": "page-client-points-product"
+          },
+          {
+            "domId": "mall-exchange-coupon",
+            "targetPageId": "page-client-exchange-result"
+          },
+          {
+            "domId": "mall-product-cup",
+            "targetPageId": "page-client-points-product"
+          },
+          {
+            "domId": "mall-exchange-cup",
+            "targetPageId": "page-client-exchange-result"
+          },
+          {
+            "domId": "mall-product-clean",
+            "targetPageId": "page-client-points-product"
+          },
+          {
+            "domId": "mall-exchange-clean",
+            "targetPageId": "page-client-exchange-result"
+          },
+          {
+            "domId": "mall-product-card",
+            "targetPageId": "page-client-points-product"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-points-product",
+      "title": "商品详情",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147461,
+      "canvasData": {
+        "x": 3285,
+        "y": 3828,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-9484ee7a",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-points-product.html",
+        "interactions": [
+          {
+            "domId": "points-product-back",
+            "targetPageId": "page-client-points-mall"
+          },
+          {
+            "domId": "points-product-balance",
+            "targetPageId": "page-client-points-detail"
+          },
+          {
+            "domId": "points-product-exchange",
+            "targetPageId": "page-client-exchange-result"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-points-tasks",
+      "title": "赚积分",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147462,
+      "canvasData": {
+        "x": 9655,
+        "y": 1964,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-b526179d",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-points-tasks.html",
+        "interactions": [
+          {
+            "domId": "points-tasks-back",
+            "targetPageId": "page-client-points"
+          },
+          {
+            "domId": "points-tasks-mall",
+            "targetPageId": "page-client-points-mall"
+          },
+          {
+            "domId": "points-task-video",
+            "targetPageId": "page-client-video"
+          },
+          {
+            "domId": "points-task-review",
+            "targetPageId": "page-client-orders"
+          },
+          {
+            "domId": "points-task-invite",
+            "targetPageId": "page-client-invite"
+          },
+          {
+            "domId": "points-task-card",
+            "targetPageId": "page-client-annual-card"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-policy-detail",
+      "title": "保单详情",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147463,
+      "canvasData": {
+        "x": 11020,
+        "y": 1964,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-43598cd0",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-policy-detail.html",
+        "interactions": [
+          {
+            "domId": "policy-detail-back",
+            "targetPageId": "page-client-order-detail"
+          },
+          {
+            "domId": "policy-detail-claim",
+            "targetPageId": "page-client-insurance-claim"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-privacy",
+      "title": "隐私设置",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147464,
+      "canvasData": {
+        "x": 12385,
+        "y": 1964,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-c5918209",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-privacy.html",
+        "interactions": [
+          {
+            "domId": "privacy-back",
+            "targetPageId": "page-client-settings"
+          },
+          {
+            "domId": "privacy-visibility",
+            "targetPageId": "page-client-visibility"
+          },
+          {
+            "domId": "privacy-delete-account",
+            "targetPageId": "page-client-account-cancel"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-profile-edit",
+      "title": "编辑资料",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147465,
+      "canvasData": {
+        "x": 5560,
+        "y": 1964,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-d6911470",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-profile-edit.html",
+        "interactions": [
+          {
+            "domId": "profile-edit-back",
+            "targetPageId": "page-client-profile"
+          },
+          {
+            "domId": "profile-edit-save-top",
+            "targetPageId": "page-client-profile"
+          },
+          {
+            "domId": "profile-edit-save-primary",
+            "targetPageId": "page-client-profile"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-profile",
+      "title": "个人资料",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147466,
+      "canvasData": {
+        "x": 6470,
+        "y": 1032,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-f31f4d52",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-profile.html",
+        "interactions": [
+          {
+            "domId": "profile-back",
+            "targetPageId": "page-client-mine"
+          },
+          {
+            "domId": "profile-settings",
+            "targetPageId": "page-client-settings"
+          },
+          {
+            "domId": "profile-avatar",
+            "targetPageId": "page-client-profile-edit"
+          },
+          {
+            "domId": "profile-name",
+            "targetPageId": "page-client-profile-edit"
+          },
+          {
+            "domId": "profile-bio",
+            "targetPageId": "page-client-profile-edit"
+          },
+          {
+            "domId": "profile-phone",
+            "targetPageId": "page-client-bind-phone"
+          },
+          {
+            "domId": "profile-verification",
+            "targetPageId": "page-client-verification"
+          },
+          {
+            "domId": "profile-address",
+            "targetPageId": "page-client-address"
+          },
+          {
+            "domId": "profile-edit-primary",
+            "targetPageId": "page-client-profile-edit"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-recharge-record",
+      "title": "充值记录",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147467,
+      "canvasData": {
+        "x": 1010,
+        "y": 2896,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-2de6ddff",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-recharge-record.html",
+        "interactions": [
+          {
+            "domId": "recharge-record-back",
+            "targetPageId": "page-client-wallet"
+          },
+          {
+            "domId": "recharge-record-wechat",
+            "targetPageId": "page-client-transaction-detail"
+          },
+          {
+            "domId": "recharge-record-balance",
+            "targetPageId": "page-client-transaction-detail"
+          },
+          {
+            "domId": "recharge-record-july",
+            "targetPageId": "page-client-transaction-detail"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-refund-card-result",
+      "title": "退卡结果",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147468,
+      "canvasData": {
+        "x": 1920,
+        "y": 3828,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-34eb2d92",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-refund-card-result.html",
+        "interactions": [
+          {
+            "domId": "refund-card-result-back",
+            "targetPageId": "page-client-annual-card"
+          },
+          {
+            "domId": "refund-card-result-service",
+            "targetPageId": "page-client-customer-service"
+          },
+          {
+            "domId": "refund-card-result-annual",
+            "targetPageId": "page-client-annual-card"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-refund-card",
+      "title": "退卡申请",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147469,
+      "canvasData": {
+        "x": 555,
+        "y": 2896,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-4a6342bd",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-refund-card.html",
+        "interactions": [
+          {
+            "domId": "refund-card-back",
+            "targetPageId": "page-client-annual-card"
+          },
+          {
+            "domId": "refund-card-submit",
+            "targetPageId": "page-client-refund-card-result"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-refund",
+      "title": "申请退款",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147470,
+      "canvasData": {
+        "x": 2830,
+        "y": 1964,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-def31c1b",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-refund.html",
+        "interactions": [
+          {
+            "domId": "refund-back",
+            "targetPageId": "page-client-order-detail"
+          },
+          {
+            "domId": "refund-submit",
+            "targetPageId": "page-client-order-detail"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-report",
+      "title": "投诉举报",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147471,
+      "canvasData": {
+        "x": 3285,
+        "y": 1964,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-c5d878c3",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-report.html",
+        "interactions": [
+          {
+            "domId": "report-back",
+            "targetPageId": "page-client-order-detail"
+          },
+          {
+            "domId": "report-submit",
+            "targetPageId": "page-client-order-detail"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-review-detail",
+      "title": "评价详情",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147472,
+      "canvasData": {
+        "x": 555,
+        "y": 3828,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-d99e66dd",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-review-detail.html",
+        "interactions": [
+          {
+            "domId": "review-detail-back",
+            "targetPageId": "page-client-orders"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-review-list",
+      "title": "我的评价",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147473,
+      "canvasData": {
+        "x": 100,
+        "y": 1964,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-d930f41a",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-review-list.html",
+        "interactions": [
+          {
+            "domId": "review-list-back",
+            "targetPageId": "page-client-mine"
+          },
+          {
+            "domId": "review-list-item-1",
+            "targetPageId": "page-client-review-detail"
+          },
+          {
+            "domId": "review-list-item-2",
+            "targetPageId": "page-client-review-detail"
+          },
+          {
+            "domId": "review-list-pending",
+            "targetPageId": "page-client-orders"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-search",
+      "title": "搜索",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147474,
+      "canvasData": {
+        "x": 555,
+        "y": 1032,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-9f3067ff",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-search.html",
+        "interactions": [
+          {
+            "domId": "search-back",
+            "targetPageId": "page-client-home-glass-neu-contrast-1"
+          },
+          {
+            "domId": "search-discovery-waterproof",
+            "targetPageId": "page-client-service-detail"
+          },
+          {
+            "domId": "search-discovery-appliance",
+            "targetPageId": "page-client-service-detail"
+          },
+          {
+            "domId": "search-worker-li",
+            "targetPageId": "page-client-worker-detail"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-ticket-detail",
+      "title": "工单详情",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147475,
+      "canvasData": {
+        "x": 5105,
+        "y": 1964,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-a62d2ff6",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-ticket-detail.html",
+        "interactions": [
+          {
+            "domId": "ticket-detail-back",
+            "targetPageId": "page-client-service"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-ticket-submit",
+      "title": "提交工单",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147476,
+      "canvasData": {
+        "x": 5560,
+        "y": 1032,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-ff56c928",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-ticket-submit.html",
+        "interactions": [
+          {
+            "domId": "ticket-submit-back",
+            "targetPageId": "page-client-service"
+          },
+          {
+            "domId": "ticket-order-picker",
+            "targetPageId": "page-client-order-picker"
+          },
+          {
+            "domId": "ticket-submit-primary",
+            "targetPageId": "page-client-ticket-detail"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-transaction-detail",
+      "title": "交易详情",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147477,
+      "canvasData": {
+        "x": 1465,
+        "y": 3828,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-d80eccde",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-transaction-detail.html",
+        "interactions": [
+          {
+            "domId": "transaction-detail-back",
+            "targetPageId": "page-client-recharge-record"
+          },
+          {
+            "domId": "transaction-view-order",
+            "targetPageId": "page-client-order-detail"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-verification-result",
+      "title": "认证结果",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147478,
+      "canvasData": {
+        "x": 1010,
+        "y": 4760,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-6290e9bc",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-verification-result.html",
+        "interactions": [
+          {
+            "domId": "verification-result-back",
+            "targetPageId": "page-client-account-security"
+          },
+          {
+            "domId": "verification-result-edit",
+            "targetPageId": "page-client-verification"
+          },
+          {
+            "domId": "verification-result-security",
+            "targetPageId": "page-client-account-security"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-verification",
+      "title": "实名认证",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147479,
+      "canvasData": {
+        "x": 6925,
+        "y": 3828,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-be5eabb9",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-verification.html",
+        "interactions": [
+          {
+            "domId": "verification-back",
+            "targetPageId": "page-client-account-security"
+          },
+          {
+            "domId": "verification-submit",
+            "targetPageId": "page-client-verification-result"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-video",
+      "title": "居家安全课堂",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147480,
+      "canvasData": {
+        "x": 3740,
+        "y": 3828,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-9ada1d78",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-video.html",
+        "interactions": [
+          {
+            "domId": "video-back",
+            "targetPageId": "page-client-points"
+          },
+          {
+            "domId": "video-complete",
+            "targetPageId": "page-client-points"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-visibility",
+      "title": "信息可见性",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147481,
+      "canvasData": {
+        "x": 6015,
+        "y": 3828,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-4432a0b3",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-visibility.html",
+        "interactions": [
+          {
+            "domId": "visibility-back",
+            "targetPageId": "page-client-privacy"
+          },
+          {
+            "domId": "visibility-save",
+            "targetPageId": "page-client-privacy"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-wallet-recharge",
+      "title": "钱包充值",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147482,
+      "canvasData": {
+        "x": 100,
+        "y": 2896,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-41518337",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-wallet-recharge.html",
+        "interactions": [
+          {
+            "domId": "wallet-recharge-back",
+            "targetPageId": "page-client-wallet"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-wallet-withdraw",
+      "title": "钱包提现",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147483,
+      "canvasData": {
+        "x": 8745,
+        "y": 1964,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-8a3952b4",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-wallet-withdraw.html",
+        "interactions": [
+          {
+            "domId": "wallet-withdraw-back",
+            "targetPageId": "page-client-wallet"
+          },
+          {
+            "domId": "wallet-withdraw-bank-card",
+            "targetPageId": "page-client-bank-cards"
+          },
+          {
+            "domId": "wallet-withdraw-submit",
+            "targetPageId": "page-client-transaction-detail"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-wallet",
+      "title": "我的钱包",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147484,
+      "canvasData": {
+        "x": 6925,
+        "y": 1032,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-c83a1065",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-wallet.html",
+        "interactions": [
+          {
+            "domId": "wallet-back",
+            "targetPageId": "page-client-mine"
+          },
+          {
+            "domId": "wallet-ledger-top",
+            "targetPageId": "page-client-balance-transactions"
+          },
+          {
+            "domId": "wallet-recharge",
+            "targetPageId": "page-client-wallet-recharge"
+          },
+          {
+            "domId": "wallet-withdraw",
+            "targetPageId": "page-client-wallet-withdraw"
+          },
+          {
+            "domId": "wallet-recharge-record",
+            "targetPageId": "page-client-recharge-record"
+          },
+          {
+            "domId": "wallet-withdraw-record",
+            "targetPageId": "page-client-withdraw-record"
+          },
+          {
+            "domId": "wallet-coupon",
+            "targetPageId": "page-client-coupon"
+          },
+          {
+            "domId": "wallet-bank-card",
+            "targetPageId": "page-client-bank-cards"
+          },
+          {
+            "domId": "wallet-income-stat",
+            "targetPageId": "page-client-income-stat"
+          },
+          {
+            "domId": "wallet-transaction-order",
+            "targetPageId": "page-client-transaction-detail"
+          },
+          {
+            "domId": "wallet-transaction-recharge",
+            "targetPageId": "page-client-transaction-detail"
+          },
+          {
+            "domId": "wallet-ledger-primary",
+            "targetPageId": "page-client-balance-transactions"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-withdraw-record",
+      "title": "提现记录",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147485,
+      "canvasData": {
+        "x": 1465,
+        "y": 2896,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-c899b411",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-withdraw-record.html",
+        "interactions": [
+          {
+            "domId": "withdraw-record-back",
+            "targetPageId": "page-client-wallet"
+          },
+          {
+            "domId": "withdraw-record-wechat",
+            "targetPageId": "page-client-transaction-detail"
+          },
+          {
+            "domId": "withdraw-record-bank",
+            "targetPageId": "page-client-transaction-detail"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-client-worker-detail",
+      "title": "师傅详情",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147486,
+      "canvasData": {
+        "x": 2375,
+        "y": 1032,
+        "group": 1,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-51aab307",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/client-worker-detail.html",
+        "interactions": [
+          {
+            "domId": "worker-detail-back",
+            "targetPageId": "page-client-search"
+          },
+          {
+            "domId": "worker-detail-chat",
+            "targetPageId": "page-client-order-chat"
+          },
+          {
+            "domId": "worker-detail-service-water",
+            "targetPageId": "page-client-service-detail"
+          },
+          {
+            "domId": "worker-detail-service-electric",
+            "targetPageId": "page-client-service-detail"
+          },
+          {
+            "domId": "worker-detail-service-pipe",
+            "targetPageId": "page-client-service-detail"
+          },
+          {
+            "domId": "worker-detail-all-reviews",
+            "targetPageId": "page-client-review-list"
+          },
+          {
+            "domId": "worker-detail-review-card",
+            "targetPageId": "page-client-review-detail"
+          },
+          {
+            "domId": "worker-detail-publish",
+            "targetPageId": "page-client-publish"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-worker-appeal-detail",
+      "title": "申诉详情",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147487,
+      "canvasData": {
+        "x": 6925,
+        "y": 7556,
+        "group": 2,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-924a7b88",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/worker-appeal-detail.html",
+        "interactions": [
+          {
+            "domId": "appeal-detail-back",
+            "targetPageId": "page-worker-appeal"
+          },
+          {
+            "domId": "appeal-detail-help",
+            "targetPageId": "page-client-customer-service"
+          },
+          {
+            "domId": "appeal-detail-order",
+            "targetPageId": "page-worker-order-detail"
+          },
+          {
+            "domId": "appeal-detail-contact",
+            "targetPageId": "page-client-customer-service"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-worker-cert-manage",
+      "title": "证书管理",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147488,
+      "canvasData": {
+        "x": 4195,
+        "y": 6624,
+        "group": 2,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-ddd14ad3",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/worker-cert-manage.html",
+        "interactions": [
+          {
+            "domId": "cert-manage-back",
+            "targetPageId": "page-worker-experience"
+          },
+          {
+            "domId": "cert-manage-add-top",
+            "targetPageId": "page-worker-certificate-edit"
+          },
+          {
+            "domId": "cert-manage-update-electric",
+            "targetPageId": "page-worker-certificate-edit"
+          },
+          {
+            "domId": "cert-manage-resubmit-ac",
+            "targetPageId": "page-worker-certificate-edit"
+          },
+          {
+            "domId": "cert-manage-add",
+            "targetPageId": "page-worker-certificate-edit"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-worker-certificate-edit",
+      "title": "证书资料",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147489,
+      "canvasData": {
+        "x": 4195,
+        "y": 7556,
+        "group": 2,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-9c9e795f",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/worker-certificate-edit.html",
+        "interactions": [
+          {
+            "domId": "certificate-edit-back",
+            "targetPageId": "page-worker-cert-manage"
+          },
+          {
+            "domId": "certificate-edit-submit",
+            "targetPageId": "page-worker-cert-manage"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-worker-chat",
+      "title": "订单聊天 - 师傅端",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147490,
+      "canvasData": {
+        "x": 555,
+        "y": 7556,
+        "group": 2,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-6163d512",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/worker-chat.html",
+        "interactions": [
+          {
+            "domId": "chat-back",
+            "targetPageId": "page-worker-order-detail"
+          },
+          {
+            "domId": "chat-open-customer",
+            "targetPageId": "page-worker-customer-profile"
+          },
+          {
+            "domId": "chat-linked-order",
+            "targetPageId": "page-worker-order-detail"
+          },
+          {
+            "domId": "chat-location-card",
+            "targetPageId": "page-client-order-tracking"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-worker-customer-profile",
+      "title": "客户资料",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147491,
+      "canvasData": {
+        "x": 1010,
+        "y": 7556,
+        "group": 2,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-e1b266cf",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/worker-customer-profile.html",
+        "interactions": [
+          {
+            "domId": "customer-profile-back",
+            "targetPageId": "page-worker-chat"
+          },
+          {
+            "domId": "customer-profile-current-order",
+            "targetPageId": "page-worker-order-detail"
+          },
+          {
+            "domId": "customer-profile-chat",
+            "targetPageId": "page-worker-chat"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-worker-deposit-pay",
+      "title": "缴纳保证金",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147492,
+      "canvasData": {
+        "x": 5105,
+        "y": 7556,
+        "group": 2,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-ad19c854",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/worker-deposit-pay.html",
+        "interactions": [
+          {
+            "domId": "deposit-pay-back",
+            "targetPageId": "page-worker-deposit"
+          },
+          {
+            "domId": "deposit-pay-help",
+            "targetPageId": "page-client-customer-service"
+          },
+          {
+            "domId": "deposit-pay-submit",
+            "targetPageId": "page-worker-deposit"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-worker-deposit-refund",
+      "title": "申请退保",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147493,
+      "canvasData": {
+        "x": 4650,
+        "y": 7556,
+        "group": 2,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-2c0f95dc",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/worker-deposit-refund.html",
+        "interactions": [
+          {
+            "domId": "deposit-refund-back",
+            "targetPageId": "page-worker-deposit"
+          },
+          {
+            "domId": "deposit-refund-help",
+            "targetPageId": "page-client-customer-service"
+          },
+          {
+            "domId": "deposit-refund-submit",
+            "targetPageId": "page-worker-deposit"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-worker-exam-result",
+      "title": "考试结果",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147494,
+      "canvasData": {
+        "x": 2830,
+        "y": 7556,
+        "group": 2,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-a94940ae",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/worker-exam-result.html",
+        "interactions": [
+          {
+            "domId": "exam-result-close",
+            "targetPageId": "page-worker-training"
+          },
+          {
+            "domId": "exam-result-review",
+            "targetPageId": "page-worker-training-exam"
+          },
+          {
+            "domId": "exam-result-course",
+            "targetPageId": "page-worker-training-detail"
+          },
+          {
+            "domId": "exam-result-training",
+            "targetPageId": "page-worker-training"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-worker-experience-item-edit",
+      "title": "工作经历",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147495,
+      "canvasData": {
+        "x": 3740,
+        "y": 7556,
+        "group": 2,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-5b40c552",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/worker-experience-item-edit.html",
+        "interactions": [
+          {
+            "domId": "experience-item-back",
+            "targetPageId": "page-worker-experience"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-worker-experience",
+      "title": "从业经验",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147496,
+      "canvasData": {
+        "x": 3740,
+        "y": 6624,
+        "group": 2,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-521bccbb",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/worker-experience.html",
+        "interactions": [
+          {
+            "domId": "experience-back",
+            "targetPageId": "page-worker-profile"
+          },
+          {
+            "domId": "experience-add-item",
+            "targetPageId": "page-worker-experience-item-edit"
+          },
+          {
+            "domId": "experience-edit-item-1",
+            "targetPageId": "page-worker-experience-item-edit"
+          },
+          {
+            "domId": "experience-edit-item-2",
+            "targetPageId": "page-worker-experience-item-edit"
+          },
+          {
+            "domId": "experience-open-cert-manager",
+            "targetPageId": "page-worker-cert-manage"
+          },
+          {
+            "domId": "experience-add-certificate",
+            "targetPageId": "page-worker-certificate-edit"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-worker-help-category",
+      "title": "接单与报价",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147497,
+      "canvasData": {
+        "x": 5560,
+        "y": 7556,
+        "group": 2,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-beb9eaff",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/worker-help-category.html",
+        "interactions": [
+          {
+            "domId": "help-category-back",
+            "targetPageId": "page-worker-help"
+          },
+          {
+            "domId": "help-category-contact-top",
+            "targetPageId": "page-client-customer-service"
+          },
+          {
+            "domId": "help-category-contact",
+            "targetPageId": "page-client-customer-service"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-worker-help",
+      "title": "帮助中心",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147498,
+      "canvasData": {
+        "x": 6470,
+        "y": 6624,
+        "group": 2,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-a851a8a5",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/worker-help.html",
+        "interactions": [
+          {
+            "domId": "help-back",
+            "targetPageId": "page-worker-profile"
+          },
+          {
+            "domId": "help-category-orders",
+            "targetPageId": "page-worker-help-category"
+          },
+          {
+            "domId": "help-category-service",
+            "targetPageId": "page-worker-help-category"
+          },
+          {
+            "domId": "help-category-wallet",
+            "targetPageId": "page-worker-help-category"
+          },
+          {
+            "domId": "help-category-cert",
+            "targetPageId": "page-worker-help-category"
+          },
+          {
+            "domId": "help-category-review",
+            "targetPageId": "page-worker-help-category"
+          },
+          {
+            "domId": "help-category-account",
+            "targetPageId": "page-worker-help-category"
+          },
+          {
+            "domId": "help-contact-service",
+            "targetPageId": "page-client-customer-service"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-worker-income-category-detail",
+      "title": "类别收入",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147499,
+      "canvasData": {
+        "x": 2375,
+        "y": 7556,
+        "group": 2,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-aeaeb662",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/worker-income-category-detail.html",
+        "interactions": [
+          {
+            "domId": "income-category-back",
+            "targetPageId": "page-worker-income-stat"
+          },
+          {
+            "domId": "income-category-order-1",
+            "targetPageId": "page-worker-order-detail"
+          },
+          {
+            "domId": "income-category-order-2",
+            "targetPageId": "page-worker-order-detail"
+          },
+          {
+            "domId": "income-category-order-3",
+            "targetPageId": "page-worker-order-detail"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-worker-income-stat",
+      "title": "收入统计",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147500,
+      "canvasData": {
+        "x": 1465,
+        "y": 6624,
+        "group": 2,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-14f4dd5f",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/worker-income-stat.html",
+        "interactions": [
+          {
+            "domId": "income-stat-back",
+            "targetPageId": "page-worker-wallet"
+          },
+          {
+            "domId": "income-stat-category-electric",
+            "targetPageId": "page-worker-income-category-detail"
+          },
+          {
+            "domId": "income-stat-category-drain",
+            "targetPageId": "page-worker-income-category-detail"
+          },
+          {
+            "domId": "income-stat-category-waterproof",
+            "targetPageId": "page-worker-income-category-detail"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-worker-lesson",
+      "title": "课时学习",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147501,
+      "canvasData": {
+        "x": 3285,
+        "y": 7556,
+        "group": 2,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-ad30c329",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/worker-lesson.html",
+        "interactions": [
+          {
+            "domId": "lesson-back",
+            "targetPageId": "page-worker-training-detail"
+          },
+          {
+            "domId": "lesson-previous",
+            "targetPageId": "page-worker-lesson"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-worker-order-setting",
+      "title": "接单设置",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147502,
+      "canvasData": {
+        "x": 6015,
+        "y": 7556,
+        "group": 2,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-ad473d64",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/worker-order-setting.html",
+        "interactions": [
+          {
+            "domId": "order-setting-back",
+            "targetPageId": "page-worker-settings"
+          },
+          {
+            "domId": "order-setting-weekday",
+            "targetPageId": "page-worker-time-setting"
+          },
+          {
+            "domId": "order-setting-weekend",
+            "targetPageId": "page-worker-time-setting"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-worker-price-adjust-worker",
+      "title": "申请补差价",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147503,
+      "canvasData": {
+        "x": 1465,
+        "y": 7556,
+        "group": 2,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-d5e922f6",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/worker-price-adjust-worker.html",
+        "interactions": [
+          {
+            "domId": "price-adjust-back",
+            "targetPageId": "page-worker-order-detail"
+          },
+          {
+            "domId": "price-adjust-submit",
+            "targetPageId": "page-worker-order-detail"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-worker-service-area",
+      "title": "服务区域",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147504,
+      "canvasData": {
+        "x": 4650,
+        "y": 6624,
+        "group": 2,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-033ac4ec",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/worker-service-area.html",
+        "interactions": [
+          {
+            "domId": "area-back",
+            "targetPageId": "page-worker-profile"
+          },
+          {
+            "domId": "area-edit-address",
+            "targetPageId": "page-client-address-edit"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-worker-service-scope",
+      "title": "服务范围",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147505,
+      "canvasData": {
+        "x": 3285,
+        "y": 6624,
+        "group": 2,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-160b0389",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/worker-service-scope.html",
+        "interactions": [
+          {
+            "domId": "scope-back",
+            "targetPageId": "page-worker-profile"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-worker-time-setting",
+      "title": "接单时间",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147506,
+      "canvasData": {
+        "x": 6470,
+        "y": 7556,
+        "group": 2,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-07e70af4",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/worker-time-setting.html",
+        "interactions": [
+          {
+            "domId": "time-setting-back",
+            "targetPageId": "page-worker-order-setting"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-worker-training-detail",
+      "title": "课程详情",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147507,
+      "canvasData": {
+        "x": 2830,
+        "y": 6624,
+        "group": 2,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-86181f1e",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/worker-training-detail.html",
+        "interactions": [
+          {
+            "domId": "training-detail-back",
+            "targetPageId": "page-worker-training"
+          },
+          {
+            "domId": "training-detail-lesson-1",
+            "targetPageId": "page-worker-lesson"
+          },
+          {
+            "domId": "training-detail-lesson-2",
+            "targetPageId": "page-worker-lesson"
+          },
+          {
+            "domId": "training-detail-lesson-3",
+            "targetPageId": "page-worker-lesson"
+          },
+          {
+            "domId": "training-detail-start",
+            "targetPageId": "page-worker-lesson"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-worker-withdraw-result",
+      "title": "提现结果",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1785765147508,
+      "canvasData": {
+        "x": 1920,
+        "y": 7556,
+        "group": 2,
+        "layoutSnapshot": {
+          "version": 1,
+          "contentHeight": 900,
+          "viewportWidth": 375,
+          "sourceHash": "fnv1a-394064fc",
+          "measuredAt": 1786115926982
+        }
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/worker-withdraw-result.html",
+        "interactions": [
+          {
+            "domId": "withdraw-result-close",
+            "targetPageId": "page-worker-wallet"
+          },
+          {
+            "domId": "withdraw-result-record",
+            "targetPageId": "page-client-withdraw-record"
+          },
+          {
+            "domId": "withdraw-result-wallet",
+            "targetPageId": "page-worker-wallet"
+          }
+        ]
+      }
+    }
+  ],
+  "config": {
+    "autoLayout": false,
+    "deviceType": "mobile",
+    "projectName": "自家人居家维修 玻璃新拟态",
+    "visualEditorEnabled": false,
+    "showEdge": false
+  }
+}

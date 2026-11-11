@@ -1,0 +1,83 @@
+/* AUTO-GENERATED DESIGN STYLE ENTRY; page-specific overrides may follow this import. */
+@import "../../../styles/generated-detail-page.wxss";
+
+.phone-page {
+  --neu-raised: var(--neu-out-md);
+  --glass-bg: rgba(255, 255, 255, 0.52);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.phone-page .section-title {
+  margin-top: 8rpx;
+}
+
+.phone-page .notice.info {
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, rgba(90, 143, 173, 0.08) 0%, rgba(13, 148, 136, 0.04) 100%);
+}
+
+.phone-page .card {
+  padding: 36rpx 32rpx;
+  margin-bottom: 28rpx;
+}
+
+.phone-page .field {
+  margin-bottom: 32rpx;
+}
+
+.phone-page .field .tag-label {
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.phone-page .input,
+.phone-page .textarea,
+.phone-page .select-like {
+  font-size: 28rpx;
+  background: var(--bg);
+}
+
+.phone-page .input:focus,
+.phone-page .textarea:focus {
+  box-shadow: var(--neu-in), 0 0 0 4rpx var(--brand-soft);
+}
+
+.phone-page .textarea {
+  min-height: 200rpx;
+}
+
+.phone-page .chip {
+  font-size: 24rpx;
+  padding: 12rpx 24rpx;
+}
+
+.phone-page .chip.active {
+  background: var(--brand-soft);
+  color: var(--brand);
+}
+
+.phone-page .list-row {
+  min-height: 100rpx;
+}
+
+.phone-page .row-icon {
+  background: var(--brand-soft);
+}
+
+.phone-page .map-visual {
+  min-height: 280rpx;
+}
+
+.phone-page .spacer {
+  height: 28rpx;
+}
+
+.phone-page .fixed-actions {
+  border: 1rpx solid rgba(13, 148, 136, 0.18);
+}
+
+.phone-page .btn.primary {
+  background: var(--brand-gradient);
+}

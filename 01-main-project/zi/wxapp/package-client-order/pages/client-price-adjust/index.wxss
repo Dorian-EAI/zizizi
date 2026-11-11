@@ -1,0 +1,86 @@
+@import "../../../styles/glass-detail-page.wxss";
+
+/* —— 价格调整页面特定样式 —— */
+
+/* Hero 渐变：警示橙红主题 */
+.hero {
+  background:
+    radial-gradient(ellipse 360rpx 240rpx at 82% 16%, rgba(212, 148, 76, 0.18) 0%, transparent 72%),
+    radial-gradient(ellipse 300rpx 200rpx at 18% 84%, rgba(13, 148, 136, 0.08) 0%, transparent 72%),
+    rgba(255, 255, 255, 0.46);
+}
+
+/* 状态横幅：琥珀警示 */
+.status-banner {
+  border: 2rpx solid rgba(212, 148, 76, 0.24);
+  box-shadow: var(--neu-raised), 0 8rpx 24rpx rgba(212, 148, 76, 0.12);
+}
+
+.status-icon {
+  background: linear-gradient(135deg, var(--accent), var(--accent-mid));
+  box-shadow: 0 6rpx 20rpx rgba(212, 148, 76, 0.28);
+}
+
+/* 金额显示大号化 */
+.amount-value {
+  font-size: 104rpx;
+  color: var(--accent-dark);
+  text-shadow: 0 2rpx 12rpx rgba(212, 148, 76, 0.18);
+}
+
+.amount-value .currency {
+  font-size: 48rpx;
+  color: var(--accent-dark);
+}
+
+/* 师傅信息行 */
+.worker-row {
+  padding: 28rpx 32rpx;
+}
+
+.worker-avatar {
+  box-shadow: var(--neu-raised), 0 6rpx 20rpx rgba(13, 148, 136, 0.16);
+}
+
+/* 差价原因文本域 */
+.reason-box {
+  background: var(--bg-elevated);
+  box-shadow: var(--neu-inset);
+  border-radius: var(--r-md);
+  padding: 28rpx 32rpx;
+  font-size: 27rpx;
+  line-height: 1.6;
+  color: var(--text-1);
+}
+
+/* 凭证照片网格 */
+.photo-grid {
+  gap: 16rpx;
+}
+
+.photo-item {
+  border-radius: var(--r-md);
+  box-shadow: var(--neu-raised-sm);
+  overflow: hidden;
+}
+
+/* 费用明细合计强调 */
+.fee-total .fee-value {
+  font-size: 44rpx;
+  color: var(--accent-dark);
+}
+
+/* 操作栏 */
+.action-buttons {
+  box-shadow: 0 -8rpx 40rpx rgba(0, 0, 0, 0.06);
+}
+
+.action-btn.confirm {
+  background: var(--brand-gradient);
+  box-shadow: var(--neu-raised-sm), 0 8rpx 28rpx var(--brand-glow);
+}
+
+.action-btn.reject {
+  color: #C4533A;
+  border-color: rgba(196, 83, 58, 0.20);
+}

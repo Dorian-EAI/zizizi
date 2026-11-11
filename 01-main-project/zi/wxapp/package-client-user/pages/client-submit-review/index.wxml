@@ -1,0 +1,126 @@
+<!-- pages/client-submit-review/index.wxml — 提交评价页面 玻璃新拟态 -->
+<view class="page">
+  <view class="blob" style="top: -40px; right: -60px; width: 280px; height: 280px; background: var(--brand);"></view>
+  <view class="blob" style="top: 320px; left: -80px; width: 240px; height: 240px; background: var(--accent);"></view>
+
+  <view class="nav-bar" style="padding-top: calc({{statusBarHeight}}px + 36rpx);">
+    <view class="nav-icon-btn press-neu" bindtap="onBack">
+      <image class="nav-icon" src="{{icons.back}}" mode="aspectFit" lazy-load="{{false}}" />
+    </view>
+    <text class="nav-title">服务评价</text>
+    <view class="nav-placeholder"></view>
+  </view>
+
+  <scroll-view scroll-y class="page-scroll" style="padding-bottom: 200rpx;">
+    <view class="section">
+      <view class="glass-neu-card order-card">
+        <view class="order-info">
+          <view class="order-avatar">
+            <image wx:if="{{order.workerAvatar}}" src="{{order.workerAvatar}}" mode="aspectFill" class="order-avatar-img" lazy-load="{{false}}" />
+            <text wx:else class="order-avatar-text">{{order.initial}}</text>
+          </view>
+          <view class="order-detail">
+            <text class="order-worker">{{order.workerName}}</text>
+            <text class="order-service">{{order.serviceName}}</text>
+            <text class="order-time">{{order.orderTime}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="glass-neu-card rating-card">
+        <view class="rating-group">
+          <text class="rating-label">整体评分</text>
+          <view class="rating-stars">
+            <view
+              class="star-item {{index < rating ? 'active' : ''}}"
+              wx:for="{{5}}"
+              wx:key="*this"
+              data-index="{{index}}"
+              bindtap="onRating"
+            >
+              <text class="star-icon">★</text>
+            </view>
+          </view>
+          <text class="rating-text">{{ratingText}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="section" wx:if="{{subCategories.length}}">
+      <view class="glass-neu-card sub-rating-card">
+        <view class="sub-rating-item" wx:for="{{subCategories}}" wx:key="key">
+          <text class="sub-label">{{item.label}}</text>
+          <view class="sub-stars">
+            <view
+              class="star-item {{index < item.value ? 'active' : ''}}"
+              wx:for="{{5}}"
+              wx:key="*this"
+              data-index="{{index}}"
+              data-key="{{item.key}}"
+              bindtap="onSubRating"
+            >
+              <text class="star-icon">★</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="glass-neu-card content-card">
+        <view class="content-title">
+          <text class="title-text">评价内容</text>
+          <text class="content-count">{{contentLength}}/500</text>
+        </view>
+        <textarea
+          class="content-input"
+          value="{{content}}"
+          maxlength="500"
+          placeholder="说说您的真实体验，帮助其他用户选择"
+          bindinput="onContentInput"
+        />
+        <view class="image-upload" wx:if="{{images.length < 6}}">
+          <view class="upload-btn press-neu" bindtap="onUploadImage">
+            <image src="{{icons.camera}}" mode="aspectFit" class="upload-icon" lazy-load="{{false}}" />
+            <text class="upload-text">添加图片</text>
+          </view>
+        </view>
+        <view class="image-list" wx:if="{{images.length}}">
+          <view class="image-item" wx:for="{{images}}" wx:key="*this">
+            <image src="{{item}}" mode="aspectFill" class="uploaded-img" lazy-load="{{false}}" />
+            <view class="image-delete" catchtap="onDeleteImage" data-index="{{index}}">
+              <text class="delete-icon">×</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="glass-neu-card anonymous-card">
+        <view class="anonymous-row">
+          <view class="anonymous-info">
+            <text class="anonymous-title">匿名评价</text>
+            <text class="anonymous-desc">开启后将隐藏您的昵称和头像</text>
+          </view>
+          <view
+            class="toggle {{anonymous ? 'toggle-on' : 'toggle-off'}}"
+            bindtap="onToggleAnonymous"
+          >
+            <view class="toggle-thumb"></view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="cta-spacer"></view>
+  </scroll-view>
+
+  <view class="cta-bar">
+    <view class="cta-primary press-scale" bindtap="onSubmit">
+      <text class="cta-primary-text">提交评价</text>
+    </view>
+  </view>
+</view>

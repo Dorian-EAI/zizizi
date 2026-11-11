@@ -1,0 +1,80 @@
+@import "../../../styles/glass-detail-page.wxss";
+
+/* —— 积分商城页面特定样式 —— */
+
+/* Hero 渐变：暖金色购物主题 */
+.hero {
+  background:
+    radial-gradient(ellipse 360rpx 240rpx at 82% 16%, rgba(212, 148, 76, 0.18) 0%, transparent 72%),
+    radial-gradient(ellipse 300rpx 200rpx at 18% 84%, rgba(13, 148, 136, 0.10) 0%, transparent 72%),
+    rgba(255, 255, 255, 0.44);
+}
+
+/* Hero 标题金色强调 */
+.hero .tag-h2 {
+  color: var(--accent-dark);
+}
+
+/* 商品网格：2列自适应 */
+.grid-2 {
+  gap: 20rpx;
+}
+
+.grid-2 .card {
+  padding: 24rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+/* 商品预览区：方形占位 */
+.card .media-placeholder {
+  min-height: 200rpx;
+  border-radius: var(--r-md);
+  background: linear-gradient(135deg, var(--brand-subtle), var(--accent-subtle));
+  box-shadow: var(--neu-inset-sm);
+}
+
+.card .media-placeholder .media-label {
+  font-family: var(--font-number);
+  font-size: 36rpx;
+  font-weight: 700;
+  color: var(--brand-dark);
+}
+
+/* 商品标题与描述 */
+.card .card-title {
+  font-size: 28rpx;
+  margin: 0;
+}
+
+.card .card-copy {
+  font-size: 24rpx;
+}
+
+/* 顶部积分余额显示 */
+.topbar .top-action {
+  color: var(--accent-dark);
+  font-weight: 700;
+  font-size: 28rpx;
+  padding: 12rpx 20rpx;
+  border-radius: var(--r-pill);
+  background: rgba(212, 148, 76, 0.14);
+}
+
+/* 开放提示卡片 */
+.section.card {
+  padding: 32rpx;
+}
+
+.section.card .tag-p {
+  margin: 12rpx 0 24rpx;
+  font-size: 26rpx;
+}
+
+/* 底部说明 */
+.notice.tag-p {
+  font-size: 22rpx;
+  text-align: center;
+  padding: 20rpx 28rpx;
+}

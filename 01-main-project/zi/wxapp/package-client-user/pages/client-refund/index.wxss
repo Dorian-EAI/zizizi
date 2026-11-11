@@ -1,0 +1,87 @@
+@import "../../../styles/glass-detail-page.wxss";
+
+/* —— 退款申请页面特定样式 —— */
+
+/* Hero 渐变：警示橙主题 */
+.hero {
+  background:
+    radial-gradient(ellipse 360rpx 240rpx at 82% 16%, rgba(212, 148, 76, 0.16) 0%, transparent 72%),
+    radial-gradient(ellipse 300rpx 200rpx at 18% 84%, rgba(196, 83, 58, 0.08) 0%, transparent 72%),
+    rgba(255, 255, 255, 0.46);
+}
+
+/* 退款类型分段控件 */
+.segmented {
+  margin-bottom: 16rpx;
+}
+
+.segmented .segment.active {
+  background: var(--brand);
+  color: #fff;
+  box-shadow: 0 4rpx 12rpx rgba(13, 148, 136, 0.24);
+}
+
+/* 退款原因胶囊 */
+.chips {
+  gap: 16rpx;
+}
+
+.chips .chip {
+  font-size: 26rpx;
+  padding: 14rpx 24rpx;
+}
+
+.chips .chip.active {
+  background: rgba(196, 83, 58, 0.12);
+  color: #C4533A;
+  box-shadow: inset 6rpx 6rpx 12rpx var(--neu-dark), inset -6rpx -6rpx 12rpx var(--neu-light);
+}
+
+/* 金额输入 */
+.field .input {
+  font-family: var(--font-number);
+  font-size: 32rpx;
+  font-weight: 600;
+  color: var(--brand-dark);
+}
+
+/* 退款说明文本域 */
+.field .textarea {
+  min-height: 200rpx;
+}
+
+/* 上传凭证网格 */
+.upload-grid {
+  gap: 16rpx;
+}
+
+.upload-tile {
+  min-height: 160rpx;
+  border-color: rgba(196, 83, 58, 0.20);
+}
+
+.upload-tile.is-disabled {
+  opacity: 0.52;
+  background: var(--bg-elevated);
+}
+
+/* 订单摘要卡片 */
+.card.list-card {
+  padding: 8rpx 24rpx;
+}
+
+.card.list-card .list-row {
+  min-height: 96rpx;
+}
+
+/* 提交按钮 */
+.fixed-actions .btn.primary {
+  background: var(--brand-gradient);
+  font-weight: 700;
+  font-size: 30rpx;
+}
+
+/* 信息提示 */
+.notice.info {
+  border-left: 6rpx solid var(--brand);
+}

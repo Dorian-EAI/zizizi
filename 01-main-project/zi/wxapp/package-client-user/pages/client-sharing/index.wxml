@@ -1,0 +1,102 @@
+<!-- pages/client-sharing/index.wxml — 分享页面 玻璃新拟态 -->
+<view class="page">
+  <view class="blob" style="top: -40px; right: -60px; width: 280px; height: 280px; background: var(--brand);"></view>
+  <view class="blob" style="top: 320px; left: -80px; width: 240px; height: 240px; background: var(--accent);"></view>
+
+  <view class="nav-bar" style="padding-top: calc({{statusBarHeight}}px + 36rpx);">
+    <view class="nav-icon-btn press-neu" bindtap="onBack">
+      <image class="nav-icon" src="{{icons.back}}" mode="aspectFit" lazy-load="{{false}}" />
+    </view>
+    <text class="nav-title">邀请好友</text>
+    <view class="nav-placeholder"></view>
+  </view>
+
+  <scroll-view scroll-y class="page-scroll" style="padding-bottom: 200rpx;">
+    <view class="section">
+      <view class="glass-neu-card hero-card">
+        <view class="hero-bg-deco"></view>
+        <view class="hero-content">
+          <view class="hero-icon-wrap">
+            <image src="{{icons.share}}" mode="aspectFit" class="hero-icon" lazy-load="{{false}}" />
+          </view>
+          <text class="hero-title">邀请好友 各得 {{rewardAmount}} 元</text>
+          <text class="hero-desc">邀请好友注册成功后，您和好友各得 {{rewardAmount}} 元优惠券</text>
+        </view>
+        <view class="qr-code-wrap">
+          <view class="qr-code-placeholder">
+            <image src="{{qrCodeUrl}}" mode="aspectFit" class="qr-code" lazy-load="{{false}}" />
+          </view>
+          <text class="qr-tip">长按保存二维码邀请好友</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="glass-neu-card link-card">
+        <view class="link-title-row">
+          <text class="link-title">邀请链接</text>
+          <view class="copy-btn press-neu" bindtap="onCopy">
+            <text>复制</text>
+          </view>
+        </view>
+        <view class="link-value mono">{{inviteLink}}</view>
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="section-title">
+        <text class="title-text">分享到</text>
+      </view>
+      <view class="share-grid">
+        <view class="glass-neu-card share-item press-scale" bindtap="onShareWechat">
+          <view class="share-icon share-icon-wechat">
+            <image src="{{icons.wechat}}" mode="aspectFit" class="share-icon-img" lazy-load="{{false}}" />
+          </view>
+          <text class="share-name">微信好友</text>
+        </view>
+        <view class="glass-neu-card share-item press-scale" bindtap="onShareMoments">
+          <view class="share-icon share-icon-moments">
+            <image src="{{icons.moments}}" mode="aspectFit" class="share-icon-img" lazy-load="{{false}}" />
+          </view>
+          <text class="share-name">朋友圈</text>
+        </view>
+        <view class="glass-neu-card share-item press-scale" bindtap="onShareLink">
+          <view class="share-icon share-icon-link">
+            <image src="{{icons.link}}" mode="aspectFit" class="share-icon-img" lazy-load="{{false}}" />
+          </view>
+          <text class="share-name">复制链接</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="section" wx:if="{{historyList.length}}">
+      <view class="section-title">
+        <text class="title-text">邀请记录</text>
+        <text class="title-count">已邀请 {{totalCount}} 人</text>
+      </view>
+      <view class="glass-neu-card history-list">
+        <view class="history-item" wx:for="{{historyList}}" wx:key="id">
+          <view class="his-avatar">
+            <image wx:if="{{item.avatar}}" src="{{item.avatar}}" mode="aspectFill" class="his-avatar-img" lazy-load="{{false}}" />
+            <text wx:else class="his-avatar-text">{{item.initial}}</text>
+          </view>
+          <view class="his-info">
+            <text class="his-name">{{item.name}}</text>
+            <text class="his-time">{{item.time}}</text>
+          </view>
+          <view class="his-status his-status-{{item.status}}">
+            <text>{{item.statusText}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="cta-spacer"></view>
+  </scroll-view>
+
+  <view class="cta-bar">
+    <view class="cta-primary press-scale" bindtap="onShare">
+      <text class="cta-primary-text">立即分享</text>
+    </view>
+  </view>
+</view>

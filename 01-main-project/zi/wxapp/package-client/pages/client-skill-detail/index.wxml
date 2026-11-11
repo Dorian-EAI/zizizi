@@ -1,0 +1,112 @@
+<!-- pages/client-skill-detail/index.wxml — 技能详情页面 玻璃新拟态 -->
+<view class="page">
+  <view class="blob" style="top: -40px; right: -60px; width: 280px; height: 280px; background: var(--brand);"></view>
+  <view class="blob" style="top: 320px; left: -80px; width: 240px; height: 240px; background: var(--accent);"></view>
+
+  <view class="nav-bar" style="padding-top: calc({{statusBarHeight}}px + 36rpx);">
+    <view class="nav-icon-btn press-neu" bindtap="onBack">
+      <image class="nav-icon" src="{{icons.back}}" mode="aspectFit" lazy-load="{{false}}" />
+    </view>
+    <text class="nav-title">技能详情</text>
+    <view class="nav-icon-btn press-neu" bindtap="onShare">
+      <image class="nav-icon" src="{{icons.share}}" mode="aspectFit" lazy-load="{{false}}" />
+    </view>
+  </view>
+
+  <scroll-view scroll-y class="page-scroll" style="padding-bottom: 200rpx;">
+    <view class="section">
+      <view class="glass-neu-card skill-hero">
+        <view class="hero-bg-deco"></view>
+        <view class="skill-icon-wrap">
+          <image src="{{skill.iconUrl}}" mode="aspectFit" class="skill-icon" lazy-load="{{false}}" />
+        </view>
+        <text class="skill-name">{{skill.name}}</text>
+        <view class="skill-meta">
+          <text class="skill-category">{{skill.category}}</text>
+          <text class="skill-dot">·</text>
+          <text class="skill-workers">{{skill.workerCount}} 位师傅</text>
+        </view>
+        <view class="skill-stats">
+          <view class="stat-item">
+            <text class="stat-value">{{skill.orderCount}}</text>
+            <text class="stat-label">累计订单</text>
+          </view>
+          <view class="stat-divider"></view>
+          <view class="stat-item">
+            <text class="stat-value">{{skill.rating}}</text>
+            <text class="stat-label">平均评分</text>
+          </view>
+          <view class="stat-divider"></view>
+          <view class="stat-item">
+            <text class="stat-value">{{skill.completionRate}}%</text>
+            <text class="stat-label">完成率</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="section-title">
+        <text class="title-text">技能介绍</text>
+      </view>
+      <view class="glass-neu-card intro-card">
+        <text class="intro-text">{{skill.description}}</text>
+        <view class="tags-row" wx:if="{{skill.tags.length}}">
+          <view class="tag-item" wx:for="{{skill.tags}}" wx:key="*this">
+            <text>{{item}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="section-title">
+        <text class="title-text">服务流程</text>
+      </view>
+      <view class="glass-neu-card process-card">
+        <view class="process-item" wx:for="{{skill.process}}" wx:key="index">
+          <view class="process-index">{{index + 1}}</view>
+          <view class="process-content">
+            <text class="process-title">{{item.title}}</text>
+            <text class="process-desc">{{item.desc}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="section" wx:if="{{relatedWorkers.length}}">
+      <view class="section-title">
+        <text class="title-text">认证师傅</text>
+        <text class="title-count">{{relatedWorkers.length}} 位</text>
+      </view>
+      <scroll-view scroll-x class="worker-scroll hide-scroll" enable-flex>
+        <view
+          class="glass-neu-card worker-card press-scale"
+          wx:for="{{relatedWorkers}}"
+          wx:key="id"
+          data-id="{{item.id}}"
+          bindtap="onWorker"
+        >
+          <view class="worker-avatar">
+            <image wx:if="{{item.avatar}}" src="{{item.avatar}}" mode="aspectFill" class="worker-avatar-img" lazy-load="{{false}}" />
+            <text wx:else class="worker-avatar-text">{{item.initial}}</text>
+          </view>
+          <text class="worker-name">{{item.name}}</text>
+          <view class="worker-rating">
+            <text class="rating-star">★</text>
+            <text class="rating-num">{{item.rating}}</text>
+          </view>
+          <text class="worker-orders">{{item.orderCount}} 单</text>
+        </view>
+      </scroll-view>
+    </view>
+
+    <view class="cta-spacer"></view>
+  </scroll-view>
+
+  <view class="cta-bar">
+    <view class="cta-primary press-scale" bindtap="onOrder">
+      <text class="cta-primary-text">立即预约</text>
+    </view>
+  </view>
+</view>

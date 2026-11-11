@@ -1,0 +1,55 @@
+<view class="phone-page design-detail-page worker-theme">
+  <view class="topbar">
+    <view class="icon-button design-button" bindtap="onBack"><image class="design-svg-icon" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%232C2824%22%20stroke-width%3D%221.8%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m15%2018-6-6%206-6M9%2012h10%22%2F%3E%3C%2Fsvg%3E" mode="aspectFill" /></view>
+    <view class="tag-h1">请假申请</view>
+    <view class="top-action"></view>
+  </view>
+
+  <view class="page-body">
+    <view class="status-banner">
+      <view class="status-dot"></view>
+      <view class="status-text">当前状态：在线接单中</view>
+    </view>
+
+    <view class="notice">请假期间将暂停接单，已接到的订单需正常完成。请提前安排好手头工作。</view>
+
+    <view class="section">
+      <view class="section-title">请假信息</view>
+      <view class="card">
+        <view class="field">
+          <view class="tag-label">请假开始时间</view>
+          <picker mode="date" value="{{form.startDate}}" bindchange="onDateChange" data-field="startDate">
+            <view class="input">{{form.startDate || '请选择开始日期'}}</view>
+          </picker>
+        </view>
+        <view class="field">
+          <view class="tag-label">请假结束时间</view>
+          <picker mode="date" value="{{form.endDate}}" bindchange="onDateChange" data-field="endDate">
+            <view class="input">{{form.endDate || '请选择结束日期'}}</view>
+          </picker>
+        </view>
+        <view class="field">
+          <view class="tag-label">请假原因</view>
+          <textarea class="textarea" placeholder="请说明请假原因..." value="{{form.reason}}" bindinput="onInput" data-field="reason"></textarea>
+        </view>
+      </view>
+    </view>
+
+    <view class="section" wx:if="{{history.length > 0}}">
+      <view class="section-title">请假记录</view>
+      <view class="card">
+        <view class="history-item" wx:for="{{history}}" wx:key="id">
+          <view class="history-info">
+            <view class="history-date">{{item.startDate}} ~ {{item.endDate}}</view>
+            <view class="history-reason">{{item.reason}}</view>
+          </view>
+          <view class="history-status {{item.status}}">{{item.statusText}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="fixed-actions">
+    <view class="btn primary design-button" bindtap="onSubmit">提交申请</view>
+  </view>
+</view>

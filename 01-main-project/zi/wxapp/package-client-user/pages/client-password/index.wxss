@@ -1,0 +1,93 @@
+@import "../../../styles/glass-detail-page.wxss";
+
+/* —— 密码修改页面特定样式 —— */
+
+/* Hero 渐变：安全绿调渐变 */
+.hero {
+  background:
+    radial-gradient(ellipse 320rpx 200rpx at 88% 14%, rgba(91, 140, 90, 0.14) 0%, transparent 72%),
+    radial-gradient(ellipse 280rpx 180rpx at 12% 86%, rgba(13, 148, 136, 0.12) 0%, transparent 72%),
+    rgba(255, 255, 255, 0.44);
+}
+
+/* 密码强度条：4 段式可视化 */
+.segmented {
+  padding: 12rpx;
+  gap: 8rpx;
+  margin: 16rpx 0;
+}
+
+.segmented .segment {
+  flex: 1;
+  height: 16rpx;
+  min-height: 16rpx;
+  padding: 0;
+  border-radius: var(--r-pill);
+  font-size: 0;
+  line-height: 0;
+  box-shadow: var(--neu-inset-sm);
+  background: var(--bg);
+}
+
+.segmented .segment.active {
+  background: var(--brand-gradient);
+  box-shadow: 0 4rpx 12rpx rgba(13, 148, 136, 0.30);
+}
+
+/* 密码输入行：左右分栏式 */
+.card .select-like {
+  min-height: 88rpx;
+}
+
+.card .select-like .input {
+  flex: 1;
+  font-family: var(--font-number);
+  letter-spacing: 0.02em;
+}
+
+.card .select-like .top-action {
+  color: var(--brand);
+  font-weight: 600;
+  font-size: 26rpx;
+  padding: 8rpx 16rpx;
+  border-radius: var(--r-pill);
+  background: rgba(13, 148, 136, 0.10);
+}
+
+/* 密码字段标签 */
+.card .field .tag-label {
+  color: var(--text-2);
+  font-size: 26rpx;
+  letter-spacing: 0.02em;
+}
+
+/* 确认修改按钮 */
+.fixed-actions .btn.primary {
+  background: var(--brand-gradient);
+  font-size: 30rpx;
+  font-weight: 700;
+}
+
+/* 安全提示 notice */
+.notice.info {
+  border-left: 6rpx solid var(--brand);
+}
+
+/* 校验状态徽章 */
+.badge.warning {
+  box-shadow: 0 4rpx 14rpx rgba(212, 148, 76, 0.20);
+}
+
+.badge.success {
+  box-shadow: 0 4rpx 14rpx rgba(91, 140, 90, 0.20);
+}
+
+/* Hero 文案优化 */
+.hero .tag-h2 {
+  font-size: 40rpx;
+}
+
+.hero .tag-p {
+  font-size: 26rpx;
+  line-height: 1.6;
+}

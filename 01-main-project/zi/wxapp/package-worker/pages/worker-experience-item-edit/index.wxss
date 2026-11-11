@@ -1,0 +1,104 @@
+@import "../../../styles/generated-detail-page.wxss";
+
+.phone-page.design-detail-page.worker-theme {
+  --brand: #2D6CDF;
+  --brand-dark: #2456B8;
+  --brand-mid: #5A8EE8;
+  --brand-glow: rgba(45, 108, 223, 0.28);
+  --brand-subtle: rgba(45, 108, 223, 0.10);
+  background: var(--bg);
+}
+
+.hero {
+  background:
+    radial-gradient(ellipse 440rpx 360rpx at 78% 45%, rgba(212, 148, 76, 0.14) 0%, transparent 70%),
+    radial-gradient(ellipse 360rpx 280rpx at 18% 75%, rgba(45, 108, 223, 0.18) 0%, transparent 70%),
+    linear-gradient(135deg, rgba(45, 108, 223, 0.14) 0%, rgba(212, 148, 76, 0.08) 50%, rgba(45, 108, 223, 0.06) 100%);
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  top: -30%;
+  right: -15%;
+  width: 440rpx;
+  height: 440rpx;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.12) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(40rpx) saturate(150%);
+  -webkit-backdrop-filter: blur(40rpx) saturate(150%);
+  border: 1rpx solid var(--glass-border);
+  border-radius: var(--r-lg);
+  box-shadow:
+    var(--neu-raised),
+    0 12rpx 56rpx rgba(0, 0, 0, 0.06),
+    0 0 0 2rpx rgba(44, 40, 36, 0.05),
+    0 4rpx 16rpx rgba(45, 108, 223, 0.04);
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  border-radius: inherit;
+  background: linear-gradient(165deg,
+    rgba(255, 255, 255, 0.22) 0%,
+    rgba(255, 255, 255, 0.05) 30%,
+    transparent 55%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.card > view, .card > text {
+  position: relative;
+  z-index: 1;
+}
+
+.input, .textarea {
+  background: var(--bg);
+  box-shadow: var(--neu-inset);
+  border: none;
+  border-radius: var(--r-md);
+}
+
+.input:focus, .textarea:focus {
+  box-shadow: var(--neu-inset), 0 0 0 4rpx var(--brand-subtle), 0 0 0 8rpx var(--brand-glow);
+}
+
+.date-picker {
+  background: var(--bg-elevated);
+  box-shadow: var(--neu-raised-sm);
+}
+
+.btn.primary {
+  background: var(--brand-gradient);
+  box-shadow:
+    var(--neu-raised),
+    0 12rpx 40rpx var(--brand-glow),
+    inset 0 3rpx 4rpx rgba(255, 255, 255, 0.40);
+}
+
+.btn.primary:active {
+  box-shadow: var(--neu-inset), 0 4rpx 12rpx var(--brand-glow);
+  transform: scale(0.97);
+}
+
+.btn.secondary {
+  background: var(--surface-strong);
+  color: var(--brand);
+  box-shadow: var(--neu-raised-sm);
+}
+
+.fixed-actions {
+  background: rgba(255, 255, 255, 0.52);
+  backdrop-filter: blur(48rpx) saturate(180%);
+  -webkit-backdrop-filter: blur(48rpx) saturate(180%);
+  border: 1rpx solid rgba(255, 255, 255, 0.70);
+  box-shadow: var(--neu-raised), 0 12rpx 48rpx rgba(0, 0, 0, 0.06);
+}
